@@ -4,6 +4,7 @@ import { ItemListPreviewComponent } from './item-list-preview.component';
 import { Item } from '../../../../core/shared/item.model';
 import { MyDspaceItemStatusType } from '../../../object-collection/shared/mydspace-item-status/my-dspace-item-status-type';
 import { SearchResult } from '../../../search/models/search-result.model';
+import { Observable } from 'rxjs';
 
 /**
  * Themed wrapper for ItemListPreviewComponent
@@ -14,13 +15,15 @@ import { SearchResult } from '../../../search/models/search-result.model';
   templateUrl: '../../../theme-support/themed.component.html',
 })
 export class ThemedItemListPreviewComponent extends ThemedComponent<ItemListPreviewComponent> {
-  protected inAndOutputNames: (keyof ItemListPreviewComponent & keyof this)[] = ['item', 'object', 'status', 'showSubmitter'];
+  protected inAndOutputNames: (keyof ItemListPreviewComponent & keyof this)[] = ['item', 'object', 'status', 'showSubmitter', 'step$'];
 
   @Input() item: Item;
 
   @Input() object: SearchResult<any>;
 
   @Input() status: MyDspaceItemStatusType;
+
+  @Input() step$: Observable<string>;
 
   @Input() showSubmitter = false;
 

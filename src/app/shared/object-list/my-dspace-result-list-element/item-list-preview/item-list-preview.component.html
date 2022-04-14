@@ -1,6 +1,6 @@
 <div *ngIf="item" @fadeInOut>
   <ng-container *ngIf="status">
-    <ds-mydspace-item-status [status]="status"></ds-mydspace-item-status>
+    <ds-mydspace-item-status [status]="status" [step$]="step$"></ds-mydspace-item-status>
   </ng-container>
   <ds-type-badge [object]="item"></ds-type-badge>
   <ds-truncatable [id]="item.id">

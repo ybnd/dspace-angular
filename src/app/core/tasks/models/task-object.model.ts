@@ -14,6 +14,8 @@ import { TASK_OBJECT } from './task-object.resource-type';
 import { WORKFLOWITEM } from '../../eperson/models/workflowitem.resource-type';
 import { WORKFLOW_ACTION } from './workflow-action-object.resource-type';
 import { WorkflowAction } from './workflow-action-object.model';
+import { WorkflowStep } from './workflow-step.model';
+import { WORKFLOW_STEP } from './workflow-step.resource-type';
 
 /**
  * An abstract model class for a TaskObject.
@@ -30,12 +32,6 @@ export class TaskObject extends DSpaceObject implements CacheableObject {
   id: string;
 
   /**
-   * The workflow step
-   */
-  @autoserialize
-  step: string;
-
-  /**
    * The {@link HALLink}s for this TaskObject
    */
   @deserialize
@@ -45,6 +41,7 @@ export class TaskObject extends DSpaceObject implements CacheableObject {
     group: HALLink;
     workflowitem: HALLink;
     action: HALLink;
+    step: HALLink;
   };
 
   /**
@@ -75,5 +72,12 @@ export class TaskObject extends DSpaceObject implements CacheableObject {
    */
   @link(WORKFLOW_ACTION, false, 'action')
   action: Observable<RemoteData<WorkflowAction>>;
+
+  /**
+   * The task action type
+   * Will be undefined unless the group {@link HALLink} has been resolved.
+   */
+  @link(WORKFLOW_STEP, false, 'step')
+  step: Observable<RemoteData<WorkflowStep>>;
 
 }

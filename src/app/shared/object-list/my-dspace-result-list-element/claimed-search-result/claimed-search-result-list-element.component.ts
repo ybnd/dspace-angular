@@ -13,6 +13,8 @@ import { followLink } from '../../../utils/follow-link-config.model';
 import { SearchResultListElementComponent } from '../../search-result-list-element/search-result-list-element.component';
 import { ClaimedTask } from '../../../../core/tasks/models/claimed-task-object.model';
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
+import { getFirstSucceededRemoteData, getRemoteDataPayload } from '../../../../core/shared/operators'
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'ds-claimed-search-result-list-element',
@@ -31,6 +33,11 @@ export class ClaimedSearchResultListElementComponent extends SearchResultListEle
    * Represent item's status
    */
   public status = MyDspaceItemStatusType.VALIDATION;
+
+  /**
+   * The step this task is at.
+   */
+  public step$: Observable<string>;
 
   /**
    * The workflowitem object that belonging to the result object
@@ -52,8 +59,13 @@ export class ClaimedSearchResultListElementComponent extends SearchResultListEle
     super.ngOnInit();
     this.linkService.resolveLinks(this.dso, followLink('workflowitem', {},
       followLink('item'), followLink('submitter')
-    ), followLink('action'));
+    ), followLink('action'), followLink('step'));
     this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
+
+    this.step$ = this.dso.step.pipe(
+      getFirstSucceededRemoteData(),
+      map(rd => rd.payload.id),
+    );
   }
 
 }

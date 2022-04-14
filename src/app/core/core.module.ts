@@ -162,6 +162,8 @@ import { SearchConfig } from './shared/search/search-filters/search-config.model
 import { SequenceService } from './shared/sequence.service';
 import { GroupDataService } from './eperson/group-data.service';
 import { SubmissionAccessesModel } from './config/models/config-submission-accesses.model';
+import { WorkflowStepDataService } from './data/workflow-step-data.service';
+import { WorkflowStep } from './tasks/models/workflow-step.model';
 
 /**
  * When not in production, endpoint responses can be mocked for testing purposes
@@ -286,6 +288,7 @@ const PROVIDERS = [
   SequenceService,
   GroupDataService,
   FeedbackDataService,
+  WorkflowStepDataService,
 ];
 
 /**
@@ -345,7 +348,8 @@ export const models =
     UsageReport,
     Root,
     SearchConfig,
-    SubmissionAccessesModel
+    SubmissionAccessesModel,
+    WorkflowStep,
   ];
 
 @NgModule({

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MyDspaceItemStatusType } from './my-dspace-item-status-type';
+import { Observable } from 'rxjs';
 
 /**
  * This component represents a badge with mydspace item status
@@ -15,6 +16,8 @@ export class MyDSpaceItemStatusComponent implements OnInit {
    * This mydspace item status
    */
   @Input() status: MyDspaceItemStatusType;
+
+  @Input() step$: Observable<string>;
 
   /**
    * This badge class

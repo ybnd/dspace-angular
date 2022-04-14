@@ -1,5 +1,8 @@
 <div>
   <span [className]="badgeClass">
     {{badgeContent | translate}}
+    <ng-container *ngVar="step$ | async as step">
+      <span *ngIf="step">: {{ 'mydspace.step.' + step | translate }}</span>
+    </ng-container>
   </span>
 </div>

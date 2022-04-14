@@ -2647,9 +2647,9 @@
 
   "mydspace.status.archived": "Archived",
 
-  "mydspace.status.validation": "Validation",
+  "mydspace.status.validation": "Claimed task",
 
-  "mydspace.status.waiting-for-controller": "Waiting for controller",
+  "mydspace.status.waiting-for-controller": "Pool task",
 
   "mydspace.status.workflow": "Workflow",
 
@@ -2668,6 +2668,8 @@
   "mydspace.upload.upload-successful": "New workspace item created. Click {{here}} for edit it.",
 
   "mydspace.view-btn": "View",
+
+  "mydspace.step.reviewstep": "Review step",
 
 
 

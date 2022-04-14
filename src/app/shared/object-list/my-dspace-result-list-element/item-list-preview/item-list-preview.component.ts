@@ -4,6 +4,7 @@ import { Item } from '../../../../core/shared/item.model';
 import { fadeInOut } from '../../../animations/fade';
 import { MyDspaceItemStatusType } from '../../../object-collection/shared/mydspace-item-status/my-dspace-item-status-type';
 import { SearchResult } from '../../../search/models/search-result.model';
+import { Observable } from 'rxjs';
 
 /**
  * This component show metadata for the given item object in the list view.
@@ -30,6 +31,11 @@ export class ItemListPreviewComponent {
    * Represent item's status
    */
   @Input() status: MyDspaceItemStatusType;
+
+  /**
+   * Represent item's step
+   */
+  @Input() step$: Observable<string>;
 
   /**
    * A boolean representing if to show submitter information

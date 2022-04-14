@@ -14,6 +14,8 @@ import { TruncatableService } from '../../../truncatable/truncatable.service';
 import { followLink } from '../../../utils/follow-link-config.model';
 import { LinkService } from '../../../../core/cache/builders/link.service';
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
+import { getFirstSucceededRemoteData } from '../../../../core/shared/operators';
+import { map } from 'rxjs/operators';
 
 /**
  * This component renders pool task object for the search result in the list view.
@@ -36,6 +38,11 @@ export class PoolSearchResultListElementComponent extends SearchResultListElemen
    * Represent item's status
    */
   public status = MyDspaceItemStatusType.WAITING_CONTROLLER;
+
+  /**
+   * The step this task is at.
+   */
+  public step$: Observable<string>;
 
   /**
    * The workflowitem object that belonging to the result object
@@ -62,8 +69,13 @@ export class PoolSearchResultListElementComponent extends SearchResultListElemen
     super.ngOnInit();
     this.linkService.resolveLinks(this.dso, followLink('workflowitem', {},
       followLink('item'), followLink('submitter')
-    ), followLink('action'));
+    ), followLink('action'), followLink('step'));
     this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
+
+    this.step$ = this.dso.step.pipe(
+      getFirstSucceededRemoteData(),
+      map(rd => rd.payload.id),
+    );
   }
 
 }
