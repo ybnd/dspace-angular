@@ -14,6 +14,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthorizationDataService } from '../core/data/feature-authorization/authorization-data.service';
 import { MenuID } from '../shared/menu/menu-id.model';
 import { MenuItemType } from '../shared/menu/menu-item-type.model';
+import { ExternalLinkMenuItemModel } from '../shared/menu/menu-item/models/external-link.model';
 
 /**
  * Component representing the public navbar
@@ -62,7 +63,54 @@ export class NavbarComponent extends MenuComponent {
           text: `menu.section.browse_global_communities_and_collections`,
           link: `/community-list`
         } as LinkMenuItemModel
-      }
+      },
+      /* Link to static asset */
+      {
+        id: 'banner',
+        active: false,
+        visible: true,
+        index: 10,
+        model: {
+          type: MenuItemType.EXTERNAL,
+          text: 'menu.section.banner',
+          href: '/assets/dspace/images/banner.jpg'
+        } as ExternalLinkMenuItemModel
+      },
+      /* Links to GitHub */
+      {
+        id: 'github',
+        active: false,
+        visible: true,
+        index: 11,
+        model: {
+          type: MenuItemType.TEXT,
+          text: 'menu.section.github',
+        } as TextMenuItemModel,
+      },
+      {
+        id: 'github_rest',
+        parentID: 'github',
+        active: false,
+        visible: true,
+        index: 0,
+        model: {
+          type: MenuItemType.EXTERNAL,
+          text: 'menu.section.github.rest',
+          href: 'https://github.com/DSpace/DSpace'
+        } as ExternalLinkMenuItemModel,
+      },
+      {
+        id: 'github_angular',
+        parentID: 'github',
+        active: false,
+        visible: true,
+        index: 1,
+        model: {
+          type: MenuItemType.EXTERNAL,
+          text: 'menu.section.github.angular',
+          href: 'https://github.com/DSpace/dspace-angular'
+        } as ExternalLinkMenuItemModel,
+      },
     ];
     // Read the different Browse-By types from config and add them to the browse menu
     this.browseService.getBrowseDefinitions()

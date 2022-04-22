@@ -2458,6 +2458,14 @@
   "menu.section.curation_task": "Curation Task",
 
 
+  "menu.section.banner": "Banner Image",
+
+  "menu.section.github": "GitHub",
+
+  "menu.section.github.rest": "DSpace REST",
+
+  "menu.section.github.angular": "DSpace Angular",
+
 
   "menu.section.edit": "Edit",
 
