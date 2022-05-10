@@ -277,6 +277,6 @@
   "defaultProject": "dspace-angular",
   "cli": {
     "analytics": false,
-    "defaultCollection": "@angular-eslint/schematics"
+    "defaultCollection": "./dist/schematics/collection.json"
   }
 }

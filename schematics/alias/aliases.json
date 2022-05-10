@@ -1,0 +1,32 @@
+[
+  {
+    "text": "of",
+    "path": "rxjs",
+    "alias": "observableOf"
+  },
+  {
+    "text": "combineLatest",
+    "path": "rxjs",
+    "alias": "observableCombineLatest"
+  },
+  {
+    "text": "zip",
+    "path": "rxjs",
+    "alias": "observableZip"
+  },
+  {
+    "text": "throwError",
+    "path": "rxjs",
+    "alias": "observableThrowError"
+  },
+  {
+    "text": "race",
+    "path": "rxjs",
+    "alias": "observableRace"
+  },
+  {
+    "text": "timer",
+    "path": "rxjs",
+    "alias": "observableTimer"
+  }
+]

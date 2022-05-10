@@ -1,0 +1,28 @@
+{
+  "$schema": "../node_modules/@angular-devkit/schematics/collection-schema.json",
+  "extends": [
+    "@schematics/angular"
+  ],
+  "schematics": {
+    "theme": {
+      "factory": "./theme",
+      "schema": "./theme/schema.json",
+      "description": "Create a new theme"
+    },
+    "themeable": {
+      "factory": "./themeable",
+      "schema": "./themeable/schema.json",
+      "description": "Generate a ThemedComponent wrapper"
+    },
+    "themed": {
+      "factory": "./themed",
+      "schema": "./themed/schema.json",
+      "description": "Generate a themed component"
+    },
+    "alias": {
+      "factory": "./alias",
+      "schema": "./alias/schema.json",
+      "description": "Alias imports"
+    }
+  }
+}

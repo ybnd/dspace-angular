@@ -37,7 +37,10 @@
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
     "env:yaml": "ts-node --project ./tsconfig.ts-node.json scripts/env-to-yaml.ts",
-    "check-circ-deps": "npx madge --exclude '(bitstream|bundle|collection|config-submission-form|eperson|item|version)\\.model\\.ts$' --circular --extensions ts ./"
+    "check-circ-deps": "npx madge --exclude '(bitstream|bundle|collection|config-submission-form|eperson|item|version)\\.model\\.ts$' --circular --extensions ts ./",
+    "build:schematics": "tsc -p tsconfig.schematics.json && yarn copy:schematics",
+    "copy:schematics": "copyfiles -u 1 schematics/package.json dist/schematics && copyfiles -u 1 schematics/collection.json dist/schematics && copyfiles -u 1 schematics/**/schema.json dist/schematics/ && copyfiles -u 1 schematics/**/*.template dist/schematics/",
+    "generate": "ng generate"
   },
   "browser": {
     "fs": false,
@@ -156,6 +159,7 @@
     "axe-core": "^4.3.3",
     "compression-webpack-plugin": "^3.0.1",
     "copy-webpack-plugin": "^6.4.1",
+    "copyfiles": "^2.4.1",
     "cross-env": "^7.0.3",
     "css-loader": "^6.2.0",
     "css-minimizer-webpack-plugin": "^3.4.1",

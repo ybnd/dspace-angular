@@ -1,0 +1,23 @@
+<%= imports %>
+
+/**
+ * Themed wrapper for <%= classify(name) %>Component
+ */
+@Component({
+  selector: 'ds-themed-<%= dasherize(name) %>',
+  styleUrls: [],
+  templateUrl: '<%= themedComponentPath %>.html',
+})
+export class Themed<%= classify(name) %>Component extends ThemedComponent<<%= classify(name) %>Component> {<%= properties %>
+  protected getComponentName(): string {
+    return '<%= classify(name) %>Component';
+  }
+
+  protected importThemedComponent(themeName: string): Promise<any> {
+    return import(`<%= src %>/themes/${themeName}<%= fromSrc %>/<%= dasherize(name) %>.component`);
+  }
+
+  protected importUnthemedComponent(): Promise<any> {
+    return import('./<%= dasherize(name) %>.component');
+  }
+}

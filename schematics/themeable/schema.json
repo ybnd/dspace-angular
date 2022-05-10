@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "DSpaceSchematicsThemeable",
+  "title": "",
+  "type": "object",
+  "description": "Create a ThemedComponent wrapper",
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "Create a ThemedComponent wrapper for"
+    }
+  },
+  "required": ["name"]
+}

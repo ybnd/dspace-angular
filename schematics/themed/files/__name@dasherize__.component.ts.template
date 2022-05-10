@@ -1,0 +1,11 @@
+<%= imports %>
+<%= decorators %>
+@Component({
+  selector: '<%= selector %>',
+  // templateUrl: './<%= dasherize(name) %>.component.html',
+  templateUrl: '<%= templateUrl %>',
+  // styleUrls: ['./<%= dasherize(name) %>.component.scss'],
+  styleUrls: <%= styleUrls %>,<%= animations %>
+})
+export class <%= classify(name) %>Component extends BaseComponent {
+}
