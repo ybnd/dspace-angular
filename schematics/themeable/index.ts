@@ -4,7 +4,7 @@ import {
 import { resolveComponentName } from '../+shared/util';
 import { classify } from '@angular-devkit/core/src/utils/strings';
 import { normalize, strings } from '@angular-devkit/core';
-import { findComponentPath, isEntryComponent, isInSrcApp, THEMED_COMPONENT } from '../+shared/dspace';
+import { findComponentPath, isInSrcApp, THEMED_COMPONENT } from '../+shared/dspace';
 import { Component } from '../+shared/source/component.model';
 import { ThemedComponentWrapper } from '../+shared/source/themed-component-wrapper.model';
 import { Project, RE_HTML } from '../+shared/source/project.model';
@@ -14,7 +14,7 @@ export default function(options: any): Rule {
   return (tree: Tree, context: SchematicContext) => {
     const project = new Project(tree);
 
-    project.assertDSpaceAngular({ withThemeSupport: true })
+    project.assertDSpaceAngular({ withThemeSupport: true });
 
     options.name = resolveComponentName(options.name);
     const path = findComponentPath(tree, options.name);
@@ -29,10 +29,10 @@ export default function(options: any): Rule {
 
     const baseComponent = new Component(tree, path);
 
-    if (isEntryComponent(baseComponent)) {
+    if (baseComponent.isEntryComponent) {
       throw new SchematicsException(
         `'${classify(options.name)}Component' is an entry component and doesn't need a ThemedComponent wrapper`
-      )
+      );
     }
 
     const themeableComponent = new ThemedComponentWrapper(baseComponent);
@@ -40,7 +40,7 @@ export default function(options: any): Rule {
     if (themeableComponent.exists) {
       throw new SchematicsException(
         `'${classify(options.name)}Component' already has a ThemedComponent wrapper`
-      )
+      );
     }
 
     const src = backpedal(baseComponent.dir, 'src');
@@ -60,9 +60,9 @@ export default function(options: any): Rule {
       move(normalize(baseComponent.dir)),
     ]);
 
-    const module = baseComponent.findDeclaringModule();
+    const module = project.findDeclaringModule(baseComponent);
     if (module !== null) {
-      module.insertDerivedComponentDeclaration(baseComponent, themeableComponent);
+      module.insertUnderExistingDeclaration(baseComponent, themeableComponent);
       const skip = [
         baseComponent.path,
         themeableComponent.path,
@@ -77,7 +77,7 @@ export default function(options: any): Rule {
         }
       ]);
     } else {
-      throw new SchematicsException(`Couldn't find the module declaring '${baseComponent.className}'`)
+      throw new SchematicsException(`Couldn't find the module declaring '${baseComponent.className}'`);
     }
 
     return chain([

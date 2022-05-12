@@ -1,9 +1,10 @@
-import { Tree } from '@angular-devkit/schematics';
+import { DirEntry, Tree } from '@angular-devkit/schematics';
 import { TypescriptFile } from './typescript-file.model';
-import { SourceFile } from './file.model';
 import { THEMED_COMPONENT, THEMES } from '../dspace';
 import { IReplace, ISymbol } from '../interfaces';
 import * as assert from 'assert';
+import { Module } from './module.model';
+import { Component } from './component.model';
 
 export const RE_TS = /.ts$/;
 export const RE_TS_NON_SPEC = /(?<!spec)\.ts$/;
@@ -86,5 +87,31 @@ export class Project {
         fun(file);
       }
     }
+  }
+
+  public findDeclaringModule(file: Component): Module | null {  // todo: should probably be at Project level
+    let dir: DirEntry | null = file.dirEntry;
+
+    while (dir !== null) {
+
+      const modules = dir.subfiles
+                         .map(pf => {
+                           try {
+                             return new Module(this.tree, dir?.path + '/' + pf);
+                           } catch(e) {
+                             return null;
+                           }
+                         })
+                         .filter(candidate =>
+                           candidate !== null && !candidate.isRoutingModule && candidate.doesImport(file)
+                         );
+      if (modules.length > 0) {
+        return modules[0];
+      }
+
+      dir = dir.parent;
+    }
+
+    return null;
   }
 }

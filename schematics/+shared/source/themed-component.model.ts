@@ -2,7 +2,7 @@ import { DerivedComponent } from './derived-component.model';
 import { Component } from './component.model';
 import { dirname } from 'path';
 import {
-  EntryComponentDecoratorArgumentType, isEntryComponent, THEMEABLE_ENTRY_COMPONENT_DECORATORS, THEMES,
+  EntryComponentDecoratorArgumentType, THEMEABLE_ENTRY_COMPONENT_DECORATORS, THEMES,
 } from '../dspace';
 import { fromSrc } from '../paths';
 import { Module } from './module.model';
@@ -50,7 +50,7 @@ export class ThemedComponent extends DerivedComponent {
   }
 
   public declare(): void {
-    if (isEntryComponent(this.base)) {
+    if (this.base.isEntryComponent) {
       const file = new TypescriptFile(this.base.tree, THEMES + this.theme + '/entry-components.ts');
       const statements = file.source.statements.filter(node => node.kind !== ts.SyntaxKind.ImportDeclaration);
 

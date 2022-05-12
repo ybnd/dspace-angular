@@ -3,7 +3,7 @@ import {
 } from '@angular-devkit/schematics';
 import { Project } from '../+shared/source/project.model';
 import { asArrayLiteralString, resolveComponentName } from '../+shared/util';
-import { findComponentPath, isEntryComponent, isInSrcApp } from '../+shared/dspace';
+import { findComponentPath, isInSrcApp } from '../+shared/dspace';
 import { classify } from '@angular-devkit/core/src/utils/strings';
 import { Component } from '../+shared/source/component.model';
 import { ThemedComponentWrapper } from '../+shared/source/themed-component-wrapper.model';
@@ -31,7 +31,7 @@ export default function(options: any): Rule {
     const baseComponent = new Component(tree, path);
     const themedComponent = new ThemedComponent(baseComponent, options.theme);
 
-    if (!isEntryComponent(baseComponent) && !new ThemedComponentWrapper(baseComponent).exists) {
+    if (!baseComponent.isEntryComponent && !new ThemedComponentWrapper(baseComponent).exists) {
       throw new SchematicsException(
         `Component '${baseComponent.className}' is not themeable; run the 'themeable' schematic first.`
       );

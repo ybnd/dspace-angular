@@ -2,12 +2,11 @@ import { ISymbol } from './interfaces';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 import { classify, dasherize } from '@angular-devkit/core/src/utils/strings';
 import { findFileByName, resolveComponentName } from './util';
-import { Component } from './source/component.model';
 
 export const SRC = '/src';
-export const APP = '/app'
-export const THEMES = '/src/themes/'
-export const THEMED_COMPONENT = '/src/app/shared/theme-support/themed.component'
+export const APP = '/app';
+export const THEMES = '/src/themes/';
+export const THEMED_COMPONENT = '/src/app/shared/theme-support/themed.component';
 export const DECLARATIONS = 'DECLARATIONS';
 
 export function isInSrcApp(path: string): boolean {
@@ -92,13 +91,4 @@ export function findComponentPath(tree: Tree, cmp: string): string {
   } else {
     return path;
   }
-}
-
-export function isEntryComponent(component: Component): boolean {
-  for (const entry of THEMEABLE_ENTRY_COMPONENT_DECORATORS) {
-    if (component.doesImport(entry) && component.getDecoratorNodes(entry.text)) {
-      return true;
-    }
-  }
-  return false;
 }

@@ -122,9 +122,9 @@ describe('Module', () => {
     });
   });
 
-  describe('insertDerivedComponentDeclaration', () => {
-    let baseComponent: Component;
-    let derivedComponent: TestDerivedComponent;
+  describe('insertUnderExistingDeclaration', () => {
+    let baseComponent: Component;                 // todo: no need to have this be a component specifically
+    let derivedComponent: TestDerivedComponent;   // todo: no need to have this be a derived component specifically
 
     beforeEach(() => {
       module = getModule(tree, REGULAR_PATH, REGULAR_MODULE);
@@ -136,7 +136,7 @@ describe('Module', () => {
       expect(module.content).not.toContain('TestDerived');
       expect(module.content).not.toContain('test-derived');
 
-      module.insertDerivedComponentDeclaration(baseComponent, derivedComponent);
+      module.insertUnderExistingDeclaration(baseComponent, derivedComponent);
 
       expect(module.content).toContain(`import { TestDerivedTestComponent } from '../../test/derived/test-derived-test.component'`);
     });
@@ -145,7 +145,7 @@ describe('Module', () => {
       expect(module.content).not.toContain('TestDerived');
       expect(module.content).not.toContain('test-derived');
 
-      module.insertDerivedComponentDeclaration(baseComponent, derivedComponent);
+      module.insertUnderExistingDeclaration(baseComponent, derivedComponent);
 
       expect(module.content).toMatch(/TestComponent,\n *TestDerivedTestComponent,/);
     });

@@ -1,11 +1,21 @@
+/* eslint-disable max-classes-per-file */
 import { SourceFile } from './file.model';
 import * as ts from 'typescript';
 import { findNode, findNodes } from '@schematics/angular/utility/ast-utils';
 import { Change, ReplaceChange } from '@schematics/angular/utility/change';
 import { IAlias, IFile, ISymbol } from '../interfaces';
-import { Import } from './import.model';
-import { importPath } from '../paths';
+import { ensureAbsolute, ensureNoExtension, importPath } from '../paths';
 import { findAncestorNode, importIdentifier, stripQuotes } from '../util';
+
+export class Import implements ISymbol {
+  public readonly path: string;
+  public readonly text: string;
+
+  constructor(symbol: ISymbol, fromFile?: TypescriptFile) {
+    this.path = ensureNoExtension(ensureAbsolute(symbol.path, fromFile?.dir));
+    this.text = symbol.text;
+  }
+}
 
 export class TypescriptFile extends SourceFile {  // todo: maybe add a check that it's actually a TypeScript file
   private _importDeclarations: ts.ImportDeclaration[] | undefined;
@@ -46,7 +56,7 @@ export class TypescriptFile extends SourceFile {  // todo: maybe add a check tha
                                 path: stripQuotes(importDeclaration.moduleSpecifier.getText(this.source)),
                               },
                               this
-                          ))
+                          ));
     if (imports.length > 0) {
       return imports[0];
     } else {

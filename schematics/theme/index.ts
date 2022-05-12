@@ -18,7 +18,7 @@ function insertEntryComponents(module: TypescriptFile, theme: string): void {
 
   const array = findNodes(module.source, ts.SyntaxKind.ArrayLiteralExpression).filter(
     array => (array.parent as any).name.escapedText === ENTRY_COMPONENTS
-  )[0]
+  )[0];
 
   const changes = [];
   changes.push(

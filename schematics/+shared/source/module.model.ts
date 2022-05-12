@@ -1,10 +1,8 @@
-import { SchematicsException, Tree } from '@angular-devkit/schematics';
+import { SchematicsException } from '@angular-devkit/schematics';
 import { findNodes, getDecoratorMetadata, insertImport } from '@schematics/angular/utility/ast-utils';
 import { TypescriptFile } from './typescript-file.model';
 import * as ts from 'typescript';
-import { appendIdentifierToArrayLiteral, insertAfterArrayLiteralEntry, print, stripQuotes } from '../util';
-import { Component } from './component.model';
-import { DerivedComponent } from './derived-component.model';
+import { appendIdentifierToArrayLiteral, insertAfterArrayLiteralEntry, print } from '../util';
 import { ISymbol } from '../interfaces';
 import { Change, InsertChange, ReplaceChange } from '@schematics/angular/utility/change';
 import { DECLARATIONS } from '../dspace';
@@ -31,13 +29,13 @@ export class Module extends TypescriptFile {
     return hasRoutingInName && hasRoutes;
   }
 
-  public insertDerivedComponentDeclaration(base: Component, derived: DerivedComponent): void {
+  public insertUnderExistingDeclaration(existing: ISymbol, insert: ISymbol): void {
     this.apply([
-      insertImport(this.source, this.path, derived.className, this.importPath(derived)),
+      insertImport(this.source, this.path, insert.text, this.importPath(insert)),
       ...findNodes(this.source, ts.SyntaxKind.Identifier)
         .filter((node) =>
-          node.parent.kind !== ts.SyntaxKind.ImportSpecifier && (node as ts.Identifier).escapedText === base.text)
-        .map((usage) => insertAfterArrayLiteralEntry(this.path, usage, derived.className)),
+          node.parent.kind !== ts.SyntaxKind.ImportSpecifier && (node as ts.Identifier).escapedText === existing.text)
+        .map((usage) => insertAfterArrayLiteralEntry(this.path, usage, insert.text)),
     ]);
   }
 
@@ -132,7 +130,7 @@ export class Module extends TypescriptFile {
     ).initializer.elements.map((identifier: any) => identifier.escapedText);
 
     for (const identifier of importIdentifiers) {
-      importList.add(this.getIdentifierImport(identifier), { fromFile: this })
+      importList.add(this.getIdentifierImport(identifier), { fromFile: this });
     }
 
     return importList;

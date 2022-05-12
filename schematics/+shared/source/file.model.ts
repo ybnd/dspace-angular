@@ -6,11 +6,11 @@ import { Change } from '@schematics/angular/utility/change';
 import { IFile, IReplace } from '../interfaces';
 
 export class SourceFile implements IFile {
-  public readonly tree: Tree
+  public readonly tree: Tree;
   public readonly path: string;
 
-  protected fileEntry: FileEntry;
-  protected dirEntry: DirEntry;
+  protected _fileEntry: FileEntry;
+  protected _dirEntry: DirEntry;
 
   private _source: ts.SourceFile | undefined;
 
@@ -34,8 +34,8 @@ export class SourceFile implements IFile {
     const dirEntry = this.tree.getDir(this.dir);
 
     if (fileEntry !== null && dirEntry !== null) {
-      this.fileEntry = fileEntry;
-      this.dirEntry = dirEntry;
+      this._fileEntry = fileEntry;
+      this._dirEntry = dirEntry;
       this._source = undefined;
     } else {
       throw new SchematicsException(`File ${this.path} doesn't exist!`);
@@ -43,7 +43,7 @@ export class SourceFile implements IFile {
   }
 
   public get content(): string {
-    return this.fileEntry.content.toString();
+    return this._fileEntry.content.toString();
   }
 
   public get source(): ts.SourceFile {
@@ -53,6 +53,14 @@ export class SourceFile implements IFile {
     return this._source;
   }
 
+  public get fileEntry(): FileEntry {
+    return this._fileEntry;
+  }
+
+  public get dirEntry(): DirEntry {
+    return this._dirEntry;
+  }
+
   public replace(replacements: IReplace[]): void {
     for (const replacement of replacements) {
       this.overwrite(this.content.replace(replacement.searchValue, replacement.replaceValue));
@@ -60,7 +68,7 @@ export class SourceFile implements IFile {
   }
 
   public apply(changes: Change[]): void {
-    applyChanges(this.tree, this.fileEntry, changes);
+    applyChanges(this.tree, this._fileEntry, changes);
     this.refresh();
   }
 

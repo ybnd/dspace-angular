@@ -132,91 +132,91 @@ export class TestComponent {
     });
   });
 
-  describe('findDeclaringModule', () => {
-    let module: Module;
-
-    const MODULE = `
-import { NgModule } from '@angular/core';
-import { TestComponent } from './test.component';
-
-@NgModule({
-  declarations: [
-    TestComponent,
-  ],
-})
-export class TestModule {
-}
-    `;
-
-    const ROUTING_MODULE = `
-import { NgModule } from '@angular/core';
-import { TestComponent } from './test.component';
-
-@NgModule({
-  imports: [
-    RouterModule.forChild([
-      {
-        path: '/test',
-        component: TestComponent,
-      }
-  ]
-})
-export class RoutingModule {
-}
-    `;
-
-    beforeEach(() => {
-      component = getComponent(tree, '/src/app/test/test.component.ts', `
-import { Component, OnInit, Input, Output } from '@angular/core';
-
-@Component({
-  selector: 'test-selector',
-  templateUrl: './test.component.html',
-})
-export class TestComponent {
-}
-      `);
-    });
-
-    it('should return declaring module as a Module object', () => {
-      module = getModule(tree, '/src/app/test/test.module.ts', MODULE);
-
-      const declaringModule = component.findDeclaringModule();
-      expect(declaringModule).toBeTruthy();
-      expect(declaringModule?.path).toEqual(module.path);
-    });
-
-    it('should skip routing modules', () => {
-      module = getModule(tree, '/src/app/test/test.module.ts', MODULE);
-      const routingModule = getModule(tree, '/src/app/test/routing.module.ts', ROUTING_MODULE);
-
-      const declaringModule = component.findDeclaringModule();
-      expect(declaringModule).toBeTruthy();
-      expect(declaringModule?.path).not.toEqual(routingModule.path);
-      expect(declaringModule?.path).toEqual(module.path);
-    });
-
-    it('should return null if only used in routing module', () => {
-      getModule(tree, '/src/app/test/routing.module.ts', ROUTING_MODULE);
-
-      const declaringModule = component.findDeclaringModule();
-      expect(declaringModule).toBeFalsy();
-    });
-
-    it('should return null if no declaring module can be found', () => {
-      const orphan = getComponent(tree, '/src/app/test/orphan.component.ts', `
-import { Component, OnInit, Input, Output } from '@angular/core';
-
-@Component({
-  selector: 'orphan-selector',
-  templateUrl: './orphan.component.html',
-})
-export class OrphanComponent {
-}
-      `);
-
-      const declaringModule = orphan.findDeclaringModule();
-      expect(declaringModule).toBeFalsy();
-    });
-  });
+//   describe('findDeclaringModule', () => {
+//     let module: Module;
+//
+//     const MODULE = `
+// import { NgModule } from '@angular/core';
+// import { TestComponent } from './test.component';
+//
+// @NgModule({
+//   declarations: [
+//     TestComponent,
+//   ],
+// })
+// export class TestModule {
+// }
+//     `;
+//
+//     const ROUTING_MODULE = `
+// import { NgModule } from '@angular/core';
+// import { TestComponent } from './test.component';
+//
+// @NgModule({
+//   imports: [
+//     RouterModule.forChild([
+//       {
+//         path: '/test',
+//         component: TestComponent,
+//       }
+//   ]
+// })
+// export class RoutingModule {
+// }
+//     `;
+//
+//     beforeEach(() => {
+//       component = getComponent(tree, '/src/app/test/test.component.ts', `
+// import { Component, OnInit, Input, Output } from '@angular/core';
+//
+// @Component({
+//   selector: 'test-selector',
+//   templateUrl: './test.component.html',
+// })
+// export class TestComponent {
+// }
+//       `);
+//     });
+//
+//     it('should return declaring module as a Module object', () => {
+//       module = getModule(tree, '/src/app/test/test.module.ts', MODULE);
+//
+//       const declaringModule = component.findDeclaringModule();
+//       expect(declaringModule).toBeTruthy();
+//       expect(declaringModule?.path).toEqual(module.path);
+//     });
+//
+//     it('should skip routing modules', () => {
+//       module = getModule(tree, '/src/app/test/test.module.ts', MODULE);
+//       const routingModule = getModule(tree, '/src/app/test/routing.module.ts', ROUTING_MODULE);
+//
+//       const declaringModule = component.findDeclaringModule();
+//       expect(declaringModule).toBeTruthy();
+//       expect(declaringModule?.path).not.toEqual(routingModule.path);
+//       expect(declaringModule?.path).toEqual(module.path);
+//     });
+//
+//     it('should return null if only used in routing module', () => {
+//       getModule(tree, '/src/app/test/routing.module.ts', ROUTING_MODULE);
+//
+//       const declaringModule = component.findDeclaringModule();
+//       expect(declaringModule).toBeFalsy();
+//     });
+//
+//     it('should return null if no declaring module can be found', () => {
+//       const orphan = getComponent(tree, '/src/app/test/orphan.component.ts', `
+// import { Component, OnInit, Input, Output } from '@angular/core';
+//
+// @Component({
+//   selector: 'orphan-selector',
+//   templateUrl: './orphan.component.html',
+// })
+// export class OrphanComponent {
+// }
+//       `);
+//
+//       const declaringModule = orphan.findDeclaringModule();
+//       expect(declaringModule).toBeFalsy();
+//     });
+//   });
 });
