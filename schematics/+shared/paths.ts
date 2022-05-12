@@ -2,7 +2,7 @@ import { dirname, extname, relative, resolve } from 'path';
 import { SchematicsException } from '@angular-devkit/schematics';
 import { PathMustBeAbsoluteException } from '@angular-devkit/core';
 
-const ALLOWED_TS_SPECIFIERS = [
+const ALLOWED_TS_SPECIFIERS = [  // todo: this shouldn't be necessary
   '',
   '.d',
   '.component',
@@ -65,7 +65,7 @@ export function backpedal(path: string, dir: string): string | null {
 
   for (const level of path.split('/').reverse()) {
     if (level === dir) {
-      return Array(steps).fill('..').join('/')
+      return Array(steps).fill('..').join('/');
     } else {
       steps++;
     }

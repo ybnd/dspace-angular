@@ -38,8 +38,9 @@
     "cypress:run": "cypress run",
     "env:yaml": "ts-node --project ./tsconfig.ts-node.json scripts/env-to-yaml.ts",
     "check-circ-deps": "npx madge --exclude '(bitstream|bundle|collection|config-submission-form|eperson|item|version)\\.model\\.ts$' --circular --extensions ts ./",
-    "build:schematics": "tsc -p tsconfig.schematics.json && yarn copy:schematics",
+    "build:schematics": "tsc -p schematics/tsconfig.json && yarn copy:schematics",
     "copy:schematics": "copyfiles -u 1 schematics/package.json dist/schematics && copyfiles -u 1 schematics/collection.json dist/schematics && copyfiles -u 1 schematics/**/schema.json dist/schematics/ && copyfiles -u 1 schematics/**/*.template dist/schematics/",
+    "test:schematics": "tsc -p schematics/tsconfig.spec.json && jasmine dist/schematics/**/*.spec.js --stop-on-failure=false --fail-fast=false --helper=schematics/helpers.js",
     "generate": "ng generate"
   },
   "browser": {
@@ -178,7 +179,7 @@
     "html-loader": "^1.3.2",
     "jasmine-core": "^3.8.0",
     "jasmine-marbles": "0.6.0",
-    "jasmine-spec-reporter": "~5.0.0",
+    "jasmine-spec-reporter": "^7.0.0",
     "karma": "^6.3.14",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~3.0.2",

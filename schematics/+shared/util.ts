@@ -13,7 +13,7 @@ export function regexify(v: string): string {
 }
 
 export function stripQuotes(str: string) {
-  return str.replace(/^['"`](.*)['"`]$/, '$1')
+  return str.replace(/^['"`](.*)['"`]$/, '$1');
 }
 
 export function stripExtension(path: string, extension: string): string {
@@ -82,7 +82,7 @@ export function appendIdentifierToArrayLiteral(
   const newNode = ts.factory.createArrayLiteralExpression([
     ...node.elements,
     ts.factory.createIdentifier(text + ','),  // todo: find a better way to ensure trailing comma
-  ], true)
+  ], true);
 
   return new ReplaceChange(
     source.fileName, node.getStart(), node.getText(source),
@@ -101,13 +101,13 @@ export function asArrayLiteralString(
   }): string {
   switch (array.length) {
     case 0: {
-      return '[]'
+      return '[]';
     }
     case 1: {   // todo: be smarter about wrapping -- optional "how/if to wrap" param?
       if (doQuote) {
-        return `['${array[0]}']`
+        return `['${array[0]}']`;
       } else {
-        return `[${array[0]}]`
+        return `[${array[0]}]`;
       }
     }
     default: {
@@ -150,7 +150,7 @@ export function print(node: ts.Node, source: ts.SourceFile, overIndentBy = 0): s
               .replace(DEFAULT_TS_INDENT, '  ');  // todo: don't see a decent way to set indentation width for printer
                                                   //       also: this should be configurable
   if (overIndentBy > 0) {
-    return s.replace(/\n/g, '\n' + '  '.repeat(overIndentBy))
+    return s.replace(/\n/g, '\n' + '  '.repeat(overIndentBy));
   } else {
     return s;
   }

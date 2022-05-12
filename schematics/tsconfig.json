@@ -12,16 +12,22 @@
     "noImplicitThis": true,
     "noUnusedParameters": false,
     "noUnusedLocals": false,
-    "outDir": "./dist/schematics",
+    "outDir": "../dist/schematics",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strictNullChecks": true,
-    "target": "es6",
+    "target": "es2020",
     "types": ["jasmine", "node"],
     "resolveJsonModule": true
   },
+  "ts-node": {
+    "transpileOnly": true
+  },
   "include": [
-    "schematics/**/*",
+    "./**/*.ts",
   ],
+  "exclude": [
+    "./**/*.spec.ts"
+  ]
 }
