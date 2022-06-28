@@ -8,6 +8,9 @@
     "eslint-plugin-deprecation",
     "eslint-plugin-unused-imports"
   ],
+  "extends": [
+    "prettier"
+  ],
   "overrides": [
     {
       "files": [
@@ -35,10 +38,6 @@
         "comma-dangle": [
           "off",
           "always-multiline"
-        ],
-        "eol-last": [
-          "error",
-          "always"
         ],
         "no-console": [
           "error",
@@ -69,13 +68,6 @@
           }
         ],
         "curly": "error",
-        "brace-style": [
-          "error",
-          "1tbs",
-          {
-            "allowSingleLine": true
-          }
-        ],
         "eqeqeq": [
           "error",
           "always",
@@ -92,9 +84,6 @@
         "no-redeclare": "error",
         "no-eval": "error",
         "no-fallthrough": "error",
-        "no-trailing-spaces": "error",
-        "space-infix-ops": "error",
-        "keyword-spacing": "error",
         "no-var": "error",
         "no-unused-expressions": [
           "error",
@@ -111,6 +100,10 @@
         "no-useless-escape": "off",
         "no-case-declarations": "off",
         "no-extra-boolean-cast": "off",
+        "no-mixed-spaces-and-tabs": "off",
+        "no-trailing-spaces": "off",
+        "space-infix-ops": "off",
+        "no-unexpected-multiline": "off",   // todo: may conflict with Prettier
 
         "@angular-eslint/directive-selector": [
           "error",
@@ -156,7 +149,6 @@
             "allowTemplateLiterals": true
           }
         ],
-        "@typescript-eslint/semi": "error",
         "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/dot-notation": "error",
         "@typescript-eslint/consistent-type-definitions": "error",
@@ -179,7 +171,6 @@
             ]
           }
         ],
-        "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/unified-signatures": "error",
         "@typescript-eslint/ban-types": "warn",  // todo: deal with {} type issues & re-enable
         "@typescript-eslint/no-floating-promises": "warn",
@@ -198,6 +189,9 @@
         "@typescript-eslint/no-unsafe-return": "off",
         "@typescript-eslint/restrict-template-expressions": "off",
         "@typescript-eslint/require-await": "off",
+        "@typescript-eslint/semi": "off",
+        "@typescript-eslint/no-extra-semi": "off",
+        "@typescript-eslint/type-annotation-spacing": "off",
 
         "deprecation/deprecation": "warn",
 
