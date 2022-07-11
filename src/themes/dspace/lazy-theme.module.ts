@@ -18,7 +18,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { EditItemPageModule } from '../../app/item-page/edit-item-page/edit-item-page.module';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { IdlePreloadModule } from 'angular-idle-preload';
 import {
   JournalEntitiesModule
 } from '../../app/entity-groups/journal-entities/journal-entities.module';
@@ -81,7 +80,6 @@ const DECLARATIONS = [
     FormsModule,
     HomePageModule,
     HttpClientModule,
-    IdlePreloadModule,
     InfoModule,
     JournalEntitiesModule,
     MenuModule,

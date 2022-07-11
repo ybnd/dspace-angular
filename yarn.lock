@@ -2314,6 +2314,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.18.12.tgz#0d4557fd3b94497d793efd4e7d92df2f83b4ef24"
   integrity sha512-q4jlIR71hUpWTnGhXWcakgkZeHa3CCjcQcnuzU8M891BAWA2jHiziiWEPEkdS5pFsz7H9HJiy8BrK7tBRNrY7A==
 
+"@types/node@^16.9.2":
+  version "16.11.43"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.43.tgz#555e5a743f76b6b897d47f945305b618525ddbe6"
+  integrity sha512-GqWykok+3uocgfAJM8imbozrqLnPyTrpFlrryURQlw1EesPUCx5XxTiucWDSFF9/NUEXDuD4bnvHm8xfVGWTpQ==
+
 "@types/parse-json@^4.0.0":
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
@@ -2914,11 +2919,6 @@ ajv@^8.0.0, ajv@^8.8.0:
     json-schema-traverse "^1.0.0"
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
-
-angular-idle-preload@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/angular-idle-preload/-/angular-idle-preload-3.0.0.tgz#decace34d9fac1cb00000727a6dc5caafdb84e4d"
-  integrity sha512-W3P2m2B6MHdt1DVunH6H3VWkAZrG3ZwxGcPjedVvIyRhg/LmMtILoizHSxTXw3fsKIEdAPwGObXGpML9WD1jJA==
 
 angulartics2@^12.0.0:
   version "12.0.0"
@@ -9543,6 +9543,11 @@ pascalcase@^0.1.1:
   resolved "https://registry.yarnpkg.com/pascalcase/-/pascalcase-0.1.1.tgz#b363e55e8006ca6fe21784d2db22bd15d7917f14"
   integrity sha1-s2PlXoAGym/iF4TS2yK9FdeRfxQ=
 
+path-equal@^1.1.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/path-equal/-/path-equal-1.2.2.tgz#fa2997f0a829de22ec8f5f86461ca5590d49b832"
+  integrity sha512-AUJvbcle1Zgb1TgtftHYknlrgrSYyI1ytrYgSbKUHSybwqUDnbD2cw9PIWivuMvsN+GTXmr/DRN4VBXpHG6aGg==
+
 path-exists@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/path-exists/-/path-exists-3.0.0.tgz#ce0ebeaa5f78cb18925ea7d810d7b59b010fd515"
@@ -11219,6 +11224,11 @@ safe-regex@^1.1.0:
   dependencies:
     ret "~0.1.10"
 
+safe-stable-stringify@^2.2.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/safe-stable-stringify/-/safe-stable-stringify-2.3.1.tgz#ab67cbe1fe7d40603ca641c5e765cb942d04fc73"
+  integrity sha512-kYBSfT+troD9cDA85VDnHZ1rpHC50O0g1e6WlGHVCz/g+JS+9WKLj+XwFYyR8UbrZN8ll9HUpDAAddY58MGisg==
+
 "safer-buffer@>= 2.1.2 < 3", "safer-buffer@>= 2.1.2 < 3.0.0", safer-buffer@^2.0.2, safer-buffer@^2.1.0, safer-buffer@^2.1.2, safer-buffer@~2.1.0:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
@@ -12461,7 +12471,7 @@ ts-loader@^5.2.0:
     micromatch "^3.1.4"
     semver "^5.0.1"
 
-ts-node@10.2.1, ts-node@^10.0.0:
+ts-node@10.2.1, ts-node@^10.0.0, ts-node@^10.2.1:
   version "10.2.1"
   resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-10.2.1.tgz#4cc93bea0a7aba2179497e65bb08ddfc198b3ab5"
   integrity sha512-hCnyOyuGmD5wHleOQX6NIjJtYVIO8bPP8F2acWkB4W06wdlkgyvJtubO/I9NkI88hCFECbsEgoLc0VNkYmcSfw==
@@ -12595,6 +12605,20 @@ typescript-compare@^0.0.2:
   dependencies:
     typescript-logic "^0.0.0"
 
+typescript-json-schema@^0.54.0:
+  version "0.54.0"
+  resolved "https://registry.yarnpkg.com/typescript-json-schema/-/typescript-json-schema-0.54.0.tgz#b3fc42ad90df6a0f6ab57571ebc8b4d41125df4f"
+  integrity sha512-/MNhm1pjdxXiVspjjyRCrQAA1B768cRzHU83aIqN5vQqQEW2NgyyKOfcguiRIMM64lseIZIelegnHOHEu7YDCg==
+  dependencies:
+    "@types/json-schema" "^7.0.9"
+    "@types/node" "^16.9.2"
+    glob "^7.1.7"
+    path-equal "^1.1.2"
+    safe-stable-stringify "^2.2.0"
+    ts-node "^10.2.1"
+    typescript "~4.6.0"
+    yargs "^17.1.1"
+
 typescript-logic@^0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/typescript-logic/-/typescript-logic-0.0.0.tgz#66ebd82a2548f2b444a43667bec120b496890196"
@@ -12621,6 +12645,11 @@ typescript@~4.5.5:
   version "4.5.5"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.5.5.tgz#d8c953832d28924a9e3d37c73d729c846c5896f3"
   integrity sha512-TCTIul70LyWe6IJWT8QSYeA54WQe8EjQFU4wY52Fasj5UKx88LNYKCgBEHcOMOrFF1rKGbD8v/xcNWVUq9SymA==
+
+typescript@~4.6.0:
+  version "4.6.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.4.tgz#caa78bbc3a59e6a5c510d35703f6a09877ce45e9"
+  integrity sha512-9ia/jWHIEbo49HfjrLGfKbZSuWo9iTMwXO+Ca3pRsSpbsMbc7/IU8NKdCZVRRBafVPGnoJeFL76ZOAA84I9fEg==
 
 ua-parser-js@1.0.2:
   version "1.0.2"
@@ -13467,6 +13496,19 @@ yargs@^17.0.0, yargs@^17.2.1:
   version "17.3.1"
   resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.3.1.tgz#da56b28f32e2fd45aefb402ed9c26f42be4c07b9"
   integrity sha512-WUANQeVgjLbNsEmGk20f+nlHgOqzRFpiGWVaBrYGYIGANIIu3lWjoyi0fNlFmJkvfhCZ6BXINe7/W2O2bV4iaA==
+  dependencies:
+    cliui "^7.0.2"
+    escalade "^3.1.1"
+    get-caller-file "^2.0.5"
+    require-directory "^2.1.1"
+    string-width "^4.2.3"
+    y18n "^5.0.5"
+    yargs-parser "^21.0.0"
+
+yargs@^17.1.1:
+  version "17.5.1"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-17.5.1.tgz#e109900cab6fcb7fd44b1d8249166feb0b36e58e"
+  integrity sha512-t6YAJcxDkNX7NFYiVtKvWUz8l+PaKTLiL63mJYWR2GnHq2gjEWISzsLp9wg3aY36dY1j+gfIEL3pIF+XlJJfbA==
   dependencies:
     cliui "^7.0.2"
     escalade "^3.1.1"
