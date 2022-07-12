@@ -9,6 +9,7 @@ import { DefaultAppConfig } from './default-app-config';
 import { ServerConfig } from './server-config.interface';
 import { mergeConfig } from './config.util';
 import { isNotEmpty } from '../app/shared/empty.util';
+import { Validator } from 'jsonschema';
 
 const CONFIG_PATH = join(process.cwd(), 'config');
 
@@ -94,11 +95,23 @@ const getLocalConfigPath = (env: Environment) => {
   return localConfigPath;
 };
 
+const loadConfig = (pathToConfig: string): AppConfig => {
+  const schema = JSON.parse(fs.readFileSync(join(CONFIG_PATH, 'schema.json'), 'utf-8'));
+  const config = yaml.load(fs.readFileSync(pathToConfig, 'utf-8'));
+  const result = new Validator().validate(config, schema);
+
+  if (!result.valid) {
+    const summary = result.errors.map(err => `  ${err.stack}`).join('\n');
+    throw new Error(`YAML Configuration ${pathToConfig} is not valid!\n${summary}`);
+  } else {
+    return config as AppConfig;
+  }
+};
+
 const overrideWithConfig = (config: Config, pathToConfig: string) => {
   try {
     console.log(`Overriding app config with ${pathToConfig}`);
-    const externalConfig = fs.readFileSync(pathToConfig, 'utf8');
-    mergeConfig(config, yaml.load(externalConfig));
+    mergeConfig(config, loadConfig(pathToConfig));
   } catch (err) {
     console.error(err);
   }
