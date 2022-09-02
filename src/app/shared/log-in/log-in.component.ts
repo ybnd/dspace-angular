@@ -1,19 +1,22 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import {
+  getForgotPasswordRoute,
+  getRegisterRoute,
+} from '../../app-routing-paths';
+import { AuthService } from '../../core/auth/auth.service';
 import { AuthMethod } from '../../core/auth/models/auth.method';
 import {
   getAuthenticationError,
   getAuthenticationMethods,
   isAuthenticated,
-  isAuthenticationLoading
+  isAuthenticationLoading,
 } from '../../core/auth/selectors';
-import { getForgotPasswordRoute, getRegisterRoute } from '../../app-routing-paths';
-import { hasValue } from '../empty.util';
-import { AuthService } from '../../core/auth/auth.service';
+import { CoreState } from '../../core/core-state.model';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 import { FeatureID } from '../../core/data/feature-authorization/feature-id';
-import { CoreState } from '../../core/core-state.model';
+import { hasValue } from '../empty.util';
 
 /**
  * /users/sign-in
@@ -22,10 +25,9 @@ import { CoreState } from '../../core/core-state.model';
 @Component({
   selector: 'ds-log-in',
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.scss']
+  styleUrls: ['./log-in.component.scss'],
 })
 export class LogInComponent implements OnInit {
-
   /**
    * A boolean representing if LogInComponent is in a standalone page
    * @type {boolean}
@@ -55,16 +57,14 @@ export class LogInComponent implements OnInit {
    */
   canRegister$: Observable<boolean>;
 
-  constructor(private store: Store<CoreState>,
-              private authService: AuthService,
-              private authorizationService: AuthorizationDataService) {
-  }
+  constructor(
+    private store: Store<CoreState>,
+    private authService: AuthService,
+    private authorizationService: AuthorizationDataService
+  ) {}
 
   ngOnInit(): void {
-
-    this.authMethods = this.store.pipe(
-      select(getAuthenticationMethods),
-    );
+    this.authMethods = this.store.pipe(select(getAuthenticationMethods));
 
     // set loading
     this.loading = this.store.pipe(select(isAuthenticationLoading));
@@ -79,7 +79,9 @@ export class LogInComponent implements OnInit {
       }
     });
 
-    this.canRegister$ = this.authorizationService.isAuthorized(FeatureID.EPersonRegistration);
+    this.canRegister$ = this.authorizationService.isAuthorized(
+      FeatureID.EPersonRegistration
+    );
   }
 
   getRegisterRoute() {

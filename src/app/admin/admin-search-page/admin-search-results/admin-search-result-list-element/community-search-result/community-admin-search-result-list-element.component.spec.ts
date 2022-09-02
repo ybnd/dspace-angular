@@ -1,18 +1,17 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
-import { TruncatableService } from '../../../../../shared/truncatable/truncatable.service';
-import { CollectionElementLinkType } from '../../../../../shared/object-collection/collection-element-link.type';
-import { ViewMode } from '../../../../../core/shared/view-mode.model';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CommunityAdminSearchResultListElementComponent } from './community-admin-search-result-list-element.component';
-import { CommunitySearchResult } from '../../../../../shared/object-collection/shared/community-search-result.model';
-import { Community } from '../../../../../core/shared/community.model';
+import { TranslateModule } from '@ngx-translate/core';
 import { getCommunityEditRoute } from '../../../../../community-page/community-page-routing-paths';
 import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service';
+import { Community } from '../../../../../core/shared/community.model';
+import { ViewMode } from '../../../../../core/shared/view-mode.model';
 import { DSONameServiceMock } from '../../../../../shared/mocks/dso-name.service.mock';
+import { CollectionElementLinkType } from '../../../../../shared/object-collection/collection-element-link.type';
+import { CommunitySearchResult } from '../../../../../shared/object-collection/shared/community-search-result.model';
+import { TruncatableService } from '../../../../../shared/truncatable/truncatable.service';
+import { CommunityAdminSearchResultListElementComponent } from './community-admin-search-result-list-element.component';
 
 describe('CommunityAdminSearchResultListElementComponent', () => {
   let component: CommunityAdminSearchResultListElementComponent;
@@ -30,20 +29,20 @@ describe('CommunityAdminSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        RouterTestingModule.withRoutes([])
-      ],
+      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
       declarations: [CommunityAdminSearchResultListElementComponent],
-      providers: [{ provide: TruncatableService, useValue: {} },
-        { provide: DSONameService, useClass: DSONameServiceMock }],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      providers: [
+        { provide: TruncatableService, useValue: {} },
+        { provide: DSONameService, useClass: DSONameServiceMock },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommunityAdminSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      CommunityAdminSearchResultListElementComponent
+    );
     component = fixture.componentInstance;
     component.object = searchResult;
     component.linkTypes = CollectionElementLinkType;

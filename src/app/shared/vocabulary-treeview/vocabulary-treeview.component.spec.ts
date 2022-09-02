@@ -1,28 +1,30 @@
-import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
 import { CdkTreeModule } from '@angular/cdk/tree';
-
-import { of as observableOf } from 'rxjs';
-import { StoreModule } from '@ngrx/store';
-import { TranslateModule } from '@ngx-translate/core';
+import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-
+import { TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { storeModuleConfig } from '../../app.reducer';
+import { authReducer } from '../../core/auth/auth.reducer';
+import { AuthTokenInfo } from '../../core/auth/models/auth-token-info.model';
+import { PageInfo } from '../../core/shared/page-info.model';
+import { VocabularyEntryDetail } from '../../core/submission/vocabularies/models/vocabulary-entry-detail.model';
+import { VocabularyEntry } from '../../core/submission/vocabularies/models/vocabulary-entry.model';
+import { VocabularyOptions } from '../../core/submission/vocabularies/models/vocabulary-options.model';
+import { FormFieldMetadataValueObject } from '../form/builder/models/form-field-metadata-value.model';
 import { createTestComponent } from '../testing/utils.test';
+import { TreeviewFlatNode } from './vocabulary-treeview-node.model';
 import { VocabularyTreeviewComponent } from './vocabulary-treeview.component';
 import { VocabularyTreeviewService } from './vocabulary-treeview.service';
-import { VocabularyEntryDetail } from '../../core/submission/vocabularies/models/vocabulary-entry-detail.model';
-import { TreeviewFlatNode } from './vocabulary-treeview-node.model';
-import { FormFieldMetadataValueObject } from '../form/builder/models/form-field-metadata-value.model';
-import { VocabularyOptions } from '../../core/submission/vocabularies/models/vocabulary-options.model';
-import { PageInfo } from '../../core/shared/page-info.model';
-import { VocabularyEntry } from '../../core/submission/vocabularies/models/vocabulary-entry.model';
-import { AuthTokenInfo } from '../../core/auth/models/auth-token-info.model';
-import { authReducer } from '../../core/auth/auth.reducer';
-import { storeModuleConfig } from '../../app.reducer';
 
 describe('VocabularyTreeviewComponent test suite', () => {
-
   let comp: VocabularyTreeviewComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<VocabularyTreeviewComponent>;
@@ -33,20 +35,29 @@ describe('VocabularyTreeviewComponent test suite', () => {
   const item2 = new VocabularyEntryDetail();
   item2.id = 'node2';
   const emptyNodeMap = new Map<string, TreeviewFlatNode>();
-  const storedNodeMap = new Map<string, TreeviewFlatNode>().set('test', new TreeviewFlatNode(item2));
-  const nodeMap = new Map<string, TreeviewFlatNode>().set('test', new TreeviewFlatNode(item));
+  const storedNodeMap = new Map<string, TreeviewFlatNode>().set(
+    'test',
+    new TreeviewFlatNode(item2)
+  );
+  const nodeMap = new Map<string, TreeviewFlatNode>().set(
+    'test',
+    new TreeviewFlatNode(item)
+  );
   const vocabularyOptions = new VocabularyOptions('vocabularyTest', false);
   const modalStub = jasmine.createSpyObj('modalStub', ['close']);
-  const vocabularyTreeviewServiceStub = jasmine.createSpyObj('VocabularyTreeviewService', {
-    initialize: jasmine.createSpy('initialize'),
-    getData: jasmine.createSpy('getData'),
-    loadMore: jasmine.createSpy('loadMore'),
-    loadMoreRoot: jasmine.createSpy('loadMoreRoot'),
-    isLoading: jasmine.createSpy('isLoading'),
-    searchByQuery: jasmine.createSpy('searchByQuery'),
-    restoreNodes: jasmine.createSpy('restoreNodes'),
-    cleanTree: jasmine.createSpy('cleanTree'),
-  });
+  const vocabularyTreeviewServiceStub = jasmine.createSpyObj(
+    'VocabularyTreeviewService',
+    {
+      initialize: jasmine.createSpy('initialize'),
+      getData: jasmine.createSpy('getData'),
+      loadMore: jasmine.createSpy('loadMore'),
+      loadMoreRoot: jasmine.createSpy('loadMoreRoot'),
+      isLoading: jasmine.createSpy('isLoading'),
+      searchByQuery: jasmine.createSpy('searchByQuery'),
+      restoreNodes: jasmine.createSpy('restoreNodes'),
+      cleanTree: jasmine.createSpy('cleanTree'),
+    }
+  );
 
   initialState = {
     core: {
@@ -57,9 +68,9 @@ describe('VocabularyTreeviewComponent test suite', () => {
         loading: false,
         authToken: new AuthTokenInfo('test_token'),
         userId: 'testid',
-        authMethods: []
-      }
-    }
+        authMethods: [],
+      },
+    },
   };
 
   beforeEach(waitForAsync(() => {
@@ -67,24 +78,28 @@ describe('VocabularyTreeviewComponent test suite', () => {
       imports: [
         CdkTreeModule,
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
-      declarations: [
-        VocabularyTreeviewComponent,
-        TestComponent
-      ],
+      declarations: [VocabularyTreeviewComponent, TestComponent],
       providers: [
-        { provide: VocabularyTreeviewService, useValue: vocabularyTreeviewServiceStub },
+        {
+          provide: VocabularyTreeviewService,
+          useValue: vocabularyTreeviewServiceStub,
+        },
         { provide: NgbActiveModal, useValue: modalStub },
         provideMockStore({ initialState }),
         ChangeDetectorRef,
-        VocabularyTreeviewComponent
+        VocabularyTreeviewComponent,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents().then(() => {
-      vocabularyTreeviewServiceStub.getData.and.returnValue(observableOf([]));
-      vocabularyTreeviewServiceStub.isLoading.and.returnValue(observableOf(false));
-    });
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents()
+      .then(() => {
+        vocabularyTreeviewServiceStub.getData.and.returnValue(observableOf([]));
+        vocabularyTreeviewServiceStub.isLoading.and.returnValue(
+          observableOf(false)
+        );
+      });
   }));
 
   describe('', () => {
@@ -93,11 +108,13 @@ describe('VocabularyTreeviewComponent test suite', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-
       const html = `
         <ds-vocabulary-treeview [vocabularyOptions]="vocabularyOptions" [preloadLevel]="preloadLevel"></ds-vocabulary-treeview>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
       vocabularyTreeviewServiceStub.getData.and.returnValue(observableOf([]));
     });
@@ -106,9 +123,12 @@ describe('VocabularyTreeviewComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create VocabularyTreeviewComponent', inject([VocabularyTreeviewComponent], (app: VocabularyTreeviewComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create VocabularyTreeviewComponent', inject(
+      [VocabularyTreeviewComponent],
+      (app: VocabularyTreeviewComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
@@ -136,24 +156,32 @@ describe('VocabularyTreeviewComponent test suite', () => {
       const currentValue = new FormFieldMetadataValueObject();
       currentValue.value = 'testValue';
       currentValue.otherInformation = {
-        id: 'entryID'
+        id: 'entryID',
       };
       comp.selectedItem = currentValue;
       fixture.detectChanges();
       expect(comp.dataSource.data).toEqual([]);
-      expect(vocabularyTreeviewServiceStub.initialize).toHaveBeenCalledWith(comp.vocabularyOptions, new PageInfo(), 'entryID');
+      expect(vocabularyTreeviewServiceStub.initialize).toHaveBeenCalledWith(
+        comp.vocabularyOptions,
+        new PageInfo(),
+        'entryID'
+      );
     });
 
     it('should should init component properly with init value as VocabularyEntry', () => {
       const currentValue = new VocabularyEntry();
       currentValue.value = 'testValue';
       currentValue.otherInformation = {
-        id: 'entryID'
+        id: 'entryID',
       };
       comp.selectedItem = currentValue;
       fixture.detectChanges();
       expect(comp.dataSource.data).toEqual([]);
-      expect(vocabularyTreeviewServiceStub.initialize).toHaveBeenCalledWith(comp.vocabularyOptions, new PageInfo(), 'entryID');
+      expect(vocabularyTreeviewServiceStub.initialize).toHaveBeenCalledWith(
+        comp.vocabularyOptions,
+        new PageInfo(),
+        'entryID'
+      );
     });
 
     it('should call loadMore function', () => {
@@ -166,14 +194,19 @@ describe('VocabularyTreeviewComponent test suite', () => {
       const node = new TreeviewFlatNode(item);
       comp.loadMoreRoot(node);
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.loadMoreRoot).toHaveBeenCalledWith(node);
+      expect(vocabularyTreeviewServiceStub.loadMoreRoot).toHaveBeenCalledWith(
+        node
+      );
     });
 
     it('should call loadChildren function', () => {
       const node = new TreeviewFlatNode(item);
       comp.loadChildren(node);
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.loadMore).toHaveBeenCalledWith(node.item, true);
+      expect(vocabularyTreeviewServiceStub.loadMore).toHaveBeenCalledWith(
+        node.item,
+        true
+      );
     });
 
     it('should emit select event', () => {
@@ -188,7 +221,9 @@ describe('VocabularyTreeviewComponent test suite', () => {
       comp.nodeMap.set('test', new TreeviewFlatNode(item));
       comp.search();
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.searchByQuery).toHaveBeenCalledWith('test search');
+      expect(vocabularyTreeviewServiceStub.searchByQuery).toHaveBeenCalledWith(
+        'test search'
+      );
       expect(comp.storedNodeMap).toEqual(nodeMap);
       expect(comp.nodeMap).toEqual(emptyNodeMap);
     });
@@ -199,7 +234,9 @@ describe('VocabularyTreeviewComponent test suite', () => {
       comp.storedNodeMap.set('test', new TreeviewFlatNode(item2));
       comp.search();
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.searchByQuery).toHaveBeenCalledWith('test search');
+      expect(vocabularyTreeviewServiceStub.searchByQuery).toHaveBeenCalledWith(
+        'test search'
+      );
       expect(comp.storedNodeMap).toEqual(storedNodeMap);
       expect(comp.nodeMap).toEqual(emptyNodeMap);
     });
@@ -234,11 +271,12 @@ describe('VocabularyTreeviewComponent test suite', () => {
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
 class TestComponent {
-
-  vocabularyOptions: VocabularyOptions = new VocabularyOptions('vocabularyTest', false);
+  vocabularyOptions: VocabularyOptions = new VocabularyOptions(
+    'vocabularyTest',
+    false
+  );
   preloadLevel = 2;
-
 }

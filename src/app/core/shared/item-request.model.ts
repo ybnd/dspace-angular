@@ -1,10 +1,10 @@
 import { autoserialize, deserialize } from 'cerialize';
 import { typedObject } from '../cache/builders/build-decorators';
-import { excludeFromEquals } from '../utilities/equals.decorators';
-import { ResourceType } from './resource-type';
-import { ITEM_REQUEST } from './item-request.resource-type';
-import { HALLink } from './hal-link.model';
 import { CacheableObject } from '../cache/cacheable-object.model';
+import { excludeFromEquals } from '../utilities/equals.decorators';
+import { HALLink } from './hal-link.model';
+import { ITEM_REQUEST } from './item-request.resource-type';
+import { ResourceType } from './resource-type';
 
 /**
  * Model class for an ItemRequest
@@ -86,5 +86,4 @@ export class ItemRequest implements CacheableObject {
     item: HALLink;
     bitstream: HALLink;
   };
-
 }

@@ -16,7 +16,9 @@ export class ThemedRegisterEmailComponent extends ThemedComponent<RegisterEmailC
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/register-page/register-email/register-email.component`);
+    return import(
+      `../../../themes/${themeName}/app/register-page/register-email/register-email.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

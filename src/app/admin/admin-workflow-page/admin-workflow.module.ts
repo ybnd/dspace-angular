@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../shared/shared.module';
-
-import { WorkflowItemSearchResultAdminWorkflowGridElementComponent } from './admin-workflow-search-results/admin-workflow-search-result-grid-element/workflow-item/workflow-item-search-result-admin-workflow-grid-element.component';
-import { WorkflowItemAdminWorkflowActionsComponent } from './admin-workflow-search-results/workflow-item-admin-workflow-actions.component';
-import { WorkflowItemSearchResultAdminWorkflowListElementComponent } from './admin-workflow-search-results/admin-workflow-search-result-list-element/workflow-item/workflow-item-search-result-admin-workflow-list-element.component';
-import { AdminWorkflowPageComponent } from './admin-workflow-page.component';
 import { SearchModule } from '../../shared/search/search.module';
+import { SharedModule } from '../../shared/shared.module';
+import { AdminWorkflowPageComponent } from './admin-workflow-page.component';
+import { WorkflowItemSearchResultAdminWorkflowGridElementComponent } from './admin-workflow-search-results/admin-workflow-search-result-grid-element/workflow-item/workflow-item-search-result-admin-workflow-grid-element.component';
+import { WorkflowItemSearchResultAdminWorkflowListElementComponent } from './admin-workflow-search-results/admin-workflow-search-result-list-element/workflow-item/workflow-item-search-result-admin-workflow-list-element.component';
+import { WorkflowItemAdminWorkflowActionsComponent } from './admin-workflow-search-results/workflow-item-admin-workflow-actions.component';
 
 const ENTRY_COMPONENTS = [
   // put only entry components that use custom decorator
@@ -14,18 +13,13 @@ const ENTRY_COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [
-    SearchModule,
-    SharedModule.withEntryComponents()
-  ],
+  imports: [SearchModule, SharedModule.withEntryComponents()],
   declarations: [
     AdminWorkflowPageComponent,
     WorkflowItemAdminWorkflowActionsComponent,
-    ...ENTRY_COMPONENTS
+    ...ENTRY_COMPONENTS,
   ],
-  exports: [
-    AdminWorkflowPageComponent
-  ]
+  exports: [AdminWorkflowPageComponent],
 })
 export class AdminWorkflowModuleModule {
   /**
@@ -35,7 +29,7 @@ export class AdminWorkflowModuleModule {
   static withEntryComponents() {
     return {
       ngModule: SharedModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

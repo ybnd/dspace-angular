@@ -1,11 +1,11 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { OrgUnitListElementComponent } from './org-unit-list-element.component';
 import { of as observableOf } from 'rxjs';
 import { Item } from '../../../../core/shared/item.model';
-import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
 import { TruncatableService } from '../../../../shared/truncatable/truncatable.service';
+import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
+import { OrgUnitListElementComponent } from './org-unit-list-element.component';
 
 const mockItem: Item = Object.assign(new Item(), {
   bundles: observableOf({}),
@@ -13,16 +13,16 @@ const mockItem: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.description': [
       {
         language: 'en_US',
-        value: 'A description about the OrgUnit'
-      }
-    ]
-  }
+        value: 'A description about the OrgUnit',
+      },
+    ],
+  },
 });
 
 describe('OrgUnitListElementComponent', () => {
@@ -39,10 +39,12 @@ describe('OrgUnitListElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(OrgUnitListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(OrgUnitListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -57,7 +59,9 @@ describe('OrgUnitListElementComponent', () => {
     });
 
     it(`should contain a OrgUnitListElementComponent`, () => {
-      const orgUnitListElement = fixture.debugElement.query(By.css(`ds-org-unit-search-result-list-element`));
+      const orgUnitListElement = fixture.debugElement.query(
+        By.css(`ds-org-unit-search-result-list-element`)
+      );
       expect(orgUnitListElement).not.toBeNull();
     });
   });

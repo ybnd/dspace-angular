@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-
 import { Observable } from 'rxjs';
 import { find, map } from 'rxjs/operators';
+import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 import { LinkService } from '../../../../core/cache/builders/link.service';
 import { RemoteData } from '../../../../core/data/remote-data';
 import { Item } from '../../../../core/shared/item.model';
-
 import { ViewMode } from '../../../../core/shared/view-mode.model';
 import { WorkspaceItem } from '../../../../core/submission/models/workspaceitem.model';
 import { isNotUndefined } from '../../../empty.util';
@@ -15,20 +14,23 @@ import { WorkspaceItemSearchResult } from '../../../object-collection/shared/wor
 import { TruncatableService } from '../../../truncatable/truncatable.service';
 import { followLink } from '../../../utils/follow-link-config.model';
 import { SearchResultListElementComponent } from '../../search-result-list-element/search-result-list-element.component';
-import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 
 /**
  * This component renders workspaceitem object for the search result in the list view.
  */
 @Component({
   selector: 'ds-workspace-item-search-result-list-element',
-  styleUrls: ['../../search-result-list-element/search-result-list-element.component.scss', './workspace-item-search-result-list-element.component.scss'],
+  styleUrls: [
+    '../../search-result-list-element/search-result-list-element.component.scss',
+    './workspace-item-search-result-list-element.component.scss',
+  ],
   templateUrl: './workspace-item-search-result-list-element.component.html',
 })
-
 @listableObjectComponent(WorkspaceItemSearchResult, ViewMode.ListElement)
-export class WorkspaceItemSearchResultListElementComponent extends SearchResultListElementComponent<WorkspaceItemSearchResult, WorkspaceItem> {
-
+export class WorkspaceItemSearchResultListElementComponent extends SearchResultListElementComponent<
+  WorkspaceItemSearchResult,
+  WorkspaceItem
+> {
   /**
    * The item object that belonging to the result object
    */
@@ -61,7 +63,9 @@ export class WorkspaceItemSearchResultListElementComponent extends SearchResultL
    */
   initItem(item$: Observable<RemoteData<Item>>) {
     this.item$ = item$.pipe(
-      find((rd: RemoteData<Item>) => rd.hasSucceeded && isNotUndefined(rd.payload)),
+      find(
+        (rd: RemoteData<Item>) => rd.hasSucceeded && isNotUndefined(rd.payload)
+      ),
       map((rd: RemoteData<Item>) => rd.payload)
     );
   }

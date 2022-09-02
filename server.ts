@@ -15,39 +15,31 @@
  * import for `ngExpressEngine`.
  */
 
-import 'zone.js/node';
-import 'reflect-metadata';
-import 'rxjs';
-
-import axios from 'axios';
-import * as pem from 'pem';
-import * as https from 'https';
-import * as morgan from 'morgan';
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as compression from 'compression';
-import * as expressStaticGzip from 'express-static-gzip';
-
-import { existsSync, readFileSync } from 'fs';
-import { join } from 'path';
-
 import { APP_BASE_HREF } from '@angular/common';
 import { enableProdMode } from '@angular/core';
-
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import { REQUEST, RESPONSE } from '@nguniversal/express-engine/tokens';
-
-import { environment } from './src/environments/environment';
+import axios from 'axios';
+import * as bodyParser from 'body-parser';
+import * as compression from 'compression';
+import * as express from 'express';
+import * as expressStaticGzip from 'express-static-gzip';
+import { existsSync, readFileSync } from 'fs';
 import { createProxyMiddleware } from 'http-proxy-middleware';
+import * as https from 'https';
+import * as morgan from 'morgan';
+import { join } from 'path';
+import * as pem from 'pem';
+import 'reflect-metadata';
+import 'rxjs';
+import 'zone.js/node';
 import { hasNoValue, hasValue } from './src/app/shared/empty.util';
-
-import { UIServerConfig } from './src/config/ui-server-config.interface';
-
-import { ServerAppModule } from './src/main.server';
-
+import { AppConfig, APP_CONFIG } from './src/config/app-config.interface';
 import { buildAppConfig } from './src/config/config.server';
-import { APP_CONFIG, AppConfig } from './src/config/app-config.interface';
 import { extendEnvironmentWithAppConfig } from './src/config/config.util';
+import { UIServerConfig } from './src/config/ui-server-config.interface';
+import { environment } from './src/environments/environment';
+import { ServerAppModule } from './src/main.server';
 
 /*
  * Set path for the browser application's dist folder
@@ -56,18 +48,21 @@ const DIST_FOLDER = join(process.cwd(), 'dist/browser');
 // Set path fir IIIF viewer.
 const IIIF_VIEWER = join(process.cwd(), 'dist/iiif');
 
-const indexHtml = existsSync(join(DIST_FOLDER, 'index.html')) ? 'index.html' : 'index';
+const indexHtml = existsSync(join(DIST_FOLDER, 'index.html'))
+  ? 'index.html'
+  : 'index';
 
 const cookieParser = require('cookie-parser');
 
-const appConfig: AppConfig = buildAppConfig(join(DIST_FOLDER, 'assets/config.json'));
+const appConfig: AppConfig = buildAppConfig(
+  join(DIST_FOLDER, 'assets/config.json')
+);
 
 // extend environment with app config for server
 extendEnvironmentWithAppConfig(environment, appConfig);
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
-
   const router = express.Router();
 
   /*
@@ -82,11 +77,13 @@ export function app() {
    */
   if (environment.production) {
     enableProdMode();
-    server.use(compression({
-      // only compress responses we've marked as SSR
-      // otherwise, this middleware may compress files we've chosen not to compress via compression-webpack-plugin
-      filter: (_, res) => res.locals.ssr,
-    }));
+    server.use(
+      compression({
+        // only compress responses we've marked as SSR
+        // otherwise, this middleware may compress files we've chosen not to compress via compression-webpack-plugin
+        filter: (_, res) => res.locals.ssr,
+      })
+    );
   }
 
   /*
@@ -122,10 +119,10 @@ export function app() {
         },
         {
           provide: APP_CONFIG,
-          useValue: environment
-        }
-      ]
-    })(_, (options as any), callback)
+          useValue: environment,
+        },
+      ],
+    })(_, options as any, callback)
   );
 
   /*
@@ -141,11 +138,14 @@ export function app() {
   /**
    * Proxy the sitemaps
    */
-  router.use('/sitemap**', createProxyMiddleware({
-    target: `${environment.rest.baseUrl}/sitemaps`,
-    pathRewrite: path => path.replace(environment.ui.nameSpace, '/'),
-    changeOrigin: true
-  }));
+  router.use(
+    '/sitemap**',
+    createProxyMiddleware({
+      target: `${environment.rest.baseUrl}/sitemaps`,
+      pathRewrite: (path) => path.replace(environment.ui.nameSpace, '/'),
+      changeOrigin: true,
+    })
+  );
 
   /**
    * Checks if the rateLimiter property is present
@@ -155,7 +155,7 @@ export function app() {
     const RateLimit = require('express-rate-limit');
     const limiter = new RateLimit({
       windowMs: (environment.ui as UIServerConfig).rateLimiter.windowMs,
-      max: (environment.ui as UIServerConfig).rateLimiter.max
+      max: (environment.ui as UIServerConfig).rateLimiter.max,
     });
     server.use(limiter);
   }
@@ -164,15 +164,19 @@ export function app() {
    * Serve static resources (images, i18n messages, …)
    * Handle pre-compressed files with [express-static-gzip](https://github.com/tkoenig89/express-static-gzip)
    */
-  router.get('*.*', cacheControl, expressStaticGzip(DIST_FOLDER, {
-    index: false,
-    enableBrotli: true,
-    orderPreference: ['br', 'gzip'],
-  }));
+  router.get(
+    '*.*',
+    cacheControl,
+    expressStaticGzip(DIST_FOLDER, {
+      index: false,
+      enableBrotli: true,
+      orderPreference: ['br', 'gzip'],
+    })
+  );
 
   /*
-  * Fallthrough to the IIIF viewer (must be included in the build).
-  */
+   * Fallthrough to the IIIF viewer (must be included in the build).
+   */
   router.use('/iiif', express.static(IIIF_VIEWER, { index: false }));
 
   /**
@@ -193,48 +197,58 @@ export function app() {
  */
 function ngApp(req, res) {
   if (environment.universal.preboot) {
-    res.render(indexHtml, {
-      req,
-      res,
-      preboot: environment.universal.preboot,
-      async: environment.universal.async,
-      time: environment.universal.time,
-      baseUrl: environment.ui.nameSpace,
-      originUrl: environment.ui.baseUrl,
-      requestUrl: req.originalUrl,
-      providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }]
-    }, (err, data) => {
-      if (hasNoValue(err) && hasValue(data)) {
-        res.locals.ssr = true;  // mark response as SSR
-        res.send(data);
-      } else if (hasValue(err) && err.code === 'ERR_HTTP_HEADERS_SENT') {
-        // When this error occurs we can't fall back to CSR because the response has already been
-        // sent. These errors occur for various reasons in universal, not all of which are in our
-        // control to solve.
-        console.warn('Warning [ERR_HTTP_HEADERS_SENT]: Tried to set headers after they were sent to the client');
-      } else {
-        console.warn('Error in SSR, serving for direct CSR.');
-        if (hasValue(err)) {
-          console.warn('Error details : ', err);
+    res.render(
+      indexHtml,
+      {
+        req,
+        res,
+        preboot: environment.universal.preboot,
+        async: environment.universal.async,
+        time: environment.universal.time,
+        baseUrl: environment.ui.nameSpace,
+        originUrl: environment.ui.baseUrl,
+        requestUrl: req.originalUrl,
+        providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }],
+      },
+      (err, data) => {
+        if (hasNoValue(err) && hasValue(data)) {
+          res.locals.ssr = true; // mark response as SSR
+          res.send(data);
+        } else if (hasValue(err) && err.code === 'ERR_HTTP_HEADERS_SENT') {
+          // When this error occurs we can't fall back to CSR because the response has already been
+          // sent. These errors occur for various reasons in universal, not all of which are in our
+          // control to solve.
+          console.warn(
+            'Warning [ERR_HTTP_HEADERS_SENT]: Tried to set headers after they were sent to the client'
+          );
+        } else {
+          console.warn('Error in SSR, serving for direct CSR.');
+          if (hasValue(err)) {
+            console.warn('Error details : ', err);
+          }
+          res.render(indexHtml, {
+            req,
+            providers: [
+              {
+                provide: APP_BASE_HREF,
+                useValue: req.baseUrl,
+              },
+            ],
+          });
         }
-        res.render(indexHtml, {
-          req,
-          providers: [{
-            provide: APP_BASE_HREF,
-            useValue: req.baseUrl
-          }]
-        });
       }
-    });
+    );
   } else {
     // If preboot is disabled, just serve the client
     console.log('Universal off, serving for direct CSR');
     res.render(indexHtml, {
       req,
-      providers: [{
-        provide: APP_BASE_HREF,
-        useValue: req.baseUrl
-      }]
+      providers: [
+        {
+          provide: APP_BASE_HREF,
+          useValue: req.baseUrl,
+        },
+      ],
     });
   }
 }
@@ -253,7 +267,9 @@ function cacheControl(req, res, next) {
  * Callback function for when the server has started
  */
 function serverStarted() {
-  console.log(`[${new Date().toTimeString()}] Listening at ${environment.ui.baseUrl}`);
+  console.log(
+    `[${new Date().toTimeString()}] Listening at ${environment.ui.baseUrl}`
+  );
 }
 
 /*
@@ -261,12 +277,17 @@ function serverStarted() {
  * @param keys SSL credentials
  */
 function createHttpsServer(keys) {
-  https.createServer({
-    key: keys.serviceKey,
-    cert: keys.certificate
-  }, app).listen(environment.ui.port, environment.ui.host, () => {
-    serverStarted();
-  });
+  https
+    .createServer(
+      {
+        key: keys.serviceKey,
+        cert: keys.certificate,
+      },
+      app
+    )
+    .listen(environment.ui.port, environment.ui.host, () => {
+      serverStarted();
+    });
 }
 
 function run() {
@@ -282,12 +303,12 @@ function run() {
 
 function start() {
   /*
-  * If SSL is enabled
-  * - Read credentials from configuration files
-  * - Call script to start an HTTPS server with these credentials
-  * When SSL is disabled
-  * - Start an HTTP server on the configured port and host
-  */
+   * If SSL is enabled
+   * - Read credentials from configuration files
+   * - Call script to start an HTTPS server with these credentials
+   * When SSL is disabled
+   * - Start an HTTP server on the configured port and host
+   */
   if (environment.ui.ssl) {
     let serviceKey;
     try {
@@ -306,19 +327,24 @@ function start() {
     if (serviceKey && certificate) {
       createHttpsServer({
         serviceKey: serviceKey,
-        certificate: certificate
+        certificate: certificate,
       });
     } else {
-      console.warn('Disabling certificate validation and proceeding with a self-signed certificate. If this is a production server, it is recommended that you configure a valid certificate instead.');
+      console.warn(
+        'Disabling certificate validation and proceeding with a self-signed certificate. If this is a production server, it is recommended that you configure a valid certificate instead.'
+      );
 
       process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; // lgtm[js/disabling-certificate-validation]
 
-      pem.createCertificate({
-        days: 1,
-        selfSigned: true
-      }, (error, keys) => {
-        createHttpsServer(keys);
-      });
+      pem.createCertificate(
+        {
+          days: 1,
+          selfSigned: true,
+        },
+        (error, keys) => {
+          createHttpsServer(keys);
+        }
+      );
     }
   } else {
     run();
@@ -330,13 +356,14 @@ function start() {
  */
 function healthCheck(req, res) {
   const baseUrl = `${environment.rest.baseUrl}${environment.actuators.endpointPath}`;
-  axios.get(baseUrl)
+  axios
+    .get(baseUrl)
     .then((response) => {
       res.status(response.status).send(response.data);
     })
     .catch((error) => {
       res.status(error.response.status).send({
-        error: error.message
+        error: error.message,
       });
     });
 }

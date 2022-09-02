@@ -1,20 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
 import { Store } from '@ngrx/store';
-
+import { getTestScheduler } from 'jasmine-marbles';
+import { of as observableOf } from 'rxjs';
+import { TestScheduler } from 'rxjs/testing';
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
 import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service.stub';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { PoolTaskDataService } from './pool-task-data.service';
-import { getTestScheduler } from 'jasmine-marbles';
-import { TestScheduler } from 'rxjs/testing';
-import { of as observableOf } from 'rxjs';
 import { RequestParam } from '../cache/models/request-param.model';
-import { HttpOptions } from '../dspace-rest/dspace-rest.service';
-import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
 import { CoreState } from '../core-state.model';
 import { FindListOptions } from '../data/find-list-options.model';
+import { HttpOptions } from '../dspace-rest/dspace-rest.service';
+import { PoolTaskDataService } from './pool-task-data.service';
 
 describe('PoolTaskDataService', () => {
   let scheduler: TestScheduler;
@@ -34,7 +32,7 @@ describe('PoolTaskDataService', () => {
     },
     getObjectBySelfLink: () => {
       /* empty */
-    }
+    },
   } as any;
   const store = {} as Store<CoreState>;
 
@@ -56,37 +54,50 @@ describe('PoolTaskDataService', () => {
     service = initTestService();
     options = Object.create({});
     let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers = headers.append(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
     options.headers = headers;
   });
 
   describe('findByItem', () => {
-
     it('should call searchTask method', () => {
-      spyOn((service as any), 'searchTask').and.returnValue(observableOf(createSuccessfulRemoteDataObject$({})));
+      spyOn(service as any, 'searchTask').and.returnValue(
+        observableOf(createSuccessfulRemoteDataObject$({}))
+      );
 
-      scheduler.schedule(() => service.findByItem('a0db0fde-1d12-4d43-bd0d-0f43df8d823c').subscribe());
+      scheduler.schedule(() =>
+        service.findByItem('a0db0fde-1d12-4d43-bd0d-0f43df8d823c').subscribe()
+      );
       scheduler.flush();
 
       const findListOptions = new FindListOptions();
       findListOptions.searchParams = [
-        new RequestParam('uuid', 'a0db0fde-1d12-4d43-bd0d-0f43df8d823c')
+        new RequestParam('uuid', 'a0db0fde-1d12-4d43-bd0d-0f43df8d823c'),
       ];
 
-      expect(service.searchTask).toHaveBeenCalledWith('findByItem', findListOptions);
+      expect(service.searchTask).toHaveBeenCalledWith(
+        'findByItem',
+        findListOptions
+      );
     });
   });
 
   describe('getPoolTaskEndpointById', () => {
-
     it('should call getEndpointById method', () => {
       spyOn(service, 'getEndpointById').and.returnValue(observableOf(null));
 
-      scheduler.schedule(() => service.getPoolTaskEndpointById('a0db0fde-1d12-4d43-bd0d-0f43df8d823c').subscribe());
+      scheduler.schedule(() =>
+        service
+          .getPoolTaskEndpointById('a0db0fde-1d12-4d43-bd0d-0f43df8d823c')
+          .subscribe()
+      );
       scheduler.flush();
 
-      expect(service.getEndpointById).toHaveBeenCalledWith('a0db0fde-1d12-4d43-bd0d-0f43df8d823c');
-
+      expect(service.getEndpointById).toHaveBeenCalledWith(
+        'a0db0fde-1d12-4d43-bd0d-0f43df8d823c'
+      );
     });
   });
 });

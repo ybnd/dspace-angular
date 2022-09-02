@@ -14,6 +14,4 @@ import { VersionedItemComponent } from '../versioned-item/versioned-item.compone
   templateUrl: './publication.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PublicationComponent extends VersionedItemComponent {
-
-}
+export class PublicationComponent extends VersionedItemComponent {}

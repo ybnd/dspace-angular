@@ -1,18 +1,18 @@
+import { CommonModule } from '@angular/common';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-import { CommonModule } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouteService } from '../../core/services/route.service';
-import { SharedModule } from '../../shared/shared.module';
-import { CollectionDataService } from '../../core/data/collection-data.service';
+import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
+import { CollectionDataService } from '../../core/data/collection-data.service';
 import { CommunityDataService } from '../../core/data/community-data.service';
-import { CreateCollectionPageComponent } from './create-collection-page.component';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
 import { RequestService } from '../../core/data/request.service';
+import { RouteService } from '../../core/services/route.service';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { SharedModule } from '../../shared/shared.module';
+import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
+import { CreateCollectionPageComponent } from './create-collection-page.component';
 
 describe('CreateCollectionPageComponent', () => {
   let comp: CreateCollectionPageComponent;
@@ -20,20 +20,33 @@ describe('CreateCollectionPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [CreateCollectionPageComponent],
       providers: [
         { provide: CollectionDataService, useValue: {} },
         {
           provide: CommunityDataService,
-          useValue: { findById: () => observableOf({ payload: { name: 'test' } }) }
+          useValue: {
+            findById: () => observableOf({ payload: { name: 'test' } }),
+          },
         },
-        { provide: RouteService, useValue: { getQueryParameterValue: () => observableOf('1234') } },
+        {
+          provide: RouteService,
+          useValue: { getQueryParameterValue: () => observableOf('1234') },
+        },
         { provide: Router, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
-        { provide: RequestService, useValue: {}}
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
+        { provide: RequestService, useValue: {} },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

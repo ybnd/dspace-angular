@@ -1,23 +1,30 @@
-import { Store, StoreModule } from '@ngrx/store';
 import { inject, TestBed, waitForAsync } from '@angular/core/testing';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-
-import { DynamicFormControlModel, DynamicFormGroupModel, DynamicInputModel } from '@ng-dynamic-forms/core';
-
-import { FormService } from './form.service';
-import { FormBuilderService } from './builder/form-builder.service';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import {
+  DynamicFormControlModel,
+  DynamicFormGroupModel,
+  DynamicInputModel,
+} from '@ng-dynamic-forms/core';
+import { Store, StoreModule } from '@ngrx/store';
 import { AppState } from '../../app.reducer';
-import { formReducer } from './form.reducer';
 import { getMockFormBuilderService } from '../mocks/form-builder-service.mock';
+import { FormBuilderService } from './builder/form-builder.service';
+import { formReducer } from './form.reducer';
+import { FormService } from './form.service';
 
 describe('FormService test suite', () => {
   const config = {
     form: {
       validatorMap: {
         required: 'required',
-        regex: 'pattern'
-      }
-    }
+        regex: 'pattern',
+      },
+    },
   } as any;
   const formId = 'testForm';
   let service: FormService;
@@ -29,37 +36,33 @@ describe('FormService test suite', () => {
     new DynamicInputModel({
       id: 'title',
       validators: {
-        required: null
+        required: null,
       },
       errorMessages: {
-        required: 'Title is required'
-      }
+        required: 'Title is required',
+      },
     }),
     new DynamicInputModel({ id: 'date' }),
     new DynamicInputModel({ id: 'description' }),
     new DynamicFormGroupModel({
-
       id: 'addressLocation',
       group: [
         new DynamicInputModel({
-
           id: 'zipCode',
           label: 'Zip Code',
-          placeholder: 'ZIP'
+          placeholder: 'ZIP',
         }),
         new DynamicInputModel({
-
           id: 'state',
           label: 'State',
-          placeholder: 'State'
+          placeholder: 'State',
         }),
         new DynamicInputModel({
-
           id: 'city',
           label: 'City',
-          placeholder: 'City'
-        })
-      ]
+          placeholder: 'City',
+        }),
+      ],
     }),
   ];
 
@@ -73,47 +76,50 @@ describe('FormService test suite', () => {
     addressLocation: {
       zipCode: null,
       state: null,
-      city: null
-    }
+      city: null,
+    },
   };
   const formState = {
     testForm: {
       data: formData,
       valid: false,
       errors: [],
-      touched: {}
-    }
+      touched: {},
+    },
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({ formReducer }, {
-          runtimeChecks: {
-            strictStateImmutability: false,
-            strictActionImmutability: false
+        StoreModule.forRoot(
+          { formReducer },
+          {
+            runtimeChecks: {
+              strictStateImmutability: false,
+              strictActionImmutability: false,
+            },
           }
-        })
-      ]
+        ),
+      ],
     }).compileComponents();
   }));
 
   beforeEach(inject([Store], (store: Store<AppState>) => {
-      builderService = getMockFormBuilderService();
-      store
-        .subscribe((state) => {
-          state.forms = formState;
-        });
-      const author: AbstractControl = new FormControl('test');
-      const title: AbstractControl = new FormControl(undefined, Validators.required);
-      const date: AbstractControl = new FormControl(undefined);
-      const description: AbstractControl = new FormControl(undefined);
-      formGroup = new FormGroup({ author, title, date, description });
-      controls = { author, title, date, description };
-      service = new FormService(builderService, store);
-    })
-  )
-  ;
+    builderService = getMockFormBuilderService();
+    store.subscribe((state) => {
+      state.forms = formState;
+    });
+    const author: AbstractControl = new FormControl('test');
+    const title: AbstractControl = new FormControl(
+      undefined,
+      Validators.required
+    );
+    const date: AbstractControl = new FormControl(undefined);
+    const description: AbstractControl = new FormControl(undefined);
+    formGroup = new FormGroup({ author, title, date, description });
+    controls = { author, title, date, description };
+    service = new FormService(builderService, store);
+  }));
 
   it('should check whether form state is init', () => {
     service.isFormInitialized(formId).subscribe((init) => {
@@ -155,7 +161,9 @@ describe('FormService test suite', () => {
 
   it('should add error to field', () => {
     let control = controls.description;
-    let model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'description');
+    let model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'description'
+    );
     let errorKeys: string[];
 
     service.addErrorToField(control, model, 'Test error message');
@@ -168,7 +176,9 @@ describe('FormService test suite', () => {
     expect(formGroup.controls.description.touched).toBe(true);
 
     control = controls.title;
-    model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'title');
+    model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'title'
+    );
     service.addErrorToField(control, model, 'error.required');
     errorKeys = Object.keys(control.errors);
 
@@ -181,7 +191,9 @@ describe('FormService test suite', () => {
 
   it('should remove error from field', () => {
     let control = controls.description;
-    let model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'description');
+    let model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'description'
+    );
     let errorKeys: string[];
 
     service.addErrorToField(control, model, 'Test error message');
@@ -196,7 +208,9 @@ describe('FormService test suite', () => {
     expect(formGroup.controls.description.touched).toBe(false);
 
     control = controls.title;
-    model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'title');
+    model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'title'
+    );
 
     service.addErrorToField(control, model, 'error.required');
 
@@ -216,5 +230,4 @@ describe('FormService test suite', () => {
 
     expect(control.value).toBeNull();
   });
-})
-;
+});

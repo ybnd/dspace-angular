@@ -26,8 +26,8 @@ export class AccessStatusObject implements CacheableObject {
   /**
    * The {@link HALLink}s for this AccessStatusObject
    */
-   @deserialize
-   _links: {
-     self: HALLink;
-   };
+  @deserialize
+  _links: {
+    self: HALLink;
+  };
 }

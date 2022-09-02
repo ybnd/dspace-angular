@@ -1,10 +1,10 @@
 /* eslint-disable max-classes-per-file */
-import { PageInfo } from '../shared/page-info.model';
 import { ConfigObject } from '../config/models/config.model';
+import { RequestError } from '../data/request-error.model';
 import { DSpaceObject } from '../shared/dspace-object.model';
 import { HALLink } from '../shared/hal-link.model';
+import { PageInfo } from '../shared/page-info.model';
 import { UnCacheableObject } from '../shared/uncacheable-object.model';
-import { RequestError } from '../data/request-error.model';
 
 export class RestResponse {
   public toCache = true;
@@ -14,12 +14,15 @@ export class RestResponse {
     public isSuccessful: boolean,
     public statusCode: number,
     public statusText: string
-  ) {
-  }
+  ) {}
 }
 
 export class ParsedResponse extends RestResponse {
-  constructor(statusCode: number, public link?: HALLink, public unCacheableObject?: UnCacheableObject) {
+  constructor(
+    statusCode: number,
+    public link?: HALLink,
+    public unCacheableObject?: UnCacheableObject
+  ) {
     super(true, statusCode, `${statusCode}`);
   }
 }
@@ -36,7 +39,7 @@ export class DSOSuccessResponse extends RestResponse {
 }
 
 export class EndpointMap {
-  [linkPath: string]: HALLink
+  [linkPath: string]: HALLink;
 }
 
 export class EndpointMapSuccessResponse extends RestResponse {

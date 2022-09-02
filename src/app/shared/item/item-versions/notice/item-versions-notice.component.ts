@@ -1,23 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Item } from '../../../../core/shared/item.model';
 import { Observable } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
 import { RemoteData } from '../../../../core/data/remote-data';
-import { VersionHistory } from '../../../../core/shared/version-history.model';
-import { Version } from '../../../../core/shared/version.model';
-import { hasValue, hasValueOperator } from '../../../empty.util';
+import { VersionHistoryDataService } from '../../../../core/data/version-history-data.service';
+import { Item } from '../../../../core/shared/item.model';
 import {
   getAllSucceededRemoteData,
   getFirstSucceededRemoteDataPayload,
-  getRemoteDataPayload
+  getRemoteDataPayload,
 } from '../../../../core/shared/operators';
-import { map, startWith, switchMap } from 'rxjs/operators';
-import { VersionHistoryDataService } from '../../../../core/data/version-history-data.service';
-import { AlertType } from '../../../alert/aletr-type';
+import { VersionHistory } from '../../../../core/shared/version-history.model';
+import { Version } from '../../../../core/shared/version.model';
 import { getItemPageRoute } from '../../../../item-page/item-page-routing-paths';
+import { AlertType } from '../../../alert/aletr-type';
+import { hasValue, hasValueOperator } from '../../../empty.util';
 
 @Component({
   selector: 'ds-item-versions-notice',
-  templateUrl: './item-versions-notice.component.html'
+  templateUrl: './item-versions-notice.component.html',
 })
 /**
  * Component for displaying a warning notice when the item is not the latest version within its version history
@@ -60,8 +60,7 @@ export class ItemVersionsNoticeComponent implements OnInit {
    */
   public AlertTypeEnum = AlertType;
 
-  constructor(private versionHistoryService: VersionHistoryDataService) {
-  }
+  constructor(private versionHistoryService: VersionHistoryDataService) {}
 
   /**
    * Initialize the component's observables
@@ -78,14 +77,16 @@ export class ItemVersionsNoticeComponent implements OnInit {
 
       this.latestVersion$ = this.versionHistoryRD$.pipe(
         getFirstSucceededRemoteDataPayload(),
-        switchMap((vh) => this.versionHistoryService.getLatestVersionFromHistory$(vh))
+        switchMap((vh) =>
+          this.versionHistoryService.getLatestVersionFromHistory$(vh)
+        )
       );
 
       this.showLatestVersionNotice$ = this.versionRD$.pipe(
         getFirstSucceededRemoteDataPayload(),
         switchMap((version) => this.versionHistoryService.isLatest$(version)),
         map((isLatest) => isLatest != null && !isLatest),
-        startWith(false),
+        startWith(false)
       );
     }
   }

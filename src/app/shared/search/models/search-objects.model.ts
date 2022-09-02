@@ -1,11 +1,11 @@
 import { autoserializeAs, inheritSerialization } from 'cerialize';
-import { DSpaceObject } from '../../../core/shared/dspace-object.model';
-import { SearchResult } from './search-result.model';
-import { PaginatedList } from '../../../core/data/paginated-list.model';
 import { typedObject } from '../../../core/cache/builders/build-decorators';
-import { SEARCH_OBJECTS } from './types/search-objects.resource-type';
+import { PaginatedList } from '../../../core/data/paginated-list.model';
+import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { excludeFromEquals } from '../../../core/utilities/equals.decorators';
 import { SearchQueryResponse } from './search-query-response.model';
+import { SearchResult } from './search-result.model';
+import { SEARCH_OBJECTS } from './types/search-objects.resource-type';
 
 /**
  * Class representing the response returned by the server when performing a search request
@@ -13,7 +13,9 @@ import { SearchQueryResponse } from './search-query-response.model';
 @typedObject
 @inheritSerialization(PaginatedList)
 @inheritSerialization(SearchQueryResponse)
-export class SearchObjects<T extends DSpaceObject> extends SearchQueryResponse<SearchResult<T>> {
+export class SearchObjects<T extends DSpaceObject> extends SearchQueryResponse<
+  SearchResult<T>
+> {
   static type = SEARCH_OBJECTS;
 
   /**

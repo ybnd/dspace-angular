@@ -1,25 +1,25 @@
 import { Injectable } from '@angular/core';
-
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-
-import { SubmissionState } from '../../submission.reducers';
+import { WorkspaceitemSectionUploadFileObject } from '../../../core/submission/models/workspaceitem-section-upload-file.model';
+import { isUndefined } from '../../../shared/empty.util';
 import {
   DeleteUploadedFileAction,
   EditFileDataAction,
-  NewUploadedFileAction
+  NewUploadedFileAction,
 } from '../../objects/submission-objects.actions';
-import { submissionUploadedFileFromUuidSelector, submissionUploadedFilesFromIdSelector } from '../../selectors';
-import { isUndefined } from '../../../shared/empty.util';
-import { WorkspaceitemSectionUploadFileObject } from '../../../core/submission/models/workspaceitem-section-upload-file.model';
+import {
+  submissionUploadedFileFromUuidSelector,
+  submissionUploadedFilesFromIdSelector,
+} from '../../selectors';
+import { SubmissionState } from '../../submission.reducers';
 
 /**
  * A service that provides methods to handle submission's bitstream state.
  */
 @Injectable()
 export class SectionUploadService {
-
   /**
    * Initialize service variables
    *
@@ -37,10 +37,16 @@ export class SectionUploadService {
    * @returns {Array}
    *    Returns submission's bitstream list
    */
-  public getUploadedFileList(submissionId: string, sectionId: string): Observable<any> {
-    return this.store.select(submissionUploadedFilesFromIdSelector(submissionId, sectionId)).pipe(
-      map((state) => state),
-      distinctUntilChanged());
+  public getUploadedFileList(
+    submissionId: string,
+    sectionId: string
+  ): Observable<any> {
+    return this.store
+      .select(submissionUploadedFilesFromIdSelector(submissionId, sectionId))
+      .pipe(
+        map((state) => state),
+        distinctUntilChanged()
+      );
   }
 
   /**
@@ -55,17 +61,24 @@ export class SectionUploadService {
    * @returns {Observable}
    *    Emits bitstream's metadata
    */
-  public getFileData(submissionId: string, sectionId: string, fileUUID: string): Observable<any> {
-    return this.store.select(submissionUploadedFilesFromIdSelector(submissionId, sectionId)).pipe(
-      filter((state) => !isUndefined(state)),
-      map((state) => {
-        let fileState;
-        Object.keys(state)
-          .filter((key) => state[key].uuid === fileUUID)
-          .forEach((key) => fileState = state[key]);
-        return fileState;
-      }),
-      distinctUntilChanged());
+  public getFileData(
+    submissionId: string,
+    sectionId: string,
+    fileUUID: string
+  ): Observable<any> {
+    return this.store
+      .select(submissionUploadedFilesFromIdSelector(submissionId, sectionId))
+      .pipe(
+        filter((state) => !isUndefined(state)),
+        map((state) => {
+          let fileState;
+          Object.keys(state)
+            .filter((key) => state[key].uuid === fileUUID)
+            .forEach((key) => (fileState = state[key]));
+          return fileState;
+        }),
+        distinctUntilChanged()
+      );
   }
 
   /**
@@ -80,10 +93,23 @@ export class SectionUploadService {
    * @returns {Observable}
    *    Emits bitstream's default policies
    */
-  public getDefaultPolicies(submissionId: string, sectionId: string, fileUUID: string): Observable<any> {
-    return this.store.select(submissionUploadedFileFromUuidSelector(submissionId, sectionId, fileUUID)).pipe(
-      map((state) => state),
-      distinctUntilChanged());
+  public getDefaultPolicies(
+    submissionId: string,
+    sectionId: string,
+    fileUUID: string
+  ): Observable<any> {
+    return this.store
+      .select(
+        submissionUploadedFileFromUuidSelector(
+          submissionId,
+          sectionId,
+          fileUUID
+        )
+      )
+      .pipe(
+        map((state) => state),
+        distinctUntilChanged()
+      );
   }
 
   /**
@@ -98,7 +124,12 @@ export class SectionUploadService {
    * @param data
    *    The [[WorkspaceitemSectionUploadFileObject]] object
    */
-  public addUploadedFile(submissionId: string, sectionId: string, fileUUID: string, data: WorkspaceitemSectionUploadFileObject) {
+  public addUploadedFile(
+    submissionId: string,
+    sectionId: string,
+    fileUUID: string,
+    data: WorkspaceitemSectionUploadFileObject
+  ) {
     this.store.dispatch(
       new NewUploadedFileAction(submissionId, sectionId, fileUUID, data)
     );
@@ -116,7 +147,12 @@ export class SectionUploadService {
    * @param data
    *    The [[WorkspaceitemSectionUploadFileObject]] object
    */
-  public updateFileData(submissionId: string, sectionId: string, fileUUID: string, data: WorkspaceitemSectionUploadFileObject) {
+  public updateFileData(
+    submissionId: string,
+    sectionId: string,
+    fileUUID: string,
+    data: WorkspaceitemSectionUploadFileObject
+  ) {
     this.store.dispatch(
       new EditFileDataAction(submissionId, sectionId, fileUUID, data)
     );
@@ -132,7 +168,11 @@ export class SectionUploadService {
    * @param fileUUID
    *    The bitstream UUID
    */
-  public removeUploadedFile(submissionId: string, sectionId: string, fileUUID: string) {
+  public removeUploadedFile(
+    submissionId: string,
+    sectionId: string,
+    fileUUID: string
+  ) {
     this.store.dispatch(
       new DeleteUploadedFileAction(submissionId, sectionId, fileUUID)
     );

@@ -1,24 +1,21 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { SearchService } from '../../../core/shared/search/search.service';
 import { RemoteData } from '../../../core/data/remote-data';
-import { SearchFilterConfig } from '../models/search-filter-config.model';
+import { getFirstSucceededRemoteData } from '../../../core/shared/operators';
 import { SearchConfigurationService } from '../../../core/shared/search/search-configuration.service';
 import { SearchFilterService } from '../../../core/shared/search/search-filter.service';
-import { getFirstSucceededRemoteData } from '../../../core/shared/operators';
+import { SearchService } from '../../../core/shared/search/search.service';
 import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
-import { currentPath } from '../../utils/route.utils';
-import { Router } from '@angular/router';
 import { hasValue } from '../../empty.util';
+import { currentPath } from '../../utils/route.utils';
+import { SearchFilterConfig } from '../models/search-filter-config.model';
 
 @Component({
   selector: 'ds-search-filters',
   styleUrls: ['./search-filters.component.scss'],
   templateUrl: './search-filters.component.html',
-
 })
 
 /**
@@ -74,28 +71,32 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     private searchService: SearchService,
     private filterService: SearchFilterService,
     private router: Router,
-    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService) {
-  }
+    @Inject(SEARCH_CONFIG_SERVICE)
+    private searchConfigService: SearchConfigurationService
+  ) {}
 
   ngOnInit(): void {
-
     this.initFilters();
 
     if (this.refreshFilters) {
       this.subs.push(this.refreshFilters.subscribe(() => this.initFilters()));
     }
 
-    this.clearParams = this.searchConfigService.getCurrentFrontendFilters().pipe(map((filters) => {
-      Object.keys(filters).forEach((f) => filters[f] = null);
-      return filters;
-    }));
+    this.clearParams = this.searchConfigService
+      .getCurrentFrontendFilters()
+      .pipe(
+        map((filters) => {
+          Object.keys(filters).forEach((f) => (filters[f] = null));
+          return filters;
+        })
+      );
     this.searchLink = this.getSearchLink();
   }
 
   initFilters() {
-    this.filters = this.searchConfigService.getConfig(this.currentScope, this.currentConfiguration).pipe(
-      getFirstSucceededRemoteData()
-    );
+    this.filters = this.searchConfigService
+      .getConfig(this.currentScope, this.currentConfiguration)
+      .pipe(getFirstSucceededRemoteData());
   }
 
   /**

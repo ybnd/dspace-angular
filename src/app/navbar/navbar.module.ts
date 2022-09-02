@@ -1,22 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
 import { EffectsModule } from '@ngrx/effects';
-
 import { CoreModule } from '../core/core.module';
-import { NavbarEffects } from './navbar.effects';
-import { NavbarSectionComponent } from './navbar-section/navbar-section.component';
-import { ExpandableNavbarSectionComponent } from './expandable-navbar-section/expandable-navbar-section.component';
-import { ThemedExpandableNavbarSectionComponent } from './expandable-navbar-section/themed-expandable-navbar-section.component';
-import { NavbarComponent } from './navbar.component';
 import { MenuModule } from '../shared/menu/menu.module';
 import { SharedModule } from '../shared/shared.module';
-import { FormsModule } from '@angular/forms';
+import { ExpandableNavbarSectionComponent } from './expandable-navbar-section/expandable-navbar-section.component';
+import { ThemedExpandableNavbarSectionComponent } from './expandable-navbar-section/themed-expandable-navbar-section.component';
+import { NavbarSectionComponent } from './navbar-section/navbar-section.component';
+import { NavbarComponent } from './navbar.component';
+import { NavbarEffects } from './navbar.effects';
 import { ThemedNavbarComponent } from './themed-navbar.component';
 
-const effects = [
-  NavbarEffects
-];
+const effects = [NavbarEffects];
 
 const ENTRY_COMPONENTS = [
   // put only entry components that use custom decorator
@@ -31,7 +27,7 @@ const ENTRY_COMPONENTS = [
     MenuModule,
     FormsModule,
     EffectsModule.forFeature(effects),
-    CoreModule.forRoot()
+    CoreModule.forRoot(),
   ],
   declarations: [
     NavbarComponent,
@@ -44,8 +40,8 @@ const ENTRY_COMPONENTS = [
   exports: [
     ThemedNavbarComponent,
     NavbarSectionComponent,
-    ThemedExpandableNavbarSectionComponent
-  ]
+    ThemedExpandableNavbarSectionComponent,
+  ],
 })
 
 /**
@@ -59,8 +55,7 @@ export class NavbarModule {
   static withEntryComponents() {
     return {
       ngModule: NavbarModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
-
 }

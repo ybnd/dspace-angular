@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { StatisticsPageComponent } from '../statistics-page/statistics-page.component';
-import { UsageReportService } from '../../core/statistics/usage-report-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Community } from '../../core/shared/community.model';
-import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { AuthService } from '../../core/auth/auth.service';
+import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
+import { Community } from '../../core/shared/community.model';
+import { UsageReportService } from '../../core/statistics/usage-report-data.service';
+import { StatisticsPageComponent } from '../statistics-page/statistics-page.component';
 
 /**
  * Component representing the statistics page for a community.
@@ -12,10 +12,9 @@ import { AuthService } from '../../core/auth/auth.service';
 @Component({
   selector: 'ds-community-statistics-page',
   templateUrl: '../statistics-page/statistics-page.component.html',
-  styleUrls: ['./community-statistics-page.component.scss']
+  styleUrls: ['./community-statistics-page.component.scss'],
 })
 export class CommunityStatisticsPageComponent extends StatisticsPageComponent<Community> {
-
   /**
    * The report types to show on this statistics page.
    */
@@ -31,14 +30,8 @@ export class CommunityStatisticsPageComponent extends StatisticsPageComponent<Co
     protected router: Router,
     protected usageReportService: UsageReportService,
     protected nameService: DSONameService,
-    protected authService: AuthService,
+    protected authService: AuthService
   ) {
-    super(
-      route,
-      router,
-      usageReportService,
-      nameService,
-      authService,
-    );
+    super(route, router, usageReportService, nameService, authService);
   }
 }

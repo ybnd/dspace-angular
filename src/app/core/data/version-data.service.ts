@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
-import { DataService } from './data.service';
-import { Version } from '../shared/version.model';
-import { RequestService } from './request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { EMPTY, Observable } from 'rxjs';
-import { dataService } from '../cache/builders/build-decorators';
-import { VERSION } from '../shared/version.resource-type';
-import { VersionHistory } from '../shared/version-history.model';
-import { followLink } from '../../shared/utils/follow-link-config.model';
-import { getFirstSucceededRemoteDataPayload } from '../shared/operators';
 import { map, switchMap } from 'rxjs/operators';
 import { isNotEmpty } from '../../shared/empty.util';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { followLink } from '../../shared/utils/follow-link-config.model';
+import { dataService } from '../cache/builders/build-decorators';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { getFirstSucceededRemoteDataPayload } from '../shared/operators';
+import { VersionHistory } from '../shared/version-history.model';
+import { Version } from '../shared/version.model';
+import { VERSION } from '../shared/version.resource-type';
+import { DataService } from './data.service';
+import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
+import { RequestService } from './request.service';
 
 /**
  * Service responsible for handling requests related to the Version object
@@ -35,7 +35,8 @@ export class VersionDataService extends DataService<Version> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Version>) {
+    protected comparator: DefaultChangeAnalyzer<Version>
+  ) {
     super();
   }
 
@@ -47,12 +48,23 @@ export class VersionDataService extends DataService<Version> {
    * @param reRequestOnStale            Whether or not the request should automatically be re-
    *                                    requested after the response becomes stale
    */
-  getHistoryFromVersion(version: Version, useCachedVersionIfAvailable = false, reRequestOnStale = true): Observable<VersionHistory> {
-    return isNotEmpty(version) ? this.findById(version.id, useCachedVersionIfAvailable, reRequestOnStale, followLink('versionhistory')).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((res: Version) => res.versionhistory),
-      getFirstSucceededRemoteDataPayload(),
-    ) : EMPTY;
+  getHistoryFromVersion(
+    version: Version,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true
+  ): Observable<VersionHistory> {
+    return isNotEmpty(version)
+      ? this.findById(
+          version.id,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          followLink('versionhistory')
+        ).pipe(
+          getFirstSucceededRemoteDataPayload(),
+          switchMap((res: Version) => res.versionhistory),
+          getFirstSucceededRemoteDataPayload()
+        )
+      : EMPTY;
   }
 
   /**
@@ -61,8 +73,7 @@ export class VersionDataService extends DataService<Version> {
    */
   getHistoryIdFromVersion(version: Version): Observable<string> {
     return this.getHistoryFromVersion(version).pipe(
-      map((versionHistory: VersionHistory) => versionHistory.id),
+      map((versionHistory: VersionHistory) => versionHistory.id)
     );
   }
-
 }

@@ -6,24 +6,21 @@ import {
   OnDestroy,
   SimpleChanges,
   TemplateRef,
-  ViewContainerRef
+  ViewContainerRef,
 } from '@angular/core';
-
 import { combineLatest, Observable, Subscription } from 'rxjs';
 import { filter, first, map } from 'rxjs/operators';
-
-import { hasValue } from '../empty.util';
-import { RoleService } from '../../core/roles/role.service';
 import { RoleType } from '../../core/roles/role-types';
+import { RoleService } from '../../core/roles/role.service';
+import { hasValue } from '../empty.util';
 
 @Directive({
-  selector: '[dsShowOnlyForRole],[dsShowExceptForRole]'
+  selector: '[dsShowOnlyForRole],[dsShowExceptForRole]',
 })
 /**
  * Structural Directive for showing or hiding a template based on current user role
  */
 export class RoleDirective implements OnChanges, OnDestroy {
-
   /**
    * The role or list of roles that can show template
    */
@@ -41,8 +38,7 @@ export class RoleDirective implements OnChanges, OnDestroy {
     private viewContainer: ViewContainerRef,
     private changeDetector: ChangeDetectorRef,
     private templateRef: TemplateRef<any>
-  ) {
-  }
+  ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     const onlyChanges = changes.dsShowOnlyForRole;
@@ -77,21 +73,27 @@ export class RoleDirective implements OnChanges, OnDestroy {
   /**
    * Validate the list of roles that can show template
    */
-  private validateOnly(): void  {
-    this.subs.push(this.hasRoles(this.dsShowOnlyForRole).pipe(filter((hasRole) => hasRole))
-      .subscribe((hasRole) => {
-        this.showTemplateBlockInView();
-      }));
+  private validateOnly(): void {
+    this.subs.push(
+      this.hasRoles(this.dsShowOnlyForRole)
+        .pipe(filter((hasRole) => hasRole))
+        .subscribe((hasRole) => {
+          this.showTemplateBlockInView();
+        })
+    );
   }
 
   /**
    * Validate the list of roles that cannot show template
    */
-  private validateExcept(): void  {
-    this.subs.push(this.hasRoles(this.dsShowExceptForRole).pipe(filter((hasRole) => !hasRole))
-      .subscribe((hasRole) => {
-        this.showTemplateBlockInView();
-      }));
+  private validateExcept(): void {
+    this.subs.push(
+      this.hasRoles(this.dsShowExceptForRole)
+        .pipe(filter((hasRole) => !hasRole))
+        .subscribe((hasRole) => {
+          this.showTemplateBlockInView();
+        })
+    );
   }
 
   /**
@@ -103,8 +105,10 @@ export class RoleDirective implements OnChanges, OnDestroy {
    *    observable of true if current user role is included in the specified role list, observable of false otherwise
    */
   private hasRoles(roles: RoleType | RoleType[]): Observable<boolean> {
-    const toValidate: RoleType[] = (Array.isArray(roles)) ? roles : [roles];
-    const checks: Observable<boolean>[] = toValidate.map((role) => this.roleService.checkRole(role));
+    const toValidate: RoleType[] = Array.isArray(roles) ? roles : [roles];
+    const checks: Observable<boolean>[] = toValidate.map((role) =>
+      this.roleService.checkRole(role)
+    );
 
     return combineLatest(checks).pipe(
       map((permissions: boolean[]) => permissions.includes(true)),

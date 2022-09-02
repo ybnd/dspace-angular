@@ -1,18 +1,28 @@
-import { AfterViewChecked, Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { TruncatableService } from '../truncatable.service';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { hasValue } from '../../empty.util';
+import { TruncatableService } from '../truncatable.service';
 
 @Component({
   selector: 'ds-truncatable-part',
   templateUrl: './truncatable-part.component.html',
-  styleUrls: ['./truncatable-part.component.scss']
+  styleUrls: ['./truncatable-part.component.scss'],
 })
 
 /**
  * Component that truncates/clamps a piece of text
  * It needs a TruncatableComponent parent to identify it's current state
  */
-export class TruncatablePartComponent implements AfterViewChecked, OnInit, OnDestroy {
+export class TruncatablePartComponent
+  implements AfterViewChecked, OnInit, OnDestroy
+{
   /**
    * Number of lines shown when the part is collapsed
    */
@@ -49,7 +59,7 @@ export class TruncatablePartComponent implements AfterViewChecked, OnInit, OnDes
   /**
    * The view on the truncatable part
    */
-  @ViewChild('content', {static: true}) content: ElementRef;
+  @ViewChild('content', { static: true }) content: ElementRef;
 
   /**
    * Current amount of lines shown of this part
@@ -82,15 +92,17 @@ export class TruncatablePartComponent implements AfterViewChecked, OnInit, OnDes
    * Subscribe to the current state to determine how much lines should be shown of this part
    */
   private setLines() {
-    this.sub = this.service.isCollapsed(this.id).subscribe((collapsed: boolean) => {
-      if (collapsed) {
-        this.lines = this.minLines.toString();
-        this.expand = false;
-      } else {
-        this.lines = this.maxLines < 0 ? 'none' : this.maxLines.toString();
-        this.expand = true;
-      }
-    });
+    this.sub = this.service
+      .isCollapsed(this.id)
+      .subscribe((collapsed: boolean) => {
+        if (collapsed) {
+          this.lines = this.minLines.toString();
+          this.expand = false;
+        } else {
+          this.lines = this.maxLines < 0 ? 'none' : this.maxLines.toString();
+          this.expand = true;
+        }
+      });
   }
 
   ngAfterViewChecked() {
@@ -113,7 +125,10 @@ export class TruncatablePartComponent implements AfterViewChecked, OnInit, OnDes
       const entry = this.content.nativeElement;
       if (entry.scrollHeight > entry.offsetHeight) {
         if (entry.children.length > 0) {
-          if (entry.children[entry.children.length - 1].offsetHeight > entry.offsetHeight) {
+          if (
+            entry.children[entry.children.length - 1].offsetHeight >
+            entry.offsetHeight
+          ) {
             entry.classList.add('truncated');
             entry.classList.remove('removeFaded');
           } else {

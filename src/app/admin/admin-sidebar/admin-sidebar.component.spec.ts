@@ -1,27 +1,36 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
-import { ChangeDetectionStrategy, Injector, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ScriptDataService } from '../../core/data/processes/script-data.service';
-import { AdminSidebarComponent } from './admin-sidebar.component';
-import { MenuService } from '../../shared/menu/menu.service';
-import { MenuServiceStub } from '../../shared/testing/menu-service.stub';
-import { CSSVariableService } from '../../shared/sass-helper/sass-helper.service';
-import { CSSVariableServiceStub } from '../../shared/testing/css-variable-service.stub';
-import { AuthServiceStub } from '../../shared/testing/auth-service.stub';
-import { AuthService } from '../../core/auth/auth.service';
-import { of as observableOf } from 'rxjs';
+import {
+  ChangeDetectionStrategy,
+  Injector,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { RouterTestingModule } from '@angular/router/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { AuthService } from '../../core/auth/auth.service';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '../../core/data/feature-authorization/feature-id';
-import createSpy = jasmine.createSpy;
-import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
+import { ScriptDataService } from '../../core/data/processes/script-data.service';
 import { Item } from '../../core/shared/item.model';
-import { ThemeService } from '../../shared/theme-support/theme.service';
+import { MenuService } from '../../shared/menu/menu.service';
 import { getMockThemeService } from '../../shared/mocks/theme-service.mock';
+import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
+import { CSSVariableService } from '../../shared/sass-helper/sass-helper.service';
+import { AuthServiceStub } from '../../shared/testing/auth-service.stub';
+import { CSSVariableServiceStub } from '../../shared/testing/css-variable-service.stub';
+import { MenuServiceStub } from '../../shared/testing/menu-service.stub';
+import { ThemeService } from '../../shared/theme-support/theme.service';
+import { AdminSidebarComponent } from './admin-sidebar.component';
+import createSpy = jasmine.createSpy;
 
 describe('AdminSidebarComponent', () => {
   let comp: AdminSidebarComponent;
@@ -30,7 +39,6 @@ describe('AdminSidebarComponent', () => {
   let authorizationService: AuthorizationDataService;
   let scriptService;
 
-
   const mockItem = Object.assign(new Item(), {
     id: 'fake-id',
     uuid: 'fake-id',
@@ -38,27 +46,31 @@ describe('AdminSidebarComponent', () => {
     lastModified: '2018',
     _links: {
       self: {
-        href: 'https://localhost:8000/items/fake-id'
-      }
-    }
+        href: 'https://localhost:8000/items/fake-id',
+      },
+    },
   });
-
 
   const routeStub = {
     data: observableOf({
-      dso: createSuccessfulRemoteDataObject(mockItem)
+      dso: createSuccessfulRemoteDataObject(mockItem),
     }),
-    children: []
+    children: [],
   };
-
 
   beforeEach(waitForAsync(() => {
     authorizationService = jasmine.createSpyObj('authorizationService', {
-      isAuthorized: observableOf(true)
+      isAuthorized: observableOf(true),
     });
-    scriptService = jasmine.createSpyObj('scriptService', { scriptWithNameExistsAndCanExecute: observableOf(true) });
+    scriptService = jasmine.createSpyObj('scriptService', {
+      scriptWithNameExistsAndCanExecute: observableOf(true),
+    });
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), NoopAnimationsModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        NoopAnimationsModule,
+        RouterTestingModule,
+      ],
       declarations: [AdminSidebarComponent],
       providers: [
         Injector,
@@ -71,18 +83,22 @@ describe('AdminSidebarComponent', () => {
         { provide: ScriptDataService, useValue: scriptService },
         { provide: ActivatedRoute, useValue: routeStub },
         {
-          provide: NgbModal, useValue: {
-            open: () => {/*comment*/
-            }
-          }
-        }
+          provide: NgbModal,
+          useValue: {
+            open: () => {
+              /*comment*/
+            },
+          },
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(AdminSidebarComponent, {
-      set: {
-        changeDetection: ChangeDetectionStrategy.Default,
-      }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(AdminSidebarComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -144,10 +160,13 @@ describe('AdminSidebarComponent', () => {
   describe('when the collapse link is clicked', () => {
     beforeEach(() => {
       spyOn(menuService, 'toggleMenu');
-      const sidebarToggler = fixture.debugElement.query(By.css('#sidebar-collapse-toggle > a'));
+      const sidebarToggler = fixture.debugElement.query(
+        By.css('#sidebar-collapse-toggle > a')
+      );
       sidebarToggler.triggerEventHandler('click', {
-        preventDefault: () => {/**/
-        }
+        preventDefault: () => {
+          /**/
+        },
       });
     });
 
@@ -161,8 +180,9 @@ describe('AdminSidebarComponent', () => {
       spyOn(menuService, 'expandMenuPreview');
       const sidebarToggler = fixture.debugElement.query(By.css('nav.navbar'));
       sidebarToggler.triggerEventHandler('mouseenter', {
-        preventDefault: () => {/**/
-        }
+        preventDefault: () => {
+          /**/
+        },
       });
       tick(99);
       expect(menuService.expandMenuPreview).not.toHaveBeenCalled();
@@ -176,8 +196,9 @@ describe('AdminSidebarComponent', () => {
       spyOn(menuService, 'collapseMenuPreview');
       const sidebarToggler = fixture.debugElement.query(By.css('nav.navbar'));
       sidebarToggler.triggerEventHandler('mouseleave', {
-        preventDefault: () => {/**/
-        }
+        preventDefault: () => {
+          /**/
+        },
       });
       tick(399);
       expect(menuService.collapseMenuPreview).not.toHaveBeenCalled();

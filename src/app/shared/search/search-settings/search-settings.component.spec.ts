@@ -1,25 +1,27 @@
-import { SearchService } from '../../../core/shared/search/search.service';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { SearchSettingsComponent } from './search-settings.component';
-import { of as observableOf } from 'rxjs';
-import { PaginationComponentOptions } from '../../pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../../core/cache/models/sort-options.model';
-import { TranslateModule } from '@ngx-translate/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute } from '@angular/router';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { EnumKeysPipe } from '../../utils/enum-keys-pipe';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { SearchFilterService } from '../../../core/shared/search/search-filter.service';
-import { VarDirective } from '../../utils/var.directive';
-import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
-import { SidebarService } from '../../sidebar/sidebar.service';
-import { SidebarServiceStub } from '../../testing/sidebar-service.stub';
+import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../../core/cache/models/sort-options.model';
 import { PaginationService } from '../../../core/pagination/pagination.service';
+import { SearchFilterService } from '../../../core/shared/search/search-filter.service';
+import { SearchService } from '../../../core/shared/search/search.service';
+import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
+import { PaginationComponentOptions } from '../../pagination/pagination-component-options.model';
+import { SidebarService } from '../../sidebar/sidebar.service';
 import { PaginationServiceStub } from '../../testing/pagination-service.stub';
+import { SidebarServiceStub } from '../../testing/sidebar-service.stub';
+import { EnumKeysPipe } from '../../utils/enum-keys-pipe';
+import { VarDirective } from '../../utils/var.directive';
+import { SearchSettingsComponent } from './search-settings.component';
 
 describe('SearchSettingsComponent', () => {
-
   let comp: SearchSettingsComponent;
   let fixture: ComponentFixture<SearchSettingsComponent>;
   let searchServiceObject: SearchService;
@@ -91,7 +93,7 @@ describe('SearchSettingsComponent', () => {
           useValue: {
             paginatedSearchOptions: observableOf(paginatedSearchOptions),
             getCurrentScope: observableOf('test-id'),
-          }
+          },
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -105,7 +107,7 @@ describe('SearchSettingsComponent', () => {
     comp.sortOptionsList = [
       new SortOptions('score', SortDirection.DESC),
       new SortOptions('dc.title', SortDirection.ASC),
-      new SortOptions('dc.title', SortDirection.DESC)
+      new SortOptions('dc.title', SortDirection.DESC),
     ];
 
     // SearchPageComponent test instance
@@ -113,12 +115,13 @@ describe('SearchSettingsComponent', () => {
     searchServiceObject = (comp as any).service;
     spyOn(comp, 'reloadOrder');
     spyOn(searchServiceObject, 'search').and.callThrough();
-
   });
 
   it('it should show the order settings with the respective selectable options', () => {
     fixture.detectChanges();
-    const orderSetting = fixture.debugElement.query(By.css('div.result-order-settings'));
+    const orderSetting = fixture.debugElement.query(
+      By.css('div.result-order-settings')
+    );
     expect(orderSetting).toBeDefined();
     const childElements = orderSetting.queryAll(By.css('option'));
     expect(childElements.length).toEqual(comp.sortOptionsList.length);
@@ -126,14 +129,20 @@ describe('SearchSettingsComponent', () => {
 
   it('it should show the size settings', () => {
     fixture.detectChanges();
-    const pageSizeSetting = fixture.debugElement.query(By.css('page-size-settings'));
+    const pageSizeSetting = fixture.debugElement.query(
+      By.css('page-size-settings')
+    );
     expect(pageSizeSetting).toBeDefined();
   });
 
   it('should have the proper order value selected by default', () => {
     fixture.detectChanges();
-    const orderSetting = fixture.debugElement.query(By.css('div.result-order-settings'));
-    const childElementToBeSelected = orderSetting.query(By.css('option[value="score,DESC"][selected="selected"]'));
+    const orderSetting = fixture.debugElement.query(
+      By.css('div.result-order-settings')
+    );
+    const childElementToBeSelected = orderSetting.query(
+      By.css('option[value="score,DESC"][selected="selected"]')
+    );
     expect(childElementToBeSelected).toBeDefined();
   });
 });

@@ -1,19 +1,18 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FormsModule } from '@angular/forms';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ProcessFormComponent } from './process-form.component';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
 import { ScriptDataService } from '../../core/data/processes/script-data.service';
+import { RequestService } from '../../core/data/request.service';
+import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
+import { ProcessParameter } from '../processes/process-parameter.model';
 import { ScriptParameter } from '../scripts/script-parameter.model';
 import { Script } from '../scripts/script.model';
-import { ProcessParameter } from '../processes/process-parameter.model';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { of as observableOf } from 'rxjs';
-import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
-import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
-import { RequestService } from '../../core/data/request.service';
-import { Router } from '@angular/router';
+import { ProcessFormComponent } from './process-form.component';
 
 describe('ProcessFormComponent', () => {
   let component: ProcessFormComponent;
@@ -32,17 +31,13 @@ describe('ProcessFormComponent', () => {
       Object.assign(new ProcessParameter(), { name: '-b', value: '123' }),
       Object.assign(new ProcessParameter(), { name: '-c', value: 'value' }),
     ];
-    scriptService = jasmine.createSpyObj(
-      'scriptService',
-      {
-        invoke: observableOf({
-          response:
-            {
-              isSuccessful: true
-            }
-        })
-      }
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: observableOf({
+        response: {
+          isSuccessful: true,
+        },
+      }),
+    });
     router = {
       navigateByUrl: () => undefined,
     };
@@ -56,19 +51,28 @@ describe('ProcessFormComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [ProcessFormComponent],
       providers: [
         { provide: ScriptDataService, useValue: scriptService },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
-        { provide: RequestService, useValue: jasmine.createSpyObj('requestService', ['removeBySubstring', 'removeByHrefSubstring']) },
-        { provide: Router, useValue: jasmine.createSpyObj('router', ['navigateByUrl']) },
+        {
+          provide: RequestService,
+          useValue: jasmine.createSpyObj('requestService', [
+            'removeBySubstring',
+            'removeByHrefSubstring',
+          ]),
+        },
+        {
+          provide: Router,
+          useValue: jasmine.createSpyObj('router', ['navigateByUrl']),
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -95,7 +99,11 @@ describe('ProcessFormComponent', () => {
 
     it('should invoke the script with an empty array of parameters', () => {
       component.submitForm({ controls: {} } as any);
-      expect(scriptService.invoke).toHaveBeenCalledWith(script.id, [], jasmine.anything());
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        script.id,
+        [],
+        jasmine.anything()
+      );
     });
   });
 });

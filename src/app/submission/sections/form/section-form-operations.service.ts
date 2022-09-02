@@ -1,37 +1,41 @@
 import { Injectable } from '@angular/core';
-
-import { isEqual, isObject } from 'lodash';
 import {
-  DYNAMIC_FORM_CONTROL_TYPE_ARRAY,
-  DYNAMIC_FORM_CONTROL_TYPE_GROUP,
   DynamicFormArrayGroupModel,
   DynamicFormControlEvent,
   DynamicFormControlModel,
-  isDynamicFormControlEvent
+  DYNAMIC_FORM_CONTROL_TYPE_ARRAY,
+  DYNAMIC_FORM_CONTROL_TYPE_GROUP,
+  isDynamicFormControlEvent,
 } from '@ng-dynamic-forms/core';
-
-import { hasValue, isNotEmpty, isNotNull, isNotUndefined, isNull, isUndefined } from '../../../shared/empty.util';
-import { JsonPatchOperationPathCombiner } from '../../../core/json-patch/builder/json-patch-operation-path-combiner';
-import { FormFieldPreviousValueObject } from '../../../shared/form/builder/models/form-field-previous-value-object';
-import { JsonPatchOperationsBuilder } from '../../../core/json-patch/builder/json-patch-operations-builder';
-import { FormFieldLanguageValueObject } from '../../../shared/form/builder/models/form-field-language-value.model';
-import { DsDynamicInputModel } from '../../../shared/form/builder/ds-dynamic-form-ui/models/ds-dynamic-input.model';
-import { VocabularyEntry } from '../../../core/submission/vocabularies/models/vocabulary-entry.model';
-import { FormBuilderService } from '../../../shared/form/builder/form-builder.service';
-import { FormFieldMetadataValueObject } from '../../../shared/form/builder/models/form-field-metadata-value.model';
-import { DynamicQualdropModel } from '../../../shared/form/builder/ds-dynamic-form-ui/models/ds-dynamic-qualdrop.model';
-import { DynamicRelationGroupModel } from '../../../shared/form/builder/ds-dynamic-form-ui/models/relation-group/dynamic-relation-group.model';
-import { VocabularyEntryDetail } from '../../../core/submission/vocabularies/models/vocabulary-entry-detail.model';
 import { deepClone } from 'fast-json-patch';
+import { isEqual, isObject } from 'lodash';
+import { JsonPatchOperationPathCombiner } from '../../../core/json-patch/builder/json-patch-operation-path-combiner';
+import { JsonPatchOperationsBuilder } from '../../../core/json-patch/builder/json-patch-operations-builder';
+import { VocabularyEntryDetail } from '../../../core/submission/vocabularies/models/vocabulary-entry-detail.model';
+import { VocabularyEntry } from '../../../core/submission/vocabularies/models/vocabulary-entry.model';
 import { dateToString, isNgbDateStruct } from '../../../shared/date.util';
+import {
+  hasValue,
+  isNotEmpty,
+  isNotNull,
+  isNotUndefined,
+  isNull,
+  isUndefined,
+} from '../../../shared/empty.util';
+import { DsDynamicInputModel } from '../../../shared/form/builder/ds-dynamic-form-ui/models/ds-dynamic-input.model';
+import { DynamicQualdropModel } from '../../../shared/form/builder/ds-dynamic-form-ui/models/ds-dynamic-qualdrop.model';
 import { DynamicRowArrayModel } from '../../../shared/form/builder/ds-dynamic-form-ui/models/ds-dynamic-row-array-model';
+import { DynamicRelationGroupModel } from '../../../shared/form/builder/ds-dynamic-form-ui/models/relation-group/dynamic-relation-group.model';
+import { FormBuilderService } from '../../../shared/form/builder/form-builder.service';
+import { FormFieldLanguageValueObject } from '../../../shared/form/builder/models/form-field-language-value.model';
+import { FormFieldMetadataValueObject } from '../../../shared/form/builder/models/form-field-metadata-value.model';
+import { FormFieldPreviousValueObject } from '../../../shared/form/builder/models/form-field-previous-value-object';
 
 /**
  * The service handling all form section operations
  */
 @Injectable()
 export class SectionFormOperationsService {
-
   /**
    * Initialize service variables
    *
@@ -40,8 +44,8 @@ export class SectionFormOperationsService {
    */
   constructor(
     private formBuilder: FormBuilderService,
-    private operationsBuilder: JsonPatchOperationsBuilder) {
-  }
+    private operationsBuilder: JsonPatchOperationsBuilder
+  ) {}
 
   /**
    * Dispatch properly method based on form operation type
@@ -55,19 +59,34 @@ export class SectionFormOperationsService {
    * @param hasStoredValue
    *    representing if field value related to the specified operation has stored value
    */
-  public dispatchOperationsFromEvent(pathCombiner: JsonPatchOperationPathCombiner,
-                                     event: DynamicFormControlEvent,
-                                     previousValue: FormFieldPreviousValueObject,
-                                     hasStoredValue: boolean): void {
+  public dispatchOperationsFromEvent(
+    pathCombiner: JsonPatchOperationPathCombiner,
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject,
+    hasStoredValue: boolean
+  ): void {
     switch (event.type) {
       case 'remove':
-        this.dispatchOperationsFromRemoveEvent(pathCombiner, event, previousValue);
+        this.dispatchOperationsFromRemoveEvent(
+          pathCombiner,
+          event,
+          previousValue
+        );
         break;
       case 'change':
-        this.dispatchOperationsFromChangeEvent(pathCombiner, event, previousValue, hasStoredValue);
+        this.dispatchOperationsFromChangeEvent(
+          pathCombiner,
+          event,
+          previousValue,
+          hasStoredValue
+        );
         break;
       case 'move':
-        this.dispatchOperationsFromMoveEvent(pathCombiner, event, previousValue);
+        this.dispatchOperationsFromMoveEvent(
+          pathCombiner,
+          event,
+          previousValue
+        );
         break;
       default:
         break;
@@ -97,7 +116,6 @@ export class SectionFormOperationsService {
         } else {
           fieldIndex = event.context.index;
         }
-
       } else {
         // This is the case of a custom event which contains indexes information
         fieldIndex = event.index as any;
@@ -117,11 +135,14 @@ export class SectionFormOperationsService {
    *    true if is part of array, false otherwise
    */
   public isPartOfArrayOfGroup(model: DynamicFormControlModel): boolean {
-    return (isNotNull(model.parent)
-      && (model.parent as any).type === DYNAMIC_FORM_CONTROL_TYPE_GROUP
-      && (model.parent as any).parent
-      && (model.parent as any).parent.context
-      && (model.parent as any).parent.context.type === DYNAMIC_FORM_CONTROL_TYPE_ARRAY);
+    return (
+      isNotNull(model.parent) &&
+      (model.parent as any).type === DYNAMIC_FORM_CONTROL_TYPE_GROUP &&
+      (model.parent as any).parent &&
+      (model.parent as any).parent.context &&
+      (model.parent as any).parent.context.type ===
+        DYNAMIC_FORM_CONTROL_TYPE_ARRAY
+    );
   }
 
   /**
@@ -141,7 +162,9 @@ export class SectionFormOperationsService {
 
     context.groups.forEach((arrayModel: DynamicFormArrayGroupModel) => {
       const groupModel = arrayModel.group[0] as DynamicQualdropModel;
-      const metadataValueList = metadataValueMap.get(groupModel.qualdropId) ? metadataValueMap.get(groupModel.qualdropId) : [];
+      const metadataValueList = metadataValueMap.get(groupModel.qualdropId)
+        ? metadataValueMap.get(groupModel.qualdropId)
+        : [];
       if (groupModel.value) {
         metadataValueList.push(groupModel.value);
         metadataValueMap.set(groupModel.qualdropId, metadataValueList);
@@ -162,7 +185,7 @@ export class SectionFormOperationsService {
   public getFieldPathFromEvent(event: DynamicFormControlEvent): string {
     const fieldIndex = this.getArrayIndexFromEvent(event);
     const fieldId = this.getFieldPathSegmentedFromChangeEvent(event);
-    return (isNotUndefined(fieldIndex)) ? fieldId + '/' + fieldIndex : fieldId;
+    return isNotUndefined(fieldIndex) ? fieldId + '/' + fieldIndex : fieldId;
   }
 
   /**
@@ -182,17 +205,21 @@ export class SectionFormOperationsService {
       ? (event.model.parent as DynamicFormArrayGroupModel).context
       : (event.model.parent.parent as DynamicFormArrayGroupModel).context;
 
-    context.groups.forEach((arrayModel: DynamicFormArrayGroupModel, index: number) => {
-      const groupModel = arrayModel.group[0] as DynamicQualdropModel;
-      const metadataValueList = metadataValueMap.get(groupModel.qualdropId) ? metadataValueMap.get(groupModel.qualdropId) : [];
-      if (groupModel.value) {
-        metadataValueList.push(groupModel.value);
-        metadataValueMap.set(groupModel.qualdropId, metadataValueList);
+    context.groups.forEach(
+      (arrayModel: DynamicFormArrayGroupModel, index: number) => {
+        const groupModel = arrayModel.group[0] as DynamicQualdropModel;
+        const metadataValueList = metadataValueMap.get(groupModel.qualdropId)
+          ? metadataValueMap.get(groupModel.qualdropId)
+          : [];
+        if (groupModel.value) {
+          metadataValueList.push(groupModel.value);
+          metadataValueMap.set(groupModel.qualdropId, metadataValueList);
+        }
+        if (index === fieldIndex) {
+          path = groupModel.qualdropId + '/' + (metadataValueList.length - 1);
+        }
       }
-      if (index === fieldIndex) {
-        path = groupModel.qualdropId + '/' + (metadataValueList.length - 1);
-      }
-    });
+    );
 
     return path;
   }
@@ -205,11 +232,19 @@ export class SectionFormOperationsService {
    * @return string
    *    the field path
    */
-  public getFieldPathSegmentedFromChangeEvent(event: DynamicFormControlEvent): string {
+  public getFieldPathSegmentedFromChangeEvent(
+    event: DynamicFormControlEvent
+  ): string {
     let fieldId;
-    if (this.formBuilder.isQualdropGroup(event.model as DynamicFormControlModel)) {
+    if (
+      this.formBuilder.isQualdropGroup(event.model as DynamicFormControlModel)
+    ) {
       fieldId = (event.model as any).qualdropId;
-    } else if (this.formBuilder.isQualdropGroup(event.model.parent as DynamicFormControlModel)) {
+    } else if (
+      this.formBuilder.isQualdropGroup(
+        event.model.parent as DynamicFormControlModel
+      )
+    ) {
       fieldId = (event.model.parent as any).qualdropId;
     } else {
       fieldId = this.formBuilder.getId(event.model);
@@ -238,12 +273,16 @@ export class SectionFormOperationsService {
       if ((event.model as DsDynamicInputModel).hasAuthority) {
         if (Array.isArray(value)) {
           value.forEach((authority, index) => {
-            authority = Object.assign(new VocabularyEntry(), authority, { language });
+            authority = Object.assign(new VocabularyEntry(), authority, {
+              language,
+            });
             value[index] = authority;
           });
           fieldValue = value;
         } else {
-          fieldValue = Object.assign(new VocabularyEntry(), value, { language });
+          fieldValue = Object.assign(new VocabularyEntry(), value, {
+            language,
+          });
         }
       } else {
         // Language without Authority (input, textArea)
@@ -251,8 +290,12 @@ export class SectionFormOperationsService {
       }
     } else if (isNgbDateStruct(value)) {
       fieldValue = new FormFieldMetadataValueObject(dateToString(value));
-    } else if (value instanceof FormFieldLanguageValueObject || value instanceof VocabularyEntry
-      || value instanceof VocabularyEntryDetail || isObject(value)) {
+    } else if (
+      value instanceof FormFieldLanguageValueObject ||
+      value instanceof VocabularyEntry ||
+      value instanceof VocabularyEntryDetail ||
+      isObject(value)
+    ) {
       fieldValue = value;
     } else {
       fieldValue = new FormFieldMetadataValueObject(value);
@@ -273,13 +316,13 @@ export class SectionFormOperationsService {
     const metadataValueMap = new Map();
 
     items.forEach((item) => {
-      Object.keys(item)
-        .forEach((key) => {
-          const metadataValueList = metadataValueMap.get(key) ? metadataValueMap.get(key) : [];
-          metadataValueList.push(item[key]);
-          metadataValueMap.set(key, metadataValueList);
-        });
-
+      Object.keys(item).forEach((key) => {
+        const metadataValueList = metadataValueMap.get(key)
+          ? metadataValueMap.get(key)
+          : [];
+        metadataValueList.push(item[key]);
+        metadataValueMap.set(key, metadataValueList);
+      });
     });
     return metadataValueMap;
   }
@@ -294,18 +337,39 @@ export class SectionFormOperationsService {
    * @param previousValue
    *    the [[FormFieldPreviousValueObject]] for the specified operation
    */
-  protected dispatchOperationsFromRemoveEvent(pathCombiner: JsonPatchOperationPathCombiner,
-                                              event: DynamicFormControlEvent,
-                                              previousValue: FormFieldPreviousValueObject): void {
-
+  protected dispatchOperationsFromRemoveEvent(
+    pathCombiner: JsonPatchOperationPathCombiner,
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject
+  ): void {
     const path = this.getFieldPathFromEvent(event);
     const value = this.getFieldValueFromChangeEvent(event);
-    if (this.formBuilder.isQualdropGroup(event.model as DynamicFormControlModel)) {
-      this.dispatchOperationsFromMap(this.getQualdropValueMap(event), pathCombiner, event, previousValue);
-    } else if (event.context && event.context instanceof DynamicFormArrayGroupModel) {
+    if (
+      this.formBuilder.isQualdropGroup(event.model as DynamicFormControlModel)
+    ) {
+      this.dispatchOperationsFromMap(
+        this.getQualdropValueMap(event),
+        pathCombiner,
+        event,
+        previousValue
+      );
+    } else if (
+      event.context &&
+      event.context instanceof DynamicFormArrayGroupModel
+    ) {
       // Model is a DynamicRowArrayModel
-      this.handleArrayGroupPatch(pathCombiner, event, (event as any).context.context, previousValue);
-    } else if ((isNotEmpty(value) && typeof value === 'string') || (isNotEmpty(value) && value instanceof FormFieldMetadataValueObject && value.hasValue())) {
+      this.handleArrayGroupPatch(
+        pathCombiner,
+        event,
+        (event as any).context.context,
+        previousValue
+      );
+    } else if (
+      (isNotEmpty(value) && typeof value === 'string') ||
+      (isNotEmpty(value) &&
+        value instanceof FormFieldMetadataValueObject &&
+        value.hasValue())
+    ) {
       this.operationsBuilder.remove(pathCombiner.getPath(path));
     }
   }
@@ -329,18 +393,24 @@ export class SectionFormOperationsService {
       if (hasValue(event.group) && hasValue(event.group.value)) {
         const valuesInGroup = event.group.value
           .map((g) => Object.values(g))
-          .reduce((accumulator, currentValue) => accumulator.concat(currentValue))
+          .reduce((accumulator, currentValue) =>
+            accumulator.concat(currentValue)
+          )
           .filter((v) => isNotEmpty(v));
         if (valuesInGroup.length === 1) {
           // The first add for a field needs to be a different PATCH operation
           // for some reason
           this.operationsBuilder.add(
             pathCombiner.getPath([path]),
-            [value], false);
+            [value],
+            false
+          );
         } else {
           this.operationsBuilder.add(
             pathCombiner.getPath([path, '-']),
-            value, false);
+            value,
+            false
+          );
         }
       }
     }
@@ -358,14 +428,20 @@ export class SectionFormOperationsService {
    * @param hasStoredValue
    *    representing if field value related to the specified operation has stored value
    */
-  protected dispatchOperationsFromChangeEvent(pathCombiner: JsonPatchOperationPathCombiner,
-                                              event: DynamicFormControlEvent,
-                                              previousValue: FormFieldPreviousValueObject,
-                                              hasStoredValue: boolean): void {
-
-   if (event.context && event.context instanceof DynamicFormArrayGroupModel) {
+  protected dispatchOperationsFromChangeEvent(
+    pathCombiner: JsonPatchOperationPathCombiner,
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject,
+    hasStoredValue: boolean
+  ): void {
+    if (event.context && event.context instanceof DynamicFormArrayGroupModel) {
       // Model is a DynamicRowArrayModel
-      this.handleArrayGroupPatch(pathCombiner, event, (event as any).context.context, previousValue);
+      this.handleArrayGroupPatch(
+        pathCombiner,
+        event,
+        (event as any).context.context,
+        previousValue
+      );
       return;
     }
 
@@ -373,33 +449,57 @@ export class SectionFormOperationsService {
     const segmentedPath = this.getFieldPathSegmentedFromChangeEvent(event);
     const value = this.getFieldValueFromChangeEvent(event);
     // Detect which operation must be dispatched
-    if (this.formBuilder.isQualdropGroup(event.model.parent as DynamicFormControlModel)
-      || this.formBuilder.isQualdropGroup(event.model as DynamicFormControlModel)) {
+    if (
+      this.formBuilder.isQualdropGroup(
+        event.model.parent as DynamicFormControlModel
+      ) ||
+      this.formBuilder.isQualdropGroup(event.model as DynamicFormControlModel)
+    ) {
       // It's a qualdrup model
-      this.dispatchOperationsFromMap(this.getQualdropValueMap(event), pathCombiner, event, previousValue);
+      this.dispatchOperationsFromMap(
+        this.getQualdropValueMap(event),
+        pathCombiner,
+        event,
+        previousValue
+      );
     } else if (this.formBuilder.isRelationGroup(event.model)) {
       // It's a relation model
-      this.dispatchOperationsFromMap(this.getValueMap(value), pathCombiner, event, previousValue);
+      this.dispatchOperationsFromMap(
+        this.getValueMap(value),
+        pathCombiner,
+        event,
+        previousValue
+      );
     } else if (this.formBuilder.hasArrayGroupValue(event.model)) {
       // Model has as value an array, so dispatch an add operation with entire block of values
       this.operationsBuilder.add(
         pathCombiner.getPath(segmentedPath),
-        value, true);
-    } else if (previousValue.isPathEqual(this.formBuilder.getPath(event.model)) || (hasStoredValue && isNotEmpty(previousValue.value)) ) {
+        value,
+        true
+      );
+    } else if (
+      previousValue.isPathEqual(this.formBuilder.getPath(event.model)) ||
+      (hasStoredValue && isNotEmpty(previousValue.value))
+    ) {
       // Here model has a previous value changed or stored in the server
       if (hasValue(event.$event) && hasValue(event.$event.previousIndex)) {
         if (event.$event.previousIndex < 0) {
           this.operationsBuilder.add(
             pathCombiner.getPath(segmentedPath),
-            value, true);
+            value,
+            true
+          );
         } else {
           const moveTo = pathCombiner.getPath(path);
-          const moveFrom = pathCombiner.getPath(segmentedPath + '/' + event.$event.previousIndex);
-          if (isNotEmpty(moveFrom.path) && isNotEmpty(moveTo.path) && moveFrom.path !== moveTo.path) {
-            this.operationsBuilder.move(
-              moveTo,
-              moveFrom.path
-            );
+          const moveFrom = pathCombiner.getPath(
+            segmentedPath + '/' + event.$event.previousIndex
+          );
+          if (
+            isNotEmpty(moveFrom.path) &&
+            isNotEmpty(moveTo.path) &&
+            moveFrom.path !== moveTo.path
+          ) {
+            this.operationsBuilder.move(moveTo, moveFrom.path);
           }
         }
       } else if (!value.hasValue()) {
@@ -411,25 +511,26 @@ export class SectionFormOperationsService {
         }
       } else {
         // New value is not equal from the previous one, so dispatch a replace operation
-        this.operationsBuilder.replace(
-          pathCombiner.getPath(path),
-          value);
+        this.operationsBuilder.replace(pathCombiner.getPath(path), value);
       }
       previousValue.delete();
     } else if (value.hasValue()) {
       // Here model has no previous value but a new one
-      if (isUndefined(this.getArrayIndexFromEvent(event)) || this.getArrayIndexFromEvent(event) === 0) {
+      if (
+        isUndefined(this.getArrayIndexFromEvent(event)) ||
+        this.getArrayIndexFromEvent(event) === 0
+      ) {
         // Model is single field or is part of an array model but is the first item,
         // so dispatch an add operation that initialize the values of a specific metadata
         this.operationsBuilder.add(
           pathCombiner.getPath(segmentedPath),
-          value, true);
+          value,
+          true
+        );
       } else {
         // Model is part of an array model but is not the first item,
         // so dispatch an add operation that add a value to an existent metadata
-        this.operationsBuilder.add(
-          pathCombiner.getPath(path),
-          value);
+        this.operationsBuilder.add(pathCombiner.getPath(path), value);
       }
     }
   }
@@ -446,10 +547,12 @@ export class SectionFormOperationsService {
    * @param previousValue
    *    the [[FormFieldPreviousValueObject]] for the specified operation
    */
-  protected dispatchOperationsFromMap(valueMap: Map<string, any>,
-                                      pathCombiner: JsonPatchOperationPathCombiner,
-                                      event: DynamicFormControlEvent,
-                                      previousValue: FormFieldPreviousValueObject): void {
+  protected dispatchOperationsFromMap(
+    valueMap: Map<string, any>,
+    pathCombiner: JsonPatchOperationPathCombiner,
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject
+  ): void {
     const currentValueMap = valueMap;
     if (event.type === 'remove') {
       const path = this.getQualdropItemPathFromEvent(event);
@@ -460,7 +563,11 @@ export class SectionFormOperationsService {
           const currentValue = currentValueMap.get(index);
           if (currentValue) {
             if (!isEqual(entry, currentValue)) {
-              this.operationsBuilder.add(pathCombiner.getPath(index), currentValue, true);
+              this.operationsBuilder.add(
+                pathCombiner.getPath(index),
+                currentValue,
+                true
+              );
             }
             currentValueMap.delete(index);
           } else if (!currentValue) {
@@ -491,11 +598,17 @@ export class SectionFormOperationsService {
    * @param previousValue
    *    the [[FormFieldPreviousValueObject]] for the specified operation
    */
-  private dispatchOperationsFromMoveEvent(pathCombiner: JsonPatchOperationPathCombiner,
-                                          event: DynamicFormControlEvent,
-                                          previousValue: FormFieldPreviousValueObject) {
-
-    return this.handleArrayGroupPatch(pathCombiner, event.$event, (event as any).$event.arrayModel, previousValue);
+  private dispatchOperationsFromMoveEvent(
+    pathCombiner: JsonPatchOperationPathCombiner,
+    event: DynamicFormControlEvent,
+    previousValue: FormFieldPreviousValueObject
+  ) {
+    return this.handleArrayGroupPatch(
+      pathCombiner,
+      event.$event,
+      (event as any).$event.arrayModel,
+      previousValue
+    );
   }
 
   /**
@@ -510,11 +623,12 @@ export class SectionFormOperationsService {
    * @param previousValue
    *    the [[FormFieldPreviousValueObject]] for the specified operation
    */
-  private handleArrayGroupPatch(pathCombiner: JsonPatchOperationPathCombiner,
-                                event,
-                                model: DynamicRowArrayModel,
-                                previousValue: FormFieldPreviousValueObject) {
-
+  private handleArrayGroupPatch(
+    pathCombiner: JsonPatchOperationPathCombiner,
+    event,
+    model: DynamicRowArrayModel,
+    previousValue: FormFieldPreviousValueObject
+  ) {
     const arrayValue = this.formBuilder.getValueFromModel([model]);
     const segmentedPath = this.getFieldPathSegmentedFromChangeEvent(event);
     if (isNotEmpty(arrayValue)) {
@@ -523,9 +637,10 @@ export class SectionFormOperationsService {
         arrayValue[segmentedPath],
         false
       );
-    } else if (previousValue.isPathEqual(this.formBuilder.getPath(event.model))) {
+    } else if (
+      previousValue.isPathEqual(this.formBuilder.getPath(event.model))
+    ) {
       this.operationsBuilder.remove(pathCombiner.getPath(segmentedPath));
     }
-
   }
 }

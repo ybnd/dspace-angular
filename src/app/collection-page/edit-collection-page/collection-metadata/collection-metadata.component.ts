@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
-import { ComcolMetadataComponent } from '../../../shared/comcol/comcol-forms/edit-comcol-page/comcol-metadata/comcol-metadata.component';
-import { Collection } from '../../../core/shared/collection.model';
-import { CollectionDataService } from '../../../core/data/collection-data.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ItemTemplateDataService } from '../../../core/data/item-template-data.service';
+import { TranslateService } from '@ngx-translate/core';
 import { combineLatest as combineLatestObservable, Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { CollectionDataService } from '../../../core/data/collection-data.service';
+import { ItemTemplateDataService } from '../../../core/data/item-template-data.service';
 import { RemoteData } from '../../../core/data/remote-data';
+import { RequestService } from '../../../core/data/request.service';
+import { Collection } from '../../../core/shared/collection.model';
 import { Item } from '../../../core/shared/item.model';
 import { getFirstSucceededRemoteDataPayload } from '../../../core/shared/operators';
-import { switchMap } from 'rxjs/operators';
+import { ComcolMetadataComponent } from '../../../shared/comcol/comcol-forms/edit-comcol-page/comcol-metadata/comcol-metadata.component';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { RequestService } from '../../../core/data/request.service';
 import { getCollectionItemTemplateRoute } from '../../collection-page-routing-paths';
 
 /**
@@ -37,9 +37,15 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
     protected route: ActivatedRoute,
     protected notificationsService: NotificationsService,
     protected translate: TranslateService,
-    protected requestService: RequestService,
+    protected requestService: RequestService
   ) {
-    super(collectionDataService, router, route, notificationsService, translate);
+    super(
+      collectionDataService,
+      router,
+      route,
+      notificationsService,
+      translate
+    );
   }
 
   ngOnInit(): void {
@@ -53,7 +59,9 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
   initTemplateItem() {
     this.itemTemplateRD$ = this.dsoRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((collection: Collection) => this.itemTemplateService.findByCollectionID(collection.uuid))
+      switchMap((collection: Collection) =>
+        this.itemTemplateService.findByCollectionID(collection.uuid)
+      )
     );
   }
 
@@ -61,47 +69,66 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
    * Add a new item template to the collection and redirect to the item template edit page
    */
   addItemTemplate() {
-    const collection$ = this.dsoRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    );
+    const collection$ = this.dsoRD$.pipe(getFirstSucceededRemoteDataPayload());
     const template$ = collection$.pipe(
-      switchMap((collection: Collection) => this.itemTemplateService.create(new Item(), collection.uuid).pipe(
-        getFirstSucceededRemoteDataPayload(),
-      )),
+      switchMap((collection: Collection) =>
+        this.itemTemplateService
+          .create(new Item(), collection.uuid)
+          .pipe(getFirstSucceededRemoteDataPayload())
+      )
     );
     const templateHref$ = collection$.pipe(
-      switchMap((collection) => this.itemTemplateService.getCollectionEndpoint(collection.id)),
+      switchMap((collection) =>
+        this.itemTemplateService.getCollectionEndpoint(collection.id)
+      )
     );
 
-    combineLatestObservable(collection$, template$, templateHref$).subscribe(([collection, template, templateHref]) => {
-      this.requestService.setStaleByHrefSubstring(templateHref);
-      this.router.navigate([getCollectionItemTemplateRoute(collection.uuid)]);
-    });
+    combineLatestObservable(collection$, template$, templateHref$).subscribe(
+      ([collection, template, templateHref]) => {
+        this.requestService.setStaleByHrefSubstring(templateHref);
+        this.router.navigate([getCollectionItemTemplateRoute(collection.uuid)]);
+      }
+    );
   }
 
   /**
    * Delete the item template from the collection
    */
   deleteItemTemplate() {
-    const collection$ = this.dsoRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    );
+    const collection$ = this.dsoRD$.pipe(getFirstSucceededRemoteDataPayload());
     const template$ = collection$.pipe(
-      switchMap((collection: Collection) => this.itemTemplateService.findByCollectionID(collection.uuid).pipe(
-        getFirstSucceededRemoteDataPayload(),
-      )),
+      switchMap((collection: Collection) =>
+        this.itemTemplateService
+          .findByCollectionID(collection.uuid)
+          .pipe(getFirstSucceededRemoteDataPayload())
+      )
     );
-    combineLatestObservable(collection$, template$).pipe(
-      switchMap(([collection, template]) => {
-        return this.itemTemplateService.deleteByCollectionID(template, collection.uuid);
-      })
-    ).subscribe((success: boolean) => {
-      if (success) {
-        this.notificationsService.success(null, this.translate.get('collection.edit.template.notifications.delete.success'));
-      } else {
-        this.notificationsService.error(null, this.translate.get('collection.edit.template.notifications.delete.error'));
-      }
-      this.initTemplateItem();
-    });
+    combineLatestObservable(collection$, template$)
+      .pipe(
+        switchMap(([collection, template]) => {
+          return this.itemTemplateService.deleteByCollectionID(
+            template,
+            collection.uuid
+          );
+        })
+      )
+      .subscribe((success: boolean) => {
+        if (success) {
+          this.notificationsService.success(
+            null,
+            this.translate.get(
+              'collection.edit.template.notifications.delete.success'
+            )
+          );
+        } else {
+          this.notificationsService.error(
+            null,
+            this.translate.get(
+              'collection.edit.template.notifications.delete.error'
+            )
+          );
+        }
+        this.initTemplateItem();
+      });
   }
 }

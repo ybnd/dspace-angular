@@ -1,6 +1,6 @@
 import { first } from 'rxjs/operators';
-import { CommunityPageResolver } from './community-page.resolver';
 import { createSuccessfulRemoteDataObject$ } from '../shared/remote-data.utils';
+import { CommunityPageResolver } from './community-page.resolver';
 
 describe('CommunityPageResolver', () => {
   describe('resolve', () => {
@@ -11,7 +11,7 @@ describe('CommunityPageResolver', () => {
 
     beforeEach(() => {
       communityService = {
-        findById: (id: string) => createSuccessfulRemoteDataObject$({ id })
+        findById: (id: string) => createSuccessfulRemoteDataObject$({ id }),
       };
       store = jasmine.createSpyObj('store', {
         dispatch: {},
@@ -20,14 +20,13 @@ describe('CommunityPageResolver', () => {
     });
 
     it('should resolve a community with the correct id', (done) => {
-      resolver.resolve({ params: { id: uuid } } as any, { url: 'current-url' } as any)
+      resolver
+        .resolve({ params: { id: uuid } } as any, { url: 'current-url' } as any)
         .pipe(first())
-        .subscribe(
-          (resolved) => {
-            expect(resolved.payload.id).toEqual(uuid);
-            done();
-          }
-        );
+        .subscribe((resolved) => {
+          expect(resolved.payload.id).toEqual(uuid);
+          done();
+        });
     });
   });
 });

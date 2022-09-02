@@ -1,10 +1,10 @@
-import { CollectionGridElementComponent } from './collection-grid-element.component';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Collection } from '../../../core/shared/collection.model';
-import { LinkService } from '../../../core/cache/builders/link.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { LinkService } from '../../../core/cache/builders/link.service';
+import { Collection } from '../../../core/shared/collection.model';
+import { CollectionGridElementComponent } from './collection-grid-element.component';
 
 let collectionGridElementComponent: CollectionGridElementComponent;
 let fixture: ComponentFixture<CollectionGridElementComponent>;
@@ -14,43 +14,49 @@ const mockCollectionWithAbstract: Collection = Object.assign(new Collection(), {
     'dc.description.abstract': [
       {
         language: 'en_US',
-        value: 'Short description'
-      }
-    ]
-  }
+        value: 'Short description',
+      },
+    ],
+  },
 });
 
-const mockCollectionWithoutAbstract: Collection = Object.assign(new Collection(), {
-  metadata: {
-    'dc.title': [
-      {
-        language: 'en_US',
-        value: 'Test title'
-      }
-    ]
+const mockCollectionWithoutAbstract: Collection = Object.assign(
+  new Collection(),
+  {
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'Test title',
+        },
+      ],
+    },
   }
-});
+);
 
 const linkService = jasmine.createSpyObj('linkService', {
-  resolveLink: mockCollectionWithAbstract
+  resolveLink: mockCollectionWithAbstract,
 });
 
 describe('CollectionGridElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [CollectionGridElementComponent],
       providers: [
-        { provide: 'objectElementProvider', useValue: (mockCollectionWithAbstract) },
-        { provide: LinkService, useValue: linkService }
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCollectionWithAbstract,
+        },
+        { provide: LinkService, useValue: linkService },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(CollectionGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(CollectionGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -65,7 +71,9 @@ describe('CollectionGridElementComponent', () => {
     });
 
     it('should show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('p.card-text')
+      );
       expect(collectionAbstractField).not.toBeNull();
     });
   });
@@ -77,7 +85,9 @@ describe('CollectionGridElementComponent', () => {
     });
 
     it('should not show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('p.card-text')
+      );
       expect(collectionAbstractField).toBeNull();
     });
   });

@@ -1,8 +1,8 @@
-import { TranslateLoader } from '@ngx-translate/core';
-import { Observable, of as observableOf } from 'rxjs';
-import * as fs from 'fs';
 import { TransferState } from '@angular/platform-browser';
-import { NGX_TRANSLATE_STATE, NgxTranslateState } from './ngx-translate-state';
+import { TranslateLoader } from '@ngx-translate/core';
+import * as fs from 'fs';
+import { Observable, of as observableOf } from 'rxjs';
+import { NgxTranslateState, NGX_TRANSLATE_STATE } from './ngx-translate-state';
 
 const JSON5 = require('json5').default;
 
@@ -11,13 +11,11 @@ const JSON5 = require('json5').default;
  * TransferState
  */
 export class TranslateServerLoader implements TranslateLoader {
-
   constructor(
     protected transferState: TransferState,
     protected prefix: string = 'dist/assets/i18n/',
     protected suffix: string = '.json'
-  ) {
-  }
+  ) {}
 
   /**
    * Return the i18n messages for a given language, and store them in the TransferState
@@ -26,7 +24,9 @@ export class TranslateServerLoader implements TranslateLoader {
    */
   public getTranslation(lang: string): Observable<any> {
     // Retrieve the file for the given language, and parse it
-    const messages = JSON5.parse(fs.readFileSync(`${this.prefix}${lang}${this.suffix}`, 'utf8'));
+    const messages = JSON5.parse(
+      fs.readFileSync(`${this.prefix}${lang}${this.suffix}`, 'utf8')
+    );
     // Store the parsed messages in the transfer state so they'll be available immediately when the
     // app loads on the client
     this.storeInTransferState(lang, messages);
@@ -43,9 +43,12 @@ export class TranslateServerLoader implements TranslateLoader {
    * @protected
    */
   protected storeInTransferState(lang: string, messages) {
-    const prevState = this.transferState.get<NgxTranslateState>(NGX_TRANSLATE_STATE, {});
+    const prevState = this.transferState.get<NgxTranslateState>(
+      NGX_TRANSLATE_STATE,
+      {}
+    );
     const nextState = Object.assign({}, prevState, {
-      [lang]: messages
+      [lang]: messages,
     });
     this.transferState.set(NGX_TRANSLATE_STATE, nextState);
   }

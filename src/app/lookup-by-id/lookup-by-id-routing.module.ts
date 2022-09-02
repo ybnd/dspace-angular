@@ -1,7 +1,7 @@
-import { LookupGuard } from './lookup-guard';
 import { NgModule } from '@angular/core';
 import { RouterModule, UrlSegment } from '@angular/router';
 import { isNotEmpty } from '../shared/empty.util';
+import { LookupGuard } from './lookup-guard';
 import { ThemedObjectNotFoundComponent } from './objectnotfound/themed-objectnotfound.component';
 
 @NgModule({
@@ -10,17 +10,13 @@ import { ThemedObjectNotFoundComponent } from './objectnotfound/themed-objectnot
       {
         matcher: urlMatcher,
         canActivate: [LookupGuard],
-        component: ThemedObjectNotFoundComponent  }
-    ])
+        component: ThemedObjectNotFoundComponent,
+      },
+    ]),
   ],
-  providers: [
-    LookupGuard
-  ]
+  providers: [LookupGuard],
 })
-
-export class LookupRoutingModule {
-
-}
+export class LookupRoutingModule {}
 
 export function urlMatcher(url) {
   // The expected path is :idType/:id
@@ -35,8 +31,8 @@ export function urlMatcher(url) {
       consumed: url,
       posParams: {
         idType: new UrlSegment(idType, {}),
-        id: new UrlSegment(id, {})
-      }
+        id: new UrlSegment(id, {}),
+      },
     };
   }
   return null;

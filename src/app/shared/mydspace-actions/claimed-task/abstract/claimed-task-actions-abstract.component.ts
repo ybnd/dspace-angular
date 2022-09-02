@@ -1,19 +1,19 @@
 import { Component, Injector, OnDestroy } from '@angular/core';
-import { ClaimedTask } from '../../../../core/tasks/models/claimed-task-object.model';
-import { ClaimedTaskDataService } from '../../../../core/tasks/claimed-task-data.service';
-import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
 import { Router } from '@angular/router';
-import { NotificationsService } from '../../../notifications/notifications.service';
 import { TranslateService } from '@ngx-translate/core';
-import { SearchService } from '../../../../core/shared/search/search.service';
-import { RequestService } from '../../../../core/data/request.service';
 import { Observable } from 'rxjs';
-import { RemoteData } from '../../../../core/data/remote-data';
-import { WorkflowItem } from '../../../../core/submission/models/workflowitem.model';
 import { switchMap, take } from 'rxjs/operators';
-import { CLAIMED_TASK } from '../../../../core/tasks/models/claimed-task-object.resource-type';
-import { getFirstSucceededRemoteDataPayload } from '../../../../core/shared/operators';
+import { RemoteData } from '../../../../core/data/remote-data';
+import { RequestService } from '../../../../core/data/request.service';
+import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
 import { Item } from '../../../../core/shared/item.model';
+import { getFirstSucceededRemoteDataPayload } from '../../../../core/shared/operators';
+import { SearchService } from '../../../../core/shared/search/search.service';
+import { WorkflowItem } from '../../../../core/submission/models/workflowitem.model';
+import { ClaimedTaskDataService } from '../../../../core/tasks/claimed-task-data.service';
+import { ClaimedTask } from '../../../../core/tasks/models/claimed-task-object.model';
+import { CLAIMED_TASK } from '../../../../core/tasks/models/claimed-task-object.resource-type';
+import { NotificationsService } from '../../../notifications/notifications.service';
 import { MyDSpaceReloadableActionsComponent } from '../../mydspace-reloadable-actions';
 
 /**
@@ -25,10 +25,15 @@ import { MyDSpaceReloadableActionsComponent } from '../../mydspace-reloadable-ac
  */
 @Component({
   selector: 'ds-claimed-task-action-abstract',
-  template: ''
+  template: '',
 })
-export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReloadableActionsComponent<ClaimedTask, ClaimedTaskDataService> implements OnDestroy {
-
+export abstract class ClaimedTaskActionsAbstractComponent
+  extends MyDSpaceReloadableActionsComponent<
+    ClaimedTask,
+    ClaimedTaskDataService
+  >
+  implements OnDestroy
+{
   /**
    * The workflow task option the child component represents
    */
@@ -43,13 +48,23 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
 
   subs = [];
 
-  protected constructor(protected injector: Injector,
-                        protected router: Router,
-                        protected notificationsService: NotificationsService,
-                        protected translate: TranslateService,
-                        protected searchService: SearchService,
-                        protected requestService: RequestService) {
-    super(CLAIMED_TASK, injector, router, notificationsService, translate, searchService, requestService);
+  protected constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService
+  ) {
+    super(
+      CLAIMED_TASK,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**
@@ -65,7 +80,7 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
    */
   createbody(): any {
     return {
-      [this.option]: 'true'
+      [this.option]: 'true',
     };
   }
 
@@ -88,17 +103,21 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
     if (!(this.object as any).workflowitem) {
       return;
     }
-    this.subs.push(this.object.workflowitem.pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((workflowItem: WorkflowItem) => workflowItem.item.pipe(getFirstSucceededRemoteDataPayload())
-      ))
-      .subscribe((item: Item) => {
-        this.itemUuid = item.uuid;
-      }));
+    this.subs.push(
+      this.object.workflowitem
+        .pipe(
+          getFirstSucceededRemoteDataPayload(),
+          switchMap((workflowItem: WorkflowItem) =>
+            workflowItem.item.pipe(getFirstSucceededRemoteDataPayload())
+          )
+        )
+        .subscribe((item: Item) => {
+          this.itemUuid = item.uuid;
+        })
+    );
   }
 
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
-
 }

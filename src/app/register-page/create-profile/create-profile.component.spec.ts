@@ -1,31 +1,31 @@
-import { CreateProfileComponent } from './create-profile.component';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { Registration } from '../../core/shared/registration.model';
 import { CommonModule } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { EPersonDataService } from '../../core/eperson/eperson-data.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { of as observableOf } from 'rxjs';
 import { By } from '@angular/platform-browser';
-import { EPerson } from '../../core/eperson/models/eperson.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Store } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
 import { AuthenticateAction } from '../../core/auth/auth.actions';
-import { RouterStub } from '../../shared/testing/router.stub';
-import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
+import { CoreState } from '../../core/core-state.model';
 import {
+  EndUserAgreementService,
   END_USER_AGREEMENT_METADATA_FIELD,
-  EndUserAgreementService
 } from '../../core/end-user-agreement/end-user-agreement.service';
+import { EPersonDataService } from '../../core/eperson/eperson-data.service';
+import { EPerson } from '../../core/eperson/models/eperson.model';
+import { Registration } from '../../core/shared/registration.model';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../shared/remote-data.utils';
-import { CoreState } from '../../core/core-state.model';
+import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
+import { RouterStub } from '../../shared/testing/router.stub';
+import { CreateProfileComponent } from './create-profile.component';
 
 describe('CreateProfileComponent', () => {
   let comp: CreateProfileComponent;
@@ -38,7 +38,10 @@ describe('CreateProfileComponent', () => {
   let store: Store<CoreState>;
   let endUserAgreementService: EndUserAgreementService;
 
-  const registration = Object.assign(new Registration(), {email: 'test@email.org', token: 'test-token'});
+  const registration = Object.assign(new Registration(), {
+    email: 'test@email.org',
+    token: 'test-token',
+  });
 
   let values;
   let eperson: EPerson;
@@ -50,72 +53,76 @@ describe('CreateProfileComponent', () => {
       metadata: {
         'eperson.firstname': [
           {
-            value: 'First'
-          }
-        ],
-          'eperson.lastname': [
-          {
-            value: 'Last'
+            value: 'First',
           },
         ],
-          'eperson.phone': [
+        'eperson.lastname': [
           {
-            value: 'Phone'
-          }
+            value: 'Last',
+          },
         ],
-          'eperson.language': [
+        'eperson.phone': [
           {
-            value: 'en'
-          }
-        ]
+            value: 'Phone',
+          },
+        ],
+        'eperson.language': [
+          {
+            value: 'en',
+          },
+        ],
       },
       email: 'test@email.org',
-        password: 'password',
+      password: 'password',
       canLogIn: true,
-      requireCertificate: false
+      requireCertificate: false,
     };
     eperson = Object.assign(new EPerson(), values);
     valuesWithAgreement = {
       metadata: {
         'eperson.firstname': [
           {
-            value: 'First'
-          }
+            value: 'First',
+          },
         ],
         'eperson.lastname': [
           {
-            value: 'Last'
+            value: 'Last',
           },
         ],
         'eperson.phone': [
           {
-            value: 'Phone'
-          }
+            value: 'Phone',
+          },
         ],
         'eperson.language': [
           {
-            value: 'en'
-          }
+            value: 'en',
+          },
         ],
         [END_USER_AGREEMENT_METADATA_FIELD]: [
           {
-            value: 'true'
-          }
-        ]
+            value: 'true',
+          },
+        ],
       },
       email: 'test@email.org',
       password: 'password',
       canLogIn: true,
-      requireCertificate: false
+      requireCertificate: false,
     };
     epersonWithAgreement = Object.assign(new EPerson(), valuesWithAgreement);
 
-    route = {data: observableOf({registration: createSuccessfulRemoteDataObject(registration)})};
+    route = {
+      data: observableOf({
+        registration: createSuccessfulRemoteDataObject(registration),
+      }),
+    };
     router = new RouterStub();
     notificationsService = new NotificationsServiceStub();
 
     ePersonDataService = jasmine.createSpyObj('ePersonDataService', {
-      createEPersonForToken: createSuccessfulRemoteDataObject$({})
+      createEPersonForToken: createSuccessfulRemoteDataObject$({}),
     });
 
     store = jasmine.createSpyObj('store', {
@@ -124,22 +131,27 @@ describe('CreateProfileComponent', () => {
 
     endUserAgreementService = jasmine.createSpyObj('endUserAgreementService', {
       isCookieAccepted: false,
-      removeCookieAccepted: {}
+      removeCookieAccepted: {},
     });
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), ReactiveFormsModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        ReactiveFormsModule,
+      ],
       declarations: [CreateProfileComponent],
       providers: [
-        {provide: Router, useValue: router},
-        {provide: ActivatedRoute, useValue: route},
-        {provide: Store, useValue: store},
-        {provide: EPersonDataService, useValue: ePersonDataService},
-        {provide: FormBuilder, useValue: new FormBuilder()},
-        {provide: NotificationsService, useValue: notificationsService},
-        {provide: EndUserAgreementService, useValue: endUserAgreementService},
+        { provide: Router, useValue: router },
+        { provide: ActivatedRoute, useValue: route },
+        { provide: Store, useValue: store },
+        { provide: EPersonDataService, useValue: ePersonDataService },
+        { provide: FormBuilder, useValue: new FormBuilder() },
+        { provide: NotificationsService, useValue: notificationsService },
+        { provide: EndUserAgreementService, useValue: endUserAgreementService },
       ],
-      schemas: [CUSTOM_ELEMENTS_SCHEMA]
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
   beforeEach(() => {
@@ -151,14 +163,23 @@ describe('CreateProfileComponent', () => {
 
   describe('init', () => {
     it('should initialise mail address', () => {
-      const elem = fixture.debugElement.queryAll(By.css('span#email'))[0].nativeElement;
+      const elem = fixture.debugElement.queryAll(By.css('span#email'))[0]
+        .nativeElement;
       expect(elem.innerHTML).toContain('test@email.org');
     });
     it('should initialise the form', () => {
-      const firstName = fixture.debugElement.queryAll(By.css('input#firstName'))[0].nativeElement;
-      const lastName = fixture.debugElement.queryAll(By.css('input#lastName'))[0].nativeElement;
-      const contactPhone = fixture.debugElement.queryAll(By.css('input#contactPhone'))[0].nativeElement;
-      const language = fixture.debugElement.queryAll(By.css('select#language'))[0].nativeElement;
+      const firstName = fixture.debugElement.queryAll(
+        By.css('input#firstName')
+      )[0].nativeElement;
+      const lastName = fixture.debugElement.queryAll(
+        By.css('input#lastName')
+      )[0].nativeElement;
+      const contactPhone = fixture.debugElement.queryAll(
+        By.css('input#contactPhone')
+      )[0].nativeElement;
+      const language = fixture.debugElement.queryAll(
+        By.css('select#language')
+      )[0].nativeElement;
 
       expect(firstName).toBeDefined();
       expect(lastName).toBeDefined();
@@ -168,7 +189,6 @@ describe('CreateProfileComponent', () => {
   });
 
   describe('submitEperson', () => {
-
     it('should submit an eperson for creation and log in on success', () => {
       comp.firstName.patchValue('First');
       comp.lastName.patchValue('Last');
@@ -179,15 +199,22 @@ describe('CreateProfileComponent', () => {
 
       comp.submitEperson();
 
-      expect(ePersonDataService.createEPersonForToken).toHaveBeenCalledWith(eperson, 'test-token');
-      expect(store.dispatch).toHaveBeenCalledWith(new AuthenticateAction('test@email.org', 'password'));
+      expect(ePersonDataService.createEPersonForToken).toHaveBeenCalledWith(
+        eperson,
+        'test-token'
+      );
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new AuthenticateAction('test@email.org', 'password')
+      );
       expect(router.navigate).toHaveBeenCalledWith(['/home']);
       expect(notificationsService.success).toHaveBeenCalled();
     });
 
     describe('when the end-user-agreement cookie is accepted', () => {
       beforeEach(() => {
-        (endUserAgreementService.isCookieAccepted as jasmine.Spy).and.returnValue(true);
+        (
+          endUserAgreementService.isCookieAccepted as jasmine.Spy
+        ).and.returnValue(true);
       });
 
       it('should submit an eperson with agreement metadata for creation and log in on success', () => {
@@ -200,8 +227,13 @@ describe('CreateProfileComponent', () => {
 
         comp.submitEperson();
 
-        expect(ePersonDataService.createEPersonForToken).toHaveBeenCalledWith(epersonWithAgreement, 'test-token');
-        expect(store.dispatch).toHaveBeenCalledWith(new AuthenticateAction('test@email.org', 'password'));
+        expect(ePersonDataService.createEPersonForToken).toHaveBeenCalledWith(
+          epersonWithAgreement,
+          'test-token'
+        );
+        expect(store.dispatch).toHaveBeenCalledWith(
+          new AuthenticateAction('test@email.org', 'password')
+        );
         expect(router.navigate).toHaveBeenCalledWith(['/home']);
         expect(notificationsService.success).toHaveBeenCalled();
       });
@@ -221,8 +253,9 @@ describe('CreateProfileComponent', () => {
     });
 
     it('should submit an eperson for creation and stay on page on error', () => {
-
-      (ePersonDataService.createEPersonForToken as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      (ePersonDataService.createEPersonForToken as jasmine.Spy).and.returnValue(
+        createFailedRemoteDataObject$('Error', 500)
+      );
 
       comp.firstName.patchValue('First');
       comp.lastName.patchValue('Last');
@@ -233,14 +266,18 @@ describe('CreateProfileComponent', () => {
 
       comp.submitEperson();
 
-      expect(ePersonDataService.createEPersonForToken).toHaveBeenCalledWith(eperson, 'test-token');
+      expect(ePersonDataService.createEPersonForToken).toHaveBeenCalledWith(
+        eperson,
+        'test-token'
+      );
       expect(store.dispatch).not.toHaveBeenCalled();
       expect(router.navigate).not.toHaveBeenCalled();
       expect(notificationsService.error).toHaveBeenCalled();
     });
     it('should submit not create an eperson when the user info form is invalid', () => {
-
-      (ePersonDataService.createEPersonForToken as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      (ePersonDataService.createEPersonForToken as jasmine.Spy).and.returnValue(
+        createFailedRemoteDataObject$('Error', 500)
+      );
 
       comp.firstName.patchValue('');
       comp.lastName.patchValue('Last');
@@ -254,8 +291,9 @@ describe('CreateProfileComponent', () => {
       expect(ePersonDataService.createEPersonForToken).not.toHaveBeenCalled();
     });
     it('should submit not create an eperson when the password is invalid', () => {
-
-      (ePersonDataService.createEPersonForToken as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      (ePersonDataService.createEPersonForToken as jasmine.Spy).and.returnValue(
+        createFailedRemoteDataObject$('Error', 500)
+      );
 
       comp.firstName.patchValue('First');
       comp.lastName.patchValue('Last');
@@ -268,6 +306,5 @@ describe('CreateProfileComponent', () => {
 
       expect(ePersonDataService.createEPersonForToken).not.toHaveBeenCalled();
     });
-
   });
 });

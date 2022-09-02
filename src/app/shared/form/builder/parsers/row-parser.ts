@@ -1,38 +1,46 @@
 import { Injectable, Injector } from '@angular/core';
-
-import { DYNAMIC_FORM_CONTROL_TYPE_ARRAY, DynamicFormGroupModelConfig } from '@ng-dynamic-forms/core';
+import {
+  DynamicFormGroupModelConfig,
+  DYNAMIC_FORM_CONTROL_TYPE_ARRAY,
+} from '@ng-dynamic-forms/core';
 import { uniqueId } from 'lodash';
-
 import { isEmpty } from '../../../empty.util';
+import { DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP } from '../ds-dynamic-form-ui/ds-dynamic-form-constants';
 import { DynamicRowGroupModel } from '../ds-dynamic-form-ui/models/ds-dynamic-row-group-model';
 import { FormFieldModel } from '../models/form-field.model';
-import { CONFIG_DATA, FieldParser, INIT_FORM_VALUES, PARSER_OPTIONS, SUBMISSION_ID } from './field-parser';
+import {
+  CONFIG_DATA,
+  FieldParser,
+  INIT_FORM_VALUES,
+  PARSER_OPTIONS,
+  SUBMISSION_ID,
+} from './field-parser';
 import { ParserFactory } from './parser-factory';
 import { ParserOptions } from './parser-options';
 import { ParserType } from './parser-type';
 import { setLayout } from './parser.utils';
-import { DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP } from '../ds-dynamic-form-ui/ds-dynamic-form-constants';
 
 export const ROW_ID_PREFIX = 'df-row-group-config-';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 
 /**
  * Parser the submission data for a single row
  */
 export class RowParser {
-  constructor(private parentInjector: Injector) {
-  }
+  constructor(private parentInjector: Injector) {}
 
-  public parse(submissionId: string,
-               rowData,
-               scopeUUID,
-               initFormValues: any,
-               submissionScope,
-               readOnly: boolean,
-               typeField: string): DynamicRowGroupModel {
+  public parse(
+    submissionId: string,
+    rowData,
+    scopeUUID,
+    initFormValues: any,
+    submissionScope,
+    readOnly: boolean,
+    typeField: string
+  ): DynamicRowGroupModel {
     let fieldModel: any = null;
     let parsedResult = null;
     const config: DynamicFormGroupModelConfig = {
@@ -40,23 +48,29 @@ export class RowParser {
       group: [],
     };
 
-    const scopedFields: FormFieldModel[] = this.filterScopedFields(rowData.fields, submissionScope);
+    const scopedFields: FormFieldModel[] = this.filterScopedFields(
+      rowData.fields,
+      submissionScope
+    );
 
-    const layoutDefaultGridClass = ' col-sm-' + Math.trunc(12 / scopedFields.length);
+    const layoutDefaultGridClass =
+      ' col-sm-' + Math.trunc(12 / scopedFields.length);
     const layoutClass = ' d-flex flex-column justify-content-start';
 
     const parserOptions: ParserOptions = {
       readOnly: readOnly,
       submissionScope: submissionScope,
       collectionUUID: scopeUUID,
-      typeField: typeField
+      typeField: typeField,
     };
 
     // Iterate over row's fields
     scopedFields.forEach((fieldData: FormFieldModel) => {
-
-      const layoutFieldClass = (fieldData.style || layoutDefaultGridClass) + layoutClass;
-      const parserProvider = ParserFactory.getProvider(fieldData.input.type as ParserType);
+      const layoutFieldClass =
+        (fieldData.style || layoutDefaultGridClass) + layoutClass;
+      const parserProvider = ParserFactory.getProvider(
+        fieldData.input.type as ParserType
+      );
       if (parserProvider) {
         const fieldInjector = Injector.create({
           providers: [
@@ -64,18 +78,23 @@ export class RowParser {
             { provide: SUBMISSION_ID, useValue: submissionId },
             { provide: CONFIG_DATA, useValue: fieldData },
             { provide: INIT_FORM_VALUES, useValue: initFormValues },
-            { provide: PARSER_OPTIONS, useValue: parserOptions }
+            { provide: PARSER_OPTIONS, useValue: parserOptions },
           ],
-          parent: this.parentInjector
+          parent: this.parentInjector,
         });
 
         fieldModel = fieldInjector.get(FieldParser).parse();
       } else {
-        throw new Error(`unknown form control model type "${fieldData.input.type}" defined for Input field with label "${fieldData.label}".`,);
+        throw new Error(
+          `unknown form control model type "${fieldData.input.type}" defined for Input field with label "${fieldData.label}".`
+        );
       }
 
       if (fieldModel) {
-        if (fieldModel.type === DYNAMIC_FORM_CONTROL_TYPE_ARRAY || fieldModel.type === DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP) {
+        if (
+          fieldModel.type === DYNAMIC_FORM_CONTROL_TYPE_ARRAY ||
+          fieldModel.type === DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP
+        ) {
           if (rowData.fields.length > 1) {
             setLayout(fieldModel, 'grid', 'host', layoutFieldClass);
             config.group.push(fieldModel);
@@ -106,7 +125,7 @@ export class RowParser {
       const clsGroup = {
         element: {
           control: 'form-row',
-        }
+        },
       };
       const groupModel = new DynamicRowGroupModel(config, clsGroup);
       if (Array.isArray(parsedResult)) {
@@ -119,10 +138,17 @@ export class RowParser {
   }
 
   checksFieldScope(fieldScope, submissionScope) {
-    return (isEmpty(fieldScope) || isEmpty(submissionScope) || fieldScope === submissionScope);
+    return (
+      isEmpty(fieldScope) ||
+      isEmpty(submissionScope) ||
+      fieldScope === submissionScope
+    );
   }
 
-  filterScopedFields(fields: FormFieldModel[], submissionScope): FormFieldModel[] {
+  filterScopedFields(
+    fields: FormFieldModel[],
+    submissionScope
+  ): FormFieldModel[] {
     const filteredFields: FormFieldModel[] = [];
     fields.forEach((field: FormFieldModel) => {
       // Whether field scope doesn't match the submission scope, skip it

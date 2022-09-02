@@ -8,19 +8,12 @@
     "eslint-plugin-deprecation",
     "eslint-plugin-unused-imports"
   ],
-  "extends": [
-    "prettier"
-  ],
+  "extends": ["prettier"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "./tsconfig.json",
-          "./cypress/tsconfig.json"
-        ],
+        "project": ["./tsconfig.json", "./cypress/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -31,14 +24,8 @@
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
-        "max-classes-per-file": [
-          "error",
-          1
-        ],
-        "comma-dangle": [
-          "off",
-          "always-multiline"
-        ],
+        "max-classes-per-file": ["error", 1],
+        "comma-dangle": ["off", "always-multiline"],
         "no-console": [
           "error",
           {
@@ -91,7 +78,7 @@
             "allowTernary": true
           }
         ],
-        "prefer-const": "off",            // todo: re-enable & fix errors (more strict than it used to be in TSLint)
+        "prefer-const": "off", // todo: re-enable & fix errors (more strict than it used to be in TSLint)
         "prefer-spread": "off",
         "no-underscore-dangle": "off",
 
@@ -103,7 +90,7 @@
         "no-mixed-spaces-and-tabs": "off",
         "no-trailing-spaces": "off",
         "space-infix-ops": "off",
-        "no-unexpected-multiline": "off",   // todo: may conflict with Prettier
+        "no-unexpected-multiline": "off", // todo: may conflict with Prettier
 
         "@angular-eslint/directive-selector": [
           "error",
@@ -124,9 +111,7 @@
         "@angular-eslint/pipe-prefix": [
           "error",
           {
-            "prefixes": [
-              "ds"
-            ]
+            "prefixes": ["ds"]
           }
         ],
         "@angular-eslint/no-attribute-decorator": "error",
@@ -135,7 +120,7 @@
         "@angular-eslint/no-output-on-prefix": "warn",
         "@angular-eslint/no-conflicting-lifecycle": "warn",
 
-        "@typescript-eslint/no-inferrable-types":[
+        "@typescript-eslint/no-inferrable-types": [
           "error",
           {
             "ignoreParameters": true
@@ -172,7 +157,7 @@
           }
         ],
         "@typescript-eslint/unified-signatures": "error",
-        "@typescript-eslint/ban-types": "warn",  // todo: deal with {} type issues & re-enable
+        "@typescript-eslint/ban-types": "warn", // todo: deal with {} type issues & re-enable
         "@typescript-eslint/no-floating-promises": "warn",
         "@typescript-eslint/no-misused-promises": "warn",
         "@typescript-eslint/restrict-plus-operands": "warn",
@@ -200,12 +185,8 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ],
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"],
       "rules": {
         // todo: re-enable & fix errors
         "@angular-eslint/template/no-negated-async": "off",

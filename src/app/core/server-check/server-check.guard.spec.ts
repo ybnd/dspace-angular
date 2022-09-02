@@ -1,11 +1,10 @@
-import { ServerCheckGuard } from './server-check.guard';
 import { Router } from '@angular/router';
-
 import { of } from 'rxjs';
 import { take } from 'rxjs/operators';
-
 import { getPageInternalServerErrorRoute } from '../../app-routing-paths';
 import { RootDataService } from '../data/root-data.service';
+import { ServerCheckGuard } from './server-check.guard';
+
 import SpyObj = jasmine.SpyObj;
 
 describe('ServerCheckGuard', () => {
@@ -15,10 +14,10 @@ describe('ServerCheckGuard', () => {
 
   rootDataServiceStub = jasmine.createSpyObj('RootDataService', {
     checkServerAvailability: jasmine.createSpy('checkServerAvailability'),
-    invalidateRootCache: jasmine.createSpy('invalidateRootCache')
+    invalidateRootCache: jasmine.createSpy('invalidateRootCache'),
   });
   router = jasmine.createSpyObj('Router', {
-    navigateByUrl: jasmine.createSpy('navigateByUrl')
+    navigateByUrl: jasmine.createSpy('navigateByUrl'),
   });
 
   beforeEach(() => {
@@ -40,13 +39,16 @@ describe('ServerCheckGuard', () => {
     });
 
     it('should not redirect to error page', () => {
-      guard.canActivateChild({} as any, {} as any).pipe(
-        take(1)
-      ).subscribe((canActivate: boolean) => {
-        expect(canActivate).toEqual(true);
-        expect(rootDataServiceStub.invalidateRootCache).not.toHaveBeenCalled();
-        expect(router.navigateByUrl).not.toHaveBeenCalled();
-      });
+      guard
+        .canActivateChild({} as any, {} as any)
+        .pipe(take(1))
+        .subscribe((canActivate: boolean) => {
+          expect(canActivate).toEqual(true);
+          expect(
+            rootDataServiceStub.invalidateRootCache
+          ).not.toHaveBeenCalled();
+          expect(router.navigateByUrl).not.toHaveBeenCalled();
+        });
     });
   });
 
@@ -56,13 +58,16 @@ describe('ServerCheckGuard', () => {
     });
 
     it('should redirect to error page', () => {
-      guard.canActivateChild({} as any, {} as any).pipe(
-        take(1)
-      ).subscribe((canActivate: boolean) => {
-        expect(canActivate).toEqual(false);
-        expect(rootDataServiceStub.invalidateRootCache).toHaveBeenCalled();
-        expect(router.navigateByUrl).toHaveBeenCalledWith(getPageInternalServerErrorRoute());
-      });
+      guard
+        .canActivateChild({} as any, {} as any)
+        .pipe(take(1))
+        .subscribe((canActivate: boolean) => {
+          expect(canActivate).toEqual(false);
+          expect(rootDataServiceStub.invalidateRootCache).toHaveBeenCalled();
+          expect(router.navigateByUrl).toHaveBeenCalledWith(
+            getPageInternalServerErrorRoute()
+          );
+        });
     });
   });
 });

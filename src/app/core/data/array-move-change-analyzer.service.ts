@@ -1,6 +1,6 @@
-import { MoveOperation } from 'fast-json-patch';
-import { Injectable } from '@angular/core';
 import { moveItemInArray } from '@angular/cdk/drag-drop';
+import { Injectable } from '@angular/core';
+import { MoveOperation } from 'fast-json-patch';
 import { hasValue } from '../../shared/empty.util';
 
 /**
@@ -8,7 +8,6 @@ import { hasValue } from '../../shared/empty.util';
  */
 @Injectable()
 export class ArrayMoveChangeAnalyzer<T> {
-
   /**
    * Compare two arrays detecting and returning move operations
    *
@@ -24,11 +23,13 @@ export class ArrayMoveChangeAnalyzer<T> {
         const movedIndex = moved.indexOf(value);
         if (index !== otherIndex && movedIndex !== otherIndex) {
           moveItemInArray(moved, movedIndex, otherIndex);
-          result.push(Object.assign({
-            op: 'move',
-            from: '/' + movedIndex,
-            path: '/' + otherIndex
-          }) as MoveOperation);
+          result.push(
+            Object.assign({
+              op: 'move',
+              from: '/' + movedIndex,
+              path: '/' + otherIndex,
+            }) as MoveOperation
+          );
         }
       }
     });

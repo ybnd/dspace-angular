@@ -1,7 +1,7 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { OrgUnitInputSuggestionsComponent } from './org-unit-input-suggestions.component';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { OrgUnitInputSuggestionsComponent } from './org-unit-input-suggestions.component';
 
 let component: OrgUnitInputSuggestionsComponent;
 let fixture: ComponentFixture<OrgUnitInputSuggestionsComponent>;
@@ -19,15 +19,14 @@ describe('OrgUnitInputSuggestionsComponent', () => {
     init();
     TestBed.configureTestingModule({
       declarations: [OrgUnitInputSuggestionsComponent],
-      imports: [
-        FormsModule,
-      ],
-      providers: [
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(OrgUnitInputSuggestionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      imports: [FormsModule],
+      providers: [],
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(OrgUnitInputSuggestionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -60,5 +59,4 @@ describe('OrgUnitInputSuggestionsComponent', () => {
       expect(component.value).toEqual(testValue);
     });
   });
-
 });

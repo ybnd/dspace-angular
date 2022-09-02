@@ -2,10 +2,10 @@
 /**
  * The list of RelationshipAction type definitions
  */
-import { type } from '../../../../ngrx/type';
 import { Action } from '@ngrx/store';
-import { Item } from '../../../../../core/shared/item.model';
 import { Relationship } from '../../../../../core/shared/item-relationships/relationship.model';
+import { Item } from '../../../../../core/shared/item.model';
+import { type } from '../../../../ngrx/type';
 
 export const RelationshipActionTypes = {
   ADD_RELATIONSHIP: type('dspace/relationship/ADD_RELATIONSHIP'),
@@ -44,7 +44,13 @@ export class AddRelationshipAction implements Action {
     submissionId: string,
     nameVariant?: string
   ) {
-    this.payload = { item1, item2, relationshipType, submissionId, nameVariant };
+    this.payload = {
+      item1,
+      item2,
+      relationshipType,
+      submissionId,
+      nameVariant,
+    };
   }
 }
 
@@ -75,7 +81,13 @@ export class UpdateRelationshipNameVariantAction implements Action {
     submissionId: string,
     nameVariant?: string
   ) {
-    this.payload = { item1, item2, relationshipType, submissionId, nameVariant };
+    this.payload = {
+      item1,
+      item2,
+      relationshipType,
+      submissionId,
+      nameVariant,
+    };
   }
 }
 
@@ -93,10 +105,7 @@ export class UpdateRelationshipAction implements Action {
    * @param relationship The relationship
    * @param submissionId The current submissionId
    */
-  constructor(
-    relationship: Relationship,
-    submissionId: string,
-  ) {
+  constructor(relationship: Relationship, submissionId: string) {
     this.payload = { relationship, submissionId };
   }
 }
@@ -132,10 +141,9 @@ export class RemoveRelationshipAction implements Action {
   }
 }
 
-
 /**
  * A type to encompass all RelationshipActions
  */
-export type RelationshipAction
-  = AddRelationshipAction
+export type RelationshipAction =
+  | AddRelationshipAction
   | RemoveRelationshipAction;

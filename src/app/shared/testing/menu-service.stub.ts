@@ -1,65 +1,78 @@
 import { Observable, of as observableOf } from 'rxjs';
+import { MenuID } from '../menu/menu-id.model';
 import { MenuSection } from '../menu/menu-section.model';
 import { MenuState } from '../menu/menu-state.model';
-import { MenuID } from '../menu/menu-id.model';
 
 export class MenuServiceStub {
   visibleSection1 = {
     id: 'section',
     visible: true,
-    active: false
+    active: false,
   } as any;
   visibleSection2 = {
     id: 'section_2',
-    visible: true
+    visible: true,
   } as any;
   hiddenSection3 = {
     id: 'section_3',
-    visible: false
+    visible: false,
   } as any;
   subSection4 = {
     id: 'section_4',
     visible: true,
-    parentID: 'section1'
+    parentID: 'section1',
   } as any;
 
-  toggleMenu(): void { /***/
+  toggleMenu(): void {
+    /***/
   }
 
-  expandMenu(): void { /***/
+  expandMenu(): void {
+    /***/
   }
 
-  collapseMenu(): void { /***/
+  collapseMenu(): void {
+    /***/
   }
 
-  showMenu(): void { /***/
+  showMenu(): void {
+    /***/
   }
 
-  hideMenu(): void { /***/
+  hideMenu(): void {
+    /***/
   }
 
-  expandMenuPreview(): void { /***/
+  expandMenuPreview(): void {
+    /***/
   }
 
-  collapseMenuPreview(): void { /***/
+  collapseMenuPreview(): void {
+    /***/
   }
 
-  toggleActiveSection(): void { /***/
+  toggleActiveSection(): void {
+    /***/
   }
 
-  activateSection(): void { /***/
+  activateSection(): void {
+    /***/
   }
 
-  deactivateSection(): void { /***/
+  deactivateSection(): void {
+    /***/
   }
 
-  addSection(menuID: MenuID, section: MenuSection): void { /***/
+  addSection(menuID: MenuID, section: MenuSection): void {
+    /***/
   }
 
-  removeSection(): void { /***/
+  removeSection(): void {
+    /***/
   }
 
-  resetSections(): void { /***/
+  resetSections(): void {
+    /***/
   }
 
   isMenuVisible(id: MenuID): Observable<boolean> {
@@ -78,7 +91,8 @@ export class MenuServiceStub {
     return observableOf(true);
   }
 
-  getMenu(id: MenuID): Observable<MenuState> {  // todo: resolve import
+  getMenu(id: MenuID): Observable<MenuState> {
+    // todo: resolve import
     return observableOf({} as MenuState);
   }
 

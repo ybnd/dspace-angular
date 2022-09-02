@@ -1,17 +1,18 @@
-import { compare, Operation } from 'fast-json-patch';
-import { ChangeAnalyzer } from './change-analyzer';
 import { Injectable } from '@angular/core';
+import { compare, Operation } from 'fast-json-patch';
+import { cloneDeep } from 'lodash';
 import { DSpaceObject } from '../shared/dspace-object.model';
 import { MetadataMap } from '../shared/metadata.models';
-import { cloneDeep } from 'lodash';
+import { ChangeAnalyzer } from './change-analyzer';
 
 /**
  * A class to determine what differs between two
  * DSpaceObjects
  */
 @Injectable()
-export class DSOChangeAnalyzer<T extends DSpaceObject> implements ChangeAnalyzer<T> {
-
+export class DSOChangeAnalyzer<T extends DSpaceObject>
+  implements ChangeAnalyzer<T>
+{
   /**
    * Compare the metadata of two DSpaceObjects and return the differences as
    * a JsonPatch Operation Array
@@ -22,8 +23,12 @@ export class DSOChangeAnalyzer<T extends DSpaceObject> implements ChangeAnalyzer
    *    The second object to compare
    */
   diff(object1: DSpaceObject, object2: DSpaceObject): Operation[] {
-    return compare(this.filterUUIDsFromMetadata(object1.metadata), this.filterUUIDsFromMetadata(object2.metadata))
-      .map((operation: Operation) => Object.assign({}, operation, { path: '/metadata' + operation.path }));
+    return compare(
+      this.filterUUIDsFromMetadata(object1.metadata),
+      this.filterUUIDsFromMetadata(object2.metadata)
+    ).map((operation: Operation) =>
+      Object.assign({}, operation, { path: '/metadata' + operation.path })
+    );
   }
 
   /**

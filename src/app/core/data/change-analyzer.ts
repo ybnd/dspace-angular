@@ -1,5 +1,4 @@
 import { Operation } from 'fast-json-patch';
-
 import { TypedObject } from '../cache/typed-object.model';
 
 /**
@@ -7,7 +6,6 @@ import { TypedObject } from '../cache/typed-object.model';
  * NormalizedObjects
  */
 export interface ChangeAnalyzer<T extends TypedObject> {
-
   /**
    * Compare two objects and return their differences as a
    * JsonPatch Operation Array

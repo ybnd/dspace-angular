@@ -1,16 +1,16 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { EndUserAgreementComponent } from './end-user-agreement.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { LogOutAction } from '../../core/auth/auth.actions';
+import { AuthService } from '../../core/auth/auth.service';
 import { EndUserAgreementService } from '../../core/end-user-agreement/end-user-agreement.service';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { AuthService } from '../../core/auth/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of as observableOf } from 'rxjs';
-import { Store } from '@ngrx/store';
-import { By } from '@angular/platform-browser';
-import { LogOutAction } from '../../core/auth/auth.actions';
 import { ActivatedRouteStub } from '../../shared/testing/active-router.stub';
+import { EndUserAgreementComponent } from './end-user-agreement.component';
 
 describe('EndUserAgreementComponent', () => {
   let component: EndUserAgreementComponent;
@@ -30,18 +30,21 @@ describe('EndUserAgreementComponent', () => {
 
     endUserAgreementService = jasmine.createSpyObj('endUserAgreementService', {
       hasCurrentUserOrCookieAcceptedAgreement: observableOf(false),
-      setUserAcceptedAgreement: observableOf(true)
+      setUserAcceptedAgreement: observableOf(true),
     });
-    notificationsService = jasmine.createSpyObj('notificationsService', ['success', 'error']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'success',
+      'error',
+    ]);
     authService = jasmine.createSpyObj('authService', {
-      isAuthenticated: observableOf(true)
+      isAuthenticated: observableOf(true),
     });
     store = jasmine.createSpyObj('store', ['dispatch']);
     router = jasmine.createSpyObj('router', ['navigate', 'navigateByUrl']);
     route = Object.assign(new ActivatedRouteStub(), {
       queryParams: observableOf({
-        redirect: redirectUrl
-      })
+        redirect: redirectUrl,
+      }),
     }) as any;
   }
 
@@ -56,9 +59,9 @@ describe('EndUserAgreementComponent', () => {
         { provide: AuthService, useValue: authService },
         { provide: Store, useValue: store },
         { provide: Router, useValue: router },
-        { provide: ActivatedRoute, useValue: route }
+        { provide: ActivatedRoute, useValue: route },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -68,9 +71,11 @@ describe('EndUserAgreementComponent', () => {
     fixture.detectChanges();
   });
 
-  describe('when the user hasn\'t accepted the agreement', () => {
+  describe("when the user hasn't accepted the agreement", () => {
     beforeEach(() => {
-      (endUserAgreementService.hasCurrentUserOrCookieAcceptedAgreement as jasmine.Spy).and.returnValue(observableOf(false));
+      (
+        endUserAgreementService.hasCurrentUserOrCookieAcceptedAgreement as jasmine.Spy
+      ).and.returnValue(observableOf(false));
       component.ngOnInit();
       fixture.detectChanges();
     });
@@ -80,14 +85,18 @@ describe('EndUserAgreementComponent', () => {
     });
 
     it('should disable the save button', () => {
-      const button = fixture.debugElement.query(By.css('#button-save')).nativeElement;
+      const button = fixture.debugElement.query(
+        By.css('#button-save')
+      ).nativeElement;
       expect(button.disabled).toBeTruthy();
     });
   });
 
   describe('when the user has accepted the agreement', () => {
     beforeEach(() => {
-      (endUserAgreementService.hasCurrentUserOrCookieAcceptedAgreement as jasmine.Spy).and.returnValue(observableOf(true));
+      (
+        endUserAgreementService.hasCurrentUserOrCookieAcceptedAgreement as jasmine.Spy
+      ).and.returnValue(observableOf(true));
       component.ngOnInit();
       fixture.detectChanges();
     });
@@ -97,14 +106,18 @@ describe('EndUserAgreementComponent', () => {
     });
 
     it('should enable the save button', () => {
-      const button = fixture.debugElement.query(By.css('#button-save')).nativeElement;
+      const button = fixture.debugElement.query(
+        By.css('#button-save')
+      ).nativeElement;
       expect(button.disabled).toBeFalsy();
     });
 
     describe('submit', () => {
       describe('when accepting the agreement was successful', () => {
         beforeEach(() => {
-          (endUserAgreementService.setUserAcceptedAgreement as jasmine.Spy).and.returnValue(observableOf(true));
+          (
+            endUserAgreementService.setUserAcceptedAgreement as jasmine.Spy
+          ).and.returnValue(observableOf(true));
           component.submit();
         });
 
@@ -119,7 +132,9 @@ describe('EndUserAgreementComponent', () => {
 
       describe('when accepting the agreement was unsuccessful', () => {
         beforeEach(() => {
-          (endUserAgreementService.setUserAcceptedAgreement as jasmine.Spy).and.returnValue(observableOf(false));
+          (
+            endUserAgreementService.setUserAcceptedAgreement as jasmine.Spy
+          ).and.returnValue(observableOf(false));
           component.submit();
         });
 
@@ -133,7 +148,9 @@ describe('EndUserAgreementComponent', () => {
   describe('cancel', () => {
     describe('when the user is authenticated', () => {
       beforeEach(() => {
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(true));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(true)
+        );
         component.cancel();
       });
 
@@ -144,7 +161,9 @@ describe('EndUserAgreementComponent', () => {
 
     describe('when the user is not authenticated', () => {
       beforeEach(() => {
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(false));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(false)
+        );
         component.cancel();
       });
 

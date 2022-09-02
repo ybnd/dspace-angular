@@ -1,25 +1,22 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-
 import { TranslateService } from '@ngx-translate/core';
 import { Operation } from 'fast-json-patch';
 import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-
 import { RemoteData } from '../../../core/data/remote-data';
+import { ResearcherProfile } from '../../../core/profile/model/researcher-profile.model';
 import { ResearcherProfileService } from '../../../core/profile/researcher-profile.service';
 import { Item } from '../../../core/shared/item.model';
 import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
-import { ResearcherProfile } from '../../../core/profile/model/researcher-profile.model';
 
 @Component({
   selector: 'ds-orcid-sync-setting',
   templateUrl: './orcid-sync-settings.component.html',
-  styleUrls: ['./orcid-sync-settings.component.scss']
+  styleUrls: ['./orcid-sync-settings.component.scss'],
 })
 export class OrcidSyncSettingsComponent implements OnInit {
-
   /**
    * The item for which showing the orcid settings
    */
@@ -48,32 +45,33 @@ export class OrcidSyncSettingsComponent implements OnInit {
   /**
    * The synchronization options
    */
-  syncModes: { value: string, label: string }[];
+  syncModes: { value: string; label: string }[];
 
   /**
    * The synchronization options for publications
    */
-  syncPublicationOptions: { value: string, label: string }[];
+  syncPublicationOptions: { value: string; label: string }[];
 
   /**
    * The synchronization options for funding
    */
-  syncFundingOptions: { value: string, label: string }[];
+  syncFundingOptions: { value: string; label: string }[];
 
   /**
    * The profile synchronization options
    */
-  syncProfileOptions: { value: string, label: string, checked: boolean }[];
+  syncProfileOptions: { value: string; label: string; checked: boolean }[];
 
   /**
    * An event emitted when settings are updated
    */
   @Output() settingsUpdated: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private researcherProfileService: ResearcherProfileService,
-              private notificationsService: NotificationsService,
-              private translateService: TranslateService) {
-  }
+  constructor(
+    private researcherProfileService: ResearcherProfileService,
+    private notificationsService: NotificationsService,
+    private translateService: TranslateService
+  ) {}
 
   /**
    * Init orcid settings form
@@ -82,44 +80,55 @@ export class OrcidSyncSettingsComponent implements OnInit {
     this.syncModes = [
       {
         label: this.messagePrefix + '.synchronization-mode.batch',
-        value: 'BATCH'
+        value: 'BATCH',
       },
       {
         label: this.messagePrefix + '.synchronization-mode.manual',
-        value: 'MANUAL'
-      }
+        value: 'MANUAL',
+      },
     ];
 
-    this.syncPublicationOptions = ['DISABLED', 'ALL']
-      .map((value) => {
-        return {
-          label: this.messagePrefix + '.sync-publications.' + value.toLowerCase(),
-          value: value,
-        };
-      });
+    this.syncPublicationOptions = ['DISABLED', 'ALL'].map((value) => {
+      return {
+        label: this.messagePrefix + '.sync-publications.' + value.toLowerCase(),
+        value: value,
+      };
+    });
 
-    this.syncFundingOptions = ['DISABLED', 'ALL']
-      .map((value) => {
-        return {
-          label: this.messagePrefix + '.sync-fundings.' + value.toLowerCase(),
-          value: value,
-        };
-      });
+    this.syncFundingOptions = ['DISABLED', 'ALL'].map((value) => {
+      return {
+        label: this.messagePrefix + '.sync-fundings.' + value.toLowerCase(),
+        value: value,
+      };
+    });
 
-    const syncProfilePreferences = this.item.allMetadataValues('dspace.orcid.sync-profile');
+    const syncProfilePreferences = this.item.allMetadataValues(
+      'dspace.orcid.sync-profile'
+    );
 
-    this.syncProfileOptions = ['BIOGRAPHICAL', 'IDENTIFIERS']
-      .map((value) => {
-        return {
-          label: this.messagePrefix + '.sync-profile.' + value.toLowerCase(),
-          value: value,
-          checked: syncProfilePreferences.includes(value)
-        };
-      });
+    this.syncProfileOptions = ['BIOGRAPHICAL', 'IDENTIFIERS'].map((value) => {
+      return {
+        label: this.messagePrefix + '.sync-profile.' + value.toLowerCase(),
+        value: value,
+        checked: syncProfilePreferences.includes(value),
+      };
+    });
 
-    this.currentSyncMode = this.getCurrentPreference('dspace.orcid.sync-mode', ['BATCH', 'MANUAL'], 'MANUAL');
-    this.currentSyncPublications = this.getCurrentPreference('dspace.orcid.sync-publications', ['DISABLED', 'ALL'], 'DISABLED');
-    this.currentSyncFunding = this.getCurrentPreference('dspace.orcid.sync-fundings', ['DISABLED', 'ALL'], 'DISABLED');
+    this.currentSyncMode = this.getCurrentPreference(
+      'dspace.orcid.sync-mode',
+      ['BATCH', 'MANUAL'],
+      'MANUAL'
+    );
+    this.currentSyncPublications = this.getCurrentPreference(
+      'dspace.orcid.sync-publications',
+      ['DISABLED', 'ALL'],
+      'DISABLED'
+    );
+    this.currentSyncFunding = this.getCurrentPreference(
+      'dspace.orcid.sync-fundings',
+      ['DISABLED', 'ALL'],
+      'DISABLED'
+    );
   }
 
   /**
@@ -130,11 +139,19 @@ export class OrcidSyncSettingsComponent implements OnInit {
   onSubmit(form: FormGroup): void {
     const operations: Operation[] = [];
     this.fillOperationsFor(operations, '/orcid/mode', form.value.syncMode);
-    this.fillOperationsFor(operations, '/orcid/publications', form.value.syncPublications);
-    this.fillOperationsFor(operations, '/orcid/fundings', form.value.syncFundings);
+    this.fillOperationsFor(
+      operations,
+      '/orcid/publications',
+      form.value.syncPublications
+    );
+    this.fillOperationsFor(
+      operations,
+      '/orcid/fundings',
+      form.value.syncFundings
+    );
 
     const syncProfileValue = this.syncProfileOptions
-      .map((syncProfileOption => syncProfileOption.value))
+      .map((syncProfileOption) => syncProfileOption.value)
       .filter((value) => form.value['syncProfile_' + value])
       .join(',');
 
@@ -144,25 +161,36 @@ export class OrcidSyncSettingsComponent implements OnInit {
       return;
     }
 
-    this.researcherProfileService.findByRelatedItem(this.item).pipe(
-      getFirstCompletedRemoteData(),
-      switchMap((profileRD: RemoteData<ResearcherProfile>) => {
-        if (profileRD.hasSucceeded) {
-          return this.researcherProfileService.updateByOrcidOperations(profileRD.payload, operations).pipe(
-            getFirstCompletedRemoteData()
+    this.researcherProfileService
+      .findByRelatedItem(this.item)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        switchMap((profileRD: RemoteData<ResearcherProfile>) => {
+          if (profileRD.hasSucceeded) {
+            return this.researcherProfileService
+              .updateByOrcidOperations(profileRD.payload, operations)
+              .pipe(getFirstCompletedRemoteData());
+          } else {
+            return of(profileRD);
+          }
+        })
+      )
+      .subscribe((remoteData: RemoteData<ResearcherProfile>) => {
+        if (remoteData.isSuccess) {
+          this.notificationsService.success(
+            this.translateService.get(
+              this.messagePrefix + '.synchronization-settings-update.success'
+            )
           );
+          this.settingsUpdated.emit();
         } else {
-          return of(profileRD);
+          this.notificationsService.error(
+            this.translateService.get(
+              this.messagePrefix + '.synchronization-settings-update.error'
+            )
+          );
         }
-      }),
-    ).subscribe((remoteData: RemoteData<ResearcherProfile>) => {
-      if (remoteData.isSuccess) {
-        this.notificationsService.success(this.translateService.get(this.messagePrefix + '.synchronization-settings-update.success'));
-        this.settingsUpdated.emit();
-      } else {
-        this.notificationsService.error(this.translateService.get(this.messagePrefix + '.synchronization-settings-update.error'));
-      }
-    });
+      });
   }
 
   /**
@@ -173,9 +201,15 @@ export class OrcidSyncSettingsComponent implements OnInit {
    * @param defaultValue  The default value
    * @private
    */
-  private getCurrentPreference(metadataField: string, allowedValues: string[], defaultValue: string): string {
+  private getCurrentPreference(
+    metadataField: string,
+    allowedValues: string[],
+    defaultValue: string
+  ): string {
     const currentPreference = this.item.firstMetadataValue(metadataField);
-    return (currentPreference && allowedValues.includes(currentPreference)) ? currentPreference : defaultValue;
+    return currentPreference && allowedValues.includes(currentPreference)
+      ? currentPreference
+      : defaultValue;
   }
 
   /**
@@ -185,12 +219,15 @@ export class OrcidSyncSettingsComponent implements OnInit {
    * @param path
    * @param currentValue
    */
-  private fillOperationsFor(operations: Operation[], path: string, currentValue: string): void {
+  private fillOperationsFor(
+    operations: Operation[],
+    path: string,
+    currentValue: string
+  ): void {
     operations.push({
       path: path,
       op: 'replace',
-      value: currentValue
+      value: currentValue,
     });
   }
-
 }

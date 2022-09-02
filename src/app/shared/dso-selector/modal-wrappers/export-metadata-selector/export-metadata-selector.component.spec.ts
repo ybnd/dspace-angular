@@ -1,11 +1,19 @@
-import { of as observableOf } from 'rxjs';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { DebugElement, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NgbActiveModal, NgbModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { METADATA_EXPORT_SCRIPT_NAME, ScriptDataService } from '../../../../core/data/processes/script-data.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import {
+  NgbActiveModal,
+  NgbModal,
+  NgbModalModule,
+} from '@ng-bootstrap/ng-bootstrap';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { AuthorizationDataService } from '../../../../core/data/feature-authorization/authorization-data.service';
+import {
+  METADATA_EXPORT_SCRIPT_NAME,
+  ScriptDataService,
+} from '../../../../core/data/processes/script-data.service';
 import { Collection } from '../../../../core/shared/collection.model';
 import { Community } from '../../../../core/shared/community.model';
 import { Item } from '../../../../core/shared/item.model';
@@ -13,31 +21,30 @@ import { ProcessParameter } from '../../../../process-page/processes/process-par
 import { ConfirmationModalComponent } from '../../../confirmation-modal/confirmation-modal.component';
 import { TranslateLoaderMock } from '../../../mocks/translate-loader.mock';
 import { NotificationsService } from '../../../notifications/notifications.service';
-import { NotificationsServiceStub } from '../../../testing/notifications-service.stub';
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../../remote-data.utils';
+import { NotificationsServiceStub } from '../../../testing/notifications-service.stub';
 import { ExportMetadataSelectorComponent } from './export-metadata-selector.component';
-import { AuthorizationDataService } from '../../../../core/data/feature-authorization/authorization-data.service';
 
 // No way to add entryComponents yet to testbed; alternative implemented; source: https://stackoverflow.com/questions/41689468/how-to-shallow-test-a-component-with-an-entrycomponents
 @NgModule({
-    imports: [NgbModalModule,
-        TranslateModule.forRoot({
-            loader: {
-                provide: TranslateLoader,
-                useClass: TranslateLoaderMock
-            }
-        }),
-    ],
-    exports: [],
-    declarations: [ConfirmationModalComponent],
-    providers: []
+  imports: [
+    NgbModalModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useClass: TranslateLoaderMock,
+      },
+    }),
+  ],
+  exports: [],
+  declarations: [ConfirmationModalComponent],
+  providers: [],
 })
-class ModelTestModule {
-}
+class ModelTestModule {}
 
 describe('ExportMetadataSelectorComponent', () => {
   let component: ExportMetadataSelectorComponent;
@@ -54,7 +61,7 @@ describe('ExportMetadataSelectorComponent', () => {
     id: 'fake-id',
     uuid: 'fake-id',
     handle: 'fake/handle',
-    lastModified: '2018'
+    lastModified: '2018',
   });
 
   const mockCollection: Collection = Object.assign(new Collection(), {
@@ -65,10 +72,10 @@ describe('ExportMetadataSelectorComponent', () => {
       'dc.identifier.uri': [
         {
           language: null,
-          value: 'fake/test-collection-1'
-        }
-      ]
-    }
+          value: 'fake/test-collection-1',
+        },
+      ],
+    },
   });
 
   const mockCommunity = Object.assign(new Community(), {
@@ -78,10 +85,10 @@ describe('ExportMetadataSelectorComponent', () => {
       'dc.identifier.uri': [
         {
           language: null,
-          value: 'fake/test-community-1'
-        }
-      ]
-    }
+          value: 'fake/test-community-1',
+        },
+      ],
+    },
   });
 
   const itemRD = createSuccessfulRemoteDataObject(mockItem);
@@ -90,24 +97,32 @@ describe('ExportMetadataSelectorComponent', () => {
   beforeEach(waitForAsync(() => {
     notificationService = new NotificationsServiceStub();
     router = jasmine.createSpyObj('router', {
-      navigateByUrl: jasmine.createSpy('navigateByUrl')
+      navigateByUrl: jasmine.createSpy('navigateByUrl'),
     });
-    scriptService = jasmine.createSpyObj('scriptService',
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: createSuccessfulRemoteDataObject$({ processId: '45' }),
+    });
+    authorizationDataService = jasmine.createSpyObj(
+      'authorizationDataService',
       {
-        invoke: createSuccessfulRemoteDataObject$({ processId: '45' })
+        isAuthorized: observableOf(true),
       }
     );
-    authorizationDataService = jasmine.createSpyObj('authorizationDataService', {
-      isAuthorized: observableOf(true)
-    });
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), ModelTestModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        ModelTestModule,
+      ],
       declarations: [ExportMetadataSelectorComponent],
       providers: [
         { provide: NgbActiveModal, useValue: modalStub },
         { provide: NotificationsService, useValue: notificationService },
         { provide: ScriptDataService, useValue: scriptService },
-        { provide: AuthorizationDataService, useValue: authorizationDataService },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -117,16 +132,16 @@ describe('ExportMetadataSelectorComponent', () => {
                   dso: itemRD,
                 },
               },
-            }
+            },
           },
         },
         {
-          provide: Router, useValue: router
-        }
+          provide: Router,
+          useValue: router,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -167,10 +182,17 @@ describe('ExportMetadataSelectorComponent', () => {
     });
     it('should invoke the metadata-export script with option -i uuid and -a option', () => {
       const parameterValues: ProcessParameter[] = [
-        Object.assign(new ProcessParameter(), { name: '-i', value: mockCollection.uuid }),
+        Object.assign(new ProcessParameter(), {
+          name: '-i',
+          value: mockCollection.uuid,
+        }),
         Object.assign(new ProcessParameter(), { name: '-a' }),
       ];
-      expect(scriptService.invoke).toHaveBeenCalledWith(METADATA_EXPORT_SCRIPT_NAME, parameterValues, []);
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        METADATA_EXPORT_SCRIPT_NAME,
+        parameterValues,
+        []
+      );
     });
     it('success notification is shown', () => {
       expect(scriptRequestSucceeded).toBeTrue();
@@ -183,7 +205,9 @@ describe('ExportMetadataSelectorComponent', () => {
   describe('if collection is selected and is not admin', () => {
     let scriptRequestSucceeded;
     beforeEach((done) => {
-      (authorizationDataService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(false));
+      (authorizationDataService.isAuthorized as jasmine.Spy).and.returnValue(
+        observableOf(false)
+      );
       spyOn((component as any).modalService, 'open').and.returnValue(modalRef);
       component.navigate(mockCollection).subscribe((succeeded: boolean) => {
         scriptRequestSucceeded = succeeded;
@@ -192,9 +216,16 @@ describe('ExportMetadataSelectorComponent', () => {
     });
     it('should invoke the metadata-export script with option -i uuid without the -a option', () => {
       const parameterValues: ProcessParameter[] = [
-        Object.assign(new ProcessParameter(), { name: '-i', value: mockCollection.uuid }),
+        Object.assign(new ProcessParameter(), {
+          name: '-i',
+          value: mockCollection.uuid,
+        }),
       ];
-      expect(scriptService.invoke).toHaveBeenCalledWith(METADATA_EXPORT_SCRIPT_NAME, parameterValues, []);
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        METADATA_EXPORT_SCRIPT_NAME,
+        parameterValues,
+        []
+      );
     });
     it('success notification is shown', () => {
       expect(scriptRequestSucceeded).toBeTrue();
@@ -216,10 +247,17 @@ describe('ExportMetadataSelectorComponent', () => {
     });
     it('should invoke the metadata-export script with option -i uuid and -a option if the user is an admin', () => {
       const parameterValues: ProcessParameter[] = [
-        Object.assign(new ProcessParameter(), { name: '-i', value: mockCommunity.uuid }),
+        Object.assign(new ProcessParameter(), {
+          name: '-i',
+          value: mockCommunity.uuid,
+        }),
         Object.assign(new ProcessParameter(), { name: '-a' }),
       ];
-      expect(scriptService.invoke).toHaveBeenCalledWith(METADATA_EXPORT_SCRIPT_NAME, parameterValues, []);
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        METADATA_EXPORT_SCRIPT_NAME,
+        parameterValues,
+        []
+      );
     });
     it('success notification is shown', () => {
       expect(scriptRequestSucceeded).toBeTrue();
@@ -232,7 +270,9 @@ describe('ExportMetadataSelectorComponent', () => {
   describe('if community is selected and is not an admin', () => {
     let scriptRequestSucceeded;
     beforeEach((done) => {
-      (authorizationDataService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(false));
+      (authorizationDataService.isAuthorized as jasmine.Spy).and.returnValue(
+        observableOf(false)
+      );
       spyOn((component as any).modalService, 'open').and.returnValue(modalRef);
       component.navigate(mockCommunity).subscribe((succeeded: boolean) => {
         scriptRequestSucceeded = succeeded;
@@ -241,9 +281,16 @@ describe('ExportMetadataSelectorComponent', () => {
     });
     it('should invoke the metadata-export script with option -i uuid without the -a option', () => {
       const parameterValues: ProcessParameter[] = [
-        Object.assign(new ProcessParameter(), { name: '-i', value: mockCommunity.uuid }),
+        Object.assign(new ProcessParameter(), {
+          name: '-i',
+          value: mockCommunity.uuid,
+        }),
       ];
-      expect(scriptService.invoke).toHaveBeenCalledWith(METADATA_EXPORT_SCRIPT_NAME, parameterValues, []);
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        METADATA_EXPORT_SCRIPT_NAME,
+        parameterValues,
+        []
+      );
     });
     it('success notification is shown', () => {
       expect(scriptRequestSucceeded).toBeTrue();
@@ -259,7 +306,9 @@ describe('ExportMetadataSelectorComponent', () => {
     beforeEach((done) => {
       spyOn((component as any).modalService, 'open').and.returnValue(modalRef);
       jasmine.getEnv().allowRespy(true);
-      spyOn(scriptService, 'invoke').and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      spyOn(scriptService, 'invoke').and.returnValue(
+        createFailedRemoteDataObject$('Error', 500)
+      );
       component.navigate(mockCommunity).subscribe((succeeded: boolean) => {
         scriptRequestSucceeded = succeeded;
         done();
@@ -270,5 +319,4 @@ describe('ExportMetadataSelectorComponent', () => {
       expect(notificationService.error).toHaveBeenCalled();
     });
   });
-
 });

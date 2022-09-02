@@ -1,15 +1,22 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { of as observableOf } from 'rxjs';
-import { TruncatablePartComponent } from './truncatable-part.component';
-import { TruncatableService } from '../truncatable.service';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { getMockTranslateService } from '../../mocks/translate.service.mock';
-import { TranslateLoaderMock } from '../../mocks/translate-loader.mock';
-import { mockTruncatableService } from '../../mocks/mock-trucatable.service';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { NativeWindowRef, NativeWindowService } from '../../../core/services/window.service';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import {
+  NativeWindowRef,
+  NativeWindowService,
+} from '../../../core/services/window.service';
+import { mockTruncatableService } from '../../mocks/mock-trucatable.service';
+import { TranslateLoaderMock } from '../../mocks/translate-loader.mock';
+import { getMockTranslateService } from '../../mocks/translate.service.mock';
+import { TruncatableService } from '../truncatable.service';
+import { TruncatablePartComponent } from './truncatable-part.component';
 
 describe('TruncatablePartComponent', () => {
   let comp: TruncatablePartComponent;
@@ -26,17 +33,18 @@ describe('TruncatablePartComponent', () => {
       } else {
         return observableOf(false);
       }
-    }
+    },
   };
   beforeEach(waitForAsync(() => {
     translateService = getMockTranslateService();
     void TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule,
+      imports: [
+        NoopAnimationsModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
       ],
       declarations: [TruncatablePartComponent],
@@ -44,10 +52,12 @@ describe('TruncatablePartComponent', () => {
         { provide: NativeWindowService, useValue: new NativeWindowRef() },
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(TruncatablePartComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(TruncatablePartComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(TruncatablePartComponent);
@@ -62,8 +72,7 @@ describe('TruncatablePartComponent', () => {
       comp.minLines = 5;
       (comp as any).setLines();
       fixture.detectChanges();
-    })
-    ;
+    });
 
     it('lines should equal minlines', () => {
       expect((comp as any).lines).toEqual(comp.minLines.toString());
@@ -78,8 +87,7 @@ describe('TruncatablePartComponent', () => {
   describe('When the item is expanded', () => {
     beforeEach(() => {
       comp.id = id2;
-    })
-    ;
+    });
 
     it('lines should equal maxlines when maxlines has a value', () => {
       comp.maxLines = 5;
@@ -88,7 +96,7 @@ describe('TruncatablePartComponent', () => {
       expect((comp as any).lines).toEqual(comp.maxLines.toString());
     });
 
-    it('lines should equal \'none\' when maxlines has no value', () => {
+    it("lines should equal 'none' when maxlines has no value", () => {
       (comp as any).setLines();
       fixture.detectChanges();
       expect((comp as any).lines).toEqual('none');
@@ -118,8 +126,8 @@ describe('TruncatablePartComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
       ],
       declarations: [TruncatablePartComponent],
@@ -127,10 +135,12 @@ describe('TruncatablePartComponent', () => {
         { provide: NativeWindowService, useValue: new NativeWindowRef() },
         { provide: TruncatableService, useValue: mockTruncatableService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(TruncatablePartComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(TruncatablePartComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -151,5 +161,4 @@ describe('TruncatablePartComponent', () => {
       expect(truncatableService.toggle).toHaveBeenCalledWith(identifier);
     });
   });
-
 });

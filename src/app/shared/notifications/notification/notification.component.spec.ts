@@ -1,23 +1,30 @@
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
-import { BrowserModule, By } from '@angular/platform-browser';
 import { ChangeDetectorRef, DebugElement } from '@angular/core';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
 import { Store, StoreModule } from '@ngrx/store';
-
-import { NotificationComponent } from './notification.component';
-import { NotificationsService } from '../notifications.service';
-import { NotificationType } from '../models/notification-type';
-import { notificationsReducer } from '../notifications.reducers';
-import { NotificationOptions } from '../models/notification-options.model';
-import { Notification } from '../models/notification.model';
-import { TranslateLoader, TranslateModule, TranslateService } from '@ngx-translate/core';
-import { TranslateLoaderMock } from '../../mocks/translate-loader.mock';
-import { storeModuleConfig } from '../../../app.reducer';
+import {
+  TranslateLoader,
+  TranslateModule,
+  TranslateService,
+} from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { storeModuleConfig } from '../../../app.reducer';
+import { TranslateLoaderMock } from '../../mocks/translate-loader.mock';
+import { NotificationOptions } from '../models/notification-options.model';
+import { NotificationType } from '../models/notification-type';
+import { Notification } from '../models/notification.model';
+import { notificationsReducer } from '../notifications.reducers';
+import { NotificationsService } from '../notifications.service';
+import { NotificationComponent } from './notification.component';
 
 describe('NotificationComponent', () => {
-
   let comp: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
   let deTitle: DebugElement;
@@ -29,7 +36,7 @@ describe('NotificationComponent', () => {
   beforeEach(waitForAsync(() => {
     const store: Store<Notification> = jasmine.createSpyObj('store', {
       /* eslint-disable no-empty, @typescript-eslint/no-empty-function */
-      notifications: []
+      notifications: [],
     });
 
     TestBed.configureTestingModule({
@@ -40,18 +47,18 @@ describe('NotificationComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })],
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [NotificationComponent], // declare the test component
       providers: [
         { provide: Store, useValue: store },
         ChangeDetectorRef,
         NotificationsService,
         TranslateService,
-      ]
-    }).compileComponents();  // compile template and css
-
+      ],
+    }).compileComponents(); // compile template and css
   }));
 
   beforeEach(() => {
@@ -62,7 +69,7 @@ describe('NotificationComponent', () => {
       type: NotificationType.Info,
       title: 'Notif. title',
       content: 'Notif. content',
-      options: new NotificationOptions()
+      options: new NotificationOptions(),
     };
 
     fixture.detectChanges();
@@ -71,7 +78,9 @@ describe('NotificationComponent', () => {
     elTitle = deTitle.nativeElement;
     deContent = fixture.debugElement.query(By.css('.notification-content'));
     elContent = deContent.nativeElement;
-    elType = fixture.debugElement.query(By.css('.notification-icon')).nativeElement;
+    elType = fixture.debugElement.query(
+      By.css('.notification-icon')
+    ).nativeElement;
 
     spyOn(comp, 'remove');
   });
@@ -98,14 +107,15 @@ describe('NotificationComponent', () => {
   it('should have html content', () => {
     fixture = TestBed.createComponent(NotificationComponent);
     comp = fixture.componentInstance;
-    const htmlContent = '<a class="btn btn-link p-0 m-0 pb-1" href="test"><strong>test</strong></a>';
+    const htmlContent =
+      '<a class="btn btn-link p-0 m-0 pb-1" href="test"><strong>test</strong></a>';
     comp.notification = {
       id: '1',
       type: NotificationType.Info,
       title: 'Notif. title',
       content: htmlContent,
       options: new NotificationOptions(),
-      html: true
+      html: true,
     };
 
     fixture.detectChanges();
@@ -127,11 +137,8 @@ describe('NotificationComponent', () => {
         type: NotificationType.Info,
         title: 'Notif. title',
         content: 'test',
-        options: Object.assign(
-          new NotificationOptions(),
-          { timeout: TIMEOUT }
-        ),
-        html: true
+        options: Object.assign(new NotificationOptions(), { timeout: TIMEOUT }),
+        html: true,
       };
     });
 
@@ -161,5 +168,4 @@ describe('NotificationComponent', () => {
       }));
     });
   });
-
 });

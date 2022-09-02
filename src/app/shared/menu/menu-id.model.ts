@@ -3,5 +3,5 @@
  */
 export enum MenuID {
   ADMIN = 'admin-sidebar',
-  PUBLIC = 'public'
+  PUBLIC = 'public',
 }

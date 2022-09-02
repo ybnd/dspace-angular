@@ -1,13 +1,12 @@
 /* eslint-disable max-classes-per-file */
+import { autoserialize, Deserialize, Serialize } from 'cerialize';
 import { v4 as uuidv4 } from 'uuid';
-import { autoserialize, Serialize, Deserialize } from 'cerialize';
 import { hasValue } from '../../shared/empty.util';
 
 export const VIRTUAL_METADATA_PREFIX = 'virtual::';
 
 /** A single metadata value and its properties. */
 export interface MetadataValueInterface {
-
   /** The language. */
   language: string;
 
@@ -57,7 +56,10 @@ export class MetadataValue implements MetadataValueInterface {
    * Returns true if this Metadatum's authority key starts with 'virtual::'
    */
   get isVirtual(): boolean {
-    return hasValue(this.authority) && this.authority.startsWith(VIRTUAL_METADATA_PREFIX);
+    return (
+      hasValue(this.authority) &&
+      this.authority.startsWith(VIRTUAL_METADATA_PREFIX)
+    );
   }
 
   /**
@@ -66,7 +68,10 @@ export class MetadataValue implements MetadataValueInterface {
    */
   get virtualValue(): string {
     if (this.isVirtual) {
-      return this.authority.substring(this.authority.indexOf(VIRTUAL_METADATA_PREFIX) + VIRTUAL_METADATA_PREFIX.length);
+      return this.authority.substring(
+        this.authority.indexOf(VIRTUAL_METADATA_PREFIX) +
+          VIRTUAL_METADATA_PREFIX.length
+      );
     } else {
       return undefined;
     }
@@ -136,5 +141,5 @@ export const MetadataMapSerializer = {
       metadataMap[key] = Deserialize(json[key], MetadataValue);
     });
     return metadataMap;
-  }
+  },
 };

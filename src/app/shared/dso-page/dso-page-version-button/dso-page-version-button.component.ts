@@ -1,15 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
 import { Observable, of } from 'rxjs';
+import { map, startWith, switchMap } from 'rxjs/operators';
+import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
 import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
 import { VersionHistoryDataService } from '../../../core/data/version-history-data.service';
 import { Item } from '../../../core/shared/item.model';
-import { map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'ds-dso-page-version-button',
   templateUrl: './dso-page-version-button.component.html',
-  styleUrls: ['./dso-page-version-button.component.scss']
+  styleUrls: ['./dso-page-version-button.component.scss'],
 })
 /**
  * Display a button linking to the edit page of a DSpaceObject
@@ -48,9 +48,8 @@ export class DsoPageVersionButtonComponent implements OnInit {
 
   constructor(
     protected authorizationService: AuthorizationDataService,
-    protected versionHistoryService: VersionHistoryDataService,
-  ) {
-  }
+    protected versionHistoryService: VersionHistoryDataService
+  ) {}
 
   /**
    * Creates a new version for the current item
@@ -60,18 +59,24 @@ export class DsoPageVersionButtonComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isAuthorized$ = this.authorizationService.isAuthorized(FeatureID.CanCreateVersion, this.dso.self);
-
-    this.disableNewVersionButton$ = this.versionHistoryService.hasDraftVersion$(this.dso._links.version.href).pipe(
-      // button is disabled if hasDraftVersion = true, and enabled if hasDraftVersion = false or null
-      // (hasDraftVersion is null when a version history does not exist)
-      map((res) => Boolean(res)),
-      startWith(true),
+    this.isAuthorized$ = this.authorizationService.isAuthorized(
+      FeatureID.CanCreateVersion,
+      this.dso.self
     );
+
+    this.disableNewVersionButton$ = this.versionHistoryService
+      .hasDraftVersion$(this.dso._links.version.href)
+      .pipe(
+        // button is disabled if hasDraftVersion = true, and enabled if hasDraftVersion = false or null
+        // (hasDraftVersion is null when a version history does not exist)
+        map((res) => Boolean(res)),
+        startWith(true)
+      );
 
     this.tooltipMsg$ = this.disableNewVersionButton$.pipe(
-      switchMap((hasDraftVersion) => of(hasDraftVersion ? this.tooltipMsgHasDraft : this.tooltipMsgCreate)),
+      switchMap((hasDraftVersion) =>
+        of(hasDraftVersion ? this.tooltipMsgHasDraft : this.tooltipMsgCreate)
+      )
     );
   }
-
 }

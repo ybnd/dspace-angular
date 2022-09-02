@@ -4,7 +4,7 @@ export enum RequestEntryState {
   Error = 'Error',
   Success = 'Success',
   ErrorStale = 'ErrorStale',
-  SuccessStale = 'SuccessStale'
+  SuccessStale = 'SuccessStale',
 }
 
 /**
@@ -78,8 +78,7 @@ export const hasSucceeded = (state: RequestEntryState) => {
 /**
  * Returns true if the given state is not loading, false otherwise
  */
-export const hasCompleted = (state: RequestEntryState) =>
-  !isLoading(state);
+export const hasCompleted = (state: RequestEntryState) => !isLoading(state);
 
 /**
  * Returns true if the given state is SuccessStale or ErrorStale, false otherwise

@@ -1,39 +1,41 @@
 import {
   Component,
   ComponentFactoryResolver,
+  ComponentRef,
   ElementRef,
+  EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
-  ViewChild,
-  EventEmitter,
   SimpleChanges,
-  OnChanges,
-  ComponentRef
+  ViewChild,
 } from '@angular/core';
-import { ListableObject } from '../listable-object.model';
-import { ViewMode } from '../../../../core/shared/view-mode.model';
-import { Context } from '../../../../core/shared/context.model';
-import { getListableObjectComponent } from './listable-object.decorator';
-import { GenericConstructor } from '../../../../core/shared/generic-constructor';
-import { ListableObjectDirective } from './listable-object.directive';
-import { CollectionElementLinkType } from '../../collection-element-link.type';
-import { hasValue, isNotEmpty } from '../../../empty.util';
 import { Subscription } from 'rxjs';
-import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
 import { take } from 'rxjs/operators';
+import { Context } from '../../../../core/shared/context.model';
+import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
+import { GenericConstructor } from '../../../../core/shared/generic-constructor';
+import { ViewMode } from '../../../../core/shared/view-mode.model';
+import { hasValue, isNotEmpty } from '../../../empty.util';
 import { ThemeService } from '../../../theme-support/theme.service';
+import { CollectionElementLinkType } from '../../collection-element-link.type';
+import { ListableObject } from '../listable-object.model';
+import { getListableObjectComponent } from './listable-object.decorator';
+import { ListableObjectDirective } from './listable-object.directive';
 
 @Component({
   selector: 'ds-listable-object-component-loader',
   styleUrls: ['./listable-object-component-loader.component.scss'],
-  templateUrl: './listable-object-component-loader.component.html'
+  templateUrl: './listable-object-component-loader.component.html',
 })
 /**
  * Component for determining what component to use depending on the item's entity type (dspace.entity.type)
  */
-export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges, OnDestroy {
+export class ListableObjectComponentLoaderComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   /**
    * The item or metadata to determine the component for
    */
@@ -82,7 +84,8 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
   /**
    * Directive hook used to place the dynamic child component
    */
-  @ViewChild(ListableObjectDirective, {static: true}) listableObjectDirective: ListableObjectDirective;
+  @ViewChild(ListableObjectDirective, { static: true })
+  listableObjectDirective: ListableObjectDirective;
 
   /**
    * View on the badges template, to be passed on to the loaded component (which will place the badges in the desired
@@ -120,23 +123,22 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
    * The list of input and output names for the dynamic component
    */
   protected inAndOutputNames: string[] = [
-      'object',
-      'index',
-      'linkType',
-      'listID',
-      'showLabel',
-      'context',
-      'viewMode',
-      'value',
-      'hideBadges',
-      'contentChange',
-    ];
+    'object',
+    'index',
+    'linkType',
+    'listID',
+    'showLabel',
+    'context',
+    'viewMode',
+    'value',
+    'hideBadges',
+    'contentChange',
+  ];
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private themeService: ThemeService
-  ) {
-  }
+  ) {}
 
   /**
    * Setup the dynamic child component
@@ -161,12 +163,16 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
   }
 
   private instantiateComponent(object) {
-
     this.initBadges();
 
-    const component = this.getComponent(object.getRenderTypes(), this.viewMode, this.context);
+    const component = this.getComponent(
+      object.getRenderTypes(),
+      this.viewMode,
+      this.context
+    );
 
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(component);
 
     const viewContainerRef = this.listableObjectDirective.viewContainerRef;
     viewContainerRef.clear();
@@ -175,21 +181,22 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
       componentFactory,
       0,
       undefined,
-      [
-        [this.badges.nativeElement],
-      ]);
+      [[this.badges.nativeElement]]
+    );
 
     this.connectInputsAndOutputs();
 
     if ((this.compRef.instance as any).reloadedObject) {
-      (this.compRef.instance as any).reloadedObject.pipe(take(1)).subscribe((reloadedObject: DSpaceObject) => {
-        if (reloadedObject) {
-          this.compRef.destroy();
-          this.object = reloadedObject;
-          this.instantiateComponent(reloadedObject);
-          this.contentChange.emit(reloadedObject);
-        }
-      });
+      (this.compRef.instance as any).reloadedObject
+        .pipe(take(1))
+        .subscribe((reloadedObject: DSpaceObject) => {
+          if (reloadedObject) {
+            this.compRef.destroy();
+            this.object = reloadedObject;
+            this.instantiateComponent(reloadedObject);
+            this.contentChange.emit(reloadedObject);
+          }
+        });
     }
   }
 
@@ -201,19 +208,33 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
     if (hasValue(objectAsAny.indexableObject)) {
       objectAsAny = objectAsAny.indexableObject;
     }
-    const objectExistsAndValidViewMode = hasValue(objectAsAny) && this.viewMode !== ViewMode.StandalonePage;
-    this.privateBadge = objectExistsAndValidViewMode && hasValue(objectAsAny.isDiscoverable) && !objectAsAny.isDiscoverable;
-    this.withdrawnBadge = objectExistsAndValidViewMode && hasValue(objectAsAny.isWithdrawn) && objectAsAny.isWithdrawn;
+    const objectExistsAndValidViewMode =
+      hasValue(objectAsAny) && this.viewMode !== ViewMode.StandalonePage;
+    this.privateBadge =
+      objectExistsAndValidViewMode &&
+      hasValue(objectAsAny.isDiscoverable) &&
+      !objectAsAny.isDiscoverable;
+    this.withdrawnBadge =
+      objectExistsAndValidViewMode &&
+      hasValue(objectAsAny.isWithdrawn) &&
+      objectAsAny.isWithdrawn;
   }
 
   /**
    * Fetch the component depending on the item's entity type, view mode and context
    * @returns {GenericConstructor<Component>}
    */
-  getComponent(renderTypes: (string | GenericConstructor<ListableObject>)[],
-               viewMode: ViewMode,
-               context: Context): GenericConstructor<Component> {
-    return getListableObjectComponent(renderTypes, viewMode, context, this.themeService.getThemeName());
+  getComponent(
+    renderTypes: (string | GenericConstructor<ListableObject>)[],
+    viewMode: ViewMode,
+    context: Context
+  ): GenericConstructor<Component> {
+    return getListableObjectComponent(
+      renderTypes,
+      viewMode,
+      context,
+      this.themeService.getThemeName()
+    );
   }
 
   /**
@@ -221,11 +242,14 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
    * to ensure they're in sync
    */
   protected connectInputsAndOutputs(): void {
-    if (isNotEmpty(this.inAndOutputNames) && hasValue(this.compRef) && hasValue(this.compRef.instance)) {
+    if (
+      isNotEmpty(this.inAndOutputNames) &&
+      hasValue(this.compRef) &&
+      hasValue(this.compRef.instance)
+    ) {
       this.inAndOutputNames.forEach((name: any) => {
         this.compRef.instance[name] = this[name];
       });
     }
   }
-
 }

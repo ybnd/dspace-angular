@@ -1,18 +1,25 @@
 import { Injectable } from '@angular/core';
-import * as Klaro from 'klaro';
-import { combineLatest as observableCombineLatest, Observable, of as observableOf } from 'rxjs';
-import { AuthService } from '../../core/auth/auth.service';
 import { TranslateService } from '@ngx-translate/core';
-import { environment } from '../../../environments/environment';
-import { switchMap, take } from 'rxjs/operators';
-import { EPerson } from '../../core/eperson/models/eperson.model';
-import { KlaroService } from './klaro.service';
-import { hasValue, isNotEmpty } from '../empty.util';
-import { CookieService } from '../../core/services/cookie.service';
-import { EPersonDataService } from '../../core/eperson/eperson-data.service';
-import { cloneDeep, debounce } from 'lodash';
-import { ANONYMOUS_STORAGE_NAME_KLARO, klaroConfiguration } from './klaro-configuration';
 import { Operation } from 'fast-json-patch';
+import * as Klaro from 'klaro';
+import { cloneDeep, debounce } from 'lodash';
+import {
+  combineLatest as observableCombineLatest,
+  Observable,
+  of as observableOf,
+} from 'rxjs';
+import { switchMap, take } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { AuthService } from '../../core/auth/auth.service';
+import { EPersonDataService } from '../../core/eperson/eperson-data.service';
+import { EPerson } from '../../core/eperson/models/eperson.model';
+import { CookieService } from '../../core/services/cookie.service';
+import { hasValue, isNotEmpty } from '../empty.util';
+import {
+  ANONYMOUS_STORAGE_NAME_KLARO,
+  klaroConfiguration,
+} from './klaro-configuration';
+import { KlaroService } from './klaro.service';
 
 /**
  * Metadata field to store a user's cookie consent preferences in
@@ -52,7 +59,8 @@ export class BrowserKlaroService extends KlaroService {
     private translateService: TranslateService,
     private authService: AuthService,
     private ePersonService: EPersonDataService,
-    private cookieService: CookieService) {
+    private cookieService: CookieService
+  ) {
     super();
   }
   /**
@@ -65,17 +73,20 @@ export class BrowserKlaroService extends KlaroService {
   initialize() {
     if (!environment.info.enablePrivacyStatement) {
       delete this.klaroConfig.privacyPolicy;
-      this.klaroConfig.translations.en.consentNotice.description = 'cookies.consent.content-notice.description.no-privacy';
+      this.klaroConfig.translations.en.consentNotice.description =
+        'cookies.consent.content-notice.description.no-privacy';
     }
 
     this.translateService.setDefaultLang(environment.defaultLanguage);
 
     const user$: Observable<EPerson> = this.getUser$();
 
-    const translationServiceReady$ = this.translateService.get('loading.default').pipe(take(1));
+    const translationServiceReady$ = this.translateService
+      .get('loading.default')
+      .pipe(take(1));
 
-    observableCombineLatest([user$, translationServiceReady$])
-      .subscribe(([user, translation]: [EPerson, string]) => {
+    observableCombineLatest([user$, translationServiceReady$]).subscribe(
+      ([user, translation]: [EPerson, string]) => {
         user = cloneDeep(user);
 
         if (hasValue(user)) {
@@ -94,7 +105,8 @@ export class BrowserKlaroService extends KlaroService {
          */
         this.translateConfiguration();
         Klaro.setup(this.klaroConfig);
-      });
+      }
+    );
   }
 
   /**
@@ -102,7 +114,10 @@ export class BrowserKlaroService extends KlaroService {
    * @param user The authenticated user
    */
   private initializeUser(user: EPerson) {
-    this.klaroConfig.callback = debounce((consent, app) => this.updateSettingsForUsers(user), updateDebounce);
+    this.klaroConfig.callback = debounce(
+      (consent, app) => this.updateSettingsForUsers(user),
+      updateDebounce
+    );
     this.klaroConfig.storageName = this.getStorageName(user.uuid);
 
     const anonCookie = this.cookieService.get(ANONYMOUS_STORAGE_NAME_KLARO);
@@ -119,17 +134,16 @@ export class BrowserKlaroService extends KlaroService {
    * Returns undefined when no one is logged in
    */
   private getUser$() {
-    return this.authService.isAuthenticated()
-      .pipe(
-        take(1),
-        switchMap((loggedIn: boolean) => {
-          if (loggedIn) {
-            return this.authService.getAuthenticatedUserFromStore();
-          }
-          return observableOf(undefined);
-        }),
-        take(1)
-      );
+    return this.authService.isAuthenticated().pipe(
+      take(1),
+      switchMap((loggedIn: boolean) => {
+        if (loggedIn) {
+          return this.authService.getAuthenticatedUserFromStore();
+        }
+        return observableOf(undefined);
+      }),
+      take(1)
+    );
   }
 
   /**
@@ -168,9 +182,13 @@ export class BrowserKlaroService extends KlaroService {
    */
   addAppMessages() {
     this.klaroConfig.services.forEach((app) => {
-      this.klaroConfig.translations.en[app.name] = { title: this.getTitleTranslation(app.name), description: this.getDescriptionTranslation(app.name) };
+      this.klaroConfig.translations.en[app.name] = {
+        title: this.getTitleTranslation(app.name),
+        description: this.getDescriptionTranslation(app.name),
+      };
       app.purposes.forEach((purpose) => {
-        this.klaroConfig.translations.en.purposes[purpose] = this.getPurposeTranslation(purpose);
+        this.klaroConfig.translations.en.purposes[purpose] =
+          this.getPurposeTranslation(purpose);
       });
     });
   }
@@ -192,7 +210,7 @@ export class BrowserKlaroService extends KlaroService {
    * @param object The object containing translation keys
    */
   private translate(object) {
-    if (typeof (object) === 'string') {
+    if (typeof object === 'string') {
       return this.translateService.instant(object);
     }
     Object.entries(object).forEach(([key, value]: [string, any]) => {
@@ -221,17 +239,18 @@ export class BrowserKlaroService extends KlaroService {
     } else {
       user.removeMetadata(COOKIE_MDFIELD);
     }
-    this.ePersonService.createPatchFromCache(user)
+    this.ePersonService
+      .createPatchFromCache(user)
       .pipe(
         take(1),
         switchMap((operations: Operation[]) => {
-            if (isNotEmpty(operations)) {
-              return this.ePersonService.patch(user, operations);
-            }
-            return observableOf(undefined);
+          if (isNotEmpty(operations)) {
+            return this.ePersonService.patch(user, operations);
           }
-        )
-      ).subscribe();
+          return observableOf(undefined);
+        })
+      )
+      .subscribe();
   }
 
   /**
@@ -239,7 +258,10 @@ export class BrowserKlaroService extends KlaroService {
    * @param user The user to save the settings for
    */
   restoreSettingsForUsers(user: EPerson) {
-    this.cookieService.set(this.getStorageName(user.uuid), this.getSettingsForUser(user));
+    this.cookieService.set(
+      this.getStorageName(user.uuid),
+      this.getSettingsForUser(user)
+    );
   }
 
   /**
@@ -247,7 +269,10 @@ export class BrowserKlaroService extends KlaroService {
    * @param user
    */
   updateSettingsForUsers(user: EPerson) {
-    this.setSettingsForUser(user, this.cookieService.get(this.getStorageName(user.uuid)));
+    this.setSettingsForUser(
+      user,
+      this.cookieService.get(this.getStorageName(user.uuid))
+    );
   }
 
   /**

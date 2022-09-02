@@ -1,8 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { Action } from '@ngrx/store';
-
-import { type } from '../../shared/ngrx/type';
 import { Operation } from 'fast-json-patch';
+import { type } from '../../shared/ngrx/type';
 import { CacheableObject } from './cacheable-object.model';
 
 /**
@@ -13,7 +12,7 @@ export const ObjectCacheActionTypes = {
   REMOVE: type('dspace/core/cache/object/REMOVE'),
   RESET_TIMESTAMPS: type('dspace/core/cache/object/RESET_TIMESTAMPS'),
   ADD_PATCH: type('dspace/core/cache/object/ADD_PATCH'),
-  APPLY_PATCH: type('dspace/core/cache/object/APPLY_PATCH')
+  APPLY_PATCH: type('dspace/core/cache/object/APPLY_PATCH'),
 };
 
 /**
@@ -44,8 +43,20 @@ export class AddToObjectCacheAction implements Action {
    *    link, it could have been part of a list for example
    *  @param alternativeLink An optional alternative link to this object
    */
-  constructor(objectToCache: CacheableObject, timeCompleted: number, msToLive: number, requestUUID: string, alternativeLink?: string) {
-    this.payload = { objectToCache, timeCompleted, msToLive, requestUUID, alternativeLink };
+  constructor(
+    objectToCache: CacheableObject,
+    timeCompleted: number,
+    msToLive: number,
+    requestUUID: string,
+    alternativeLink?: string
+  ) {
+    this.payload = {
+      objectToCache,
+      timeCompleted,
+      msToLive,
+      requestUUID,
+      alternativeLink,
+    };
   }
 }
 
@@ -91,8 +102,8 @@ export class ResetObjectCacheTimestampsAction implements Action {
 export class AddPatchObjectCacheAction implements Action {
   type = ObjectCacheActionTypes.ADD_PATCH;
   payload: {
-    href: string,
-    operations: Operation[]
+    href: string;
+    operations: Operation[];
   };
 
   /**
@@ -126,12 +137,11 @@ export class ApplyPatchObjectCacheAction implements Action {
   }
 }
 
-
 /**
  * A type to encompass all ObjectCacheActions
  */
-export type ObjectCacheAction
-  = AddToObjectCacheAction
+export type ObjectCacheAction =
+  | AddToObjectCacheAction
   | RemoveFromObjectCacheAction
   | ResetObjectCacheTimestampsAction
   | AddPatchObjectCacheAction

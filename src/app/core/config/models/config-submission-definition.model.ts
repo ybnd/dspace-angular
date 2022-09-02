@@ -3,8 +3,8 @@ import { typedObject } from '../../cache/builders/build-decorators';
 import { PaginatedList } from '../../data/paginated-list.model';
 import { HALLink } from '../../shared/hal-link.model';
 import { SubmissionSectionModel } from './config-submission-section.model';
-import { ConfigObject } from './config.model';
 import { SUBMISSION_DEFINITION_TYPE } from './config-type';
+import { ConfigObject } from './config.model';
 
 /**
  * Class for the configuration describing the submission
@@ -32,9 +32,8 @@ export class SubmissionDefinitionModel extends ConfigObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
-    collections: HALLink,
-    sections: HALLink
+    self: HALLink;
+    collections: HALLink;
+    sections: HALLink;
   };
-
 }

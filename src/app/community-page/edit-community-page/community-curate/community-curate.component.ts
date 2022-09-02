@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Community } from '../../../core/shared/community.model';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, take } from 'rxjs/operators';
-import { RemoteData } from '../../../core/data/remote-data';
 import { Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
+import { RemoteData } from '../../../core/data/remote-data';
+import { Community } from '../../../core/shared/community.model';
 import { hasValue } from '../../../shared/empty.util';
 
 /**
@@ -15,20 +15,18 @@ import { hasValue } from '../../../shared/empty.util';
   templateUrl: './community-curate.component.html',
 })
 export class CommunityCurateComponent implements OnInit {
-
   dsoRD$: Observable<RemoteData<Community>>;
   communityName$: Observable<string>;
 
   constructor(
     private route: ActivatedRoute,
-    private dsoNameService: DSONameService,
-  ) {
-  }
+    private dsoNameService: DSONameService
+  ) {}
 
   ngOnInit(): void {
     this.dsoRD$ = this.route.parent.data.pipe(
       take(1),
-      map((data) => data.dso),
+      map((data) => data.dso)
     );
 
     this.communityName$ = this.dsoRD$.pipe(
@@ -38,5 +36,4 @@ export class CommunityCurateComponent implements OnInit {
       })
     );
   }
-
 }

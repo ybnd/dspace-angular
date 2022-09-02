@@ -1,11 +1,11 @@
-import { HALLink } from '../../core/shared/hal-link.model';
 import { autoserialize, deserialize } from 'cerialize';
-import { SCRIPT } from './script.resource-type';
-import { ScriptParameter } from './script-parameter.model';
 import { typedObject } from '../../core/cache/builders/build-decorators';
-import { excludeFromEquals } from '../../core/utilities/equals.decorators';
-import { ResourceType } from '../../core/shared/resource-type';
 import { CacheableObject } from '../../core/cache/cacheable-object.model';
+import { HALLink } from '../../core/shared/hal-link.model';
+import { ResourceType } from '../../core/shared/resource-type';
+import { excludeFromEquals } from '../../core/utilities/equals.decorators';
+import { ScriptParameter } from './script-parameter.model';
+import { SCRIPT } from './script.resource-type';
 
 /**
  * Object representing a script
@@ -50,6 +50,6 @@ export class Script implements CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
+    self: HALLink;
   };
 }

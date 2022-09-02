@@ -3,13 +3,12 @@ import {
   DynamicFormControlRelation,
   DynamicInputModel,
   DynamicInputModelConfig,
-  serializable
+  serializable,
 } from '@ng-dynamic-forms/core';
-import {Subject} from 'rxjs';
-
-import { LanguageCode } from '../../models/form-field-language-value.model';
+import { Subject } from 'rxjs';
 import { VocabularyOptions } from '../../../../../core/submission/vocabularies/models/vocabulary-options.model';
-import {hasValue} from '../../../../empty.util';
+import { hasValue } from '../../../../empty.util';
+import { LanguageCode } from '../../models/form-field-language-value.model';
 import { FormFieldMetadataValueObject } from '../../models/form-field-metadata-value.model';
 import { RelationshipOptions } from '../../models/relationship-options.model';
 
@@ -27,11 +26,9 @@ export interface DsDynamicInputModelConfig extends DynamicInputModelConfig {
   hasSelectableMetadata: boolean;
   metadataValue?: FormFieldMetadataValueObject;
   isModelOfInnerForm?: boolean;
-
 }
 
 export class DsDynamicInputModel extends DynamicInputModel {
-
   @serializable() vocabularyOptions: VocabularyOptions;
   @serializable() private _languageCodes: LanguageCode[];
   @serializable() private _language: string;
@@ -47,8 +44,10 @@ export class DsDynamicInputModel extends DynamicInputModel {
   @serializable() metadataValue: FormFieldMetadataValueObject;
   @serializable() isModelOfInnerForm: boolean;
 
-
-  constructor(config: DsDynamicInputModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DsDynamicInputModelConfig,
+    layout?: DynamicFormControlLayout
+  ) {
     super(config, layout);
     this.repeatable = config.repeatable;
     this.metadataFields = config.metadataFields;
@@ -60,7 +59,9 @@ export class DsDynamicInputModel extends DynamicInputModel {
     this.hasSelectableMetadata = config.hasSelectableMetadata;
     this.metadataValue = config.metadataValue;
     this.place = config.place;
-    this.isModelOfInnerForm = (hasValue(config.isModelOfInnerForm) ? config.isModelOfInnerForm : false);
+    this.isModelOfInnerForm = hasValue(config.isModelOfInnerForm)
+      ? config.isModelOfInnerForm
+      : false;
 
     this.language = config.language;
     if (!this.language) {
@@ -81,7 +82,9 @@ export class DsDynamicInputModel extends DynamicInputModel {
       this.language = lang;
     });
 
-    this.typeBindRelations = config.typeBindRelations ? config.typeBindRelations : [];
+    this.typeBindRelations = config.typeBindRelations
+      ? config.typeBindRelations
+      : [];
 
     this.vocabularyOptions = config.vocabularyOptions;
   }

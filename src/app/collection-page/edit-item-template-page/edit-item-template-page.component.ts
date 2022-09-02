@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { RemoteData } from '../../core/data/remote-data';
-import { Collection } from '../../core/shared/collection.model';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 import { first, map, switchMap } from 'rxjs/operators';
 import { ItemTemplateDataService } from '../../core/data/item-template-data.service';
-import { getCollectionEditRoute } from '../collection-page-routing-paths';
+import { RemoteData } from '../../core/data/remote-data';
+import { Collection } from '../../core/shared/collection.model';
 import { Item } from '../../core/shared/item.model';
 import { getFirstSucceededRemoteDataPayload } from '../../core/shared/operators';
 import { AlertType } from '../../shared/alert/aletr-type';
+import { getCollectionEditRoute } from '../collection-page-routing-paths';
 
 @Component({
   selector: 'ds-edit-item-template-page',
@@ -18,7 +18,6 @@ import { AlertType } from '../../shared/alert/aletr-type';
  * Component for editing the item template of a collection
  */
 export class EditItemTemplatePageComponent implements OnInit {
-
   /**
    * The collection to edit the item template for
    */
@@ -35,15 +34,21 @@ export class EditItemTemplatePageComponent implements OnInit {
    */
   AlertTypeEnum = AlertType;
 
-  constructor(protected route: ActivatedRoute,
-              public itemTemplateService: ItemTemplateDataService) {
-  }
+  constructor(
+    protected route: ActivatedRoute,
+    public itemTemplateService: ItemTemplateDataService
+  ) {}
 
   ngOnInit(): void {
-    this.collectionRD$ = this.route.parent.data.pipe(first(), map((data) => data.dso));
+    this.collectionRD$ = this.route.parent.data.pipe(
+      first(),
+      map((data) => data.dso)
+    );
     this.itemRD$ = this.collectionRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((collection) => this.itemTemplateService.findByCollectionID(collection.id)),
+      switchMap((collection) =>
+        this.itemTemplateService.findByCollectionID(collection.id)
+      )
     );
   }
 
@@ -58,5 +63,4 @@ export class EditItemTemplatePageComponent implements OnInit {
       return '';
     }
   }
-
 }

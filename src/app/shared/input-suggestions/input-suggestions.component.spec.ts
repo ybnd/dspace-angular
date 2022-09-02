@@ -1,15 +1,17 @@
-import { ChangeDetectionStrategy, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-
-import { TranslateModule } from '@ngx-translate/core';
-import { InputSuggestionsComponent } from './input-suggestions.component';
-import { By } from '@angular/platform-browser';
+import {
+  ChangeDetectionStrategy,
+  DebugElement,
+  NO_ERRORS_SCHEMA,
+} from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { InputSuggestionsComponent } from './input-suggestions.component';
 
 describe('InputSuggestionsComponent', () => {
-
   let comp: InputSuggestionsComponent;
   let fixture: ComponentFixture<InputSuggestionsComponent>;
   let de: DebugElement;
@@ -17,19 +19,30 @@ describe('InputSuggestionsComponent', () => {
   let suggestions;
 
   beforeEach(waitForAsync(() => {
-    suggestions = [{ displayValue: 'suggestion uno', value: 'suggestion uno' }, {
-      displayValue: 'suggestion dos',
-      value: 'suggestion dos'
-    }, { displayValue: 'suggestion tres', value: 'suggestion tres' }];
+    suggestions = [
+      { displayValue: 'suggestion uno', value: 'suggestion uno' },
+      {
+        displayValue: 'suggestion dos',
+        value: 'suggestion dos',
+      },
+      { displayValue: 'suggestion tres', value: 'suggestion tres' },
+    ];
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule, FormsModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
+        FormsModule,
+      ],
       declarations: [InputSuggestionsComponent],
       providers: [],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(InputSuggestionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(InputSuggestionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -49,12 +62,10 @@ describe('InputSuggestionsComponent', () => {
   });
 
   describe('when the input field is in focus', () => {
-
     beforeEach(() => {
       const inputElement = de.query(By.css('.suggestion_input'));
       inputElement.nativeElement.focus();
       fixture.detectChanges();
-
     });
 
     it('should not have any element in focus', () => {
@@ -108,7 +119,9 @@ describe('InputSuggestionsComponent', () => {
       });
 
       it('should put the focus on the first element ', () => {
-        const firstLink = de.query(By.css('.dropdown-list > div:first-child a'));
+        const firstLink = de.query(
+          By.css('.dropdown-list > div:first-child a')
+        );
         const activeElement = el.ownerDocument.activeElement;
         expect(activeElement).toEqual(firstLink.nativeElement);
       });
@@ -122,7 +135,9 @@ describe('InputSuggestionsComponent', () => {
       });
 
       it('should put the focus on the second element', () => {
-        const secondLink = de.query(By.css('.dropdown-list > div:nth-child(2) a'));
+        const secondLink = de.query(
+          By.css('.dropdown-list > div:nth-child(2) a')
+        );
         const activeElement = el.ownerDocument.activeElement;
         expect(activeElement).toEqual(secondLink.nativeElement);
       });
@@ -135,7 +150,6 @@ describe('InputSuggestionsComponent', () => {
       firstLink.nativeElement.focus();
       comp.selectedIndex = 0;
       fixture.detectChanges();
-
     });
 
     describe('when shiftFocusUp() is triggered', () => {
@@ -158,7 +172,9 @@ describe('InputSuggestionsComponent', () => {
       });
 
       it('should put the focus on the second element ', () => {
-        const secondLink = de.query(By.css('.dropdown-list > div:nth-child(2) a'));
+        const secondLink = de.query(
+          By.css('.dropdown-list > div:nth-child(2) a')
+        );
         const activeElement = el.ownerDocument.activeElement;
         expect(activeElement).toEqual(secondLink.nativeElement);
       });
@@ -171,7 +187,6 @@ describe('InputSuggestionsComponent', () => {
       lastLink.nativeElement.focus();
       comp.selectedIndex = suggestions.length - 1;
       fixture.detectChanges();
-
     });
 
     describe('when shiftFocusUp() is triggered', () => {
@@ -181,7 +196,9 @@ describe('InputSuggestionsComponent', () => {
       });
 
       it('should put the focus on the second last element ', () => {
-        const secondLastLink = de.query(By.css('.dropdown-list > div:nth-last-child(2) a'));
+        const secondLastLink = de.query(
+          By.css('.dropdown-list > div:nth-last-child(2) a')
+        );
         const activeElement = el.ownerDocument.activeElement;
         expect(activeElement).toEqual(secondLastLink.nativeElement);
       });
@@ -194,7 +211,9 @@ describe('InputSuggestionsComponent', () => {
       });
 
       it('should put the focus on the first element ', () => {
-        const firstLink = de.query(By.css('.dropdown-list > div:first-child a'));
+        const firstLink = de.query(
+          By.css('.dropdown-list > div:first-child a')
+        );
         const activeElement = el.ownerDocument.activeElement;
         expect(activeElement).toEqual(firstLink.nativeElement);
       });
@@ -223,7 +242,6 @@ describe('InputSuggestionsComponent', () => {
       it('should not change the focus', () => {
         expect(comp.queryInput.nativeElement.focus).not.toHaveBeenCalled();
       });
-
     });
 
     describe('when onKeydown is triggered with the any other (not-Enter) key', () => {
@@ -236,7 +254,6 @@ describe('InputSuggestionsComponent', () => {
       it('should change the focus', () => {
         expect(comp.queryInput.nativeElement.focus).toHaveBeenCalled();
       });
-
     });
   });
 
@@ -245,7 +262,7 @@ describe('InputSuggestionsComponent', () => {
       comp.show.next(true);
       fixture.detectChanges();
     });
-    it('should contain an .autocomplete list with a \'show\' class', () => {
+    it("should contain an .autocomplete list with a 'show' class", () => {
       const autocomplete = de.query(By.css('div.autocomplete'));
       expect(autocomplete.nativeElement.classList).toContain('show');
     });
@@ -256,7 +273,7 @@ describe('InputSuggestionsComponent', () => {
       comp.show.next(false);
       fixture.detectChanges();
     });
-    it('should contain an .autocomplete list without a \'show\' class', () => {
+    it("should contain an .autocomplete list without a 'show' class", () => {
       const autocomplete = de.query(By.css('div.autocomplete'));
       expect(autocomplete.nativeElement.classList).not.toContain('show');
     });
@@ -268,7 +285,7 @@ describe('InputSuggestionsComponent', () => {
       comp.show.next(false);
       fixture.detectChanges();
     });
-    it('should contain an .autocomplete list without a \'show\' class', () => {
+    it("should contain an .autocomplete list without a 'show' class", () => {
       const autocomplete = de.query(By.css('div.autocomplete'));
       expect(autocomplete.nativeElement.classList).not.toContain('show');
     });
@@ -279,19 +296,19 @@ describe('InputSuggestionsComponent', () => {
       comp.show.next(true);
       fixture.detectChanges();
     });
-    it('should contain an .autocomplete list without a \'show\' class', () => {
+    it("should contain an .autocomplete list without a 'show' class", () => {
       const autocomplete = de.query(By.css('div.autocomplete'));
       expect(autocomplete.nativeElement.classList).not.toContain('show');
     });
   });
 
-  describe('when the variable \'show\' is set to true and close() is called', () => {
+  describe("when the variable 'show' is set to true and close() is called", () => {
     beforeEach(() => {
       comp.show.next(true);
       comp.close();
       fixture.detectChanges();
     });
-    it('should set \'show\' to false', () => {
+    it("should set 'show' to false", () => {
       expect(comp.show.getValue()).toBeFalsy();
     });
   });
@@ -300,12 +317,16 @@ describe('InputSuggestionsComponent', () => {
     const clickedIndex = 0;
     beforeEach(() => {
       spyOn(comp, 'onClickSuggestion');
-      const clickedLink = de.query(By.css('.dropdown-list > div:nth-child(' + (clickedIndex + 1) + ') a'));
+      const clickedLink = de.query(
+        By.css('.dropdown-list > div:nth-child(' + (clickedIndex + 1) + ') a')
+      );
       clickedLink.triggerEventHandler('click', {});
       fixture.detectChanges();
     });
     it('should call onClickSuggestion() with the suggestion as a parameter', () => {
-      expect(comp.onClickSuggestion).toHaveBeenCalledWith(suggestions[clickedIndex].value);
+      expect(comp.onClickSuggestion).toHaveBeenCalledWith(
+        suggestions[clickedIndex].value
+      );
     });
   });
 });

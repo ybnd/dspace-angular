@@ -1,20 +1,19 @@
 import { Component } from '@angular/core';
-import { ViewMode } from '../../../../core/shared/view-mode.model';
-import { listableObjectComponent } from '../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
-import { VersionedItemComponent } from '../../../../item-page/simple/item-types/versioned-item/versioned-item.component';
 import { MetadataValue } from '../../../../core/shared/metadata.models';
+import { ViewMode } from '../../../../core/shared/view-mode.model';
+import { VersionedItemComponent } from '../../../../item-page/simple/item-types/versioned-item/versioned-item.component';
+import { listableObjectComponent } from '../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
 
 @listableObjectComponent('Person', ViewMode.StandalonePage)
 @Component({
   selector: 'ds-person',
   styleUrls: ['./person.component.scss'],
-  templateUrl: './person.component.html'
+  templateUrl: './person.component.html',
 })
 /**
  * The component for displaying metadata and relations of an item of the type Person
  */
 export class PersonComponent extends VersionedItemComponent {
-
   /**
    * Returns the metadata values to be used for the page title.
    */
@@ -34,5 +33,4 @@ export class PersonComponent extends VersionedItemComponent {
     }
     return metadataValues;
   }
-
 }

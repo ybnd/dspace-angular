@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouterStub } from '../../../testing/router.stub';
-import { EditCollectionSelectorComponent } from './edit-collection-selector.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { Collection } from '../../../../core/shared/collection.model';
 import { MetadataValue } from '../../../../core/shared/metadata.models';
 import { createSuccessfulRemoteDataObject } from '../../../remote-data.utils';
+import { RouterStub } from '../../../testing/router.stub';
+import { EditCollectionSelectorComponent } from './edit-collection-selector.component';
 
 describe('EditCollectionSelectorComponent', () => {
   let component: EditCollectionSelectorComponent;
@@ -17,10 +17,12 @@ describe('EditCollectionSelectorComponent', () => {
   const collection = new Collection();
   collection.uuid = '1234-1234-1234-1234';
   collection.metadata = {
-    'dc.title': [Object.assign(new MetadataValue(), {
-      value: 'Collection title',
-      language: undefined
-    })]
+    'dc.title': [
+      Object.assign(new MetadataValue(), {
+        value: 'Collection title',
+        language: undefined,
+      }),
+    ],
   };
   const router = new RouterStub();
   const collectionRD = createSuccessfulRemoteDataObject(collection);
@@ -42,16 +44,16 @@ describe('EditCollectionSelectorComponent', () => {
                   dso: collectionRD,
                 },
               },
-            }
+            },
           },
         },
         {
-          provide: Router, useValue: router
-        }
+          provide: Router,
+          useValue: router,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -69,5 +71,4 @@ describe('EditCollectionSelectorComponent', () => {
     component.navigate(collection);
     expect(router.navigate).toHaveBeenCalledWith([editPath]);
   });
-
 });

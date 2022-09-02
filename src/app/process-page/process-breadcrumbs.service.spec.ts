@@ -1,7 +1,7 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { getTestScheduler } from 'jasmine-marbles';
-import { ProcessBreadcrumbsService } from './process-breadcrumbs.service';
 import { Breadcrumb } from '../breadcrumbs/breadcrumb/breadcrumb.model';
+import { ProcessBreadcrumbsService } from './process-breadcrumbs.service';
 import { Process } from './processes/process.model';
 
 describe('ProcessBreadcrumbsService', () => {
@@ -14,7 +14,10 @@ describe('ProcessBreadcrumbsService', () => {
   function init() {
     exampleId = '12345';
     exampleScriptName = 'Example Script';
-    exampleProcess = Object.assign(new Process(), {processId: exampleId, scriptName: exampleScriptName});
+    exampleProcess = Object.assign(new Process(), {
+      processId: exampleId,
+      scriptName: exampleScriptName,
+    });
     exampleURL = 'example.com';
   }
 
@@ -30,7 +33,13 @@ describe('ProcessBreadcrumbsService', () => {
   describe('getBreadcrumbs', () => {
     it('should return a breadcrumb based on a id and scriptName of the process', () => {
       const breadcrumbs = service.getBreadcrumbs(exampleProcess, exampleURL);
-      getTestScheduler().expectObservable(breadcrumbs).toBe('(a|)', { a: [new Breadcrumb(exampleId + ' - ' + exampleScriptName, exampleURL)] });
+      getTestScheduler()
+        .expectObservable(breadcrumbs)
+        .toBe('(a|)', {
+          a: [
+            new Breadcrumb(exampleId + ' - ' + exampleScriptName, exampleURL),
+          ],
+        });
     });
   });
 });

@@ -1,7 +1,12 @@
-import { Component, Input, ComponentFactoryResolver, ChangeDetectorRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+} from '@angular/core';
+import { ThemeService } from '../theme-support/theme.service';
 import { ThemedComponent } from '../theme-support/themed.component';
 import { LoadingComponent } from './loading.component';
-import { ThemeService } from '../theme-support/theme.service';
 
 /**
  * Themed wrapper for LoadingComponent
@@ -12,11 +17,13 @@ import { ThemeService } from '../theme-support/theme.service';
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedLoadingComponent extends ThemedComponent<LoadingComponent> {
-
   @Input() message: string;
   @Input() showMessage = true;
 
-  protected inAndOutputNames: (keyof LoadingComponent & keyof this)[] = ['message', 'showMessage'];
+  protected inAndOutputNames: (keyof LoadingComponent & keyof this)[] = [
+    'message',
+    'showMessage',
+  ];
 
   constructor(
     protected resolver: ComponentFactoryResolver,
@@ -31,7 +38,9 @@ export class ThemedLoadingComponent extends ThemedComponent<LoadingComponent> {
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/loading/loading.component`);
+    return import(
+      `../../../themes/${themeName}/app/shared/loading/loading.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

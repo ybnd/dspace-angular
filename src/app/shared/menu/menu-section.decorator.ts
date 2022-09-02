@@ -1,6 +1,6 @@
+import { hasValue } from '../empty.util';
 import { DEFAULT_THEME } from '../object-collection/shared/listable-object/listable-object.decorator';
 import { MenuID } from './menu-id.model';
-import { hasValue } from '../empty.util';
 
 const menuComponentMap = new Map();
 
@@ -10,7 +10,11 @@ const menuComponentMap = new Map();
  * @param {boolean} expandable True when the section should be expandable, false when if should not
  * @returns {(menuSectionWrapperComponent: GenericConstructor) => void}
  */
-export function rendersSectionForMenu(menuID: MenuID, expandable: boolean, theme = DEFAULT_THEME) {
+export function rendersSectionForMenu(
+  menuID: MenuID,
+  expandable: boolean,
+  theme = DEFAULT_THEME
+) {
   return function decorator(menuSectionWrapperComponent: any) {
     if (!menuSectionWrapperComponent) {
       return;
@@ -19,9 +23,12 @@ export function rendersSectionForMenu(menuID: MenuID, expandable: boolean, theme
       menuComponentMap.set(menuID, new Map());
     }
     if (!menuComponentMap.get(menuID).get(expandable)) {
-        menuComponentMap.get(menuID).set(expandable, new Map());
+      menuComponentMap.get(menuID).set(expandable, new Map());
     }
-    menuComponentMap.get(menuID).get(expandable).set(theme, menuSectionWrapperComponent);
+    menuComponentMap
+      .get(menuID)
+      .get(expandable)
+      .set(theme, menuSectionWrapperComponent);
   };
 }
 
@@ -31,7 +38,11 @@ export function rendersSectionForMenu(menuID: MenuID, expandable: boolean, theme
  * @param {boolean} expandable True when the section should be expandable, false when if should not
  * @returns {GenericConstructor} The constructor of the matching Component
  */
-export function getComponentForMenu(menuID: MenuID, expandable: boolean, theme: string) {
+export function getComponentForMenu(
+  menuID: MenuID,
+  expandable: boolean,
+  theme: string
+) {
   const comp = menuComponentMap.get(menuID).get(expandable).get(theme);
   if (hasValue(comp)) {
     return comp;

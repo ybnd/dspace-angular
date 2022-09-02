@@ -1,8 +1,7 @@
-import { Component, } from '@angular/core';
-
-import { renderAuthMethodFor } from '../log-in.methods-decorator';
+import { Component } from '@angular/core';
 import { AuthMethodType } from '../../../../core/auth/models/auth.method-type';
 import { LogInExternalProviderComponent } from '../log-in-external-provider.component';
+import { renderAuthMethodFor } from '../log-in.methods-decorator';
 
 @Component({
   selector: 'ds-log-in-orcid',
@@ -10,12 +9,10 @@ import { LogInExternalProviderComponent } from '../log-in-external-provider.comp
 })
 @renderAuthMethodFor(AuthMethodType.Orcid)
 export class LogInOrcidComponent extends LogInExternalProviderComponent {
-
   /**
    * Redirect to orcid authentication url
    */
   redirectToOrcid() {
     this.redirectToExternalProvider();
   }
-
 }

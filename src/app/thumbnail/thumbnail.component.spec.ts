@@ -1,14 +1,15 @@
 import { DebugElement, Pipe, PipeTransform } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { Bitstream } from '../core/shared/bitstream.model';
-import { SafeUrlPipe } from '../shared/utils/safe-url-pipe';
-
-import { ThumbnailComponent } from './thumbnail.component';
 import { RemoteData } from '../core/data/remote-data';
+import { Bitstream } from '../core/shared/bitstream.model';
 import {
-  createFailedRemoteDataObject, createPendingRemoteDataObject, createSuccessfulRemoteDataObject,
+  createFailedRemoteDataObject,
+  createPendingRemoteDataObject,
+  createSuccessfulRemoteDataObject,
 } from '../shared/remote-data.utils';
+import { SafeUrlPipe } from '../shared/utils/safe-url-pipe';
+import { ThumbnailComponent } from './thumbnail.component';
 
 // eslint-disable-next-line @angular-eslint/pipe-prefix
 @Pipe({ name: 'translate' })
@@ -63,7 +64,9 @@ describe('ThumbnailComponent', () => {
 
         comp.ngOnChanges();
         fixture.detectChanges();
-        const placeholder = fixture.debugElement.query(By.css('div.thumbnail-placeholder')).nativeElement;
+        const placeholder = fixture.debugElement.query(
+          By.css('div.thumbnail-placeholder')
+        ).nativeElement;
         expect(placeholder.innerHTML).toBe('TRANSLATED ' + comp.placeholder);
       });
     });
@@ -87,7 +90,9 @@ describe('ThumbnailComponent', () => {
       comp.ngOnChanges();
       fixture.detectChanges();
       const image: HTMLElement = de.query(By.css('img')).nativeElement;
-      expect(image.getAttribute('src')).toBe(comp.thumbnail._links.content.href);
+      expect(image.getAttribute('src')).toBe(
+        comp.thumbnail._links.content.href
+      );
     });
 
     it('should include the alt text', () => {
@@ -137,7 +142,9 @@ describe('ThumbnailComponent', () => {
         comp.ngOnChanges();
         fixture.detectChanges();
         const image: HTMLElement = de.query(By.css('img')).nativeElement;
-        expect(image.getAttribute('src')).toBe(comp.thumbnail.payload._links.content.href);
+        expect(image.getAttribute('src')).toBe(
+          comp.thumbnail.payload._links.content.href
+        );
       });
 
       it('should display the alt text', () => {

@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, of as observableOf } from 'rxjs';
+import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service';
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../../../../../core/cache/object-cache.service';
 import { BitstreamDataService } from '../../../../../core/data/bitstream-data.service';
@@ -20,6 +21,7 @@ import { Bitstream } from '../../../../../core/shared/bitstream.model';
 import { HALEndpointService } from '../../../../../core/shared/hal-endpoint.service';
 import { Item } from '../../../../../core/shared/item.model';
 import { UUIDService } from '../../../../../core/shared/uuid.service';
+import { DSONameServiceMock } from '../../../../../shared/mocks/dso-name.service.mock';
 import { NotificationsService } from '../../../../../shared/notifications/notifications.service';
 import { ItemSearchResult } from '../../../../../shared/object-collection/shared/item-search-result.model';
 import { SelectableListService } from '../../../../../shared/object-list/selectable-list/selectable-list.service';
@@ -27,8 +29,6 @@ import { createSuccessfulRemoteDataObject$ } from '../../../../../shared/remote-
 import { TruncatableService } from '../../../../../shared/truncatable/truncatable.service';
 import { TruncatePipe } from '../../../../../shared/utils/truncate.pipe';
 import { OrgUnitSearchResultListSubmissionElementComponent } from './org-unit-search-result-list-submission-element.component';
-import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service';
-import { DSONameServiceMock } from '../../../../../shared/mocks/dso-name.service.mock';
 
 let personListElementComponent: OrgUnitSearchResultListSubmissionElementComponent;
 let fixture: ComponentFixture<OrgUnitSearchResultListSubmissionElementComponent>;
@@ -40,52 +40,52 @@ let nameVariant;
 let mockRelationshipService;
 
 function init() {
-  mockItemWithMetadata = Object.assign(
-    new ItemSearchResult(),
-    {
-      indexableObject: Object.assign(new Item(), {
-        bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, [])),
-        metadata: {
-          'dc.title': [
-            {
-              language: 'en_US',
-              value: 'This is just another title'
-            }
-          ],
-          'organization.address.addressLocality': [
-            {
-              language: 'en_US',
-              value: 'Europe'
-            }
-          ],
-          'organization.address.addressCountry': [
-            {
-              language: 'en_US',
-              value: 'Belgium'
-            }
-          ]
-        }
-      })
-    });
-  mockItemWithoutMetadata = Object.assign(
-    new ItemSearchResult(),
-    {
-      indexableObject: Object.assign(new Item(), {
-        bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, [])),
-        metadata: {
-          'dc.title': [
-            {
-              language: 'en_US',
-              value: 'This is just another title'
-            }
-          ]
-        }
-      })
-    });
+  mockItemWithMetadata = Object.assign(new ItemSearchResult(), {
+    indexableObject: Object.assign(new Item(), {
+      bundles: createSuccessfulRemoteDataObject$(
+        buildPaginatedList(undefined, [])
+      ),
+      metadata: {
+        'dc.title': [
+          {
+            language: 'en_US',
+            value: 'This is just another title',
+          },
+        ],
+        'organization.address.addressLocality': [
+          {
+            language: 'en_US',
+            value: 'Europe',
+          },
+        ],
+        'organization.address.addressCountry': [
+          {
+            language: 'en_US',
+            value: 'Belgium',
+          },
+        ],
+      },
+    }),
+  });
+  mockItemWithoutMetadata = Object.assign(new ItemSearchResult(), {
+    indexableObject: Object.assign(new Item(), {
+      bundles: createSuccessfulRemoteDataObject$(
+        buildPaginatedList(undefined, [])
+      ),
+      metadata: {
+        'dc.title': [
+          {
+            language: 'en_US',
+            value: 'This is just another title',
+          },
+        ],
+      },
+    }),
+  });
 
   nameVariant = 'Doe J.';
   mockRelationshipService = {
-    getNameVariant: () => observableOf(nameVariant)
+    getNameVariant: () => observableOf(nameVariant),
   };
 }
 
@@ -95,10 +95,13 @@ describe('OrgUnitSearchResultListSubmissionElementComponent', () => {
     const mockBitstreamDataService = {
       getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
         return createSuccessfulRemoteDataObject$(new Bitstream());
-      }
+      },
     };
     TestBed.configureTestingModule({
-      declarations: [OrgUnitSearchResultListSubmissionElementComponent, TruncatePipe],
+      declarations: [
+        OrgUnitSearchResultListSubmissionElementComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: RelationshipService, useValue: mockRelationshipService },
@@ -117,19 +120,22 @@ describe('OrgUnitSearchResultListSubmissionElementComponent', () => {
         { provide: DSOChangeAnalyzer, useValue: {} },
         { provide: DefaultChangeAnalyzer, useValue: {} },
         { provide: BitstreamDataService, useValue: mockBitstreamDataService },
-        { provide: DSONameService, useClass: DSONameServiceMock }
+        { provide: DSONameService, useClass: DSONameServiceMock },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(OrgUnitSearchResultListSubmissionElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(OrgUnitSearchResultListSubmissionElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(OrgUnitSearchResultListSubmissionElementComponent);
+    fixture = TestBed.createComponent(
+      OrgUnitSearchResultListSubmissionElementComponent
+    );
     personListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('When the item has a address locality span', () => {
@@ -139,7 +145,9 @@ describe('OrgUnitSearchResultListSubmissionElementComponent', () => {
     });
 
     it('should show the address locality span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-address-locality'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-address-locality')
+      );
       expect(jobTitleField).not.toBeNull();
     });
   });
@@ -151,7 +159,9 @@ describe('OrgUnitSearchResultListSubmissionElementComponent', () => {
     });
 
     it('should not show the address locality span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-address-locality'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-address-locality')
+      );
       expect(jobTitleField).toBeNull();
     });
   });
@@ -163,7 +173,9 @@ describe('OrgUnitSearchResultListSubmissionElementComponent', () => {
     });
 
     it('should show the address country span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-address-country'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-address-country')
+      );
       expect(jobTitleField).not.toBeNull();
     });
   });
@@ -175,7 +187,9 @@ describe('OrgUnitSearchResultListSubmissionElementComponent', () => {
     });
 
     it('should not show the address country span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-address-country'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-address-country')
+      );
       expect(jobTitleField).toBeNull();
     });
   });

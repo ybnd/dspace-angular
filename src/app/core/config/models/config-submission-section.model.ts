@@ -2,8 +2,8 @@ import { autoserialize, deserialize, inheritSerialization } from 'cerialize';
 import { SectionsType } from '../../../submission/sections/sections-type';
 import { typedObject } from '../../cache/builders/build-decorators';
 import { HALLink } from '../../shared/hal-link.model';
-import { ConfigObject } from './config.model';
 import { SUBMISSION_SECTION_TYPE } from './config-type';
+import { ConfigObject } from './config.model';
 
 /**
  * An interface that define section visibility and its properties.
@@ -50,5 +50,4 @@ export class SubmissionSectionModel extends ConfigObject {
     self: HALLink;
     config: HALLink;
   };
-
 }

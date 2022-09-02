@@ -4,7 +4,7 @@
 export enum HealthStatus {
   UP = 'UP',
   UP_WITH_ISSUES = 'UP_WITH_ISSUES',
-  DOWN = 'DOWN'
+  DOWN = 'DOWN',
 }
 
 /**
@@ -23,7 +23,7 @@ export interface HealthResponse {
 export interface HealthComponent {
   status: HealthStatus;
   details?: {
-    [name: string]: number|string;
+    [name: string]: number | string;
   };
   components?: {
     [name: string]: HealthComponent;
@@ -34,15 +34,12 @@ export interface HealthComponent {
  * Interface describing the Health info endpoint response
  */
 export interface HealthInfoResponse {
-  [name: string]: HealthInfoComponent|string;
+  [name: string]: HealthInfoComponent | string;
 }
 
 /**
  * Interface describing a single component retrieved from the Health info endpoint response
  */
 export interface HealthInfoComponent {
-  [property: string]: HealthInfoComponent|string;
+  [property: string]: HealthInfoComponent | string;
 }
-
-
-

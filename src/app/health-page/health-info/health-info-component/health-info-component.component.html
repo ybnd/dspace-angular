@@ -1,8 +1,22 @@
-<div *ngFor="let entry of healthInfoComponent | dsObjNgFor" data-test="collapse">
-  <div *ngIf="entry && !isPlainProperty(entry.value)" class="mb-3 border-bottom">
-    <div class="w-100 d-flex justify-content-between collapse-toggle" (click)="collapse.toggle()">
-      <button type="button" class="btn btn-link p-0" (click)="$event.preventDefault()" [attr.aria-expanded]="!collapse.collapsed"
-              aria-controls="collapseExample">
+<div
+  *ngFor="let entry of healthInfoComponent | dsObjNgFor"
+  data-test="collapse"
+>
+  <div
+    *ngIf="entry && !isPlainProperty(entry.value)"
+    class="mb-3 border-bottom"
+  >
+    <div
+      class="w-100 d-flex justify-content-between collapse-toggle"
+      (click)="collapse.toggle()"
+    >
+      <button
+        type="button"
+        class="btn btn-link p-0"
+        (click)="$event.preventDefault()"
+        [attr.aria-expanded]="!collapse.collapsed"
+        aria-controls="collapseExample"
+      >
         {{ entry.key | titlecase }}
       </button>
       <div class="d-inline-block">
@@ -13,15 +27,22 @@
     <div #collapse="ngbCollapse" [ngbCollapse]="isCollapsed">
       <div class="card border-0">
         <div class="card-body">
-          <ds-health-info-component [healthInfoComponent]="entry.value"
-                                    [healthInfoComponentName]="entry.key"
-                                    [isNested]="true"
-                                    data-test="info-component"></ds-health-info-component>
+          <ds-health-info-component
+            [healthInfoComponent]="entry.value"
+            [healthInfoComponentName]="entry.key"
+            [isNested]="true"
+            data-test="info-component"
+          ></ds-health-info-component>
         </div>
       </div>
     </div>
   </div>
   <ng-container *ngIf="entry && isPlainProperty(entry.value)">
-    <p data-test="property"> <span class="font-weight-bold">{{ getPropertyLabel(entry.key) | titlecase }}</span> : {{entry.value}}</p>
+    <p data-test="property">
+      <span class="font-weight-bold">{{
+        getPropertyLabel(entry.key) | titlecase
+      }}</span>
+      : {{ entry.value }}
+    </p>
   </ng-container>
 </div>

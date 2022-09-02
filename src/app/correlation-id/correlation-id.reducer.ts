@@ -1,4 +1,8 @@
-import { CorrelationIdAction, CorrelationIDActionTypes, SetCorrelationIdAction } from './correlation-id.actions';
+import {
+  CorrelationIdAction,
+  CorrelationIDActionTypes,
+  SetCorrelationIdAction,
+} from './correlation-id.actions';
 
 const initialState = null;
 
@@ -8,7 +12,10 @@ const initialState = null;
  * @param {CorrelationIdAction} action  the action to perform
  * @return {string}                     the new correlation ID
  */
-export const correlationIdReducer = (state = initialState, action: CorrelationIdAction): string => {
+export const correlationIdReducer = (
+  state = initialState,
+  action: CorrelationIdAction
+): string => {
   switch (action.type) {
     case CorrelationIDActionTypes.SET: {
       return (action as SetCorrelationIdAction).payload;

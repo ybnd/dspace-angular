@@ -1,8 +1,7 @@
 import { autoserialize } from 'cerialize';
-
+import { FormRowModel } from '../../../../core/config/models/config-submission-form.model';
 import { LanguageCode } from './form-field-language-value.model';
 import { RelationshipOptions } from './relationship-options.model';
-import { FormRowModel } from '../../../../core/config/models/config-submission-form.model';
 
 /**
  * Representing SelectableMetadata properties
@@ -33,7 +32,6 @@ export interface SelectableMetadata {
  * A class representing a specific input-form field
  */
 export class FormFieldModel {
-
   /**
    * The hints for this metadata field to display on form
    */

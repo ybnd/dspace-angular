@@ -1,15 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { BitstreamDataService } from '../../../../core/data/bitstream-data.service';
-
+import { PaginatedList } from '../../../../core/data/paginated-list.model';
+import { RemoteData } from '../../../../core/data/remote-data';
 import { Bitstream } from '../../../../core/shared/bitstream.model';
 import { Item } from '../../../../core/shared/item.model';
-import { RemoteData } from '../../../../core/data/remote-data';
-import { hasValue } from '../../../../shared/empty.util';
-import { PaginatedList } from '../../../../core/data/paginated-list.model';
-import { NotificationsService } from '../../../../shared/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
 import { getFirstCompletedRemoteData } from '../../../../core/shared/operators';
+import { hasValue } from '../../../../shared/empty.util';
+import { NotificationsService } from '../../../../shared/notifications/notifications.service';
 
 /**
  * This component renders the file section of the item
@@ -17,10 +16,9 @@ import { getFirstCompletedRemoteData } from '../../../../core/shared/operators';
  */
 @Component({
   selector: 'ds-item-page-file-section',
-  templateUrl: './file-section.component.html'
+  templateUrl: './file-section.component.html',
 })
 export class FileSectionComponent implements OnInit {
-
   @Input() item: Item;
 
   label = 'item.page.files';
@@ -41,8 +39,7 @@ export class FileSectionComponent implements OnInit {
     protected bitstreamDataService: BitstreamDataService,
     protected notificationsService: NotificationsService,
     protected translateService: TranslateService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.getNextPage();
@@ -62,20 +59,25 @@ export class FileSectionComponent implements OnInit {
     } else {
       this.currentPage++;
     }
-    this.bitstreamDataService.findAllByItemAndBundleName(this.item, 'ORIGINAL', {
-      currentPage: this.currentPage,
-      elementsPerPage: this.pageSize
-    }).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
-      if (bitstreamsRD.errorMessage) {
-        this.notificationsService.error(this.translateService.get('file-section.error.header'), `${bitstreamsRD.statusCode} ${bitstreamsRD.errorMessage}`);
-      } else if (hasValue(bitstreamsRD.payload)) {
-        const current: Bitstream[] = this.bitstreams$.getValue();
-        this.bitstreams$.next([...current, ...bitstreamsRD.payload.page]);
-        this.isLoading = false;
-        this.isLastPage = this.currentPage === bitstreamsRD.payload.totalPages;
-      }
-    });
+    this.bitstreamDataService
+      .findAllByItemAndBundleName(this.item, 'ORIGINAL', {
+        currentPage: this.currentPage,
+        elementsPerPage: this.pageSize,
+      })
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
+        if (bitstreamsRD.errorMessage) {
+          this.notificationsService.error(
+            this.translateService.get('file-section.error.header'),
+            `${bitstreamsRD.statusCode} ${bitstreamsRD.errorMessage}`
+          );
+        } else if (hasValue(bitstreamsRD.payload)) {
+          const current: Bitstream[] = this.bitstreams$.getValue();
+          this.bitstreams$.next([...current, ...bitstreamsRD.payload.page]);
+          this.isLoading = false;
+          this.isLastPage =
+            this.currentPage === bitstreamsRD.payload.totalPages;
+        }
+      });
   }
 }

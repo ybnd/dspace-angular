@@ -1,39 +1,39 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
-import { ItemDataService } from '../../core/data/item-data.service';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ItemPageComponent } from './item-page.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ActivatedRouteStub } from '../../shared/testing/active-router.stub';
-import { MetadataService } from '../../core/metadata/metadata.service';
-import { VarDirective } from '../../shared/utils/var.directive';
-import { Item } from '../../core/shared/item.model';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { createRelationshipsObservable } from './item-types/shared/item.component.spec';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
+import { AuthService } from '../../core/auth/auth.service';
+import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
+import { ItemDataService } from '../../core/data/item-data.service';
+import { MetadataService } from '../../core/metadata/metadata.service';
+import { Item } from '../../core/shared/item.model';
+import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
 import {
   createFailedRemoteDataObject$,
   createPendingRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../shared/remote-data.utils';
-import { AuthService } from '../../core/auth/auth.service';
+import { ActivatedRouteStub } from '../../shared/testing/active-router.stub';
 import { createPaginatedList } from '../../shared/testing/utils.test';
-import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
+import { VarDirective } from '../../shared/utils/var.directive';
+import { ItemPageComponent } from './item-page.component';
+import { createRelationshipsObservable } from './item-types/shared/item.component.spec';
 
 const mockItem: Item = Object.assign(new Item(), {
   bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
   metadata: [],
-  relationships: createRelationshipsObservable()
+  relationships: createRelationshipsObservable(),
 });
 
 const mockWithdrawnItem: Item = Object.assign(new Item(), {
   bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
   metadata: [],
   relationships: createRelationshipsObservable(),
-  isWithdrawn: true
+  isWithdrawn: true,
 });
 
 describe('ItemPageComponent', () => {
@@ -44,30 +44,35 @@ describe('ItemPageComponent', () => {
 
   const mockMetadataService = {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    processRemoteData: () => {
-    }
+    processRemoteData: () => {},
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
   };
   const mockRoute = Object.assign(new ActivatedRouteStub(), {
-    data: observableOf({ dso: createSuccessfulRemoteDataObject(mockItem) })
+    data: observableOf({ dso: createSuccessfulRemoteDataObject(mockItem) }),
   });
 
   beforeEach(waitForAsync(() => {
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
-      setRedirectUrl: {}
+      setRedirectUrl: {},
     });
-    authorizationDataService = jasmine.createSpyObj('authorizationDataService', {
-      isAuthorized: observableOf(false),
-    });
+    authorizationDataService = jasmine.createSpyObj(
+      'authorizationDataService',
+      {
+        isAuthorized: observableOf(false),
+      }
+    );
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      }), BrowserAnimationsModule],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+        BrowserAnimationsModule,
+      ],
       declarations: [ItemPageComponent, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: mockRoute },
@@ -75,13 +80,18 @@ describe('ItemPageComponent', () => {
         { provide: MetadataService, useValue: mockMetadataService },
         { provide: Router, useValue: {} },
         { provide: AuthService, useValue: authService },
-        { provide: AuthorizationDataService, useValue: authorizationDataService },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemPageComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemPageComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -123,7 +133,9 @@ describe('ItemPageComponent', () => {
     });
 
     it('should display the item', () => {
-      const objectLoader = fixture.debugElement.query(By.css('ds-listable-object-component-loader'));
+      const objectLoader = fixture.debugElement.query(
+        By.css('ds-listable-object-component-loader')
+      );
       expect(objectLoader.nativeElement).toBeDefined();
     });
   });
@@ -134,7 +146,9 @@ describe('ItemPageComponent', () => {
     });
 
     it('should not display the item', () => {
-      const objectLoader = fixture.debugElement.query(By.css('ds-listable-object-component-loader'));
+      const objectLoader = fixture.debugElement.query(
+        By.css('ds-listable-object-component-loader')
+      );
       expect(objectLoader).toBeNull();
     });
   });
@@ -147,7 +161,9 @@ describe('ItemPageComponent', () => {
     });
 
     it('should display the item', () => {
-      const objectLoader = fixture.debugElement.query(By.css('ds-listable-object-component-loader'));
+      const objectLoader = fixture.debugElement.query(
+        By.css('ds-listable-object-component-loader')
+      );
       expect(objectLoader.nativeElement).toBeDefined();
     });
   });
@@ -159,9 +175,10 @@ describe('ItemPageComponent', () => {
     });
 
     it('should display the item', () => {
-      const objectLoader = fixture.debugElement.query(By.css('ds-listable-object-component-loader'));
+      const objectLoader = fixture.debugElement.query(
+        By.css('ds-listable-object-component-loader')
+      );
       expect(objectLoader.nativeElement).toBeDefined();
     });
   });
-
 });

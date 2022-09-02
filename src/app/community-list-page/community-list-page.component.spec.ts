@@ -1,9 +1,13 @@
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { CommunityListPageComponent } from './community-list-page.component';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateLoaderMock } from '../shared/mocks/translate-loader.mock';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommunityListPageComponent } from './community-list-page.component';
 
 describe('CommunityListPageComponent', () => {
   let component: CommunityListPageComponent;
@@ -15,17 +19,14 @@ describe('CommunityListPageComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
+            useClass: TranslateLoaderMock,
           },
         }),
       ],
       declarations: [CommunityListPageComponent],
-      providers: [
-        CommunityListPageComponent,
-      ],
+      providers: [CommunityListPageComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -34,8 +35,10 @@ describe('CommunityListPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', inject([CommunityListPageComponent], (comp: CommunityListPageComponent) => {
-    expect(comp).toBeTruthy();
-  }));
-
+  it('should create', inject(
+    [CommunityListPageComponent],
+    (comp: CommunityListPageComponent) => {
+      expect(comp).toBeTruthy();
+    }
+  ));
 });

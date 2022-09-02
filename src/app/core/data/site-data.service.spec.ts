@@ -1,18 +1,18 @@
-import { cold, getTestScheduler } from 'jasmine-marbles';
-import { SiteDataService } from './site-data.service';
-import { RequestService } from './request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { Site } from '../shared/site.model';
-import { Store } from '@ngrx/store';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { Store } from '@ngrx/store';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
 import { createPaginatedList } from '../../shared/testing/utils.test';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { Site } from '../shared/site.model';
 import { FindListOptions } from './find-list-options.model';
+import { RequestService } from './request.service';
+import { SiteDataService } from './site-data.service';
 
 describe('SiteDataService', () => {
   let scheduler: TestScheduler;
@@ -35,7 +35,7 @@ describe('SiteDataService', () => {
     scheduler = getTestScheduler();
 
     halService = jasmine.createSpyObj('halService', {
-      getEndpoint: cold('a', { a: siteLink })
+      getEndpoint: cold('a', { a: siteLink }),
     });
     requestService = jasmine.createSpyObj('requestService', {
       generateRequestId: requestUUID,
@@ -43,8 +43,8 @@ describe('SiteDataService', () => {
     });
     rdbService = jasmine.createSpyObj('rdbService', {
       buildList: cold('a', {
-        a: createSuccessfulRemoteDataObject(createPaginatedList([testObject]))
-      })
+        a: createSuccessfulRemoteDataObject(createPaginatedList([testObject])),
+      }),
     });
 
     const store = {} as Store<CoreState>;
@@ -67,7 +67,6 @@ describe('SiteDataService', () => {
 
   describe('getBrowseEndpoint', () => {
     it('should return the Static Page endpoint', () => {
-
       const result = service.getBrowseEndpoint(options);
       const expected = cold('b', { b: siteLink });
 
@@ -77,10 +76,13 @@ describe('SiteDataService', () => {
 
   describe('find', () => {
     it('should return the Site object', () => {
-
-      spyOn(service, 'findAll').and.returnValue(cold('a', {
-        a: createSuccessfulRemoteDataObject(createPaginatedList([testObject]))
-      }));
+      spyOn(service, 'findAll').and.returnValue(
+        cold('a', {
+          a: createSuccessfulRemoteDataObject(
+            createPaginatedList([testObject])
+          ),
+        })
+      );
 
       const expected = cold('(b|)', { b: testObject });
       const result = service.find();

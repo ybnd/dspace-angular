@@ -1,10 +1,10 @@
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { MetadataValue } from '../../../core/shared/metadata.models';
 import { TranslateLoaderMock } from '../../../shared/mocks/translate-loader.mock';
 import { MetadataValuesComponent } from './metadata-values.component';
-import { By } from '@angular/platform-browser';
-import { MetadataValue } from '../../../core/shared/metadata.models';
 
 let comp: MetadataValuesComponent;
 let fixture: ComponentFixture<MetadataValuesComponent>;
@@ -12,33 +12,38 @@ let fixture: ComponentFixture<MetadataValuesComponent>;
 const mockMetadata = [
   {
     language: 'en_US',
-    value: '1234'
+    value: '1234',
   },
   {
     language: 'en_US',
-    value: 'a publisher'
+    value: 'a publisher',
   },
   {
     language: 'en_US',
-    value: 'desc'
-  }] as MetadataValue[];
+    value: 'desc',
+  },
+] as MetadataValue[];
 const mockSeperator = '<br/>';
 const mockLabel = 'fake.message';
 
 describe('MetadataValuesComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock
-        }
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [MetadataValuesComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(MetadataValuesComponent, {
-      set: {changeDetection: ChangeDetectionStrategy.Default}
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(MetadataValuesComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -61,5 +66,4 @@ describe('MetadataValuesComponent', () => {
     const separators = fixture.debugElement.queryAll(By.css('span>span'));
     expect(separators.length).toBe(mockMetadata.length - 1);
   });
-
 });

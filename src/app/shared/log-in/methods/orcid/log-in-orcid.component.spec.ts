@@ -1,29 +1,25 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { provideMockStore } from '@ngrx/store/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store, StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
-
-import { EPerson } from '../../../../core/eperson/models/eperson.model';
-import { EPersonMock } from '../../../testing/eperson.mock';
+import { storeModuleConfig } from '../../../../app.reducer';
 import { authReducer } from '../../../../core/auth/auth.reducer';
 import { AuthService } from '../../../../core/auth/auth.service';
-import { AuthServiceStub } from '../../../testing/auth-service.stub';
-import { storeModuleConfig } from '../../../../app.reducer';
 import { AuthMethod } from '../../../../core/auth/models/auth.method';
 import { AuthMethodType } from '../../../../core/auth/models/auth.method-type';
-import { LogInOrcidComponent } from './log-in-orcid.component';
-import { NativeWindowService } from '../../../../core/services/window.service';
-import { RouterStub } from '../../../testing/router.stub';
-import { ActivatedRouteStub } from '../../../testing/active-router.stub';
-import { NativeWindowMockFactory } from '../../../mocks/mock-native-window-ref';
+import { EPerson } from '../../../../core/eperson/models/eperson.model';
 import { HardRedirectService } from '../../../../core/services/hard-redirect.service';
-
+import { NativeWindowService } from '../../../../core/services/window.service';
+import { NativeWindowMockFactory } from '../../../mocks/mock-native-window-ref';
+import { ActivatedRouteStub } from '../../../testing/active-router.stub';
+import { AuthServiceStub } from '../../../testing/auth-service.stub';
+import { EPersonMock } from '../../../testing/eperson.mock';
+import { RouterStub } from '../../../testing/router.stub';
+import { LogInOrcidComponent } from './log-in-orcid.component';
 
 describe('LogInOrcidComponent', () => {
-
   let component: LogInOrcidComponent;
   let fixture: ComponentFixture<LogInOrcidComponent>;
   let page: Page;
@@ -42,7 +38,7 @@ describe('LogInOrcidComponent', () => {
 
     hardRedirectService = jasmine.createSpyObj('hardRedirectService', {
       getCurrentRoute: {},
-      redirect: {}
+      redirect: {},
     });
 
     initialState = {
@@ -52,9 +48,9 @@ describe('LogInOrcidComponent', () => {
           loaded: false,
           blocking: false,
           loading: false,
-          authMethods: []
-        }
-      }
+          authMethods: [],
+        },
+      },
     };
   });
 
@@ -63,14 +59,15 @@ describe('LogInOrcidComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
-        TranslateModule.forRoot()
+        TranslateModule.forRoot(),
       ],
-      declarations: [
-        LogInOrcidComponent
-      ],
+      declarations: [LogInOrcidComponent],
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
-        { provide: 'authMethodProvider', useValue: new AuthMethod(AuthMethodType.Orcid, location) },
+        {
+          provide: 'authMethodProvider',
+          useValue: new AuthMethod(AuthMethodType.Orcid, location),
+        },
         { provide: 'isStandalonePage', useValue: true },
         { provide: NativeWindowService, useFactory: NativeWindowMockFactory },
         { provide: Router, useValue: new RouterStub() },
@@ -78,12 +75,8 @@ describe('LogInOrcidComponent', () => {
         { provide: HardRedirectService, useValue: hardRedirectService },
         provideMockStore({ initialState }),
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]
-    })
-      .compileComponents();
-
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -96,8 +89,11 @@ describe('LogInOrcidComponent', () => {
 
     // create page
     page = new Page(component, fixture);
-    setHrefSpy = spyOnProperty(componentAsAny._window.nativeWindow.location, 'href', 'set').and.callThrough();
-
+    setHrefSpy = spyOnProperty(
+      componentAsAny._window.nativeWindow.location,
+      'href',
+      'set'
+    ).and.callThrough();
   });
 
   it('should set the properly a new redirectUrl', () => {
@@ -112,7 +108,6 @@ describe('LogInOrcidComponent', () => {
     component.redirectToOrcid();
 
     expect(setHrefSpy).toHaveBeenCalledWith(currentUrl);
-
   });
 
   it('should not set a new redirectUrl', () => {
@@ -127,9 +122,7 @@ describe('LogInOrcidComponent', () => {
     component.redirectToOrcid();
 
     expect(setHrefSpy).toHaveBeenCalledWith(currentUrl);
-
   });
-
 });
 
 /**
@@ -138,12 +131,14 @@ describe('LogInOrcidComponent', () => {
  * @class Page
  */
 class Page {
-
   public emailInput: HTMLInputElement;
   public navigateSpy: jasmine.Spy;
   public passwordInput: HTMLInputElement;
 
-  constructor(private component: LogInOrcidComponent, private fixture: ComponentFixture<LogInOrcidComponent>) {
+  constructor(
+    private component: LogInOrcidComponent,
+    private fixture: ComponentFixture<LogInOrcidComponent>
+  ) {
     // use injector to get services
     const injector = fixture.debugElement.injector;
     const store = injector.get(Store);
@@ -151,5 +146,4 @@ class Page {
     // add spies
     this.navigateSpy = spyOn(store, 'dispatch');
   }
-
 }

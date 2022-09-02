@@ -1,12 +1,14 @@
-import { TestBed } from '@angular/core/testing';
-import { HttpClientTestingModule, HttpTestingController, } from '@angular/common/http/testing';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-
-import { DspaceRestService } from '../dspace-rest/dspace-rest.service';
-import { RestRequestMethod } from '../data/rest-request-method';
-import { LocaleService } from './locale.service';
-import { LocaleInterceptor } from './locale.interceptor';
+import {
+  HttpClientTestingModule,
+  HttpTestingController,
+} from '@angular/common/http/testing';
+import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { RestRequestMethod } from '../data/rest-request-method';
+import { DspaceRestService } from '../dspace-rest/dspace-rest.service';
+import { LocaleInterceptor } from './locale.interceptor';
+import { LocaleService } from './locale.service';
 
 describe(`LocaleInterceptor`, () => {
   let service: DspaceRestService;
@@ -17,7 +19,7 @@ describe(`LocaleInterceptor`, () => {
 
   const mockLocaleService = jasmine.createSpyObj('LocaleService', {
     getCurrentLanguageCode: jasmine.createSpy('getCurrentLanguageCode'),
-    getLanguageCodeList: of(languageList)
+    getLanguageCodeList: of(languageList),
   });
 
   beforeEach(() => {
@@ -42,13 +44,20 @@ describe(`LocaleInterceptor`, () => {
   });
 
   describe('', () => {
-
     it('should add an Accept-Language header when we’re sending an HTTP POST request', () => {
-      service.request(RestRequestMethod.POST, 'server/api/submission/workspaceitems', 'test').subscribe((response) => {
-        expect(response).toBeTruthy();
-      });
+      service
+        .request(
+          RestRequestMethod.POST,
+          'server/api/submission/workspaceitems',
+          'test'
+        )
+        .subscribe((response) => {
+          expect(response).toBeTruthy();
+        });
 
-      const httpRequest = httpMock.expectOne(`server/api/submission/workspaceitems`);
+      const httpRequest = httpMock.expectOne(
+        `server/api/submission/workspaceitems`
+      );
 
       expect(httpRequest.request.headers.has('Accept-Language'));
       const lang = httpRequest.request.headers.get('Accept-Language');
@@ -57,18 +66,23 @@ describe(`LocaleInterceptor`, () => {
     });
 
     it('should add an Accept-Language header when we’re sending an HTTP GET request', () => {
-      service.request(RestRequestMethod.GET, 'server/api/submission/workspaceitems/123').subscribe((response) => {
-        expect(response).toBeTruthy();
-      });
+      service
+        .request(
+          RestRequestMethod.GET,
+          'server/api/submission/workspaceitems/123'
+        )
+        .subscribe((response) => {
+          expect(response).toBeTruthy();
+        });
 
-      const httpRequest = httpMock.expectOne(`server/api/submission/workspaceitems/123`);
+      const httpRequest = httpMock.expectOne(
+        `server/api/submission/workspaceitems/123`
+      );
 
       expect(httpRequest.request.headers.has('Accept-Language'));
       const lang = httpRequest.request.headers.get('Accept-Language');
       expect(lang).toBeDefined();
       expect(lang).toBe(languageList.toString());
     });
-
   });
-
 });

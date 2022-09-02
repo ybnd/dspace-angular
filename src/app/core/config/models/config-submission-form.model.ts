@@ -1,8 +1,8 @@
 import { autoserialize, inheritSerialization } from 'cerialize';
-import { typedObject } from '../../cache/builders/build-decorators';
-import { ConfigObject } from './config.model';
 import { FormFieldModel } from '../../../shared/form/builder/models/form-field.model';
+import { typedObject } from '../../cache/builders/build-decorators';
 import { SUBMISSION_FORM_TYPE } from './config-type';
+import { ConfigObject } from './config.model';
 
 /**
  * An interface that define a form row and its properties.

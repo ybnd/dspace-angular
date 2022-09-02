@@ -1,25 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { AccessStatusObject } from 'src/app/shared/object-list/access-status-badge/access-status.model';
+import { ACCESS_STATUS } from 'src/app/shared/object-list/access-status-badge/access-status.resource-type';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { DataService } from './data.service';
-import { RequestService } from './request.service';
-import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
 import { CoreState } from '../core-state.model';
-import { AccessStatusObject } from 'src/app/shared/object-list/access-status-badge/access-status.model';
-import { ACCESS_STATUS } from 'src/app/shared/object-list/access-status-badge/access-status.resource-type';
-import { Observable } from 'rxjs';
-import { RemoteData } from './remote-data';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { Item } from '../shared/item.model';
+import { DataService } from './data.service';
+import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
+import { RemoteData } from './remote-data';
+import { RequestService } from './request.service';
 
 @Injectable()
 @dataService(ACCESS_STATUS)
 export class AccessStatusDataService extends DataService<AccessStatusObject> {
-
   protected linkPath = 'accessStatus';
 
   constructor(
@@ -30,7 +29,7 @@ export class AccessStatusDataService extends DataService<AccessStatusObject> {
     protected objectCache: ObjectCacheService,
     protected rdbService: RemoteDataBuildService,
     protected requestService: RequestService,
-    protected store: Store<CoreState>,
+    protected store: Store<CoreState>
   ) {
     super();
   }

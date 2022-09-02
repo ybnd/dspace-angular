@@ -25,8 +25,7 @@ export class ConfirmationModalComponent {
   @Output()
   response = new EventEmitter<boolean>();
 
-  constructor(protected activeModal: NgbActiveModal) {
-  }
+  constructor(protected activeModal: NgbActiveModal) {}
 
   /**
    * Confirm the action that led to the modal

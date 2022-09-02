@@ -1,7 +1,7 @@
 import { first } from 'rxjs/operators';
-import { WorkspaceItemPageResolver } from './workspace-item-page.resolver';
 import { WorkspaceitemDataService } from '../core/submission/workspaceitem-data.service';
 import { createSuccessfulRemoteDataObject$ } from '../shared/remote-data.utils';
+import { WorkspaceItemPageResolver } from './workspace-item-page.resolver';
 
 describe('WorkflowItemPageResolver', () => {
   describe('resolve', () => {
@@ -11,20 +11,19 @@ describe('WorkflowItemPageResolver', () => {
 
     beforeEach(() => {
       wsiService = {
-        findById: (id: string) => createSuccessfulRemoteDataObject$({ id })
+        findById: (id: string) => createSuccessfulRemoteDataObject$({ id }),
       } as any;
       resolver = new WorkspaceItemPageResolver(wsiService);
     });
 
     it('should resolve a workspace item with the correct id', (done) => {
-      resolver.resolve({ params: { id: uuid } } as any, undefined)
+      resolver
+        .resolve({ params: { id: uuid } } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (resolved) => {
-            expect(resolved.payload.id).toEqual(uuid);
-            done();
-          }
-        );
+        .subscribe((resolved) => {
+          expect(resolved.payload.id).toEqual(uuid);
+          done();
+        });
     });
   });
 });

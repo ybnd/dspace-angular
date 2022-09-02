@@ -1,19 +1,18 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { Observable, of as observableOf } from 'rxjs';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { SearchFilterService } from '../../../../core/shared/search/search-filter.service';
 import { SearchService } from '../../../../core/shared/search/search.service';
-import { SearchFilterComponent } from './search-filter.component';
-import { SearchFilterConfig } from '../../models/search-filter-config.model';
-import { FilterType } from '../../models/filter-type.model';
-import { SearchConfigurationServiceStub } from '../../../testing/search-configuration-service.stub';
-import { SEARCH_CONFIG_SERVICE } from '../../../../my-dspace-page/my-dspace-page.component';
 import { SequenceService } from '../../../../core/shared/sequence.service';
+import { SEARCH_CONFIG_SERVICE } from '../../../../my-dspace-page/my-dspace-page.component';
 import { BrowserOnlyMockPipe } from '../../../testing/browser-only-mock.pipe';
+import { SearchConfigurationServiceStub } from '../../../testing/search-configuration-service.stub';
+import { FilterType } from '../../models/filter-type.model';
+import { SearchFilterConfig } from '../../models/search-filter-config.model';
+import { SearchFilterComponent } from './search-filter.component';
 
 describe('SearchFilterComponent', () => {
   let comp: SearchFilterComponent;
@@ -23,63 +22,69 @@ describe('SearchFilterComponent', () => {
   const filterName3 = 'another name3';
   const nonExistingFilter1 = 'non existing 1';
   const nonExistingFilter2 = 'non existing 2';
-  const mockFilterConfig: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-    name: filterName1,
-    filterType: FilterType.text,
-    hasFacets: false,
-    isOpenByDefault: false
-  });
+  const mockFilterConfig: SearchFilterConfig = Object.assign(
+    new SearchFilterConfig(),
+    {
+      name: filterName1,
+      filterType: FilterType.text,
+      hasFacets: false,
+      isOpenByDefault: false,
+    }
+  );
   const mockFilterService = {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    toggle: (filter) => {
-    },
-    collapse: (filter) => {
-    },
-    expand: (filter) => {
-    },
-    initializeFilter: (filter) => {
-    },
+    toggle: (filter) => {},
+    collapse: (filter) => {},
+    expand: (filter) => {},
+    initializeFilter: (filter) => {},
     getSelectedValuesForFilter: (filter) => {
       return observableOf([filterName1, filterName2, filterName3]);
     },
     isFilterActive: (filter) => {
-      return observableOf([filterName1, filterName2, filterName3].indexOf(filter) >= 0);
+      return observableOf(
+        [filterName1, filterName2, filterName3].indexOf(filter) >= 0
+      );
     },
     isCollapsed: (filter) => {
       return observableOf(true);
-    }
+    },
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-
   };
   let filterService;
   let sequenceService;
   const mockResults = observableOf(['test', 'data']);
   const searchServiceStub = {
-    getFacetValuesFor: (filter) => mockResults
+    getFacetValuesFor: (filter) => mockResults,
   };
 
   beforeEach(waitForAsync(() => {
     sequenceService = jasmine.createSpyObj('sequenceService', { next: 17 });
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule],
-      declarations: [
-        SearchFilterComponent,
-        BrowserOnlyMockPipe,
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
       ],
+      declarations: [SearchFilterComponent, BrowserOnlyMockPipe],
       providers: [
         { provide: SearchService, useValue: searchServiceStub },
         {
           provide: SearchFilterService,
-          useValue: mockFilterService
+          useValue: mockFilterService,
         },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: SequenceService, useValue: sequenceService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchFilterComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchFilterComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -114,7 +119,9 @@ describe('SearchFilterComponent', () => {
     });
 
     it('should call initialCollapse with the correct filter configuration name', () => {
-      expect(filterService.initializeFilter).toHaveBeenCalledWith(mockFilterConfig);
+      expect(filterService.initializeFilter).toHaveBeenCalledWith(
+        mockFilterConfig
+      );
     });
   });
 

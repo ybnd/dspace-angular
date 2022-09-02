@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
-import { MenuService } from '../shared/menu/menu.service';
 import { MenuID } from '../shared/menu/menu-id.model';
+import { MenuService } from '../shared/menu/menu.service';
 
 /**
  * Represents the header with the logo and simple navigation
@@ -20,10 +20,7 @@ export class HeaderComponent {
   public showAuth = false;
   menuID = MenuID.PUBLIC;
 
-  constructor(
-    private menuService: MenuService
-  ) {
-  }
+  constructor(private menuService: MenuService) {}
 
   public toggleNavbar(): void {
     this.menuService.toggleMenu(this.menuID);

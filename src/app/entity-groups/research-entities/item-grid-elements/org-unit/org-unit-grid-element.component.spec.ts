@@ -1,44 +1,46 @@
-import { Item } from '../../../../core/shared/item.model';
-import { of as observableOf } from 'rxjs';
-import { OrgUnitGridElementComponent } from './org-unit-grid-element.component';
-import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
-import { buildPaginatedList } from '../../../../core/data/paginated-list.model';
-import { PageInfo } from '../../../../core/shared/page-info.model';
-import { TestBed, waitForAsync } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
-import { TruncatableService } from '../../../../shared/truncatable/truncatable.service';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { of as observableOf } from 'rxjs';
+import { buildPaginatedList } from '../../../../core/data/paginated-list.model';
+import { Item } from '../../../../core/shared/item.model';
+import { PageInfo } from '../../../../core/shared/page-info.model';
+import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
+import { TruncatableService } from '../../../../shared/truncatable/truncatable.service';
+import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
+import { OrgUnitGridElementComponent } from './org-unit-grid-element.component';
 
 const mockItem = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), [])
+  ),
   metadata: {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'organization.foundingDate': [
       {
         language: null,
-        value: '2015-06-26'
-      }
+        value: '2015-06-26',
+      },
     ],
     'organization.address.addressCountry': [
       {
         language: 'en_US',
-        value: 'Belgium'
-      }
+        value: 'Belgium',
+      },
     ],
     'organization.address.addressLocality': [
       {
         language: 'en_US',
-        value: 'Brussels'
-      }
-    ]
-  }
+        value: 'Brussels',
+      },
+    ],
+  },
 });
 
 describe('OrgUnitGridElementComponent', () => {
@@ -56,10 +58,12 @@ describe('OrgUnitGridElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(OrgUnitGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(OrgUnitGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -74,7 +78,9 @@ describe('OrgUnitGridElementComponent', () => {
     });
 
     it(`should contain a OrgUnitGridElementComponent`, () => {
-      const orgUnitGridElement = fixture.debugElement.query(By.css(`ds-org-unit-search-result-grid-element`));
+      const orgUnitGridElement = fixture.debugElement.query(
+        By.css(`ds-org-unit-search-result-grid-element`)
+      );
       expect(orgUnitGridElement).not.toBeNull();
     });
   });

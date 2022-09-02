@@ -1,31 +1,34 @@
+import { CommonModule } from '@angular/common';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { EMPTY, of as observableOf } from 'rxjs';
+import { LinkService } from '../../../core/cache/builders/link.service';
+import { EntityTypeService } from '../../../core/data/entity-type.service';
+import { ItemDataService } from '../../../core/data/item-data.service';
+import { ObjectUpdatesService } from '../../../core/data/object-updates/object-updates.service';
+import { RelationshipTypeService } from '../../../core/data/relationship-type.service';
+import { RelationshipService } from '../../../core/data/relationship.service';
 import { ItemType } from '../../../core/shared/item-relationships/item-type.model';
+import { RelationshipType } from '../../../core/shared/item-relationships/relationship-type.model';
 import { Relationship } from '../../../core/shared/item-relationships/relationship.model';
 import { Item } from '../../../core/shared/item.model';
-import { RouterStub } from '../../../shared/testing/router.stub';
-import { of as observableOf, EMPTY } from 'rxjs';
-import { NotificationsServiceStub } from '../../../shared/testing/notifications-service.stub';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ItemDataService } from '../../../core/data/item-data.service';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { By } from '@angular/platform-browser';
-import { ItemDeleteComponent } from './item-delete.component';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
-import { VarDirective } from '../../../shared/utils/var.directive';
-import { ObjectUpdatesService } from '../../../core/data/object-updates/object-updates.service';
-import { RelationshipService } from '../../../core/data/relationship.service';
-import { RelationshipType } from '../../../core/shared/item-relationships/relationship-type.model';
-import { EntityTypeService } from '../../../core/data/entity-type.service';
-import { getItemEditRoute } from '../../item-page-routing-paths';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../../shared/remote-data.utils';
+import { NotificationsServiceStub } from '../../../shared/testing/notifications-service.stub';
+import { RouterStub } from '../../../shared/testing/router.stub';
 import { createPaginatedList } from '../../../shared/testing/utils.test';
-import { RelationshipTypeService } from '../../../core/data/relationship-type.service';
-import { LinkService } from '../../../core/cache/builders/link.service';
+import { VarDirective } from '../../../shared/utils/var.directive';
+import { getItemEditRoute } from '../../item-page-routing-paths';
+import { ItemDeleteComponent } from './item-delete.component';
 
 let comp: ItemDeleteComponent;
 let fixture: ComponentFixture<ItemDeleteComponent>;
@@ -49,7 +52,6 @@ let typesSelection;
 
 describe('ItemDeleteComponent', () => {
   beforeEach(waitForAsync(() => {
-
     mockItem = Object.assign(new Item(), {
       id: 'fake-id',
       uuid: 'fake-uuid',
@@ -57,10 +59,8 @@ describe('ItemDeleteComponent', () => {
       lastModified: '2018',
       isWithdrawn: true,
       metadata: {
-        'dspace.entity.type': [
-          { value: 'Person' }
-        ]
-      }
+        'dspace.entity.type': [{ value: 'Person' }],
+      },
     });
 
     itemType = Object.assign(new ItemType(), {
@@ -99,17 +99,17 @@ describe('ItemDeleteComponent', () => {
 
     itemPageUrl = `fake-url/${mockItem.id}`;
     routerStub = Object.assign(new RouterStub(), {
-      url: `${itemPageUrl}/edit`
+      url: `${itemPageUrl}/edit`,
     });
 
     mockItemDataService = jasmine.createSpyObj('mockItemDataService', {
-      delete: createSuccessfulRemoteDataObject$({})
+      delete: createSuccessfulRemoteDataObject$({}),
     });
 
     routeStub = {
       data: observableOf({
-        dso: createSuccessfulRemoteDataObject(mockItem)
-      })
+        dso: createSuccessfulRemoteDataObject(mockItem),
+      }),
     };
 
     typesSelection = {
@@ -117,12 +117,12 @@ describe('ItemDeleteComponent', () => {
       type2: true,
     };
 
-    entityTypeService = jasmine.createSpyObj('entityTypeService',
-      {
-        getEntityTypeByLabel: createSuccessfulRemoteDataObject$(itemType),
-        getEntityTypeRelationships: createSuccessfulRemoteDataObject$(createPaginatedList(types)),
-      }
-    );
+    entityTypeService = jasmine.createSpyObj('entityTypeService', {
+      getEntityTypeByLabel: createSuccessfulRemoteDataObject$(itemType),
+      getEntityTypeRelationships: createSuccessfulRemoteDataObject$(
+        createPaginatedList(types)
+      ),
+    });
 
     objectUpdatesServiceStub = {
       initialize: () => {
@@ -131,22 +131,24 @@ describe('ItemDeleteComponent', () => {
       isSelectedVirtualMetadata: (type) => observableOf(typesSelection[type]),
     };
 
-    relationshipService = jasmine.createSpyObj('relationshipService',
-      {
-        getItemRelationshipsArray: observableOf(relationships),
-      }
-    );
+    relationshipService = jasmine.createSpyObj('relationshipService', {
+      getItemRelationshipsArray: observableOf(relationships),
+    });
 
-    linkService = jasmine.createSpyObj('linkService',
-      {
-        resolveLinks: relationships[0],
-      }
-    );
+    linkService = jasmine.createSpyObj('linkService', {
+      resolveLinks: relationships[0],
+    });
 
     notificationsServiceStub = new NotificationsServiceStub();
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [ItemDeleteComponent, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
@@ -158,9 +160,8 @@ describe('ItemDeleteComponent', () => {
         { provide: EntityTypeService, useValue: entityTypeService },
         { provide: RelationshipTypeService, useValue: {} },
         { provide: LinkService, useValue: linkService },
-      ], schemas: [
-        CUSTOM_ELEMENTS_SCHEMA
-      ]
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -170,14 +171,18 @@ describe('ItemDeleteComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should render a page with messages based on the \'delete\' messageKey', () => {
+  it("should render a page with messages based on the 'delete' messageKey", () => {
     const header = fixture.debugElement.query(By.css('h2')).nativeElement;
     expect(header.innerHTML).toContain('item.edit.delete.header');
     const description = fixture.debugElement.query(By.css('p')).nativeElement;
     expect(description.innerHTML).toContain('item.edit.delete.description');
-    const confirmButton = fixture.debugElement.query(By.css('button.perform-action')).nativeElement;
+    const confirmButton = fixture.debugElement.query(
+      By.css('button.perform-action')
+    ).nativeElement;
     expect(confirmButton.innerHTML).toContain('item.edit.delete.confirm');
-    const cancelButton = fixture.debugElement.query(By.css('button.cancel')).nativeElement;
+    const cancelButton = fixture.debugElement.query(
+      By.css('button.cancel')
+    ).nativeElement;
     expect(cancelButton.innerHTML).toContain('item.edit.delete.cancel');
   });
 
@@ -186,28 +191,35 @@ describe('ItemDeleteComponent', () => {
       it('should call delete function from the ItemDataService', () => {
         spyOn(comp, 'notify');
         comp.performAction();
-        expect(mockItemDataService.delete)
-          .toHaveBeenCalledWith(mockItem.id, types.filter((type) => typesSelection[type]).map((type) => type.id));
+        expect(mockItemDataService.delete).toHaveBeenCalledWith(
+          mockItem.id,
+          types.filter((type) => typesSelection[type]).map((type) => type.id)
+        );
         expect(comp.notify).toHaveBeenCalled();
       });
 
       it('should call delete function from the ItemDataService with empty types', () => {
-
         spyOn(comp, 'notify');
         jasmine.getEnv().allowRespy(true);
-        spyOn(entityTypeService, 'getEntityTypeRelationships').and.returnValue([]);
+        spyOn(entityTypeService, 'getEntityTypeRelationships').and.returnValue(
+          []
+        );
         comp.ngOnInit();
 
         comp.performAction();
 
-        expect(mockItemDataService.delete).toHaveBeenCalledWith(mockItem.id, []);
+        expect(mockItemDataService.delete).toHaveBeenCalledWith(
+          mockItem.id,
+          []
+        );
         expect(comp.notify).toHaveBeenCalled();
       });
     });
 
     describe(`when there are no entity types`, () => {
       beforeEach(() => {
-        (comp as any).entityTypeService = jasmine.createSpyObj('entityTypeService',
+        (comp as any).entityTypeService = jasmine.createSpyObj(
+          'entityTypeService',
           {
             getEntityTypeByLabel: EMPTY,
           }
@@ -217,8 +229,10 @@ describe('ItemDeleteComponent', () => {
       it('should call delete function from the ItemDataService', () => {
         spyOn(comp, 'notify');
         comp.performAction();
-        expect(mockItemDataService.delete)
-          .toHaveBeenCalledWith(mockItem.id, types.filter((type) => typesSelection[type]).map((type) => type.id));
+        expect(mockItemDataService.delete).toHaveBeenCalledWith(
+          mockItem.id,
+          types.filter((type) => typesSelection[type]).map((type) => type.id)
+        );
         expect(comp.notify).toHaveBeenCalled();
       });
     });
@@ -232,7 +246,9 @@ describe('ItemDeleteComponent', () => {
   describe('notify', () => {
     it('should navigate to the item edit page on failed deletion of the item', () => {
       comp.notify(false);
-      expect(routerStub.navigate).toHaveBeenCalledWith([getItemEditRoute(mockItem)]);
+      expect(routerStub.navigate).toHaveBeenCalledWith([
+        getItemEditRoute(mockItem),
+      ]);
     });
   });
 });

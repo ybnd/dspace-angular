@@ -1,5 +1,5 @@
-import { isNotEmpty } from './empty.util';
 import { isEqual, isObject, transform } from 'lodash';
+import { isNotEmpty } from './empty.util';
 
 /**
  * Returns passed object without specified property
@@ -47,7 +47,9 @@ export function difference(object: object, base: object) {
   const changes = (o, b) => {
     return transform(o, (result, value, key) => {
       if (!isEqual(value, b[key]) && isNotEmpty(value)) {
-        const resultValue = ((isObject(value) && isObject(b[key])) ? changes(value, b[key]) : value) as object;
+        const resultValue = (
+          isObject(value) && isObject(b[key]) ? changes(value, b[key]) : value
+        ) as object;
         if (!hasOnlyEmptyProperties(resultValue)) {
           result[key] = resultValue;
         }

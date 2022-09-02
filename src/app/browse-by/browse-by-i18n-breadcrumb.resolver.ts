@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { I18nBreadcrumbsService } from '../core/breadcrumbs/i18n-breadcrumbs.service';
 import { BreadcrumbConfig } from '../breadcrumbs/breadcrumb/breadcrumb-config.model';
 import { I18nBreadcrumbResolver } from '../core/breadcrumbs/i18n-breadcrumb.resolver';
+import { I18nBreadcrumbsService } from '../core/breadcrumbs/i18n-breadcrumbs.service';
 
 /**
  * This class resolves a BreadcrumbConfig object with an i18n key string for a route
@@ -20,9 +20,15 @@ export class BrowseByI18nBreadcrumbResolver extends I18nBreadcrumbResolver {
    * @param {RouterStateSnapshot} state The current RouterStateSnapshot
    * @returns BreadcrumbConfig object for a browse-by page
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): BreadcrumbConfig<string> {
-    const extendedBreadcrumbKey = route.data.breadcrumbKey + '.' + route.params.id;
-    route.data = Object.assign({}, route.data, { breadcrumbKey: extendedBreadcrumbKey });
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): BreadcrumbConfig<string> {
+    const extendedBreadcrumbKey =
+      route.data.breadcrumbKey + '.' + route.params.id;
+    route.data = Object.assign({}, route.data, {
+      breadcrumbKey: extendedBreadcrumbKey,
+    });
     return super.resolve(route, state);
   }
 }

@@ -1,16 +1,17 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CommonModule } from '@angular/common';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-
-import { HealthComponentComponent } from './health-component.component';
-import { HealthComponentOne, HealthComponentTwo } from '../../../shared/mocks/health-endpoint.mocks';
-import { ObjNgFor } from '../../../shared/utils/object-ngfor.pipe';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import {
+  HealthComponentOne,
+  HealthComponentTwo,
+} from '../../../shared/mocks/health-endpoint.mocks';
 import { TranslateLoaderMock } from '../../../shared/mocks/translate-loader.mock';
+import { ObjNgFor } from '../../../shared/utils/object-ngfor.pipe';
+import { HealthComponentComponent } from './health-component.component';
 
 describe('HealthComponentComponent', () => {
   let component: HealthComponentComponent;
@@ -25,17 +26,13 @@ describe('HealthComponentComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
-      declarations: [
-        HealthComponentComponent,
-        ObjNgFor
-      ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-    .compileComponents();
+      declarations: [HealthComponentComponent, ObjNgFor],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -56,9 +53,13 @@ describe('HealthComponentComponent', () => {
     });
 
     it('should create collapsible divs properly', () => {
-      const collapseDivs = fixture.debugElement.queryAll(By.css('[data-test="collapse"]'));
+      const collapseDivs = fixture.debugElement.queryAll(
+        By.css('[data-test="collapse"]')
+      );
       expect(collapseDivs.length).toBe(2);
-      const detailsDivs = fixture.debugElement.queryAll(By.css('[data-test="details"]'));
+      const detailsDivs = fixture.debugElement.queryAll(
+        By.css('[data-test="details"]')
+      );
       expect(detailsDivs.length).toBe(6);
     });
   });
@@ -76,9 +77,13 @@ describe('HealthComponentComponent', () => {
     });
 
     it('should create detail divs properly', () => {
-      const detailsDivs = fixture.debugElement.queryAll(By.css('[data-test="details"]'));
+      const detailsDivs = fixture.debugElement.queryAll(
+        By.css('[data-test="details"]')
+      );
       expect(detailsDivs.length).toBe(1);
-      const collapseDivs = fixture.debugElement.queryAll(By.css('[data-test="collapse"]'));
+      const collapseDivs = fixture.debugElement.queryAll(
+        By.css('[data-test="collapse"]')
+      );
       expect(collapseDivs.length).toBe(0);
     });
   });

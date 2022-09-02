@@ -7,14 +7,14 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
+import { CONFIG_PROPERTY } from '../shared/config-property.resource-type';
+import { ConfigurationProperty } from '../shared/configuration-property.model';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { DataService } from './data.service';
+import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
 import { RemoteData } from './remote-data';
 import { RequestService } from './request.service';
-import { ConfigurationProperty } from '../shared/configuration-property.model';
-import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
-import { CONFIG_PROPERTY } from '../shared/config-property.resource-type';
-import { CoreState } from '../core-state.model';
 
 class DataServiceImpl extends DataService<ConfigurationProperty> {
   protected linkPath = 'properties';
@@ -27,7 +27,8 @@ class DataServiceImpl extends DataService<ConfigurationProperty> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ConfigurationProperty>) {
+    protected comparator: DefaultChangeAnalyzer<ConfigurationProperty>
+  ) {
     super();
   }
 }
@@ -48,15 +49,27 @@ export class ConfigurationDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ConfigurationProperty>) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
+    protected comparator: DefaultChangeAnalyzer<ConfigurationProperty>
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
    * Finds a configuration property by name
    * @param name
    */
-  findByPropertyName(name: string): Observable<RemoteData<ConfigurationProperty>> {
+  findByPropertyName(
+    name: string
+  ): Observable<RemoteData<ConfigurationProperty>> {
     return this.dataService.findById(name);
   }
 }

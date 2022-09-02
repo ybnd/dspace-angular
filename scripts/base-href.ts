@@ -1,14 +1,13 @@
 import * as fs from 'fs';
 import { join } from 'path';
-
 import { AppConfig } from '../src/config/app-config.interface';
 import { buildAppConfig } from '../src/config/config.server';
 
 /**
  * Script to set baseHref as `ui.nameSpace` for development mode. Adds `baseHref` to angular.json build options.
- * 
+ *
  * Usage (see package.json):
- * 
+ *
  * yarn base-href
  */
 
@@ -24,13 +23,19 @@ if (!fs.existsSync(angularJsonPath)) {
 try {
   const angularJson = require(angularJsonPath);
 
-  const baseHref = `${appConfig.ui.nameSpace}${appConfig.ui.nameSpace.endsWith('/') ? '' : '/'}`;
+  const baseHref = `${appConfig.ui.nameSpace}${
+    appConfig.ui.nameSpace.endsWith('/') ? '' : '/'
+  }`;
 
   console.log(`Setting baseHref to ${baseHref} in angular.json`);
 
-  angularJson.projects['dspace-angular'].architect.build.options.baseHref = baseHref;
+  angularJson.projects['dspace-angular'].architect.build.options.baseHref =
+    baseHref;
 
-  fs.writeFileSync(angularJsonPath, JSON.stringify(angularJson, null, 2) + '\n');
+  fs.writeFileSync(
+    angularJsonPath,
+    JSON.stringify(angularJson, null, 2) + '\n'
+  );
 } catch (e) {
   console.error(e);
 }

@@ -1,7 +1,6 @@
 import { first } from 'rxjs/operators';
-
-import { ItemTemplatePageResolver } from './item-template-page.resolver';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import { ItemTemplatePageResolver } from './item-template-page.resolver';
 
 describe('ItemTemplatePageResolver', () => {
   describe('resolve', () => {
@@ -11,20 +10,20 @@ describe('ItemTemplatePageResolver', () => {
 
     beforeEach(() => {
       itemTemplateService = {
-        findByCollectionID: (id: string) => createSuccessfulRemoteDataObject$({ id })
+        findByCollectionID: (id: string) =>
+          createSuccessfulRemoteDataObject$({ id }),
       };
       resolver = new ItemTemplatePageResolver(itemTemplateService);
     });
 
     it('should resolve an item template with the correct id', (done) => {
-      resolver.resolve({ params: { id: uuid } } as any, undefined)
+      resolver
+        .resolve({ params: { id: uuid } } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (resolved) => {
-            expect(resolved.payload.id).toEqual(uuid);
-            done();
-          }
-        );
+        .subscribe((resolved) => {
+          expect(resolved.payload.id).toEqual(uuid);
+          done();
+        });
     });
   });
 });

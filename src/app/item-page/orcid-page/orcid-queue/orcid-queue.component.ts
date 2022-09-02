@@ -1,31 +1,39 @@
-import { Component, Input, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
-
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap, tap } from 'rxjs/operators';
-
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { PaginatedList } from '../../../core/data/paginated-list.model';
 import { RemoteData } from '../../../core/data/remote-data';
 import { OrcidHistory } from '../../../core/orcid/model/orcid-history.model';
 import { OrcidQueue } from '../../../core/orcid/model/orcid-queue.model';
+import { OrcidAuthService } from '../../../core/orcid/orcid-auth.service';
 import { OrcidHistoryDataService } from '../../../core/orcid/orcid-history-data.service';
 import { OrcidQueueService } from '../../../core/orcid/orcid-queue.service';
 import { PaginationService } from '../../../core/pagination/pagination.service';
+import { Item } from '../../../core/shared/item.model';
 import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
+import { AlertType } from '../../../shared/alert/aletr-type';
 import { hasValue } from '../../../shared/empty.util';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { PaginationComponentOptions } from '../../../shared/pagination/pagination-component-options.model';
-import { AlertType } from '../../../shared/alert/aletr-type';
-import { Item } from '../../../core/shared/item.model';
-import { OrcidAuthService } from '../../../core/orcid/orcid-auth.service';
 
 @Component({
   selector: 'ds-orcid-queue',
   templateUrl: './orcid-queue.component.html',
-  styleUrls: ['./orcid-queue.component.scss']
+  styleUrls: ['./orcid-queue.component.scss'],
 })
 export class OrcidQueueComponent implements OnInit, OnDestroy {
-
   /**
    * The item for which showing the orcid settings
    */
@@ -34,10 +42,13 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
   /**
    * Pagination config used to display the list
    */
-  public paginationOptions: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'oqp',
-    pageSize: 5
-  });
+  public paginationOptions: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'oqp',
+      pageSize: 5,
+    }
+  );
 
   /**
    * A boolean representing if results are loading
@@ -47,7 +58,8 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
   /**
    * A list of orcid queue records
    */
-  private list$: BehaviorSubject<RemoteData<PaginatedList<OrcidQueue>>> = new BehaviorSubject<RemoteData<PaginatedList<OrcidQueue>>>({} as any);
+  private list$: BehaviorSubject<RemoteData<PaginatedList<OrcidQueue>>> =
+    new BehaviorSubject<RemoteData<PaginatedList<OrcidQueue>>>({} as any);
 
   /**
    * The AlertType enumeration
@@ -61,21 +73,24 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
    */
   private subs: Subscription[] = [];
 
-  constructor(private orcidAuthService: OrcidAuthService,
-              private orcidQueueService: OrcidQueueService,
-              protected translateService: TranslateService,
-              private paginationService: PaginationService,
-              private notificationsService: NotificationsService,
-              private orcidHistoryService: OrcidHistoryDataService,
-  ) {
-  }
+  constructor(
+    private orcidAuthService: OrcidAuthService,
+    private orcidQueueService: OrcidQueueService,
+    protected translateService: TranslateService,
+    private paginationService: PaginationService,
+    private notificationsService: NotificationsService,
+    private orcidHistoryService: OrcidHistoryDataService
+  ) {}
 
   ngOnInit(): void {
     this.updateList();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (!changes.item.isFirstChange() && changes.item.currentValue !== changes.item.previousValue) {
+    if (
+      !changes.item.isFirstChange() &&
+      changes.item.currentValue !== changes.item.previousValue
+    ) {
       this.updateList();
     }
   }
@@ -85,17 +100,26 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
    */
   updateList() {
     this.subs.push(
-      this.paginationService.getCurrentPagination(this.paginationOptions.id, this.paginationOptions).pipe(
-        debounceTime(100),
-        distinctUntilChanged(),
-        tap(() => this.processing$.next(true)),
-        switchMap((config: PaginationComponentOptions) => this.orcidQueueService.searchByProfileItemId(this.item.id, config, false)),
-        getFirstCompletedRemoteData()
-      ).subscribe((result: RemoteData<PaginatedList<OrcidQueue>>) => {
-        this.processing$.next(false);
-        this.list$.next(result);
-        this.orcidQueueService.clearFindByProfileItemRequests();
-      })
+      this.paginationService
+        .getCurrentPagination(this.paginationOptions.id, this.paginationOptions)
+        .pipe(
+          debounceTime(100),
+          distinctUntilChanged(),
+          tap(() => this.processing$.next(true)),
+          switchMap((config: PaginationComponentOptions) =>
+            this.orcidQueueService.searchByProfileItemId(
+              this.item.id,
+              config,
+              false
+            )
+          ),
+          getFirstCompletedRemoteData()
+        )
+        .subscribe((result: RemoteData<PaginatedList<OrcidQueue>>) => {
+          this.processing$.next(false);
+          this.list$.next(result);
+          this.orcidQueueService.clearFindByProfileItemRequests();
+        })
     );
   }
 
@@ -144,7 +168,10 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
       return '';
     }
 
-    return 'person.page.orcid.sync-queue.tooltip.' + orcidQueue.recordType.toLowerCase();
+    return (
+      'person.page.orcid.sync-queue.tooltip.' +
+      orcidQueue.recordType.toLowerCase()
+    );
   }
 
   /**
@@ -157,7 +184,10 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
       return '';
     }
 
-    return 'person.page.orcid.sync-queue.tooltip.' + orcidQueue.operation.toLowerCase();
+    return (
+      'person.page.orcid.sync-queue.tooltip.' +
+      orcidQueue.operation.toLowerCase()
+    );
   }
 
   /**
@@ -166,7 +196,6 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
    * @param orcidQueue The OrcidQueue object
    */
   getOperationClass(orcidQueue: OrcidQueue): string {
-
     if (!orcidQueue.operation) {
       return '';
     }
@@ -190,17 +219,28 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
    */
   discardEntry(orcidQueue: OrcidQueue) {
     this.processing$.next(true);
-    this.subs.push(this.orcidQueueService.deleteById(orcidQueue.id).pipe(
-      getFirstCompletedRemoteData()
-    ).subscribe((remoteData) => {
-      this.processing$.next(false);
-      if (remoteData.isSuccess) {
-        this.notificationsService.success(this.translateService.get('person.page.orcid.sync-queue.discard.success'));
-        this.updateList();
-      } else {
-        this.notificationsService.error(this.translateService.get('person.page.orcid.sync-queue.discard.error'));
-      }
-    }));
+    this.subs.push(
+      this.orcidQueueService
+        .deleteById(orcidQueue.id)
+        .pipe(getFirstCompletedRemoteData())
+        .subscribe((remoteData) => {
+          this.processing$.next(false);
+          if (remoteData.isSuccess) {
+            this.notificationsService.success(
+              this.translateService.get(
+                'person.page.orcid.sync-queue.discard.success'
+              )
+            );
+            this.updateList();
+          } else {
+            this.notificationsService.error(
+              this.translateService.get(
+                'person.page.orcid.sync-queue.discard.error'
+              )
+            );
+          }
+        })
+    );
   }
 
   /**
@@ -210,32 +250,42 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
    */
   send(orcidQueue: OrcidQueue) {
     this.processing$.next(true);
-    this.subs.push(this.orcidHistoryService.sendToORCID(orcidQueue).pipe(
-      getFirstCompletedRemoteData()
-    ).subscribe((remoteData) => {
-      this.processing$.next(false);
-      if (remoteData.isSuccess) {
-        this.handleOrcidHistoryRecordCreation(remoteData.payload);
-      } else if (remoteData.statusCode === 422) {
-        this.handleValidationErrors(remoteData);
-      } else {
-        this.notificationsService.error(this.translateService.get('person.page.orcid.sync-queue.send.error'));
-      }
-    }));
+    this.subs.push(
+      this.orcidHistoryService
+        .sendToORCID(orcidQueue)
+        .pipe(getFirstCompletedRemoteData())
+        .subscribe((remoteData) => {
+          this.processing$.next(false);
+          if (remoteData.isSuccess) {
+            this.handleOrcidHistoryRecordCreation(remoteData.payload);
+          } else if (remoteData.statusCode === 422) {
+            this.handleValidationErrors(remoteData);
+          } else {
+            this.notificationsService.error(
+              this.translateService.get(
+                'person.page.orcid.sync-queue.send.error'
+              )
+            );
+          }
+        })
+    );
   }
-
 
   /**
    * Return the error message for Unauthorized response
    * @private
    */
   private getUnauthorizedErrorContent(): Observable<string> {
-    return this.orcidAuthService.getOrcidAuthorizeUrl(this.item).pipe(
-      switchMap((authorizeUrl) => this.translateService.get(
-        'person.page.orcid.sync-queue.send.unauthorized-error.content',
-        { orcid: authorizeUrl }
-      ))
-    );
+    return this.orcidAuthService
+      .getOrcidAuthorizeUrl(this.item)
+      .pipe(
+        switchMap((authorizeUrl) =>
+          this.translateService.get(
+            'person.page.orcid.sync-queue.send.unauthorized-error.content',
+            { orcid: authorizeUrl }
+          )
+        )
+      );
   }
 
   /**
@@ -247,28 +297,52 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
       case 200:
       case 201:
       case 204:
-        this.notificationsService.success(this.translateService.get('person.page.orcid.sync-queue.send.success'));
+        this.notificationsService.success(
+          this.translateService.get('person.page.orcid.sync-queue.send.success')
+        );
         this.updateList();
         break;
       case 400:
-        this.notificationsService.error(this.translateService.get('person.page.orcid.sync-queue.send.bad-request-error'), null, { timeOut: 0 });
+        this.notificationsService.error(
+          this.translateService.get(
+            'person.page.orcid.sync-queue.send.bad-request-error'
+          ),
+          null,
+          { timeOut: 0 }
+        );
         break;
       case 401:
         combineLatest([
-          this.translateService.get('person.page.orcid.sync-queue.send.unauthorized-error.title'),
-          this.getUnauthorizedErrorContent()],
-        ).subscribe(([title, content]) => {
+          this.translateService.get(
+            'person.page.orcid.sync-queue.send.unauthorized-error.title'
+          ),
+          this.getUnauthorizedErrorContent(),
+        ]).subscribe(([title, content]) => {
           this.notificationsService.error(title, content, { timeOut: 0 }, true);
         });
         break;
       case 404:
-        this.notificationsService.warning(this.translateService.get('person.page.orcid.sync-queue.send.not-found-warning'));
+        this.notificationsService.warning(
+          this.translateService.get(
+            'person.page.orcid.sync-queue.send.not-found-warning'
+          )
+        );
         break;
       case 409:
-        this.notificationsService.error(this.translateService.get('person.page.orcid.sync-queue.send.conflict-error'), null, { timeOut: 0 });
+        this.notificationsService.error(
+          this.translateService.get(
+            'person.page.orcid.sync-queue.send.conflict-error'
+          ),
+          null,
+          { timeOut: 0 }
+        );
         break;
       default:
-        this.notificationsService.error(this.translateService.get('person.page.orcid.sync-queue.send.error'), null, { timeOut: 0 });
+        this.notificationsService.error(
+          this.translateService.get('person.page.orcid.sync-queue.send.error'),
+          null,
+          { timeOut: 0 }
+        );
     }
   }
 
@@ -277,15 +351,31 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
    * @private
    */
   private handleValidationErrors(remoteData: RemoteData<OrcidHistory>) {
-    const translations = [this.translateService.get('person.page.orcid.sync-queue.send.validation-error')];
+    const translations = [
+      this.translateService.get(
+        'person.page.orcid.sync-queue.send.validation-error'
+      ),
+    ];
     const errorMessage = remoteData.errorMessage;
     if (errorMessage && errorMessage.indexOf('Error codes:') > 0) {
-      errorMessage.substring(errorMessage.indexOf(':') + 1).trim().split(',')
-        .forEach((error) => translations.push(this.translateService.get('person.page.orcid.sync-queue.send.validation-error.' + error)));
+      errorMessage
+        .substring(errorMessage.indexOf(':') + 1)
+        .trim()
+        .split(',')
+        .forEach((error) =>
+          translations.push(
+            this.translateService.get(
+              'person.page.orcid.sync-queue.send.validation-error.' + error
+            )
+          )
+        );
     }
     combineLatest(translations).subscribe((messages) => {
       const title = messages.shift();
-      const content = '<ul>' + messages.map((message) => `<li>${message}</li>`).join('') + '</ul>';
+      const content =
+        '<ul>' +
+        messages.map((message) => `<li>${message}</li>`).join('') +
+        '</ul>';
       this.notificationsService.error(title, content, { timeOut: 0 }, true);
     });
   }
@@ -295,8 +385,8 @@ export class OrcidQueueComponent implements OnInit, OnDestroy {
    */
   ngOnDestroy(): void {
     this.list$ = null;
-    this.subs.filter((subscription) => hasValue(subscription))
+    this.subs
+      .filter((subscription) => hasValue(subscription))
       .forEach((subscription) => subscription.unsubscribe());
   }
-
 }

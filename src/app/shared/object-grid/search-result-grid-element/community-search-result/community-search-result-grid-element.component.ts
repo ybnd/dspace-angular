@@ -1,14 +1,14 @@
 import { Component, Input } from '@angular/core';
-import { Community } from '../../../../core/shared/community.model';
-import { SearchResultGridElementComponent } from '../search-result-grid-element.component';
-import { CommunitySearchResult } from '../../../object-collection/shared/community-search-result.model';
-import { ViewMode } from '../../../../core/shared/view-mode.model';
-import { listableObjectComponent } from '../../../object-collection/shared/listable-object/listable-object.decorator';
 import { LinkService } from '../../../../core/cache/builders/link.service';
-import { TruncatableService } from '../../../truncatable/truncatable.service';
 import { BitstreamDataService } from '../../../../core/data/bitstream-data.service';
+import { Community } from '../../../../core/shared/community.model';
+import { ViewMode } from '../../../../core/shared/view-mode.model';
 import { hasNoValue, hasValue } from '../../../empty.util';
+import { CommunitySearchResult } from '../../../object-collection/shared/community-search-result.model';
+import { listableObjectComponent } from '../../../object-collection/shared/listable-object/listable-object.decorator';
+import { TruncatableService } from '../../../truncatable/truncatable.service';
 import { followLink } from '../../../utils/follow-link-config.model';
+import { SearchResultGridElementComponent } from '../search-result-grid-element.component';
 
 @Component({
   selector: 'ds-community-search-result-grid-element',
@@ -22,7 +22,10 @@ import { followLink } from '../../../utils/follow-link-config.model';
  * Component representing a grid element for a community search result
  */
 @listableObjectComponent(CommunitySearchResult, ViewMode.GridElement)
-export class CommunitySearchResultGridElementComponent extends SearchResultGridElementComponent<CommunitySearchResult,Community> {
+export class CommunitySearchResultGridElementComponent extends SearchResultGridElementComponent<
+  CommunitySearchResult,
+  Community
+> {
   private _dso: Community;
 
   constructor(

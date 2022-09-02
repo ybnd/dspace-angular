@@ -16,7 +16,9 @@ export class ThemedAuthNavMenuComponent extends ThemedComponent<AuthNavMenuCompo
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/auth-nav-menu/auth-nav-menu.component`);
+    return import(
+      `../../../themes/${themeName}/app/shared/auth-nav-menu/auth-nav-menu.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

@@ -1,12 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { PlainTextMetadataListElementComponent } from './plain-text-metadata-list-element.component';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { MetadatumRepresentation } from '../../../../core/shared/metadata-representation/metadatum/metadatum-representation.model';
+import { PlainTextMetadataListElementComponent } from './plain-text-metadata-list-element.component';
 
-const mockMetadataRepresentation = Object.assign(new MetadatumRepresentation('type'), {
-  key: 'dc.contributor.author',
-  value: 'Test Author'
-});
+const mockMetadataRepresentation = Object.assign(
+  new MetadatumRepresentation('type'),
+  {
+    key: 'dc.contributor.author',
+    value: 'Test Author',
+  }
+);
 
 describe('PlainTextMetadataListElementComponent', () => {
   let comp: PlainTextMetadataListElementComponent;
@@ -16,10 +19,12 @@ describe('PlainTextMetadataListElementComponent', () => {
     TestBed.configureTestingModule({
       imports: [],
       declarations: [PlainTextMetadataListElementComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(PlainTextMetadataListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(PlainTextMetadataListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -30,7 +35,8 @@ describe('PlainTextMetadataListElementComponent', () => {
   }));
 
   it('should contain the value as plain text', () => {
-    expect(fixture.debugElement.nativeElement.textContent).toContain(mockMetadataRepresentation.value);
+    expect(fixture.debugElement.nativeElement.textContent).toContain(
+      mockMetadataRepresentation.value
+    );
   });
-
 });

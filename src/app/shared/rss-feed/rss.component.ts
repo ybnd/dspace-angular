@@ -3,22 +3,21 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { GroupDataService } from '../../core/eperson/group-data.service';
-import { LinkHeadService } from '../../core/services/link-head.service';
-import { ConfigurationDataService } from '../../core/data/configuration-data.service';
-import { getFirstCompletedRemoteData } from '../../core/shared/operators';
-import { environment } from '../../../../src/environments/environment';
-import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
-import { SortOptions } from '../../core/cache/models/sort-options.model';
-import { PaginationService } from '../../core/pagination/pagination.service';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { PaginatedSearchOptions } from '../search/models/paginated-search-options.model';
+import { environment } from '../../../../src/environments/environment';
+import { SortOptions } from '../../core/cache/models/sort-options.model';
+import { ConfigurationDataService } from '../../core/data/configuration-data.service';
 import { RemoteData } from '../../core/data/remote-data';
-
+import { GroupDataService } from '../../core/eperson/group-data.service';
+import { PaginationService } from '../../core/pagination/pagination.service';
+import { LinkHeadService } from '../../core/services/link-head.service';
+import { getFirstCompletedRemoteData } from '../../core/shared/operators';
+import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
+import { PaginatedSearchOptions } from '../search/models/paginated-search-options.model';
 
 /**
  * The Rss feed button componenet.
@@ -29,10 +28,9 @@ import { RemoteData } from '../../core/data/remote-data';
   styleUrls: ['rss.component.scss'],
   templateUrl: 'rss.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
 })
-export class RSSComponent implements OnInit, OnDestroy  {
-
+export class RSSComponent implements OnInit, OnDestroy {
   route$: BehaviorSubject<string>;
 
   isEnabled$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
@@ -43,66 +41,85 @@ export class RSSComponent implements OnInit, OnDestroy  {
 
   subs: Subscription[] = [];
 
-  constructor(private groupDataService: GroupDataService,
-              private linkHeadService: LinkHeadService,
-              private configurationService: ConfigurationDataService,
-              private searchConfigurationService: SearchConfigurationService,
-              private router: Router,
-              protected paginationService: PaginationService) {
-  }
+  constructor(
+    private groupDataService: GroupDataService,
+    private linkHeadService: LinkHeadService,
+    private configurationService: ConfigurationDataService,
+    private searchConfigurationService: SearchConfigurationService,
+    private router: Router,
+    protected paginationService: PaginationService
+  ) {}
   /**
    * Removes the linktag created when the component gets removed from the page.
    */
   ngOnDestroy(): void {
     this.linkHeadService.removeTag("rel='alternate'");
-    this.subs.forEach(sub => {
+    this.subs.forEach((sub) => {
       sub.unsubscribe();
     });
   }
-
 
   /**
    * Generates the link tags and the url to opensearch when the component is loaded.
    */
   ngOnInit(): void {
-    this.configuration$ = this.searchConfigurationService.getCurrentConfiguration('default');
+    this.configuration$ =
+      this.searchConfigurationService.getCurrentConfiguration('default');
 
-    this.subs.push(this.configurationService.findByPropertyName('websvc.opensearch.enable').pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((result) => {
-      if (result.hasSucceeded) {
-        const enabled = (result.payload.values[0] === 'true');
-        this.isEnabled$.next(enabled);
-      }
-    }));
-    this.subs.push(this.configurationService.findByPropertyName('websvc.opensearch.svccontext').pipe(
-      getFirstCompletedRemoteData(),
-      map((result: RemoteData<any>) => {
-        if (result.hasSucceeded) {
-          return result.payload.values[0];
-        }
-        return null;
-      }),
-      switchMap((openSearchUri: string) =>
-        this.searchConfigurationService.paginatedSearchOptions.pipe(
-          map((searchOptions: PaginatedSearchOptions) => ({ openSearchUri,  searchOptions }))
+    this.subs.push(
+      this.configurationService
+        .findByPropertyName('websvc.opensearch.enable')
+        .pipe(getFirstCompletedRemoteData())
+        .subscribe((result) => {
+          if (result.hasSucceeded) {
+            const enabled = result.payload.values[0] === 'true';
+            this.isEnabled$.next(enabled);
+          }
+        })
+    );
+    this.subs.push(
+      this.configurationService
+        .findByPropertyName('websvc.opensearch.svccontext')
+        .pipe(
+          getFirstCompletedRemoteData(),
+          map((result: RemoteData<any>) => {
+            if (result.hasSucceeded) {
+              return result.payload.values[0];
+            }
+            return null;
+          }),
+          switchMap((openSearchUri: string) =>
+            this.searchConfigurationService.paginatedSearchOptions.pipe(
+              map((searchOptions: PaginatedSearchOptions) => ({
+                openSearchUri,
+                searchOptions,
+              }))
+            )
+          )
         )
-      ),
-    ).subscribe(({ openSearchUri,  searchOptions }) => {
-      if (!openSearchUri) {
-        return null;
-      }
-      this.uuid = this.groupDataService.getUUIDFromString(this.router.url);
-      const route = environment.rest.baseUrl + this.formulateRoute(this.uuid, openSearchUri, searchOptions.sort, searchOptions.query);
-      this.addLinks(route);
-      this.linkHeadService.addTag({
-        href: environment.rest.baseUrl + '/' + openSearchUri + '/service',
-        type: 'application/atom+xml',
-        rel: 'search',
-        title: 'Dspace'
-      });
-      this.route$ = new BehaviorSubject<string>(route);
-    }));
+        .subscribe(({ openSearchUri, searchOptions }) => {
+          if (!openSearchUri) {
+            return null;
+          }
+          this.uuid = this.groupDataService.getUUIDFromString(this.router.url);
+          const route =
+            environment.rest.baseUrl +
+            this.formulateRoute(
+              this.uuid,
+              openSearchUri,
+              searchOptions.sort,
+              searchOptions.query
+            );
+          this.addLinks(route);
+          this.linkHeadService.addTag({
+            href: environment.rest.baseUrl + '/' + openSearchUri + '/service',
+            type: 'application/atom+xml',
+            rel: 'search',
+            title: 'Dspace',
+          });
+          this.route$ = new BehaviorSubject<string>(route);
+        })
+    );
   }
 
   /**
@@ -113,7 +130,12 @@ export class RSSComponent implements OnInit, OnDestroy  {
    * @param query The query string that was provided in the search
    * @returns The combine URL to opensearch
    */
-  formulateRoute(uuid: string, opensearch: string, sort: SortOptions, query: string): string {
+  formulateRoute(
+    uuid: string,
+    opensearch: string,
+    sort: SortOptions,
+    query: string
+  ): string {
     let route = 'search?format=atom';
     if (uuid) {
       route += `&scope=${uuid}`;
@@ -150,14 +172,14 @@ export class RSSComponent implements OnInit, OnDestroy  {
       href: route,
       type: 'application/atom+xml',
       rel: 'alternate',
-      title: 'Sitewide Atom feed'
+      title: 'Sitewide Atom feed',
     });
     route = route.replace('format=atom', 'format=rss');
     this.linkHeadService.addTag({
       href: route,
       type: 'application/rss+xml',
       rel: 'alternate',
-      title: 'Sitewide RSS feed'
+      title: 'Sitewide RSS feed',
     });
   }
 }

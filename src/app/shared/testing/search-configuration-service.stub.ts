@@ -1,13 +1,16 @@
 import { BehaviorSubject, of as observableOf } from 'rxjs';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { SearchConfig } from '../../core/shared/search/search-filters/search-config.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
 
 export class SearchConfigurationServiceStub {
-
   public paginationID = 'test-id';
 
   private searchOptions: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  private paginatedSearchOptions: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  private paginatedSearchOptions: BehaviorSubject<any> =
+    new BehaviorSubject<any>({});
 
   getCurrentFrontendFilters() {
     return observableOf([]);
@@ -25,12 +28,12 @@ export class SearchConfigurationServiceStub {
     return observableOf(a);
   }
 
-  getConfig () {
+  getConfig() {
     return observableOf({ hasSucceeded: true, payload: [] });
   }
 
   getAvailableConfigurationOptions() {
-    return observableOf([{value: 'test', label: 'test'}]);
+    return observableOf([{ value: 'test', label: 'test' }]);
   }
 
   getConfigurationSearchConfigObservable() {
@@ -38,10 +41,13 @@ export class SearchConfigurationServiceStub {
   }
 
   getConfigurationSortOptionsObservable() {
-    return observableOf([new SortOptions('score', SortDirection.ASC), new SortOptions('score', SortDirection.DESC)]);
+    return observableOf([
+      new SortOptions('score', SortDirection.ASC),
+      new SortOptions('score', SortDirection.DESC),
+    ]);
   }
 
   initializeSortOptionsFromConfiguration() {
-   /* empty */
+    /* empty */
   }
 }

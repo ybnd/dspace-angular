@@ -1,15 +1,19 @@
-import { combineLatest as observableCombineLatest, Observable, Subscription } from 'rxjs';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { SearchFilterConfig } from '../../../../models/search-filter-config.model';
-import { SearchService } from '../../../../../../core/shared/search/search.service';
-import { SearchFilterService } from '../../../../../../core/shared/search/search-filter.service';
-import { hasValue } from '../../../../../empty.util';
-import { SearchConfigurationService } from '../../../../../../core/shared/search/search-configuration.service';
-import { FacetValue } from '../../../../models/facet-value.model';
-import { currentPath } from '../../../../../utils/route.utils';
-import { getFacetValueForType } from '../../../../search.utils';
+import {
+  combineLatest as observableCombineLatest,
+  Observable,
+  Subscription,
+} from 'rxjs';
 import { PaginationService } from '../../../../../../core/pagination/pagination.service';
+import { SearchConfigurationService } from '../../../../../../core/shared/search/search-configuration.service';
+import { SearchFilterService } from '../../../../../../core/shared/search/search-filter.service';
+import { SearchService } from '../../../../../../core/shared/search/search.service';
+import { hasValue } from '../../../../../empty.util';
+import { currentPath } from '../../../../../utils/route.utils';
+import { FacetValue } from '../../../../models/facet-value.model';
+import { SearchFilterConfig } from '../../../../models/search-filter-config.model';
+import { getFacetValueForType } from '../../../../search.utils';
 
 @Component({
   selector: 'ds-search-facet-selected-option',
@@ -56,22 +60,24 @@ export class SearchFacetSelectedOptionComponent implements OnInit, OnDestroy {
    */
   searchLink: string;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected searchConfigService: SearchConfigurationService,
-              protected router: Router,
-              protected paginationService: PaginationService
-  ) {
-  }
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected searchConfigService: SearchConfigurationService,
+    protected router: Router,
+    protected paginationService: PaginationService
+  ) {}
 
   /**
    * Initializes all observable instance variables and starts listening to them
    */
   ngOnInit(): void {
-    this.sub = observableCombineLatest(this.selectedValues$, this.searchConfigService.searchOptions)
-      .subscribe(([selectedValues, searchOptions]) => {
-        this.updateRemoveParams(selectedValues);
-      });
+    this.sub = observableCombineLatest(
+      this.selectedValues$,
+      this.searchConfigService.searchOptions
+    ).subscribe(([selectedValues, searchOptions]) => {
+      this.updateRemoveParams(selectedValues);
+    });
     this.searchLink = this.getSearchLink();
   }
 
@@ -90,12 +96,17 @@ export class SearchFacetSelectedOptionComponent implements OnInit, OnDestroy {
    * @param {string[]} selectedValues The values that are currently selected for this filter
    */
   private updateRemoveParams(selectedValues: FacetValue[]): void {
-    const page = this.paginationService.getPageParam(this.searchConfigService.paginationID);
+    const page = this.paginationService.getPageParam(
+      this.searchConfigService.paginationID
+    );
     this.removeQueryParams = {
       [this.filterConfig.paramName]: selectedValues
-        .filter((facetValue: FacetValue) => facetValue.label !== this.selectedValue.label)
+        .filter(
+          (facetValue: FacetValue) =>
+            facetValue.label !== this.selectedValue.label
+        )
         .map((facetValue: FacetValue) => this.getFacetValue(facetValue)),
-      [page]: 1
+      [page]: 1,
     };
   }
   /**

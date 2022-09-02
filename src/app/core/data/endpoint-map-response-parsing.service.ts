@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
-
-import {
-  DspaceRestResponseParsingService,
-  isCacheableObject
-} from './dspace-rest-response-parsing.service';
+import { environment } from '../../../environments/environment';
 import { hasValue } from '../../shared/empty.util';
 import { getClassForType } from '../cache/builders/build-decorators';
-import { GenericConstructor } from '../shared/generic-constructor';
-import { RawRestResponse } from '../dspace-rest/raw-rest-response.model';
-import { ParsedResponse } from '../cache/response.models';
-import { DSpaceObject } from '../shared/dspace-object.model';
-import { environment } from '../../../environments/environment';
 import { CacheableObject } from '../cache/cacheable-object.model';
+import { ParsedResponse } from '../cache/response.models';
+import { RawRestResponse } from '../dspace-rest/raw-rest-response.model';
+import { DSpaceObject } from '../shared/dspace-object.model';
+import { GenericConstructor } from '../shared/generic-constructor';
+import {
+  DspaceRestResponseParsingService,
+  isCacheableObject,
+} from './dspace-rest-response-parsing.service';
 import { RestRequest } from './rest-request.model';
 
 /**
@@ -22,7 +21,6 @@ import { RestRequest } from './rest-request.model';
  */
 @Injectable()
 export class EndpointMapResponseParsingService extends DspaceRestResponseParsingService {
-
   /**
    * Parse an endpoint map response.
    *
@@ -36,7 +34,10 @@ export class EndpointMapResponseParsingService extends DspaceRestResponseParsing
   parse(request: RestRequest, response: RawRestResponse): ParsedResponse {
     try {
       response = this.ensureSelfLink(request, response);
-      const processRequestDTO = this.process<DSpaceObject>(response.payload, request);
+      const processRequestDTO = this.process<DSpaceObject>(
+        response.payload,
+        request
+      );
 
       if (hasValue(processRequestDTO)) {
         const type: string = processRequestDTO.type;
@@ -46,9 +47,16 @@ export class EndpointMapResponseParsingService extends DspaceRestResponseParsing
         }
 
         if (isCacheableObject(processRequestDTO) && hasValue(objConstructor)) {
-          return new ParsedResponse(response.statusCode, processRequestDTO._links.self);
+          return new ParsedResponse(
+            response.statusCode,
+            processRequestDTO._links.self
+          );
         } else {
-          return new ParsedResponse(response.statusCode, undefined, processRequestDTO);
+          return new ParsedResponse(
+            response.statusCode,
+            undefined,
+            processRequestDTO
+          );
         }
       } else {
         return new ParsedResponse(response.statusCode);
@@ -56,7 +64,7 @@ export class EndpointMapResponseParsingService extends DspaceRestResponseParsing
     } catch (e) {
       console.warn(`Couldn't parse endpoint request at ${request.href}`);
       return new ParsedResponse(response.statusCode, undefined, {
-        _links: response.payload._links
+        _links: response.payload._links,
       });
     }
   }
@@ -73,7 +81,9 @@ export class EndpointMapResponseParsingService extends DspaceRestResponseParsing
   protected deserialize<ObjectDomain>(obj): any {
     const type: string = obj.type;
     if (hasValue(type)) {
-      const objConstructor = getClassForType(type) as GenericConstructor<ObjectDomain>;
+      const objConstructor = getClassForType(
+        type
+      ) as GenericConstructor<ObjectDomain>;
 
       if (hasValue(objConstructor)) {
         const serializer = new this.serializerConstructor(objConstructor);
@@ -95,24 +105,41 @@ export class EndpointMapResponseParsingService extends DspaceRestResponseParsing
    * @param data            the (partial) response from the server
    * @param alternativeURL  an alternative url that can be used to retrieve the object
    */
-  addToObjectCache(co: CacheableObject, request: RestRequest, data: any, alternativeURL?: string): void {
+  addToObjectCache(
+    co: CacheableObject,
+    request: RestRequest,
+    data: any,
+    alternativeURL?: string
+  ): void {
     if (!isCacheableObject(co)) {
       const type = hasValue(data) && hasValue(data.type) ? data.type : 'object';
       let dataJSON: string;
       if (hasValue(data._embedded)) {
-        dataJSON = JSON.stringify(Object.assign({}, data, {
-          _embedded: '...'
-        }));
+        dataJSON = JSON.stringify(
+          Object.assign({}, data, {
+            _embedded: '...',
+          })
+        );
       } else {
         dataJSON = JSON.stringify(data);
       }
-      console.warn(`Can't cache incomplete ${type}: ${JSON.stringify(co)}, parsed from (partial) response: ${dataJSON}`);
+      console.warn(
+        `Can't cache incomplete ${type}: ${JSON.stringify(
+          co
+        )}, parsed from (partial) response: ${dataJSON}`
+      );
       return;
     }
 
     if (hasValue(this.getConstructorFor<any>((co as any).type))) {
-      this.objectCache.add(co, hasValue(request.responseMsToLive) ? request.responseMsToLive : environment.cache.msToLive.default, request.uuid, alternativeURL);
+      this.objectCache.add(
+        co,
+        hasValue(request.responseMsToLive)
+          ? request.responseMsToLive
+          : environment.cache.msToLive.default,
+        request.uuid,
+        alternativeURL
+      );
     }
   }
-
 }

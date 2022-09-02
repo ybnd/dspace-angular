@@ -8,16 +8,16 @@ import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
 import { DSpaceObject } from '../shared/dspace-object.model';
 import { DSPACE_OBJECT } from '../shared/dspace-object.resource-type';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { DataService } from './data.service';
 import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
+import { FindListOptions } from './find-list-options.model';
+import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
 import { RequestService } from './request.service';
-import { PaginatedList } from './paginated-list.model';
-import { CoreState } from '../core-state.model';
-import { FindListOptions } from './find-list-options.model';
 
 class DataServiceImpl extends DataService<DSpaceObject> {
   protected linkPath = 'dso';
@@ -30,13 +30,22 @@ class DataServiceImpl extends DataService<DSpaceObject> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<DSpaceObject>) {
+    protected comparator: DSOChangeAnalyzer<DSpaceObject>
+  ) {
     super();
   }
 
-  getIDHref(endpoint, resourceID,  ...linksToFollow: FollowLinkConfig<DSpaceObject>[]): string {
-    return this.buildHrefFromFindOptions( endpoint.replace(/\{\?uuid\}/, `?uuid=${resourceID}`),
-      {}, [], ...linksToFollow);
+  getIDHref(
+    endpoint,
+    resourceID,
+    ...linksToFollow: FollowLinkConfig<DSpaceObject>[]
+  ): string {
+    return this.buildHrefFromFindOptions(
+      endpoint.replace(/\{\?uuid\}/, `?uuid=${resourceID}`),
+      {},
+      [],
+      ...linksToFollow
+    );
   }
 }
 
@@ -53,8 +62,18 @@ export class DSpaceObjectDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<DSpaceObject>) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
+    protected comparator: DSOChangeAnalyzer<DSpaceObject>
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
@@ -68,9 +87,18 @@ export class DSpaceObjectDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findById(id: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<DSpaceObject>[]): Observable<RemoteData<DSpaceObject>> {
-    return this.dataService.findById(id, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
-
+  findById(
+    id: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<DSpaceObject>[]
+  ): Observable<RemoteData<DSpaceObject>> {
+    return this.dataService.findById(
+      id,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
   /**
    * Returns an observable of {@link RemoteData} of an object, based on an href, with a list of {@link FollowLinkConfig},
@@ -83,8 +111,18 @@ export class DSpaceObjectDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<DSpaceObject>[]): Observable<RemoteData<DSpaceObject>> {
-    return this.dataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<DSpaceObject>[]
+  ): Observable<RemoteData<DSpaceObject>> {
+    return this.dataService.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -99,8 +137,19 @@ export class DSpaceObjectDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByHref(href: string, findListOptions: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<DSpaceObject>[]): Observable<RemoteData<PaginatedList<DSpaceObject>>> {
-    return this.dataService.findAllByHref(href, findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllByHref(
+    href: string,
+    findListOptions: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<DSpaceObject>[]
+  ): Observable<RemoteData<PaginatedList<DSpaceObject>>> {
+    return this.dataService.findAllByHref(
+      href,
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
-
 }

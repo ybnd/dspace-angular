@@ -1,9 +1,7 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
-
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { Store, StoreModule } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
-
 import { AppState, storeModuleConfig } from '../../app.reducer';
 import { AuthBlockingGuard } from './auth-blocking.guard';
 import { authReducer } from './auth.reducer';
@@ -21,20 +19,18 @@ describe('AuthBlockingGuard', () => {
         loaded: false,
         blocking: undefined,
         loading: false,
-        authMethods: []
-      }
-    }
+        authMethods: [],
+      },
+    },
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(authReducer, storeModuleConfig),
-      ],
+      imports: [StoreModule.forRoot(authReducer, storeModuleConfig)],
       providers: [
         provideMockStore({ initialState }),
-        { provide: AuthBlockingGuard, useValue: guard }
-      ]
+        { provide: AuthBlockingGuard, useValue: guard },
+      ],
     }).compileComponents();
   }));
 
@@ -45,7 +41,6 @@ describe('AuthBlockingGuard', () => {
   });
 
   describe(`canActivate`, () => {
-
     describe(`when authState.blocking is undefined`, () => {
       it(`should not emit anything`, (done) => {
         expect(guard.canActivate()).toBeObservable(cold('-'));
@@ -57,10 +52,10 @@ describe('AuthBlockingGuard', () => {
       beforeEach(() => {
         const state = Object.assign({}, initialState, {
           core: Object.assign({}, initialState.core, {
-            'auth': {
-              blocking: true
-            }
-          })
+            auth: {
+              blocking: true,
+            },
+          }),
         });
         mockStore.setState(state);
       });
@@ -75,10 +70,10 @@ describe('AuthBlockingGuard', () => {
       beforeEach(() => {
         const state = Object.assign({}, initialState, {
           core: Object.assign({}, initialState.core, {
-            'auth': {
-              blocking: false
-            }
-          })
+            auth: {
+              blocking: false,
+            },
+          }),
         });
         mockStore.setState(state);
       });
@@ -89,5 +84,4 @@ describe('AuthBlockingGuard', () => {
       });
     });
   });
-
 });

@@ -1,7 +1,6 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-
-import { rendersAuthMethodType } from '../methods/log-in.methods-decorator';
 import { AuthMethod } from '../../../core/auth/models/auth.method';
+import { rendersAuthMethodType } from '../methods/log-in.methods-decorator';
 
 /**
  * This component represents a component container for log-in methods available.
@@ -9,10 +8,9 @@ import { AuthMethod } from '../../../core/auth/models/auth.method';
 @Component({
   selector: 'ds-log-in-container',
   templateUrl: './log-in-container.component.html',
-  styleUrls: ['./log-in-container.component.scss']
+  styleUrls: ['./log-in-container.component.scss'],
 })
 export class LogInContainerComponent implements OnInit {
-
   @Input() authMethod: AuthMethod;
 
   /**
@@ -32,8 +30,7 @@ export class LogInContainerComponent implements OnInit {
    *
    * @param {Injector} injector
    */
-  constructor(private injector: Injector) {
-  }
+  constructor(private injector: Injector) {}
 
   /**
    * Initialize all instance variables
@@ -41,10 +38,18 @@ export class LogInContainerComponent implements OnInit {
   ngOnInit() {
     this.objectInjector = Injector.create({
       providers: [
-        { provide: 'authMethodProvider', useFactory: () => (this.authMethod), deps: [] },
-        { provide: 'isStandalonePage', useFactory: () => (this.isStandalonePage), deps: [] },
+        {
+          provide: 'authMethodProvider',
+          useFactory: () => this.authMethod,
+          deps: [],
+        },
+        {
+          provide: 'isStandalonePage',
+          useFactory: () => this.isStandalonePage,
+          deps: [],
+        },
       ],
-      parent: this.injector
+      parent: this.injector,
     });
   }
 
@@ -52,7 +57,6 @@ export class LogInContainerComponent implements OnInit {
    * Find the correct component based on the AuthMethod's type
    */
   getAuthMethodContent(): string {
-      return rendersAuthMethodType(this.authMethod.authMethodType);
+    return rendersAuthMethodType(this.authMethod.authMethodType);
   }
-
 }

@@ -1,11 +1,10 @@
 import { Component, Input } from '@angular/core';
-
 import { Item } from '../../../../../core/shared/item.model';
 import { ItemPageFieldComponent } from '../item-page-field.component';
 
 @Component({
   selector: 'ds-generic-item-page-field',
-  templateUrl: '../item-page-field.component.html'
+  templateUrl: '../item-page-field.component.html',
 })
 /**
  * This component can be used to represent metadata on a simple item page.
@@ -13,7 +12,6 @@ import { ItemPageFieldComponent } from '../item-page-field.component';
  * It expects 4 parameters: The item, a separator, the metadata keys and an i18n key
  */
 export class GenericItemPageFieldComponent extends ItemPageFieldComponent {
-
   /**
    * The item to display metadata for
    */
@@ -34,5 +32,4 @@ export class GenericItemPageFieldComponent extends ItemPageFieldComponent {
    * Label i18n key for the rendered metadata
    */
   @Input() label: string;
-
 }

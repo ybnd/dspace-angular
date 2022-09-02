@@ -1,6 +1,5 @@
 import { autoserialize, inheritSerialization } from 'cerialize';
 import { typedObject } from '../../cache/builders/build-decorators';
-
 import { DSpaceObject } from '../../shared/dspace-object.model';
 import { HALLink } from '../../shared/hal-link.model';
 import { FEEDBACK } from './feedback.resource-type';
@@ -30,5 +29,4 @@ export class Feedback extends DSpaceObject {
   _links: {
     self: HALLink;
   };
-
 }

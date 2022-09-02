@@ -1,34 +1,32 @@
-import { ItemVersionsComponent } from './item-versions.component';
-import {
-  ComponentFixture, TestBed, waitForAsync
-} from '@angular/core/testing';
-import { VarDirective } from '../../utils/var.directive';
-import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { Item } from '../../../core/shared/item.model';
-import { Version } from '../../../core/shared/version.model';
-import { VersionHistory } from '../../../core/shared/version-history.model';
-import { VersionHistoryDataService } from '../../../core/data/version-history-data.service';
-import { BrowserModule, By } from '@angular/platform-browser';
-import { createSuccessfulRemoteDataObject$ } from '../../remote-data.utils';
-import { createPaginatedList } from '../../testing/utils.test';
-import { EMPTY, of, of as observableOf } from 'rxjs';
-import { PaginationService } from '../../../core/pagination/pagination.service';
-import { PaginationServiceStub } from '../../testing/pagination-service.stub';
-import { AuthService } from '../../../core/auth/auth.service';
-import { VersionDataService } from '../../../core/data/version-data.service';
-import { ItemDataService } from '../../../core/data/item-data.service';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NotificationsService } from '../../notifications/notifications.service';
-import { NotificationsServiceStub } from '../../testing/notifications-service.stub';
-import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
-import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
-import { WorkspaceitemDataService } from '../../../core/submission/workspaceitem-data.service';
-import { WorkflowItemDataService } from '../../../core/submission/workflowitem-data.service';
-import { ConfigurationDataService } from '../../../core/data/configuration-data.service';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
+import { EMPTY, of as observableOf, of } from 'rxjs';
+import { AuthService } from '../../../core/auth/auth.service';
+import { ConfigurationDataService } from '../../../core/data/configuration-data.service';
+import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
+import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
+import { ItemDataService } from '../../../core/data/item-data.service';
+import { VersionDataService } from '../../../core/data/version-data.service';
+import { VersionHistoryDataService } from '../../../core/data/version-history-data.service';
+import { PaginationService } from '../../../core/pagination/pagination.service';
+import { Item } from '../../../core/shared/item.model';
+import { VersionHistory } from '../../../core/shared/version-history.model';
+import { Version } from '../../../core/shared/version.model';
+import { WorkflowItemDataService } from '../../../core/submission/workflowitem-data.service';
+import { WorkspaceitemDataService } from '../../../core/submission/workspaceitem-data.service';
+import { NotificationsService } from '../../notifications/notifications.service';
+import { createSuccessfulRemoteDataObject$ } from '../../remote-data.utils';
+import { NotificationsServiceStub } from '../../testing/notifications-service.stub';
+import { PaginationServiceStub } from '../../testing/pagination-service.stub';
+import { createPaginatedList } from '../../testing/utils.test';
+import { VarDirective } from '../../utils/var.directive';
+import { ItemVersionsComponent } from './item-versions.component';
 
 describe('ItemVersionsComponent', () => {
   let component: ItemVersionsComponent;
@@ -71,18 +69,21 @@ describe('ItemVersionsComponent', () => {
     },
   });
   const versions = [version1, version2];
-  versionHistory.versions = createSuccessfulRemoteDataObject$(createPaginatedList(versions));
+  versionHistory.versions = createSuccessfulRemoteDataObject$(
+    createPaginatedList(versions)
+  );
 
-  const item1 = Object.assign(new Item(), { // is a workspace item
+  const item1 = Object.assign(new Item(), {
+    // is a workspace item
     id: 'item-identifier-1',
     uuid: 'item-identifier-1',
     handle: '123456789/1',
     version: createSuccessfulRemoteDataObject$(version1),
     _links: {
       self: {
-        href: '/items/item-identifier-1'
-      }
-    }
+        href: '/items/item-identifier-1',
+      },
+    },
   });
   const item2 = Object.assign(new Item(), {
     id: 'item-identifier-2',
@@ -91,32 +92,46 @@ describe('ItemVersionsComponent', () => {
     version: createSuccessfulRemoteDataObject$(version2),
     _links: {
       self: {
-        href: '/items/item-identifier-2'
-      }
-    }
+        href: '/items/item-identifier-2',
+      },
+    },
   });
   const items = [item1, item2];
   version1.item = createSuccessfulRemoteDataObject$(item1);
   version2.item = createSuccessfulRemoteDataObject$(item2);
 
-  const versionHistoryServiceSpy = jasmine.createSpyObj('versionHistoryService', {
-    getVersions: createSuccessfulRemoteDataObject$(createPaginatedList(versions)),
-    getVersionHistoryFromVersion$: of(versionHistory),
-    getLatestVersionItemFromHistory$: of(item1),  // called when version2 is deleted
-  });
-  const authenticationServiceSpy = jasmine.createSpyObj('authenticationService', {
-    isAuthenticated: observableOf(true),
-    setRedirectUrl: {}
-  });
+  const versionHistoryServiceSpy = jasmine.createSpyObj(
+    'versionHistoryService',
+    {
+      getVersions: createSuccessfulRemoteDataObject$(
+        createPaginatedList(versions)
+      ),
+      getVersionHistoryFromVersion$: of(versionHistory),
+      getLatestVersionItemFromHistory$: of(item1), // called when version2 is deleted
+    }
+  );
+  const authenticationServiceSpy = jasmine.createSpyObj(
+    'authenticationService',
+    {
+      isAuthenticated: observableOf(true),
+      setRedirectUrl: {},
+    }
+  );
   const authorizationServiceSpy = jasmine.createSpyObj('authorizationService', {
-    isAuthorized: observableOf(true)
+    isAuthorized: observableOf(true),
   });
-  const workspaceItemDataServiceSpy = jasmine.createSpyObj('workspaceItemDataService', {
-    findByItem: EMPTY,
-  });
-  const workflowItemDataServiceSpy = jasmine.createSpyObj('workflowItemDataService', {
-    findByItem: EMPTY,
-  });
+  const workspaceItemDataServiceSpy = jasmine.createSpyObj(
+    'workspaceItemDataService',
+    {
+      findByItem: EMPTY,
+    }
+  );
+  const workflowItemDataServiceSpy = jasmine.createSpyObj(
+    'workflowItemDataService',
+    {
+      findByItem: EMPTY,
+    }
+  );
   const versionServiceSpy = jasmine.createSpyObj('versionService', {
     findById: EMPTY,
   });
@@ -134,25 +149,49 @@ describe('ItemVersionsComponent', () => {
   });
 
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
       declarations: [ItemVersionsComponent, VarDirective],
-      imports: [TranslateModule.forRoot(), CommonModule, NgbModule, FormsModule, ReactiveFormsModule, BrowserModule],
+      imports: [
+        TranslateModule.forRoot(),
+        CommonModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserModule,
+      ],
       providers: [
-        {provide: PaginationService, useValue: new PaginationServiceStub()},
-        {provide: FormBuilder, useValue: new FormBuilder()},
-        {provide: NotificationsService, useValue: new NotificationsServiceStub()},
-        {provide: AuthService, useValue: authenticationServiceSpy},
-        {provide: AuthorizationDataService, useValue: authorizationServiceSpy},
-        {provide: VersionHistoryDataService, useValue: versionHistoryServiceSpy},
-        {provide: ItemDataService, useValue: itemDataServiceSpy},
-        {provide: VersionDataService, useValue: versionServiceSpy},
-        {provide: WorkspaceitemDataService, useValue: workspaceItemDataServiceSpy},
-        {provide: WorkflowItemDataService, useValue: workflowItemDataServiceSpy},
-        {provide: ConfigurationDataService, useValue: configurationServiceSpy},
+        { provide: PaginationService, useValue: new PaginationServiceStub() },
+        { provide: FormBuilder, useValue: new FormBuilder() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
+        { provide: AuthService, useValue: authenticationServiceSpy },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationServiceSpy,
+        },
+        {
+          provide: VersionHistoryDataService,
+          useValue: versionHistoryServiceSpy,
+        },
+        { provide: ItemDataService, useValue: itemDataServiceSpy },
+        { provide: VersionDataService, useValue: versionServiceSpy },
+        {
+          provide: WorkspaceitemDataService,
+          useValue: workspaceItemDataServiceSpy,
+        },
+        {
+          provide: WorkflowItemDataService,
+          useValue: workflowItemDataServiceSpy,
+        },
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationServiceSpy,
+        },
         { provide: Router, useValue: routerSpy },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     versionHistoryService = TestBed.inject(VersionHistoryDataService);
@@ -162,7 +201,6 @@ describe('ItemVersionsComponent', () => {
     workflowItemDataService = TestBed.inject(WorkflowItemDataService);
     versionService = TestBed.inject(VersionDataService);
     configurationService = TestBed.inject(ConfigurationDataService);
-
   }));
 
   beforeEach(() => {
@@ -182,26 +220,38 @@ describe('ItemVersionsComponent', () => {
     const versionItem = items[index];
 
     it(`should display version ${version.version} in the correct column for version ${version.id}`, () => {
-      const id = fixture.debugElement.query(By.css(`#version-row-${version.id} .version-row-element-version`));
-      expect(id.nativeElement.textContent).toContain(version.version.toString());
+      const id = fixture.debugElement.query(
+        By.css(`#version-row-${version.id} .version-row-element-version`)
+      );
+      expect(id.nativeElement.textContent).toContain(
+        version.version.toString()
+      );
     });
 
     // Check if the current version contains an asterisk
     if (item1.uuid === versionItem.uuid) {
       it('should add an asterisk to the version of the selected item', () => {
-        const item = fixture.debugElement.query(By.css(`#version-row-${version.id} .version-row-element-version`));
+        const item = fixture.debugElement.query(
+          By.css(`#version-row-${version.id} .version-row-element-version`)
+        );
         expect(item.nativeElement.textContent).toContain('*');
       });
     }
 
     it(`should display date ${version.created} in the correct column for version ${version.id}`, () => {
-      const date = fixture.debugElement.query(By.css(`#version-row-${version.id} .version-row-element-date`));
+      const date = fixture.debugElement.query(
+        By.css(`#version-row-${version.id} .version-row-element-date`)
+      );
       switch (versionItem.uuid) {
         case item1.uuid:
-          expect(date.nativeElement.textContent.trim()).toEqual('2020-02-01 00:00:00');
+          expect(date.nativeElement.textContent.trim()).toEqual(
+            '2020-02-01 00:00:00'
+          );
           break;
         case item2.uuid:
-          expect(date.nativeElement.textContent.trim()).toEqual('2020-02-02 00:00:00');
+          expect(date.nativeElement.textContent.trim()).toEqual(
+            '2020-02-02 00:00:00'
+          );
           break;
         default:
           throw new Error('Unexpected versionItem');
@@ -209,28 +259,37 @@ describe('ItemVersionsComponent', () => {
     });
 
     it(`should display summary ${version.summary} in the correct column for version ${version.id}`, () => {
-      const summary = fixture.debugElement.query(By.css(`#version-row-${version.id} .version-row-element-summary`));
+      const summary = fixture.debugElement.query(
+        By.css(`#version-row-${version.id} .version-row-element-summary`)
+      );
       expect(summary.nativeElement.textContent).toEqual(version.summary);
     });
   });
 
   describe('when the user can only delete a version', () => {
     beforeAll(waitForAsync(() => {
-      const canDelete = (featureID: FeatureID, url: string ) => of(featureID === FeatureID.CanDeleteVersion);
+      const canDelete = (featureID: FeatureID, url: string) =>
+        of(featureID === FeatureID.CanDeleteVersion);
       authorizationServiceSpy.isAuthorized.and.callFake(canDelete);
     }));
     it('should not disable the delete button', () => {
-      const deleteButtons = fixture.debugElement.queryAll(By.css(`.version-row-element-delete`));
+      const deleteButtons = fixture.debugElement.queryAll(
+        By.css(`.version-row-element-delete`)
+      );
       deleteButtons.forEach((btn) => {
         expect(btn.nativeElement.disabled).toBe(false);
       });
     });
     it('should disable other buttons', () => {
-      const createButtons = fixture.debugElement.queryAll(By.css(`.version-row-element-create`));
+      const createButtons = fixture.debugElement.queryAll(
+        By.css(`.version-row-element-create`)
+      );
       createButtons.forEach((btn) => {
         expect(btn.nativeElement.disabled).toBe(true);
       });
-      const editButtons = fixture.debugElement.queryAll(By.css(`.version-row-element-create`));
+      const editButtons = fixture.debugElement.queryAll(
+        By.css(`.version-row-element-create`)
+      );
       editButtons.forEach((btn) => {
         expect(btn.nativeElement.disabled).toBe(true);
       });
@@ -298,13 +357,16 @@ describe('ItemVersionsComponent', () => {
     let deleteButton;
 
     beforeEach(() => {
-      const canDelete = (featureID: FeatureID, url: string ) => of(featureID === FeatureID.CanDeleteVersion);
+      const canDelete = (featureID: FeatureID, url: string) =>
+        of(featureID === FeatureID.CanDeleteVersion);
       authorizationServiceSpy.isAuthorized.and.callFake(canDelete);
 
       fixture.detectChanges();
 
       // delete the last version in the table (version2 → item2)
-      deleteButton = fixture.debugElement.queryAll(By.css('.version-row-element-delete'))[1].nativeElement;
+      deleteButton = fixture.debugElement.queryAll(
+        By.css('.version-row-element-delete')
+      )[1].nativeElement;
 
       itemDataServiceSpy.delete.calls.reset();
     });

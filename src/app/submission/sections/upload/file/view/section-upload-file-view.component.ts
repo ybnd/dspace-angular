@@ -1,9 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-
+import {
+  MetadataMap,
+  MetadataValue,
+} from '../../../../../core/shared/metadata.models';
+import { Metadata } from '../../../../../core/shared/metadata.utils';
 import { WorkspaceitemSectionUploadFileObject } from '../../../../../core/submission/models/workspaceitem-section-upload-file.model';
 import { isNotEmpty } from '../../../../../shared/empty.util';
-import { Metadata } from '../../../../../core/shared/metadata.utils';
-import { MetadataMap, MetadataValue } from '../../../../../core/shared/metadata.models';
 
 /**
  * This component allow to show bitstream's metadata
@@ -13,7 +15,6 @@ import { MetadataMap, MetadataValue } from '../../../../../core/shared/metadata.
   templateUrl: './section-upload-file-view.component.html',
 })
 export class SubmissionSectionUploadFileViewComponent implements OnInit {
-
   /**
    * The bitstream's metadata data
    * @type {WorkspaceitemSectionUploadFileObject}
@@ -43,8 +44,14 @@ export class SubmissionSectionUploadFileViewComponent implements OnInit {
    */
   ngOnInit() {
     if (isNotEmpty(this.fileData.metadata)) {
-      this.metadata[this.fileTitleKey] = Metadata.all(this.fileData.metadata, 'dc.title');
-      this.metadata[this.fileDescrKey] = Metadata.all(this.fileData.metadata, 'dc.description');
+      this.metadata[this.fileTitleKey] = Metadata.all(
+        this.fileData.metadata,
+        'dc.title'
+      );
+      this.metadata[this.fileDescrKey] = Metadata.all(
+        this.fileData.metadata,
+        'dc.description'
+      );
     }
   }
 

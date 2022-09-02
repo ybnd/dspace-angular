@@ -1,19 +1,27 @@
-import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-
-import { RemoteData } from '../../core/data/remote-data';
-import { PageInfo } from '../../core/shared/page-info.model';
-import { PaginationComponentOptions } from '../pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
-import { ListableObject } from './shared/listable-object.model';
-import { isEmpty } from '../empty.util';
-import { ViewMode } from '../../core/shared/view-mode.model';
-import { CollectionElementLinkType } from './collection-element-link.type';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { PaginatedList } from '../../core/data/paginated-list.model';
+import { RemoteData } from '../../core/data/remote-data';
 import { Context } from '../../core/shared/context.model';
+import { PageInfo } from '../../core/shared/page-info.model';
+import { ViewMode } from '../../core/shared/view-mode.model';
+import { isEmpty } from '../empty.util';
+import { PaginationComponentOptions } from '../pagination/pagination-component-options.model';
+import { CollectionElementLinkType } from './collection-element-link.type';
+import { ListableObject } from './shared/listable-object.model';
 
 /**
  * Component that can render a list of listable objects in different view modes
@@ -49,9 +57,11 @@ export class ObjectCollectionComponent implements OnInit {
    */
   @Input() hideGear = false;
   @Input() selectable = false;
-  @Input() selectionConfig: {repeatable: boolean, listId: string};
-  @Output() deselectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
-  @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Input() selectionConfig: { repeatable: boolean; listId: string };
+  @Output() deselectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
+  @Output() selectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * Emit when one of the collection's object has changed.
@@ -71,7 +81,8 @@ export class ObjectCollectionComponent implements OnInit {
   /**
    * Send an import event to the parent component
    */
-  @Output() importObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() importObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * The link type of the rendered list elements
@@ -114,12 +125,14 @@ export class ObjectCollectionComponent implements OnInit {
    * An event fired when the sort direction is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter<SortDirection>();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter<SortDirection>();
 
   /**
    * An event fired one of the pagination parameters is changed
    */
-  @Output() paginationChange: EventEmitter<SortDirection> = new EventEmitter<any>();
+  @Output() paginationChange: EventEmitter<SortDirection> =
+    new EventEmitter<any>();
 
   /**
    * An event fired when the sort field is changed.
@@ -148,12 +161,12 @@ export class ObjectCollectionComponent implements OnInit {
   viewModeEnum = ViewMode;
 
   ngOnInit(): void {
-    this.currentMode$ = this.route
-      .queryParams
-      .pipe(
-        map((params) => isEmpty(params?.view) ? ViewMode.ListElement : params.view),
-        distinctUntilChanged()
-      );
+    this.currentMode$ = this.route.queryParams.pipe(
+      map((params) =>
+        isEmpty(params?.view) ? ViewMode.ListElement : params.view
+      ),
+      distinctUntilChanged()
+    );
   }
 
   /**
@@ -167,8 +180,8 @@ export class ObjectCollectionComponent implements OnInit {
   constructor(
     private cdRef: ChangeDetectorRef,
     private route: ActivatedRoute,
-    private router: Router) {
-  }
+    private router: Router
+  ) {}
 
   /**
    * Updates the page
@@ -211,14 +224,13 @@ export class ObjectCollectionComponent implements OnInit {
    * Go to the previous page
    */
   goPrev() {
-      this.prev.emit(true);
+    this.prev.emit(true);
   }
 
- /**
-  * Go to the next page
-  */
+  /**
+   * Go to the next page
+   */
   goNext() {
-      this.next.emit(true);
+    this.next.emit(true);
   }
-
 }

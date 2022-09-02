@@ -1,12 +1,16 @@
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpResponse,
+} from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
-
-import { RawRestResponse } from './raw-rest-response.model';
-import { RestRequestMethod } from '../data/rest-request-method';
 import { hasNoValue, hasValue, isNotEmpty } from '../../shared/empty.util';
+import { RestRequestMethod } from '../data/rest-request-method';
 import { DSpaceObject } from '../shared/dspace-object.model';
+import { RawRestResponse } from './raw-rest-response.model';
 
 export const DEFAULT_CONTENT_TYPE = 'application/json; charset=utf-8';
 export interface HttpOptions {
@@ -24,10 +28,7 @@ export interface HttpOptions {
  */
 @Injectable()
 export class DspaceRestService {
-
-  constructor(protected http: HttpClient) {
-
-  }
+  constructor(protected http: HttpClient) {}
 
   /**
    * Performs a request to the REST API with the `get` http method.
@@ -40,22 +41,26 @@ export class DspaceRestService {
   get(absoluteURL: string): Observable<RawRestResponse> {
     const requestOptions = {
       observe: 'response' as any,
-      headers: new HttpHeaders({'Content-Type': DEFAULT_CONTENT_TYPE})
+      headers: new HttpHeaders({ 'Content-Type': DEFAULT_CONTENT_TYPE }),
     };
     return this.http.get(absoluteURL, requestOptions).pipe(
       map((res: HttpResponse<any>) => ({
         payload: res.body,
         statusCode: res.status,
-        statusText: res.statusText
+        statusText: res.statusText,
       })),
       catchError((err) => {
         console.log('Error: ', err);
         return observableThrowError({
           statusCode: err.status,
           statusText: err.statusText,
-          message: (hasValue(err.error) && isNotEmpty(err.error.message)) ? err.error.message : err.message
+          message:
+            hasValue(err.error) && isNotEmpty(err.error.message)
+              ? err.error.message
+              : err.message,
         });
-      }));
+      })
+    );
   }
 
   /**
@@ -74,10 +79,20 @@ export class DspaceRestService {
    * @return {Observable<string>}
    *      An Observable<string> containing the response from the server
    */
-  request(method: RestRequestMethod, url: string, body?: any, options?: HttpOptions, isMultipart?: boolean): Observable<RawRestResponse> {
+  request(
+    method: RestRequestMethod,
+    url: string,
+    body?: any,
+    options?: HttpOptions,
+    isMultipart?: boolean
+  ): Observable<RawRestResponse> {
     const requestOptions: HttpOptions = {};
     requestOptions.body = body;
-    if (method === RestRequestMethod.POST && isNotEmpty(body) && isNotEmpty(body.name)) {
+    if (
+      method === RestRequestMethod.POST &&
+      isNotEmpty(body) &&
+      isNotEmpty(body.name)
+    ) {
       requestOptions.body = this.buildFormData(body);
     }
     requestOptions.observe = 'response';
@@ -102,26 +117,33 @@ export class DspaceRestService {
 
     if (!requestOptions.headers.has('Content-Type') && !isMultipart) {
       // Because HttpHeaders is immutable, the set method returns a new object instead of updating the existing headers
-      requestOptions.headers = requestOptions.headers.set('Content-Type', DEFAULT_CONTENT_TYPE);
+      requestOptions.headers = requestOptions.headers.set(
+        'Content-Type',
+        DEFAULT_CONTENT_TYPE
+      );
     }
     return this.http.request(method, url, requestOptions).pipe(
       map((res) => ({
         payload: res.body,
         headers: res.headers,
         statusCode: res.status,
-        statusText: res.statusText
+        statusText: res.statusText,
       })),
       catchError((err) => {
         if (hasValue(err.status)) {
           return observableThrowError({
             statusCode: err.status,
             statusText: err.statusText,
-            message: (hasValue(err.error) && isNotEmpty(err.error.message)) ? err.error.message : err.message
+            message:
+              hasValue(err.error) && isNotEmpty(err.error.message)
+                ? err.error.message
+                : err.message,
           });
         } else {
           return observableThrowError(err);
         }
-      }));
+      })
+    );
   }
 
   /**
@@ -144,5 +166,4 @@ export class DspaceRestService {
     }
     return form;
   }
-
 }

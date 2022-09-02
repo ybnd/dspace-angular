@@ -1,36 +1,36 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 import { LinkService } from '../../../../core/cache/builders/link.service';
+import { ConfigurationDataService } from '../../../../core/data/configuration-data.service';
+import { FieldChangeType } from '../../../../core/data/object-updates/field-change-type.model';
 import { ObjectUpdatesService } from '../../../../core/data/object-updates/object-updates.service';
+import { RelationshipTypeService } from '../../../../core/data/relationship-type.service';
 import { RelationshipService } from '../../../../core/data/relationship.service';
+import { GroupDataService } from '../../../../core/eperson/group-data.service';
+import { PaginationService } from '../../../../core/pagination/pagination.service';
+import { LinkHeadService } from '../../../../core/services/link-head.service';
+import { ConfigurationProperty } from '../../../../core/shared/configuration-property.model';
 import { ItemType } from '../../../../core/shared/item-relationships/item-type.model';
 import { RelationshipType } from '../../../../core/shared/item-relationships/relationship-type.model';
 import { Relationship } from '../../../../core/shared/item-relationships/relationship.model';
 import { Item } from '../../../../core/shared/item.model';
-import { SelectableListService } from '../../../../shared/object-list/selectable-list/selectable-list.service';
-import { SharedModule } from '../../../../shared/shared.module';
-import { EditRelationshipListComponent } from './edit-relationship-list.component';
-import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
-import { createPaginatedList } from '../../../../shared/testing/utils.test';
-import { PaginationService } from '../../../../core/pagination/pagination.service';
-import { PaginationServiceStub } from '../../../../shared/testing/pagination-service.stub';
-import { HostWindowService } from '../../../../shared/host-window.service';
-import { HostWindowServiceStub } from '../../../../shared/testing/host-window-service.stub';
-import { PaginationComponent } from '../../../../shared/pagination/pagination.component';
-import { PaginationComponentOptions } from '../../../../shared/pagination/pagination-component-options.model';
-import { RelationshipTypeService } from '../../../../core/data/relationship-type.service';
-import { FieldChangeType } from '../../../../core/data/object-updates/field-change-type.model';
-import { GroupDataService } from '../../../../core/eperson/group-data.service';
-import { ConfigurationDataService } from '../../../../core/data/configuration-data.service';
-import { LinkHeadService } from '../../../../core/services/link-head.service';
 import { SearchConfigurationService } from '../../../../core/shared/search/search-configuration.service';
-import { SearchConfigurationServiceStub } from '../../../../shared/testing/search-configuration-service.stub';
-import { ConfigurationProperty } from '../../../../core/shared/configuration-property.model';
-import { Router } from '@angular/router';
+import { HostWindowService } from '../../../../shared/host-window.service';
 import { RouterMock } from '../../../../shared/mocks/router.mock';
+import { SelectableListService } from '../../../../shared/object-list/selectable-list/selectable-list.service';
+import { PaginationComponentOptions } from '../../../../shared/pagination/pagination-component-options.model';
+import { PaginationComponent } from '../../../../shared/pagination/pagination.component';
+import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
+import { SharedModule } from '../../../../shared/shared.module';
+import { HostWindowServiceStub } from '../../../../shared/testing/host-window-service.stub';
+import { PaginationServiceStub } from '../../../../shared/testing/pagination-service.stub';
+import { SearchConfigurationServiceStub } from '../../../../shared/testing/search-configuration-service.stub';
+import { createPaginatedList } from '../../../../shared/testing/utils.test';
+import { EditRelationshipListComponent } from './edit-relationship-list.component';
 
 let comp: EditRelationshipListComponent;
 let fixture: ComponentFixture<EditRelationshipListComponent>;
@@ -58,7 +58,6 @@ let relationshipType;
 let paginationOptions;
 
 describe('EditRelationshipListComponent', () => {
-
   const resetComponent = () => {
     fixture = TestBed.createComponent(EditRelationshipListComponent);
     comp = fixture.componentInstance;
@@ -72,7 +71,6 @@ describe('EditRelationshipListComponent', () => {
   };
 
   beforeEach(waitForAsync(() => {
-
     entityType = Object.assign(new ItemType(), {
       id: 'Publication',
       uuid: 'Publication',
@@ -102,11 +100,11 @@ describe('EditRelationshipListComponent', () => {
 
     author1 = Object.assign(new Item(), {
       id: 'author1',
-      uuid: 'author1'
+      uuid: 'author1',
     });
     author2 = Object.assign(new Item(), {
       id: 'author2',
-      uuid: 'author2'
+      uuid: 'author2',
     });
 
     relationships = [
@@ -125,16 +123,18 @@ describe('EditRelationshipListComponent', () => {
         relationshipType: createSuccessfulRemoteDataObject$(relationshipType),
         leftItem: createSuccessfulRemoteDataObject$(item),
         rightItem: createSuccessfulRemoteDataObject$(author2),
-      })
+      }),
     ];
 
     item = Object.assign(new Item(), {
       _links: {
-        self: { href: 'fake-item-url/publication' }
+        self: { href: 'fake-item-url/publication' },
       },
       id: 'publication',
       uuid: 'publication',
-      relationships: createSuccessfulRemoteDataObject$(createPaginatedList(relationships))
+      relationships: createSuccessfulRemoteDataObject$(
+        createPaginatedList(relationships)
+      ),
     });
 
     fieldUpdate1 = {
@@ -143,7 +143,7 @@ describe('EditRelationshipListComponent', () => {
         relationship: relationships[0],
         type: relationshipType,
       },
-      changeType: undefined
+      changeType: undefined,
     };
     fieldUpdate2 = {
       field: {
@@ -151,25 +151,25 @@ describe('EditRelationshipListComponent', () => {
         relationship: relationships[1],
         type: relationshipType,
       },
-      changeType: FieldChangeType.REMOVE
+      changeType: FieldChangeType.REMOVE,
     };
 
-    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService',
-      {
-        getFieldUpdates: observableOf({
-          [relationships[0].uuid]: fieldUpdate1,
-          [relationships[1].uuid]: fieldUpdate2
-        })
-      }
-    );
+    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService', {
+      getFieldUpdates: observableOf({
+        [relationships[0].uuid]: fieldUpdate1,
+        [relationships[1].uuid]: fieldUpdate2,
+      }),
+    });
 
-    relationshipService = jasmine.createSpyObj('relationshipService',
-      {
-        getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(createPaginatedList([author1, author2])),
-        getItemRelationshipsByLabel: createSuccessfulRemoteDataObject$(createPaginatedList(relationships)),
-        isLeftItem: observableOf(true),
-      }
-    );
+    relationshipService = jasmine.createSpyObj('relationshipService', {
+      getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(
+        createPaginatedList([author1, author2])
+      ),
+      getItemRelationshipsByLabel: createSuccessfulRemoteDataObject$(
+        createPaginatedList(relationships)
+      ),
+      isLeftItem: observableOf(true),
+    });
 
     selectableListService = {};
 
@@ -183,7 +183,7 @@ describe('EditRelationshipListComponent', () => {
     hostWindowService = new HostWindowServiceStub(1200);
 
     const linkHeadService = jasmine.createSpyObj('linkHeadService', {
-      addTag: ''
+      addTag: '',
     });
 
     const groupDataService = jasmine.createSpyObj('groupsDataService', {
@@ -192,14 +192,17 @@ describe('EditRelationshipListComponent', () => {
       getUUIDFromString: '',
     });
 
-    const configurationDataService = jasmine.createSpyObj('configurationDataService', {
-      findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-        name: 'test',
-        values: [
-          'org.dspace.ctask.general.ProfileFormats = test'
-        ]
-      }))
-    });
+    const configurationDataService = jasmine.createSpyObj(
+      'configurationDataService',
+      {
+        findByPropertyName: createSuccessfulRemoteDataObject$(
+          Object.assign(new ConfigurationProperty(), {
+            name: 'test',
+            values: ['org.dspace.ctask.general.ProfileFormats = test'],
+          })
+        ),
+      }
+    );
 
     TestBed.configureTestingModule({
       imports: [SharedModule, TranslateModule.forRoot()],
@@ -215,11 +218,16 @@ describe('EditRelationshipListComponent', () => {
         { provide: GroupDataService, useValue: groupDataService },
         { provide: Router, useValue: new RouterMock() },
         { provide: LinkHeadService, useValue: linkHeadService },
-        { provide: ConfigurationDataService, useValue: configurationDataService },
-        { provide: SearchConfigurationService, useValue: new SearchConfigurationServiceStub() },
-      ], schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationDataService,
+        },
+        {
+          provide: SearchConfigurationService,
+          useValue: new SearchConfigurationServiceStub(),
+        },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     resetComponent();
@@ -250,18 +258,24 @@ describe('EditRelationshipListComponent', () => {
     it('should receive correct collection size', () => {
       expect(paginationComp.collectionSize).toEqual(relationships.length);
     });
-
   });
 
   describe('relationshipService.getItemRelationshipsByLabel', () => {
     it('should receive the correct pagination info', () => {
-      expect(relationshipService.getItemRelationshipsByLabel).toHaveBeenCalledTimes(1);
+      expect(
+        relationshipService.getItemRelationshipsByLabel
+      ).toHaveBeenCalledTimes(1);
 
-      const callArgs = relationshipService.getItemRelationshipsByLabel.calls.mostRecent().args;
+      const callArgs =
+        relationshipService.getItemRelationshipsByLabel.calls.mostRecent().args;
       const findListOptions = callArgs[2];
 
-      expect(findListOptions.elementsPerPage).toEqual(paginationOptions.pageSize);
-      expect(findListOptions.currentPage).toEqual(paginationOptions.currentPage);
+      expect(findListOptions.elementsPerPage).toEqual(
+        paginationOptions.pageSize
+      );
+      expect(findListOptions.currentPage).toEqual(
+        paginationOptions.currentPage
+      );
     });
 
     describe('when the publication is on the left side of the relationship', () => {
@@ -279,9 +293,13 @@ describe('EditRelationshipListComponent', () => {
       });
 
       it('should fetch isAuthorOfPublication', () => {
-        expect(relationshipService.getItemRelationshipsByLabel).toHaveBeenCalledTimes(1);
+        expect(
+          relationshipService.getItemRelationshipsByLabel
+        ).toHaveBeenCalledTimes(1);
 
-        const callArgs = relationshipService.getItemRelationshipsByLabel.calls.mostRecent().args;
+        const callArgs =
+          relationshipService.getItemRelationshipsByLabel.calls.mostRecent()
+            .args;
         const label = callArgs[1];
 
         expect(label).toEqual('isAuthorOfPublication');
@@ -303,19 +321,20 @@ describe('EditRelationshipListComponent', () => {
       });
 
       it('should fetch isAuthorOfPublication', () => {
-        expect(relationshipService.getItemRelationshipsByLabel).toHaveBeenCalledTimes(1);
+        expect(
+          relationshipService.getItemRelationshipsByLabel
+        ).toHaveBeenCalledTimes(1);
 
-        const callArgs = relationshipService.getItemRelationshipsByLabel.calls.mostRecent().args;
+        const callArgs =
+          relationshipService.getItemRelationshipsByLabel.calls.mostRecent()
+            .args;
         const label = callArgs[1];
 
         expect(label).toEqual('isAuthorOfPublication');
       });
     });
 
-
-
     describe('changes managment for add buttons', () => {
-
       it('should show enabled add buttons', () => {
         const element = de.query(By.css('.btn-success'));
         expect(element.nativeElement?.disabled).toBeFalse();
@@ -328,7 +347,5 @@ describe('EditRelationshipListComponent', () => {
         expect(element.nativeElement?.disabled).toBeTrue();
       });
     });
-
   });
-
 });

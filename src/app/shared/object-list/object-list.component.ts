@@ -1,14 +1,24 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation } from '@angular/core';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+} from '@angular/core';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { PaginatedList } from '../../core/data/paginated-list.model';
 import { RemoteData } from '../../core/data/remote-data';
+import { Context } from '../../core/shared/context.model';
+import { ViewMode } from '../../core/shared/view-mode.model';
 import { fadeIn } from '../animations/fade';
+import { CollectionElementLinkType } from '../object-collection/collection-element-link.type';
 import { ListableObject } from '../object-collection/shared/listable-object.model';
 import { PaginationComponentOptions } from '../pagination/pagination-component-options.model';
 import { SelectableListService } from './selectable-list/selectable-list.service';
-import { ViewMode } from '../../core/shared/view-mode.model';
-import { Context } from '../../core/shared/context.model';
-import { CollectionElementLinkType } from '../object-collection/collection-element-link.type';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
@@ -16,7 +26,7 @@ import { CollectionElementLinkType } from '../object-collection/collection-eleme
   selector: 'ds-object-list',
   styleUrls: ['./object-list.component.scss'],
   templateUrl: './object-list.component.html',
-  animations: [fadeIn]
+  animations: [fadeIn],
 })
 export class ObjectListComponent {
   /**
@@ -49,7 +59,7 @@ export class ObjectListComponent {
    */
   @Input() hidePagerWhenSinglePage = true;
   @Input() selectable = false;
-  @Input() selectionConfig: { repeatable: boolean, listId: string };
+  @Input() selectionConfig: { repeatable: boolean; listId: string };
 
   /**
    * The link type of the listable elements
@@ -121,11 +131,11 @@ export class ObjectListComponent {
    * Event's payload equals to the newly selected page.
    */
   @Output() change: EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }> = new EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }>();
 
   /**
@@ -144,21 +154,25 @@ export class ObjectListComponent {
    * An event fired when the sort direction is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter<SortDirection>();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter<SortDirection>();
 
   /**
    * An event fired when on of the pagination parameters changes
    */
   @Output() paginationChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() deselectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() deselectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
-  @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() selectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * Send an import event to the parent component
    */
-  @Output() importObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() importObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * An event fired when the sort field is changed.
@@ -166,8 +180,7 @@ export class ObjectListComponent {
    */
   @Output() sortFieldChange: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(protected selectionService: SelectableListService) {
-  }
+  constructor(protected selectionService: SelectableListService) {}
 
   /**
    * Emits the current page when it changes
@@ -212,13 +225,13 @@ export class ObjectListComponent {
    * Go to the previous page
    */
   goPrev() {
-      this.prev.emit(true);
+    this.prev.emit(true);
   }
 
- /**
-  * Go to the next page
-  */
+  /**
+   * Go to the next page
+   */
   goNext() {
-      this.next.emit(true);
+    this.next.emit(true);
   }
 }

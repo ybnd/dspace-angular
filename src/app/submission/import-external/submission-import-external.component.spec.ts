@@ -1,27 +1,36 @@
 import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, inject, TestBed, waitForAsync } from '@angular/core/testing';
-
-import { getTestScheduler } from 'jasmine-marbles';
-import { TranslateModule } from '@ngx-translate/core';
+import {
+  ComponentFixture,
+  inject,
+  TestBed,
+  waitForAsync,
+} from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
-
-import { SubmissionImportExternalComponent } from './submission-import-external.component';
 import { ExternalSourceService } from '../../core/data/external-source.service';
-import { getMockExternalSourceService } from '../../shared/mocks/external-source.service.mock';
-import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
 import { RouteService } from '../../core/services/route.service';
-import { createPaginatedList, createTestComponent } from '../../shared/testing/utils.test';
-import { RouterStub } from '../../shared/testing/router.stub';
-import { VarDirective } from '../../shared/utils/var.directive';
-import { routeServiceStub } from '../../shared/testing/route-service.stub';
-import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
-import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
-import { createSuccessfulRemoteDataObject, createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
 import { ExternalSourceEntry } from '../../core/shared/external-source-entry.model';
+import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
+import { getMockExternalSourceService } from '../../shared/mocks/external-source.service.mock';
+import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
+import {
+  createSuccessfulRemoteDataObject,
+  createSuccessfulRemoteDataObject$,
+} from '../../shared/remote-data.utils';
+import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
+import { routeServiceStub } from '../../shared/testing/route-service.stub';
+import { RouterStub } from '../../shared/testing/router.stub';
+import {
+  createPaginatedList,
+  createTestComponent,
+} from '../../shared/testing/utils.test';
+import { VarDirective } from '../../shared/utils/var.directive';
 import { SubmissionImportExternalPreviewComponent } from './import-external-preview/submission-import-external-preview.component';
+import { SubmissionImportExternalComponent } from './submission-import-external.component';
 
 describe('SubmissionImportExternalComponent test suite', () => {
   let comp: SubmissionImportExternalComponent;
@@ -29,38 +38,43 @@ describe('SubmissionImportExternalComponent test suite', () => {
   let fixture: ComponentFixture<SubmissionImportExternalComponent>;
   let scheduler: TestScheduler;
   const ngbModal = jasmine.createSpyObj('modal', ['open']);
-  const mockSearchOptions = observableOf(new PaginatedSearchOptions({
-    pagination: Object.assign(new PaginationComponentOptions(), {
-      pageSize: 10,
-      currentPage: 0
-    }),
-    query: 'test'
-  }));
+  const mockSearchOptions = observableOf(
+    new PaginatedSearchOptions({
+      pagination: Object.assign(new PaginationComponentOptions(), {
+        pageSize: 10,
+        currentPage: 0,
+      }),
+      query: 'test',
+    })
+  );
   const searchConfigServiceStub = {
-    paginatedSearchOptions: mockSearchOptions
+    paginatedSearchOptions: mockSearchOptions,
   };
   const mockExternalSourceService: any = getMockExternalSourceService();
 
-  beforeEach(waitForAsync (() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot()
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [
         SubmissionImportExternalComponent,
         TestComponent,
-        VarDirective
+        VarDirective,
       ],
       providers: [
         { provide: ExternalSourceService, useValue: mockExternalSourceService },
-        { provide: SearchConfigurationService, useValue: searchConfigServiceStub },
+        {
+          provide: SearchConfigurationService,
+          useValue: searchConfigServiceStub,
+        },
         { provide: RouteService, useValue: routeServiceStub },
         { provide: Router, useValue: new RouterStub() },
         { provide: NgbModal, useValue: ngbModal },
-        SubmissionImportExternalComponent
+        SubmissionImportExternalComponent,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).compileComponents().then();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .compileComponents()
+      .then();
   }));
 
   // First test to check the correct component creation
@@ -72,7 +86,10 @@ describe('SubmissionImportExternalComponent test suite', () => {
     beforeEach(() => {
       const html = `
         <ds-submission-import-external></ds-submission-import-external>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -80,9 +97,12 @@ describe('SubmissionImportExternalComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionImportExternalComponent', inject([SubmissionImportExternalComponent], (app: SubmissionImportExternalComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create SubmissionImportExternalComponent', inject(
+      [SubmissionImportExternalComponent],
+      (app: SubmissionImportExternalComponent) => {
+        expect(app).toBeDefined();
+      }
+    ));
   });
 
   describe('', () => {
@@ -91,7 +111,9 @@ describe('SubmissionImportExternalComponent test suite', () => {
       comp = fixture.componentInstance;
       compAsAny = comp;
       scheduler = getTestScheduler();
-      mockExternalSourceService.getExternalSourceEntries.and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList([])));
+      mockExternalSourceService.getExternalSourceEntries.and.returnValue(
+        createSuccessfulRemoteDataObject$(createPaginatedList([]))
+      );
     });
 
     afterEach(() => {
@@ -101,52 +123,74 @@ describe('SubmissionImportExternalComponent test suite', () => {
     });
 
     it('Should init component properly (without route data)', () => {
-      const expectedEntries = createSuccessfulRemoteDataObject(createPaginatedList([]));
-      comp.routeData = {entity: '', sourceId: '', query: '' };
-      spyOn(compAsAny.routeService, 'getQueryParameterValue').and.returnValue(observableOf(''));
+      const expectedEntries = createSuccessfulRemoteDataObject(
+        createPaginatedList([])
+      );
+      comp.routeData = { entity: '', sourceId: '', query: '' };
+      spyOn(compAsAny.routeService, 'getQueryParameterValue').and.returnValue(
+        observableOf('')
+      );
       fixture.detectChanges();
 
-      expect(comp.routeData).toEqual({entity: '', sourceId: '', query: '' });
+      expect(comp.routeData).toEqual({ entity: '', sourceId: '', query: '' });
       expect(comp.isLoading$.value).toBe(false);
       expect(comp.entriesRD$.value).toEqual(expectedEntries);
     });
 
     it('Should init component properly (with route data)', () => {
-      comp.routeData = {entity: '', sourceId: '', query: '' };
+      comp.routeData = { entity: '', sourceId: '', query: '' };
       spyOn(compAsAny, 'retrieveExternalSources');
-      spyOn(compAsAny.routeService, 'getQueryParameterValue').and.returnValues(observableOf('entity'), observableOf('source'), observableOf('dummy'));
+      spyOn(compAsAny.routeService, 'getQueryParameterValue').and.returnValues(
+        observableOf('entity'),
+        observableOf('source'),
+        observableOf('dummy')
+      );
       fixture.detectChanges();
 
       expect(compAsAny.retrieveExternalSources).toHaveBeenCalled();
     });
 
-    it('Should call \'getExternalSourceEntries\' properly', () => {
-      spyOn(routeServiceStub, 'getQueryParameterValue').and.callFake((param) => {
-        if (param === 'sourceId') {
-          return observableOf('orcidV2');
-        } else if (param === 'query') {
-          return observableOf('test');
+    it("Should call 'getExternalSourceEntries' properly", () => {
+      spyOn(routeServiceStub, 'getQueryParameterValue').and.callFake(
+        (param) => {
+          if (param === 'sourceId') {
+            return observableOf('orcidV2');
+          } else if (param === 'query') {
+            return observableOf('test');
+          }
+          return observableOf({});
         }
-        return observableOf({});
-      });
+      );
 
       fixture.detectChanges();
 
-
       expect(comp.isLoading$.value).toBe(false);
-      expect(compAsAny.externalService.getExternalSourceEntries).toHaveBeenCalled();
+      expect(
+        compAsAny.externalService.getExternalSourceEntries
+      ).toHaveBeenCalled();
     });
 
-    it('Should call \'router.navigate\'', () => {
-      comp.routeData = {entity: 'Person', sourceId: '', query: '' };
+    it("Should call 'router.navigate'", () => {
+      comp.routeData = { entity: 'Person', sourceId: '', query: '' };
       spyOn(compAsAny, 'retrieveExternalSources').and.callFake(() => null);
-      compAsAny.router.navigate.and.returnValue( new Promise(() => {return;}));
-      const event = {entity: 'Person', sourceId: 'orcidV2', query: 'dummy' };
+      compAsAny.router.navigate.and.returnValue(
+        new Promise(() => {
+          return;
+        })
+      );
+      const event = { entity: 'Person', sourceId: 'orcidV2', query: 'dummy' };
 
       scheduler.schedule(() => comp.getExternalSourceData(event));
       scheduler.flush();
 
-      expect(compAsAny.router.navigate).toHaveBeenCalledWith([], { queryParams: { entity: event.entity, sourceId: event.sourceId, query: event.query }, replaceUrl: true });
+      expect(compAsAny.router.navigate).toHaveBeenCalledWith([], {
+        queryParams: {
+          entity: event.entity,
+          sourceId: event.sourceId,
+          query: event.query,
+        },
+        replaceUrl: true,
+      });
     });
 
     it('Entry should be passed to the component loaded inside the modal', () => {
@@ -157,16 +201,23 @@ describe('SubmissionImportExternalComponent test suite', () => {
         metadata: {
           'dc.identifier.uri': [
             {
-              value: 'https://orcid.org/0001-0001-0001-0001'
-            }
-          ]
-        }
+              value: 'https://orcid.org/0001-0001-0001-0001',
+            },
+          ],
+        },
       });
-      ngbModal.open.and.returnValue({componentInstance: { externalSourceEntry: null}});
+      ngbModal.open.and.returnValue({
+        componentInstance: { externalSourceEntry: null },
+      });
       comp.import(entry);
 
-      expect(compAsAny.modalService.open).toHaveBeenCalledWith(SubmissionImportExternalPreviewComponent, { size: 'lg' });
-      expect(comp.modalRef.componentInstance.externalSourceEntry).toEqual(entry);
+      expect(compAsAny.modalService.open).toHaveBeenCalledWith(
+        SubmissionImportExternalPreviewComponent,
+        { size: 'lg' }
+      );
+      expect(comp.modalRef.componentInstance.externalSourceEntry).toEqual(
+        entry
+      );
     });
 
     it('Should set the correct label', () => {
@@ -176,14 +227,11 @@ describe('SubmissionImportExternalComponent test suite', () => {
       expect(comp.label).toEqual(label);
     });
   });
-
 });
 
 // declare a test component
 @Component({
   selector: 'ds-test-cmp',
-  template: ``
+  template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

@@ -1,13 +1,13 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DSpaceObject } from '../../../core/shared/dspace-object.model';
-import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
 import { Observable } from 'rxjs';
+import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
 import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
+import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 
 @Component({
   selector: 'ds-dso-page-edit-button',
   templateUrl: './dso-page-edit-button.component.html',
-  styleUrls: ['./dso-page-edit-button.component.scss']
+  styleUrls: ['./dso-page-edit-button.component.scss'],
 })
 /**
  * Display a button linking to the edit page of a DSpaceObject
@@ -34,10 +34,12 @@ export class DsoPageEditButtonComponent implements OnInit {
    */
   isAuthorized$: Observable<boolean>;
 
-  constructor(protected authorizationService: AuthorizationDataService) { }
+  constructor(protected authorizationService: AuthorizationDataService) {}
 
   ngOnInit() {
-    this.isAuthorized$ = this.authorizationService.isAuthorized(FeatureID.CanEditMetadata, this.dso.self);
+    this.isAuthorized$ = this.authorizationService.isAuthorized(
+      FeatureID.CanEditMetadata,
+      this.dso.self
+    );
   }
-
 }

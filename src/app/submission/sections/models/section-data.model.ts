@@ -1,12 +1,11 @@
 import { WorkspaceitemSectionDataType } from '../../../core/submission/models/workspaceitem-sections.model';
-import { SectionsType } from '../sections-type';
 import { SubmissionSectionError } from '../../objects/submission-section-error.model';
+import { SectionsType } from '../sections-type';
 
 /**
  * An interface to represent section model
  */
 export interface SectionDataObject {
-
   /**
    * The section configuration url
    */

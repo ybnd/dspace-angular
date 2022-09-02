@@ -1,36 +1,51 @@
 import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import {
   BehaviorSubject,
   combineLatest as observableCombineLatest,
   Observable,
   of as observableOf,
   Subject,
-  Subscription
+  Subscription,
 } from 'rxjs';
-import { distinctUntilChanged, map, switchMap, take, tap } from 'rxjs/operators';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {
+  distinctUntilChanged,
+  map,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
 import { PaginatedList } from '../../../../../core/data/paginated-list.model';
 import { RemoteData } from '../../../../../core/data/remote-data';
-import { hasNoValue, hasValue, isNotEmpty } from '../../../../empty.util';
-import { EmphasizePipe } from '../../../../utils/emphasize.pipe';
-import { FacetValue } from '../../../models/facet-value.model';
-import { SearchFilterConfig } from '../../../models/search-filter-config.model';
-import { SearchService } from '../../../../../core/shared/search/search.service';
+import { getFirstSucceededRemoteData } from '../../../../../core/shared/operators';
+import { SearchConfigurationService } from '../../../../../core/shared/search/search-configuration.service';
 import {
   FILTER_CONFIG,
   IN_PLACE_SEARCH,
-  SearchFilterService
+  SearchFilterService,
 } from '../../../../../core/shared/search/search-filter.service';
-import { SearchConfigurationService } from '../../../../../core/shared/search/search-configuration.service';
-import { getFirstSucceededRemoteData } from '../../../../../core/shared/operators';
-import { InputSuggestion } from '../../../../input-suggestions/input-suggestions.model';
-import { SearchOptions } from '../../../models/search-options.model';
+import { SearchService } from '../../../../../core/shared/search/search.service';
 import { SEARCH_CONFIG_SERVICE } from '../../../../../my-dspace-page/my-dspace-page.component';
-import { currentPath } from '../../../../utils/route.utils';
-import { getFacetValueForType, stripOperatorFromFilterValue } from '../../../search.utils';
+import { hasNoValue, hasValue, isNotEmpty } from '../../../../empty.util';
+import { InputSuggestion } from '../../../../input-suggestions/input-suggestions.model';
 import { createPendingRemoteDataObject } from '../../../../remote-data.utils';
+import { EmphasizePipe } from '../../../../utils/emphasize.pipe';
+import { currentPath } from '../../../../utils/route.utils';
+import { FacetValue } from '../../../models/facet-value.model';
+import { SearchFilterConfig } from '../../../models/search-filter-config.model';
+import { SearchOptions } from '../../../models/search-options.model';
+import {
+  getFacetValueForType,
+  stripOperatorFromFilterValue,
+} from '../../../search.utils';
 
 @Component({
   selector: 'ds-search-facet-filter',
@@ -92,14 +107,16 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
    */
   currentUrl: string;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected rdbs: RemoteDataBuildService,
-              protected router: Router,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
-              @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
-              @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig) {
-  }
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected rdbs: RemoteDataBuildService,
+    protected router: Router,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService,
+    @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
+    @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig
+  ) {}
 
   /**
    * Initializes all observable instance variables and starts listening to them
@@ -110,66 +127,88 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
     this.currentPage = this.getCurrentPage().pipe(distinctUntilChanged());
 
     this.searchOptions$ = this.searchConfigService.searchOptions;
-    this.subs.push(this.searchOptions$.subscribe(() => this.updateFilterValueList()));
-    const facetValues$ = observableCombineLatest(this.searchOptions$, this.currentPage).pipe(
+    this.subs.push(
+      this.searchOptions$.subscribe(() => this.updateFilterValueList())
+    );
+    const facetValues$ = observableCombineLatest(
+      this.searchOptions$,
+      this.currentPage
+    ).pipe(
       map(([options, page]) => {
         return { options, page };
       }),
       switchMap(({ options, page }) => {
-        return this.searchService.getFacetValuesFor(this.filterConfig, page, options)
+        return this.searchService
+          .getFacetValuesFor(this.filterConfig, page, options)
           .pipe(
             getFirstSucceededRemoteData(),
             map((results) => {
-                return {
-                  values: observableOf(results),
-                  page: page
-                };
-              }
-            )
+              return {
+                values: observableOf(results),
+                page: page,
+              };
+            })
           );
       })
     );
 
     let filterValues = [];
-    this.subs.push(facetValues$.subscribe((facetOutcome) => {
-      const newValues$ = facetOutcome.values;
+    this.subs.push(
+      facetValues$.subscribe((facetOutcome) => {
+        const newValues$ = facetOutcome.values;
 
-      if (this.collapseNextUpdate) {
-        this.showFirstPageOnly();
-        facetOutcome.page = 1;
-        this.collapseNextUpdate = false;
-      }
-      if (facetOutcome.page === 1) {
-        filterValues = [];
-      }
+        if (this.collapseNextUpdate) {
+          this.showFirstPageOnly();
+          facetOutcome.page = 1;
+          this.collapseNextUpdate = false;
+        }
+        if (facetOutcome.page === 1) {
+          filterValues = [];
+        }
 
-      filterValues = [...filterValues, newValues$];
+        filterValues = [...filterValues, newValues$];
 
-      this.subs.push(this.rdbs.aggregate(filterValues).pipe(
-        tap((rd: RemoteData<PaginatedList<FacetValue>[]>) => {
-          this.selectedValues$ = this.filterService.getSelectedValuesForFilter(this.filterConfig).pipe(
-            map((selectedValues) => {
-              return selectedValues.map((value: string) => {
-                const fValue = [].concat(...rd.payload.map((page) => page.page)).find((facetValue: FacetValue) => this.getFacetValue(facetValue) === value);
-                if (hasValue(fValue)) {
-                  return fValue;
-                }
-                const filterValue = stripOperatorFromFilterValue(value);
-                return Object.assign(new FacetValue(), { label: filterValue, value: filterValue });
-              });
+        this.subs.push(
+          this.rdbs
+            .aggregate(filterValues)
+            .pipe(
+              tap((rd: RemoteData<PaginatedList<FacetValue>[]>) => {
+                this.selectedValues$ = this.filterService
+                  .getSelectedValuesForFilter(this.filterConfig)
+                  .pipe(
+                    map((selectedValues) => {
+                      return selectedValues.map((value: string) => {
+                        const fValue = []
+                          .concat(...rd.payload.map((page) => page.page))
+                          .find(
+                            (facetValue: FacetValue) =>
+                              this.getFacetValue(facetValue) === value
+                          );
+                        if (hasValue(fValue)) {
+                          return fValue;
+                        }
+                        const filterValue = stripOperatorFromFilterValue(value);
+                        return Object.assign(new FacetValue(), {
+                          label: filterValue,
+                          value: filterValue,
+                        });
+                      });
+                    })
+                  );
+              })
+            )
+            .subscribe((rd: RemoteData<PaginatedList<FacetValue>[]>) => {
+              this.animationState = 'ready';
+              this.filterValues$.next(rd);
             })
-          );
-        })
-      ).subscribe((rd: RemoteData<PaginatedList<FacetValue>[]>) => {
-        this.animationState = 'ready';
-        this.filterValues$.next(rd);
-
-      }));
-      this.subs.push(newValues$.pipe(take(1)).subscribe((rd) => {
-        this.isLastPage$.next(hasNoValue(rd.payload.next));
-      }));
-    }));
-
+        );
+        this.subs.push(
+          newValues$.pipe(take(1)).subscribe((rd) => {
+            this.isLastPage$.next(hasNoValue(rd.payload.next));
+          })
+        );
+      })
+    );
   }
 
   /**
@@ -185,7 +224,10 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
    * Checks if a value for this filter is currently active
    */
   isChecked(value: FacetValue): Observable<boolean> {
-    return this.filterService.isFilterActiveWithValue(this.filterConfig.paramName, value.value);
+    return this.filterService.isFilterActiveWithValue(
+      this.filterConfig.paramName,
+      value.value
+    );
   }
 
   /**
@@ -269,24 +311,24 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
    */
   findSuggestions(data): void {
     if (isNotEmpty(data)) {
-      this.searchOptions$.pipe(take(1)).subscribe(
-        (options) => {
-          this.filterSearchResults = this.searchService.getFacetValuesFor(this.filterConfig, 1, options, data.toLowerCase())
-            .pipe(
-              getFirstSucceededRemoteData(),
-              map(
-                (rd: RemoteData<PaginatedList<FacetValue>>) => {
-                  return rd.payload.page.map((facet) => {
-                    return {
-                      displayValue: this.getDisplayValue(facet, data),
-                      query: this.getFacetValue(facet),
-                      value: stripOperatorFromFilterValue(this.getFacetValue(facet))
-                    };
-                  });
-                }
-              ));
-        }
-      );
+      this.searchOptions$.pipe(take(1)).subscribe((options) => {
+        this.filterSearchResults = this.searchService
+          .getFacetValuesFor(this.filterConfig, 1, options, data.toLowerCase())
+          .pipe(
+            getFirstSucceededRemoteData(),
+            map((rd: RemoteData<PaginatedList<FacetValue>>) => {
+              return rd.payload.page.map((facet) => {
+                return {
+                  displayValue: this.getDisplayValue(facet, data),
+                  query: this.getFacetValue(facet),
+                  value: stripOperatorFromFilterValue(
+                    this.getFacetValue(facet)
+                  ),
+                };
+              });
+            })
+          );
+      });
     } else {
       this.filterSearchResults = observableOf([]);
     }
@@ -301,14 +343,13 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
       this.selectedValues$.pipe(take(1)).subscribe((selectedValues) => {
         if (isNotEmpty(data)) {
           this.router.navigate(this.getSearchLinkParts(), {
-            queryParams:
-              {
-                [this.filterConfig.paramName]: [
-                  ...selectedValues.map((facet) => this.getFacetValue(facet)),
-                  data
-                ]
-              },
-            queryParamsHandling: 'merge'
+            queryParams: {
+              [this.filterConfig.paramName]: [
+                ...selectedValues.map((facet) => this.getFacetValue(facet)),
+                data,
+              ],
+            },
+            queryParamsHandling: 'merge',
           });
           this.filter = '';
         }
@@ -331,7 +372,12 @@ export class SearchFacetFilterComponent implements OnInit, OnDestroy {
    * @returns {string} The facet value with the query part emphasized
    */
   getDisplayValue(facet: FacetValue, query: string): string {
-    return new EmphasizePipe().transform(facet.value, query) + ' (' + facet.count + ')';
+    return (
+      new EmphasizePipe().transform(facet.value, query) +
+      ' (' +
+      facet.count +
+      ')'
+    );
   }
 
   /**

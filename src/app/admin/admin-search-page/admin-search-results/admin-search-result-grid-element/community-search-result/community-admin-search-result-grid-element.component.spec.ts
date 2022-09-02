@@ -1,21 +1,20 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
-import { BitstreamDataService } from '../../../../../core/data/bitstream-data.service';
-import { mockTruncatableService } from '../../../../../shared/mocks/mock-trucatable.service';
-import { SharedModule } from '../../../../../shared/shared.module';
-import { TruncatableService } from '../../../../../shared/truncatable/truncatable.service';
-import { CollectionElementLinkType } from '../../../../../shared/object-collection/collection-element-link.type';
-import { ViewMode } from '../../../../../core/shared/view-mode.model';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { CommunityAdminSearchResultGridElementComponent } from './community-admin-search-result-grid-element.component';
-import { CommunitySearchResult } from '../../../../../shared/object-collection/shared/community-search-result.model';
-import { Community } from '../../../../../core/shared/community.model';
+import { TranslateModule } from '@ngx-translate/core';
 import { getCommunityEditRoute } from '../../../../../community-page/community-page-routing-paths';
 import { LinkService } from '../../../../../core/cache/builders/link.service';
+import { BitstreamDataService } from '../../../../../core/data/bitstream-data.service';
+import { Community } from '../../../../../core/shared/community.model';
+import { ViewMode } from '../../../../../core/shared/view-mode.model';
+import { mockTruncatableService } from '../../../../../shared/mocks/mock-trucatable.service';
+import { CollectionElementLinkType } from '../../../../../shared/object-collection/collection-element-link.type';
+import { CommunitySearchResult } from '../../../../../shared/object-collection/shared/community-search-result.model';
+import { SharedModule } from '../../../../../shared/shared.module';
+import { TruncatableService } from '../../../../../shared/truncatable/truncatable.service';
+import { CommunityAdminSearchResultGridElementComponent } from './community-admin-search-result-grid-element.component';
 
 describe('CommunityAdminSearchResultGridElementComponent', () => {
   let component: CommunityAdminSearchResultGridElementComponent;
@@ -31,7 +30,7 @@ describe('CommunityAdminSearchResultGridElementComponent', () => {
   }
 
   const linkService = jasmine.createSpyObj('linkService', {
-    resolveLink: {}
+    resolveLink: {},
   });
 
   beforeEach(waitForAsync(() => {
@@ -41,21 +40,22 @@ describe('CommunityAdminSearchResultGridElementComponent', () => {
         NoopAnimationsModule,
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([]),
-        SharedModule
+        SharedModule,
       ],
       declarations: [CommunityAdminSearchResultGridElementComponent],
       providers: [
         { provide: TruncatableService, useValue: mockTruncatableService },
         { provide: BitstreamDataService, useValue: {} },
-        { provide: LinkService, useValue: linkService }
+        { provide: LinkService, useValue: linkService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CommunityAdminSearchResultGridElementComponent);
+    fixture = TestBed.createComponent(
+      CommunityAdminSearchResultGridElementComponent
+    );
     component = fixture.componentInstance;
     component.object = searchResult;
     component.linkTypes = CollectionElementLinkType;

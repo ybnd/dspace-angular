@@ -1,5 +1,4 @@
 import * as child from 'child_process';
-
 import { AppConfig } from '../src/config/app-config.interface';
 import { buildAppConfig } from '../src/config/config.server';
 

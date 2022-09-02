@@ -1,52 +1,55 @@
-import { CollectionItemMapperComponent } from './collection-item-mapper.component';
+import { CommonModule } from '@angular/common';
+import { EventEmitter } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
+import { By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SearchFormComponent } from '../../shared/search-form/search-form.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { RouterStub } from '../../shared/testing/router.stub';
-import { SearchServiceStub } from '../../shared/testing/search-service.stub';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
-import { ItemDataService } from '../../core/data/item-data.service';
-import { FormsModule } from '@angular/forms';
-import { Collection } from '../../core/shared/collection.model';
-import { RemoteData } from '../../core/data/remote-data';
-import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
-import { ChangeDetectionStrategy, EventEmitter } from '@angular/core';
-import { HostWindowService } from '../../shared/host-window.service';
-import { HostWindowServiceStub } from '../../shared/testing/host-window-service.stub';
-import { By } from '@angular/platform-browser';
-import { CollectionDataService } from '../../core/data/collection-data.service';
-import { PaginationComponent } from '../../shared/pagination/pagination.component';
-import { EnumKeysPipe } from '../../shared/utils/enum-keys-pipe';
-import { ItemSelectComponent } from '../../shared/object-select/item-select/item-select.component';
-import { ObjectSelectService } from '../../shared/object-select/object-select.service';
-import { ObjectSelectServiceStub } from '../../shared/testing/object-select-service.stub';
-import { VarDirective } from '../../shared/utils/var.directive';
 import { of as observableOf } from 'rxjs';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
+import { CollectionDataService } from '../../core/data/collection-data.service';
+import { ConfigurationDataService } from '../../core/data/configuration-data.service';
+import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
+import { ItemDataService } from '../../core/data/item-data.service';
+import { RemoteData } from '../../core/data/remote-data';
+import { GroupDataService } from '../../core/eperson/group-data.service';
+import { LinkHeadService } from '../../core/services/link-head.service';
 import { RouteService } from '../../core/services/route.service';
-import { ErrorComponent } from '../../shared/error/error.component';
-import { LoadingComponent } from '../../shared/loading/loading.component';
+import { Collection } from '../../core/shared/collection.model';
+import { ConfigurationProperty } from '../../core/shared/configuration-property.model';
 import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
 import { SearchService } from '../../core/shared/search/search.service';
-import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
+import { SEARCH_CONFIG_SERVICE } from '../../my-dspace-page/my-dspace-page.component';
+import { ErrorComponent } from '../../shared/error/error.component';
+import { HostWindowService } from '../../shared/host-window.service';
+import { LoadingComponent } from '../../shared/loading/loading.component';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { ItemSelectComponent } from '../../shared/object-select/item-select/item-select.component';
+import { ObjectSelectService } from '../../shared/object-select/object-select.service';
+import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
+import { PaginationComponent } from '../../shared/pagination/pagination.component';
 import {
   createFailedRemoteDataObject$,
   createSuccessfulRemoteDataObject,
-  createSuccessfulRemoteDataObject$
+  createSuccessfulRemoteDataObject$,
 } from '../../shared/remote-data.utils';
-import { createPaginatedList } from '../../shared/testing/utils.test';
-import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
-import { MyDSpacePageComponent, SEARCH_CONFIG_SERVICE } from '../../my-dspace-page/my-dspace-page.component';
+import { SearchFormComponent } from '../../shared/search-form/search-form.component';
+import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
+import { HostWindowServiceStub } from '../../shared/testing/host-window-service.stub';
+import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
+import { ObjectSelectServiceStub } from '../../shared/testing/object-select-service.stub';
+import { RouterStub } from '../../shared/testing/router.stub';
 import { SearchConfigurationServiceStub } from '../../shared/testing/search-configuration-service.stub';
-import { GroupDataService } from '../../core/eperson/group-data.service';
-import { LinkHeadService } from '../../core/services/link-head.service';
-import { ConfigurationDataService } from '../../core/data/configuration-data.service';
-import { ConfigurationProperty } from '../../core/shared/configuration-property.model';
+import { SearchServiceStub } from '../../shared/testing/search-service.stub';
+import { createPaginatedList } from '../../shared/testing/utils.test';
+import { EnumKeysPipe } from '../../shared/utils/enum-keys-pipe';
+import { VarDirective } from '../../shared/utils/var.directive';
+import { CollectionItemMapperComponent } from './collection-item-mapper.component';
 
 describe('CollectionItemMapperComponent', () => {
   let comp: CollectionItemMapperComponent;
@@ -64,66 +67,68 @@ describe('CollectionItemMapperComponent', () => {
     name: 'test-collection',
     _links: {
       mappedItems: {
-        href: 'https://rest.api/collections/ce41d451-97ed-4a9c-94a1-7de34f16a9f4/mappedItems'
+        href: 'https://rest.api/collections/ce41d451-97ed-4a9c-94a1-7de34f16a9f4/mappedItems',
       },
       self: {
-        href: 'https://rest.api/collections/ce41d451-97ed-4a9c-94a1-7de34f16a9f4'
-      }
-    }
+        href: 'https://rest.api/collections/ce41d451-97ed-4a9c-94a1-7de34f16a9f4',
+      },
+    },
   });
-  const mockCollectionRD: RemoteData<Collection> = createSuccessfulRemoteDataObject(mockCollection);
-  const mockSearchOptions = observableOf(new PaginatedSearchOptions({
-    pagination: Object.assign(new PaginationComponentOptions(), {
-      id: 'search-page-configuration',
-      pageSize: 10,
-      currentPage: 1
-    }),
-    sort: new SortOptions('dc.title', SortDirection.ASC),
-    scope: mockCollection.id
-  }));
+  const mockCollectionRD: RemoteData<Collection> =
+    createSuccessfulRemoteDataObject(mockCollection);
+  const mockSearchOptions = observableOf(
+    new PaginatedSearchOptions({
+      pagination: Object.assign(new PaginationComponentOptions(), {
+        id: 'search-page-configuration',
+        pageSize: 10,
+        currentPage: 1,
+      }),
+      sort: new SortOptions('dc.title', SortDirection.ASC),
+      scope: mockCollection.id,
+    })
+  );
   const url = 'http://test.url';
   const urlWithParam = url + '?param=value';
   const routerStub = Object.assign(new RouterStub(), {
     url: urlWithParam,
     navigateByUrl: {},
-    navigate: {}
+    navigate: {},
   });
   const searchConfigServiceStub = {
-    paginatedSearchOptions: mockSearchOptions
+    paginatedSearchOptions: mockSearchOptions,
   };
   const emptyList = createSuccessfulRemoteDataObject(createPaginatedList([]));
   const itemDataServiceStub = {
     mapToCollection: () => createSuccessfulRemoteDataObject$({}),
-    findAllByHref: () => observableOf(emptyList)
+    findAllByHref: () => observableOf(emptyList),
   };
   const activatedRouteStub = {
     parent: {
       data: observableOf({
-        dso: mockCollectionRD
-      })
+        dso: mockCollectionRD,
+      }),
     },
     snapshot: {
-      queryParamMap: new Map([
-        ['query', 'test'],
-      ])
-    }
+      queryParamMap: new Map([['query', 'test']]),
+    },
   };
   const translateServiceStub = {
-    get: () => observableOf('test-message of collection ' + mockCollection.name),
+    get: () =>
+      observableOf('test-message of collection ' + mockCollection.name),
     onLangChange: new EventEmitter(),
     onTranslationChange: new EventEmitter(),
-    onDefaultLangChange: new EventEmitter()
+    onDefaultLangChange: new EventEmitter(),
   };
   const searchServiceStub = Object.assign(new SearchServiceStub(), {
     search: () => observableOf(emptyList),
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    clearDiscoveryRequests: () => {}
+    clearDiscoveryRequests: () => {},
     /* eslint-enable no-empty,@typescript-eslint/no-empty-function */
   });
   const collectionDataServiceStub = {
     getMappedItems: () => observableOf(emptyList),
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    clearMappedItemsRequests: () => {}
+    clearMappedItemsRequests: () => {},
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
   };
   const routeServiceStub = {
@@ -135,20 +140,23 @@ describe('CollectionItemMapperComponent', () => {
     },
     getQueryParamsWithPrefix: () => {
       return observableOf('');
-    }
+    },
   };
   const fixedFilterServiceStub = {
     getQueryByFilterName: () => {
       return observableOf('');
-    }
+    },
   };
 
-  const authorizationDataService = jasmine.createSpyObj('authorizationDataService', {
-    isAuthorized: observableOf(true)
-  });
+  const authorizationDataService = jasmine.createSpyObj(
+    'authorizationDataService',
+    {
+      isAuthorized: observableOf(true),
+    }
+  );
 
   const linkHeadService = jasmine.createSpyObj('linkHeadService', {
-    addTag: ''
+    addTag: '',
   });
 
   const groupDataService = jasmine.createSpyObj('groupsDataService', {
@@ -157,45 +165,81 @@ describe('CollectionItemMapperComponent', () => {
     getUUIDFromString: '',
   });
 
-  const configurationDataService = jasmine.createSpyObj('configurationDataService', {
-    findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-      name: 'test',
-      values: [
-        'org.dspace.ctask.general.ProfileFormats = test'
-      ]
-    }))
-  });
+  const configurationDataService = jasmine.createSpyObj(
+    'configurationDataService',
+    {
+      findByPropertyName: createSuccessfulRemoteDataObject$(
+        Object.assign(new ConfigurationProperty(), {
+          name: 'test',
+          values: ['org.dspace.ctask.general.ProfileFormats = test'],
+        })
+      ),
+    }
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-      declarations: [CollectionItemMapperComponent, ItemSelectComponent, SearchFormComponent, PaginationComponent, EnumKeysPipe, VarDirective, ErrorComponent, LoadingComponent],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
+      declarations: [
+        CollectionItemMapperComponent,
+        ItemSelectComponent,
+        SearchFormComponent,
+        PaginationComponent,
+        EnumKeysPipe,
+        VarDirective,
+        ErrorComponent,
+        LoadingComponent,
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: routerStub },
-        { provide: SearchConfigurationService, useValue: searchConfigServiceStub },
+        {
+          provide: SearchConfigurationService,
+          useValue: searchConfigServiceStub,
+        },
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: ItemDataService, useValue: itemDataServiceStub },
         { provide: CollectionDataService, useValue: collectionDataServiceStub },
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
-        { provide: ObjectSelectService, useValue: new ObjectSelectServiceStub() },
+        {
+          provide: ObjectSelectService,
+          useValue: new ObjectSelectServiceStub(),
+        },
         { provide: RouteService, useValue: routeServiceStub },
-        { provide: AuthorizationDataService, useValue: authorizationDataService },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
         { provide: GroupDataService, useValue: groupDataService },
         { provide: LinkHeadService, useValue: linkHeadService },
-        { provide: ConfigurationDataService, useValue: configurationDataService },
-      ]
-    }).overrideComponent(CollectionItemMapperComponent, {
-      set: {
-        providers: [
-          {
-            provide: SEARCH_CONFIG_SERVICE,
-            useClass: SearchConfigurationServiceStub
-          }
-        ] }
-    }).compileComponents();
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationDataService,
+        },
+      ],
+    })
+      .overrideComponent(CollectionItemMapperComponent, {
+        set: {
+          providers: [
+            {
+              provide: SEARCH_CONFIG_SERVICE,
+              useClass: SearchConfigurationServiceStub,
+            },
+          ],
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -211,7 +255,9 @@ describe('CollectionItemMapperComponent', () => {
   });
 
   it('should display the correct collection name', () => {
-    const name: HTMLElement = fixture.debugElement.query(By.css('#collection-name')).nativeElement;
+    const name: HTMLElement = fixture.debugElement.query(
+      By.css('#collection-name')
+    ).nativeElement;
     expect(name.innerHTML).toContain(mockCollection.name);
   });
 
@@ -225,7 +271,9 @@ describe('CollectionItemMapperComponent', () => {
     });
 
     it('should display an error message if at least one mapping was unsuccessful', () => {
-      spyOn(itemDataService, 'mapToCollection').and.returnValue(createFailedRemoteDataObject$('Not Found', 404));
+      spyOn(itemDataService, 'mapToCollection').and.returnValue(
+        createFailedRemoteDataObject$('Not Found', 404)
+      );
       comp.mapItems(ids);
       expect(notificationsService.success).not.toHaveBeenCalled();
       expect(notificationsService.error).toHaveBeenCalled();
@@ -265,8 +313,10 @@ describe('CollectionItemMapperComponent', () => {
     });
 
     it('should navigate to the collection page', () => {
-      expect(router.navigate).toHaveBeenCalledWith(['/collections/', mockCollection.id]);
+      expect(router.navigate).toHaveBeenCalledWith([
+        '/collections/',
+        mockCollection.id,
+      ]);
     });
   });
-
 });

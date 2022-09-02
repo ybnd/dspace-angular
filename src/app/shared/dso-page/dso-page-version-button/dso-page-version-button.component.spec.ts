@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { DsoPageVersionButtonComponent } from './dso-page-version-button.component';
-import { Item } from '../../../core/shared/item.model';
-import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
-import { Observable, of, of as observableOf } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { Observable, of as observableOf, of } from 'rxjs';
+import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
+import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
 import { VersionHistoryDataService } from '../../../core/data/version-history-data.service';
+import { Item } from '../../../core/shared/item.model';
+import { DsoPageVersionButtonComponent } from './dso-page-version-button.component';
 
 describe('DsoPageVersionButtonComponent', () => {
   let component: DsoPageVersionButtonComponent;
@@ -20,10 +20,18 @@ describe('DsoPageVersionButtonComponent', () => {
   let dso: Item;
   let tooltipMsg: Observable<string>;
 
-  const authorizationServiceSpy = jasmine.createSpyObj('authorizationService', ['isAuthorized']);
+  const authorizationServiceSpy = jasmine.createSpyObj('authorizationService', [
+    'isAuthorized',
+  ]);
 
-  const versionHistoryServiceSpy = jasmine.createSpyObj('versionHistoryService',
-    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$', 'hasDraftVersion$']
+  const versionHistoryServiceSpy = jasmine.createSpyObj(
+    'versionHistoryService',
+    [
+      'getVersions',
+      'getLatestVersionFromHistory$',
+      'isLatest$',
+      'hasDraftVersion$',
+    ]
   );
 
   beforeEach(waitForAsync(() => {
@@ -38,17 +46,29 @@ describe('DsoPageVersionButtonComponent', () => {
 
     TestBed.configureTestingModule({
       declarations: [DsoPageVersionButtonComponent],
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NgbModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NgbModule,
+      ],
       providers: [
-        { provide: AuthorizationDataService, useValue: authorizationServiceSpy },
-        { provide: VersionHistoryDataService, useValue: versionHistoryServiceSpy },
-      ]
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationServiceSpy,
+        },
+        {
+          provide: VersionHistoryDataService,
+          useValue: versionHistoryServiceSpy,
+        },
+      ],
     }).compileComponents();
 
     authorizationService = TestBed.inject(AuthorizationDataService);
     versionHistoryService = TestBed.inject(VersionHistoryDataService);
 
-    versionHistoryServiceSpy.hasDraftVersion$.and.returnValue(observableOf(true));
+    versionHistoryServiceSpy.hasDraftVersion$.and.returnValue(
+      observableOf(true)
+    );
   }));
 
   beforeEach(() => {
@@ -60,11 +80,16 @@ describe('DsoPageVersionButtonComponent', () => {
   });
 
   it('should check the authorization of the current user', () => {
-    expect(authorizationService.isAuthorized).toHaveBeenCalledWith(FeatureID.CanCreateVersion, dso.self);
+    expect(authorizationService.isAuthorized).toHaveBeenCalledWith(
+      FeatureID.CanCreateVersion,
+      dso.self
+    );
   });
 
   it('should check if the item has a draft version', () => {
-    expect(versionHistoryServiceSpy.hasDraftVersion$).toHaveBeenCalledWith(dso._links.version.href);
+    expect(versionHistoryServiceSpy.hasDraftVersion$).toHaveBeenCalledWith(
+      dso._links.version.href
+    );
   });
 
   describe('when the user is authorized', () => {
@@ -92,5 +117,4 @@ describe('DsoPageVersionButtonComponent', () => {
       expect(button).toBeNull();
     });
   });
-
 });

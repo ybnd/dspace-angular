@@ -1,22 +1,22 @@
-import { filter, map } from 'rxjs/operators';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-
 import { BehaviorSubject, Observable } from 'rxjs';
-
-import { ItemPageComponent } from '../simple/item-page.component';
-import { MetadataMap } from '../../core/shared/metadata.models';
+import { filter, map } from 'rxjs/operators';
+import { AuthService } from '../../core/auth/auth.service';
+import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 import { ItemDataService } from '../../core/data/item-data.service';
-
 import { RemoteData } from '../../core/data/remote-data';
 import { Item } from '../../core/shared/item.model';
-
+import { MetadataMap } from '../../core/shared/metadata.models';
 import { fadeInOut } from '../../shared/animations/fade';
 import { hasValue } from '../../shared/empty.util';
-import { AuthService } from '../../core/auth/auth.service';
-import { Location } from '@angular/common';
-import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
-
+import { ItemPageComponent } from '../simple/item-page.component';
 
 /**
  * This component renders a full item page.
@@ -28,10 +28,12 @@ import { AuthorizationDataService } from '../../core/data/feature-authorization/
   styleUrls: ['./full-item-page.component.scss'],
   templateUrl: './full-item-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [fadeInOut]
+  animations: [fadeInOut],
 })
-export class FullItemPageComponent extends ItemPageComponent implements OnInit, OnDestroy {
-
+export class FullItemPageComponent
+  extends ItemPageComponent
+  implements OnInit, OnDestroy
+{
   itemRD$: BehaviorSubject<RemoteData<Item>>;
 
   metadata$: Observable<MetadataMap>;
@@ -43,12 +45,14 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
 
   subs = [];
 
-  constructor(protected route: ActivatedRoute,
-              router: Router,
-              items: ItemDataService,
-              authService: AuthService,
-              authorizationService: AuthorizationDataService,
-              private _location: Location) {
+  constructor(
+    protected route: ActivatedRoute,
+    router: Router,
+    items: ItemDataService,
+    authService: AuthService,
+    authorizationService: AuthorizationDataService,
+    private _location: Location
+  ) {
     super(route, router, items, authService, authorizationService);
   }
 
@@ -58,9 +62,11 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
     this.metadata$ = this.itemRD$.pipe(
       map((rd: RemoteData<Item>) => rd.payload),
       filter((item: Item) => hasValue(item)),
-      map((item: Item) => item.metadata),);
+      map((item: Item) => item.metadata)
+    );
 
-    this.subs.push(this.route.data.subscribe((data: Data) => {
+    this.subs.push(
+      this.route.data.subscribe((data: Data) => {
         this.fromSubmissionObject = hasValue(data.wfi) || hasValue(data.wsi);
       })
     );
@@ -74,6 +80,8 @@ export class FullItemPageComponent extends ItemPageComponent implements OnInit, 
   }
 
   ngOnDestroy() {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
 }

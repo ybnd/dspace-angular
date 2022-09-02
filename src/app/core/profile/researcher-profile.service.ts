@@ -2,32 +2,37 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Store } from '@ngrx/store';
 import { Operation, ReplaceOperation } from 'fast-json-patch';
 import { Observable } from 'rxjs';
 import { find, map } from 'rxjs/operators';
+import { hasValue, isEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { createFailedRemoteDataObject$ } from '../../shared/remote-data.utils';
+import {
+  followLink,
+  FollowLinkConfig,
+} from '../../shared/utils/follow-link-config.model';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
 import { DataService } from '../data/data.service';
 import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
 import { ItemDataService } from '../data/item-data.service';
 import { RemoteData } from '../data/remote-data';
+import { PostRequest } from '../data/request.models';
 import { RequestService } from '../data/request.service';
+import { HttpOptions } from '../dspace-rest/dspace-rest.service';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { Item } from '../shared/item.model';
 import { NoContent } from '../shared/NoContent.model';
-import { getAllCompletedRemoteData, getFirstCompletedRemoteData } from '../shared/operators';
+import {
+  getAllCompletedRemoteData,
+  getFirstCompletedRemoteData,
+} from '../shared/operators';
 import { ResearcherProfile } from './model/researcher-profile.model';
 import { RESEARCHER_PROFILE } from './model/researcher-profile.resource-type';
-import { HttpOptions } from '../dspace-rest/dspace-rest.service';
-import { PostRequest } from '../data/request.models';
-import { hasValue, isEmpty } from '../../shared/empty.util';
-import { CoreState } from '../core-state.model';
-import { followLink, FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
-import { Item } from '../shared/item.model';
-import { createFailedRemoteDataObject$ } from '../../shared/remote-data.utils';
 
 /**
  * A private DataService implementation to delegate specific methods to.
@@ -43,10 +48,10 @@ class ResearcherProfileServiceImpl extends DataService<ResearcherProfile> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ResearcherProfile>) {
+    protected comparator: DefaultChangeAnalyzer<ResearcherProfile>
+  ) {
     super();
   }
-
 }
 
 /**
@@ -55,7 +60,6 @@ class ResearcherProfileServiceImpl extends DataService<ResearcherProfile> {
 @Injectable()
 @dataService(RESEARCHER_PROFILE)
 export class ResearcherProfileService {
-
   protected dataService: ResearcherProfileServiceImpl;
 
   protected responseMsToLive: number = 10 * 1000;
@@ -69,11 +73,18 @@ export class ResearcherProfileService {
     protected http: HttpClient,
     protected router: Router,
     protected comparator: DefaultChangeAnalyzer<ResearcherProfile>,
-    protected itemService: ItemDataService) {
-
-    this.dataService = new ResearcherProfileServiceImpl(requestService, rdbService, null, objectCache, halService,
-      notificationsService, http, comparator);
-
+    protected itemService: ItemDataService
+  ) {
+    this.dataService = new ResearcherProfileServiceImpl(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
@@ -87,10 +98,20 @@ export class ResearcherProfileService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public findById(uuid: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResearcherProfile>[]): Observable<RemoteData<ResearcherProfile>> {
-    return this.dataService.findById(uuid, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow).pipe(
-      getAllCompletedRemoteData(),
-    );
+  public findById(
+    uuid: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResearcherProfile>[]
+  ): Observable<RemoteData<ResearcherProfile>> {
+    return this.dataService
+      .findById(
+        uuid,
+        useCachedVersionIfAvailable,
+        reRequestOnStale,
+        ...linksToFollow
+      )
+      .pipe(getAllCompletedRemoteData());
   }
 
   /**
@@ -117,7 +138,9 @@ export class ResearcherProfileService {
    *
    * @param item
    */
-  public findByRelatedItem(item: Item): Observable<RemoteData<ResearcherProfile>> {
+  public findByRelatedItem(
+    item: Item
+  ): Observable<RemoteData<ResearcherProfile>> {
     const profileId = item.firstMetadata('dspace.object.owner')?.authority;
     if (isEmpty(profileId)) {
       return createFailedRemoteDataObject$();
@@ -131,11 +154,17 @@ export class ResearcherProfileService {
    *
    * @param researcherProfile the profile to find for
    */
-  public findRelatedItemId(researcherProfile: ResearcherProfile): Observable<string> {
-    const relatedItem$ = researcherProfile.item ? researcherProfile.item : this.itemService.findByHref(researcherProfile._links.item.href, false);
+  public findRelatedItemId(
+    researcherProfile: ResearcherProfile
+  ): Observable<string> {
+    const relatedItem$ = researcherProfile.item
+      ? researcherProfile.item
+      : this.itemService.findByHref(researcherProfile._links.item.href, false);
     return relatedItem$.pipe(
       getFirstCompletedRemoteData(),
-      map((itemRD: RemoteData<Item>) => (itemRD.hasSucceeded && itemRD.payload) ? itemRD.payload.id : null)
+      map((itemRD: RemoteData<Item>) =>
+        itemRD.hasSucceeded && itemRD.payload ? itemRD.payload.id : null
+      )
     );
   }
 
@@ -145,11 +174,14 @@ export class ResearcherProfileService {
    * @param researcherProfile the profile to update
    * @param visible the visibility value to set
    */
-  public setVisibility(researcherProfile: ResearcherProfile, visible: boolean): Observable<RemoteData<ResearcherProfile>> {
+  public setVisibility(
+    researcherProfile: ResearcherProfile,
+    visible: boolean
+  ): Observable<RemoteData<ResearcherProfile>> {
     const replaceOperation: ReplaceOperation<boolean> = {
       path: '/visible',
       op: 'replace',
-      value: visible
+      value: visible,
     };
 
     return this.dataService.patch(researcherProfile, [replaceOperation]);
@@ -159,7 +191,9 @@ export class ResearcherProfileService {
    * Creates a researcher profile starting from an external source URI
    * @param sourceUri URI of source item of researcher profile.
    */
-  public createFromExternalSource(sourceUri: string): Observable<RemoteData<ResearcherProfile>> {
+  public createFromExternalSource(
+    sourceUri: string
+  ): Observable<RemoteData<ResearcherProfile>> {
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'text/uri-list');
@@ -168,13 +202,22 @@ export class ResearcherProfileService {
     const requestId = this.requestService.generateRequestId();
     const href$ = this.halService.getEndpoint(this.dataService.getLinkPath());
 
-    href$.pipe(
-      find((href: string) => hasValue(href)),
-      map((href: string) => this.dataService.buildHrefWithParams(href, [], followLink('item')))
-    ).subscribe((endpoint: string) => {
-      const request = new PostRequest(requestId, endpoint, sourceUri, options);
-      this.requestService.send(request);
-    });
+    href$
+      .pipe(
+        find((href: string) => hasValue(href)),
+        map((href: string) =>
+          this.dataService.buildHrefWithParams(href, [], followLink('item'))
+        )
+      )
+      .subscribe((endpoint: string) => {
+        const request = new PostRequest(
+          requestId,
+          endpoint,
+          sourceUri,
+          options
+        );
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId, followLink('item'));
   }
@@ -185,10 +228,10 @@ export class ResearcherProfileService {
    * @param researcherProfile
    * @param operations
    */
-  public updateByOrcidOperations(researcherProfile: ResearcherProfile, operations: Operation[]): Observable<RemoteData<ResearcherProfile>> {
+  public updateByOrcidOperations(
+    researcherProfile: ResearcherProfile,
+    operations: Operation[]
+  ): Observable<RemoteData<ResearcherProfile>> {
     return this.dataService.patch(researcherProfile, operations);
   }
-
-
-
 }

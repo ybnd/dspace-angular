@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-
 import { Subscription } from 'rxjs';
-
-import { SearchEvent } from '../eperson-group-list.component';
 import { isNotNull } from '../../../../empty.util';
+import { SearchEvent } from '../eperson-group-list.component';
 
 /**
  * A component used to show a search box for groups.
@@ -14,7 +12,6 @@ import { isNotNull } from '../../../../empty.util';
   templateUrl: './group-search-box.component.html',
 })
 export class GroupSearchBoxComponent {
-
   labelPrefix = 'admin.access-control.groups.';
 
   /**
@@ -34,18 +31,18 @@ export class GroupSearchBoxComponent {
   @Output() search: EventEmitter<SearchEvent> = new EventEmitter<SearchEvent>();
 
   constructor(private formBuilder: FormBuilder) {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       query: '',
-    }));
+    });
   }
 
   /**
    * Reset the search form
    */
   reset() {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       query: '',
-    }));
+    });
   }
 
   /**
@@ -55,7 +52,7 @@ export class GroupSearchBoxComponent {
   submit(data: any) {
     const event: SearchEvent = {
       scope: '',
-      query: isNotNull(data) ? data.query : ''
+      query: isNotNull(data) ? data.query : '',
     };
     this.search.emit(event);
   }

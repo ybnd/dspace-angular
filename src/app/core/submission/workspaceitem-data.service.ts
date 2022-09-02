@@ -1,22 +1,21 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { RequestParam } from '../cache/models/request-param.model';
+import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
 import { DataService } from '../data/data.service';
+import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
+import { FindListOptions } from '../data/find-list-options.model';
+import { RemoteData } from '../data/remote-data';
 import { RequestService } from '../data/request.service';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
 import { WorkspaceItem } from './models/workspaceitem.model';
-import { Observable } from 'rxjs';
-import { RemoteData } from '../data/remote-data';
-import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
-import { RequestParam } from '../cache/models/request-param.model';
-import { CoreState } from '../core-state.model';
-import { FindListOptions } from '../data/find-list-options.model';
 
 /**
  * A service that provides methods to make REST requests with workspaceitems endpoint.
@@ -35,7 +34,8 @@ export class WorkspaceitemDataService extends DataService<WorkspaceItem> {
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
     protected objectCache: ObjectCacheService,
-    protected store: Store<CoreState>) {
+    protected store: Store<CoreState>
+  ) {
     super();
   }
 
@@ -50,11 +50,27 @@ export class WorkspaceitemDataService extends DataService<WorkspaceItem> {
    * @param options        The {@link FindListOptions} object
    * @param linksToFollow  List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public findByItem(uuid: string, useCachedVersionIfAvailable = false, reRequestOnStale = true, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]): Observable<RemoteData<WorkspaceItem>> {
+  public findByItem(
+    uuid: string,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]
+  ): Observable<RemoteData<WorkspaceItem>> {
     const findListOptions = new FindListOptions();
-    findListOptions.searchParams = [new RequestParam('uuid', encodeURIComponent(uuid))];
-    const href$ = this.getSearchByHref(this.searchByItemLinkPath, findListOptions, ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    findListOptions.searchParams = [
+      new RequestParam('uuid', encodeURIComponent(uuid)),
+    ];
+    const href$ = this.getSearchByHref(
+      this.searchByItemLinkPath,
+      findListOptions,
+      ...linksToFollow
+    );
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
-
 }

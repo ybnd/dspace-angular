@@ -15,5 +15,4 @@ import { EagerThemeModule as DSpaceEagerThemeModule } from './dspace/eager-theme
     // CustomEagerThemeModule,
   ],
 })
-export class EagerThemesModule {
-}
+export class EagerThemesModule {}

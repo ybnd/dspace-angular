@@ -1,7 +1,10 @@
 import * as deepFreeze from 'deep-freeze';
-
+import {
+  SidebarCollapseAction,
+  SidebarExpandAction,
+  SidebarToggleAction,
+} from './sidebar.actions';
 import { sidebarReducer } from './sidebar.reducer';
-import { SidebarCollapseAction, SidebarExpandAction, SidebarToggleAction } from './sidebar.actions';
 
 class NullAction extends SidebarCollapseAction {
   type = null;
@@ -12,7 +15,6 @@ class NullAction extends SidebarCollapseAction {
 }
 
 describe('sidebarReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = { sidebarCollapsed: false };
     const action = new NullAction();
@@ -82,5 +84,4 @@ describe('sidebarReducer', () => {
     const action = new SidebarToggleAction();
     sidebarReducer(state, action);
   });
-
 });

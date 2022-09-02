@@ -1,14 +1,14 @@
-import { Observable } from 'rxjs';
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import { UUIDIndexEffects } from './index.effects';
+import { provideMockStore } from '@ngrx/store/testing';
 import { cold, hot } from 'jasmine-marbles';
+import { Observable } from 'rxjs';
+import { NoOpAction } from '../../shared/ngrx/no-op.action';
 import { AddToObjectCacheAction } from '../cache/object-cache.actions';
 import { Item } from '../shared/item.model';
-import { AddToIndexAction } from './index.actions';
-import { provideMockStore } from '@ngrx/store/testing';
-import { NoOpAction } from '../../shared/ngrx/no-op.action';
 import { IndexName } from './index-name.model';
+import { AddToIndexAction } from './index.actions';
+import { UUIDIndexEffects } from './index.effects';
 
 describe('ObjectUpdatesEffects', () => {
   let indexEffects: UUIDIndexEffects;
@@ -30,8 +30,8 @@ describe('ObjectUpdatesEffects', () => {
       uuid: '3601eaed-8fdb-487f-8b89-4d7647314143',
       _links: {
         self: { href: selfLink },
-        anotherLink: { href: otherLink }
-      }
+        anotherLink: { href: otherLink },
+      },
     };
     timeCompleted = new Date().getDate();
     msToLive = 90000;
@@ -41,10 +41,10 @@ describe('ObjectUpdatesEffects', () => {
       core: {
         index: {
           [IndexName.REQUEST]: {
-            [selfLink]: requestUUID
-          }
-        }
-      }
+            [selfLink]: requestUUID,
+          },
+        },
+      },
     };
   }
 
@@ -66,7 +66,13 @@ describe('ObjectUpdatesEffects', () => {
   describe('addAlternativeObjectLink$', () => {
     let action;
     it('should emit a new ADD_TO_INDEX action when a AddToObjectCacheAction with alternativeLink is dispatched', () => {
-      action = new AddToObjectCacheAction(objectToCache, timeCompleted, msToLive, requestUUID, alternativeLink);
+      action = new AddToObjectCacheAction(
+        objectToCache,
+        timeCompleted,
+        msToLive,
+        requestUUID,
+        alternativeLink
+      );
       const newAction = new AddToIndexAction(
         IndexName.ALTERNATIVE_OBJECT_LINK,
         alternativeLink,
@@ -78,14 +84,26 @@ describe('ObjectUpdatesEffects', () => {
     });
 
     it('should emit NO_ACTION when a AddToObjectCacheAction without an alternativeLink is dispatched', () => {
-      action = new AddToObjectCacheAction(objectToCache, timeCompleted, msToLive, requestUUID, undefined);
+      action = new AddToObjectCacheAction(
+        objectToCache,
+        timeCompleted,
+        msToLive,
+        requestUUID,
+        undefined
+      );
       actions = hot('--a-', { a: action });
       const expected = cold('--b-', { b: new NoOpAction() });
       expect(indexEffects.addAlternativeObjectLink$).toBeObservable(expected);
     });
 
-    it('should emit NO_ACTION when a AddToObjectCacheAction with an alternativeLink that\'s the same as the objectToCache\'s selfLink is dispatched', () => {
-      action = new AddToObjectCacheAction(objectToCache, timeCompleted, msToLive, requestUUID, objectToCache._links.self.href);
+    it("should emit NO_ACTION when a AddToObjectCacheAction with an alternativeLink that's the same as the objectToCache's selfLink is dispatched", () => {
+      action = new AddToObjectCacheAction(
+        objectToCache,
+        timeCompleted,
+        msToLive,
+        requestUUID,
+        objectToCache._links.self.href
+      );
       actions = hot('--a-', { a: action });
       const expected = cold('--b-', { b: new NoOpAction() });
       expect(indexEffects.addAlternativeObjectLink$).toBeObservable(expected);

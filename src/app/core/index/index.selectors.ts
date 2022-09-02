@@ -1,11 +1,11 @@
 import { createSelector, MemoizedSelector } from '@ngrx/store';
+import * as parse from 'url-parse';
 import { hasValue, isNotEmpty } from '../../shared/empty.util';
+import { CoreState } from '../core-state.model';
 import { coreSelector } from '../core.selectors';
 import { URLCombiner } from '../url-combiner/url-combiner';
-import { IndexState, MetaIndexState } from './index.reducer';
-import * as parse from 'url-parse';
 import { IndexName } from './index-name.model';
-import { CoreState } from '../core-state.model';
+import { IndexState, MetaIndexState } from './index.reducer';
 
 /**
  * Return the given url without `embed` params.
@@ -23,9 +23,13 @@ export const getUrlWithoutEmbedParams = (url: string): string => {
   if (isNotEmpty(url)) {
     const parsed = parse(url);
     if (isNotEmpty(parsed.query)) {
-      const parts = parsed.query.split(/[?|&]/)
+      const parts = parsed.query
+        .split(/[?|&]/)
         .filter((part: string) => isNotEmpty(part))
-        .filter((part: string) => !(part.startsWith('embed=') || part.startsWith('embed.size=')));
+        .filter(
+          (part: string) =>
+            !(part.startsWith('embed=') || part.startsWith('embed.size='))
+        );
       let args = '';
       if (isNotEmpty(parts)) {
         args = `?${parts.join('&')}`;
@@ -42,14 +46,20 @@ export const getUrlWithoutEmbedParams = (url: string): string => {
  * Parse the embed size params from a url
  * @param url The url to parse
  */
-export const getEmbedSizeParams = (url: string): { name: string, size: number }[] => {
+export const getEmbedSizeParams = (
+  url: string
+): { name: string; size: number }[] => {
   if (isNotEmpty(url)) {
     const parsed = parse(url);
     if (isNotEmpty(parsed.query)) {
-      return parsed.query.split(/[?|&]/)
+      return parsed.query
+        .split(/[?|&]/)
         .filter((part: string) => isNotEmpty(part))
         .map((part: string) => part.match(/^embed.size=([^=]+)=(\d+)$/))
-        .filter((matches: RegExpMatchArray) => hasValue(matches) && hasValue(matches[1]) && hasValue(matches[2]))
+        .filter(
+          (matches: RegExpMatchArray) =>
+            hasValue(matches) && hasValue(matches[1]) && hasValue(matches[2])
+        )
         .map((matches: RegExpMatchArray) => {
           return { name: matches[1], size: Number(matches[2]) };
         });
@@ -65,10 +75,8 @@ export const getEmbedSizeParams = (url: string): { name: string, size: number }[
  * @returns
  *    a MemoizedSelector to select the MetaIndexState
  */
-export const metaIndexSelector: MemoizedSelector<CoreState, MetaIndexState> = createSelector(
-  coreSelector,
-  (state: CoreState) => state.index
-);
+export const metaIndexSelector: MemoizedSelector<CoreState, MetaIndexState> =
+  createSelector(coreSelector, (state: CoreState) => state.index);
 
 /**
  * Return the object index based on the MetaIndexState
@@ -77,10 +85,11 @@ export const metaIndexSelector: MemoizedSelector<CoreState, MetaIndexState> = cr
  * @returns
  *    a MemoizedSelector to select the object index
  */
-export const objectIndexSelector: MemoizedSelector<CoreState, IndexState> = createSelector(
-  metaIndexSelector,
-  (state: MetaIndexState) => state[IndexName.OBJECT]
-);
+export const objectIndexSelector: MemoizedSelector<CoreState, IndexState> =
+  createSelector(
+    metaIndexSelector,
+    (state: MetaIndexState) => state[IndexName.OBJECT]
+  );
 
 /**
  * Return the request index based on the MetaIndexState
@@ -88,10 +97,11 @@ export const objectIndexSelector: MemoizedSelector<CoreState, IndexState> = crea
  * @returns
  *    a MemoizedSelector to select the request index
  */
-export const requestIndexSelector: MemoizedSelector<CoreState, IndexState> = createSelector(
-  metaIndexSelector,
-  (state: MetaIndexState) => state[IndexName.REQUEST]
-);
+export const requestIndexSelector: MemoizedSelector<CoreState, IndexState> =
+  createSelector(
+    metaIndexSelector,
+    (state: MetaIndexState) => state[IndexName.REQUEST]
+  );
 
 /**
  * Return the alternative link index based on the MetaIndexState
@@ -99,7 +109,10 @@ export const requestIndexSelector: MemoizedSelector<CoreState, IndexState> = cre
  * @returns
  *    a MemoizedSelector to select the alternative link index
  */
-export const alternativeLinkIndexSelector: MemoizedSelector<CoreState, IndexState> = createSelector(
+export const alternativeLinkIndexSelector: MemoizedSelector<
+  CoreState,
+  IndexState
+> = createSelector(
   metaIndexSelector,
   (state: MetaIndexState) => state[IndexName.ALTERNATIVE_OBJECT_LINK]
 );
@@ -112,10 +125,11 @@ export const alternativeLinkIndexSelector: MemoizedSelector<CoreState, IndexStat
  * @returns
  *    a MemoizedSelector to select the self link
  */
-export const selfLinkFromUuidSelector =
-  (uuid: string): MemoizedSelector<CoreState, string> => createSelector(
-    objectIndexSelector,
-    (state: IndexState) => hasValue(state) ? state[uuid] : undefined
+export const selfLinkFromUuidSelector = (
+  uuid: string
+): MemoizedSelector<CoreState, string> =>
+  createSelector(objectIndexSelector, (state: IndexState) =>
+    hasValue(state) ? state[uuid] : undefined
   );
 
 /**
@@ -126,10 +140,11 @@ export const selfLinkFromUuidSelector =
  * @returns
  *    a MemoizedSelector to select the UUID
  */
-export const uuidFromHrefSelector =
-  (href: string): MemoizedSelector<CoreState, string> => createSelector(
-    requestIndexSelector,
-    (state: IndexState) => hasValue(state) ? state[getUrlWithoutEmbedParams(href)] : undefined
+export const uuidFromHrefSelector = (
+  href: string
+): MemoizedSelector<CoreState, string> =>
+  createSelector(requestIndexSelector, (state: IndexState) =>
+    hasValue(state) ? state[getUrlWithoutEmbedParams(href)] : undefined
   );
 
 /**
@@ -140,8 +155,9 @@ export const uuidFromHrefSelector =
  * @returns
  *    a MemoizedSelector to select the object self link
  */
-export const selfLinkFromAlternativeLinkSelector =
-  (altLink: string): MemoizedSelector<CoreState, string> => createSelector(
-    alternativeLinkIndexSelector,
-    (state: IndexState) => hasValue(state) ? state[altLink] : undefined
+export const selfLinkFromAlternativeLinkSelector = (
+  altLink: string
+): MemoizedSelector<CoreState, string> =>
+  createSelector(alternativeLinkIndexSelector, (state: IndexState) =>
+    hasValue(state) ? state[altLink] : undefined
   );

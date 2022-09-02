@@ -1,23 +1,23 @@
-import { Injectable } from '@angular/core';
-import { DataService } from '../data.service';
-import { RequestService } from '../request.service';
-import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../../cache/object-cache.service';
-import { HALEndpointService } from '../../shared/hal-endpoint.service';
-import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { DefaultChangeAnalyzer } from '../default-change-analyzer.service';
-import { Process } from '../../../process-page/processes/process.model';
-import { dataService } from '../../cache/builders/build-decorators';
-import { PROCESS } from '../../../process-page/processes/process.resource-type';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { PaginatedList } from '../paginated-list.model';
-import { Bitstream } from '../../shared/bitstream.model';
-import { RemoteData } from '../remote-data';
-import { BitstreamDataService } from '../bitstream-data.service';
+import { Process } from '../../../process-page/processes/process.model';
+import { PROCESS } from '../../../process-page/processes/process.resource-type';
+import { NotificationsService } from '../../../shared/notifications/notifications.service';
+import { dataService } from '../../cache/builders/build-decorators';
+import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../../cache/object-cache.service';
 import { CoreState } from '../../core-state.model';
+import { Bitstream } from '../../shared/bitstream.model';
+import { HALEndpointService } from '../../shared/hal-endpoint.service';
+import { BitstreamDataService } from '../bitstream-data.service';
+import { DataService } from '../data.service';
+import { DefaultChangeAnalyzer } from '../default-change-analyzer.service';
+import { PaginatedList } from '../paginated-list.model';
+import { RemoteData } from '../remote-data';
+import { RequestService } from '../request.service';
 
 @Injectable()
 @dataService(PROCESS)
@@ -33,7 +33,8 @@ export class ProcessDataService extends DataService<Process> {
     protected notificationsService: NotificationsService,
     protected bitstreamDataService: BitstreamDataService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Process>) {
+    protected comparator: DefaultChangeAnalyzer<Process>
+  ) {
     super();
   }
 
@@ -43,7 +44,9 @@ export class ProcessDataService extends DataService<Process> {
    */
   getFilesEndpoint(processId: string): Observable<string> {
     return this.getBrowseEndpoint().pipe(
-      switchMap((href) => this.halService.getEndpoint('files', `${href}/${processId}`))
+      switchMap((href) =>
+        this.halService.getEndpoint('files', `${href}/${processId}`)
+      )
     );
   }
 
@@ -51,7 +54,9 @@ export class ProcessDataService extends DataService<Process> {
    * Get a process' output files
    * @param processId The ID of the process
    */
-  getFiles(processId: string): Observable<RemoteData<PaginatedList<Bitstream>>> {
+  getFiles(
+    processId: string
+  ): Observable<RemoteData<PaginatedList<Bitstream>>> {
     const href$ = this.getFilesEndpoint(processId);
     return this.bitstreamDataService.findAllByHref(href$);
   }

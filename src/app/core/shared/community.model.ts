@@ -5,12 +5,12 @@ import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
 import { Bitstream } from './bitstream.model';
 import { BITSTREAM } from './bitstream.resource-type';
+import { ChildHALResource } from './child-hal-resource.model';
 import { Collection } from './collection.model';
 import { COLLECTION } from './collection.resource-type';
 import { COMMUNITY } from './community.resource-type';
 import { DSpaceObject } from './dspace-object.model';
 import { HALLink } from './hal-link.model';
-import { ChildHALResource } from './child-hal-resource.model';
 
 @typedObject
 @inheritSerialization(DSpaceObject)

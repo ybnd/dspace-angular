@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { filter, map, take } from 'rxjs/operators';
-import { RemoteData } from '../../../core/data/remote-data';
-import { Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { filter, map, take } from 'rxjs/operators';
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
+import { RemoteData } from '../../../core/data/remote-data';
 import { Collection } from '../../../core/shared/collection.model';
 import { hasValue } from '../../../shared/empty.util';
 
@@ -20,14 +20,13 @@ export class CollectionCurateComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private dsoNameService: DSONameService,
-  ) {
-  }
+    private dsoNameService: DSONameService
+  ) {}
 
   ngOnInit(): void {
     this.dsoRD$ = this.route.parent.data.pipe(
       take(1),
-      map((data) => data.dso),
+      map((data) => data.dso)
     );
 
     this.collectionName$ = this.dsoRD$.pipe(

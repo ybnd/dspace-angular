@@ -1,6 +1,5 @@
 /* eslint-disable max-classes-per-file */
 import { Action } from '@ngrx/store';
-
 import { type } from '../ngrx/type';
 
 /**
@@ -14,7 +13,7 @@ import { type } from '../ngrx/type';
 export const SidebarActionTypes = {
   COLLAPSE: type('dspace/sidebar/COLLAPSE'),
   EXPAND: type('dspace/sidebar/EXPAND'),
-  TOGGLE: type('dspace/sidebar/TOGGLE')
+  TOGGLE: type('dspace/sidebar/TOGGLE'),
 };
 
 /**
@@ -42,7 +41,7 @@ export class SidebarToggleAction implements Action {
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
-export type SidebarAction
-  = SidebarCollapseAction
+export type SidebarAction =
+  | SidebarCollapseAction
   | SidebarExpandAction
   | SidebarToggleAction;

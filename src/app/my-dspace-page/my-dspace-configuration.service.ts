@@ -1,28 +1,28 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-
 import { combineLatest, Observable } from 'rxjs';
 import { first, map } from 'rxjs/operators';
-
-import { MyDSpaceConfigurationValueType } from './my-dspace-configuration-value-type';
+import { LinkService } from '../core/cache/builders/link.service';
+import { RemoteDataBuildService } from '../core/cache/builders/remote-data-build.service';
+import {
+  SortDirection,
+  SortOptions,
+} from '../core/cache/models/sort-options.model';
+import { RequestService } from '../core/data/request.service';
+import { PaginationService } from '../core/pagination/pagination.service';
 import { RoleService } from '../core/roles/role.service';
-import { SearchConfigurationOption } from '../shared/search/search-switch-configuration/search-configuration-option.model';
+import { RouteService } from '../core/services/route.service';
+import { Context } from '../core/shared/context.model';
+import { HALEndpointService } from '../core/shared/hal-endpoint.service';
 import { SearchConfigurationService } from '../core/shared/search/search-configuration.service';
 import { PaginationComponentOptions } from '../shared/pagination/pagination-component-options.model';
-import { SortDirection, SortOptions } from '../core/cache/models/sort-options.model';
-import { RouteService } from '../core/services/route.service';
-import { PaginationService } from '../core/pagination/pagination.service';
-import { LinkService } from '../core/cache/builders/link.service';
-import { HALEndpointService } from '../core/shared/hal-endpoint.service';
-import { RequestService } from '../core/data/request.service';
-import { RemoteDataBuildService } from '../core/cache/builders/remote-data-build.service';
-import { Context } from '../core/shared/context.model';
+import { SearchConfigurationOption } from '../shared/search/search-switch-configuration/search-configuration-option.model';
+import { MyDSpaceConfigurationValueType } from './my-dspace-configuration-value-type';
 
 export const MyDSpaceConfigurationToContextMap = new Map([
   [MyDSpaceConfigurationValueType.Workspace, Context.Workspace],
-  [MyDSpaceConfigurationValueType.Workflow, Context.Workflow]
+  [MyDSpaceConfigurationValueType.Workflow, Context.Workflow],
 ]);
-
 
 /**
  * Service that performs all actions that have to do with the current mydspace configuration
@@ -32,11 +32,14 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
   /**
    * Default pagination settings
    */
-  protected defaultPagination = Object.assign(new PaginationComponentOptions(), {
-    id: 'mydspace-page',
-    pageSize: 10,
-    currentPage: 1
-  });
+  protected defaultPagination = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'mydspace-page',
+      pageSize: 10,
+      currentPage: 1,
+    }
+  );
 
   /**
    * Default sort settings
@@ -74,16 +77,25 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
    * @param requestService
    * @param rdb
    */
-  constructor(protected roleService: RoleService,
-              protected routeService: RouteService,
-              protected paginationService: PaginationService,
-              protected route: ActivatedRoute,
-              protected linkService: LinkService,
-              protected halService: HALEndpointService,
-              protected requestService: RequestService,
-              protected rdb: RemoteDataBuildService) {
-
-    super(routeService, paginationService, route, linkService, halService, requestService, rdb);
+  constructor(
+    protected roleService: RoleService,
+    protected routeService: RouteService,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected linkService: LinkService,
+    protected halService: HALEndpointService,
+    protected requestService: RequestService,
+    protected rdb: RemoteDataBuildService
+  ) {
+    super(
+      routeService,
+      paginationService,
+      route,
+      linkService,
+      halService,
+      requestService,
+      rdb
+    );
 
     // override parent class initialization
     this._defaults = null;
@@ -100,19 +112,28 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
    * @return {Observable<MyDSpaceConfigurationValueType[]>}
    *    Emits the available configuration list
    */
-  public getAvailableConfigurationTypes(): Observable<MyDSpaceConfigurationValueType[]> {
-    return combineLatest(this.isSubmitter$, this.isController$, this.isAdmin$).pipe(
+  public getAvailableConfigurationTypes(): Observable<
+    MyDSpaceConfigurationValueType[]
+  > {
+    return combineLatest(
+      this.isSubmitter$,
+      this.isController$,
+      this.isAdmin$
+    ).pipe(
       first(),
-      map(([isSubmitter, isController, isAdmin]: [boolean, boolean, boolean]) => {
-        const availableConf: MyDSpaceConfigurationValueType[] = [];
-        if (isSubmitter) {
-          availableConf.push(MyDSpaceConfigurationValueType.Workspace);
+      map(
+        ([isSubmitter, isController, isAdmin]: [boolean, boolean, boolean]) => {
+          const availableConf: MyDSpaceConfigurationValueType[] = [];
+          if (isSubmitter) {
+            availableConf.push(MyDSpaceConfigurationValueType.Workspace);
+          }
+          if (isController || isAdmin) {
+            availableConf.push(MyDSpaceConfigurationValueType.Workflow);
+          }
+          return availableConf;
         }
-        if (isController || isAdmin) {
-          availableConf.push(MyDSpaceConfigurationValueType.Workflow);
-        }
-        return availableConf;
-      }));
+      )
+    );
   }
 
   /**
@@ -121,7 +142,9 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
    * @return {Observable<SearchConfigurationOption[]>}
    *    Emits the select options list
    */
-  public getAvailableConfigurationOptions(): Observable<SearchConfigurationOption[]> {
+  public getAvailableConfigurationOptions(): Observable<
+    SearchConfigurationOption[]
+  > {
     return this.getAvailableConfigurationTypes().pipe(
       first(),
       map((availableConfigurationTypes: MyDSpaceConfigurationValueType[]) => {
@@ -136,5 +159,4 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
       })
     );
   }
-
 }

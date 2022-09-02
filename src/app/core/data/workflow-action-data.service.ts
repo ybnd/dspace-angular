@@ -1,19 +1,19 @@
-import { DataService } from './data.service';
-import { WorkflowAction } from '../tasks/models/workflow-action-object.model';
-import { RequestService } from './request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
-import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { dataService } from '../cache/builders/build-decorators';
-import { WORKFLOW_ACTION } from '../tasks/models/workflow-action-object.resource-type';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { WorkflowAction } from '../tasks/models/workflow-action-object.model';
+import { WORKFLOW_ACTION } from '../tasks/models/workflow-action-object.resource-type';
+import { DataService } from './data.service';
+import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
 import { FindListOptions } from './find-list-options.model';
+import { RequestService } from './request.service';
 
 /**
  * A service responsible for fetching/sending data from/to the REST API on the workflowactions endpoint
@@ -31,11 +31,15 @@ export class WorkflowActionDataService extends DataService<WorkflowAction> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<WorkflowAction>) {
+    protected comparator: DefaultChangeAnalyzer<WorkflowAction>
+  ) {
     super();
   }
 
-  getBrowseEndpoint(options: FindListOptions, linkPath?: string): Observable<string> {
+  getBrowseEndpoint(
+    options: FindListOptions,
+    linkPath?: string
+  ): Observable<string> {
     return this.halService.getEndpoint(this.linkPath);
   }
 }

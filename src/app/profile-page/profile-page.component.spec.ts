@@ -1,28 +1,34 @@
-import { ProfilePageComponent } from './profile-page.component';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { VarDirective } from '../shared/utils/var.directive';
-import { TranslateModule } from '@ngx-translate/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { EPerson } from '../core/eperson/models/eperson.model';
-import { StoreModule } from '@ngrx/store';
-import { storeModuleConfig } from '../app.reducer';
-import { AuthTokenInfo } from '../core/auth/models/auth-token-info.model';
-import { EPersonDataService } from '../core/eperson/eperson-data.service';
-import { NotificationsService } from '../shared/notifications/notifications.service';
-import { authReducer } from '../core/auth/auth.reducer';
-import { createFailedRemoteDataObject$, createSuccessfulRemoteDataObject$ } from '../shared/remote-data.utils';
-import { createPaginatedList } from '../shared/testing/utils.test';
-import { BehaviorSubject, of as observableOf } from 'rxjs';
-import { AuthService } from '../core/auth/auth.service';
-import { RestResponse } from '../core/cache/response.models';
-import { provideMockStore } from '@ngrx/store/testing';
-import { AuthorizationDataService } from '../core/data/feature-authorization/authorization-data.service';
-import { cold, getTestScheduler } from 'jasmine-marbles';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { EmptySpecialGroupDataMock$, SpecialGroupDataMock$ } from '../shared/testing/special-group.mock';
+import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
+import { TranslateModule } from '@ngx-translate/core';
+import { cold, getTestScheduler } from 'jasmine-marbles';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
+import { storeModuleConfig } from '../app.reducer';
+import { authReducer } from '../core/auth/auth.reducer';
+import { AuthService } from '../core/auth/auth.service';
+import { AuthTokenInfo } from '../core/auth/models/auth-token-info.model';
+import { RestResponse } from '../core/cache/response.models';
 import { ConfigurationDataService } from '../core/data/configuration-data.service';
+import { AuthorizationDataService } from '../core/data/feature-authorization/authorization-data.service';
+import { EPersonDataService } from '../core/eperson/eperson-data.service';
+import { EPerson } from '../core/eperson/models/eperson.model';
 import { ConfigurationProperty } from '../core/shared/configuration-property.model';
+import { NotificationsService } from '../shared/notifications/notifications.service';
+import {
+  createFailedRemoteDataObject$,
+  createSuccessfulRemoteDataObject$,
+} from '../shared/remote-data.utils';
+import {
+  EmptySpecialGroupDataMock$,
+  SpecialGroupDataMock$,
+} from '../shared/testing/special-group.mock';
+import { createPaginatedList } from '../shared/testing/utils.test';
+import { VarDirective } from '../shared/utils/var.directive';
+import { ProfilePageComponent } from './profile-page.component';
 
 describe('ProfilePageComponent', () => {
   let component: ProfilePageComponent;
@@ -39,20 +45,18 @@ describe('ProfilePageComponent', () => {
   const canChangePassword = new BehaviorSubject(true);
   const validConfiguration = Object.assign(new ConfigurationProperty(), {
     name: 'researcher-profile.entity-type',
-    values: [
-      'Person'
-    ]
+    values: ['Person'],
   });
   const emptyConfiguration = Object.assign(new ConfigurationProperty(), {
     name: 'researcher-profile.entity-type',
-    values: []
+    values: [],
   });
 
   function init() {
     user = Object.assign(new EPerson(), {
       id: 'userId',
       groups: createSuccessfulRemoteDataObject$(createPaginatedList([])),
-      _links: { self: { href: 'test.com/uuid/1234567654321' } }
+      _links: { self: { href: 'test.com/uuid/1234567654321' } },
     });
     initialState = {
       core: {
@@ -63,26 +67,30 @@ describe('ProfilePageComponent', () => {
           loading: false,
           authToken: new AuthTokenInfo('test_token'),
           userId: user.id,
-          authMethods: []
-        }
-      }
+          authMethods: [],
+        },
+      },
     };
-    authorizationService = jasmine.createSpyObj('authorizationService', { isAuthorized: canChangePassword });
+    authorizationService = jasmine.createSpyObj('authorizationService', {
+      isAuthorized: canChangePassword,
+    });
     authService = jasmine.createSpyObj('authService', {
       getAuthenticatedUserFromStore: observableOf(user),
-      getSpecialGroupsFromAuthStatus: SpecialGroupDataMock$
+      getSpecialGroupsFromAuthStatus: SpecialGroupDataMock$,
     });
     epersonService = jasmine.createSpyObj('epersonService', {
       findById: createSuccessfulRemoteDataObject$(user),
-      patch: observableOf(Object.assign(new RestResponse(true, 200, 'Success')))
+      patch: observableOf(
+        Object.assign(new RestResponse(true, 200, 'Success'))
+      ),
     });
     notificationsService = jasmine.createSpyObj('notificationsService', {
       success: {},
       error: {},
-      warning: {}
+      warning: {},
     });
     configurationService = jasmine.createSpyObj('configurationDataService', {
-      findByPropertyName: jasmine.createSpy('findByPropertyName')
+      findByPropertyName: jasmine.createSpy('findByPropertyName'),
     });
   }
 
@@ -93,7 +101,7 @@ describe('ProfilePageComponent', () => {
       imports: [
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
         TranslateModule.forRoot(),
-        RouterTestingModule.withRoutes([])
+        RouterTestingModule.withRoutes([]),
       ],
       providers: [
         { provide: EPersonDataService, useValue: epersonService },
@@ -103,7 +111,7 @@ describe('ProfilePageComponent', () => {
         { provide: AuthorizationDataService, useValue: authorizationService },
         provideMockStore({ initialState }),
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -113,9 +121,10 @@ describe('ProfilePageComponent', () => {
   });
 
   describe('', () => {
-
     beforeEach(() => {
-      configurationService.findByPropertyName.and.returnValue(createSuccessfulRemoteDataObject$(validConfiguration));
+      configurationService.findByPropertyName.and.returnValue(
+        createSuccessfulRemoteDataObject$(validConfiguration)
+      );
       fixture.detectChanges();
     });
 
@@ -123,7 +132,7 @@ describe('ProfilePageComponent', () => {
       describe('when the metadata form returns false and the security form returns true', () => {
         beforeEach(() => {
           component.metadataForm = jasmine.createSpyObj('metadataForm', {
-            updateProfile: false
+            updateProfile: false,
           });
           spyOn(component, 'updateSecurity').and.returnValue(true);
           component.updateProfile();
@@ -137,7 +146,7 @@ describe('ProfilePageComponent', () => {
       describe('when the metadata form returns true and the security form returns false', () => {
         beforeEach(() => {
           component.metadataForm = jasmine.createSpyObj('metadataForm', {
-            updateProfile: true
+            updateProfile: true,
           });
           component.updateProfile();
         });
@@ -150,7 +159,7 @@ describe('ProfilePageComponent', () => {
       describe('when the metadata form returns true and the security form returns true', () => {
         beforeEach(() => {
           component.metadataForm = jasmine.createSpyObj('metadataForm', {
-            updateProfile: true
+            updateProfile: true,
           });
           component.updateProfile();
         });
@@ -163,7 +172,7 @@ describe('ProfilePageComponent', () => {
       describe('when the metadata form returns false and the security form returns false', () => {
         beforeEach(() => {
           component.metadataForm = jasmine.createSpyObj('metadataForm', {
-            updateProfile: false
+            updateProfile: false,
           });
           component.updateProfile();
         });
@@ -237,12 +246,16 @@ describe('ProfilePageComponent', () => {
         });
 
         it('should contain true', () => {
-          getTestScheduler().expectObservable(component.canChangePassword$).toBe('(a)', { a: true });
+          getTestScheduler()
+            .expectObservable(component.canChangePassword$)
+            .toBe('(a)', { a: true });
         });
 
         it('should show the security section on the page', () => {
           fixture.detectChanges();
-          expect(fixture.debugElement.query(By.css('.security-section'))).not.toBeNull();
+          expect(
+            fixture.debugElement.query(By.css('.security-section'))
+          ).not.toBeNull();
         });
       });
 
@@ -252,83 +265,95 @@ describe('ProfilePageComponent', () => {
         });
 
         it('should contain false', () => {
-          getTestScheduler().expectObservable(component.canChangePassword$).toBe('(a)', { a: false });
+          getTestScheduler()
+            .expectObservable(component.canChangePassword$)
+            .toBe('(a)', { a: false });
         });
 
         it('should not show the security section on the page', () => {
           fixture.detectChanges();
-          expect(fixture.debugElement.query(By.css('.security-section'))).toBeNull();
+          expect(
+            fixture.debugElement.query(By.css('.security-section'))
+          ).toBeNull();
         });
       });
     });
 
-  describe('check for specialGroups', () => {
-    it('should contains specialGroups list', () => {
-      const specialGroupsEle = fixture.debugElement.query(By.css('[data-test="specialGroups"]'));
-      expect(specialGroupsEle).toBeTruthy();
-    });
+    describe('check for specialGroups', () => {
+      it('should contains specialGroups list', () => {
+        const specialGroupsEle = fixture.debugElement.query(
+          By.css('[data-test="specialGroups"]')
+        );
+        expect(specialGroupsEle).toBeTruthy();
+      });
 
-    it('should not contains specialGroups list', () => {
-      component.specialGroupsRD$ = null;
-      fixture.detectChanges();
-      const specialGroupsEle = fixture.debugElement.query(By.css('[data-test="specialGroups"]'));
-      expect(specialGroupsEle).toBeFalsy();
-    });
+      it('should not contains specialGroups list', () => {
+        component.specialGroupsRD$ = null;
+        fixture.detectChanges();
+        const specialGroupsEle = fixture.debugElement.query(
+          By.css('[data-test="specialGroups"]')
+        );
+        expect(specialGroupsEle).toBeFalsy();
+      });
 
-    it('should not contains specialGroups list', () => {
-      component.specialGroupsRD$ = EmptySpecialGroupDataMock$;
-      fixture.detectChanges();
-      const specialGroupsEle = fixture.debugElement.query(By.css('[data-test="specialGroups"]'));
-      expect(specialGroupsEle).toBeFalsy();
+      it('should not contains specialGroups list', () => {
+        component.specialGroupsRD$ = EmptySpecialGroupDataMock$;
+        fixture.detectChanges();
+        const specialGroupsEle = fixture.debugElement.query(
+          By.css('[data-test="specialGroups"]')
+        );
+        expect(specialGroupsEle).toBeFalsy();
+      });
     });
-  });
   });
 
   describe('isResearcherProfileEnabled', () => {
-
     describe('when configuration service return values', () => {
-
       beforeEach(() => {
-        configurationService.findByPropertyName.and.returnValue(createSuccessfulRemoteDataObject$(validConfiguration));
+        configurationService.findByPropertyName.and.returnValue(
+          createSuccessfulRemoteDataObject$(validConfiguration)
+        );
         fixture.detectChanges();
       });
 
       it('should return true', () => {
         const result = component.isResearcherProfileEnabled();
         const expected = cold('a', {
-          a: true
+          a: true,
         });
         expect(result).toBeObservable(expected);
       });
     });
 
     describe('when configuration service return no values', () => {
-
       beforeEach(() => {
-        configurationService.findByPropertyName.and.returnValue(createSuccessfulRemoteDataObject$(emptyConfiguration));
+        configurationService.findByPropertyName.and.returnValue(
+          createSuccessfulRemoteDataObject$(emptyConfiguration)
+        );
         fixture.detectChanges();
       });
 
       it('should return false', () => {
         const result = component.isResearcherProfileEnabled();
         const expected = cold('a', {
-          a: false
+          a: false,
         });
         expect(result).toBeObservable(expected);
       });
     });
 
     describe('when configuration service return an error', () => {
-
       beforeEach(() => {
-        configurationService.findByPropertyName.and.returnValue(createFailedRemoteDataObject$());
+        configurationService.findByPropertyName.and.returnValue(
+          createFailedRemoteDataObject$()
+        );
         fixture.detectChanges();
       });
 
       it('should return false', () => {
         const result = component.isResearcherProfileEnabled();
         const expected = cold('a', {
-          a: false
+          a: false,
         });
         expect(result).toBeObservable(expected);
       });

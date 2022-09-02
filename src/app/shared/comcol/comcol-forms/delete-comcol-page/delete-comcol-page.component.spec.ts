@@ -1,20 +1,22 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { CommunityDataService } from '../../../../core/data/community-data.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { of as observableOf } from 'rxjs';
-import { Community } from '../../../../core/shared/community.model';
-import { SharedModule } from '../../../shared.module';
 import { CommonModule } from '@angular/common';
-import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { DeleteComColPageComponent } from './delete-comcol-page.component';
-import { NotificationsService } from '../../../notifications/notifications.service';
-import { NotificationsServiceStub } from '../../../testing/notifications-service.stub';
-import { RequestService } from '../../../../core/data/request.service';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { getTestScheduler } from 'jasmine-marbles';
+import { of as observableOf } from 'rxjs';
 import { ComColDataService } from '../../../../core/data/comcol-data.service';
-import { createFailedRemoteDataObject$, createNoContentRemoteDataObject$ } from '../../../remote-data.utils';
+import { CommunityDataService } from '../../../../core/data/community-data.service';
+import { Community } from '../../../../core/shared/community.model';
+import { NotificationsService } from '../../../notifications/notifications.service';
+import {
+  createFailedRemoteDataObject$,
+  createNoContentRemoteDataObject$,
+} from '../../../remote-data.utils';
+import { SharedModule } from '../../../shared.module';
+import { NotificationsServiceStub } from '../../../testing/notifications-service.stub';
+import { DeleteComColPageComponent } from './delete-comcol-page.component';
 
 describe('DeleteComColPageComponent', () => {
   let comp: DeleteComColPageComponent<any>;
@@ -40,62 +42,73 @@ describe('DeleteComColPageComponent', () => {
   function initializeVars() {
     community = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66b9300d347',
-      metadata: [{
-        key: 'dc.title',
-        value: 'test community'
-      }]
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'test community',
+        },
+      ],
     });
 
     newCommunity = Object.assign(new Community(), {
       uuid: '1ff59938-a69a-4e62-b9a4-718569c55d48',
-      metadata: [{
-        key: 'dc.title',
-        value: 'new community'
-      }]
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'new community',
+        },
+      ],
     });
 
     parentCommunity = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66as300d399',
       id: 'a20da287-e174-466a-9926-f66as300d399',
-      metadata: [{
-        key: 'dc.title',
-        value: 'parent community'
-      }]
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'parent community',
+        },
+      ],
     });
 
-    dsoDataService = jasmine.createSpyObj(
-      'dsoDataService',
-      {
-        delete: createNoContentRemoteDataObject$(),
-        findByHref: jasmine.createSpy('findByHref'),
-      });
+    dsoDataService = jasmine.createSpyObj('dsoDataService', {
+      delete: createNoContentRemoteDataObject$(),
+      findByHref: jasmine.createSpy('findByHref'),
+    });
 
     routerStub = {
-      navigate: (commands) => commands
+      navigate: (commands) => commands,
     };
 
     routeStub = {
-      data: observableOf(community)
+      data: observableOf(community),
     };
 
     translateServiceStub = jasmine.createSpyObj('TranslateService', {
-      instant: jasmine.createSpy('instant')
+      instant: jasmine.createSpy('instant'),
     });
-
   }
 
   beforeEach(waitForAsync(() => {
     initializeVars();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       providers: [
         { provide: ComColDataService, useValue: dsoDataService },
         { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: routeStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: TranslateService, useValue: translateServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -116,38 +129,43 @@ describe('DeleteComColPageComponent', () => {
       data1 = {
         dso: Object.assign(new Community(), {
           uuid: validUUID,
-          metadata: [{
-            key: 'dc.title',
-            value: 'test'
-          }]
+          metadata: [
+            {
+              key: 'dc.title',
+              value: 'test',
+            },
+          ],
         }),
-        _links: {}
+        _links: {},
       };
 
       data2 = {
         dso: Object.assign(new Community(), {
           uuid: invalidUUID,
-          metadata: [{
-            key: 'dc.title',
-            value: 'test'
-          }]
+          metadata: [
+            {
+              key: 'dc.title',
+              value: 'test',
+            },
+          ],
         }),
         _links: {},
         uploader: {
           options: {
-            url: ''
+            url: '',
           },
           queue: [],
           /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-          uploadAll: () => {
-          }
+          uploadAll: () => {},
           /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-        }
+        },
       };
     });
 
     it('should show an error notification on failure', () => {
-      (dsoDataService.delete as any).and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      (dsoDataService.delete as any).and.returnValue(
+        createFailedRemoteDataObject$('Error', 500)
+      );
       spyOn(router, 'navigate');
       scheduler.schedule(() => comp.onConfirm(data2));
       scheduler.flush();
@@ -177,10 +195,12 @@ describe('DeleteComColPageComponent', () => {
     beforeEach(() => {
       data1 = Object.assign(new Community(), {
         uuid: validUUID,
-        metadata: [{
-          key: 'dc.title',
-          value: 'test'
-        }]
+        metadata: [
+          {
+            key: 'dc.title',
+            value: 'test',
+          },
+        ],
       });
     });
 

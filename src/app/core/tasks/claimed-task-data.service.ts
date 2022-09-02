@@ -1,25 +1,24 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
 import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
+import { FindListOptions } from '../data/find-list-options.model';
+import { RemoteData } from '../data/remote-data';
 import { RequestService } from '../data/request.service';
+import { HttpOptions } from '../dspace-rest/dspace-rest.service';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { getFirstSucceededRemoteData } from '../shared/operators';
 import { ClaimedTask } from './models/claimed-task-object.model';
 import { CLAIMED_TASK } from './models/claimed-task-object.resource-type';
 import { ProcessTaskResponse } from './models/process-task-response';
 import { TasksService } from './tasks.service';
-import { RemoteData } from '../data/remote-data';
-import { RequestParam } from '../cache/models/request-param.model';
-import { HttpOptions } from '../dspace-rest/dspace-rest.service';
-import { getFirstSucceededRemoteData } from '../shared/operators';
-import { CoreState } from '../core-state.model';
-import { FindListOptions } from '../data/find-list-options.model';
 
 /**
  * The service handling all REST requests for ClaimedTask
@@ -27,7 +26,6 @@ import { FindListOptions } from '../data/find-list-options.model';
 @Injectable()
 @dataService(CLAIMED_TASK)
 export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
-
   protected responseMsToLive = 1000;
 
   /**
@@ -55,7 +53,8 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<ClaimedTask>) {
+    protected comparator: DSOChangeAnalyzer<ClaimedTask>
+  ) {
     super();
   }
 
@@ -69,7 +68,10 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
    * @return {Observable<ProcessTaskResponse>}
    *    Emit the server response
    */
-  public claimTask(scopeId: string, poolTaskHref: string): Observable<ProcessTaskResponse> {
+  public claimTask(
+    scopeId: string,
+    poolTaskHref: string
+  ): Observable<ProcessTaskResponse> {
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'text/uri-list');
@@ -87,8 +89,16 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
    * @return {Observable<ProcessTaskResponse>}
    *    Emit the server response
    */
-  public submitTask(scopeId: string, body: any): Observable<ProcessTaskResponse> {
-    return this.postToEndpoint(this.linkPath, this.requestService.uriEncodeBody(body), scopeId, this.makeHttpOptions());
+  public submitTask(
+    scopeId: string,
+    body: any
+  ): Observable<ProcessTaskResponse> {
+    return this.postToEndpoint(
+      this.linkPath,
+      this.requestService.uriEncodeBody(body),
+      scopeId,
+      this.makeHttpOptions()
+    );
   }
 
   /**
@@ -112,10 +122,9 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
    */
   public findByItem(uuid: string): Observable<RemoteData<ClaimedTask>> {
     const options = new FindListOptions();
-    options.searchParams = [
-      new RequestParam('uuid', uuid)
-    ];
-    return this.searchTask('findByItem', options).pipe(getFirstSucceededRemoteData());
+    options.searchParams = [new RequestParam('uuid', uuid)];
+    return this.searchTask('findByItem', options).pipe(
+      getFirstSucceededRemoteData()
+    );
   }
-
 }

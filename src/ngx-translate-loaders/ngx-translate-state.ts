@@ -5,11 +5,13 @@ import { makeStateKey } from '@angular/platform-browser';
  */
 export class NgxTranslateState {
   [lang: string]: {
-    [key: string]: string
-  }
+    [key: string]: string;
+  };
 }
 
 /**
  * The key to store the NgxTranslateState as part of the TransferState
  */
-export const NGX_TRANSLATE_STATE = makeStateKey<NgxTranslateState>('NGX_TRANSLATE_STATE');
+export const NGX_TRANSLATE_STATE = makeStateKey<NgxTranslateState>(
+  'NGX_TRANSLATE_STATE'
+);

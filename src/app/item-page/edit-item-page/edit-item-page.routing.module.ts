@@ -1,25 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { EditItemPageComponent } from './edit-item-page.component';
-import { ItemWithdrawComponent } from './item-withdraw/item-withdraw.component';
-import { ItemReinstateComponent } from './item-reinstate/item-reinstate.component';
-import { ItemPrivateComponent } from './item-private/item-private.component';
-import { ItemPublicComponent } from './item-public/item-public.component';
-import { ItemDeleteComponent } from './item-delete/item-delete.component';
-import { ItemStatusComponent } from './item-status/item-status.component';
-import { ItemMetadataComponent } from './item-metadata/item-metadata.component';
-import { ItemBitstreamsComponent } from './item-bitstreams/item-bitstreams.component';
-import { ItemCollectionMapperComponent } from './item-collection-mapper/item-collection-mapper.component';
-import { ItemMoveComponent } from './item-move/item-move.component';
-import { ItemRelationshipsComponent } from './item-relationships/item-relationships.component';
 import { I18nBreadcrumbResolver } from '../../core/breadcrumbs/i18n-breadcrumb.resolver';
-import { ItemVersionHistoryComponent } from './item-version-history/item-version-history.component';
-import { ItemAuthorizationsComponent } from './item-authorizations/item-authorizations.component';
-import { ResourcePolicyTargetResolver } from '../../shared/resource-policies/resolvers/resource-policy-target.resolver';
-import { ResourcePolicyResolver } from '../../shared/resource-policies/resolvers/resource-policy.resolver';
+import { I18nBreadcrumbsService } from '../../core/breadcrumbs/i18n-breadcrumbs.service';
 import { ResourcePolicyCreateComponent } from '../../shared/resource-policies/create/resource-policy-create.component';
 import { ResourcePolicyEditComponent } from '../../shared/resource-policies/edit/resource-policy-edit.component';
-import { I18nBreadcrumbsService } from '../../core/breadcrumbs/i18n-breadcrumbs.service';
+import { ResourcePolicyTargetResolver } from '../../shared/resource-policies/resolvers/resource-policy-target.resolver';
+import { ResourcePolicyResolver } from '../../shared/resource-policies/resolvers/resource-policy.resolver';
+import { ItemPageAdministratorGuard } from '../item-page-administrator.guard';
+import { EditItemPageComponent } from './edit-item-page.component';
 import {
   ITEM_EDIT_AUTHORIZATIONS_PATH,
   ITEM_EDIT_DELETE_PATH,
@@ -27,17 +15,29 @@ import {
   ITEM_EDIT_PRIVATE_PATH,
   ITEM_EDIT_PUBLIC_PATH,
   ITEM_EDIT_REINSTATE_PATH,
-  ITEM_EDIT_WITHDRAW_PATH
+  ITEM_EDIT_WITHDRAW_PATH,
 } from './edit-item-page.routing-paths';
-import { ItemPageReinstateGuard } from './item-page-reinstate.guard';
-import { ItemPageWithdrawGuard } from './item-page-withdraw.guard';
-import { ItemPageMetadataGuard } from './item-page-metadata.guard';
-import { ItemPageAdministratorGuard } from '../item-page-administrator.guard';
-import { ItemPageStatusGuard } from './item-page-status.guard';
+import { ItemAuthorizationsComponent } from './item-authorizations/item-authorizations.component';
+import { ItemBitstreamsComponent } from './item-bitstreams/item-bitstreams.component';
+import { ItemCollectionMapperComponent } from './item-collection-mapper/item-collection-mapper.component';
+import { ItemDeleteComponent } from './item-delete/item-delete.component';
+import { ItemMetadataComponent } from './item-metadata/item-metadata.component';
+import { ItemMoveComponent } from './item-move/item-move.component';
 import { ItemPageBitstreamsGuard } from './item-page-bitstreams.guard';
-import { ItemPageRelationshipsGuard } from './item-page-relationships.guard';
-import { ItemPageVersionHistoryGuard } from './item-page-version-history.guard';
 import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.guard';
+import { ItemPageMetadataGuard } from './item-page-metadata.guard';
+import { ItemPageReinstateGuard } from './item-page-reinstate.guard';
+import { ItemPageRelationshipsGuard } from './item-page-relationships.guard';
+import { ItemPageStatusGuard } from './item-page-status.guard';
+import { ItemPageVersionHistoryGuard } from './item-page-version-history.guard';
+import { ItemPageWithdrawGuard } from './item-page-withdraw.guard';
+import { ItemPrivateComponent } from './item-private/item-private.component';
+import { ItemPublicComponent } from './item-public/item-public.component';
+import { ItemReinstateComponent } from './item-reinstate/item-reinstate.component';
+import { ItemRelationshipsComponent } from './item-relationships/item-relationships.component';
+import { ItemStatusComponent } from './item-status/item-status.component';
+import { ItemVersionHistoryComponent } from './item-version-history/item-version-history.component';
+import { ItemWithdrawComponent } from './item-withdraw/item-withdraw.component';
 
 /**
  * Routing module that handles the routing for the Edit Item page administrator functionality
@@ -48,7 +48,7 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
       {
         path: '',
         resolve: {
-          breadcrumb: I18nBreadcrumbResolver
+          breadcrumb: I18nBreadcrumbResolver,
         },
         data: { breadcrumbKey: 'item.edit' },
         children: [
@@ -59,31 +59,43 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
               {
                 path: '',
                 redirectTo: 'status',
-                pathMatch: 'full'
+                pathMatch: 'full',
               },
               {
                 path: 'status',
                 component: ItemStatusComponent,
-                data: { title: 'item.edit.tabs.status.title', showBreadcrumbs: true },
-                canActivate: [ItemPageStatusGuard]
+                data: {
+                  title: 'item.edit.tabs.status.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageStatusGuard],
               },
               {
                 path: 'bitstreams',
                 component: ItemBitstreamsComponent,
-                data: { title: 'item.edit.tabs.bitstreams.title', showBreadcrumbs: true },
-                canActivate: [ItemPageBitstreamsGuard]
+                data: {
+                  title: 'item.edit.tabs.bitstreams.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageBitstreamsGuard],
               },
               {
                 path: 'metadata',
                 component: ItemMetadataComponent,
-                data: { title: 'item.edit.tabs.metadata.title', showBreadcrumbs: true },
-                canActivate: [ItemPageMetadataGuard]
+                data: {
+                  title: 'item.edit.tabs.metadata.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageMetadataGuard],
               },
               {
                 path: 'relationships',
                 component: ItemRelationshipsComponent,
-                data: { title: 'item.edit.tabs.relationships.title', showBreadcrumbs: true },
-                canActivate: [ItemPageRelationshipsGuard]
+                data: {
+                  title: 'item.edit.tabs.relationships.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageRelationshipsGuard],
               },
               /* TODO - uncomment & fix when view page exists
               {
@@ -100,16 +112,22 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
               {
                 path: 'versionhistory',
                 component: ItemVersionHistoryComponent,
-                data: { title: 'item.edit.tabs.versionhistory.title', showBreadcrumbs: true },
-                canActivate: [ItemPageVersionHistoryGuard]
+                data: {
+                  title: 'item.edit.tabs.versionhistory.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageVersionHistoryGuard],
               },
               {
                 path: 'mapper',
                 component: ItemCollectionMapperComponent,
-                data: { title: 'item.edit.tabs.item-mapper.title', showBreadcrumbs: true },
-                canActivate: [ItemPageCollectionMapperGuard]
-              }
-            ]
+                data: {
+                  title: 'item.edit.tabs.item-mapper.title',
+                  showBreadcrumbs: true,
+                },
+                canActivate: [ItemPageCollectionMapperGuard],
+              },
+            ],
           },
           {
             path: 'mapper',
@@ -118,12 +136,12 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
           {
             path: ITEM_EDIT_WITHDRAW_PATH,
             component: ItemWithdrawComponent,
-            canActivate: [ItemPageWithdrawGuard]
+            canActivate: [ItemPageWithdrawGuard],
           },
           {
             path: ITEM_EDIT_REINSTATE_PATH,
             component: ItemReinstateComponent,
-            canActivate: [ItemPageReinstateGuard]
+            canActivate: [ItemPageReinstateGuard],
           },
           {
             path: ITEM_EDIT_PRIVATE_PATH,
@@ -148,29 +166,29 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
               {
                 path: 'create',
                 resolve: {
-                  resourcePolicyTarget: ResourcePolicyTargetResolver
+                  resourcePolicyTarget: ResourcePolicyTargetResolver,
                 },
                 component: ResourcePolicyCreateComponent,
-                data: { title: 'resource-policies.create.page.title' }
+                data: { title: 'resource-policies.create.page.title' },
               },
               {
                 path: 'edit',
                 resolve: {
-                  resourcePolicy: ResourcePolicyResolver
+                  resourcePolicy: ResourcePolicyResolver,
                 },
                 component: ResourcePolicyEditComponent,
-                data: { title: 'resource-policies.edit.page.title' }
+                data: { title: 'resource-policies.edit.page.title' },
               },
               {
                 path: '',
                 component: ItemAuthorizationsComponent,
-                data: { title: 'item.edit.authorizations.title' }
-              }
-            ]
-          }
-        ]
-      }
-    ])
+                data: { title: 'item.edit.authorizations.title' },
+              },
+            ],
+          },
+        ],
+      },
+    ]),
   ],
   providers: [
     I18nBreadcrumbResolver,
@@ -186,8 +204,6 @@ import { ItemPageCollectionMapperGuard } from './item-page-collection-mapper.gua
     ItemPageRelationshipsGuard,
     ItemPageVersionHistoryGuard,
     ItemPageCollectionMapperGuard,
-  ]
+  ],
 })
-export class EditItemPageRoutingModule {
-
-}
+export class EditItemPageRoutingModule {}

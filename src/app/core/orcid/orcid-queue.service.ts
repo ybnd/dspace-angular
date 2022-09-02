@@ -1,27 +1,27 @@
 // eslint-disable-next-line max-classes-per-file
-import { DataService } from '../data/data.service';
-import { OrcidQueue } from './model/orcid-queue.model';
-import { RequestService } from '../data/request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
 import { Injectable } from '@angular/core';
-import { dataService } from '../cache/builders/build-decorators';
-import { ORCID_QUEUE } from './model/orcid-queue.resource-type';
-import { ItemDataService } from '../data/item-data.service';
-import { Observable } from 'rxjs';
-import { RemoteData } from '../data/remote-data';
-import { PaginatedList } from '../data/paginated-list.model';
-import { RequestParam } from '../cache/models/request-param.model';
-import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
-import { NoContent } from '../shared/NoContent.model';
-import { ConfigurationDataService } from '../data/configuration-data.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
+import { dataService } from '../cache/builders/build-decorators';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { RequestParam } from '../cache/models/request-param.model';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
+import { ConfigurationDataService } from '../data/configuration-data.service';
+import { DataService } from '../data/data.service';
+import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
+import { ItemDataService } from '../data/item-data.service';
+import { PaginatedList } from '../data/paginated-list.model';
+import { RemoteData } from '../data/remote-data';
+import { RequestService } from '../data/request.service';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { NoContent } from '../shared/NoContent.model';
+import { OrcidQueue } from './model/orcid-queue.model';
+import { ORCID_QUEUE } from './model/orcid-queue.resource-type';
 
 /**
  * A private DataService implementation to delegate specific methods to.
@@ -37,10 +37,10 @@ class OrcidQueueServiceImpl extends DataService<OrcidQueue> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<OrcidQueue>) {
+    protected comparator: DefaultChangeAnalyzer<OrcidQueue>
+  ) {
     super();
   }
-
 }
 
 /**
@@ -49,27 +49,33 @@ class OrcidQueueServiceImpl extends DataService<OrcidQueue> {
 @Injectable()
 @dataService(ORCID_QUEUE)
 export class OrcidQueueService {
-
   dataService: OrcidQueueServiceImpl;
 
   responseMsToLive: number = 10 * 1000;
 
   constructor(
-      protected requestService: RequestService,
-      protected rdbService: RemoteDataBuildService,
-      protected store: Store<CoreState>,
-      protected objectCache: ObjectCacheService,
-      protected halService: HALEndpointService,
-      protected notificationsService: NotificationsService,
-      protected http: HttpClient,
-      protected comparator: DefaultChangeAnalyzer<OrcidQueue>,
-      protected configurationService: ConfigurationDataService,
-      protected router: Router,
-      protected itemService: ItemDataService ) {
-
-          this.dataService = new OrcidQueueServiceImpl(requestService, rdbService, store, objectCache, halService,
-              notificationsService, http, comparator);
-
+    protected requestService: RequestService,
+    protected rdbService: RemoteDataBuildService,
+    protected store: Store<CoreState>,
+    protected objectCache: ObjectCacheService,
+    protected halService: HALEndpointService,
+    protected notificationsService: NotificationsService,
+    protected http: HttpClient,
+    protected comparator: DefaultChangeAnalyzer<OrcidQueue>,
+    protected configurationService: ConfigurationDataService,
+    protected router: Router,
+    protected itemService: ItemDataService
+  ) {
+    this.dataService = new OrcidQueueServiceImpl(
+      requestService,
+      rdbService,
+      store,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
@@ -81,11 +87,18 @@ export class OrcidQueueService {
    *                                    requested after the response becomes stale
    * @returns { OrcidQueue }
    */
-  searchByProfileItemId(itemId: string, paginationOptions: PaginationComponentOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true): Observable<RemoteData<PaginatedList<OrcidQueue>>> {
-    return this.dataService.searchBy('findByProfileItem', {
+  searchByProfileItemId(
+    itemId: string,
+    paginationOptions: PaginationComponentOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true
+  ): Observable<RemoteData<PaginatedList<OrcidQueue>>> {
+    return this.dataService.searchBy(
+      'findByProfileItem',
+      {
         searchParams: [new RequestParam('profileItemId', itemId)],
         elementsPerPage: paginationOptions.pageSize,
-        currentPage: paginationOptions.currentPage
+        currentPage: paginationOptions.currentPage,
       },
       useCachedVersionIfAvailable,
       reRequestOnStale
@@ -104,7 +117,8 @@ export class OrcidQueueService {
    * This method will set linkPath to stale
    */
   clearFindByProfileItemRequests() {
-    this.requestService.setStaleByHrefSubstring(this.dataService.linkPath + '/search/findByProfileItem');
+    this.requestService.setStaleByHrefSubstring(
+      this.dataService.linkPath + '/search/findByProfileItem'
+    );
   }
-
 }

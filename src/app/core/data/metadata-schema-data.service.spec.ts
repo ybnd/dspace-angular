@@ -1,14 +1,14 @@
-import { RequestService } from './request.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { MetadataSchemaDataService } from './metadata-schema-data.service';
 import { of as observableOf } from 'rxjs';
-import { RestResponse } from '../cache/response.models';
-import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service.stub';
-import { MetadataSchema } from '../metadata/metadata-schema.model';
-import { CreateRequest, PutRequest } from './request.models';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { getMockRemoteDataBuildService } from '../../shared/mocks/remote-data-build.service.mock';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service.stub';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { RestResponse } from '../cache/response.models';
+import { MetadataSchema } from '../metadata/metadata-schema.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { MetadataSchemaDataService } from './metadata-schema-data.service';
+import { CreateRequest, PutRequest } from './request.models';
+import { RequestService } from './request.service';
 
 describe('MetadataSchemaDataService', () => {
   let metadataSchemaService: MetadataSchemaDataService;
@@ -24,14 +24,23 @@ describe('MetadataSchemaDataService', () => {
       generateRequestId: '34cfed7c-f597-49ef-9cbe-ea351f0023c2',
       send: {},
       getByUUID: observableOf({ response: new RestResponse(true, 200, 'OK') }),
-      removeByHrefSubstring: {}
+      removeByHrefSubstring: {},
     });
     halService = Object.assign(new HALEndpointServiceStub(endpoint));
     notificationsService = jasmine.createSpyObj('notificationsService', {
-      error: {}
+      error: {},
     });
     rdbService = getMockRemoteDataBuildService();
-    metadataSchemaService = new MetadataSchemaDataService(requestService, rdbService, undefined, halService, undefined, undefined, undefined, notificationsService);
+    metadataSchemaService = new MetadataSchemaDataService(
+      requestService,
+      rdbService,
+      undefined,
+      halService,
+      undefined,
+      undefined,
+      undefined,
+      notificationsService
+    );
   }
 
   beforeEach(() => {
@@ -46,40 +55,50 @@ describe('MetadataSchemaDataService', () => {
         prefix: 'dc',
         namespace: 'namespace',
         _links: {
-          self: { href: 'selflink' }
-        }
+          self: { href: 'selflink' },
+        },
       });
     });
 
     describe('called with a new metadata schema', () => {
       it('should send a CreateRequest', (done) => {
-        metadataSchemaService.createOrUpdateMetadataSchema(schema).subscribe(() => {
-          expect(requestService.send).toHaveBeenCalledWith(jasmine.any(CreateRequest));
-          done();
-        });
+        metadataSchemaService
+          .createOrUpdateMetadataSchema(schema)
+          .subscribe(() => {
+            expect(requestService.send).toHaveBeenCalledWith(
+              jasmine.any(CreateRequest)
+            );
+            done();
+          });
       });
     });
 
     describe('called with an existing metadata schema', () => {
       beforeEach(() => {
         schema = Object.assign(schema, {
-          id: 'id-of-existing-schema'
+          id: 'id-of-existing-schema',
         });
       });
 
       it('should send a PutRequest', (done) => {
-        metadataSchemaService.createOrUpdateMetadataSchema(schema).subscribe(() => {
-          expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PutRequest));
-          done();
-        });
+        metadataSchemaService
+          .createOrUpdateMetadataSchema(schema)
+          .subscribe(() => {
+            expect(requestService.send).toHaveBeenCalledWith(
+              jasmine.any(PutRequest)
+            );
+            done();
+          });
       });
     });
   });
 
   describe('clearRequests', () => {
-    it('should remove requests on the data service\'s endpoint', (done) => {
+    it("should remove requests on the data service's endpoint", (done) => {
       metadataSchemaService.clearRequests().subscribe(() => {
-        expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(`${endpoint}/${(metadataSchemaService as any).linkPath}`);
+        expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(
+          `${endpoint}/${(metadataSchemaService as any).linkPath}`
+        );
         done();
       });
     });

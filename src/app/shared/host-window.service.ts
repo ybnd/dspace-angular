@@ -1,36 +1,36 @@
-import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
-
-import { filter, distinctUntilChanged, map } from 'rxjs/operators';
-import { HostWindowState } from './search/host-window.reducer';
 import { Injectable } from '@angular/core';
 import { createSelector, select, Store } from '@ngrx/store';
-
-import { hasValue } from './empty.util';
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { AppState } from '../app.reducer';
+import { hasValue } from './empty.util';
 import { CSSVariableService } from './sass-helper/sass-helper.service';
+import { HostWindowState } from './search/host-window.reducer';
 
 export enum WidthCategory {
   XS,
   SM,
   MD,
   LG,
-  XL
+  XL,
 }
 
 const hostWindowStateSelector = (state: AppState) => state.hostWindow;
-const widthSelector = createSelector(hostWindowStateSelector, (hostWindow: HostWindowState) => hostWindow.width);
+const widthSelector = createSelector(
+  hostWindowStateSelector,
+  (hostWindow: HostWindowState) => hostWindow.width
+);
 
 @Injectable()
 export class HostWindowService {
-  private breakPoints: { XS_MIN, SM_MIN, MD_MIN, LG_MIN, XL_MIN } = {} as any;
+  private breakPoints: { XS_MIN; SM_MIN; MD_MIN; LG_MIN; XL_MIN } = {} as any;
 
   constructor(
     private store: Store<AppState>,
     private variableService: CSSVariableService
   ) {
     /* See _exposed_variables.scss */
-    variableService.getAllVariables()
-      .subscribe((variables) => {
+    variableService.getAllVariables().subscribe((variables) => {
       this.breakPoints.XL_MIN = parseInt(variables.xlMin, 10);
       this.breakPoints.LG_MIN = parseInt(variables.lgMin, 10);
       this.breakPoints.MD_MIN = parseInt(variables.mdMin, 10);
@@ -50,11 +50,20 @@ export class HostWindowService {
       map((width: number) => {
         if (width < this.breakPoints.SM_MIN) {
           return WidthCategory.XS;
-        } else if (width >= this.breakPoints.SM_MIN && width < this.breakPoints.MD_MIN) {
+        } else if (
+          width >= this.breakPoints.SM_MIN &&
+          width < this.breakPoints.MD_MIN
+        ) {
           return WidthCategory.SM;
-        } else if (width >= this.breakPoints.MD_MIN && width < this.breakPoints.LG_MIN) {
+        } else if (
+          width >= this.breakPoints.MD_MIN &&
+          width < this.breakPoints.LG_MIN
+        ) {
           return WidthCategory.MD;
-        } else if (width >= this.breakPoints.LG_MIN && width < this.breakPoints.XL_MIN) {
+        } else if (
+          width >= this.breakPoints.LG_MIN &&
+          width < this.breakPoints.XL_MIN
+        ) {
           return WidthCategory.LG;
         } else {
           return WidthCategory.XL;
@@ -100,10 +109,7 @@ export class HostWindowService {
   }
 
   isXsOrSm(): Observable<boolean> {
-    return observableCombineLatest(
-      this.isXs(),
-      this.isSm()
-    ).pipe(
+    return observableCombineLatest(this.isXs(), this.isSm()).pipe(
       map(([isXs, isSm]) => isXs || isSm),
       distinctUntilChanged()
     );

@@ -1,9 +1,8 @@
 import { Component, Injector, Input, OnInit, ViewChild } from '@angular/core';
-
-import { SectionsDirective } from '../sections.directive';
+import { AlertType } from '../../../shared/alert/aletr-type';
 import { SectionDataObject } from '../models/section-data.model';
 import { rendersSectionType } from '../sections-decorator';
-import { AlertType } from '../../../shared/alert/aletr-type';
+import { SectionsDirective } from '../sections.directive';
 
 /**
  * This component represents a section that contains the submission license form.
@@ -11,10 +10,9 @@ import { AlertType } from '../../../shared/alert/aletr-type';
 @Component({
   selector: 'ds-submission-section-container',
   templateUrl: './section-container.component.html',
-  styleUrls: ['./section-container.component.scss']
+  styleUrls: ['./section-container.component.scss'],
 })
 export class SubmissionSectionContainerComponent implements OnInit {
-
   /**
    * The collection id this submission belonging to
    * @type {string}
@@ -55,8 +53,7 @@ export class SubmissionSectionContainerComponent implements OnInit {
    *
    * @param {Injector} injector
    */
-  constructor(private injector: Injector) {
-  }
+  constructor(private injector: Injector) {}
 
   /**
    * Initialize all instance variables
@@ -64,11 +61,23 @@ export class SubmissionSectionContainerComponent implements OnInit {
   ngOnInit() {
     this.objectInjector = Injector.create({
       providers: [
-        { provide: 'collectionIdProvider', useFactory: () => (this.collectionId), deps: [] },
-        { provide: 'sectionDataProvider', useFactory: () => (this.sectionData), deps: [] },
-        { provide: 'submissionIdProvider', useFactory: () => (this.submissionId), deps: [] },
+        {
+          provide: 'collectionIdProvider',
+          useFactory: () => this.collectionId,
+          deps: [],
+        },
+        {
+          provide: 'sectionDataProvider',
+          useFactory: () => this.sectionData,
+          deps: [],
+        },
+        {
+          provide: 'submissionIdProvider',
+          useFactory: () => this.submissionId,
+          deps: [],
+        },
       ],
-      parent: this.injector
+      parent: this.injector,
     });
   }
 

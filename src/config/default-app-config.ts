@@ -1,11 +1,14 @@
 import { RestRequestMethod } from '../app/core/data/rest-request-method';
 import { NotificationAnimationsType } from '../app/shared/notifications/models/notification-animations-type';
+import { ActuatorsConfig } from './actuators.config';
 import { AppConfig } from './app-config.interface';
 import { AuthConfig } from './auth-config.interfaces';
 import { BrowseByConfig } from './browse-by-config.interface';
+import { BundleConfig } from './bundle-config.interface';
 import { CacheConfig } from './cache-config.interface';
 import { CollectionPageConfig } from './collection-page-config.interface';
 import { FormConfig } from './form-config.interfaces';
+import { InfoConfig } from './info-config.interface';
 import { ItemConfig } from './item-config.interface';
 import { LangConfig } from './lang-config.interface';
 import { MediaViewerConfig } from './media-viewer-config.interface';
@@ -14,9 +17,6 @@ import { ServerConfig } from './server-config.interface';
 import { SubmissionConfig } from './submission-config.interface';
 import { ThemeConfig } from './theme.model';
 import { UIServerConfig } from './ui-server-config.interface';
-import { BundleConfig } from './bundle-config.interface';
-import { ActuatorsConfig } from './actuators.config';
-import { InfoConfig } from './info-config.interface';
 
 export class DefaultAppConfig implements AppConfig {
   production = false;
@@ -36,8 +36,8 @@ export class DefaultAppConfig implements AppConfig {
     // The rateLimiter settings limit each IP to a 'max' of 500 requests per 'windowMs' (1 minute).
     rateLimiter: {
       windowMs: 1 * 60 * 1000, // 1 minute
-      max: 500 // limit each IP to 500 requests per windowMs
-    }
+      max: 500, // limit each IP to 500 requests per windowMs
+    },
   };
 
   // The REST API server settings
@@ -51,21 +51,21 @@ export class DefaultAppConfig implements AppConfig {
   };
 
   actuators: ActuatorsConfig = {
-    endpointPath: '/actuator/health'
+    endpointPath: '/actuator/health',
   };
 
   // Caching settings
   cache: CacheConfig = {
     // NOTE: how long should objects be cached for by default
     msToLive: {
-      default: 15 * 60 * 1000 // 15 minutes
+      default: 15 * 60 * 1000, // 15 minutes
     },
     control: 'max-age=60', // revalidate browser
     autoSync: {
       defaultTime: 0,
       maxBufferSize: 100,
-      timePerMethod: { [RestRequestMethod.PATCH]: 3 } as any // time in seconds
-    }
+      timePerMethod: { [RestRequestMethod.PATCH]: 3 } as any, // time in seconds
+    },
   };
 
   // Authentication settings
@@ -75,14 +75,14 @@ export class DefaultAppConfig implements AppConfig {
       // the amount of time before the idle warning is shown
       timeUntilIdle: 15 * 60 * 1000, // 15 minutes
       // the amount of time the user has to react after the idle warning is shown before they are logged out.
-      idleGracePeriod: 5 * 60 * 1000 // 5 minutes
+      idleGracePeriod: 5 * 60 * 1000, // 5 minutes
     },
     // Authentication REST settings
     rest: {
       // If the rest token expires in less than this amount of time, it will be refreshed automatically.
       // This is independent from the idle warning.
-      timeLeftBeforeTokenRefresh: 2 * 60 * 1000 // 2 minutes
-    }
+      timeLeftBeforeTokenRefresh: 2 * 60 * 1000, // 2 minutes
+    },
   };
 
   // Form settings
@@ -90,8 +90,8 @@ export class DefaultAppConfig implements AppConfig {
     // NOTE: Map server-side validators to comparative Angular form validators
     validatorMap: {
       required: 'required',
-      regex: 'pattern'
-    }
+      regex: 'pattern',
+    },
   };
 
   // Notifications
@@ -103,7 +103,7 @@ export class DefaultAppConfig implements AppConfig {
     timeOut: 5000, // 5 second
     clickToClose: true,
     // NOTE: 'fade' | 'fromTop' | 'fromRight' | 'fromBottom' | 'fromLeft' | 'rotate' | 'scale'
-    animate: NotificationAnimationsType.Scale
+    animate: NotificationAnimationsType.Scale,
   };
 
   // Submission settings
@@ -115,10 +115,10 @@ export class DefaultAppConfig implements AppConfig {
        * NOTE: after how many time (milliseconds) submission is saved automatically
        * eg. timer: 5 * (1000 * 60); // 5 minutes
        */
-      timer: 0
+      timer: 0,
     },
     typeBind: {
-      field: 'dc.type'
+      field: 'dc.type',
     },
     icons: {
       metadata: [
@@ -133,13 +133,13 @@ export class DefaultAppConfig implements AppConfig {
          */
         {
           name: 'dc.author',
-          style: 'fas fa-user'
+          style: 'fas fa-user',
         },
         // default configuration
         {
           name: 'default',
-          style: ''
-        }
+          style: '',
+        },
       ],
       authority: {
         confidence: [
@@ -154,25 +154,24 @@ export class DefaultAppConfig implements AppConfig {
            */
           {
             value: 600,
-            style: 'text-success'
+            style: 'text-success',
           },
           {
             value: 500,
-            style: 'text-info'
+            style: 'text-info',
           },
           {
             value: 400,
-            style: 'text-warning'
+            style: 'text-warning',
           },
           // default configuration
           {
             value: 'default',
-            style: 'text-muted'
-          }
-
-        ]
-      }
-    }
+            style: 'text-muted',
+          },
+        ],
+      },
+    },
   };
 
   // Default Language in which the UI will be rendered if the user's browser language is not an active language
@@ -195,7 +194,7 @@ export class DefaultAppConfig implements AppConfig {
     { code: 'fi', label: 'Suomi', active: true },
     { code: 'sv', label: 'Svenska', active: true },
     { code: 'tr', label: 'Türkçe', active: true },
-    { code: 'bn', label: 'বাংলা', active: true }
+    { code: 'bn', label: 'বাংলা', active: true },
   ];
 
   // Browse-By Pages
@@ -205,23 +204,23 @@ export class DefaultAppConfig implements AppConfig {
     // Limit for years to display using jumps of five years (current year - fiveYearLimit)
     fiveYearLimit: 30,
     // The absolute lowest year to display in the dropdown (only used when no lowest date can be found for all items)
-    defaultLowerLimit: 1900
+    defaultLowerLimit: 1900,
   };
 
   // Item Config
   item: ItemConfig = {
     edit: {
-      undoTimeout: 10000 // 10 seconds
+      undoTimeout: 10000, // 10 seconds
     },
     // Show the item access status label in items lists
-    showAccessStatuses: false
+    showAccessStatuses: false,
   };
 
   // Collection Page Config
   collection: CollectionPageConfig = {
     edit: {
-      undoTimeout: 10000 // 10 seconds
-    }
+      undoTimeout: 10000, // 10 seconds
+    },
   };
 
   // Theme Config
@@ -281,50 +280,50 @@ export class DefaultAppConfig implements AppConfig {
           // Insert <link rel="icon" href="assets/dspace/images/favicons/favicon.ico" sizes="any"/> into the <head> of the page.
           tagName: 'link',
           attributes: {
-            'rel': 'icon',
-            'href': 'assets/dspace/images/favicons/favicon.ico',
-            'sizes': 'any',
-          }
+            rel: 'icon',
+            href: 'assets/dspace/images/favicons/favicon.ico',
+            sizes: 'any',
+          },
         },
         {
           // Insert <link rel="icon" href="assets/dspace/images/favicons/favicon.svg" type="image/svg+xml"/> into the <head> of the page.
           tagName: 'link',
           attributes: {
-            'rel': 'icon',
-            'href': 'assets/dspace/images/favicons/favicon.svg',
-            'type': 'image/svg+xml',
-          }
+            rel: 'icon',
+            href: 'assets/dspace/images/favicons/favicon.svg',
+            type: 'image/svg+xml',
+          },
         },
         {
           // Insert <link rel="apple-touch-icon" href="assets/dspace/images/favicons/apple-touch-icon.png"/> into the <head> of the page.
           tagName: 'link',
           attributes: {
-            'rel': 'apple-touch-icon',
-            'href': 'assets/dspace/images/favicons/apple-touch-icon.png',
-          }
+            rel: 'apple-touch-icon',
+            href: 'assets/dspace/images/favicons/apple-touch-icon.png',
+          },
         },
         {
           // Insert <link rel="manifest" href="assets/dspace/images/favicons/manifest.webmanifest"/> into the <head> of the page.
           tagName: 'link',
           attributes: {
-            'rel': 'manifest',
-            'href': 'assets/dspace/images/favicons/manifest.webmanifest',
-          }
+            rel: 'manifest',
+            href: 'assets/dspace/images/favicons/manifest.webmanifest',
+          },
         },
-      ]
+      ],
     },
   ];
   // The default bundles that should always be displayed when you edit or add a bundle even when no bundle has been
   // added to the item yet.
   bundle: BundleConfig = {
-    standardBundles: ['ORIGINAL', 'THUMBNAIL', 'LICENSE']
+    standardBundles: ['ORIGINAL', 'THUMBNAIL', 'LICENSE'],
   };
   // Whether to enable media viewer for image and/or video Bitstreams (i.e. Bitstreams whose MIME type starts with "image" or "video").
   // For images, this enables a gallery viewer where you can zoom or page through images.
   // For videos, this enables embedded video streaming
   mediaViewer: MediaViewerConfig = {
     image: false,
-    video: false
+    video: false,
   };
   // Whether the end-user-agreement and privacy policy feature should be enabled or not.
   // Disabling the end user agreement feature will result in:
@@ -336,6 +335,6 @@ export class DefaultAppConfig implements AppConfig {
   // - All mentions of the privacy policy being removed from the UI (e.g. in the footer)
   info: InfoConfig = {
     enableEndUserAgreement: true,
-    enablePrivacyStatement: true
+    enablePrivacyStatement: true,
   };
 }

@@ -1,29 +1,25 @@
-import 'zone.js';
-import 'reflect-metadata';
-import 'core-js/es/reflect';
-
 import { enableProdMode } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import 'core-js/es/reflect';
+import 'reflect-metadata';
 import { load as loadWebFont } from 'webfontloader';
-
+import 'zone.js';
 import { hasValue } from './app/shared/empty.util';
-
-import { BrowserAppModule } from './modules/app/browser-app.module';
-
-import { environment } from './environments/environment';
 import { AppConfig } from './config/app-config.interface';
 import { extendEnvironmentWithAppConfig } from './config/config.util';
+import { environment } from './environments/environment';
+import { BrowserAppModule } from './modules/app/browser-app.module';
 
-const bootstrap = () => platformBrowserDynamic()
-  .bootstrapModule(BrowserAppModule, {});
+const bootstrap = () =>
+  platformBrowserDynamic().bootstrapModule(BrowserAppModule, {});
 
 const main = () => {
   // Load fonts async
   // https://github.com/typekit/webfontloader#configuration
   loadWebFont({
     google: {
-      families: ['Droid Sans']
-    }
+      families: ['Droid Sans'],
+    },
   });
 
   if (environment.production) {
@@ -45,7 +41,11 @@ const main = () => {
 };
 
 // support async tag or hmr
-if (document.readyState === 'complete' && hasValue(environment.universal) && !environment.universal.preboot) {
+if (
+  document.readyState === 'complete' &&
+  hasValue(environment.universal) &&
+  !environment.universal.preboot
+) {
   main();
 } else {
   document.addEventListener('DOMContentLoaded', main);

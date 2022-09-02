@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { PageErrorComponent } from './page-error.component';
-import { ActivatedRoute } from '@angular/router';
-import { ActivatedRouteStub } from '../shared/testing/active-router.stub';
-import { of as observableOf } from 'rxjs';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { By } from '@angular/platform-browser';
+import { ActivatedRoute } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { ActivatedRouteStub } from '../shared/testing/active-router.stub';
 import { TranslateLoaderMock } from '../shared/testing/translate-loader.mock';
+import { PageErrorComponent } from './page-error.component';
 
 describe('PageErrorComponent', () => {
   let component: PageErrorComponent;
@@ -13,23 +13,21 @@ describe('PageErrorComponent', () => {
   const activatedRouteStub = Object.assign(new ActivatedRouteStub(), {
     queryParams: observableOf({
       status: 401,
-      code: 'orcid.generic-error'
-    })
+      code: 'orcid.generic-error',
+    }),
   });
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageErrorComponent ],
+      declarations: [PageErrorComponent],
       imports: [
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
-        })
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteStub },
-      ]
+      providers: [{ provide: ActivatedRoute, useValue: activatedRouteStub }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PageErrorComponent);
@@ -42,7 +40,9 @@ describe('PageErrorComponent', () => {
   });
 
   it('should show error for 401 unauthorized', () => {
-    const statusElement = fixture.debugElement.query(By.css('[data-test="status"]')).nativeElement;
+    const statusElement = fixture.debugElement.query(
+      By.css('[data-test="status"]')
+    ).nativeElement;
     expect(statusElement.innerHTML).toEqual('401');
   });
 });

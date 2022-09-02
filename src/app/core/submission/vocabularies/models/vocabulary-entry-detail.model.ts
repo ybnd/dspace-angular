@@ -1,8 +1,7 @@
 import { autoserialize, deserialize, inheritSerialization } from 'cerialize';
-
+import { typedObject } from '../../../cache/builders/build-decorators';
 import { HALLink } from '../../../shared/hal-link.model';
 import { VOCABULARY_ENTRY_DETAIL } from './vocabularies.resource-type';
-import { typedObject } from '../../../cache/builders/build-decorators';
 import { VocabularyEntry } from './vocabulary-entry.model';
 
 /**
@@ -33,7 +32,6 @@ export class VocabularyEntryDetail extends VocabularyEntry {
     self: HALLink;
     vocabulary: HALLink;
     parent: HALLink;
-    children
+    children;
   };
-
 }

@@ -1,16 +1,15 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TranslateModule } from '@ngx-translate/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { URLCombiner } from '../../../core/url-combiner/url-combiner';
-import { WorkflowItemAdminWorkflowActionsComponent } from './workflow-item-admin-workflow-actions.component';
+import { TranslateModule } from '@ngx-translate/core';
 import { WorkflowItem } from '../../../core/submission/models/workflowitem.model';
+import { URLCombiner } from '../../../core/url-combiner/url-combiner';
 import {
   getWorkflowItemDeleteRoute,
-  getWorkflowItemSendBackRoute
+  getWorkflowItemSendBackRoute,
 } from '../../../workflowitems-edit-page/workflowitems-edit-page-routing-paths';
+import { WorkflowItemAdminWorkflowActionsComponent } from './workflow-item-admin-workflow-actions.component';
 
 describe('WorkflowItemAdminWorkflowActionsComponent', () => {
   let component: WorkflowItemAdminWorkflowActionsComponent;
@@ -27,18 +26,16 @@ describe('WorkflowItemAdminWorkflowActionsComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        RouterTestingModule.withRoutes([])
-      ],
+      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
       declarations: [WorkflowItemAdminWorkflowActionsComponent],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(WorkflowItemAdminWorkflowActionsComponent);
+    fixture = TestBed.createComponent(
+      WorkflowItemAdminWorkflowActionsComponent
+    );
     component = fixture.componentInstance;
     component.wfi = wfi;
     fixture.detectChanges();
@@ -51,12 +48,16 @@ describe('WorkflowItemAdminWorkflowActionsComponent', () => {
   it('should render a delete button with the correct link', () => {
     const button = fixture.debugElement.query(By.css('a.delete-link'));
     const link = button.nativeElement.href;
-    expect(link).toContain(new URLCombiner(getWorkflowItemDeleteRoute(wfi.id)).toString());
+    expect(link).toContain(
+      new URLCombiner(getWorkflowItemDeleteRoute(wfi.id)).toString()
+    );
   });
 
   it('should render a move button with the correct link', () => {
     const a = fixture.debugElement.query(By.css('a.send-back-link'));
     const link = a.nativeElement.href;
-    expect(link).toContain(new URLCombiner(getWorkflowItemSendBackRoute(wfi.id)).toString());
+    expect(link).toContain(
+      new URLCombiner(getWorkflowItemSendBackRoute(wfi.id)).toString()
+    );
   });
 });

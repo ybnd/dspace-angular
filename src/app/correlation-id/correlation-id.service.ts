@@ -1,27 +1,25 @@
+import { Injectable } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { take } from 'rxjs/operators';
+import { AppState } from '../app.reducer';
 import { CookieService } from '../core/services/cookie.service';
 import { UUIDService } from '../core/shared/uuid.service';
-import { Store, select } from '@ngrx/store';
-import { AppState } from '../app.reducer';
 import { isEmpty } from '../shared/empty.util';
-import { take } from 'rxjs/operators';
 import { SetCorrelationIdAction } from './correlation-id.actions';
-import { Injectable } from '@angular/core';
 import { correlationIdSelector } from './correlation-id.selector';
 
 /**
  * Service to manage the correlation id, an id used to give context to server side logs
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CorrelationIdService {
-
   constructor(
     protected cookieService: CookieService,
     protected uuidService: UUIDService,
-    protected store: Store<AppState>,
-  ) {
-  }
+    protected store: Store<AppState>
+  ) {}
 
   /**
    * Initialize the correlation id based on the cookie or the ngrx store
@@ -51,13 +49,12 @@ export class CorrelationIdService {
   getCorrelationId(): string {
     let correlationId;
 
-    this.store.pipe(
-      select(correlationIdSelector),
-      take(1)
-    ).subscribe((storeId: string) => {
-      // we can do this because ngrx selects are synchronous
-      correlationId = storeId;
-    });
+    this.store
+      .pipe(select(correlationIdSelector), take(1))
+      .subscribe((storeId: string) => {
+        // we can do this because ngrx selects are synchronous
+        correlationId = storeId;
+      });
 
     return correlationId;
   }

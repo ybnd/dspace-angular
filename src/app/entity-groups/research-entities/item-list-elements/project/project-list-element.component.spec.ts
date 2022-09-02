@@ -1,10 +1,10 @@
-import { waitForAsync, TestBed } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 import { Item } from '../../../../core/shared/item.model';
-import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
 import { TruncatableService } from '../../../../shared/truncatable/truncatable.service';
+import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
 import { ProjectListElementComponent } from './project-list-element.component';
 
 const mockItem: Item = Object.assign(new Item(), {
@@ -13,8 +13,8 @@ const mockItem: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     // 'project.identifier.status': [
     //   {
@@ -22,7 +22,7 @@ const mockItem: Item = Object.assign(new Item(), {
     //     value: 'A status about the project'
     //   }
     // ]
-  }
+  },
 });
 
 describe('ProjectListElementComponent', () => {
@@ -39,10 +39,12 @@ describe('ProjectListElementComponent', () => {
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ProjectListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ProjectListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -57,7 +59,9 @@ describe('ProjectListElementComponent', () => {
     });
 
     it(`should contain a ProjectListElementComponent`, () => {
-      const projectListElement = fixture.debugElement.query(By.css(`ds-project-search-result-list-element`));
+      const projectListElement = fixture.debugElement.query(
+        By.css(`ds-project-search-result-list-element`)
+      );
       expect(projectListElement).not.toBeNull();
     });
   });

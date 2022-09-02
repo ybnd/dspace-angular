@@ -1,18 +1,17 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { environment } from '../../../environments/environment';
-import { AuthService } from '../../core/auth/auth.service';
-import { hasValue } from '../empty.util';
 import { Store } from '@ngrx/store';
+import { environment } from '../../../environments/environment';
 import { AppState } from '../../app.reducer';
 import { LogOutAction } from '../../core/auth/auth.actions';
+import { AuthService } from '../../core/auth/auth.service';
+import { hasValue } from '../empty.util';
 
 @Component({
   selector: 'ds-idle-modal',
   templateUrl: 'idle-modal.component.html',
 })
 export class IdleModalComponent implements OnInit {
-
   /**
    * Total time of idleness before session expires (in minutes)
    * (environment.auth.ui.timeUntilIdle + environment.auth.ui.idleGracePeriod / 1000 / 60)
@@ -30,10 +29,16 @@ export class IdleModalComponent implements OnInit {
   @Output()
   response = new EventEmitter<boolean>();
 
-  constructor(private activeModal: NgbActiveModal,
-              private authService: AuthService,
-              private store: Store<AppState>) {
-    this.timeToExpire = (environment.auth.ui.timeUntilIdle + environment.auth.ui.idleGracePeriod) / 1000 / 60; // ms => min
+  constructor(
+    private activeModal: NgbActiveModal,
+    private authService: AuthService,
+    private store: Store<AppState>
+  ) {
+    this.timeToExpire =
+      (environment.auth.ui.timeUntilIdle +
+        environment.auth.ui.idleGracePeriod) /
+      1000 /
+      60; // ms => min
   }
 
   ngOnInit() {

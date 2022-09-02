@@ -1,9 +1,9 @@
 import { autoserialize, deserialize, inheritSerialization } from 'cerialize';
 import { typedObject } from '../../cache/builders/build-decorators';
-import { ConfigObject } from './config.model';
+import { HALLink } from '../../shared/hal-link.model';
 import { AccessesConditionOption } from './config-accesses-conditions-options.model';
 import { SUBMISSION_ACCESSES_TYPE } from './config-type';
-import { HALLink } from '../../shared/hal-link.model';
+import { ConfigObject } from './config.model';
 
 /**
  * Class for the configuration describing the item accesses condition
@@ -36,7 +36,6 @@ export class SubmissionAccessModel extends ConfigObject {
    */
   @deserialize
   _links: {
-    self: HALLink
+    self: HALLink;
   };
-
 }

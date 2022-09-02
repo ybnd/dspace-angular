@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import { FEATURE } from '../../shared/feature.resource-type';
-import { dataService } from '../../cache/builders/build-decorators';
-import { DataService } from '../data.service';
-import { Feature } from '../../shared/feature.model';
-import { RequestService } from '../request.service';
-import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../../cache/object-cache.service';
-import { HALEndpointService } from '../../shared/hal-endpoint.service';
-import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { DSOChangeAnalyzer } from '../dso-change-analyzer.service';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { NotificationsService } from '../../../shared/notifications/notifications.service';
+import { dataService } from '../../cache/builders/build-decorators';
+import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../../cache/object-cache.service';
 import { CoreState } from '../../core-state.model';
+import { Feature } from '../../shared/feature.model';
+import { FEATURE } from '../../shared/feature.resource-type';
+import { HALEndpointService } from '../../shared/hal-endpoint.service';
+import { DataService } from '../data.service';
+import { DSOChangeAnalyzer } from '../dso-change-analyzer.service';
+import { RequestService } from '../request.service';
 
 /**
  * A service to retrieve {@link Feature}s from the REST API

@@ -5,18 +5,17 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { CoreState } from '../core-state.model';
 import { DataService } from '../data/data.service';
+import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
 import { RequestService } from '../data/request.service';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { SUBMISSION_CC_LICENSE } from './models/submission-cc-licence.resource-type';
 import { SubmissionCcLicence } from './models/submission-cc-license.model';
-import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
-import { CoreState } from '../core-state.model';
 
 @Injectable()
 @dataService(SUBMISSION_CC_LICENSE)
 export class SubmissionCcLicenseDataService extends DataService<SubmissionCcLicence> {
-
   protected linkPath = 'submissioncclicenses';
 
   constructor(
@@ -27,7 +26,7 @@ export class SubmissionCcLicenseDataService extends DataService<SubmissionCcLice
     protected objectCache: ObjectCacheService,
     protected rdbService: RemoteDataBuildService,
     protected requestService: RequestService,
-    protected store: Store<CoreState>,
+    protected store: Store<CoreState>
   ) {
     super();
   }

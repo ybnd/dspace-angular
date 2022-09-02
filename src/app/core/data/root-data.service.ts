@@ -1,27 +1,26 @@
 /* eslint-disable max-classes-per-file */
-import { DataService } from './data.service';
-import { Root } from './root.model';
-import { Injectable } from '@angular/core';
-import { ROOT } from './root.resource-type';
-import { dataService } from '../cache/builders/build-decorators';
-import { RequestService } from './request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable, of as observableOf } from 'rxjs';
-import { RemoteData } from './remote-data';
+import { catchError, map } from 'rxjs/operators';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
-import { PaginatedList } from './paginated-list.model';
+import { dataService } from '../cache/builders/build-decorators';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
-import { FindListOptions } from './find-list-options.model';
 import { DspaceRestService } from '../dspace-rest/dspace-rest.service';
 import { RawRestResponse } from '../dspace-rest/raw-rest-response.model';
-import { catchError, map } from 'rxjs/operators';
-
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { DataService } from './data.service';
+import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
+import { FindListOptions } from './find-list-options.model';
+import { PaginatedList } from './paginated-list.model';
+import { RemoteData } from './remote-data';
+import { RequestService } from './request.service';
+import { Root } from './root.model';
+import { ROOT } from './root.resource-type';
 
 /**
  * A private DataService implementation to delegate specific methods to.
@@ -38,7 +37,8 @@ class DataServiceImpl extends DataService<Root> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Root>) {
+    protected comparator: DefaultChangeAnalyzer<Root>
+  ) {
     super();
   }
 }
@@ -63,8 +63,18 @@ export class RootDataService {
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
     protected comparator: DefaultChangeAnalyzer<Root>,
-    protected restService: DspaceRestService) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
+    protected restService: DspaceRestService
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
@@ -72,7 +82,7 @@ export class RootDataService {
    */
   checkServerAvailability(): Observable<boolean> {
     return this.restService.get(this.halService.getRootHref()).pipe(
-      catchError((err ) => {
+      catchError((err) => {
         console.error(err);
         return observableOf(false);
       }),
@@ -89,8 +99,17 @@ export class RootDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findRoot(useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Root>[]): Observable<RemoteData<Root>> {
-    return this.dataService.findByHref(this.halService.getRootHref(), useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findRoot(
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Root>[]
+  ): Observable<RemoteData<Root>> {
+    return this.dataService.findByHref(
+      this.halService.getRootHref(),
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -104,8 +123,18 @@ export class RootDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByHref(href: string | Observable<string>, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Root>[]): Observable<RemoteData<Root>> {
-    return this.dataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByHref(
+    href: string | Observable<string>,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Root>[]
+  ): Observable<RemoteData<Root>> {
+    return this.dataService.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -120,8 +149,20 @@ export class RootDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByHref(href: string | Observable<string>, findListOptions: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Root>[]): Observable<RemoteData<PaginatedList<Root>>> {
-    return this.dataService.findAllByHref(href, findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllByHref(
+    href: string | Observable<string>,
+    findListOptions: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Root>[]
+  ): Observable<RemoteData<PaginatedList<Root>>> {
+    return this.dataService.findAllByHref(
+      href,
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**

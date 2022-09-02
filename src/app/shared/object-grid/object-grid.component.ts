@@ -1,28 +1,32 @@
-import { combineLatest as observableCombineLatest, BehaviorSubject, Observable } from 'rxjs';
-
-import { startWith, distinctUntilChanged, map } from 'rxjs/operators';
 import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input, OnInit,
+  Input,
+  OnInit,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
+import {
+  BehaviorSubject,
+  combineLatest as observableCombineLatest,
+  Observable,
+} from 'rxjs';
+import { distinctUntilChanged, map, startWith } from 'rxjs/operators';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
 import { PaginatedList } from '../../core/data/paginated-list.model';
-
 import { RemoteData } from '../../core/data/remote-data';
+import { Context } from '../../core/shared/context.model';
+import { ViewMode } from '../../core/shared/view-mode.model';
 import { fadeIn } from '../animations/fade';
 import { hasNoValue, hasValue } from '../empty.util';
 import { HostWindowService, WidthCategory } from '../host-window.service';
-import { ListableObject } from '../object-collection/shared/listable-object.model';
-
-import { PaginationComponentOptions } from '../pagination/pagination-component-options.model';
-import { ViewMode } from '../../core/shared/view-mode.model';
-import { Context } from '../../core/shared/context.model';
 import { CollectionElementLinkType } from '../object-collection/collection-element-link.type';
+import { ListableObject } from '../object-collection/shared/listable-object.model';
+import { PaginationComponentOptions } from '../pagination/pagination-component-options.model';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
@@ -30,9 +34,8 @@ import { CollectionElementLinkType } from '../object-collection/collection-eleme
   selector: 'ds-object-grid',
   styleUrls: ['./object-grid.component.scss'],
   templateUrl: './object-grid.component.html',
-  animations: [fadeIn]
+  animations: [fadeIn],
 })
-
 export class ObjectGridComponent implements OnInit {
   /**
    * The view mode of the this component
@@ -104,11 +107,11 @@ export class ObjectGridComponent implements OnInit {
    * Event's payload equals to the newly selected page.
    */
   @Output() change: EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }> = new EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }>();
 
   /**
@@ -127,7 +130,8 @@ export class ObjectGridComponent implements OnInit {
    * An event fired when the sort direction is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter<SortDirection>();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter<SortDirection>();
 
   /**
    * An event fired when on of the pagination parameters changes
@@ -161,46 +165,52 @@ export class ObjectGridComponent implements OnInit {
    * Initialize the instance variables
    */
   ngOnInit(): void {
-    const nbColumns$ = this.hostWindow.widthCategory.pipe(
-      map((widthCat: WidthCategory) => {
-        switch (widthCat) {
-          case WidthCategory.XL:
-          case WidthCategory.LG: {
-            return 3;
+    const nbColumns$ = this.hostWindow.widthCategory
+      .pipe(
+        map((widthCat: WidthCategory) => {
+          switch (widthCat) {
+            case WidthCategory.XL:
+            case WidthCategory.LG: {
+              return 3;
+            }
+            case WidthCategory.MD:
+            case WidthCategory.SM: {
+              return 2;
+            }
+            default: {
+              return 1;
+            }
           }
-          case WidthCategory.MD:
-          case WidthCategory.SM: {
-            return 2;
-          }
-          default: {
-            return 1;
-          }
+        }),
+        distinctUntilChanged()
+      )
+      .pipe(startWith(3));
+
+    this.columns$ = observableCombineLatest(nbColumns$, this._objects$).pipe(
+      map(([nbColumns, objects]) => {
+        if (
+          hasValue(objects) &&
+          hasValue(objects.payload) &&
+          hasValue(objects.payload.page)
+        ) {
+          const page = objects.payload.page;
+
+          const result = [];
+
+          page.forEach((obj: ListableObject, i: number) => {
+            const colNb = i % nbColumns;
+            let col = result[colNb];
+            if (hasNoValue(col)) {
+              col = [];
+            }
+            result[colNb] = [...col, obj];
+          });
+          return result;
+        } else {
+          return [];
         }
-      }),
-      distinctUntilChanged()
-    ).pipe(startWith(3));
-
-    this.columns$ = observableCombineLatest(
-      nbColumns$,
-      this._objects$).pipe(map(([nbColumns, objects]) => {
-      if (hasValue(objects) && hasValue(objects.payload) && hasValue(objects.payload.page)) {
-        const page = objects.payload.page;
-
-        const result = [];
-
-        page.forEach((obj: ListableObject, i: number) => {
-          const colNb = i % nbColumns;
-          let col = result[colNb];
-          if (hasNoValue(col)) {
-            col = [];
-          }
-          result[colNb] = [...col, obj];
-        });
-        return result;
-      } else {
-        return [];
-      }
-    }));
+      })
+    );
   }
 
   /**
@@ -245,14 +255,13 @@ export class ObjectGridComponent implements OnInit {
    * Go to the previous page
    */
   goPrev() {
-      this.prev.emit(true);
+    this.prev.emit(true);
   }
 
- /**
-  * Go to the next page
-  */
+  /**
+   * Go to the next page
+   */
   goNext() {
-      this.next.emit(true);
+    this.next.emit(true);
   }
-
 }

@@ -1,16 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { DSpaceObject } from '../../../core/shared/dspace-object.model';
-import { RemoteData } from '../../../core/data/remote-data';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { RemoteData } from '../../../core/data/remote-data';
 import { DSpaceObjectType } from '../../../core/shared/dspace-object-type.model';
+import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { hasValue, isNotEmpty } from '../../empty.util';
 
 export enum SelectorActionType {
   CREATE = 'create',
   EDIT = 'edit',
   EXPORT_METADATA = 'export-metadata',
-  SET_SCOPE = 'set-scope'
+  SET_SCOPE = 'set-scope',
 }
 
 /**
@@ -18,7 +18,7 @@ export enum SelectorActionType {
  */
 @Component({
   selector: 'ds-dso-selector-modal',
-  template: ''
+  template: '',
 })
 export abstract class DSOSelectorModalWrapperComponent implements OnInit {
   /**
@@ -47,8 +47,10 @@ export abstract class DSOSelectorModalWrapperComponent implements OnInit {
    */
   action: SelectorActionType;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute) {
-  }
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute
+  ) {}
 
   /**
    * Get de current page's DSO based on the selectorType
@@ -63,14 +65,26 @@ export abstract class DSOSelectorModalWrapperComponent implements OnInit {
     }
   }
 
-  findRouteData(predicate: (value: ActivatedRouteSnapshot, index?: number, obj?: ActivatedRouteSnapshot[]) => unknown, ...routes: ActivatedRouteSnapshot[]) {
+  findRouteData(
+    predicate: (
+      value: ActivatedRouteSnapshot,
+      index?: number,
+      obj?: ActivatedRouteSnapshot[]
+    ) => unknown,
+    ...routes: ActivatedRouteSnapshot[]
+  ) {
     const result = routes.find(predicate);
     if (hasValue(result)) {
       return result;
     } else {
       const nextLevelRoutes = routes
         .map((route: ActivatedRouteSnapshot) => route.children)
-        .reduce((combined: ActivatedRouteSnapshot[], current: ActivatedRouteSnapshot[]) => [...combined, ...current]);
+        .reduce(
+          (
+            combined: ActivatedRouteSnapshot[],
+            current: ActivatedRouteSnapshot[]
+          ) => [...combined, ...current]
+        );
       if (isNotEmpty(nextLevelRoutes)) {
         return this.findRouteData(predicate, ...nextLevelRoutes);
       } else {

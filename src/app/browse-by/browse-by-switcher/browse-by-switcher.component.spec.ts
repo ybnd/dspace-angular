@@ -1,48 +1,45 @@
-import { BrowseBySwitcherComponent } from './browse-by-switcher.component';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
-import { BROWSE_BY_COMPONENT_FACTORY, BrowseByDataType } from './browse-by-decorator';
-import { BrowseDefinition } from '../../core/shared/browse-definition.model';
 import { BehaviorSubject } from 'rxjs';
+import { BrowseDefinition } from '../../core/shared/browse-definition.model';
 import { ThemeService } from '../../shared/theme-support/theme.service';
+import {
+  BrowseByDataType,
+  BROWSE_BY_COMPONENT_FACTORY,
+} from './browse-by-decorator';
+import { BrowseBySwitcherComponent } from './browse-by-switcher.component';
 
 describe('BrowseBySwitcherComponent', () => {
   let comp: BrowseBySwitcherComponent;
   let fixture: ComponentFixture<BrowseBySwitcherComponent>;
 
   const types = [
-    Object.assign(
-      new BrowseDefinition(), {
-        id: 'title',
-        dataType: BrowseByDataType.Title,
-      }
-    ),
-    Object.assign(
-      new BrowseDefinition(), {
-        id: 'dateissued',
-        dataType: BrowseByDataType.Date,
-        metadataKeys: ['dc.date.issued']
-      }
-    ),
-    Object.assign(
-      new BrowseDefinition(), {
-        id: 'author',
-        dataType: BrowseByDataType.Metadata,
-      }
-    ),
-    Object.assign(
-      new BrowseDefinition(), {
-        id: 'subject',
-        dataType: BrowseByDataType.Metadata,
-      }
-    ),
+    Object.assign(new BrowseDefinition(), {
+      id: 'title',
+      dataType: BrowseByDataType.Title,
+    }),
+    Object.assign(new BrowseDefinition(), {
+      id: 'dateissued',
+      dataType: BrowseByDataType.Date,
+      metadataKeys: ['dc.date.issued'],
+    }),
+    Object.assign(new BrowseDefinition(), {
+      id: 'author',
+      dataType: BrowseByDataType.Metadata,
+    }),
+    Object.assign(new BrowseDefinition(), {
+      id: 'subject',
+      dataType: BrowseByDataType.Metadata,
+    }),
   ];
 
-  const data = new BehaviorSubject(createDataWithBrowseDefinition(new BrowseDefinition()));
+  const data = new BehaviorSubject(
+    createDataWithBrowseDefinition(new BrowseDefinition())
+  );
 
   const activatedRouteStub = {
-    data
+    data,
   };
 
   let themeService: ThemeService;
@@ -59,9 +56,14 @@ describe('BrowseBySwitcherComponent', () => {
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: ThemeService, useValue: themeService },
-        { provide: BROWSE_BY_COMPONENT_FACTORY, useValue: jasmine.createSpy('getComponentByBrowseByType').and.returnValue(null) }
+        {
+          provide: BROWSE_BY_COMPONENT_FACTORY,
+          useValue: jasmine
+            .createSpy('getComponentByBrowseByType')
+            .and.returnValue(null),
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -78,7 +80,10 @@ describe('BrowseBySwitcherComponent', () => {
       });
 
       it(`should call getComponentByBrowseByType with type "${type.dataType}"`, () => {
-        expect((comp as any).getComponentByBrowseByType).toHaveBeenCalledWith(type.dataType, themeName);
+        expect((comp as any).getComponentByBrowseByType).toHaveBeenCalledWith(
+          type.dataType,
+          themeName
+        );
       });
     });
   });

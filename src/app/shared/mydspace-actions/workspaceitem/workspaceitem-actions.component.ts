@@ -1,20 +1,18 @@
 import { Component, Injector, Input } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { BehaviorSubject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-
-import { WorkspaceItem } from '../../../core/submission/models/workspaceitem.model';
-import { MyDSpaceActionsComponent } from '../mydspace-actions';
-import { WorkspaceitemDataService } from '../../../core/submission/workspaceitem-data.service';
-import { NotificationsService } from '../../notifications/notifications.service';
-import { RequestService } from '../../../core/data/request.service';
-import { SearchService } from '../../../core/shared/search/search.service';
-import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
+import { BehaviorSubject } from 'rxjs';
 import { RemoteData } from '../../../core/data/remote-data';
+import { RequestService } from '../../../core/data/request.service';
 import { NoContent } from '../../../core/shared/NoContent.model';
+import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
+import { SearchService } from '../../../core/shared/search/search.service';
+import { WorkspaceItem } from '../../../core/submission/models/workspaceitem.model';
+import { WorkspaceitemDataService } from '../../../core/submission/workspaceitem-data.service';
 import { getWorkspaceItemViewRoute } from '../../../workspaceitems-edit-page/workspaceitems-edit-page-routing-paths';
+import { NotificationsService } from '../../notifications/notifications.service';
+import { MyDSpaceActionsComponent } from '../mydspace-actions';
 
 /**
  * This component represents actions related to WorkspaceItem object.
@@ -24,8 +22,10 @@ import { getWorkspaceItemViewRoute } from '../../../workspaceitems-edit-page/wor
   styleUrls: ['./workspaceitem-actions.component.scss'],
   templateUrl: './workspaceitem-actions.component.html',
 })
-export class WorkspaceitemActionsComponent extends MyDSpaceActionsComponent<WorkspaceItem, WorkspaceitemDataService> {
-
+export class WorkspaceitemActionsComponent extends MyDSpaceActionsComponent<
+  WorkspaceItem,
+  WorkspaceitemDataService
+> {
   /**
    * The workspaceitem object
    */
@@ -48,33 +48,42 @@ export class WorkspaceitemActionsComponent extends MyDSpaceActionsComponent<Work
    * @param {SearchService} searchService
    * @param {RequestService} requestService
    */
-  constructor(protected injector: Injector,
+  constructor(
+    protected injector: Injector,
     protected router: Router,
     protected modalService: NgbModal,
     protected notificationsService: NotificationsService,
     protected translate: TranslateService,
     protected searchService: SearchService,
-    protected requestService: RequestService) {
-    super(WorkspaceItem.type, injector, router, notificationsService, translate, searchService, requestService);
+    protected requestService: RequestService
+  ) {
+    super(
+      WorkspaceItem.type,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**
    * Delete the target workspaceitem object
    */
   public confirmDiscard(content) {
-    this.modalService.open(content).result.then(
-      (result) => {
-        if (result === 'ok') {
-          this.processingDelete$.next(true);
-          this.objectDataService.delete(this.object.id)
-            .pipe(getFirstCompletedRemoteData())
-            .subscribe((response: RemoteData<NoContent>) => {
-              this.processingDelete$.next(false);
-              this.handleActionResponse(response.hasSucceeded);
-            });
-        }
+    this.modalService.open(content).result.then((result) => {
+      if (result === 'ok') {
+        this.processingDelete$.next(true);
+        this.objectDataService
+          .delete(this.object.id)
+          .pipe(getFirstCompletedRemoteData())
+          .subscribe((response: RemoteData<NoContent>) => {
+            this.processingDelete$.next(false);
+            this.handleActionResponse(response.hasSucceeded);
+          });
       }
-    );
+    });
   }
 
   /**
@@ -92,5 +101,4 @@ export class WorkspaceitemActionsComponent extends MyDSpaceActionsComponent<Work
   getWorkspaceItemViewRoute(workspaceItem: WorkspaceItem): string {
     return getWorkspaceItemViewRoute(workspaceItem?.id);
   }
-
 }

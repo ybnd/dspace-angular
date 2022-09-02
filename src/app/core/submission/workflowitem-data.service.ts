@@ -1,28 +1,27 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { dataService } from '../cache/builders/build-decorators';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { DataService } from '../data/data.service';
-import { RequestService } from '../data/request.service';
-import { WorkflowItem } from './models/workflowitem.model';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { DeleteByIDRequest } from '../data/request.models';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
 import { Observable } from 'rxjs';
 import { find, map } from 'rxjs/operators';
 import { hasValue } from '../../shared/empty.util';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
+import { dataService } from '../cache/builders/build-decorators';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { RequestParam } from '../cache/models/request-param.model';
+import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
+import { DataService } from '../data/data.service';
+import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
+import { FindListOptions } from '../data/find-list-options.model';
 import { RemoteData } from '../data/remote-data';
+import { DeleteByIDRequest } from '../data/request.models';
+import { RequestService } from '../data/request.service';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { NoContent } from '../shared/NoContent.model';
 import { getFirstCompletedRemoteData } from '../shared/operators';
-import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
+import { WorkflowItem } from './models/workflowitem.model';
 import { WorkspaceItem } from './models/workspaceitem.model';
-import { RequestParam } from '../cache/models/request-param.model';
-import { CoreState } from '../core-state.model';
-import { FindListOptions } from '../data/find-list-options.model';
 
 /**
  * A service that provides methods to make REST requests with workflow items endpoint.
@@ -42,7 +41,8 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
     protected objectCache: ObjectCacheService,
-    protected store: Store<CoreState>) {
+    protected store: Store<CoreState>
+  ) {
     super();
   }
 
@@ -74,7 +74,10 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
    * When true, the workflow item and its item will be permanently expunged on the server
    * When false, the workflow item will be removed, but the item will still be available as a workspace item
    */
-  private deleteWFI(id: string, expunge: boolean): Observable<RemoteData<NoContent>> {
+  private deleteWFI(
+    id: string,
+    expunge: boolean
+  ): Observable<RemoteData<NoContent>> {
     const requestId = this.requestService.generateRequestId();
 
     const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
@@ -82,12 +85,12 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
       map((endpoint: string) => endpoint + '?expunge=' + expunge)
     );
 
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-    ).subscribe((href: string) => {
-      const request = new DeleteByIDRequest(requestId, href, id);
-      this.requestService.send(request);
-    });
+    hrefObs
+      .pipe(find((href: string) => hasValue(href)))
+      .subscribe((href: string) => {
+        const request = new DeleteByIDRequest(requestId, href, id);
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -103,11 +106,27 @@ export class WorkflowItemDataService extends DataService<WorkflowItem> {
    * @param options        The {@link FindListOptions} object
    * @param linksToFollow  List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public findByItem(uuid: string, useCachedVersionIfAvailable = false, reRequestOnStale = true, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]): Observable<RemoteData<WorkspaceItem>> {
+  public findByItem(
+    uuid: string,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]
+  ): Observable<RemoteData<WorkspaceItem>> {
     const findListOptions = new FindListOptions();
-    findListOptions.searchParams = [new RequestParam('uuid', encodeURIComponent(uuid))];
-    const href$ = this.getSearchByHref(this.searchByItemLinkPath, findListOptions, ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    findListOptions.searchParams = [
+      new RequestParam('uuid', encodeURIComponent(uuid)),
+    ];
+    const href$ = this.getSearchByHref(
+      this.searchByItemLinkPath,
+      findListOptions,
+      ...linksToFollow
+    );
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
-
 }

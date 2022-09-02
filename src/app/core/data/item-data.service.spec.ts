@@ -3,20 +3,20 @@ import { Store } from '@ngrx/store';
 import { cold, getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
+import { HALEndpointServiceStub } from 'src/app/shared/testing/hal-endpoint-service.stub';
+import { getMockRemoteDataBuildService } from '../../shared/mocks/remote-data-build.service.mock';
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { BrowseService } from '../browse/browse.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { RestResponse } from '../cache/response.models';
-import { ExternalSourceEntry } from '../shared/external-source-entry.model';
-import { ItemDataService } from './item-data.service';
-import { DeleteRequest, GetRequest, PostRequest } from './request.models';
-import { RequestService } from './request.service';
-import { getMockRemoteDataBuildService } from '../../shared/mocks/remote-data-build.service.mock';
 import { CoreState } from '../core-state.model';
-import { RequestEntry } from './request-entry.model';
+import { ExternalSourceEntry } from '../shared/external-source-entry.model';
 import { FindListOptions } from './find-list-options.model';
-import { HALEndpointServiceStub } from 'src/app/shared/testing/hal-endpoint-service.stub';
+import { ItemDataService } from './item-data.service';
+import { RequestEntry } from './request-entry.model';
+import { DeleteRequest, PostRequest } from './request.models';
+import { RequestService } from './request.service';
 
 describe('ItemDataService', () => {
   let scheduler: TestScheduler;
@@ -43,7 +43,7 @@ describe('ItemDataService', () => {
   const objectCache = {} as ObjectCacheService;
   const halEndpointService: any = new HALEndpointServiceStub(itemEndpoint);
   const bundleService = jasmine.createSpyObj('bundleService', {
-    findByHref: {}
+    findByHref: {},
   });
 
   const scopeID = '4af28e99-6a9c-4036-a199-e1b587046d39';
@@ -51,8 +51,8 @@ describe('ItemDataService', () => {
     scopeID: scopeID,
     sort: {
       field: '',
-      direction: undefined
-    }
+      direction: undefined,
+    },
   });
 
   const browsesEndpoint = 'https://rest.api/discover/browses';
@@ -66,11 +66,11 @@ describe('ItemDataService', () => {
   const ScopedItemEndpoint = `https://rest.api/core/items/${scopeID}`;
 
   function initMockBrowseService(isSuccessful: boolean) {
-    const obs = isSuccessful ?
-      cold('--a-', { a: itemBrowseEndpoint }) :
-      cold('--#-', undefined, browseError);
+    const obs = isSuccessful
+      ? cold('--a-', { a: itemBrowseEndpoint })
+      : cold('--#-', undefined, browseError);
     return jasmine.createSpyObj('bs', {
-      getBrowseURLFor: obs
+      getBrowseURLFor: obs,
     });
   }
 
@@ -104,7 +104,7 @@ describe('ItemDataService', () => {
       expect(result).toBeObservable(expected);
     });
 
-    describe('if the dc.date.issue browse isn\'t configured for items', () => {
+    describe("if the dc.date.issue browse isn't configured for items", () => {
       beforeEach(() => {
         bs = initMockBrowseService(false);
         service = initTestService();
@@ -127,7 +127,11 @@ describe('ItemDataService', () => {
     });
 
     it('should send a DELETE request', () => {
-      result.subscribe(() => expect(requestService.send).toHaveBeenCalledWith(jasmine.any(DeleteRequest)));
+      result.subscribe(() =>
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(DeleteRequest)
+        )
+      );
     });
   });
 
@@ -140,7 +144,11 @@ describe('ItemDataService', () => {
     });
 
     it('should send a POST request', () => {
-      result.subscribe(() => expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PostRequest)));
+      result.subscribe(() =>
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(PostRequest)
+        )
+      );
     });
   });
 
@@ -150,17 +158,26 @@ describe('ItemDataService', () => {
     const externalSourceEntry = Object.assign(new ExternalSourceEntry(), {
       display: 'John, Doe',
       value: 'John, Doe',
-      _links: { self: { href: 'http://test-rest.com/server/api/integration/externalSources/orcidV2/entryValues/0000-0003-4851-8004' } }
+      _links: {
+        self: {
+          href: 'http://test-rest.com/server/api/integration/externalSources/orcidV2/entryValues/0000-0003-4851-8004',
+        },
+      },
     });
 
     beforeEach(() => {
       service = initTestService();
-      result = service.importExternalSourceEntry(externalSourceEntry, 'collection-id');
+      result = service.importExternalSourceEntry(
+        externalSourceEntry,
+        'collection-id'
+      );
     });
 
     it('should send a POST request', (done) => {
       result.subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PostRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(PostRequest)
+        );
         done();
       });
     });
@@ -178,7 +195,9 @@ describe('ItemDataService', () => {
 
     it('should send a POST request', (done) => {
       result.subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PostRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(PostRequest)
+        );
         done();
       });
     });
@@ -190,8 +209,9 @@ describe('ItemDataService', () => {
     });
     it('should call setStaleByHrefSubstring', () => {
       service.invalidateItemCache('uuid');
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('item/uuid');
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        'item/uuid'
+      );
     });
   });
-
 });

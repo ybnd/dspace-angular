@@ -1,23 +1,21 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { filter, map, take } from 'rxjs/operators';
-import { TranslateService } from '@ngx-translate/core';
-
+import { RemoteData } from '../../../core/data/remote-data';
+import { RequestService } from '../../../core/data/request.service';
+import { WorkflowActionDataService } from '../../../core/data/workflow-action-data.service';
+import { SearchService } from '../../../core/shared/search/search.service';
+import { WorkflowItem } from '../../../core/submission/models/workflowitem.model';
 import { ClaimedTaskDataService } from '../../../core/tasks/claimed-task-data.service';
 import { ClaimedTask } from '../../../core/tasks/models/claimed-task-object.model';
-import { isNotUndefined } from '../../empty.util';
-import { WorkflowItem } from '../../../core/submission/models/workflowitem.model';
-import { RemoteData } from '../../../core/data/remote-data';
-import { MyDSpaceActionsComponent } from '../mydspace-actions';
-import { NotificationsService } from '../../notifications/notifications.service';
-import { RequestService } from '../../../core/data/request.service';
-import { SearchService } from '../../../core/shared/search/search.service';
 import { WorkflowAction } from '../../../core/tasks/models/workflow-action-object.model';
-import { WorkflowActionDataService } from '../../../core/data/workflow-action-data.service';
-import { WORKFLOW_TASK_OPTION_RETURN_TO_POOL } from './return-to-pool/claimed-task-actions-return-to-pool.component';
 import { getWorkflowItemViewRoute } from '../../../workflowitems-edit-page/workflowitems-edit-page-routing-paths';
+import { isNotUndefined } from '../../empty.util';
+import { NotificationsService } from '../../notifications/notifications.service';
+import { MyDSpaceActionsComponent } from '../mydspace-actions';
+import { WORKFLOW_TASK_OPTION_RETURN_TO_POOL } from './return-to-pool/claimed-task-actions-return-to-pool.component';
 
 /**
  * This component represents actions related to ClaimedTask object.
@@ -27,8 +25,10 @@ import { getWorkflowItemViewRoute } from '../../../workflowitems-edit-page/workf
   styleUrls: ['./claimed-task-actions.component.scss'],
   templateUrl: './claimed-task-actions.component.html',
 })
-export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<ClaimedTask, ClaimedTaskDataService> implements OnInit {
-
+export class ClaimedTaskActionsComponent
+  extends MyDSpaceActionsComponent<ClaimedTask, ClaimedTaskDataService>
+  implements OnInit
+{
   /**
    * The ClaimedTask object
    */
@@ -61,14 +61,24 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
    * @param {RequestService} requestService
    * @param workflowActionService
    */
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService,
-              protected workflowActionService: WorkflowActionDataService) {
-    super(ClaimedTask.type, injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+    protected workflowActionService: WorkflowActionDataService
+  ) {
+    super(
+      ClaimedTask.type,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**
@@ -87,10 +97,16 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
   initObjects(object: ClaimedTask) {
     this.object = object;
 
-    this.workflowitem$ = (this.object.workflowitem as Observable<RemoteData<WorkflowItem>>).pipe(
-      filter((rd: RemoteData<WorkflowItem>) => ((!rd.isRequestPending) && isNotUndefined(rd.payload))),
+    this.workflowitem$ = (
+      this.object.workflowitem as Observable<RemoteData<WorkflowItem>>
+    ).pipe(
+      filter(
+        (rd: RemoteData<WorkflowItem>) =>
+          !rd.isRequestPending && isNotUndefined(rd.payload)
+      ),
       map((rd: RemoteData<WorkflowItem>) => rd.payload),
-      take(1));
+      take(1)
+    );
   }
 
   /**
@@ -108,5 +124,4 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
   getWorkflowItemViewRoute(workflowitem: WorkflowItem): string {
     return getWorkflowItemViewRoute(workflowitem?.id);
   }
-
 }

@@ -7,6 +7,7 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { getFirstSucceededRemoteData } from '../shared/operators';
 import { Site } from '../shared/site.model';
@@ -16,7 +17,6 @@ import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
 import { RequestService } from './request.service';
-import { CoreState } from '../core-state.model';
 
 /**
  * Service responsible for handling requests related to the Site object
@@ -34,7 +34,7 @@ export class SiteDataService extends DataService<Site> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<Site>,
+    protected comparator: DSOChangeAnalyzer<Site>
   ) {
     super();
   }

@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
-
-import { LogOutAction } from '../../core/auth/auth.actions';
-import { getLogOutError, } from '../../core/auth/selectors';
+import { Observable } from 'rxjs';
 import { AppState } from '../../app.reducer';
+import { LogOutAction } from '../../core/auth/auth.actions';
+import { getLogOutError } from '../../core/auth/selectors';
 import { fadeOut } from '../animations/fade';
 
 @Component({
   selector: 'ds-log-out',
   templateUrl: './log-out.component.html',
   styleUrls: ['./log-out.component.scss'],
-  animations: [fadeOut]
+  animations: [fadeOut],
 })
 export class LogOutComponent implements OnInit {
   /**
@@ -27,9 +25,7 @@ export class LogOutComponent implements OnInit {
    * @param {Store<State>} store
    * @param {Router} router
    */
-  constructor(private router: Router,
-              private store: Store<AppState>) {
-  }
+  constructor(private router: Router, private store: Store<AppState>) {}
 
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
@@ -49,5 +45,4 @@ export class LogOutComponent implements OnInit {
   public logOut() {
     this.store.dispatch(new LogOutAction());
   }
-
 }

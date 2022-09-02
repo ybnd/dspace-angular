@@ -1,14 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
+import { RouteService } from '../../../../core/services/route.service';
 import { Item } from '../../../../core/shared/item.model';
 import { getItemPageRoute } from '../../../item-page-routing-paths';
-import { RouteService } from '../../../../core/services/route.service';
-import { Observable } from 'rxjs';
-import { getDSpaceQuery, isIiifEnabled, isIiifSearchEnabled } from './item-iiif-utils';
+import {
+  getDSpaceQuery,
+  isIiifEnabled,
+  isIiifSearchEnabled,
+} from './item-iiif-utils';
 
 @Component({
   selector: 'ds-item',
-  template: ''
+  template: '',
 })
 /**
  * A generic component for displaying metadata and relations of an item

@@ -1,18 +1,17 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { ClaimedTaskActionsAbstractComponent } from '../abstract/claimed-task-actions-abstract.component';
-import { rendersWorkflowTaskOption } from '../switcher/claimed-task-actions-decorator';
 import { Router } from '@angular/router';
-import { NotificationsService } from '../../../notifications/notifications.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import { SearchService } from '../../../../core/shared/search/search.service';
-import { RequestService } from '../../../../core/data/request.service';
 import { Observable, of } from 'rxjs';
 import { RemoteData } from '../../../../core/data/remote-data';
+import { RequestService } from '../../../../core/data/request.service';
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
+import { SearchService } from '../../../../core/shared/search/search.service';
+import { NotificationsService } from '../../../notifications/notifications.service';
 import { ClaimedDeclinedTaskSearchResult } from '../../../object-collection/shared/claimed-declined-task-search-result.model';
+import { ClaimedTaskActionsAbstractComponent } from '../abstract/claimed-task-actions-abstract.component';
+import { rendersWorkflowTaskOption } from '../switcher/claimed-task-actions-decorator';
 
 export const WORKFLOW_TASK_OPTION_REJECT = 'submit_reject';
 
@@ -25,7 +24,10 @@ export const WORKFLOW_TASK_OPTION_REJECT = 'submit_reject';
 /**
  * Component for displaying and processing the reject action on a workflow task item
  */
-export class ClaimedTaskActionsRejectComponent extends ClaimedTaskActionsAbstractComponent implements OnInit {
+export class ClaimedTaskActionsRejectComponent
+  extends ClaimedTaskActionsAbstractComponent
+  implements OnInit
+{
   /**
    * This component represents the reject option
    */
@@ -41,15 +43,24 @@ export class ClaimedTaskActionsRejectComponent extends ClaimedTaskActionsAbstrac
    */
   public modalRef: NgbModalRef;
 
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService,
-              private formBuilder: FormBuilder,
-              private modalService: NgbModal) {
-    super(injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal
+  ) {
+    super(
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService
+    );
   }
 
   /**
@@ -57,7 +68,7 @@ export class ClaimedTaskActionsRejectComponent extends ClaimedTaskActionsAbstrac
    */
   ngOnInit() {
     this.rejectForm = this.formBuilder.group({
-      reason: ['', Validators.required]
+      reason: ['', Validators.required],
     });
   }
 
@@ -93,9 +104,13 @@ export class ClaimedTaskActionsRejectComponent extends ClaimedTaskActionsAbstrac
   }
 
   convertReloadedObject(dso: DSpaceObject): DSpaceObject {
-    const reloadedObject = Object.assign(new ClaimedDeclinedTaskSearchResult(), dso, {
-      indexableObject: dso
-    });
+    const reloadedObject = Object.assign(
+      new ClaimedDeclinedTaskSearchResult(),
+      dso,
+      {
+        indexableObject: dso,
+      }
+    );
     return reloadedObject;
   }
 }

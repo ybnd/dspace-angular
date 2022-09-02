@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
+import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { Item } from '../../../core/shared/item.model';
-import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
-import { of as observableOf } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
-import { RouterTestingModule } from '@angular/router/testing';
-import { FeatureID } from '../../../core/data/feature-authorization/feature-id';
-import { By } from '@angular/platform-browser';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DsoPageOrcidButtonComponent } from './dso-page-orcid-button.component';
 
 describe('DsoPageOrcidButtonComponent', () => {
@@ -21,18 +21,22 @@ describe('DsoPageOrcidButtonComponent', () => {
     dso = Object.assign(new Item(), {
       id: 'test-item',
       _links: {
-        self: { href: 'test-item-selflink' }
-      }
+        self: { href: 'test-item-selflink' },
+      },
     });
     authorizationService = jasmine.createSpyObj('authorizationService', {
-      isAuthorized: observableOf(true)
+      isAuthorized: observableOf(true),
     });
     TestBed.configureTestingModule({
       declarations: [DsoPageOrcidButtonComponent],
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NgbModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NgbModule,
+      ],
       providers: [
-        { provide: AuthorizationDataService, useValue: authorizationService }
-      ]
+        { provide: AuthorizationDataService, useValue: authorizationService },
+      ],
     }).compileComponents();
   }));
 
@@ -45,12 +49,17 @@ describe('DsoPageOrcidButtonComponent', () => {
   });
 
   it('should check the authorization of the current user', () => {
-    expect(authorizationService.isAuthorized).toHaveBeenCalledWith(FeatureID.CanSynchronizeWithORCID, dso.self);
+    expect(authorizationService.isAuthorized).toHaveBeenCalledWith(
+      FeatureID.CanSynchronizeWithORCID,
+      dso.self
+    );
   });
 
   describe('when the user is authorized', () => {
     beforeEach(() => {
-      (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(true));
+      (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(
+        observableOf(true)
+      );
       component.ngOnInit();
       fixture.detectChanges();
     });
@@ -63,7 +72,9 @@ describe('DsoPageOrcidButtonComponent', () => {
 
   describe('when the user is not authorized', () => {
     beforeEach(() => {
-      (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(false));
+      (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(
+        observableOf(false)
+      );
       component.ngOnInit();
       fixture.detectChanges();
     });

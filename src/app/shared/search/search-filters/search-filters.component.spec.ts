@@ -1,15 +1,14 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Subject } from 'rxjs';
 import { SearchFilterService } from '../../../core/shared/search/search-filter.service';
-import { SearchFiltersComponent } from './search-filters.component';
 import { SearchService } from '../../../core/shared/search/search.service';
-import { of as observableOf, Subject } from 'rxjs';
 import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
 import { SearchConfigurationServiceStub } from '../../testing/search-configuration-service.stub';
+import { SearchFiltersComponent } from './search-filters.component';
 
 describe('SearchFiltersComponent', () => {
   let comp: SearchFiltersComponent;
@@ -18,32 +17,37 @@ describe('SearchFiltersComponent', () => {
 
   const searchServiceStub = {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    getClearFiltersQueryParams: () => {
-    },
-    getSearchLink: () => {
-    }
+    getClearFiltersQueryParams: () => {},
+    getSearchLink: () => {},
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
   };
 
   const searchFiltersStub = {
-    getSelectedValuesForFilter: (filter) =>
-      []
+    getSelectedValuesForFilter: (filter) => [],
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
+      ],
       declarations: [SearchFiltersComponent],
       providers: [
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: SearchFilterService, useValue: searchFiltersStub },
-
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchFiltersComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchFiltersComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -65,11 +69,12 @@ describe('SearchFiltersComponent', () => {
   });
 
   describe('when refreshSearch observable is present and emit events', () => {
-
     let refreshFiltersEmitter: Subject<any>;
 
     beforeEach(() => {
-      spyOn(comp, 'initFilters').and.callFake(() => { /****/});
+      spyOn(comp, 'initFilters').and.callFake(() => {
+        /****/
+      });
 
       refreshFiltersEmitter = new Subject();
       comp.refreshFilters = refreshFiltersEmitter.asObservable();
@@ -77,7 +82,6 @@ describe('SearchFiltersComponent', () => {
     });
 
     it('should reinitialize search filters', () => {
-
       expect(comp.initFilters).toHaveBeenCalledTimes(1);
 
       refreshFiltersEmitter.next(null);
@@ -85,5 +89,4 @@ describe('SearchFiltersComponent', () => {
       expect(comp.initFilters).toHaveBeenCalledTimes(2);
     });
   });
-
 });

@@ -1,22 +1,24 @@
-import { hasNoValue } from '../../shared/empty.util';
 import { InjectionToken } from '@angular/core';
 import { GenericConstructor } from '../../core/shared/generic-constructor';
+import { hasNoValue } from '../../shared/empty.util';
 import {
   DEFAULT_THEME,
-  resolveTheme
+  resolveTheme,
 } from '../../shared/object-collection/shared/listable-object/listable-object.decorator';
 
 export enum BrowseByDataType {
   Title = 'title',
   Metadata = 'text',
-  Date = 'date'
+  Date = 'date',
 }
 
 export const DEFAULT_BROWSE_BY_TYPE = BrowseByDataType.Metadata;
 
-export const BROWSE_BY_COMPONENT_FACTORY = new InjectionToken<(browseByType, theme) => GenericConstructor<any>>('getComponentByBrowseByType', {
+export const BROWSE_BY_COMPONENT_FACTORY = new InjectionToken<
+  (browseByType, theme) => GenericConstructor<any>
+>('getComponentByBrowseByType', {
   providedIn: 'root',
-  factory: () => getComponentByBrowseByType
+  factory: () => getComponentByBrowseByType,
 });
 
 const map = new Map();
@@ -26,7 +28,10 @@ const map = new Map();
  * @param browseByType  The type of page
  * @param theme The optional theme for the component
  */
-export function rendersBrowseBy(browseByType: BrowseByDataType, theme = DEFAULT_THEME) {
+export function rendersBrowseBy(
+  browseByType: BrowseByDataType,
+  theme = DEFAULT_THEME
+) {
   return function decorator(component: any) {
     if (hasNoValue(map.get(browseByType))) {
       map.set(browseByType, new Map());
@@ -34,7 +39,9 @@ export function rendersBrowseBy(browseByType: BrowseByDataType, theme = DEFAULT_
     if (hasNoValue(map.get(browseByType).get(theme))) {
       map.get(browseByType).set(theme, component);
     } else {
-      throw new Error(`There can't be more than one component to render Browse-By of type "${browseByType}" and theme "${theme}"`);
+      throw new Error(
+        `There can't be more than one component to render Browse-By of type "${browseByType}" and theme "${theme}"`
+      );
     }
   };
 }

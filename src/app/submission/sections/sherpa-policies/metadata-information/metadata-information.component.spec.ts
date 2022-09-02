@@ -1,12 +1,10 @@
-import { TranslateLoaderMock } from '../../../../shared/testing/translate-loader.mock';
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { MetadataInformationComponent } from './metadata-information.component';
-
 import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SherpaDataResponse } from '../../../../shared/mocks/section-sherpa-policies.service.mock';
+import { TranslateLoaderMock } from '../../../../shared/testing/translate-loader.mock';
+import { MetadataInformationComponent } from './metadata-information.component';
 
 describe('MetadataInformationComponent', () => {
   let component: MetadataInformationComponent;
@@ -19,13 +17,12 @@ describe('MetadataInformationComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
       ],
-      declarations: [MetadataInformationComponent]
-    })
-      .compileComponents();
+      declarations: [MetadataInformationComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -43,5 +40,4 @@ describe('MetadataInformationComponent', () => {
   it('should show 4 rows', () => {
     expect(de.queryAll(By.css('.row')).length).toEqual(4);
   });
-
 });

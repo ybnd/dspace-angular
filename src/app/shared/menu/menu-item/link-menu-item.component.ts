@@ -1,16 +1,16 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
-import { LinkMenuItemModel } from './models/link.model';
-import { rendersMenuItemForType } from '../menu-item.decorator';
+import { Component, Inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { isNotEmpty } from '../../empty.util';
 import { MenuItemType } from '../menu-item-type.model';
-import { Router } from '@angular/router';
+import { rendersMenuItemForType } from '../menu-item.decorator';
+import { LinkMenuItemModel } from './models/link.model';
 
 /**
  * Component that renders a menu section of type LINK
  */
 @Component({
   selector: 'ds-link-menu-item',
-  templateUrl: './link-menu-item.component.html'
+  templateUrl: './link-menu-item.component.html',
 })
 @rendersMenuItemForType(MenuItemType.LINK)
 export class LinkMenuItemComponent implements OnInit {
@@ -18,7 +18,7 @@ export class LinkMenuItemComponent implements OnInit {
   hasLink: boolean;
   constructor(
     @Inject('itemModelProvider') item: LinkMenuItemModel,
-    private router: Router,
+    private router: Router
   ) {
     this.item = item;
   }
@@ -41,5 +41,4 @@ export class LinkMenuItemComponent implements OnInit {
     }
     event.stopPropagation();
   }
-
 }

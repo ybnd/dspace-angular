@@ -1,23 +1,33 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { filter, find, startWith } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-
-import { VocabularyEntryDetail } from '../../core/submission/vocabularies/models/vocabulary-entry-detail.model';
-import { hasValue, isEmpty, isNotEmpty } from '../empty.util';
+import { Observable, Subscription } from 'rxjs';
+import { filter, find, startWith } from 'rxjs/operators';
 import { isAuthenticated } from '../../core/auth/selectors';
-import { VocabularyTreeviewService } from './vocabulary-treeview.service';
-import { LOAD_MORE, LOAD_MORE_ROOT, TreeviewFlatNode, TreeviewNode } from './vocabulary-treeview-node.model';
-import { VocabularyOptions } from '../../core/submission/vocabularies/models/vocabulary-options.model';
-import { PageInfo } from '../../core/shared/page-info.model';
-import { VocabularyEntry } from '../../core/submission/vocabularies/models/vocabulary-entry.model';
-import { VocabularyTreeFlattener } from './vocabulary-tree-flattener';
-import { VocabularyTreeFlatDataSource } from './vocabulary-tree-flat-data-source';
 import { CoreState } from '../../core/core-state.model';
+import { PageInfo } from '../../core/shared/page-info.model';
+import { VocabularyEntryDetail } from '../../core/submission/vocabularies/models/vocabulary-entry-detail.model';
+import { VocabularyEntry } from '../../core/submission/vocabularies/models/vocabulary-entry.model';
+import { VocabularyOptions } from '../../core/submission/vocabularies/models/vocabulary-options.model';
+import { hasValue, isEmpty, isNotEmpty } from '../empty.util';
+import { VocabularyTreeFlatDataSource } from './vocabulary-tree-flat-data-source';
+import { VocabularyTreeFlattener } from './vocabulary-tree-flattener';
+import {
+  LOAD_MORE,
+  LOAD_MORE_ROOT,
+  TreeviewFlatNode,
+  TreeviewNode,
+} from './vocabulary-treeview-node.model';
+import { VocabularyTreeviewService } from './vocabulary-treeview.service';
 
 /**
  * Component that show a hierarchical vocabulary in a tree view
@@ -25,10 +35,9 @@ import { CoreState } from '../../core/core-state.model';
 @Component({
   selector: 'ds-vocabulary-treeview',
   templateUrl: './vocabulary-treeview.component.html',
-  styleUrls: ['./vocabulary-treeview.component.scss']
+  styleUrls: ['./vocabulary-treeview.component.scss'],
 })
 export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
-
   /**
    * The {@link VocabularyOptions} object
    */
@@ -88,7 +97,8 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
    * An event fired when a vocabulary entry is selected.
    * Event's payload equals to {@link VocabularyEntryDetail} selected.
    */
-  @Output() select: EventEmitter<VocabularyEntryDetail> = new EventEmitter<VocabularyEntryDetail>(null);
+  @Output() select: EventEmitter<VocabularyEntryDetail> =
+    new EventEmitter<VocabularyEntryDetail>(null);
 
   /**
    * A boolean representing if user is authenticated
@@ -114,19 +124,30 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
     private store: Store<CoreState>,
     private translate: TranslateService
   ) {
-    this.treeFlattener = new VocabularyTreeFlattener(this.transformer, this.getLevel,
-      this.isExpandable, this.getChildren);
+    this.treeFlattener = new VocabularyTreeFlattener(
+      this.transformer,
+      this.getLevel,
+      this.isExpandable,
+      this.getChildren
+    );
 
-    this.treeControl = new FlatTreeControl<TreeviewFlatNode>(this.getLevel, this.isExpandable);
+    this.treeControl = new FlatTreeControl<TreeviewFlatNode>(
+      this.getLevel,
+      this.isExpandable
+    );
 
-    this.dataSource = new VocabularyTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    this.dataSource = new VocabularyTreeFlatDataSource(
+      this.treeControl,
+      this.treeFlattener
+    );
   }
 
   /**
    * Get children for a given node
    * @param node The node for which to retrieve the children
    */
-  getChildren = (node: TreeviewNode): Observable<TreeviewNode[]> => node.childrenChange;
+  getChildren = (node: TreeviewNode): Observable<TreeviewNode[]> =>
+    node.childrenChange;
 
   /**
    * Transform a {@link TreeviewNode} to {@link TreeviewFlatNode}
@@ -136,7 +157,11 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
   transformer = (node: TreeviewNode, level: number) => {
     const existingNode = this.nodeMap.get(node.item.id);
 
-    if (existingNode && existingNode.item.id !== LOAD_MORE && existingNode.item.id !== LOAD_MORE_ROOT) {
+    if (
+      existingNode &&
+      existingNode.item.id !== LOAD_MORE &&
+      existingNode.item.id !== LOAD_MORE_ROOT
+    ) {
       return existingNode;
     }
 
@@ -144,7 +169,7 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
       node.item,
       level,
       node.hasChildren,
-      (node.hasChildren && isNotEmpty(node.children)),
+      node.hasChildren && isNotEmpty(node.children),
       node.pageInfo,
       node.loadMoreParentItem,
       node.isSearchNode,
@@ -152,9 +177,11 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
     );
     this.nodeMap.set(node.item.id, newNode);
 
-    if ((((level + 1) < this.preloadLevel) && newNode.childrenLoaded)
-      || (newNode.isSearchNode && newNode.childrenLoaded)
-      || newNode.isInInitValueHierarchy) {
+    if (
+      (level + 1 < this.preloadLevel && newNode.childrenLoaded) ||
+      (newNode.isSearchNode && newNode.childrenLoaded) ||
+      newNode.isInInitValueHierarchy
+    ) {
       if (!newNode.isSearchNode) {
         this.loadChildren(newNode);
       }
@@ -179,19 +206,22 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
    * Check if a given node has children
    * @param _nodeData The node for which to retrieve the information
    */
-  hasChildren = (_: number, _nodeData: TreeviewFlatNode) => _nodeData.expandable;
+  hasChildren = (_: number, _nodeData: TreeviewFlatNode) =>
+    _nodeData.expandable;
 
   /**
    * Check if a given node has more children to load
    * @param _nodeData The node for which to retrieve the information
    */
-  isLoadMore = (_: number, _nodeData: TreeviewFlatNode) => _nodeData.item.id === LOAD_MORE;
+  isLoadMore = (_: number, _nodeData: TreeviewFlatNode) =>
+    _nodeData.item.id === LOAD_MORE;
 
   /**
    * Check if there are more node to load at root level
    * @param _nodeData The node for which to retrieve the information
    */
-  isLoadMoreRoot = (_: number, _nodeData: TreeviewFlatNode) => _nodeData.item.id === LOAD_MORE_ROOT;
+  isLoadMoreRoot = (_: number, _nodeData: TreeviewFlatNode) =>
+    _nodeData.item.id === LOAD_MORE_ROOT;
 
   /**
    * Initialize the component, setting up the data to build the tree
@@ -203,7 +233,8 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
       })
     );
 
-    const descriptionLabel = 'vocabulary-treeview.tree.description.' + this.vocabularyOptions.name;
+    const descriptionLabel =
+      'vocabulary-treeview.tree.description.' + this.vocabularyOptions.name;
     this.description = this.translate.get(descriptionLabel).pipe(
       filter((msg) => msg !== descriptionLabel),
       startWith('')
@@ -214,11 +245,15 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit {
 
     this.loading = this.vocabularyTreeviewService.isLoading();
 
-    this.isAuthenticated.pipe(
-      find((isAuth) => isAuth)
-    ).subscribe(() => {
-      const entryId: string = (this.selectedItem) ? this.getEntryId(this.selectedItem) : null;
-      this.vocabularyTreeviewService.initialize(this.vocabularyOptions, new PageInfo(), entryId);
+    this.isAuthenticated.pipe(find((isAuth) => isAuth)).subscribe(() => {
+      const entryId: string = this.selectedItem
+        ? this.getEntryId(this.selectedItem)
+        : null;
+      this.vocabularyTreeviewService.initialize(
+        this.vocabularyOptions,
+        new PageInfo(),
+        entryId
+      );
     });
   }
 

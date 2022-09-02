@@ -1,9 +1,8 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { NameVariantModalComponent } from './name-variant-modal.component';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import { By } from '@angular/platform-browser';
+import { NameVariantModalComponent } from './name-variant-modal.component';
 
 describe('NameVariantModalComponent', () => {
   let component: NameVariantModalComponent;
@@ -19,9 +18,8 @@ describe('NameVariantModalComponent', () => {
     TestBed.configureTestingModule({
       declarations: [NameVariantModalComponent],
       imports: [NgbModule, TranslateModule.forRoot()],
-      providers: [{ provide: NgbActiveModal, useValue: modal }]
-    })
-      .compileComponents();
+      providers: [{ provide: NgbActiveModal, useValue: modal }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -29,7 +27,6 @@ describe('NameVariantModalComponent', () => {
     component = fixture.componentInstance;
     debugElement = fixture.debugElement;
     fixture.detectChanges();
-
   });
 
   it('should create', () => {
@@ -42,12 +39,16 @@ describe('NameVariantModalComponent', () => {
   });
 
   it('when confirm button is clicked, close should be called on the modal', () => {
-    debugElement.query(By.css('button.confirm-button')).triggerEventHandler('click', {});
+    debugElement
+      .query(By.css('button.confirm-button'))
+      .triggerEventHandler('click', {});
     expect(modal.close).toHaveBeenCalled();
   });
 
   it('when decline button is clicked, dismiss should be called on the modal', () => {
-    debugElement.query(By.css('button.decline-button')).triggerEventHandler('click', {});
+    debugElement
+      .query(By.css('button.decline-button'))
+      .triggerEventHandler('click', {});
     expect(modal.dismiss).toHaveBeenCalled();
   });
 });

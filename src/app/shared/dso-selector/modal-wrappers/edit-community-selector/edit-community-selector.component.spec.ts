@@ -1,13 +1,13 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RouterStub } from '../../../testing/router.stub';
-import { EditCommunitySelectorComponent } from './edit-community-selector.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateModule } from '@ngx-translate/core';
 import { Community } from '../../../../core/shared/community.model';
 import { MetadataValue } from '../../../../core/shared/metadata.models';
 import { createSuccessfulRemoteDataObject } from '../../../remote-data.utils';
+import { RouterStub } from '../../../testing/router.stub';
+import { EditCommunitySelectorComponent } from './edit-community-selector.component';
 
 describe('EditCommunitySelectorComponent', () => {
   let component: EditCommunitySelectorComponent;
@@ -17,10 +17,12 @@ describe('EditCommunitySelectorComponent', () => {
   const community = new Community();
   community.uuid = '1234-1234-1234-1234';
   community.metadata = {
-    'dc.title': [Object.assign(new MetadataValue(), {
-      value: 'Community title',
-      language: undefined
-    })]
+    'dc.title': [
+      Object.assign(new MetadataValue(), {
+        value: 'Community title',
+        language: undefined,
+      }),
+    ],
   };
   const router = new RouterStub();
   const communityRD = createSuccessfulRemoteDataObject(community);
@@ -42,16 +44,16 @@ describe('EditCommunitySelectorComponent', () => {
                   dso: communityRD,
                 },
               },
-            }
+            },
           },
         },
         {
-          provide: Router, useValue: router
-        }
+          provide: Router,
+          useValue: router,
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -69,5 +71,4 @@ describe('EditCommunitySelectorComponent', () => {
     component.navigate(community);
     expect(router.navigate).toHaveBeenCalledWith([editPath]);
   });
-
 });

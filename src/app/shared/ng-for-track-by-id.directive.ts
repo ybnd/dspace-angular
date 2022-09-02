@@ -1,6 +1,5 @@
-import { Directive, Host } from '@angular/core';
 import { NgForOf } from '@angular/common';
-
+import { Directive, Host } from '@angular/core';
 import { DSpaceObject } from '../core/shared/dspace-object.model';
 
 @Directive({
@@ -8,9 +7,8 @@ import { DSpaceObject } from '../core/shared/dspace-object.model';
   selector: '[ngForTrackById]',
 })
 export class NgForTrackByIdDirective<T extends DSpaceObject> {
-
   constructor(@Host() private ngFor: NgForOf<T>) {
-    this.ngFor.ngForTrackBy = (index: number, dso: T) => (dso) ? dso.id : undefined;
+    this.ngFor.ngForTrackBy = (index: number, dso: T) =>
+      dso ? dso.id : undefined;
   }
-
 }

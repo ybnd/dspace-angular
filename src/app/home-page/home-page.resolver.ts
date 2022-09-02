@@ -1,17 +1,20 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { SiteDataService } from '../core/data/site-data.service';
-import { Site } from '../core/shared/site.model';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { SiteDataService } from '../core/data/site-data.service';
+import { Site } from '../core/shared/site.model';
 
 /**
  * The class that resolve the Site object for a route
  */
 @Injectable()
 export class HomePageResolver implements Resolve<Site> {
-  constructor(private siteService: SiteDataService) {
-  }
+  constructor(private siteService: SiteDataService) {}
 
   /**
    * Method for resolving a site object
@@ -19,7 +22,10 @@ export class HomePageResolver implements Resolve<Site> {
    * @param {RouterStateSnapshot} state The current RouterStateSnapshot
    * @returns Observable<Site> Emits the found Site object, or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Site> | Promise<Site> | Site {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<Site> | Promise<Site> | Site {
     return this.siteService.find().pipe(take(1));
   }
 }

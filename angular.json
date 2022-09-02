@@ -41,10 +41,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "src/assets",
-              "src/robots.txt"
-            ],
+            "assets": ["src/assets", "src/robots.txt"],
             "styles": [
               "src/styles/startup.scss",
               {
@@ -148,9 +145,7 @@
               "hidden": false,
               "vendor": false
             },
-            "assets": [
-              "src/assets"
-            ],
+            "assets": ["src/assets"],
             "styles": [
               {
                 "input": "src/styles/base-theme.scss",
@@ -237,9 +232,7 @@
           "options": {
             "browserTarget": "dspace-angular:build:production",
             "serverTarget": "dspace-angular:server:production",
-            "routes": [
-              "/"
-            ]
+            "routes": ["/"]
           },
           "configurations": {
             "production": {}
@@ -266,10 +259,7 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": [
-              "src/**/*.ts",
-              "src/**/*.html"
-            ]
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
         }
       }

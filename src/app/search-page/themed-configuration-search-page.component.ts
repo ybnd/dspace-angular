@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { ThemedComponent } from '../shared/theme-support/themed.component';
-import { ConfigurationSearchPageComponent } from './configuration-search-page.component';
 import { Observable } from 'rxjs';
 import { Context } from '../core/shared/context.model';
+import { ThemedComponent } from '../shared/theme-support/themed.component';
+import { ConfigurationSearchPageComponent } from './configuration-search-page.component';
 
 /**
  * Themed wrapper for ConfigurationSearchPageComponent
@@ -54,19 +54,27 @@ export class ThemedConfigurationSearchPageComponent extends ThemedComponent<Conf
   @Input()
   context: Context;
 
-  protected inAndOutputNames: (keyof ConfigurationSearchPageComponent & keyof this)[] =
-    ['context', 'configuration', 'fixedFilterQuery', 'inPlaceSearch', 'searchEnabled', 'sideBarWidth'];
+  protected inAndOutputNames: (keyof ConfigurationSearchPageComponent &
+    keyof this)[] = [
+    'context',
+    'configuration',
+    'fixedFilterQuery',
+    'inPlaceSearch',
+    'searchEnabled',
+    'sideBarWidth',
+  ];
 
   protected getComponentName(): string {
     return 'ConfigurationSearchPageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/search-page/configuration-search-page.component`);
+    return import(
+      `../../themes/${themeName}/app/search-page/configuration-search-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./configuration-search-page.component`);
   }
-
 }

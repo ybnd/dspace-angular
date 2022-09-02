@@ -7,23 +7,24 @@ import {
   OnDestroy,
   OnInit,
   Output,
-  ViewEncapsulation
+  ViewEncapsulation,
 } from '@angular/core';
-
 import { Observable, of as observableOf, Subscription } from 'rxjs';
-
+import { map, take } from 'rxjs/operators';
+import {
+  SortDirection,
+  SortOptions,
+} from '../../core/cache/models/sort-options.model';
+import { PaginatedList } from '../../core/data/paginated-list.model';
+import { RemoteData } from '../../core/data/remote-data';
+import { PaginationService } from '../../core/pagination/pagination.service';
+import { PageInfo } from '../../core/shared/page-info.model';
+import { ViewMode } from '../../core/shared/view-mode.model';
+import { hasValue } from '../empty.util';
 import { HostWindowService } from '../host-window.service';
+import { ListableObject } from '../object-collection/shared/listable-object.model';
 import { HostWindowState } from '../search/host-window.reducer';
 import { PaginationComponentOptions } from './pagination-component-options.model';
-import { SortDirection, SortOptions } from '../../core/cache/models/sort-options.model';
-import { hasValue } from '../empty.util';
-import { PageInfo } from '../../core/shared/page-info.model';
-import { PaginationService } from '../../core/pagination/pagination.service';
-import { map, take } from 'rxjs/operators';
-import { RemoteData } from '../../core/data/remote-data';
-import { PaginatedList } from '../../core/data/paginated-list.model';
-import { ListableObject } from '../object-collection/shared/listable-object.model';
-import { ViewMode } from '../../core/shared/view-mode.model';
 
 /**
  * The default pagination controls component.
@@ -34,7 +35,7 @@ import { ViewMode } from '../../core/shared/view-mode.model';
   styleUrls: ['pagination.component.scss'],
   templateUrl: 'pagination.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
-  encapsulation: ViewEncapsulation.Emulated
+  encapsulation: ViewEncapsulation.Emulated,
 })
 export class PaginationComponent implements OnDestroy, OnInit {
   /**
@@ -70,7 +71,7 @@ export class PaginationComponent implements OnDestroy, OnInit {
   /**
    * The current pagination configuration
    */
-   @Input() config?: PaginationComponentOptions;
+  @Input() config?: PaginationComponentOptions;
 
   /**
    * The list of listable objects to render in this component
@@ -98,7 +99,8 @@ export class PaginationComponent implements OnDestroy, OnInit {
    * An event fired when the sort direction is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter<SortDirection>();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter<SortDirection>();
 
   /**
    * An event fired when the sort field is changed.
@@ -205,11 +207,12 @@ export class PaginationComponent implements OnDestroy, OnInit {
    * Method provided by Angular. Invoked after the constructor.
    */
   ngOnInit() {
-    this.subs.push(this.hostWindowService.isXs()
-      .subscribe((status: boolean) => {
+    this.subs.push(
+      this.hostWindowService.isXs().subscribe((status: boolean) => {
         this.isXs = status;
         this.cdRef.markForCheck();
-      }));
+      })
+    );
     this.checkConfig(this.paginationOptions);
     this.initializeConfig();
   }
@@ -230,25 +233,28 @@ export class PaginationComponent implements OnDestroy, OnInit {
     // Set initial values
     this.id = this.paginationOptions.id || null;
     this.pageSizeOptions = this.paginationOptions.pageSizeOptions;
-    this.currentPage$ = this.paginationService.getCurrentPagination(this.id, this.paginationOptions).pipe(
-      map((currentPagination) => currentPagination.currentPage)
-    );
-    this.pageSize$ = this.paginationService.getCurrentPagination(this.id, this.paginationOptions).pipe(
-      map((currentPagination) => currentPagination.pageSize)
-    );
+    this.currentPage$ = this.paginationService
+      .getCurrentPagination(this.id, this.paginationOptions)
+      .pipe(map((currentPagination) => currentPagination.currentPage));
+    this.pageSize$ = this.paginationService
+      .getCurrentPagination(this.id, this.paginationOptions)
+      .pipe(map((currentPagination) => currentPagination.pageSize));
 
     let sortOptions;
     if (this.sortOptions) {
       sortOptions = this.sortOptions;
     } else {
-      sortOptions = new SortOptions(this.defaultSortField, this.defaultsortDirection);
+      sortOptions = new SortOptions(
+        this.defaultSortField,
+        this.defaultsortDirection
+      );
     }
-      this.sortDirection$ = this.paginationService.getCurrentSort(this.id, sortOptions).pipe(
-        map((currentSort) => currentSort.direction)
-      );
-      this.sortField$ = this.paginationService.getCurrentSort(this.id, sortOptions).pipe(
-        map((currentSort) => currentSort.field)
-      );
+    this.sortDirection$ = this.paginationService
+      .getCurrentSort(this.id, sortOptions)
+      .pipe(map((currentSort) => currentSort.direction));
+    this.sortField$ = this.paginationService
+      .getCurrentSort(this.id, sortOptions)
+      .pipe(map((currentSort) => currentSort.field));
   }
 
   /**
@@ -261,10 +267,11 @@ export class PaginationComponent implements OnDestroy, OnInit {
    * @param hostWindowService
    *    the HostWindowService singleton.
    */
-  constructor(private cdRef: ChangeDetectorRef,
-              private paginationService: PaginationService,
-              public hostWindowService: HostWindowService) {
-  }
+  constructor(
+    private cdRef: ChangeDetectorRef,
+    private paginationService: PaginationService,
+    public hostWindowService: HostWindowService
+  ) {}
 
   /**
    * Method to change the route to the given page
@@ -273,7 +280,7 @@ export class PaginationComponent implements OnDestroy, OnInit {
    *    The page being navigated to.
    */
   public doPageChange(page: number) {
-    this.updateParams({page: page.toString()});
+    this.updateParams({ page: page.toString() });
     this.emitPaginationChange();
   }
 
@@ -295,7 +302,11 @@ export class PaginationComponent implements OnDestroy, OnInit {
    *    The sort direction being navigated to.
    */
   public doSortDirectionChange(sortDirection: SortDirection) {
-    this.updateParams({ pageId: this.id, page: 1, sortDirection: sortDirection });
+    this.updateParams({
+      pageId: this.id,
+      page: 1,
+      sortDirection: sortDirection,
+    });
     this.emitPaginationChange();
   }
 
@@ -322,30 +333,48 @@ export class PaginationComponent implements OnDestroy, OnInit {
    * @param params
    */
   private updateParams(params: {}) {
-    this.paginationService.updateRoute(this.id, params, {}, this.retainScrollPosition);
+    this.paginationService.updateRoute(
+      this.id,
+      params,
+      {},
+      this.retainScrollPosition
+    );
   }
 
   /**
    * Method to get pagination details of the current viewed page.
    */
   public getShowingDetails(collectionSize: number): Observable<any> {
-    let showingDetails = observableOf({ range: null + ' - ' + null, total: null });
+    let showingDetails = observableOf({
+      range: null + ' - ' + null,
+      total: null,
+    });
     if (collectionSize) {
-      showingDetails = this.paginationService.getCurrentPagination(this.id, this.paginationOptions).pipe(
-        map((currentPaginationOptions) => {
-          let firstItem;
-          let lastItem;
-          const pageMax = currentPaginationOptions.pageSize * currentPaginationOptions.currentPage;
+      showingDetails = this.paginationService
+        .getCurrentPagination(this.id, this.paginationOptions)
+        .pipe(
+          map((currentPaginationOptions) => {
+            let firstItem;
+            let lastItem;
+            const pageMax =
+              currentPaginationOptions.pageSize *
+              currentPaginationOptions.currentPage;
 
-          firstItem = currentPaginationOptions.pageSize * (currentPaginationOptions.currentPage - 1) + 1;
-          if (collectionSize > pageMax) {
-            lastItem = pageMax;
-          } else {
-            lastItem = collectionSize;
-          }
-          return {range: firstItem + ' - ' + lastItem, total: collectionSize};
-        })
-      );
+            firstItem =
+              currentPaginationOptions.pageSize *
+                (currentPaginationOptions.currentPage - 1) +
+              1;
+            if (collectionSize > pageMax) {
+              lastItem = pageMax;
+            } else {
+              lastItem = collectionSize;
+            }
+            return {
+              range: firstItem + ' - ' + lastItem,
+              total: collectionSize,
+            };
+          })
+        );
     }
     return showingDetails;
   }
@@ -362,7 +391,10 @@ export class PaginationComponent implements OnDestroy, OnInit {
       return !(prop in paginateOptions);
     });
     if (0 < missing.length) {
-      throw new Error('Paginate: Argument is missing the following required properties: ' + missing.join(', '));
+      throw new Error(
+        'Paginate: Argument is missing the following required properties: ' +
+          missing.join(', ')
+      );
     }
   }
 
@@ -371,9 +403,14 @@ export class PaginationComponent implements OnDestroy, OnInit {
    * @returns true if there are multiple pages, else returns false
    */
   get hasMultiplePages(): Observable<boolean> {
-    return this.paginationService.getCurrentPagination(this.id, this.paginationOptions).pipe(
-      map((currentPaginationOptions) =>  this.collectionSize > currentPaginationOptions.pageSize)
-    );
+    return this.paginationService
+      .getCurrentPagination(this.id, this.paginationOptions)
+      .pipe(
+        map(
+          (currentPaginationOptions) =>
+            this.collectionSize > currentPaginationOptions.pageSize
+        )
+      );
   }
 
   /**
@@ -382,14 +419,16 @@ export class PaginationComponent implements OnDestroy, OnInit {
    */
   get shouldShowBottomPager(): Observable<boolean> {
     return this.hasMultiplePages.pipe(
-      map((hasMultiplePages) => hasMultiplePages || !this.hidePagerWhenSinglePage)
+      map(
+        (hasMultiplePages) => hasMultiplePages || !this.hidePagerWhenSinglePage
+      )
     );
   }
 
   /**
    * Go to the previous page
    */
-   goPrev() {
+  goPrev() {
     this.prev.emit(true);
     this.updatePagination(-1);
   }
@@ -407,9 +446,13 @@ export class PaginationComponent implements OnDestroy, OnInit {
    * @param value
    */
   updatePagination(value: number) {
-    this.paginationService.getCurrentPagination(this.id, this.paginationOptions).pipe(take(1)).subscribe((currentPaginationOptions) => {
-      this.updateParams({page: (currentPaginationOptions.currentPage + value).toString()});
-    });
+    this.paginationService
+      .getCurrentPagination(this.id, this.paginationOptions)
+      .pipe(take(1))
+      .subscribe((currentPaginationOptions) => {
+        this.updateParams({
+          page: (currentPaginationOptions.currentPage + value).toString(),
+        });
+      });
   }
-
 }

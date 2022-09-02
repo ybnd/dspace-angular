@@ -1,26 +1,22 @@
 import { Injectable } from '@angular/core';
-
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-
 import { RemoteData } from '../../core/data/remote-data';
 import { EPerson } from '../../core/eperson/models/eperson.model';
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
+import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { SearchService } from '../../core/shared/search/search.service';
 import { isEmpty, isNotEmpty } from '../../shared/empty.util';
-import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
-import { getFirstCompletedRemoteData } from '../../core/shared/operators';
-import { SearchObjects } from '../../shared/search/models/search-objects.model';
 import { createNoContentRemoteDataObject } from '../../shared/remote-data.utils';
+import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
+import { SearchObjects } from '../../shared/search/models/search-objects.model';
 
 /**
  * Service that handle profiles claim.
  */
 @Injectable()
 export class ProfileClaimService {
-
-  constructor(private searchService: SearchService) {
-  }
+  constructor(private searchService: SearchService) {}
 
   /**
    * Returns true if it is possible to suggest profiles to be claimed to the given eperson.
@@ -31,7 +27,9 @@ export class ProfileClaimService {
     return this.searchForSuggestions(eperson).pipe(
       getFirstCompletedRemoteData(),
       map((rd: RemoteData<SearchObjects<DSpaceObject>>) => {
-        return isNotEmpty(rd) && rd.hasSucceeded && rd.payload?.page?.length > 0;
+        return (
+          isNotEmpty(rd) && rd.hasSucceeded && rd.payload?.page?.length > 0
+        );
       })
     );
   }
@@ -41,10 +39,16 @@ export class ProfileClaimService {
    *
    * @param eperson the user
    */
-  searchForSuggestions(eperson: EPerson): Observable<RemoteData<SearchObjects<DSpaceObject>>> {
+  searchForSuggestions(
+    eperson: EPerson
+  ): Observable<RemoteData<SearchObjects<DSpaceObject>>> {
     const query = this.personQueryData(eperson);
     if (isEmpty(query)) {
-      return of(createNoContentRemoteDataObject() as RemoteData<SearchObjects<DSpaceObject>>);
+      return of(
+        createNoContentRemoteDataObject() as RemoteData<
+          SearchObjects<DSpaceObject>
+        >
+      );
     }
     return this.lookup(query);
   }
@@ -54,14 +58,25 @@ export class ProfileClaimService {
    *
    * @param query the query for the search
    */
-  private lookup(query: string): Observable<RemoteData<SearchObjects<DSpaceObject>>> {
+  private lookup(
+    query: string
+  ): Observable<RemoteData<SearchObjects<DSpaceObject>>> {
     if (isEmpty(query)) {
-      return of(createNoContentRemoteDataObject() as RemoteData<SearchObjects<DSpaceObject>>);
+      return of(
+        createNoContentRemoteDataObject() as RemoteData<
+          SearchObjects<DSpaceObject>
+        >
+      );
     }
-    return this.searchService.search(new PaginatedSearchOptions({
-      configuration: 'eperson_claims',
-      query: query
-    }), null, false, true);
+    return this.searchService.search(
+      new PaginatedSearchOptions({
+        configuration: 'eperson_claims',
+        query: query,
+      }),
+      null,
+      false,
+      true
+    );
   }
 
   /**
@@ -76,5 +91,4 @@ export class ProfileClaimService {
       return null;
     }
   }
-
 }

@@ -1,6 +1,6 @@
+import { isNotEmpty } from '../empty.util';
 import { FacetValue } from './models/facet-value.model';
 import { SearchFilterConfig } from './models/search-filter-config.model';
-import { isNotEmpty } from '../empty.util';
 
 /**
  * Get a facet's value by matching its parameter in the search href, this will include the operator of the facet value
@@ -8,8 +8,16 @@ import { isNotEmpty } from '../empty.util';
  * @param facetValue
  * @param searchFilterConfig
  */
-export function getFacetValueForType(facetValue: FacetValue, searchFilterConfig: SearchFilterConfig): string {
-  const regex = new RegExp(`[?|&]${escapeRegExp(encodeURIComponent(searchFilterConfig.paramName))}=(${escapeRegExp(encodeURIComponent(facetValue.value))}[^&]*)`, 'g');
+export function getFacetValueForType(
+  facetValue: FacetValue,
+  searchFilterConfig: SearchFilterConfig
+): string {
+  const regex = new RegExp(
+    `[?|&]${escapeRegExp(
+      encodeURIComponent(searchFilterConfig.paramName)
+    )}=(${escapeRegExp(encodeURIComponent(facetValue.value))}[^&]*)`,
+    'g'
+  );
   if (isNotEmpty(facetValue._links)) {
     const values = regex.exec(facetValue._links.search.href);
     if (isNotEmpty(values)) {

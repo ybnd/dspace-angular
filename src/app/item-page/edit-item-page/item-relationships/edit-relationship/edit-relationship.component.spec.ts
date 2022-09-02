@@ -1,16 +1,16 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
+import { FieldChangeType } from '../../../../core/data/object-updates/field-change-type.model';
 import { ObjectUpdatesService } from '../../../../core/data/object-updates/object-updates.service';
 import { RelationshipType } from '../../../../core/shared/item-relationships/relationship-type.model';
 import { Relationship } from '../../../../core/shared/item-relationships/relationship.model';
 import { Item } from '../../../../core/shared/item.model';
-import { EditRelationshipComponent } from './edit-relationship.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
 import { createPaginatedList } from '../../../../shared/testing/utils.test';
-import { FieldChangeType } from '../../../../core/data/object-updates/field-change-type.model';
+import { EditRelationshipComponent } from './edit-relationship.component';
 
 let objectUpdatesService;
 const url = 'http://test-url.com/test-url';
@@ -30,25 +30,25 @@ let de;
 let el;
 
 describe('EditRelationshipComponent', () => {
-
   beforeEach(waitForAsync(() => {
-
     relationshipType = Object.assign(new RelationshipType(), {
       id: '1',
       uuid: '1',
       leftwardType: 'isAuthorOfPublication',
-      rightwardType: 'isPublicationOfAuthor'
+      rightwardType: 'isPublicationOfAuthor',
     });
 
     item = Object.assign(new Item(), {
       _links: {
         self: {
-          href: 'fake-item-url/publication'
-        }
+          href: 'fake-item-url/publication',
+        },
       },
       id: 'publication',
       uuid: 'publication',
-      relationships: createSuccessfulRemoteDataObject$(createPaginatedList(relationships))
+      relationships: createSuccessfulRemoteDataObject$(
+        createPaginatedList(relationships)
+      ),
     });
 
     relatedItem = Object.assign(new Item(), {
@@ -58,7 +58,7 @@ describe('EditRelationshipComponent', () => {
     relationships = [
       Object.assign(new Relationship(), {
         _links: {
-          self: { href: url + '/2' }
+          self: { href: url + '/2' },
         },
         id: '2',
         uuid: '2',
@@ -70,23 +70,23 @@ describe('EditRelationshipComponent', () => {
       }),
       Object.assign(new Relationship(), {
         _links: {
-          self: { href: url + '/3' }
+          self: { href: url + '/3' },
         },
         id: '3',
         uuid: '3',
         leftId: 'author2',
         rightId: 'publication',
-        relationshipType: createSuccessfulRemoteDataObject$(relationshipType)
-      })
+        relationshipType: createSuccessfulRemoteDataObject$(relationshipType),
+      }),
     ];
 
     author1 = Object.assign(new Item(), {
       id: 'author1',
-      uuid: 'author1'
+      uuid: 'author1',
     });
     author2 = Object.assign(new Item(), {
       id: 'author2',
-      uuid: 'author2'
+      uuid: 'author2',
     });
 
     fieldUpdate1 = {
@@ -94,14 +94,14 @@ describe('EditRelationshipComponent', () => {
         uuid: relationships[0].uuid,
         relationship: relationships[0],
       },
-      changeType: undefined
+      changeType: undefined,
     };
     fieldUpdate2 = {
       field: {
         uuid: relationships[1].uuid,
         relationship: relationships[1],
       },
-      changeType: FieldChangeType.REMOVE
+      changeType: FieldChangeType.REMOVE,
     };
 
     const itemSelection = {};
@@ -114,7 +114,9 @@ describe('EditRelationshipComponent', () => {
       saveRemoveFieldUpdate: jasmine.createSpy('saveRemoveFieldUpdate'),
     };
 
-    spyOn(objectUpdatesService, 'isSelectedVirtualMetadata').and.callFake((a, b, uuid) => observableOf(itemSelection[uuid]));
+    spyOn(objectUpdatesService, 'isSelectedVirtualMetadata').and.callFake(
+      (a, b, uuid) => observableOf(itemSelection[uuid])
+    );
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
@@ -122,19 +124,19 @@ describe('EditRelationshipComponent', () => {
       providers: [
         { provide: ObjectUpdatesService, useValue: objectUpdatesService },
         {
-          provide: NgbModal, useValue: {
-            open: () => {/*comment*/
-            }
+          provide: NgbModal,
+          useValue: {
+            open: () => {
+              /*comment*/
+            },
           },
         },
-      ], schemas: [
-        NO_ERRORS_SCHEMA
-      ]
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-
     fixture = TestBed.createComponent(EditRelationshipComponent);
     comp = fixture.componentInstance;
     de = fixture.debugElement;
@@ -187,7 +189,6 @@ describe('EditRelationshipComponent', () => {
   });
 
   describe('remove', () => {
-
     beforeEach(() => {
       spyOn(comp, 'closeVirtualMetadataModal');
       comp.ngOnChanges();
@@ -201,16 +202,18 @@ describe('EditRelationshipComponent', () => {
         Object.assign({}, fieldUpdate1.field, {
           keepLeftVirtualMetadata: false,
           keepRightVirtualMetadata: true,
-        }),
+        })
       );
     });
   });
 
   describe('undo', () => {
-
     it('should call removeSingleFieldUpdate with the correct arguments', () => {
       comp.undo();
-      expect(objectUpdatesService.removeSingleFieldUpdate).toHaveBeenCalledWith(url, relationships[0].uuid);
+      expect(objectUpdatesService.removeSingleFieldUpdate).toHaveBeenCalledWith(
+        url,
+        relationships[0].uuid
+      );
     });
   });
 });

@@ -1,5 +1,3 @@
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
 /**
  * If a component implementing this interface is used to create a modal (i.e. it is passed to {@link NgbModal#open}),
  * and that modal is dismissed, then {@link #beforeDismiss} will be called.
@@ -10,7 +8,6 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
  * Docs: https://ng-bootstrap.github.io/#/components/modal/api
  */
 export interface ModalBeforeDismiss {
-
   /**
    * Callback right before the modal will be dismissed.
    * If this function returns:
@@ -21,5 +18,4 @@ export interface ModalBeforeDismiss {
    * Docs: https://ng-bootstrap.github.io/#/components/modal/api#NgbModalOptions
    */
   beforeDismiss(): boolean | Promise<boolean>;
-
 }

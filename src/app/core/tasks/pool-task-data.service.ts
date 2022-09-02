@@ -1,23 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-
 import { Observable } from 'rxjs';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
 import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
+import { FindListOptions } from '../data/find-list-options.model';
+import { RemoteData } from '../data/remote-data';
 import { RequestService } from '../data/request.service';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { getFirstCompletedRemoteData } from '../shared/operators';
 import { PoolTask } from './models/pool-task-object.model';
 import { POOL_TASK } from './models/pool-task-object.resource-type';
 import { TasksService } from './tasks.service';
-import { RemoteData } from '../data/remote-data';
-import { RequestParam } from '../cache/models/request-param.model';
-import { getFirstCompletedRemoteData } from '../shared/operators';
-import { CoreState } from '../core-state.model';
-import { FindListOptions } from '../data/find-list-options.model';
 
 /**
  * The service handling all REST requests for PoolTask
@@ -25,7 +24,6 @@ import { FindListOptions } from '../data/find-list-options.model';
 @Injectable()
 @dataService(POOL_TASK)
 export class PoolTaskDataService extends TasksService<PoolTask> {
-
   /**
    * The endpoint link name
    */
@@ -54,7 +52,8 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<PoolTask>) {
+    protected comparator: DSOChangeAnalyzer<PoolTask>
+  ) {
     super();
   }
 
@@ -67,10 +66,10 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
    */
   public findByItem(uuid: string): Observable<RemoteData<PoolTask>> {
     const options = new FindListOptions();
-    options.searchParams = [
-      new RequestParam('uuid', uuid)
-    ];
-    return this.searchTask('findByItem', options).pipe(getFirstCompletedRemoteData());
+    options.searchParams = [new RequestParam('uuid', uuid)];
+    return this.searchTask('findByItem', options).pipe(
+      getFirstCompletedRemoteData()
+    );
   }
 
   /**
@@ -84,5 +83,4 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
   public getPoolTaskEndpointById(poolTaskId): Observable<string> {
     return this.getEndpointById(poolTaskId);
   }
-
 }

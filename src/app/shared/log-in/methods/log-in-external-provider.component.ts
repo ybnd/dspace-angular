@@ -1,26 +1,27 @@
-import { Component, Inject, OnInit, } from '@angular/core';
-
+import { Component, Inject, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
-import { select, Store } from '@ngrx/store';
-
-import { AuthMethod } from '../../../core/auth/models/auth.method';
-
-import { isAuthenticated, isAuthenticationLoading } from '../../../core/auth/selectors';
-import { NativeWindowRef, NativeWindowService } from '../../../core/services/window.service';
-import { isEmpty, isNotNull } from '../../empty.util';
 import { AuthService } from '../../../core/auth/auth.service';
-import { HardRedirectService } from '../../../core/services/hard-redirect.service';
-import { URLCombiner } from '../../../core/url-combiner/url-combiner';
+import { AuthMethod } from '../../../core/auth/models/auth.method';
+import {
+  isAuthenticated,
+  isAuthenticationLoading,
+} from '../../../core/auth/selectors';
 import { CoreState } from '../../../core/core-state.model';
+import { HardRedirectService } from '../../../core/services/hard-redirect.service';
+import {
+  NativeWindowRef,
+  NativeWindowService,
+} from '../../../core/services/window.service';
+import { URLCombiner } from '../../../core/url-combiner/url-combiner';
+import { isEmpty, isNotNull } from '../../empty.util';
 
 @Component({
   selector: 'ds-log-in-external-provider',
-  template: ''
-
+  template: '',
 })
 export abstract class LogInExternalProviderComponent implements OnInit {
-
   /**
    * The authentication method data.
    * @type {AuthMethod}
@@ -74,37 +75,46 @@ export abstract class LogInExternalProviderComponent implements OnInit {
 
     // set location
     this.location = decodeURIComponent(this.injectedAuthMethodModel.location);
-
   }
 
   /**
    * Redirect to the external provider url for login
    */
   redirectToExternalProvider() {
-    this.authService.getRedirectUrl().pipe(take(1)).subscribe((redirectRoute) => {
-      if (!this.isStandalonePage) {
-        redirectRoute = this.hardRedirectService.getCurrentRoute();
-      } else if (isEmpty(redirectRoute)) {
-        redirectRoute = '/';
-      }
-      const correctRedirectUrl = new URLCombiner(this._window.nativeWindow.origin, redirectRoute).toString();
+    this.authService
+      .getRedirectUrl()
+      .pipe(take(1))
+      .subscribe((redirectRoute) => {
+        if (!this.isStandalonePage) {
+          redirectRoute = this.hardRedirectService.getCurrentRoute();
+        } else if (isEmpty(redirectRoute)) {
+          redirectRoute = '/';
+        }
+        const correctRedirectUrl = new URLCombiner(
+          this._window.nativeWindow.origin,
+          redirectRoute
+        ).toString();
 
-      let externalServerUrl = this.location;
-      const myRegexp = /\?redirectUrl=(.*)/g;
-      const match = myRegexp.exec(this.location);
-      const redirectUrlFromServer = (match && match[1]) ? match[1] : null;
+        let externalServerUrl = this.location;
+        const myRegexp = /\?redirectUrl=(.*)/g;
+        const match = myRegexp.exec(this.location);
+        const redirectUrlFromServer = match && match[1] ? match[1] : null;
 
-      // Check whether the current page is different from the redirect url received from rest
-      if (isNotNull(redirectUrlFromServer) && redirectUrlFromServer !== correctRedirectUrl) {
-        // change the redirect url with the current page url
-        const newRedirectUrl = `?redirectUrl=${correctRedirectUrl}`;
-        externalServerUrl = this.location.replace(/\?redirectUrl=(.*)/g, newRedirectUrl);
-      }
+        // Check whether the current page is different from the redirect url received from rest
+        if (
+          isNotNull(redirectUrlFromServer) &&
+          redirectUrlFromServer !== correctRedirectUrl
+        ) {
+          // change the redirect url with the current page url
+          const newRedirectUrl = `?redirectUrl=${correctRedirectUrl}`;
+          externalServerUrl = this.location.replace(
+            /\?redirectUrl=(.*)/g,
+            newRedirectUrl
+          );
+        }
 
-      // redirect to shibboleth authentication url
-      this.hardRedirectService.redirect(externalServerUrl);
-    });
-
+        // redirect to shibboleth authentication url
+        this.hardRedirectService.redirect(externalServerUrl);
+      });
   }
-
 }

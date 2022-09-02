@@ -38,9 +38,13 @@ describe('Numeric Utils', () => {
     });
 
     it('should return false for any other kind of value', () => {
-      expect(isNumeric([1,2,3])).toBeFalse();
-      expect(isNumeric({ a:1, b:2, c:3 })).toBeFalse();
-      expect(isNumeric(() => { /* empty */ })).toBeFalse();
+      expect(isNumeric([1, 2, 3])).toBeFalse();
+      expect(isNumeric({ a: 1, b: 2, c: 3 })).toBeFalse();
+      expect(
+        isNumeric(() => {
+          /* empty */
+        })
+      ).toBeFalse();
       expect(isNumeric(null)).toBeFalse();
       expect(isNumeric(undefined)).toBeFalse();
       expect(isNumeric(true)).toBeFalse();

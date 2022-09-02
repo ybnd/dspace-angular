@@ -1,30 +1,30 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
-import { RelatedItemsComponent } from './related-items-component';
-import { Item } from '../../../core/shared/item.model';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { createRelationshipsObservable } from '../item-types/shared/item.component.spec';
-import { createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
-import { RelationshipService } from '../../../core/data/relationship.service';
 import { TranslateModule } from '@ngx-translate/core';
-import { VarDirective } from '../../../shared/utils/var.directive';
 import { of as observableOf } from 'rxjs';
+import { RelationshipService } from '../../../core/data/relationship.service';
+import { Item } from '../../../core/shared/item.model';
+import { createSuccessfulRemoteDataObject$ } from '../../../shared/remote-data.utils';
 import { createPaginatedList } from '../../../shared/testing/utils.test';
+import { VarDirective } from '../../../shared/utils/var.directive';
+import { createRelationshipsObservable } from '../item-types/shared/item.component.spec';
+import { RelatedItemsComponent } from './related-items-component';
 
 const parentItem: Item = Object.assign(new Item(), {
   bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
   metadata: [],
-  relationships: createRelationshipsObservable()
+  relationships: createRelationshipsObservable(),
 });
 const mockItem1: Item = Object.assign(new Item(), {
   bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
   metadata: [],
-  relationships: createRelationshipsObservable()
+  relationships: createRelationshipsObservable(),
 });
 const mockItem2: Item = Object.assign(new Item(), {
   bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
   metadata: [],
-  relationships: createRelationshipsObservable()
+  relationships: createRelationshipsObservable(),
 });
 const mockItems = [mockItem1, mockItem2];
 const relationType = 'isItemOfItem';
@@ -35,22 +35,24 @@ describe('RelatedItemsComponent', () => {
   let fixture: ComponentFixture<RelatedItemsComponent>;
 
   beforeEach(waitForAsync(() => {
-    relationshipService = jasmine.createSpyObj('relationshipService',
-      {
-        getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(createPaginatedList(mockItems)),
-      }
-    );
+    relationshipService = jasmine.createSpyObj('relationshipService', {
+      getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(
+        createPaginatedList(mockItems)
+      ),
+    });
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [RelatedItemsComponent, VarDirective],
       providers: [
-        { provide: RelationshipService, useValue: relationshipService }
+        { provide: RelationshipService, useValue: relationshipService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(RelatedItemsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(RelatedItemsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -62,7 +64,9 @@ describe('RelatedItemsComponent', () => {
   }));
 
   it(`should load ${mockItems.length} item-type-switcher components`, () => {
-    const fields = fixture.debugElement.queryAll(By.css('ds-listable-object-component-loader'));
+    const fields = fixture.debugElement.queryAll(
+      By.css('ds-listable-object-component-loader')
+    );
     expect(fields.length).toBe(mockItems.length);
   });
 
@@ -79,11 +83,15 @@ describe('RelatedItemsComponent', () => {
       expect(comp.objects.length).toEqual(2);
     });
 
-    it('should call relationship-service\'s getRelatedItemsByLabel with the correct arguments (second page)', () => {
-      expect(relationshipService.getRelatedItemsByLabel).toHaveBeenCalledWith(parentItem, relationType, Object.assign(comp.options, {
-        elementsPerPage: comp.incrementBy,
-        currentPage: 2
-      }));
+    it("should call relationship-service's getRelatedItemsByLabel with the correct arguments (second page)", () => {
+      expect(relationshipService.getRelatedItemsByLabel).toHaveBeenCalledWith(
+        parentItem,
+        relationType,
+        Object.assign(comp.options, {
+          elementsPerPage: comp.incrementBy,
+          currentPage: 2,
+        })
+      );
     });
   });
 
@@ -98,5 +106,4 @@ describe('RelatedItemsComponent', () => {
       expect(comp.objects.length).toEqual(1);
     });
   });
-
 });

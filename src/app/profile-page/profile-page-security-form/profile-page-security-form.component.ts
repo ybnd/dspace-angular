@@ -1,24 +1,27 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DynamicFormControlModel, DynamicFormService, DynamicInputModel } from '@ng-dynamic-forms/core';
-import { TranslateService } from '@ngx-translate/core';
 import { FormGroup } from '@angular/forms';
-import { hasValue, isEmpty } from '../../shared/empty.util';
-import { EPersonDataService } from '../../core/eperson/eperson-data.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { map } from 'rxjs/operators';
+import {
+  DynamicFormControlModel,
+  DynamicFormService,
+  DynamicInputModel,
+} from '@ng-dynamic-forms/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { EPersonDataService } from '../../core/eperson/eperson-data.service';
 import { debounceTimeWorkaround as debounceTime } from '../../core/shared/operators';
+import { hasValue, isEmpty } from '../../shared/empty.util';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 
 @Component({
   selector: 'ds-profile-page-security-form',
-  templateUrl: './profile-page-security-form.component.html'
+  templateUrl: './profile-page-security-form.component.html',
 })
 /**
  * Component for a user to edit their security information
  * Displays a form containing a password field and a confirmation of the password
  */
 export class ProfilePageSecurityFormComponent implements OnInit {
-
   /**
    * Emits the validity of the password
    */
@@ -35,13 +38,13 @@ export class ProfilePageSecurityFormComponent implements OnInit {
     new DynamicInputModel({
       id: 'password',
       name: 'password',
-      inputType: 'password'
+      inputType: 'password',
     }),
     new DynamicInputModel({
       id: 'passwordrepeat',
       name: 'passwordrepeat',
-      inputType: 'password'
-    })
+      inputType: 'password',
+    }),
   ];
 
   /**
@@ -62,53 +65,65 @@ export class ProfilePageSecurityFormComponent implements OnInit {
   FORM_PREFIX: string;
   private subs: Subscription[] = [];
 
-  constructor(protected formService: DynamicFormService,
-              protected translate: TranslateService,
-              protected epersonService: EPersonDataService,
-              protected notificationsService: NotificationsService) {
-  }
+  constructor(
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected epersonService: EPersonDataService,
+    protected notificationsService: NotificationsService
+  ) {}
 
   ngOnInit(): void {
     if (this.passwordCanBeEmpty) {
-      this.formGroup = this.formService.createFormGroup(this.formModel,
-        {validators: [this.checkPasswordsEqual, this.checkPasswordLength]});
+      this.formGroup = this.formService.createFormGroup(this.formModel, {
+        validators: [this.checkPasswordsEqual, this.checkPasswordLength],
+      });
     } else {
-      this.formGroup = this.formService.createFormGroup(this.formModel,
-        {validators: [this.checkPasswordsEqual, this.checkPasswordLength, this.checkPasswordEmpty]});
+      this.formGroup = this.formService.createFormGroup(this.formModel, {
+        validators: [
+          this.checkPasswordsEqual,
+          this.checkPasswordLength,
+          this.checkPasswordEmpty,
+        ],
+      });
     }
     this.updateFieldTranslations();
-    this.translate.onLangChange
-      .subscribe(() => {
-        this.updateFieldTranslations();
-      });
+    this.translate.onLangChange.subscribe(() => {
+      this.updateFieldTranslations();
+    });
 
-    this.subs.push(this.formGroup.statusChanges.pipe(
-      debounceTime(300),
-      map((status: string) => {
-        if (status !== 'VALID') {
-          return true;
-        } else {
-          return false;
-        }
-      })).subscribe((status) => this.isInvalid.emit(status))
+    this.subs.push(
+      this.formGroup.statusChanges
+        .pipe(
+          debounceTime(300),
+          map((status: string) => {
+            if (status !== 'VALID') {
+              return true;
+            } else {
+              return false;
+            }
+          })
+        )
+        .subscribe((status) => this.isInvalid.emit(status))
     );
 
-    this.subs.push(this.formGroup.valueChanges.pipe(
-      debounceTime(300),
-    ).subscribe((valueChange) => {
-      this.passwordValue.emit(valueChange.password);
-    }));
+    this.subs.push(
+      this.formGroup.valueChanges
+        .pipe(debounceTime(300))
+        .subscribe((valueChange) => {
+          this.passwordValue.emit(valueChange.password);
+        })
+    );
   }
 
   /**
    * Update the translations of the field labels
    */
   updateFieldTranslations() {
-    this.formModel.forEach(
-      (fieldModel: DynamicInputModel) => {
-        fieldModel.label = this.translate.instant(this.FORM_PREFIX + 'label.' + fieldModel.id);
-      }
-    );
+    this.formModel.forEach((fieldModel: DynamicInputModel) => {
+      fieldModel.label = this.translate.instant(
+        this.FORM_PREFIX + 'label.' + fieldModel.id
+      );
+    });
   }
 
   /**
@@ -119,7 +134,7 @@ export class ProfilePageSecurityFormComponent implements OnInit {
     const pass = group.get('password').value;
     const repeatPass = group.get('passwordrepeat').value;
 
-    return pass === repeatPass ? null : {notSame: true};
+    return pass === repeatPass ? null : { notSame: true };
   }
 
   /**
@@ -129,7 +144,7 @@ export class ProfilePageSecurityFormComponent implements OnInit {
   checkPasswordLength(group: FormGroup) {
     const pass = group.get('password').value;
 
-    return isEmpty(pass) || pass.length >= 6 ? null : {notLongEnough: true};
+    return isEmpty(pass) || pass.length >= 6 ? null : { notLongEnough: true };
   }
 
   /**
@@ -138,7 +153,7 @@ export class ProfilePageSecurityFormComponent implements OnInit {
    */
   checkPasswordEmpty(group: FormGroup) {
     const pass = group.get('password').value;
-    return isEmpty(pass) ? {emptyPassword: true} : null;
+    return isEmpty(pass) ? { emptyPassword: true } : null;
   }
 
   /**

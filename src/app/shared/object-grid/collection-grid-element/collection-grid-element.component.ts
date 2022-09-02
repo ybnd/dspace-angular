@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
-import { Collection } from '../../../core/shared/collection.model';
-import { AbstractListableElementComponent } from '../../object-collection/shared/object-collection-element/abstract-listable-element.component';
-import { ViewMode } from '../../../core/shared/view-mode.model';
-import { listableObjectComponent } from '../../object-collection/shared/listable-object/listable-object.decorator';
-import { hasNoValue, hasValue } from '../../empty.util';
-import { followLink } from '../../utils/follow-link-config.model';
 import { LinkService } from '../../../core/cache/builders/link.service';
+import { Collection } from '../../../core/shared/collection.model';
+import { ViewMode } from '../../../core/shared/view-mode.model';
+import { hasNoValue, hasValue } from '../../empty.util';
+import { listableObjectComponent } from '../../object-collection/shared/listable-object/listable-object.decorator';
+import { AbstractListableElementComponent } from '../../object-collection/shared/object-collection-element/abstract-listable-element.component';
+import { followLink } from '../../utils/follow-link-config.model';
 
 /**
  * Component representing a grid element for collection
@@ -16,9 +16,7 @@ import { LinkService } from '../../../core/cache/builders/link.service';
   templateUrl: './collection-grid-element.component.html',
 })
 @listableObjectComponent(Collection, ViewMode.GridElement)
-export class CollectionGridElementComponent extends AbstractListableElementComponent<
-  Collection
-> {
+export class CollectionGridElementComponent extends AbstractListableElementComponent<Collection> {
   private _object: Collection;
 
   constructor(private linkService: LinkService) {

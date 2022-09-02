@@ -1,22 +1,22 @@
 import { InjectionToken } from '@angular/core';
 import { makeStateKey } from '@angular/platform-browser';
-import { Config } from './config.interface';
-import { ServerConfig } from './server-config.interface';
-import { CacheConfig } from './cache-config.interface';
-import { INotificationBoardOptions } from './notifications-config.interfaces';
-import { SubmissionConfig } from './submission-config.interface';
-import { FormConfig } from './form-config.interfaces';
-import { LangConfig } from './lang-config.interface';
-import { ItemConfig } from './item-config.interface';
-import { CollectionPageConfig } from './collection-page-config.interface';
-import { ThemeConfig } from './theme.model';
+import { ActuatorsConfig } from './actuators.config';
 import { AuthConfig } from './auth-config.interfaces';
-import { UIServerConfig } from './ui-server-config.interface';
-import { MediaViewerConfig } from './media-viewer-config.interface';
 import { BrowseByConfig } from './browse-by-config.interface';
 import { BundleConfig } from './bundle-config.interface';
-import { ActuatorsConfig } from './actuators.config';
+import { CacheConfig } from './cache-config.interface';
+import { CollectionPageConfig } from './collection-page-config.interface';
+import { Config } from './config.interface';
+import { FormConfig } from './form-config.interfaces';
 import { InfoConfig } from './info-config.interface';
+import { ItemConfig } from './item-config.interface';
+import { LangConfig } from './lang-config.interface';
+import { MediaViewerConfig } from './media-viewer-config.interface';
+import { INotificationBoardOptions } from './notifications-config.interfaces';
+import { ServerConfig } from './server-config.interface';
+import { SubmissionConfig } from './submission-config.interface';
+import { ThemeConfig } from './theme.model';
+import { UIServerConfig } from './ui-server-config.interface';
 
 interface AppConfig extends Config {
   ui: UIServerConfig;
@@ -36,7 +36,7 @@ interface AppConfig extends Config {
   themes: ThemeConfig[];
   mediaViewer: MediaViewerConfig;
   bundle: BundleConfig;
-  actuators: ActuatorsConfig
+  actuators: ActuatorsConfig;
   info: InfoConfig;
 }
 
@@ -44,8 +44,4 @@ const APP_CONFIG = new InjectionToken<AppConfig>('APP_CONFIG');
 
 const APP_CONFIG_STATE = makeStateKey('APP_CONFIG_STATE');
 
-export {
-  AppConfig,
-  APP_CONFIG,
-  APP_CONFIG_STATE
-};
+export { AppConfig, APP_CONFIG, APP_CONFIG_STATE };

@@ -1,18 +1,15 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-
+import { SharedModule } from '../shared/shared.module';
+import { HealthInfoComponentComponent } from './health-info/health-info-component/health-info-component.component';
+import { HealthInfoComponent } from './health-info/health-info.component';
+import { HealthPageComponent } from './health-page.component';
 import { HealthPageRoutingModule } from './health-page.routing.module';
+import { HealthComponentComponent } from './health-panel/health-component/health-component.component';
 import { HealthPanelComponent } from './health-panel/health-panel.component';
 import { HealthStatusComponent } from './health-panel/health-status/health-status.component';
-import { SharedModule } from '../shared/shared.module';
-import { HealthPageComponent } from './health-page.component';
-import { HealthComponentComponent } from './health-panel/health-component/health-component.component';
-import { HealthInfoComponent } from './health-info/health-info.component';
-import { HealthInfoComponentComponent } from './health-info/health-info-component/health-info-component.component';
-
 
 @NgModule({
   imports: [
@@ -20,7 +17,7 @@ import { HealthInfoComponentComponent } from './health-info/health-info-componen
     HealthPageRoutingModule,
     NgbModule,
     SharedModule,
-    TranslateModule
+    TranslateModule,
   ],
   declarations: [
     HealthPageComponent,
@@ -29,7 +26,6 @@ import { HealthInfoComponentComponent } from './health-info/health-info-componen
     HealthComponentComponent,
     HealthInfoComponent,
     HealthInfoComponentComponent,
-  ]
+  ],
 })
-export class HealthPageModule {
-}
+export class HealthPageModule {}

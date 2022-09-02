@@ -1,4 +1,8 @@
 /* eslint-disable max-classes-per-file */
+import { applyPatch, Operation } from 'fast-json-patch';
+import { hasValue, isNotEmpty } from '../../shared/empty.util';
+import { CacheEntry } from './cache-entry';
+import { CacheableObject } from './cacheable-object.model';
 import {
   AddPatchObjectCacheAction,
   AddToObjectCacheAction,
@@ -6,12 +10,8 @@ import {
   ObjectCacheAction,
   ObjectCacheActionTypes,
   RemoveFromObjectCacheAction,
-  ResetObjectCacheTimestampsAction
+  ResetObjectCacheTimestampsAction,
 } from './object-cache.actions';
-import { hasValue, isNotEmpty } from '../../shared/empty.util';
-import { CacheEntry } from './cache-entry';
-import { applyPatch, Operation } from 'fast-json-patch';
-import { CacheableObject } from './cacheable-object.model';
 
 /**
  * An interface to represent a JsonPatch
@@ -87,7 +87,6 @@ export class ObjectCacheEntry implements CacheEntry {
   alternativeLinks: string[];
 }
 
-
 /**
  * The ObjectCache State
  *
@@ -111,19 +110,27 @@ const initialState: ObjectCacheState = Object.create(null);
  * @return ObjectCacheState
  *    the new state
  */
-export function objectCacheReducer(state = initialState, action: ObjectCacheAction): ObjectCacheState {
+export function objectCacheReducer(
+  state = initialState,
+  action: ObjectCacheAction
+): ObjectCacheState {
   switch (action.type) {
-
     case ObjectCacheActionTypes.ADD: {
       return addToObjectCache(state, action as AddToObjectCacheAction);
     }
 
     case ObjectCacheActionTypes.REMOVE: {
-      return removeFromObjectCache(state, action as RemoveFromObjectCacheAction);
+      return removeFromObjectCache(
+        state,
+        action as RemoveFromObjectCacheAction
+      );
     }
 
     case ObjectCacheActionTypes.RESET_TIMESTAMPS: {
-      return resetObjectCacheTimestamps(state, action as ResetObjectCacheTimestampsAction);
+      return resetObjectCacheTimestamps(
+        state,
+        action as ResetObjectCacheTimestampsAction
+      );
     }
 
     case ObjectCacheActionTypes.ADD_PATCH: {
@@ -131,7 +138,10 @@ export function objectCacheReducer(state = initialState, action: ObjectCacheActi
     }
 
     case ObjectCacheActionTypes.APPLY_PATCH: {
-      return applyPatchObjectCache(state, action as ApplyPatchObjectCacheAction);
+      return applyPatchObjectCache(
+        state,
+        action as ApplyPatchObjectCacheAction
+      );
     }
 
     default: {
@@ -150,19 +160,28 @@ export function objectCacheReducer(state = initialState, action: ObjectCacheActi
  * @return ObjectCacheState
  *    the new state, with the object added, or overwritten.
  */
-function addToObjectCache(state: ObjectCacheState, action: AddToObjectCacheAction): ObjectCacheState {
-  const existing = state[action.payload.objectToCache._links.self.href] || {} as any;
-  const newAltLinks = hasValue(action.payload.alternativeLink) ? [action.payload.alternativeLink] : [];
+function addToObjectCache(
+  state: ObjectCacheState,
+  action: AddToObjectCacheAction
+): ObjectCacheState {
+  const existing =
+    state[action.payload.objectToCache._links.self.href] || ({} as any);
+  const newAltLinks = hasValue(action.payload.alternativeLink)
+    ? [action.payload.alternativeLink]
+    : [];
   return Object.assign({}, state, {
     [action.payload.objectToCache._links.self.href]: {
       data: action.payload.objectToCache,
       timeCompleted: action.payload.timeCompleted,
       msToLive: action.payload.msToLive,
-      requestUUIDs: [action.payload.requestUUID, ...(existing.requestUUIDs || [])],
+      requestUUIDs: [
+        action.payload.requestUUID,
+        ...(existing.requestUUIDs || []),
+      ],
       isDirty: isNotEmpty(existing.patches),
       patches: existing.patches || [],
-      alternativeLinks: [...(existing.alternativeLinks || []), ...newAltLinks]
-    } as ObjectCacheEntry
+      alternativeLinks: [...(existing.alternativeLinks || []), ...newAltLinks],
+    } as ObjectCacheEntry,
   });
 }
 
@@ -176,7 +195,10 @@ function addToObjectCache(state: ObjectCacheState, action: AddToObjectCacheActio
  * @return ObjectCacheState
  *    the new state, with the object removed if it existed.
  */
-function removeFromObjectCache(state: ObjectCacheState, action: RemoveFromObjectCacheAction): ObjectCacheState {
+function removeFromObjectCache(
+  state: ObjectCacheState,
+  action: RemoveFromObjectCacheAction
+): ObjectCacheState {
   if (hasValue(state[action.payload])) {
     const newObjectCache = Object.assign({}, state);
     delete newObjectCache[action.payload];
@@ -197,11 +219,14 @@ function removeFromObjectCache(state: ObjectCacheState, action: RemoveFromObject
  * @return ObjectCacheState
  *    the new state, with all timeCompleted timestamps set to the specified value
  */
-function resetObjectCacheTimestamps(state: ObjectCacheState, action: ResetObjectCacheTimestampsAction): ObjectCacheState {
+function resetObjectCacheTimestamps(
+  state: ObjectCacheState,
+  action: ResetObjectCacheTimestampsAction
+): ObjectCacheState {
   const newState = Object.create(null);
   Object.keys(state).forEach((key) => {
     newState[key] = Object.assign({}, state[key], {
-      timeCompleted: action.payload
+      timeCompleted: action.payload,
     });
   });
   return newState;
@@ -217,7 +242,10 @@ function resetObjectCacheTimestamps(state: ObjectCacheState, action: ResetObject
  * @return ObjectCacheState
  *    the new state, with the new operations added to the state of the specified ObjectCacheEntry
  */
-function addPatchObjectCache(state: ObjectCacheState, action: AddPatchObjectCacheAction): ObjectCacheState {
+function addPatchObjectCache(
+  state: ObjectCacheState,
+  action: AddPatchObjectCacheAction
+): ObjectCacheState {
   const uuid = action.payload.href;
   const operations = action.payload.operations;
   const newState = Object.assign({}, state);
@@ -225,7 +253,7 @@ function addPatchObjectCache(state: ObjectCacheState, action: AddPatchObjectCach
     const patches = newState[uuid].patches;
     newState[uuid] = Object.assign({}, newState[uuid], {
       patches: [...patches, { operations } as Patch],
-      isDirty: true
+      isDirty: true,
     });
   }
   return newState;
@@ -241,14 +269,27 @@ function addPatchObjectCache(state: ObjectCacheState, action: AddPatchObjectCach
  * @return ObjectCacheState
  *    the new state, with the new operations applied to the state of the specified ObjectCacheEntry
  */
-function applyPatchObjectCache(state: ObjectCacheState, action: ApplyPatchObjectCacheAction): ObjectCacheState {
+function applyPatchObjectCache(
+  state: ObjectCacheState,
+  action: ApplyPatchObjectCacheAction
+): ObjectCacheState {
   const uuid = action.payload;
   const newState = Object.assign({}, state);
   if (hasValue(newState[uuid])) {
     // flatten two dimensional array
-    const flatPatch: Operation[] = [].concat(...newState[uuid].patches.map((patch) => patch.operations));
-    const newData = applyPatch(newState[uuid].data, flatPatch, undefined, false);
-    newState[uuid] = Object.assign({}, newState[uuid], { data: newData.newDocument, patches: [] });
+    const flatPatch: Operation[] = [].concat(
+      ...newState[uuid].patches.map((patch) => patch.operations)
+    );
+    const newData = applyPatch(
+      newState[uuid].data,
+      flatPatch,
+      undefined,
+      false
+    );
+    newState[uuid] = Object.assign({}, newState[uuid], {
+      data: newData.newDocument,
+      patches: [],
+    });
   }
   return newState;
 }

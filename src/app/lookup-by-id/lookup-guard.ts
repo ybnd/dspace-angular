@@ -1,10 +1,14 @@
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { IdentifierType } from '../core/data/request.models';
+import {
+  ActivatedRouteSnapshot,
+  CanActivate,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { RemoteData } from '../core/data/remote-data';
 import { DsoRedirectDataService } from '../core/data/dso-redirect-data.service';
+import { RemoteData } from '../core/data/remote-data';
+import { IdentifierType } from '../core/data/request.models';
 import { DSpaceObject } from '../core/shared/dspace-object.model';
 
 interface LookupParams {
@@ -14,15 +18,16 @@ interface LookupParams {
 
 @Injectable()
 export class LookupGuard implements CanActivate {
+  constructor(private dsoService: DsoRedirectDataService) {}
 
-  constructor(private dsoService: DsoRedirectDataService) {
-  }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean>  {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Observable<boolean> {
     const params = this.getLookupParams(route);
-    return this.dsoService.findByIdAndIDType(params.id, params.type).pipe(
-      map((response: RemoteData<DSpaceObject>) => response.hasFailed)
-    );
+    return this.dsoService
+      .findByIdAndIDType(params.id, params.type)
+      .pipe(map((response: RemoteData<DSpaceObject>) => response.hasFailed));
   }
 
   private getLookupParams(route: ActivatedRouteSnapshot): LookupParams {
@@ -36,18 +41,16 @@ export class LookupGuard implements CanActivate {
       const prefix = route.params.idType;
       const handleId = route.params.id;
       id = `hdl:${prefix}/${handleId}`;
-
     } else if (route.params.idType === IdentifierType.HANDLE) {
       type = IdentifierType.HANDLE;
       id = 'hdl:' + route.params.id;
-
     } else {
       type = IdentifierType.UUID;
       id = route.params.id;
     }
     return {
       type: type,
-      id: id
+      id: id,
     };
   }
 }

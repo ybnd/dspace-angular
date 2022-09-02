@@ -16,7 +16,9 @@ export class ThemedEditItemTemplatePageComponent extends ThemedComponent<EditIte
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/collection-page/edit-item-template-page/edit-item-template-page.component`);
+    return import(
+      `../../../themes/${themeName}/app/collection-page/edit-item-template-page/edit-item-template-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

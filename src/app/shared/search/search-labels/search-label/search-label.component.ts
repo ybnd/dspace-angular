@@ -1,12 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Params, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { hasValue, isNotEmpty } from '../../../empty.util';
-import { SearchService } from '../../../../core/shared/search/search.service';
-import { currentPath } from '../../../utils/route.utils';
 import { PaginationService } from '../../../../core/pagination/pagination.service';
 import { SearchConfigurationService } from '../../../../core/shared/search/search-configuration.service';
+import { SearchService } from '../../../../core/shared/search/search.service';
+import { hasValue, isNotEmpty } from '../../../empty.util';
+import { currentPath } from '../../../utils/route.utils';
 
 @Component({
   selector: 'ds-search-label',
@@ -36,8 +36,8 @@ export class SearchLabelComponent implements OnInit {
     private searchService: SearchService,
     private paginationService: PaginationService,
     private searchConfigurationService: SearchConfigurationService,
-    private router: Router) {
-  }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.searchLink = this.getSearchLink();
@@ -53,11 +53,15 @@ export class SearchLabelComponent implements OnInit {
     return this.appliedFilters.pipe(
       map((filters) => {
         const field: string = Object.keys(filters).find((f) => f === this.key);
-        const newValues = hasValue(filters[field]) ? filters[field].filter((v) => v !== this.value) : null;
-        const page = this.paginationService.getPageParam(this.searchConfigurationService.paginationID);
+        const newValues = hasValue(filters[field])
+          ? filters[field].filter((v) => v !== this.value)
+          : null;
+        const page = this.paginationService.getPageParam(
+          this.searchConfigurationService.paginationID
+        );
         return {
           [field]: isNotEmpty(newValues) ? newValues : null,
-          [page]: 1
+          [page]: 1,
         };
       })
     );

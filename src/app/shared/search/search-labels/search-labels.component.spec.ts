@@ -1,15 +1,15 @@
-import { SearchLabelsComponent } from './search-labels.component';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TranslateModule } from '@ngx-translate/core';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 import { SearchService } from '../../../core/shared/search/search.service';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ObjectKeysPipe } from '../../utils/object-keys-pipe';
-import { SearchServiceStub } from '../../testing/search-service.stub';
 import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
+import { SearchServiceStub } from '../../testing/search-service.stub';
+import { ObjectKeysPipe } from '../../utils/object-keys-pipe';
+import { SearchLabelsComponent } from './search-labels.component';
 
 describe('SearchLabelsComponent', () => {
   let comp: SearchLabelsComponent;
@@ -24,23 +24,32 @@ describe('SearchLabelsComponent', () => {
   const value2 = 'TestSubject';
   const filter1 = [field1, value1];
   const filter2 = [field2, value2];
-  const mockFilters = [
-    filter1,
-    filter2
-  ];
+  const mockFilters = [filter1, filter2];
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormsModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        NoopAnimationsModule,
+        FormsModule,
+        RouterTestingModule,
+      ],
       declarations: [SearchLabelsComponent, ObjectKeysPipe],
       providers: [
         { provide: SearchService, useValue: new SearchServiceStub(searchLink) },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: { getCurrentFrontendFilters: () => observableOf(mockFilters) } }
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: {
+            getCurrentFrontendFilters: () => observableOf(mockFilters),
+          },
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchLabelsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchLabelsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

@@ -1,18 +1,18 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Script } from '../scripts/script.model';
-import { Process } from '../processes/process.model';
-import { ProcessParameter } from '../processes/process-parameter.model';
-import { ScriptDataService } from '../../core/data/processes/script-data.service';
 import { ControlContainer, NgForm } from '@angular/forms';
-import { ScriptParameter } from '../scripts/script-parameter.model';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
-import { RequestService } from '../../core/data/request.service';
 import { Router } from '@angular/router';
-import { getFirstCompletedRemoteData } from '../../core/shared/operators';
+import { TranslateService } from '@ngx-translate/core';
+import { ScriptDataService } from '../../core/data/processes/script-data.service';
 import { RemoteData } from '../../core/data/remote-data';
-import { getProcessListRoute } from '../process-page-routing.paths';
+import { RequestService } from '../../core/data/request.service';
+import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { isEmpty } from '../../shared/empty.util';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { getProcessListRoute } from '../process-page-routing.paths';
+import { ProcessParameter } from '../processes/process-parameter.model';
+import { Process } from '../processes/process.model';
+import { ScriptParameter } from '../scripts/script-parameter.model';
+import { Script } from '../scripts/script.model';
 
 /**
  * Component to create a new script
@@ -58,8 +58,8 @@ export class ProcessFormComponent implements OnInit {
     private notificationsService: NotificationsService,
     private translationService: TranslateService,
     private requestService: RequestService,
-    private router: Router) {
-  }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.process = new Process();
@@ -77,24 +77,34 @@ export class ProcessFormComponent implements OnInit {
       return;
     }
 
-    const stringParameters: ProcessParameter[] = this.parameters.map((parameter: ProcessParameter) => {
+    const stringParameters: ProcessParameter[] = this.parameters.map(
+      (parameter: ProcessParameter) => {
         return {
           name: parameter.name,
-          value: this.checkValue(parameter)
+          value: this.checkValue(parameter),
         };
       }
     );
-    this.scriptService.invoke(this.selectedScript.id, stringParameters, this.files)
+    this.scriptService
+      .invoke(this.selectedScript.id, stringParameters, this.files)
       .pipe(getFirstCompletedRemoteData())
       .subscribe((rd: RemoteData<Process>) => {
         if (rd.hasSucceeded) {
-          const title = this.translationService.get('process.new.notification.success.title');
-          const content = this.translationService.get('process.new.notification.success.content');
+          const title = this.translationService.get(
+            'process.new.notification.success.title'
+          );
+          const content = this.translationService.get(
+            'process.new.notification.success.content'
+          );
           this.notificationsService.success(title, content);
           this.sendBack();
         } else {
-          const title = this.translationService.get('process.new.notification.error.title');
-          const content = this.translationService.get('process.new.notification.error.content');
+          const title = this.translationService.get(
+            'process.new.notification.error.title'
+          );
+          const content = this.translationService.get(
+            'process.new.notification.error.content'
+          );
           this.notificationsService.error(title, content);
         }
       });
@@ -132,9 +142,9 @@ export class ProcessFormComponent implements OnInit {
 
   private isRequiredMissing() {
     this.missingParameters = [];
-    const setParams: string[] = this.parameters
-      .map((param) => param.name);
-    const requiredParams: ScriptParameter[] = this.selectedScript.parameters.filter((param) => param.mandatory);
+    const setParams: string[] = this.parameters.map((param) => param.name);
+    const requiredParams: ScriptParameter[] =
+      this.selectedScript.parameters.filter((param) => param.mandatory);
     for (const rp of requiredParams) {
       if (!setParams.includes(rp.name)) {
         this.missingParameters.push(rp.name);

@@ -1,5 +1,5 @@
-import { MetadataPatchOperation } from './metadata-patch-operation.model';
 import { Operation } from 'fast-json-patch';
+import { MetadataPatchOperation } from './metadata-patch-operation.model';
 
 /**
  * Wrapper object for a metadata patch remove Operation
@@ -22,6 +22,9 @@ export class MetadataPatchRemoveOperation extends MetadataPatchOperation {
    * using the information provided.
    */
   toOperation(): Operation {
-    return { op: this.op as any, path: `/metadata/${this.field}/${this.place}` };
+    return {
+      op: this.op as any,
+      path: `/metadata/${this.field}/${this.place}`,
+    };
   }
 }

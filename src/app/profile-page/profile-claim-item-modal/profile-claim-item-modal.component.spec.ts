@@ -1,20 +1,18 @@
-import { ActivatedRoute, Router } from '@angular/router';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
-import { of } from 'rxjs';
-import { TranslateModule } from '@ngx-translate/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-
-import { ProfileClaimItemModalComponent } from './profile-claim-item-modal.component';
-import { ProfileClaimService } from '../profile-claim/profile-claim.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { of } from 'rxjs';
 import { Item } from '../../core/shared/item.model';
-import { ItemSearchResult } from '../../shared/object-collection/shared/item-search-result.model';
-import { SearchObjects } from '../../shared/search/models/search-objects.model';
-import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
 import { getItemPageRoute } from '../../item-page/item-page-routing-paths';
+import { ItemSearchResult } from '../../shared/object-collection/shared/item-search-result.model';
+import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
+import { SearchObjects } from '../../shared/search/models/search-objects.model';
 import { RouterStub } from '../../shared/testing/router.stub';
+import { ProfileClaimService } from '../profile-claim/profile-claim.service';
+import { ProfileClaimItemModalComponent } from './profile-claim-item-modal.component';
 
 describe('ProfileClaimItemModalComponent', () => {
   let component: ProfileClaimItemModalComponent;
@@ -25,82 +23,89 @@ describe('ProfileClaimItemModalComponent', () => {
     metadata: {
       'person.email': [
         {
-          value: 'fake@email.com'
-        }
+          value: 'fake@email.com',
+        },
       ],
       'person.familyName': [
         {
-          value: 'Doe'
-        }
+          value: 'Doe',
+        },
       ],
       'person.givenName': [
         {
-          value: 'John'
-        }
-      ]
+          value: 'John',
+        },
+      ],
     },
     _links: {
       self: {
-        href: 'item-href'
-      }
-    }
+        href: 'item-href',
+      },
+    },
   });
   const item2: Item = Object.assign(new Item(), {
     uuid: 'c8279647-1acc-41ae-b036-951d5f65649b',
     metadata: {
       'person.email': [
         {
-          value: 'fake2@email.com'
-        }
+          value: 'fake2@email.com',
+        },
       ],
       'dc.title': [
         {
-          value: 'John, Doe'
-        }
-      ]
+          value: 'John, Doe',
+        },
+      ],
     },
     _links: {
       self: {
-        href: 'item-href'
-      }
-    }
+        href: 'item-href',
+      },
+    },
   });
   const item3: Item = Object.assign(new Item(), {
     uuid: 'c8279647-1acc-41ae-b036-951d5f65649b',
     metadata: {
       'person.email': [
         {
-          value: 'fake3@email.com'
-        }
+          value: 'fake3@email.com',
+        },
       ],
       'dc.title': [
         {
-          value: 'John, Doe'
-        }
-      ]
+          value: 'John, Doe',
+        },
+      ],
     },
     _links: {
       self: {
-        href: 'item-href'
-      }
-    }
+        href: 'item-href',
+      },
+    },
   });
 
-  const searchResult1 = Object.assign(new ItemSearchResult(), { indexableObject: item1 });
-  const searchResult2 = Object.assign(new ItemSearchResult(), { indexableObject: item2 });
-  const searchResult3 = Object.assign(new ItemSearchResult(), { indexableObject: item3 });
+  const searchResult1 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item1,
+  });
+  const searchResult2 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item2,
+  });
+  const searchResult3 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item3,
+  });
 
   const searchResult = Object.assign(new SearchObjects(), {
-    page: [searchResult1, searchResult2, searchResult3]
+    page: [searchResult1, searchResult2, searchResult3],
   });
   const emptySearchResult = Object.assign(new SearchObjects(), {
-    page: []
+    page: [],
   });
   const searchResultRD = createSuccessfulRemoteDataObject(searchResult);
-  const emptySearchResultRD = createSuccessfulRemoteDataObject(emptySearchResult);
+  const emptySearchResultRD =
+    createSuccessfulRemoteDataObject(emptySearchResult);
 
   const profileClaimService = jasmine.createSpyObj('profileClaimService', {
-    searchForSuggestions: jasmine.createSpy('searchForSuggestions')
+    searchForSuggestions: jasmine.createSpy('searchForSuggestions'),
   });
 
   beforeEach(waitForAsync(() => {
@@ -111,11 +116,10 @@ describe('ProfileClaimItemModalComponent', () => {
         { provide: NgbActiveModal, useValue: {} },
         { provide: ActivatedRoute, useValue: {} },
         { provide: Router, useValue: new RouterStub() },
-        { provide: ProfileClaimService, useValue: profileClaimService }
+        { provide: ProfileClaimService, useValue: profileClaimService },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -124,9 +128,10 @@ describe('ProfileClaimItemModalComponent', () => {
   });
 
   describe('when there are suggestions', () => {
-
     beforeEach(() => {
-      profileClaimService.searchForSuggestions.and.returnValue(of(searchResultRD));
+      profileClaimService.searchForSuggestions.and.returnValue(
+        of(searchResultRD)
+      );
       fixture.detectChanges();
     });
 
@@ -173,9 +178,10 @@ describe('ProfileClaimItemModalComponent', () => {
   });
 
   describe('when there are not suggestions', () => {
-
     beforeEach(() => {
-      profileClaimService.searchForSuggestions.and.returnValue(of(emptySearchResultRD));
+      profileClaimService.searchForSuggestions.and.returnValue(
+        of(emptySearchResultRD)
+      );
       fixture.detectChanges();
     });
 

@@ -1,22 +1,23 @@
 import { Component } from '@angular/core';
+import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
 import { Collection } from '../../../core/shared/collection.model';
-import { ObjectSelectComponent } from '../object-select/object-select.component';
 import { isNotEmpty } from '../../empty.util';
 import { ObjectSelectService } from '../object-select.service';
-import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
+import { ObjectSelectComponent } from '../object-select/object-select.component';
 
 @Component({
   selector: 'ds-collection-select',
-  templateUrl: './collection-select.component.html'
+  templateUrl: './collection-select.component.html',
 })
 
 /**
  * A component used to select collections from a specific list and returning the UUIDs of the selected collections
  */
 export class CollectionSelectComponent extends ObjectSelectComponent<Collection> {
-
-  constructor(protected objectSelectService: ObjectSelectService,
-              protected authorizationService: AuthorizationDataService) {
+  constructor(
+    protected objectSelectService: ObjectSelectService,
+    protected authorizationService: AuthorizationDataService
+  ) {
     super(objectSelectService, authorizationService);
   }
 
@@ -26,5 +27,4 @@ export class CollectionSelectComponent extends ObjectSelectComponent<Collection>
       this.confirmButton = 'collection.select.confirm';
     }
   }
-
 }

@@ -1,34 +1,28 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BrowseByTitlePageComponent } from './browse-by-title-page/browse-by-title-page.component';
+import { NgModule } from '@angular/core';
+import { ComcolModule } from '../shared/comcol/comcol.module';
 import { SharedModule } from '../shared/shared.module';
-import { BrowseByMetadataPageComponent } from './browse-by-metadata-page/browse-by-metadata-page.component';
 import { BrowseByDatePageComponent } from './browse-by-date-page/browse-by-date-page.component';
+import { BrowseByMetadataPageComponent } from './browse-by-metadata-page/browse-by-metadata-page.component';
 import { BrowseBySwitcherComponent } from './browse-by-switcher/browse-by-switcher.component';
 import { ThemedBrowseBySwitcherComponent } from './browse-by-switcher/themed-browse-by-switcher.component';
-import { ComcolModule } from '../shared/comcol/comcol.module';
+import { BrowseByTitlePageComponent } from './browse-by-title-page/browse-by-title-page.component';
 
 const ENTRY_COMPONENTS = [
   // put only entry components that use custom decorator
   BrowseByTitlePageComponent,
   BrowseByMetadataPageComponent,
-  BrowseByDatePageComponent
+  BrowseByDatePageComponent,
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    ComcolModule,
-    SharedModule
-  ],
+  imports: [CommonModule, ComcolModule, SharedModule],
   declarations: [
     BrowseBySwitcherComponent,
     ThemedBrowseBySwitcherComponent,
-    ...ENTRY_COMPONENTS
+    ...ENTRY_COMPONENTS,
   ],
-  exports: [
-    BrowseBySwitcherComponent
-  ]
+  exports: [BrowseBySwitcherComponent],
 })
 export class BrowseByModule {
   /**
@@ -38,7 +32,7 @@ export class BrowseByModule {
   static withEntryComponents() {
     return {
       ngModule: SharedModule,
-      providers: ENTRY_COMPONENTS.map((component) => ({provide: component}))
+      providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
 }

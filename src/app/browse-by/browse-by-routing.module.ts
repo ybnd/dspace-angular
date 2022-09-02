@@ -1,7 +1,7 @@
-import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
-import { BrowseByGuard } from './browse-by-guard';
+import { RouterModule } from '@angular/router';
 import { BrowseByDSOBreadcrumbResolver } from './browse-by-dso-breadcrumb.resolver';
+import { BrowseByGuard } from './browse-by-guard';
 import { BrowseByI18nBreadcrumbResolver } from './browse-by-i18n-breadcrumb.resolver';
 import { ThemedBrowseBySwitcherComponent } from './browse-by-switcher/themed-browse-by-switcher.component';
 
@@ -17,16 +17,15 @@ import { ThemedBrowseBySwitcherComponent } from './browse-by-switcher/themed-bro
             component: ThemedBrowseBySwitcherComponent,
             canActivate: [BrowseByGuard],
             resolve: { breadcrumb: BrowseByI18nBreadcrumbResolver },
-            data: { title: 'browse.title.page', breadcrumbKey: 'browse.metadata' }
-          }
-        ]
-      }])
+            data: {
+              title: 'browse.title.page',
+              breadcrumbKey: 'browse.metadata',
+            },
+          },
+        ],
+      },
+    ]),
   ],
-  providers: [
-    BrowseByI18nBreadcrumbResolver,
-    BrowseByDSOBreadcrumbResolver
-  ]
+  providers: [BrowseByI18nBreadcrumbResolver, BrowseByDSOBreadcrumbResolver],
 })
-export class BrowseByRoutingModule {
-
-}
+export class BrowseByRoutingModule {}

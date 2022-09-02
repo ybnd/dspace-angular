@@ -1,5 +1,10 @@
-import { Injectable, RendererFactory2, ViewEncapsulation, Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import {
+  Inject,
+  Injectable,
+  RendererFactory2,
+  ViewEncapsulation,
+} from '@angular/core';
 
 /**
  * LinkHead Service injects <link> tag into the head element during runtime.
@@ -9,9 +14,7 @@ export class LinkHeadService {
   constructor(
     private rendererFactory: RendererFactory2,
     @Inject(DOCUMENT) private document
-  ) {
-
-  }
+  ) {}
 
   /**
    * Method to create a Link tag in the HEAD of the html.
@@ -19,13 +22,12 @@ export class LinkHeadService {
    * @returns Link tag that was created
    */
   addTag(tag: LinkDefinition) {
-
     try {
       const renderer = this.rendererFactory.createRenderer(this.document, {
         id: '-1',
         encapsulation: ViewEncapsulation.None,
         styles: [],
-        data: {}
+        data: {},
       });
 
       const link = renderer.createElement('link');
@@ -57,13 +59,15 @@ export class LinkHeadService {
           id: '-1',
           encapsulation: ViewEncapsulation.None,
           styles: [],
-          data: {}
+          data: {},
         });
         const head = this.document.head;
         if (head === null) {
           throw new Error('<head> not found within DOCUMENT.');
         }
-        const linkTags = this.document.querySelectorAll('link[' + attrSelector + ']');
+        const linkTags = this.document.querySelectorAll(
+          'link[' + attrSelector + ']'
+        );
         for (const link of linkTags) {
           renderer.removeChild(head, link);
         }
@@ -86,5 +90,5 @@ export declare type LinkDefinition = {
   target?: string;
   type?: string;
 } & {
-    [prop: string]: string;
-  };
+  [prop: string]: string;
+};

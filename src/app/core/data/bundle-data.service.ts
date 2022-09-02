@@ -5,32 +5,30 @@ import { Observable } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
 import { hasValue } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
+import { Bitstream } from '../shared/bitstream.model';
 import { Bundle } from '../shared/bundle.model';
 import { BUNDLE } from '../shared/bundle.resource-type';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { Item } from '../shared/item.model';
 import { DataService } from './data.service';
 import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
+import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
+import { RequestEntryState } from './request-entry-state.model';
 import { GetRequest } from './request.models';
 import { RequestService } from './request.service';
-import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
-import { Bitstream } from '../shared/bitstream.model';
-import { RequestEntryState } from './request-entry-state.model';
-import { CoreState } from '../core-state.model';
-import { FindListOptions } from './find-list-options.model';
 
 /**
  * A service to retrieve {@link Bundle}s from the REST API
  */
-@Injectable(
-  {providedIn: 'root'}
-)
+@Injectable({ providedIn: 'root' })
 @dataService(BUNDLE)
 export class BundleDataService extends DataService<Bundle> {
   protected linkPath = 'bundles';
@@ -44,7 +42,8 @@ export class BundleDataService extends DataService<Bundle> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<Bundle>) {
+    protected comparator: DefaultChangeAnalyzer<Bundle>
+  ) {
     super();
   }
 
@@ -60,8 +59,20 @@ export class BundleDataService extends DataService<Bundle> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByItem(item: Item, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Bundle>[]): Observable<RemoteData<PaginatedList<Bundle>>> {
-    return this.findAllByHref(item._links.bundles.href, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllByItem(
+    item: Item,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Bundle>[]
+  ): Observable<RemoteData<PaginatedList<Bundle>>> {
+    return this.findAllByHref(
+      item._links.bundles.href,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -77,12 +88,25 @@ export class BundleDataService extends DataService<Bundle> {
    *                                    {@link HALLink}s should be automatically resolved
    */
   // TODO should be implemented rest side
-  findByItemAndName(item: Item, bundleName: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Bundle>[]): Observable<RemoteData<Bundle>> {
-    return this.findAllByItem(item, { elementsPerPage: 9999 }, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow).pipe(
+  findByItemAndName(
+    item: Item,
+    bundleName: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Bundle>[]
+  ): Observable<RemoteData<Bundle>> {
+    return this.findAllByItem(
+      item,
+      { elementsPerPage: 9999 },
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    ).pipe(
       map((rd: RemoteData<PaginatedList<Bundle>>) => {
         if (hasValue(rd.payload) && hasValue(rd.payload.page)) {
-          const matchingBundle = rd.payload.page.find((bundle: Bundle) =>
-            bundle.name === bundleName);
+          const matchingBundle = rd.payload.page.find(
+            (bundle: Bundle) => bundle.name === bundleName
+          );
           if (hasValue(matchingBundle)) {
             return new RemoteData(
               rd.timeCompleted,
@@ -107,7 +131,7 @@ export class BundleDataService extends DataService<Bundle> {
         } else {
           return rd as any;
         }
-      }),
+      })
     );
   }
 
@@ -116,10 +140,18 @@ export class BundleDataService extends DataService<Bundle> {
    * @param bundleId
    * @param searchOptions
    */
-  getBitstreamsEndpoint(bundleId: string, searchOptions?: PaginatedSearchOptions): Observable<string> {
+  getBitstreamsEndpoint(
+    bundleId: string,
+    searchOptions?: PaginatedSearchOptions
+  ): Observable<string> {
     return this.getBrowseEndpoint().pipe(
-      switchMap((href: string) => this.halService.getEndpoint(this.bitstreamsEndpoint, `${href}/${bundleId}`)),
-      map((href) => searchOptions ? searchOptions.toRestUrl(href) : href)
+      switchMap((href: string) =>
+        this.halService.getEndpoint(
+          this.bitstreamsEndpoint,
+          `${href}/${bundleId}`
+        )
+      ),
+      map((href) => (searchOptions ? searchOptions.toRestUrl(href) : href))
     );
   }
 
@@ -129,13 +161,18 @@ export class BundleDataService extends DataService<Bundle> {
    * @param searchOptions   The search options to use
    * @param linksToFollow   The {@link FollowLinkConfig}s for the request
    */
-  getBitstreams(bundleId: string, searchOptions?: PaginatedSearchOptions, ...linksToFollow: FollowLinkConfig<Bitstream>[]): Observable<RemoteData<PaginatedList<Bitstream>>> {
+  getBitstreams(
+    bundleId: string,
+    searchOptions?: PaginatedSearchOptions,
+    ...linksToFollow: FollowLinkConfig<Bitstream>[]
+  ): Observable<RemoteData<PaginatedList<Bitstream>>> {
     const hrefObs = this.getBitstreamsEndpoint(bundleId, searchOptions);
 
-    hrefObs.pipe(
-      take(1)
-    ).subscribe((href) => {
-      const request = new GetRequest(this.requestService.generateRequestId(), href);
+    hrefObs.pipe(take(1)).subscribe((href) => {
+      const request = new GetRequest(
+        this.requestService.generateRequestId(),
+        href
+      );
       this.requestService.send(request, true);
     });
 

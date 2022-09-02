@@ -1,7 +1,7 @@
 import { Component, Input, Optional } from '@angular/core';
-import { ValueInputComponent } from '../value-input.component';
 import { ControlContainer, NgForm } from '@angular/forms';
 import { controlContainerFactory } from '../../../process-form.component';
+import { ValueInputComponent } from '../value-input.component';
 
 /**
  * Represents the user inputted value of a date parameter
@@ -10,9 +10,13 @@ import { controlContainerFactory } from '../../../process-form.component';
   selector: 'ds-date-value-input',
   templateUrl: './date-value-input.component.html',
   styleUrls: ['./date-value-input.component.scss'],
-  viewProviders: [ { provide: ControlContainer,
-    useFactory: controlContainerFactory,
-    deps: [[new Optional(), NgForm]] } ]
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: controlContainerFactory,
+      deps: [[new Optional(), NgForm]],
+    },
+  ],
 })
 export class DateValueInputComponent extends ValueInputComponent<string> {
   /**

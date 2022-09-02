@@ -1,19 +1,23 @@
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { ComponentFixture, fakeAsync, TestBed, tick, waitForAsync } from '@angular/core/testing';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ComponentFixture,
+  fakeAsync,
+  TestBed,
+  tick,
+  waitForAsync,
+} from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-
-import { TranslateLoaderMock } from '../mocks/translate-loader.mock';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { SearchService } from '../../core/shared/search/search.service';
-import { ViewModeSwitchComponent } from './view-mode-switch.component';
-import { SearchServiceStub } from '../testing/search-service.stub';
 import { ViewMode } from '../../core/shared/view-mode.model';
+import { TranslateLoaderMock } from '../mocks/translate-loader.mock';
 import { BrowserOnlyMockPipe } from '../testing/browser-only-mock.pipe';
+import { SearchServiceStub } from '../testing/search-service.stub';
+import { ViewModeSwitchComponent } from './view-mode-switch.component';
 
 @Component({ template: '' })
-class DummyComponent {
-}
+class DummyComponent {}
 
 describe('ViewModeSwitchComponent', () => {
   let comp: ViewModeSwitchComponent;
@@ -28,24 +32,24 @@ describe('ViewModeSwitchComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
         RouterTestingModule.withRoutes([
           { path: 'search', component: DummyComponent, pathMatch: 'full' },
-        ])
+        ]),
       ],
       declarations: [
         ViewModeSwitchComponent,
         DummyComponent,
         BrowserOnlyMockPipe,
       ],
-      providers: [
-        { provide: SearchService, useValue: searchService },
-      ],
-    }).overrideComponent(ViewModeSwitchComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      providers: [{ provide: SearchService, useValue: searchService }],
+    })
+      .overrideComponent(ViewModeSwitchComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -74,12 +78,13 @@ describe('ViewModeSwitchComponent', () => {
       expect(comp.currentMode).toBe(ViewMode.ListElement);
       expect(listButton.classList).toContain('active');
       expect(gridButton.classList).not.toContain('active');
-
     }));
 
     it('should set grid button as active when on grid mode', fakeAsync(() => {
       comp.switchViewTo(ViewMode.GridElement);
-      expect(comp.changeViewMode.emit).toHaveBeenCalledWith(ViewMode.GridElement);
+      expect(comp.changeViewMode.emit).toHaveBeenCalledWith(
+        ViewMode.GridElement
+      );
       tick();
       fixture.detectChanges();
       expect(comp.currentMode).toBe(ViewMode.GridElement);
@@ -87,7 +92,6 @@ describe('ViewModeSwitchComponent', () => {
       expect(gridButton.classList).toContain('active');
     }));
   });
-
 
   describe('', () => {
     beforeEach(fakeAsync(() => {
@@ -113,7 +117,9 @@ describe('ViewModeSwitchComponent', () => {
 
     it('should set detail button as active when on detailed mode', fakeAsync(() => {
       comp.switchViewTo(ViewMode.DetailedListElement);
-      expect(comp.changeViewMode.emit).toHaveBeenCalledWith(ViewMode.DetailedListElement);
+      expect(comp.changeViewMode.emit).toHaveBeenCalledWith(
+        ViewMode.DetailedListElement
+      );
       tick();
       fixture.detectChanges();
       expect(comp.currentMode).toBe(ViewMode.DetailedListElement);
@@ -121,6 +127,4 @@ describe('ViewModeSwitchComponent', () => {
       expect(detailButton.classList).toContain('active');
     }));
   });
-
-
 });

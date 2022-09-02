@@ -1,6 +1,12 @@
-import { EPeopleRegistryCancelEPersonAction, EPeopleRegistryEditEPersonAction } from './epeople-registry.actions';
-import { ePeopleRegistryReducer, EPeopleRegistryState } from './epeople-registry.reducers';
 import { EPersonMock } from '../../shared/testing/eperson.mock';
+import {
+  EPeopleRegistryCancelEPersonAction,
+  EPeopleRegistryEditEPersonAction,
+} from './epeople-registry.actions';
+import {
+  ePeopleRegistryReducer,
+  EPeopleRegistryState,
+} from './epeople-registry.reducers';
 
 const initialState: EPeopleRegistryState = {
   editEPerson: null,
@@ -19,7 +25,6 @@ class NullAction extends EPeopleRegistryEditEPersonAction {
 }
 
 describe('epeopleRegistryReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = initialState;
     const action = new NullAction();

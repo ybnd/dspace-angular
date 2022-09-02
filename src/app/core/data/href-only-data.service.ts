@@ -1,25 +1,25 @@
 /* eslint-disable max-classes-per-file */
-import { DataService } from './data.service';
-import { RequestService } from './request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
 import { Injectable } from '@angular/core';
-import { VOCABULARY_ENTRY } from '../submission/vocabularies/models/vocabularies.resource-type';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { dataService } from '../cache/builders/build-decorators';
-import { RemoteData } from './remote-data';
-import { Observable } from 'rxjs';
-import { PaginatedList } from './paginated-list.model';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { CacheableObject } from '../cache/cacheable-object.model';
+import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { ITEM_TYPE } from '../shared/item-relationships/item-type.resource-type';
 import { LICENSE } from '../shared/license.resource-type';
-import { CacheableObject } from '../cache/cacheable-object.model';
-import { CoreState } from '../core-state.model';
+import { VOCABULARY_ENTRY } from '../submission/vocabularies/models/vocabularies.resource-type';
+import { DataService } from './data.service';
+import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
 import { FindListOptions } from './find-list-options.model';
+import { PaginatedList } from './paginated-list.model';
+import { RemoteData } from './remote-data';
+import { RequestService } from './request.service';
 
 class DataServiceImpl extends DataService<any> {
   // linkPath isn't used if we're only searching by href.
@@ -33,7 +33,8 @@ class DataServiceImpl extends DataService<any> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<any>) {
+    protected comparator: DefaultChangeAnalyzer<any>
+  ) {
     super();
   }
 }
@@ -46,7 +47,7 @@ class DataServiceImpl extends DataService<any> {
  * an @dataService annotation can be added for any number of these resource types
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 @dataService(VOCABULARY_ENTRY)
 @dataService(ITEM_TYPE)
@@ -62,8 +63,18 @@ export class HrefOnlyDataService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<any>) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, store, objectCache, halService, notificationsService, http, comparator);
+    protected comparator: DefaultChangeAnalyzer<any>
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      store,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
@@ -77,8 +88,18 @@ export class HrefOnlyDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByHref<T extends CacheableObject>(href: string | Observable<string>, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<T>> {
-    return this.dataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByHref<T extends CacheableObject>(
+    href: string | Observable<string>,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<T>> {
+    return this.dataService.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -93,7 +114,19 @@ export class HrefOnlyDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByHref<T extends CacheableObject>(href: string | Observable<string>, findListOptions: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    return this.dataService.findAllByHref(href, findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllByHref<T extends CacheableObject>(
+    href: string | Observable<string>,
+    findListOptions: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    return this.dataService.findAllByHref(
+      href,
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 }

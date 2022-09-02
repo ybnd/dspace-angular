@@ -1,10 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { renderStartsWithFor, StartsWithType } from '../starts-with-decorator';
-import { StartsWithAbstractComponent } from '../starts-with-abstract.component';
-import { hasValue } from '../../empty.util';
 import { PaginationService } from '../../../core/pagination/pagination.service';
+import { hasValue } from '../../empty.util';
+import { StartsWithAbstractComponent } from '../starts-with-abstract.component';
+import { renderStartsWithFor, StartsWithType } from '../starts-with-decorator';
 
 /**
  * A switchable component rendering StartsWith options for the type "Date".
@@ -13,11 +12,10 @@ import { PaginationService } from '../../../core/pagination/pagination.service';
 @Component({
   selector: 'ds-starts-with-date',
   styleUrls: ['./starts-with-date.component.scss'],
-  templateUrl: './starts-with-date.component.html'
+  templateUrl: './starts-with-date.component.html',
 })
 @renderStartsWithFor(StartsWithType.date)
 export class StartsWithDateComponent extends StartsWithAbstractComponent {
-
   /**
    * A list of options for months to select from
    */
@@ -33,11 +31,13 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
    */
   startsWithYear: number;
 
-  public constructor(@Inject('startsWithOptions') public startsWithOptions: any[],
-                     @Inject('paginationId') public paginationId: string,
-                     protected paginationService: PaginationService,
-                     protected route: ActivatedRoute,
-                     protected router: Router) {
+  public constructor(
+    @Inject('startsWithOptions') public startsWithOptions: any[],
+    @Inject('paginationId') public paginationId: string,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected router: Router
+  ) {
     super(startsWithOptions, paginationId, paginationService, route, router);
   }
 
@@ -55,7 +55,7 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
       'september',
       'october',
       'november',
-      'december'
+      'december',
     ];
 
     super.ngOnInit();
@@ -87,7 +87,11 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
    */
   getStartsWith() {
     const month = this.getStartsWithMonth();
-    if (month > 0 && hasValue(this.startsWithYear) && this.startsWithYear !== -1) {
+    if (
+      month > 0 &&
+      hasValue(this.startsWithYear) &&
+      this.startsWithYear !== -1
+    ) {
       let twoDigitMonth = '' + month;
       if (month < 10) {
         twoDigitMonth = `0${month}`;
@@ -147,5 +151,4 @@ export class StartsWithDateComponent extends StartsWithAbstractComponent {
   getStartsWithMonth() {
     return this.monthOptions.indexOf(this.startsWithMonth);
   }
-
 }

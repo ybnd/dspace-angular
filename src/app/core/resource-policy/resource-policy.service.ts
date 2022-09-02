@@ -1,42 +1,38 @@
 /* eslint-disable max-classes-per-file */
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
+import { isNotEmpty } from '../../shared/empty.util';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { dataService } from '../cache/builders/build-decorators';
-
-import { DataService } from '../data/data.service';
-import { RequestService } from '../data/request.service';
-import { Collection } from '../shared/collection.model';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { ResourcePolicy } from './models/resource-policy.model';
-import { RemoteData } from '../data/remote-data';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { RESOURCE_POLICY } from './models/resource-policy.resource-type';
-import { ChangeAnalyzer } from '../data/change-analyzer';
-import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
-import { PaginatedList } from '../data/paginated-list.model';
-import { ActionType } from './models/action-type.model';
 import { RequestParam } from '../cache/models/request-param.model';
-import { isNotEmpty } from '../../shared/empty.util';
-import { map, take } from 'rxjs/operators';
-import { NoContent } from '../shared/NoContent.model';
-import { getFirstCompletedRemoteData } from '../shared/operators';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
+import { ChangeAnalyzer } from '../data/change-analyzer';
+import { DataService } from '../data/data.service';
+import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
 import { FindListOptions } from '../data/find-list-options.model';
-import { HttpOptions } from '../dspace-rest/dspace-rest.service';
-import { PutRequest } from '../data/request.models';
-import { GenericConstructor } from '../shared/generic-constructor';
+import { PaginatedList } from '../data/paginated-list.model';
 import { ResponseParsingService } from '../data/parsing.service';
+import { RemoteData } from '../data/remote-data';
+import { PutRequest } from '../data/request.models';
+import { RequestService } from '../data/request.service';
 import { StatusCodeOnlyResponseParsingService } from '../data/status-code-only-response-parsing.service';
-import { HALLink } from '../shared/hal-link.model';
+import { HttpOptions } from '../dspace-rest/dspace-rest.service';
 import { EPersonDataService } from '../eperson/eperson-data.service';
 import { GroupDataService } from '../eperson/group-data.service';
-
+import { Collection } from '../shared/collection.model';
+import { GenericConstructor } from '../shared/generic-constructor';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { NoContent } from '../shared/NoContent.model';
+import { getFirstCompletedRemoteData } from '../shared/operators';
+import { ActionType } from './models/action-type.model';
+import { ResourcePolicy } from './models/resource-policy.model';
+import { RESOURCE_POLICY } from './models/resource-policy.resource-type';
 
 /**
  * A private DataService implementation to delegate specific methods to.
@@ -52,11 +48,10 @@ class DataServiceImpl extends DataService<ResourcePolicy> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: ChangeAnalyzer<ResourcePolicy>,
+    protected comparator: ChangeAnalyzer<ResourcePolicy>
   ) {
     super();
   }
-
 }
 
 /**
@@ -79,9 +74,18 @@ export class ResourcePolicyService {
     protected http: HttpClient,
     protected comparator: DefaultChangeAnalyzer<ResourcePolicy>,
     protected ePersonService: EPersonDataService,
-    protected groupService: GroupDataService,
+    protected groupService: GroupDataService
   ) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, null, objectCache, halService, notificationsService, http, comparator);
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      null,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator
+    );
   }
 
   /**
@@ -97,7 +101,12 @@ export class ResourcePolicyService {
    * @param {string} groupUUID
    *    The uuid of the group that will be grant of the permission. Exactly one of eperson or group is required
    */
-  create(resourcePolicy: ResourcePolicy, resourceUUID: string, epersonUUID?: string, groupUUID?: string): Observable<RemoteData<ResourcePolicy>> {
+  create(
+    resourcePolicy: ResourcePolicy,
+    resourceUUID: string,
+    epersonUUID?: string,
+    groupUUID?: string
+  ): Observable<RemoteData<ResourcePolicy>> {
     const params = [];
     params.push(new RequestParam('resource', resourceUUID));
     if (isNotEmpty(epersonUUID)) {
@@ -141,8 +150,18 @@ export class ResourcePolicyService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]): Observable<RemoteData<ResourcePolicy>> {
-    return this.dataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]
+  ): Observable<RemoteData<ResourcePolicy>> {
+    return this.dataService.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -156,8 +175,18 @@ export class ResourcePolicyService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findById(id: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]): Observable<RemoteData<ResourcePolicy>> {
-    return this.dataService.findById(id, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findById(
+    id: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]
+  ): Observable<RemoteData<ResourcePolicy>> {
+    return this.dataService.findById(
+      id,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -166,8 +195,14 @@ export class ResourcePolicyService {
    * @param collection the {@link Collection} to retrieve the defaultAccessConditions for
    * @param findListOptions the {@link FindListOptions} for the request
    */
-  getDefaultAccessConditionsFor(collection: Collection, findListOptions?: FindListOptions): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
-    return this.dataService.findAllByHref(collection._links.defaultAccessConditions.href, findListOptions);
+  getDefaultAccessConditionsFor(
+    collection: Collection,
+    findListOptions?: FindListOptions
+  ): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
+    return this.dataService.findAllByHref(
+      collection._links.defaultAccessConditions.href,
+      findListOptions
+    );
   }
 
   /**
@@ -182,13 +217,25 @@ export class ResourcePolicyService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByEPerson(UUID: string, resourceUUID?: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
+  searchByEPerson(
+    UUID: string,
+    resourceUUID?: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]
+  ): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
     const options = new FindListOptions();
     options.searchParams = [new RequestParam('uuid', UUID)];
     if (isNotEmpty(resourceUUID)) {
       options.searchParams.push(new RequestParam('resource', resourceUUID));
     }
-    return this.dataService.searchBy(this.searchByEPersonMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.dataService.searchBy(
+      this.searchByEPersonMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -203,13 +250,25 @@ export class ResourcePolicyService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByGroup(UUID: string, resourceUUID?: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
+  searchByGroup(
+    UUID: string,
+    resourceUUID?: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]
+  ): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
     const options = new FindListOptions();
     options.searchParams = [new RequestParam('uuid', UUID)];
     if (isNotEmpty(resourceUUID)) {
       options.searchParams.push(new RequestParam('resource', resourceUUID));
     }
-    return this.dataService.searchBy(this.searchByGroupMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.dataService.searchBy(
+      this.searchByGroupMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -224,13 +283,25 @@ export class ResourcePolicyService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByResource(UUID: string, action?: ActionType, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
+  searchByResource(
+    UUID: string,
+    action?: ActionType,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]
+  ): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
     const options = new FindListOptions();
     options.searchParams = [new RequestParam('uuid', UUID)];
     if (isNotEmpty(action)) {
       options.searchParams.push(new RequestParam('action', action));
     }
-    return this.dataService.searchBy(this.searchByResourceMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.dataService.searchBy(
+      this.searchByResourceMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -240,13 +311,18 @@ export class ResourcePolicyService {
    * @param targetUUID the UUID of the target to which the permission is being granted
    * @param targetType the type of the target (eperson or group) to which the permission is being granted
    */
-  updateTarget(resourcePolicyId: string, resourcePolicyHref: string, targetUUID: string, targetType: string): Observable<RemoteData<any>> {
-
-    const targetService = targetType === 'eperson' ? this.ePersonService : this.groupService;
+  updateTarget(
+    resourcePolicyId: string,
+    resourcePolicyHref: string,
+    targetUUID: string,
+    targetType: string
+  ): Observable<RemoteData<any>> {
+    const targetService =
+      targetType === 'eperson' ? this.ePersonService : this.groupService;
 
     const targetEndpoint$ = targetService.getBrowseEndpoint().pipe(
       take(1),
-      map((endpoint: string) =>`${endpoint}/${targetUUID}`),
+      map((endpoint: string) => `${endpoint}/${targetUUID}`)
     );
 
     const options: HttpOptions = Object.create({});
@@ -256,21 +332,26 @@ export class ResourcePolicyService {
 
     const requestId = this.requestService.generateRequestId();
 
-    this.requestService.setStaleByHrefSubstring(`${this.dataService.getLinkPath()}/${resourcePolicyId}/${targetType}`);
+    this.requestService.setStaleByHrefSubstring(
+      `${this.dataService.getLinkPath()}/${resourcePolicyId}/${targetType}`
+    );
 
     targetEndpoint$.subscribe((targetEndpoint) => {
       const resourceEndpoint = resourcePolicyHref + '/' + targetType;
-      const request = new PutRequest(requestId, resourceEndpoint, targetEndpoint, options);
+      const request = new PutRequest(
+        requestId,
+        resourceEndpoint,
+        targetEndpoint,
+        options
+      );
       Object.assign(request, {
         getResponseParser(): GenericConstructor<ResponseParsingService> {
           return StatusCodeOnlyResponseParsingService;
-        }
+        },
       });
       this.requestService.send(request);
     });
 
     return this.rdbService.buildFromRequestUUID(requestId);
-
   }
-
 }

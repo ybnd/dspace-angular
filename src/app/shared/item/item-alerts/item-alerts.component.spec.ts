@@ -1,9 +1,9 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { ItemAlertsComponent } from './item-alerts.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { Item } from '../../../core/shared/item.model';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
+import { Item } from '../../../core/shared/item.model';
+import { ItemAlertsComponent } from './item-alerts.component';
 
 describe('ItemAlertsComponent', () => {
   let component: ItemAlertsComponent;
@@ -14,9 +14,8 @@ describe('ItemAlertsComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ItemAlertsComponent],
       imports: [TranslateModule.forRoot()],
-      schemas: [NO_ERRORS_SCHEMA]
-    })
-      .compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -28,14 +27,16 @@ describe('ItemAlertsComponent', () => {
   describe('when the item is discoverable', () => {
     beforeEach(() => {
       item = Object.assign(new Item(), {
-        isDiscoverable: true
+        isDiscoverable: true,
       });
       component.item = item;
       fixture.detectChanges();
     });
 
     it('should not display the private alert', () => {
-      const privateWarning = fixture.debugElement.query(By.css('.private-warning'));
+      const privateWarning = fixture.debugElement.query(
+        By.css('.private-warning')
+      );
       expect(privateWarning).toBeNull();
     });
   });
@@ -43,14 +44,16 @@ describe('ItemAlertsComponent', () => {
   describe('when the item is not discoverable', () => {
     beforeEach(() => {
       item = Object.assign(new Item(), {
-        isDiscoverable: false
+        isDiscoverable: false,
       });
       component.item = item;
       fixture.detectChanges();
     });
 
     it('should display the private alert', () => {
-      const privateWarning = fixture.debugElement.query(By.css('.private-warning'));
+      const privateWarning = fixture.debugElement.query(
+        By.css('.private-warning')
+      );
       expect(privateWarning).not.toBeNull();
     });
   });
@@ -58,14 +61,16 @@ describe('ItemAlertsComponent', () => {
   describe('when the item is withdrawn', () => {
     beforeEach(() => {
       item = Object.assign(new Item(), {
-        isWithdrawn: true
+        isWithdrawn: true,
       });
       component.item = item;
       fixture.detectChanges();
     });
 
     it('should display the withdrawn alert', () => {
-      const privateWarning = fixture.debugElement.query(By.css('.withdrawn-warning'));
+      const privateWarning = fixture.debugElement.query(
+        By.css('.withdrawn-warning')
+      );
       expect(privateWarning).not.toBeNull();
     });
   });
@@ -73,14 +78,16 @@ describe('ItemAlertsComponent', () => {
   describe('when the item is not withdrawn', () => {
     beforeEach(() => {
       item = Object.assign(new Item(), {
-        isWithdrawn: false
+        isWithdrawn: false,
       });
       component.item = item;
       fixture.detectChanges();
     });
 
     it('should not display the withdrawn alert', () => {
-      const privateWarning = fixture.debugElement.query(By.css('.withdrawn-warning'));
+      const privateWarning = fixture.debugElement.query(
+        By.css('.withdrawn-warning')
+      );
       expect(privateWarning).toBeNull();
     });
   });

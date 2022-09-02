@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core';
-import { DataService } from './data.service';
-import { ExternalSource } from '../shared/external-source.model';
-import { RequestService } from './request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map, switchMap, take } from 'rxjs/operators';
-import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
 import { hasValue, isNotEmptyOperator } from '../../shared/empty.util';
-import { RemoteData } from './remote-data';
-import { PaginatedList } from './paginated-list.model';
-import { ExternalSourceEntry } from '../shared/external-source-entry.model';
-import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
+import { ExternalSourceEntry } from '../shared/external-source-entry.model';
+import { ExternalSource } from '../shared/external-source.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { DataService } from './data.service';
+import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
 import { FindListOptions } from './find-list-options.model';
+import { PaginatedList } from './paginated-list.model';
+import { RemoteData } from './remote-data';
+import { RequestService } from './request.service';
 
 /**
  * A service handling all external source requests
@@ -35,7 +35,8 @@ export class ExternalSourceService extends DataService<ExternalSource> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DefaultChangeAnalyzer<ExternalSource>) {
+    protected comparator: DefaultChangeAnalyzer<ExternalSource>
+  ) {
     super();
   }
 
@@ -44,7 +45,10 @@ export class ExternalSourceService extends DataService<ExternalSource> {
    * @param options
    * @param linkPath
    */
-  getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath
+  ): Observable<string> {
     return this.halService.getEndpoint(linkPath);
   }
 
@@ -70,15 +74,29 @@ export class ExternalSourceService extends DataService<ExternalSource> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  getExternalSourceEntries(externalSourceId: string, searchOptions?: PaginatedSearchOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ExternalSourceEntry>[]): Observable<RemoteData<PaginatedList<ExternalSourceEntry>>> {
+  getExternalSourceEntries(
+    externalSourceId: string,
+    searchOptions?: PaginatedSearchOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ExternalSourceEntry>[]
+  ): Observable<RemoteData<PaginatedList<ExternalSourceEntry>>> {
     const href$ = this.getEntriesEndpoint(externalSourceId).pipe(
       isNotEmptyOperator(),
       distinctUntilChanged(),
-      map((endpoint: string) => hasValue(searchOptions) ? searchOptions.toRestUrl(endpoint) : endpoint),
+      map((endpoint: string) =>
+        hasValue(searchOptions) ? searchOptions.toRestUrl(endpoint) : endpoint
+      ),
       take(1)
     );
 
     // TODO create a dedicated ExternalSourceEntryDataService and move this entire method to it. Then the "as any"s won't be necessary
-    return this.findAllByHref(href$, undefined, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow as any) as any;
+    return this.findAllByHref(
+      href$,
+      undefined,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...(linksToFollow as any)
+    ) as any;
   }
 }

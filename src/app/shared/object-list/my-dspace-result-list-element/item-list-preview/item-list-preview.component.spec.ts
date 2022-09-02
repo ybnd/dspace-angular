@@ -1,15 +1,13 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-
-import { of as observableOf } from 'rxjs';
-
-import { TruncatePipe } from '../../../utils/truncate.pipe';
-import { Item } from '../../../../core/shared/item.model';
-import { ItemListPreviewComponent } from './item-list-preview.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateLoaderMock } from '../../../mocks/translate-loader.mock';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { Item } from '../../../../core/shared/item.model';
+import { TranslateLoaderMock } from '../../../mocks/translate-loader.mock';
+import { TruncatePipe } from '../../../utils/truncate.pipe';
+import { ItemListPreviewComponent } from './item-list-preview.component';
 
 let component: ItemListPreviewComponent;
 let fixture: ComponentFixture<ItemListPreviewComponent>;
@@ -20,16 +18,16 @@ const mockItemWithAuthorAndDate: Item = Object.assign(new Item(), {
     'dc.contributor.author': [
       {
         language: 'en_US',
-        value: 'Smith, Donald'
-      }
+        value: 'Smith, Donald',
+      },
     ],
     'dc.date.issued': [
       {
         language: null,
-        value: '2015-06-26'
-      }
-    ]
-  }
+        value: '2015-06-26',
+      },
+    ],
+  },
 });
 const mockItemWithoutAuthorAndDate: Item = Object.assign(new Item(), {
   bundles: observableOf({}),
@@ -37,16 +35,16 @@ const mockItemWithoutAuthorAndDate: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dc.type': [
       {
         language: null,
-        value: 'Article'
-      }
-    ]
-  }
+        value: 'Article',
+      },
+    ],
+  },
 });
 const mockItemWithEntityType: Item = Object.assign(new Item(), {
   bundles: observableOf({}),
@@ -54,16 +52,16 @@ const mockItemWithEntityType: Item = Object.assign(new Item(), {
     'dc.title': [
       {
         language: 'en_US',
-        value: 'This is just another title'
-      }
+        value: 'This is just another title',
+      },
     ],
     'dspace.entity.type': [
       {
         language: null,
-        value: 'Publication'
-      }
-    ]
-  }
+        value: 'Publication',
+      },
+    ],
+  },
 });
 
 describe('ItemListPreviewComponent', () => {
@@ -73,27 +71,30 @@ describe('ItemListPreviewComponent', () => {
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
-            useClass: TranslateLoaderMock
-          }
+            useClass: TranslateLoaderMock,
+          },
         }),
-        NoopAnimationsModule
+        NoopAnimationsModule,
       ],
       declarations: [ItemListPreviewComponent, TruncatePipe],
       providers: [
-        { provide: 'objectElementProvider', useValue: { mockItemWithAuthorAndDate } }
-
+        {
+          provide: 'objectElementProvider',
+          useValue: { mockItemWithAuthorAndDate },
+        },
       ],
 
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(ItemListPreviewComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(ItemListPreviewComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(ItemListPreviewComponent);
     component = fixture.componentInstance;
-
   }));
 
   beforeEach(() => {
@@ -107,7 +108,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should show the author paragraph', () => {
-      const itemAuthorField = fixture.debugElement.query(By.css('span.item-list-authors'));
+      const itemAuthorField = fixture.debugElement.query(
+        By.css('span.item-list-authors')
+      );
       expect(itemAuthorField).not.toBeNull();
     });
   });
@@ -119,7 +122,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should not show the author paragraph', () => {
-      const itemAuthorField = fixture.debugElement.query(By.css('span.item-list-authors'));
+      const itemAuthorField = fixture.debugElement.query(
+        By.css('span.item-list-authors')
+      );
       expect(itemAuthorField).toBeNull();
     });
   });
@@ -131,7 +136,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should show the issuedate span', () => {
-      const dateField = fixture.debugElement.query(By.css('span.item-list-date'));
+      const dateField = fixture.debugElement.query(
+        By.css('span.item-list-date')
+      );
       expect(dateField).not.toBeNull();
     });
   });
@@ -143,7 +150,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should show the issuedate empty placeholder', () => {
-      const dateField = fixture.debugElement.query(By.css('span.item-list-date'));
+      const dateField = fixture.debugElement.query(
+        By.css('span.item-list-date')
+      );
       expect(dateField).not.toBeNull();
     });
   });

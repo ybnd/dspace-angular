@@ -1,14 +1,20 @@
 import { Component, HostListener, Injector, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, first, map, withLatestFrom } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  first,
+  map,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { AuthService } from '../../core/auth/auth.service';
+import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 import { slideHorizontal, slideSidebar } from '../../shared/animations/slide';
+import { MenuID } from '../../shared/menu/menu-id.model';
 import { MenuComponent } from '../../shared/menu/menu.component';
 import { MenuService } from '../../shared/menu/menu.service';
 import { CSSVariableService } from '../../shared/sass-helper/sass-helper.service';
-import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
-import { MenuID } from '../../shared/menu/menu-id.model';
-import { ActivatedRoute } from '@angular/router';
 import { ThemeService } from '../../shared/theme-support/theme.service';
 
 /**
@@ -18,7 +24,7 @@ import { ThemeService } from '../../shared/theme-support/theme.service';
   selector: 'ds-admin-sidebar',
   templateUrl: './admin-sidebar.component.html',
   styleUrls: ['./admin-sidebar.component.scss'],
-  animations: [slideHorizontal, slideSidebar]
+  animations: [slideHorizontal, slideSidebar],
 })
 export class AdminSidebarComponent extends MenuComponent implements OnInit {
   /**
@@ -70,36 +76,38 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
   ngOnInit(): void {
     super.ngOnInit();
     this.sidebarWidth = this.variableService.getVariable('sidebarItemsWidth');
-    this.authService.isAuthenticated()
-      .subscribe((loggedIn: boolean) => {
-        if (loggedIn) {
-          this.menuService.showMenu(this.menuID);
-        }
-      });
-    this.menuCollapsed.pipe(first())
-      .subscribe((collapsed: boolean) => {
-        this.sidebarOpen = !collapsed;
-        this.sidebarClosed = collapsed;
-      });
-    this.sidebarExpanded = combineLatest([this.menuCollapsed, this.menuPreviewCollapsed])
-      .pipe(
-        map(([collapsed, previewCollapsed]) => (!collapsed || !previewCollapsed))
-      );
-    this.inFocus$.pipe(
-      debounceTime(50),
-      distinctUntilChanged(),  // disregard focusout in situations like --(focusout)-(focusin)--
-      withLatestFrom(
-        combineLatest([this.menuCollapsed, this.menuPreviewCollapsed])
-      ),
-    ).subscribe(([inFocus, [collapsed, previewCollapsed]]) => {
-      if (collapsed) {
-        if (inFocus && previewCollapsed) {
-          this.expandPreview(new Event('focusin → expand'));
-        } else if (!inFocus && !previewCollapsed) {
-          this.collapsePreview(new Event('focusout → collapse'));
-        }
+    this.authService.isAuthenticated().subscribe((loggedIn: boolean) => {
+      if (loggedIn) {
+        this.menuService.showMenu(this.menuID);
       }
     });
+    this.menuCollapsed.pipe(first()).subscribe((collapsed: boolean) => {
+      this.sidebarOpen = !collapsed;
+      this.sidebarClosed = collapsed;
+    });
+    this.sidebarExpanded = combineLatest([
+      this.menuCollapsed,
+      this.menuPreviewCollapsed,
+    ]).pipe(
+      map(([collapsed, previewCollapsed]) => !collapsed || !previewCollapsed)
+    );
+    this.inFocus$
+      .pipe(
+        debounceTime(50),
+        distinctUntilChanged(), // disregard focusout in situations like --(focusout)-(focusin)--
+        withLatestFrom(
+          combineLatest([this.menuCollapsed, this.menuPreviewCollapsed])
+        )
+      )
+      .subscribe(([inFocus, [collapsed, previewCollapsed]]) => {
+        if (collapsed) {
+          if (inFocus && previewCollapsed) {
+            this.expandPreview(new Event('focusin → expand'));
+          } else if (!inFocus && !previewCollapsed) {
+            this.collapsePreview(new Event('focusout → collapse'));
+          }
+        }
+      });
   }
 
   @HostListener('focusin')

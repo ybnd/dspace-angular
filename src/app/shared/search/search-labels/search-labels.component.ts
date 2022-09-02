@@ -1,9 +1,9 @@
 import { Component, Inject, Input } from '@angular/core';
-import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
-import { Observable } from 'rxjs';
 import { Params, Router } from '@angular/router';
-import { SearchConfigurationService } from '../../../core/shared/search/search-configuration.service';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { SearchConfigurationService } from '../../../core/shared/search/search-configuration.service';
+import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.component';
 import { stripOperatorFromFilterValue } from '../search.utils';
 
 @Component({
@@ -31,16 +31,23 @@ export class SearchLabelsComponent {
    */
   constructor(
     protected router: Router,
-    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService) {
-    this.appliedFilters = this.searchConfigService.getCurrentFrontendFilters().pipe(
-      map((params) => {
-        const labels = {};
-        Object.keys(params)
-          .forEach((key) => {
-            labels[key] = [...params[key].map((value) => stripOperatorFromFilterValue(value))];
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService
+  ) {
+    this.appliedFilters = this.searchConfigService
+      .getCurrentFrontendFilters()
+      .pipe(
+        map((params) => {
+          const labels = {};
+          Object.keys(params).forEach((key) => {
+            labels[key] = [
+              ...params[key].map((value) =>
+                stripOperatorFromFilterValue(value)
+              ),
+            ];
           });
-        return labels;
-      })
-    );
+          return labels;
+        })
+      );
   }
 }

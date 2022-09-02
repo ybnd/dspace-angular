@@ -1,26 +1,25 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, map, switchMap, take } from 'rxjs/operators';
+import { isNotEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
 import { Community } from '../shared/community.model';
 import { COMMUNITY } from '../shared/community.resource-type';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { BitstreamDataService } from './bitstream-data.service';
 import { ComColDataService } from './comcol-data.service';
 import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
+import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
 import { RequestService } from './request.service';
-import { BitstreamDataService } from './bitstream-data.service';
-import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
-import { isNotEmpty } from '../../shared/empty.util';
-import { CoreState } from '../core-state.model';
-import { FindListOptions } from './find-list-options.model';
 
 @Injectable()
 @dataService(COMMUNITY)
@@ -46,16 +45,25 @@ export class CommunityDataService extends ComColDataService<Community> {
     return this.halService.getEndpoint(this.linkPath);
   }
 
-  findTop(options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<Community>[]): Observable<RemoteData<PaginatedList<Community>>> {
+  findTop(
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<Community>[]
+  ): Observable<RemoteData<PaginatedList<Community>>> {
     const hrefObs = this.getFindAllHref(options, this.topLinkPath);
     return this.findAllByHref(hrefObs, undefined, true, true, ...linksToFollow);
   }
 
   protected getFindByParentHref(parentUUID: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((communityEndpointHref: string) =>
-        this.halService.getEndpoint('subcommunities', `${communityEndpointHref}/${parentUUID}`))
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((communityEndpointHref: string) =>
+          this.halService.getEndpoint(
+            'subcommunities',
+            `${communityEndpointHref}/${parentUUID}`
+          )
+        )
+      );
   }
 
   protected getScopeCommunityHref(options: FindListOptions) {

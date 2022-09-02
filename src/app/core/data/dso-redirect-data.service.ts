@@ -4,26 +4,25 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { getItemPageRoute } from '../../item-page/item-page-routing-paths';
 import { hasValue } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
+import { DSpaceObject } from '../shared/dspace-object.model';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { Item } from '../shared/item.model';
+import { getFirstCompletedRemoteData } from '../shared/operators';
 import { DataService } from './data.service';
 import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
 import { RemoteData } from './remote-data';
 import { IdentifierType } from './request.models';
 import { RequestService } from './request.service';
-import { getFirstCompletedRemoteData } from '../shared/operators';
-import { DSpaceObject } from '../shared/dspace-object.model';
-import { Item } from '../shared/item.model';
-import { getItemPageRoute } from '../../item-page/item-page-routing-paths';
-import { CoreState } from '../core-state.model';
 
 @Injectable()
 export class DsoRedirectDataService extends DataService<any> {
-
   // Set the default link path to the identifier lookup endpoint.
   protected linkPath = 'pid';
   private uuidEndpoint = 'dso';
@@ -37,7 +36,8 @@ export class DsoRedirectDataService extends DataService<any> {
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<any>,
-    private router: Router) {
+    private router: Router
+  ) {
     super();
   }
 
@@ -49,14 +49,26 @@ export class DsoRedirectDataService extends DataService<any> {
     }
   }
 
-  getIDHref(endpoint, resourceID, ...linksToFollow: FollowLinkConfig<any>[]): string {
+  getIDHref(
+    endpoint,
+    resourceID,
+    ...linksToFollow: FollowLinkConfig<any>[]
+  ): string {
     // Supporting both identifier (pid) and uuid (dso) endpoints
-    return this.buildHrefFromFindOptions( endpoint.replace(/\{\?id\}/, `?id=${resourceID}`)
+    return this.buildHrefFromFindOptions(
+      endpoint
+        .replace(/\{\?id\}/, `?id=${resourceID}`)
         .replace(/\{\?uuid\}/, `?uuid=${resourceID}`),
-      {}, [], ...linksToFollow);
+      {},
+      [],
+      ...linksToFollow
+    );
   }
 
-  findByIdAndIDType(id: string, identifierType = IdentifierType.UUID): Observable<RemoteData<DSpaceObject>> {
+  findByIdAndIDType(
+    id: string,
+    identifierType = IdentifierType.UUID
+  ): Observable<RemoteData<DSpaceObject>> {
     this.setLinkPath(identifierType);
     return this.findById(id).pipe(
       getFirstCompletedRemoteData(),

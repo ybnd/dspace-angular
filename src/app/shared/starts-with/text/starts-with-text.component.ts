@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { renderStartsWithFor, StartsWithType } from '../starts-with-decorator';
-import { StartsWithAbstractComponent } from '../starts-with-abstract.component';
 import { hasValue } from '../../empty.util';
+import { StartsWithAbstractComponent } from '../starts-with-abstract.component';
+import { renderStartsWithFor, StartsWithType } from '../starts-with-decorator';
 
 /**
  * A switchable component rendering StartsWith options for the type "Text".
@@ -9,11 +9,10 @@ import { hasValue } from '../../empty.util';
 @Component({
   selector: 'ds-starts-with-text',
   styleUrls: ['./starts-with-text.component.scss'],
-  templateUrl: './starts-with-text.component.html'
+  templateUrl: './starts-with-text.component.html',
 })
 @renderStartsWithFor(StartsWithType.text)
 export class StartsWithTextComponent extends StartsWithAbstractComponent {
-
   /**
    * Get startsWith as text;
    */
@@ -45,5 +44,4 @@ export class StartsWithTextComponent extends StartsWithAbstractComponent {
     }
     return option === this.startsWith;
   }
-
 }

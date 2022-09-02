@@ -1,8 +1,8 @@
 /* eslint-disable max-classes-per-file */
-import { Config } from './config.interface';
-import { hasValue, hasNoValue, isNotEmpty } from '../app/shared/empty.util';
-import { DSpaceObject } from '../app/core/shared/dspace-object.model';
 import { getDSORoute } from '../app/app-routing-paths';
+import { DSpaceObject } from '../app/core/shared/dspace-object.model';
+import { hasNoValue, hasValue, isNotEmpty } from '../app/shared/empty.util';
+import { Config } from './config.interface';
 
 export interface NamedThemeConfig extends Config {
   name: string;
@@ -49,8 +49,7 @@ export interface UUIDThemeConfig extends NamedThemeConfig {
 }
 
 export class Theme {
-  constructor(public config: NamedThemeConfig) {
-  }
+  constructor(public config: NamedThemeConfig) {}
 
   matches(url: string, dso: DSpaceObject): boolean {
     return true;
@@ -87,7 +86,11 @@ export class HandleTheme extends Theme {
   }
 
   matches(url: string, dso: any): boolean {
-    return hasValue(dso) && hasValue(dso.handle) && dso.handle.includes(this.config.handle);
+    return (
+      hasValue(dso) &&
+      hasValue(dso.handle) &&
+      dso.handle.includes(this.config.handle)
+    );
   }
 }
 
@@ -113,8 +116,8 @@ export const themeFactory = (config: ThemeConfig): Theme => {
   }
 };
 
-export type ThemeConfig
-  = NamedThemeConfig
+export type ThemeConfig =
+  | NamedThemeConfig
   | RegExThemeConfig
   | HandleThemeConfig
   | UUIDThemeConfig;

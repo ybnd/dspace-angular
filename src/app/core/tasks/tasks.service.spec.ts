@@ -1,34 +1,31 @@
 /* eslint-disable max-classes-per-file */
-import { getTestScheduler } from 'jasmine-marbles';
-import { TestScheduler } from 'rxjs/testing';
-
-import { getMockRequestService } from '../../shared/mocks/request.service.mock';
-import { TasksService } from './tasks.service';
-import { RequestService } from '../data/request.service';
-import { TaskDeleteRequest, TaskPostRequest } from '../data/request.models';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service.stub';
-import { TaskObject } from './models/task-object.model';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
-import { ChangeAnalyzer } from '../data/change-analyzer';
+import { Store } from '@ngrx/store';
 import { compare, Operation } from 'fast-json-patch';
-import { of as observableOf } from 'rxjs';
-import { HttpOptions } from '../dspace-rest/dspace-rest.service';
+import { getTestScheduler } from 'jasmine-marbles';
+import { of as observableOf, of } from 'rxjs';
+import { TestScheduler } from 'rxjs/testing';
 import { getMockRemoteDataBuildService } from '../../shared/mocks/remote-data-build.service.mock';
+import { getMockRequestService } from '../../shared/mocks/request.service.mock';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service.stub';
 import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
-import { of } from 'rxjs';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
+import { ChangeAnalyzer } from '../data/change-analyzer';
+import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
 import { FindListOptions } from '../data/find-list-options.model';
+import { TaskDeleteRequest, TaskPostRequest } from '../data/request.models';
+import { RequestService } from '../data/request.service';
+import { HttpOptions } from '../dspace-rest/dspace-rest.service';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { TaskObject } from './models/task-object.model';
+import { TasksService } from './tasks.service';
 
 const LINK_NAME = 'test';
 
-class TestTask extends TaskObject {
-}
+class TestTask extends TaskObject {}
 
 class TestService extends TasksService<TestTask> {
   protected linkPath = LINK_NAME;
@@ -41,7 +38,8 @@ class TestService extends TasksService<TestTask> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected http: HttpClient,
-    protected comparator: DSOChangeAnalyzer<TestTask>) {
+    protected comparator: DSOChangeAnalyzer<TestTask>
+  ) {
     super();
   }
 }
@@ -50,9 +48,7 @@ class DummyChangeAnalyzer implements ChangeAnalyzer<TestTask> {
   diff(object1: TestTask, object2: TestTask): Operation[] {
     return compare((object1 as any).metadata, (object2 as any).metadata);
   }
-
 }
-
 
 describe('TasksService', () => {
   let scheduler: TestScheduler;
@@ -71,7 +67,7 @@ describe('TasksService', () => {
     },
     getObjectBySelfLink: () => {
       /* empty */
-    }
+    },
   } as any;
   const store = {} as Store<CoreState>;
 
@@ -93,16 +89,23 @@ describe('TasksService', () => {
     service = initTestService();
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers = headers.append(
+      'Content-Type',
+      'application/x-www-form-urlencoded'
+    );
     options.headers = headers;
-
   });
 
   describe('postToEndpoint', () => {
-
     it('should send a new TaskPostRequest', () => {
-      const expected = new TaskPostRequest(requestService.generateRequestId(), `${taskEndpoint}/${linkPath}`, {});
-      scheduler.schedule(() => service.postToEndpoint('testTask', {}).subscribe());
+      const expected = new TaskPostRequest(
+        requestService.generateRequestId(),
+        `${taskEndpoint}/${linkPath}`,
+        {}
+      );
+      scheduler.schedule(() =>
+        service.postToEndpoint('testTask', {}).subscribe()
+      );
       scheduler.flush();
 
       expect(requestService.send).toHaveBeenCalledWith(expected);
@@ -110,11 +113,16 @@ describe('TasksService', () => {
   });
 
   describe('deleteById', () => {
-
     it('should send a new TaskDeleteRequest', () => {
       const scopeId = '1234';
-      const expected = new TaskDeleteRequest(requestService.generateRequestId(), `${taskEndpoint}/${linkPath}/${scopeId}`, null);
-      scheduler.schedule(() => service.deleteById('testTask', scopeId).subscribe());
+      const expected = new TaskDeleteRequest(
+        requestService.generateRequestId(),
+        `${taskEndpoint}/${linkPath}/${scopeId}`,
+        null
+      );
+      scheduler.schedule(() =>
+        service.deleteById('testTask', scopeId).subscribe()
+      );
       scheduler.flush();
 
       expect(requestService.send).toHaveBeenCalledWith(expected);
@@ -122,37 +130,51 @@ describe('TasksService', () => {
   });
 
   describe('searchTask', () => {
-
     it('should call findByHref with the href generated by getSearchByHref', () => {
-
-      spyOn(service, 'getSearchByHref').and.returnValue(observableOf('generatedHref'));
+      spyOn(service, 'getSearchByHref').and.returnValue(
+        observableOf('generatedHref')
+      );
       spyOn(service, 'findByHref').and.returnValue(of(null));
 
       const followLinks = {};
       const options = new FindListOptions();
       options.searchParams = [];
 
-      scheduler.schedule(() => service.searchTask('method', options, followLinks as any).subscribe());
+      scheduler.schedule(() =>
+        service.searchTask('method', options, followLinks as any).subscribe()
+      );
       scheduler.flush();
 
-      expect(service.getSearchByHref).toHaveBeenCalledWith('method', options, followLinks as any);
-      expect(service.findByHref).toHaveBeenCalledWith('generatedHref', false, true);
+      expect(service.getSearchByHref).toHaveBeenCalledWith(
+        'method',
+        options,
+        followLinks as any
+      );
+      expect(service.findByHref).toHaveBeenCalledWith(
+        'generatedHref',
+        false,
+        true
+      );
     });
   });
 
   describe('getEndpointById', () => {
-
     it('should call halService.getEndpoint and then getEndpointByIDHref', () => {
-
-      spyOn(halService, 'getEndpoint').and.returnValue(observableOf('generatedHref'));
+      spyOn(halService, 'getEndpoint').and.returnValue(
+        observableOf('generatedHref')
+      );
       spyOn(service, 'getEndpointByIDHref').and.returnValue(null);
 
       scheduler.schedule(() => service.getEndpointById('scopeId').subscribe());
       scheduler.flush();
 
-      expect(halService.getEndpoint).toHaveBeenCalledWith(service.getLinkPath());
-      expect(service.getEndpointByIDHref).toHaveBeenCalledWith('generatedHref', 'scopeId');
+      expect(halService.getEndpoint).toHaveBeenCalledWith(
+        service.getLinkPath()
+      );
+      expect(service.getEndpointByIDHref).toHaveBeenCalledWith(
+        'generatedHref',
+        'scopeId'
+      );
     });
   });
-
 });

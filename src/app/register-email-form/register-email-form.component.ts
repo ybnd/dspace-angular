@@ -1,21 +1,25 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { EpersonRegistrationService } from '../core/data/eperson-registration.service';
-import { NotificationsService } from '../shared/notifications/notifications.service';
-import { TranslateService } from '@ngx-translate/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Registration } from '../core/shared/registration.model';
+import { TranslateService } from '@ngx-translate/core';
+import { EpersonRegistrationService } from '../core/data/eperson-registration.service';
 import { RemoteData } from '../core/data/remote-data';
+import { Registration } from '../core/shared/registration.model';
+import { NotificationsService } from '../shared/notifications/notifications.service';
 
 @Component({
   selector: 'ds-register-email-form',
-  templateUrl: './register-email-form.component.html'
+  templateUrl: './register-email-form.component.html',
 })
 /**
  * Component responsible to render an email registration form.
  */
 export class RegisterEmailFormComponent implements OnInit {
-
   /**
    * The form containing the mail address
    */
@@ -33,19 +37,17 @@ export class RegisterEmailFormComponent implements OnInit {
     private translateService: TranslateService,
     private router: Router,
     private formBuilder: FormBuilder
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       email: new FormControl('', {
-        validators: [Validators.required,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')
+        validators: [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
         ],
-      })
+      }),
     });
-
   }
 
   /**
@@ -53,22 +55,32 @@ export class RegisterEmailFormComponent implements OnInit {
    */
   register() {
     if (!this.form.invalid) {
-      this.epersonRegistrationService.registerEmail(this.email.value).subscribe((response: RemoteData<Registration>) => {
+      this.epersonRegistrationService
+        .registerEmail(this.email.value)
+        .subscribe((response: RemoteData<Registration>) => {
           if (response.hasSucceeded) {
-            this.notificationService.success(this.translateService.get(`${this.MESSAGE_PREFIX}.success.head`),
-              this.translateService.get(`${this.MESSAGE_PREFIX}.success.content`, {email: this.email.value}));
+            this.notificationService.success(
+              this.translateService.get(`${this.MESSAGE_PREFIX}.success.head`),
+              this.translateService.get(
+                `${this.MESSAGE_PREFIX}.success.content`,
+                { email: this.email.value }
+              )
+            );
             this.router.navigate(['/home']);
           } else {
-            this.notificationService.error(this.translateService.get(`${this.MESSAGE_PREFIX}.error.head`),
-              this.translateService.get(`${this.MESSAGE_PREFIX}.error.content`, {email: this.email.value}));
+            this.notificationService.error(
+              this.translateService.get(`${this.MESSAGE_PREFIX}.error.head`),
+              this.translateService.get(
+                `${this.MESSAGE_PREFIX}.error.content`,
+                { email: this.email.value }
+              )
+            );
           }
-        }
-      );
+        });
     }
   }
 
   get email() {
     return this.form.get('email');
   }
-
 }

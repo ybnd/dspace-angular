@@ -1,7 +1,10 @@
 import * as deepFreeze from 'deep-freeze';
-
+import {
+  TruncatableCollapseAction,
+  TruncatableExpandAction,
+  TruncatableToggleAction,
+} from './truncatable.actions';
 import { truncatableReducer } from './truncatable.reducer';
-import { TruncatableCollapseAction, TruncatableExpandAction, TruncatableToggleAction } from './truncatable.actions';
 
 const id1 = '123';
 const id2 = '456';
@@ -15,7 +18,6 @@ class NullAction extends TruncatableCollapseAction {
 }
 
 describe('truncatableReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = { 123: { collapsed: true, page: 1 } };
     const action = new NullAction();

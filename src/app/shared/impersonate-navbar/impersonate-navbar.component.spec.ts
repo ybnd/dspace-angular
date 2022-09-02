@@ -1,19 +1,17 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { RouterTestingModule } from '@angular/router/testing';
-
-import { TranslateModule } from '@ngx-translate/core';
-import { Store, StoreModule } from '@ngrx/store';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-
-import { ImpersonateNavbarComponent } from './impersonate-navbar.component';
-import { VarDirective } from '../utils/var.directive';
-import { AuthService } from '../../core/auth/auth.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { AppState, storeModuleConfig } from '../../app.reducer';
 import { authReducer } from '../../core/auth/auth.reducer';
+import { AuthService } from '../../core/auth/auth.service';
 import { AuthTokenInfo } from '../../core/auth/models/auth-token-info.model';
 import { EPersonMock } from '../testing/eperson.mock';
-import { AppState, storeModuleConfig } from '../../app.reducer';
+import { VarDirective } from '../utils/var.directive';
+import { ImpersonateNavbarComponent } from './impersonate-navbar.component';
 
 describe('ImpersonateNavbarComponent', () => {
   let component: ImpersonateNavbarComponent;
@@ -25,7 +23,7 @@ describe('ImpersonateNavbarComponent', () => {
   beforeEach(waitForAsync(() => {
     authService = jasmine.createSpyObj('authService', {
       isImpersonating: false,
-      stopImpersonatingAndRefresh: {}
+      stopImpersonatingAndRefresh: {},
     });
     initialState = {
       core: {
@@ -36,9 +34,9 @@ describe('ImpersonateNavbarComponent', () => {
           loading: false,
           authToken: new AuthTokenInfo('test_token'),
           userId: EPersonMock.id,
-          authMethods: []
-        }
-      }
+          authMethods: [],
+        },
+      },
     };
 
     TestBed.configureTestingModule({
@@ -52,7 +50,7 @@ describe('ImpersonateNavbarComponent', () => {
         { provide: AuthService, useValue: authService },
         provideMockStore({ initialState }),
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -74,7 +72,7 @@ describe('ImpersonateNavbarComponent', () => {
       expect(button).not.toBeNull();
     });
 
-    it('should call authService\'s stopImpersonatingAndRefresh upon clicking the button', () => {
+    it("should call authService's stopImpersonatingAndRefresh upon clicking the button", () => {
       const button = fixture.debugElement.query(By.css('button')).nativeElement;
       button.click();
       expect(authService.stopImpersonatingAndRefresh).toHaveBeenCalled();

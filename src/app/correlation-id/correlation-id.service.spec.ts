@@ -1,11 +1,11 @@
-import { CorrelationIdService } from './correlation-id.service';
-import { CookieServiceMock } from '../shared/mocks/cookie.service.mock';
-import { UUIDService } from '../core/shared/uuid.service';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { TestBed } from '@angular/core/testing';
 import { Store, StoreModule } from '@ngrx/store';
+import { MockStore } from '@ngrx/store/testing';
 import { appReducers, AppState, storeModuleConfig } from '../app.reducer';
+import { UUIDService } from '../core/shared/uuid.service';
+import { CookieServiceMock } from '../shared/mocks/cookie.service.mock';
 import { SetCorrelationIdAction } from './correlation-id.actions';
+import { CorrelationIdService } from './correlation-id.service';
 
 describe('CorrelationIdService', () => {
   let service: CorrelationIdService;
@@ -16,9 +16,7 @@ describe('CorrelationIdService', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(appReducers, storeModuleConfig),
-      ],
+      imports: [StoreModule.forRoot(appReducers, storeModuleConfig)],
     }).compileComponents();
   });
 
@@ -37,7 +35,6 @@ describe('CorrelationIdService', () => {
     });
   });
 
-
   describe('initCorrelationId', () => {
     const cookieCID = 'cookie CID';
     const storeCID = 'store CID';
@@ -47,7 +44,9 @@ describe('CorrelationIdService', () => {
 
       expect(cookieService.get('CORRELATION-ID')).toBeTruthy();
       expect(service.getCorrelationId()).toBeTruthy();
-      expect(cookieService.get('CORRELATION-ID')).toEqual(service.getCorrelationId());
+      expect(cookieService.get('CORRELATION-ID')).toEqual(
+        service.getCorrelationId()
+      );
     });
 
     it('should set store value to cookie value if present', () => {

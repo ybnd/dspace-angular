@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { getCollectionEditRoute } from '../../../../collection-page/collection-page-routing-paths';
 import { DSpaceObjectType } from '../../../../core/shared/dspace-object-type.model';
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   DSOSelectorModalWrapperComponent,
-  SelectorActionType
+  SelectorActionType,
 } from '../dso-selector-modal-wrapper.component';
-import { getCollectionEditRoute } from '../../../../collection-page/collection-page-routing-paths';
 
 /**
  * Component to wrap a list of existing collections inside a modal
@@ -18,12 +18,19 @@ import { getCollectionEditRoute } from '../../../../collection-page/collection-p
   selector: 'ds-edit-collection-selector',
   templateUrl: '../dso-selector-modal-wrapper.component.html',
 })
-export class EditCollectionSelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class EditCollectionSelectorComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.COLLECTION;
   selectorTypes = [DSpaceObjectType.COLLECTION];
   action = SelectorActionType.EDIT;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router
+  ) {
     super(activeModal, route);
   }
 

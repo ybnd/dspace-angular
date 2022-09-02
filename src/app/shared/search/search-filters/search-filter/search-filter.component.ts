@@ -1,16 +1,14 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-
 import { Observable, of as observableOf } from 'rxjs';
 import { filter, map, startWith, switchMap, take } from 'rxjs/operators';
-
-import { SearchFilterConfig } from '../../models/search-filter-config.model';
+import { SearchConfigurationService } from '../../../../core/shared/search/search-configuration.service';
 import { SearchFilterService } from '../../../../core/shared/search/search-filter.service';
+import { SearchService } from '../../../../core/shared/search/search.service';
+import { SequenceService } from '../../../../core/shared/sequence.service';
+import { SEARCH_CONFIG_SERVICE } from '../../../../my-dspace-page/my-dspace-page.component';
 import { slide } from '../../../animations/slide';
 import { isNotEmpty } from '../../../empty.util';
-import { SearchService } from '../../../../core/shared/search/search.service';
-import { SearchConfigurationService } from '../../../../core/shared/search/search-configuration.service';
-import { SEARCH_CONFIG_SERVICE } from '../../../../my-dspace-page/my-dspace-page.component';
-import { SequenceService } from '../../../../core/shared/sequence.service';
+import { SearchFilterConfig } from '../../models/search-filter-config.model';
 
 @Component({
   selector: 'ds-search-filter',
@@ -68,8 +66,9 @@ export class SearchFilterComponent implements OnInit {
   constructor(
     private filterService: SearchFilterService,
     private searchService: SearchService,
-    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService,
-    private sequenceService: SequenceService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    private searchConfigService: SearchConfigurationService,
+    private sequenceService: SequenceService
   ) {
     this.sequenceId = this.sequenceService.next();
   }
@@ -166,15 +165,19 @@ export class SearchFilterComponent implements OnInit {
         } else {
           return this.searchConfigService.searchOptions.pipe(
             switchMap((options) => {
-                return this.searchService.getFacetValuesFor(this.filter, 1, options).pipe(
+              return this.searchService
+                .getFacetValuesFor(this.filter, 1, options)
+                .pipe(
                   filter((RD) => !RD.isLoading),
                   map((valuesRD) => {
                     return valuesRD.payload?.totalElements > 0;
-                  }),);
-              }
-            ));
+                  })
+                );
+            })
+          );
         }
       }),
-      startWith(true));
+      startWith(true)
+    );
   }
 }

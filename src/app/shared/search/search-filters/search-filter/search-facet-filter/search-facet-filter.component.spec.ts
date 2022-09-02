@@ -1,28 +1,28 @@
 import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
+import { buildPaginatedList } from '../../../../../core/data/paginated-list.model';
+import { PageInfo } from '../../../../../core/shared/page-info.model';
 import {
   FILTER_CONFIG,
   IN_PLACE_SEARCH,
-  SearchFilterService
+  SearchFilterService,
 } from '../../../../../core/shared/search/search-filter.service';
-import { SearchFilterConfig } from '../../../models/search-filter-config.model';
-import { FilterType } from '../../../models/filter-type.model';
-import { FacetValue } from '../../../models/facet-value.model';
-import { FormsModule } from '@angular/forms';
-import { of as observableOf } from 'rxjs';
 import { SearchService } from '../../../../../core/shared/search/search.service';
-import { SearchServiceStub } from '../../../../testing/search-service.stub';
-import { buildPaginatedList } from '../../../../../core/data/paginated-list.model';
-import { RouterStub } from '../../../../testing/router.stub';
-import { Router } from '@angular/router';
-import { PageInfo } from '../../../../../core/shared/page-info.model';
-import { SearchFacetFilterComponent } from './search-facet-filter.component';
-import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
-import { SearchConfigurationServiceStub } from '../../../../testing/search-configuration-service.stub';
 import { SEARCH_CONFIG_SERVICE } from '../../../../../my-dspace-page/my-dspace-page.component';
 import { createSuccessfulRemoteDataObject$ } from '../../../../remote-data.utils';
+import { RouterStub } from '../../../../testing/router.stub';
+import { SearchConfigurationServiceStub } from '../../../../testing/search-configuration-service.stub';
+import { SearchServiceStub } from '../../../../testing/search-service.stub';
+import { FacetValue } from '../../../models/facet-value.model';
+import { FilterType } from '../../../models/filter-type.model';
+import { SearchFilterConfig } from '../../../models/search-filter-config.model';
+import { SearchFacetFilterComponent } from './search-facet-filter.component';
 
 describe('SearchFacetFilterComponent', () => {
   let comp: SearchFacetFilterComponent;
@@ -31,13 +31,16 @@ describe('SearchFacetFilterComponent', () => {
   const value1 = 'testvalue1';
   const value2 = 'test2';
   const value3 = 'another value3';
-  const mockFilterConfig: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-    name: filterName1,
-    filterType: FilterType.text,
-    hasFacets: false,
-    isOpenByDefault: false,
-    pageSize: 2
-  });
+  const mockFilterConfig: SearchFilterConfig = Object.assign(
+    new SearchFilterConfig(),
+    {
+      name: filterName1,
+      filterType: FilterType.text,
+      hasFacets: false,
+      isOpenByDefault: false,
+      pageSize: 2,
+    }
+  );
   const values: FacetValue[] = [
     {
       label: value1,
@@ -45,37 +48,39 @@ describe('SearchFacetFilterComponent', () => {
       count: 52,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }, {
+          href: '',
+        },
+      },
+    },
+    {
       label: value2,
       value: value2,
       count: 20,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }, {
+          href: '',
+        },
+      },
+    },
+    {
       label: value3,
       value: value3,
       count: 5,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }
+          href: '',
+        },
+      },
+    },
   ];
 
   const searchLink = '/search';
@@ -85,7 +90,9 @@ describe('SearchFacetFilterComponent', () => {
   let router;
   const page = observableOf(0);
 
-  const mockValues = createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), values));
+  const mockValues = createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), values)
+  );
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormsModule],
@@ -94,27 +101,35 @@ describe('SearchFacetFilterComponent', () => {
         { provide: SearchService, useValue: new SearchServiceStub(searchLink) },
         { provide: Router, useValue: new RouterStub() },
         { provide: FILTER_CONFIG, useValue: new SearchFilterConfig() },
-        { provide: RemoteDataBuildService, useValue: { aggregate: () => observableOf({}) } },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: RemoteDataBuildService,
+          useValue: { aggregate: () => observableOf({}) },
+        },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: IN_PLACE_SEARCH, useValue: false },
         {
-          provide: SearchFilterService, useValue: {
+          provide: SearchFilterService,
+          useValue: {
             getSelectedValuesForFilter: () => observableOf(selectedValues),
-            isFilterActiveWithValue: (paramName: string, filterValue: string) => true,
+            isFilterActiveWithValue: (paramName: string, filterValue: string) =>
+              true,
             getPage: (paramName: string) => page,
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            incrementPage: (filterName: string) => {
-            },
-            resetPage: (filterName: string) => {
-            }
+            incrementPage: (filterName: string) => {},
+            resetPage: (filterName: string) => {},
             /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-          }
-        }
+          },
+        },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchFacetFilterComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchFacetFilterComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -135,7 +150,10 @@ describe('SearchFacetFilterComponent', () => {
     });
 
     it('should call isFilterActiveWithValue on the filterService with the correct filter parameter name and the passed value', () => {
-      expect(filterService.isFilterActiveWithValue).toHaveBeenCalledWith(mockFilterConfig.paramName, values[1].value);
+      expect(filterService.isFilterActiveWithValue).toHaveBeenCalledWith(
+        mockFilterConfig.paramName,
+        values[1].value
+      );
     });
   });
 
@@ -157,7 +175,9 @@ describe('SearchFacetFilterComponent', () => {
     });
 
     it('should call incrementPage on the filterService with the correct filter parameter name', () => {
-      expect(filterService.incrementPage).toHaveBeenCalledWith(mockFilterConfig.name);
+      expect(filterService.incrementPage).toHaveBeenCalledWith(
+        mockFilterConfig.name
+      );
     });
   });
 
@@ -168,7 +188,9 @@ describe('SearchFacetFilterComponent', () => {
     });
 
     it('should call resetPage on the filterService with the correct filter parameter name', () => {
-      expect(filterService.resetPage).toHaveBeenCalledWith(mockFilterConfig.name);
+      expect(filterService.resetPage).toHaveBeenCalledWith(
+        mockFilterConfig.name
+      );
     });
   });
 
@@ -199,11 +221,14 @@ describe('SearchFacetFilterComponent', () => {
     const testValue = 'test';
 
     beforeEach(() => {
-      comp.selectedValues$ = observableOf(selectedValues.map((value) =>
-        Object.assign(new FacetValue(), {
-          label: value,
-          value: value
-        })));
+      comp.selectedValues$ = observableOf(
+        selectedValues.map((value) =>
+          Object.assign(new FacetValue(), {
+            label: value,
+            value: value,
+          })
+        )
+      );
       fixture.detectChanges();
       spyOn(comp, 'getSearchLink').and.returnValue(searchUrl);
     });
@@ -211,8 +236,13 @@ describe('SearchFacetFilterComponent', () => {
     it('should call navigate on the router with the right searchlink and parameters when the filter is provided with a valid operator', () => {
       comp.onSubmit(testValue + ',equals');
       expect(router.navigate).toHaveBeenCalledWith(searchUrl.split('/'), {
-        queryParams: { [mockFilterConfig.paramName]: [...selectedValues.map((value) => `${value},equals`), `${testValue},equals`] },
-        queryParamsHandling: 'merge'
+        queryParams: {
+          [mockFilterConfig.paramName]: [
+            ...selectedValues.map((value) => `${value},equals`),
+            `${testValue},equals`,
+          ],
+        },
+        queryParamsHandling: 'merge',
       });
     });
 
@@ -240,14 +270,16 @@ describe('SearchFacetFilterComponent', () => {
     });
   });
 
-  describe('when findSuggestions is called with query \'test\'', () => {
+  describe("when findSuggestions is called with query 'test'", () => {
     const query = 'test';
     beforeEach(() => {
       comp.findSuggestions(query);
     });
 
-    it('should call getFacetValuesFor on the component\'s SearchService with the right query', () => {
-      expect((comp as any).searchService.getFacetValuesFor).toHaveBeenCalledWith(comp.filterConfig, 1, {}, query);
+    it("should call getFacetValuesFor on the component's SearchService with the right query", () => {
+      expect(
+        (comp as any).searchService.getFacetValuesFor
+      ).toHaveBeenCalledWith(comp.filterConfig, 1, {}, query);
     });
   });
 });

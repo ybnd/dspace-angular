@@ -1,7 +1,12 @@
 import { Directive, Injectable } from '@angular/core';
-import { AbstractControl, AsyncValidator, NG_VALIDATORS, ValidationErrors } from '@angular/forms';
+import {
+  AbstractControl,
+  AsyncValidator,
+  NG_VALIDATORS,
+  ValidationErrors,
+} from '@angular/forms';
+import { Observable, of as observableOf, timer as observableTimer } from 'rxjs';
 import { map, switchMap, take } from 'rxjs/operators';
-import { of as observableOf, timer as observableTimer, Observable } from 'rxjs';
 import { MetadataFieldDataService } from '../../core/data/metadata-field-data.service';
 import { PaginatedList } from '../../core/data/paginated-list.model';
 import { RemoteData } from '../../core/data/remote-data';
@@ -15,31 +20,40 @@ import { getFirstSucceededRemoteData } from '../../core/shared/operators';
   selector: '[ngModel][dsMetadataFieldValidator]',
   // We add our directive to the list of existing validators
   providers: [
-    { provide: NG_VALIDATORS, useExisting: MetadataFieldValidator, multi: true }
-  ]
+    {
+      provide: NG_VALIDATORS,
+      useExisting: MetadataFieldValidator,
+      multi: true,
+    },
+  ],
 })
 @Injectable({ providedIn: 'root' })
 export class MetadataFieldValidator implements AsyncValidator {
-
-  constructor(private metadataFieldService: MetadataFieldDataService) {
-  }
+  constructor(private metadataFieldService: MetadataFieldDataService) {}
 
   /**
    * The function that checks if the form control's value is currently valid
    * @param control The FormControl
    */
-  validate(control: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
+  validate(
+    control: AbstractControl
+  ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
     const resTimer = observableTimer(500).pipe(
       switchMap(() => {
         if (!control.value) {
-          return observableOf({ invalidMetadataField: { value: control.value } });
+          return observableOf({
+            invalidMetadataField: { value: control.value },
+          });
         }
         const mdFieldNameParts = control.value.split('.');
         if (mdFieldNameParts.length < 2) {
-          return observableOf({ invalidMetadataField: { value: control.value } });
+          return observableOf({
+            invalidMetadataField: { value: control.value },
+          });
         }
 
-        const res = this.metadataFieldService.findByExactFieldName(control.value)
+        const res = this.metadataFieldService
+          .findByExactFieldName(control.value)
           .pipe(
             getFirstSucceededRemoteData(),
             map((matchingFieldRD: RemoteData<PaginatedList<MetadataField>>) => {

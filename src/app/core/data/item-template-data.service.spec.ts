@@ -1,27 +1,28 @@
-import { ItemTemplateDataService } from './item-template-data.service';
-import { RestResponse } from '../cache/response.models';
-import { RequestService } from './request.service';
-import { Observable, of as observableOf } from 'rxjs';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { BrowseService } from '../browse/browse.service';
-import { cold } from 'jasmine-marbles';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { CollectionDataService } from './collection-data.service';
-import { RestRequestMethod } from './rest-request-method';
-import { Item } from '../shared/item.model';
-import { RestRequest } from './rest-request.model';
+import { Store } from '@ngrx/store';
+import { cold } from 'jasmine-marbles';
+import { Observable, of as observableOf } from 'rxjs';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { BrowseService } from '../browse/browse.service';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { RestResponse } from '../cache/response.models';
 import { CoreState } from '../core-state.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { Item } from '../shared/item.model';
+import { CollectionDataService } from './collection-data.service';
+import { ItemTemplateDataService } from './item-template-data.service';
 import { RequestEntry } from './request-entry.model';
+import { RequestService } from './request.service';
+import { RestRequestMethod } from './rest-request-method';
+import { RestRequest } from './rest-request.model';
 
 describe('ItemTemplateDataService', () => {
   let service: ItemTemplateDataService;
   let itemService: any;
 
   const item = new Item();
-  const collectionEndpoint = 'https://rest.api/core/collections/4af28e99-6a9c-4036-a199-e1b587046d39';
+  const collectionEndpoint =
+    'https://rest.api/core/collections/4af28e99-6a9c-4036-a199-e1b587046d39';
   const itemEndpoint = `${collectionEndpoint}/itemtemplate`;
   const scopeID = '4af28e99-6a9c-4036-a199-e1b587046d39';
   const requestService = {
@@ -43,7 +44,7 @@ describe('ItemTemplateDataService', () => {
     },
     commit(method?: RestRequestMethod) {
       // Do nothing
-    }
+    },
   } as RequestService;
   const rdbService = {} as RemoteDataBuildService;
   const store = {} as Store<CoreState>;
@@ -54,24 +55,24 @@ describe('ItemTemplateDataService', () => {
     },
     addPatch(self, operations) {
       // Do nothing
-    }
+    },
   } as any;
   const halEndpointService = {
     getEndpoint(linkPath: string): Observable<string> {
       return cold('a', { a: itemEndpoint });
-    }
+    },
   } as HALEndpointService;
   const notificationsService = {} as NotificationsService;
   const http = {} as HttpClient;
   const comparator = {
     diff(first, second) {
       return [{}];
-    }
+    },
   } as any;
   const collectionService = {
     getIDHrefObs(id): Observable<string> {
       return observableOf(collectionEndpoint);
-    }
+    },
   } as CollectionDataService;
 
   function initTestService() {

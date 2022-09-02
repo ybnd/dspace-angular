@@ -1,12 +1,17 @@
-import { autoserializeAs, deserialize, deserializeAs, serializeAs } from 'cerialize';
+import {
+  autoserializeAs,
+  deserialize,
+  deserializeAs,
+  serializeAs,
+} from 'cerialize';
+import { typedObject } from '../cache/builders/build-decorators';
+import { CacheableObject } from '../cache/cacheable-object.model';
+import { excludeFromEquals } from '../utilities/equals.decorators';
+import { ContentSourceSetSerializer } from './content-source-set-serializer';
+import { CONTENT_SOURCE } from './content-source.resource-type';
 import { HALLink } from './hal-link.model';
 import { MetadataConfig } from './metadata-config.model';
-import { typedObject } from '../cache/builders/build-decorators';
-import { CONTENT_SOURCE } from './content-source.resource-type';
-import { excludeFromEquals } from '../utilities/equals.decorators';
 import { ResourceType } from './resource-type';
-import { CacheableObject } from '../cache/cacheable-object.model';
-import { ContentSourceSetSerializer } from './content-source-set-serializer';
 
 /**
  * The type of content harvesting used
@@ -15,7 +20,7 @@ export enum ContentSourceHarvestType {
   None = 'NONE',
   Metadata = 'METADATA_ONLY',
   MetadataAndRef = 'METADATA_AND_REF',
-  MetadataAndBitstreams = 'METADATA_AND_BITSTREAMS'
+  MetadataAndBitstreams = 'METADATA_AND_BITSTREAMS',
 }
 
 /**
@@ -101,6 +106,6 @@ export class ContentSource extends CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink
+    self: HALLink;
   };
 }

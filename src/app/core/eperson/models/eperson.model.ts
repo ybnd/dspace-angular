@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { link, typedObject } from '../../cache/builders/build-decorators';
 import { PaginatedList } from '../../data/paginated-list.model';
 import { RemoteData } from '../../data/remote-data';
-
 import { DSpaceObject } from '../../shared/dspace-object.model';
 import { HALLink } from '../../shared/hal-link.model';
 import { EPERSON } from './eperson.resource-type';
@@ -67,7 +66,11 @@ export class EPerson extends DSpaceObject {
    * Getter to retrieve the EPerson's full name as a string
    */
   get name(): string {
-    return this.firstMetadataValue('eperson.firstname') + ' ' + this.firstMetadataValue('eperson.lastname');
+    return (
+      this.firstMetadataValue('eperson.firstname') +
+      ' ' +
+      this.firstMetadataValue('eperson.lastname')
+    );
   }
 
   _links: {
@@ -81,5 +84,4 @@ export class EPerson extends DSpaceObject {
    */
   @link(GROUP, true)
   public groups?: Observable<RemoteData<PaginatedList<Group>>>;
-
 }

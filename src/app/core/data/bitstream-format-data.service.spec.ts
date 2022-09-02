@@ -1,23 +1,23 @@
-import { BitstreamFormatDataService } from './bitstream-format-data.service';
-import { RestResponse } from '../cache/response.models';
-import { Observable, of as observableOf } from 'rxjs';
-import { Action, Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { cold, getTestScheduler, hot } from 'jasmine-marbles';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { BitstreamFormat } from '../shared/bitstream-format.model';
 import { waitForAsync } from '@angular/core/testing';
+import { Action, Store } from '@ngrx/store';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
+import { Observable, of as observableOf } from 'rxjs';
+import { TestScheduler } from 'rxjs/testing';
 import {
   BitstreamFormatsRegistryDeselectAction,
   BitstreamFormatsRegistryDeselectAllAction,
-  BitstreamFormatsRegistrySelectAction
+  BitstreamFormatsRegistrySelectAction,
 } from '../../admin/admin-registries/bitstream-formats/bitstream-format.actions';
-import { TestScheduler } from 'rxjs/testing';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
+import { RestResponse } from '../cache/response.models';
 import { CoreState } from '../core-state.model';
+import { BitstreamFormat } from '../shared/bitstream-format.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { BitstreamFormatDataService } from './bitstream-format-data.service';
 import { RequestEntry } from './request-entry.model';
 
 describe('BitstreamFormatDataService', () => {
@@ -26,7 +26,8 @@ describe('BitstreamFormatDataService', () => {
   let scheduler: TestScheduler;
 
   const bitstreamFormatsEndpoint = 'https://rest.api/core/bitstream-formats';
-  const bitstreamFormatsIdEndpoint = 'https://rest.api/core/bitstream-formats/format-id';
+  const bitstreamFormatsIdEndpoint =
+    'https://rest.api/core/bitstream-formats/format-id';
 
   const responseCacheEntry = new RequestEntry();
   responseCacheEntry.response = new RestResponse(true, 200, 'Success');
@@ -34,19 +35,19 @@ describe('BitstreamFormatDataService', () => {
   const store = {
     dispatch(action: Action) {
       // Do Nothing
-    }
+    },
   } as Store<CoreState>;
 
   const requestUUIDs = ['some', 'uuid'];
 
   const objectCache = jasmine.createSpyObj('objectCache', {
-    getByHref: observableOf({ requestUUIDs })
+    getByHref: observableOf({ requestUUIDs }),
   }) as ObjectCacheService;
 
   const halEndpointService = {
     getEndpoint(linkPath: string): Observable<string> {
       return cold('a', { a: bitstreamFormatsEndpoint });
-    }
+    },
   } as HALEndpointService;
 
   const notificationsService = {} as NotificationsService;
@@ -59,7 +60,7 @@ describe('BitstreamFormatDataService', () => {
   function initTestService(halService) {
     rd = createSuccessfulRemoteDataObject({});
     rdbService = jasmine.createSpyObj('rdbService', {
-      buildFromRequestUUID: observableOf(rd)
+      buildFromRequestUUID: observableOf(rd),
     });
 
     return new BitstreamFormatDataService(
@@ -83,7 +84,7 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       service = initTestService(halEndpointService);
     }));
@@ -104,7 +105,7 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       service = initTestService(halEndpointService);
     }));
@@ -127,12 +128,11 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       service = initTestService(halEndpointService);
     }));
     it('should get the create endpoint ', () => {
-
       const result = service.getCreateEndpoint();
       const expected = cold('b', { b: bitstreamFormatsEndpoint });
 
@@ -149,7 +149,7 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       service = initTestService(halEndpointService);
     }));
@@ -161,7 +161,6 @@ describe('BitstreamFormatDataService', () => {
       const result = service.updateBitstreamFormat(updatedBistreamFormat);
 
       expect(result).toBeObservable(expected);
-
     });
   });
 
@@ -174,7 +173,7 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       service = initTestService(halEndpointService);
     }));
@@ -198,18 +197,20 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       const halService = {
         getEndpoint(linkPath: string): Observable<string> {
           return observableOf(bitstreamFormatsEndpoint);
-        }
+        },
       } as HALEndpointService;
       service = initTestService(halService);
       service.clearBitStreamFormatRequests().subscribe();
     }));
     it('should remove the bitstream format hrefs in the request service', () => {
-      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(bitstreamFormatsEndpoint);
+      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(
+        bitstreamFormatsEndpoint
+      );
     });
   });
 
@@ -222,7 +223,7 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       service = initTestService(halEndpointService);
       spyOn(store, 'dispatch');
@@ -232,7 +233,9 @@ describe('BitstreamFormatDataService', () => {
       format.uuid = 'uuid';
 
       service.selectBitstreamFormat(format);
-      expect(store.dispatch).toHaveBeenCalledWith(new BitstreamFormatsRegistrySelectAction(format));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new BitstreamFormatsRegistrySelectAction(format)
+      );
     });
   });
 
@@ -245,7 +248,7 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       service = initTestService(halEndpointService);
       spyOn(store, 'dispatch');
@@ -255,7 +258,9 @@ describe('BitstreamFormatDataService', () => {
       format.uuid = 'uuid';
 
       service.deselectBitstreamFormat(format);
-      expect(store.dispatch).toHaveBeenCalledWith(new BitstreamFormatsRegistryDeselectAction(format));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new BitstreamFormatsRegistryDeselectAction(format)
+      );
     });
   });
 
@@ -268,15 +273,16 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: cold('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       service = initTestService(halEndpointService);
       spyOn(store, 'dispatch');
-
     }));
     it('should remove all bitstreamFormats from the store', () => {
       service.deselectAllBitstreamFormats();
-      expect(store.dispatch).toHaveBeenCalledWith(new BitstreamFormatsRegistryDeselectAllAction());
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new BitstreamFormatsRegistryDeselectAllAction()
+      );
     });
   });
 
@@ -289,12 +295,12 @@ describe('BitstreamFormatDataService', () => {
         getByUUID: hot('a', { a: responseCacheEntry }),
         setStaleByUUID: observableOf(true),
         generateRequestId: 'request-id',
-        removeByHrefSubstring: {}
+        removeByHrefSubstring: {},
       });
       const halService = {
         getEndpoint(linkPath: string): Observable<string> {
           return observableOf(bitstreamFormatsEndpoint);
-        }
+        },
       } as HALEndpointService;
       service = initTestService(halService);
     }));

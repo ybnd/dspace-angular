@@ -6,21 +6,20 @@ import { ModalBeforeDismiss } from '../../../interfaces/modal-before-dismiss.int
 @Component({
   selector: 'ds-item-versions-summary-modal',
   templateUrl: './item-versions-summary-modal.component.html',
-  styleUrls: ['./item-versions-summary-modal.component.scss']
+  styleUrls: ['./item-versions-summary-modal.component.scss'],
 })
-export class ItemVersionsSummaryModalComponent implements OnInit, ModalBeforeDismiss {
-
+export class ItemVersionsSummaryModalComponent
+  implements OnInit, ModalBeforeDismiss
+{
   versionNumber: number;
   newVersionSummary: string;
   firstVersion = true;
   submitted$: BehaviorSubject<boolean>;
 
-  @Output() createVersionEvent: EventEmitter<string> = new EventEmitter<string>();
+  @Output() createVersionEvent: EventEmitter<string> =
+    new EventEmitter<string>();
 
-  constructor(
-    protected activeModal: NgbActiveModal,
-  ) {
-  }
+  constructor(protected activeModal: NgbActiveModal) {}
 
   ngOnInit() {
     this.submitted$ = new BehaviorSubject<boolean>(false);
@@ -41,5 +40,4 @@ export class ItemVersionsSummaryModalComponent implements OnInit, ModalBeforeDis
     // NOTE: the caller of this modal is responsible for closing it,
     //       e.g. after the version creation POST request completed.
   }
-
 }

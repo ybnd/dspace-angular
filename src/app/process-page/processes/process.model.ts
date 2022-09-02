@@ -1,18 +1,18 @@
-import { Bitstream } from '../../core/shared/bitstream.model';
-import { PROCESS_OUTPUT_TYPE } from '../../core/shared/process-output.resource-type';
-import { ProcessStatus } from './process-status.model';
-import { ProcessParameter } from './process-parameter.model';
-import { HALLink } from '../../core/shared/hal-link.model';
 import { autoserialize, deserialize } from 'cerialize';
-import { PROCESS } from './process.resource-type';
-import { excludeFromEquals } from '../../core/utilities/equals.decorators';
-import { ResourceType } from '../../core/shared/resource-type';
-import { link, typedObject } from '../../core/cache/builders/build-decorators';
 import { Observable } from 'rxjs';
-import { RemoteData } from '../../core/data/remote-data';
-import { SCRIPT } from '../scripts/script.resource-type';
-import { Script } from '../scripts/script.model';
+import { link, typedObject } from '../../core/cache/builders/build-decorators';
 import { CacheableObject } from '../../core/cache/cacheable-object.model';
+import { RemoteData } from '../../core/data/remote-data';
+import { Bitstream } from '../../core/shared/bitstream.model';
+import { HALLink } from '../../core/shared/hal-link.model';
+import { PROCESS_OUTPUT_TYPE } from '../../core/shared/process-output.resource-type';
+import { ResourceType } from '../../core/shared/resource-type';
+import { excludeFromEquals } from '../../core/utilities/equals.decorators';
+import { Script } from '../scripts/script.model';
+import { SCRIPT } from '../scripts/script.resource-type';
+import { ProcessParameter } from './process-parameter.model';
+import { ProcessStatus } from './process-status.model';
+import { PROCESS } from './process.resource-type';
 
 /**
  * Object representing a process
@@ -75,10 +75,10 @@ export class Process implements CacheableObject {
    */
   @deserialize
   _links: {
-    self: HALLink,
-    script: HALLink,
-    output: HALLink,
-    files: HALLink
+    self: HALLink;
+    script: HALLink;
+    output: HALLink;
+    files: HALLink;
   };
 
   /**

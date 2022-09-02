@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import {
+  COMMUNITY_PARENT_PARAMETER,
+  getCommunityCreateRoute,
+} from '../../../../community-page/community-page-routing-paths';
 import { DSpaceObjectType } from '../../../../core/shared/dspace-object-type.model';
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
 import { hasValue } from '../../../empty.util';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   DSOSelectorModalWrapperComponent,
-  SelectorActionType
+  SelectorActionType,
 } from '../dso-selector-modal-wrapper.component';
-import {
-    getCommunityCreateRoute,
-    COMMUNITY_PARENT_PARAMETER
-} from '../../../../community-page/community-page-routing-paths';
 
 /**
  * Component to wrap a button - for top communities -
@@ -25,12 +25,19 @@ import {
   styleUrls: ['./create-community-parent-selector.component.scss'],
   templateUrl: './create-community-parent-selector.component.html',
 })
-export class CreateCommunityParentSelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class CreateCommunityParentSelectorComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.COMMUNITY;
   selectorTypes = [DSpaceObjectType.COMMUNITY];
   action = SelectorActionType.CREATE;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router
+  ) {
     super(activeModal, route);
   }
 
@@ -43,7 +50,7 @@ export class CreateCommunityParentSelectorComponent extends DSOSelectorModalWrap
       navigationExtras = {
         queryParams: {
           [COMMUNITY_PARENT_PARAMETER]: dso.uuid,
-        }
+        },
       };
     }
     this.router.navigate([getCommunityCreateRoute()], navigationExtras);

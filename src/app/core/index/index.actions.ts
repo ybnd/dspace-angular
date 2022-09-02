@@ -1,6 +1,5 @@
 /* eslint-disable max-classes-per-file */
 import { Action } from '@ngrx/store';
-
 import { type } from '../../shared/ngrx/type';
 import { IndexName } from './index-name.model';
 
@@ -10,7 +9,7 @@ import { IndexName } from './index-name.model';
 export const IndexActionTypes = {
   ADD: type('dspace/core/index/ADD'),
   REMOVE_BY_VALUE: type('dspace/core/index/REMOVE_BY_VALUE'),
-  REMOVE_BY_SUBSTRING: type('dspace/core/index/REMOVE_BY_SUBSTRING')
+  REMOVE_BY_SUBSTRING: type('dspace/core/index/REMOVE_BY_SUBSTRING'),
 };
 
 /**
@@ -45,8 +44,8 @@ export class AddToIndexAction implements Action {
 export class RemoveFromIndexByValueAction implements Action {
   type = IndexActionTypes.REMOVE_BY_VALUE;
   payload: {
-    name: IndexName,
-    value: any
+    name: IndexName;
+    value: any;
   };
 
   /**
@@ -60,7 +59,6 @@ export class RemoveFromIndexByValueAction implements Action {
   constructor(name: IndexName, value: any) {
     this.payload = { name, value };
   }
-
 }
 
 /**
@@ -69,8 +67,8 @@ export class RemoveFromIndexByValueAction implements Action {
 export class RemoveFromIndexBySubstringAction implements Action {
   type = IndexActionTypes.REMOVE_BY_SUBSTRING;
   payload: {
-    name: IndexName,
-    value: string
+    name: IndexName;
+    value: string;
   };
 
   /**
@@ -84,10 +82,12 @@ export class RemoveFromIndexBySubstringAction implements Action {
   constructor(name: IndexName, value: string) {
     this.payload = { name, value };
   }
-
 }
 
 /**
  * A type to encompass all HrefIndexActions
  */
-export type IndexAction = AddToIndexAction | RemoveFromIndexByValueAction | RemoveFromIndexBySubstringAction;
+export type IndexAction =
+  | AddToIndexAction
+  | RemoveFromIndexByValueAction
+  | RemoveFromIndexBySubstringAction;

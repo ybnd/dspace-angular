@@ -1,12 +1,12 @@
 import { Component, Optional } from '@angular/core';
-import { hasValue } from '../shared/empty.util';
-import { KlaroService } from '../shared/cookies/klaro.service';
 import { environment } from '../../environments/environment';
+import { KlaroService } from '../shared/cookies/klaro.service';
+import { hasValue } from '../shared/empty.util';
 
 @Component({
   selector: 'ds-footer',
   styleUrls: ['footer.component.scss'],
-  templateUrl: 'footer.component.html'
+  templateUrl: 'footer.component.html',
 })
 export class FooterComponent {
   dateObj: number = Date.now();
@@ -18,8 +18,7 @@ export class FooterComponent {
   showPrivacyPolicy = environment.info.enablePrivacyStatement;
   showEndUserAgreement = environment.info.enableEndUserAgreement;
 
-  constructor(@Optional() private cookies: KlaroService) {
-  }
+  constructor(@Optional() private cookies: KlaroService) {}
 
   showCookieSettings() {
     if (hasValue(this.cookies)) {

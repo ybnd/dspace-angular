@@ -1,20 +1,20 @@
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { of as observableOf } from 'rxjs';
+import { BitstreamDataService } from '../../core/data/bitstream-data.service';
 import { Bitstream } from '../../core/shared/bitstream.model';
+import { MediaViewerItem } from '../../core/shared/media-viewer-item.model';
+import { MockBitstreamFormat1 } from '../../shared/mocks/item.mock';
+import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
 import { createPaginatedList } from '../../shared/testing/utils.test';
-import { of as observableOf } from 'rxjs';
-import { By } from '@angular/platform-browser';
-import { MediaViewerComponent } from './media-viewer.component';
-import { MockBitstreamFormat1 } from '../../shared/mocks/item.mock';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BitstreamDataService } from '../../core/data/bitstream-data.service';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { MediaViewerItem } from '../../core/shared/media-viewer-item.model';
+import { FileSizePipe } from '../../shared/utils/file-size-pipe';
 import { VarDirective } from '../../shared/utils/var.directive';
 import { MetadataFieldWrapperComponent } from '../field-components/metadata-field-wrapper/metadata-field-wrapper.component';
-import { FileSizePipe } from '../../shared/utils/file-size-pipe';
+import { MediaViewerComponent } from './media-viewer.component';
 
 describe('MediaViewerComponent', () => {
   let comp: MediaViewerComponent;
@@ -28,12 +28,10 @@ describe('MediaViewerComponent', () => {
     bundleName: 'ORIGINAL',
     _links: {
       self: {
-        href:
-          'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
       },
       content: {
-        href:
-          'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
       },
     },
     id: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',

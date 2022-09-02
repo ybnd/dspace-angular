@@ -1,8 +1,8 @@
 /* eslint-disable max-classes-per-file */
 import { Action } from '@ngrx/store';
 import { type } from '../ngrx/type';
-import { MenuSection } from './menu-section.model';
 import { MenuID } from './menu-id.model';
+import { MenuSection } from './menu-section.model';
 
 /**
  * For each action type in an action group, make a simple
@@ -28,7 +28,6 @@ export const MenuActionTypes = {
   DEACTIVATE_SECTION: type('dspace/menu-section/DEACTIVATE_SECTION'),
   TOGGLE_ACTIVE_SECTION: type('dspace/menu-section/TOGGLE_ACTIVE_SECTION'),
 };
-
 
 // MENU STATE ACTIONS
 /**
@@ -151,7 +150,6 @@ export class RemoveMenuSectionAction extends MenuSectionAction {
 
   constructor(menuID: MenuID, id: string) {
     super(menuID, id);
-
   }
 }
 
@@ -211,7 +209,7 @@ export class ToggleActiveMenuSectionAction extends MenuSectionAction {
 }
 
 export type MenuAction =
-  CollapseMenuAction
+  | CollapseMenuAction
   | ExpandMenuAction
   | ToggleMenuAction
   | ShowMenuAction

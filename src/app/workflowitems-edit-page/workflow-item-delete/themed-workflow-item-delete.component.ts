@@ -1,6 +1,6 @@
-import { WorkflowItemDeleteComponent } from './workflow-item-delete.component';
-import { ThemedComponent } from '../../shared/theme-support/themed.component';
 import { Component } from '@angular/core';
+import { ThemedComponent } from '../../shared/theme-support/themed.component';
+import { WorkflowItemDeleteComponent } from './workflow-item-delete.component';
 
 /**
  * Themed wrapper for WorkflowItemDeleteComponent
@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'ds-themed-workflow-item-delete',
   styleUrls: [],
-  templateUrl: './../../shared/theme-support/themed.component.html'
+  templateUrl: './../../shared/theme-support/themed.component.html',
 })
 export class ThemedWorkflowItemDeleteComponent extends ThemedComponent<WorkflowItemDeleteComponent> {
   protected getComponentName(): string {
@@ -17,7 +17,9 @@ export class ThemedWorkflowItemDeleteComponent extends ThemedComponent<WorkflowI
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/workflowitems-edit-page/workflow-item-delete/workflow-item-delete.component`);
+    return import(
+      `../../../themes/${themeName}/app/workflowitems-edit-page/workflow-item-delete/workflow-item-delete.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

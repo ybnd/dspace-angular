@@ -1,15 +1,15 @@
-import { ProfilePageMetadataFormComponent } from './profile-page-metadata-form.component';
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
-import { VarDirective } from '../../shared/utils/var.directive';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { RouterTestingModule } from '@angular/router/testing';
 import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { cloneDeep } from 'lodash';
+import { EPersonDataService } from '../../core/eperson/eperson-data.service';
 import { EPerson } from '../../core/eperson/models/eperson.model';
 import { FormBuilderService } from '../../shared/form/builder/form-builder.service';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
-import { EPersonDataService } from '../../core/eperson/eperson-data.service';
-import { cloneDeep } from 'lodash';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
+import { VarDirective } from '../../shared/utils/var.directive';
+import { ProfilePageMetadataFormComponent } from './profile-page-metadata-form.component';
 
 describe('ProfilePageMetadataFormComponent', () => {
   let component: ProfilePageMetadataFormComponent;
@@ -28,37 +28,36 @@ describe('ProfilePageMetadataFormComponent', () => {
         'eperson.firstname': [
           {
             value: 'John',
-            language: null
-          }
+            language: null,
+          },
         ],
         'eperson.lastname': [
           {
             value: 'Doe',
-            language: null
-          }
+            language: null,
+          },
         ],
         'eperson.language': [
           {
             value: 'de',
-            language: null
-          }
-        ]
-      }
+            language: null,
+          },
+        ],
+      },
     });
 
     epersonService = jasmine.createSpyObj('epersonService', {
-      update: createSuccessfulRemoteDataObject$(user)
+      update: createSuccessfulRemoteDataObject$(user),
     });
     notificationsService = jasmine.createSpyObj('notificationsService', {
       success: {},
       error: {},
-      warning: {}
+      warning: {},
     });
     translate = {
       instant: () => 'translated',
-      onLangChange: new EventEmitter()
+      onLangChange: new EventEmitter(),
     };
-
   }
 
   beforeEach(waitForAsync(() => {
@@ -70,9 +69,9 @@ describe('ProfilePageMetadataFormComponent', () => {
         { provide: EPersonDataService, useValue: epersonService },
         { provide: TranslateService, useValue: translate },
         { provide: NotificationsService, useValue: notificationsService },
-        FormBuilderService
+        FormBuilderService,
       ],
-      schemas: [NO_ERRORS_SCHEMA]
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -83,7 +82,7 @@ describe('ProfilePageMetadataFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should automatically fill in the user\'s email in the correct field', () => {
+  it("should automatically fill in the user's email in the correct field", () => {
     expect(component.formGroup.get('email').value).toEqual(user.email);
   });
 
@@ -133,6 +132,8 @@ describe('ProfilePageMetadataFormComponent', () => {
   });
 
   function setModelValue(id: string, value: string) {
-    component.formModel.filter((model) => model.id === id).forEach((model) => (model as any).value = value);
+    component.formModel
+      .filter((model) => model.id === id)
+      .forEach((model) => ((model as any).value = value));
   }
 });

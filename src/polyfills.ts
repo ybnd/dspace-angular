@@ -46,15 +46,12 @@
  * APPLICATION IMPORTS
  */
 
-import 'core-js/es';
-import 'core-js/features/reflect';
-
-import 'zone.js';  // Included with Angular CLI.
-
-import 'reflect-metadata';
-
 /******************************************************************
  * Load `$localize` - not used for i18n in this project, we use ngx-translate.
  * It's used for localization of dates, numbers, currencies, etc.
  */
 import '@angular/localize/init';
+import 'core-js/es';
+import 'core-js/features/reflect';
+import 'reflect-metadata';
+import 'zone.js'; // Included with Angular CLI.

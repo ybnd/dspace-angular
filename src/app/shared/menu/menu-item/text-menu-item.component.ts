@@ -1,7 +1,7 @@
-import { Component, Inject, Input } from '@angular/core';
-import { TextMenuItemModel } from './models/text.model';
-import { rendersMenuItemForType } from '../menu-item.decorator';
+import { Component, Inject } from '@angular/core';
 import { MenuItemType } from '../menu-item-type.model';
+import { rendersMenuItemForType } from '../menu-item.decorator';
+import { TextMenuItemModel } from './models/text.model';
 
 /**
  * Component that renders a menu section of type TEXT

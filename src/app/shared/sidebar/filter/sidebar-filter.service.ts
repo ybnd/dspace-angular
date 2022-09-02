@@ -1,23 +1,25 @@
 import { Injectable } from '@angular/core';
-import {
-  FilterCollapseAction,
-  FilterExpandAction, FilterInitializeAction,
-  FilterToggleAction
-} from './sidebar-filter.actions';
 import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
-import { SidebarFiltersState, SidebarFilterState } from './sidebar-filter.reducer';
 import { Observable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { hasValue } from '../../empty.util';
+import {
+  FilterCollapseAction,
+  FilterExpandAction,
+  FilterInitializeAction,
+  FilterToggleAction,
+} from './sidebar-filter.actions';
+import {
+  SidebarFiltersState,
+  SidebarFilterState,
+} from './sidebar-filter.reducer';
 
 /**
  * Service that performs all actions that have to do with sidebar filters like collapsing or expanding them.
  */
 @Injectable()
 export class SidebarFilterService {
-
-  constructor(private store: Store<SidebarFiltersState>) {
-  }
+  constructor(private store: Store<SidebarFiltersState>) {}
 
   /**
    * Dispatches an initialize action to the store for a given filter
@@ -70,16 +72,19 @@ export class SidebarFilterService {
       distinctUntilChanged()
     );
   }
-
 }
 
 const filterStateSelector = (state: SidebarFiltersState) => state.sidebarFilter;
 
-function filterByNameSelector(name: string): MemoizedSelector<SidebarFiltersState, SidebarFilterState> {
+function filterByNameSelector(
+  name: string
+): MemoizedSelector<SidebarFiltersState, SidebarFilterState> {
   return keySelector<SidebarFilterState>(name);
 }
 
-export function keySelector<T>(key: string): MemoizedSelector<SidebarFiltersState, T> {
+export function keySelector<T>(
+  key: string
+): MemoizedSelector<SidebarFiltersState, T> {
   return createSelector(filterStateSelector, (state: SidebarFilterState) => {
     if (hasValue(state)) {
       return state[key];

@@ -11,13 +11,14 @@ import { PageErrorComponent } from './page-error.component';
   templateUrl: '../shared/theme-support/themed.component.html',
 })
 export class ThemedPageErrorComponent extends ThemedComponent<PageErrorComponent> {
-
   protected getComponentName(): string {
     return 'PageErrorComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/page-error/page-error.component`);
+    return import(
+      `../../themes/${themeName}/app/page-error/page-error.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

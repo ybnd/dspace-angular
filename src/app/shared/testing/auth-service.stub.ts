@@ -1,26 +1,25 @@
 import { Observable, of as observableOf } from 'rxjs';
 import { AuthStatus } from '../../core/auth/models/auth-status.model';
 import { AuthTokenInfo } from '../../core/auth/models/auth-token-info.model';
-import { EPersonMock } from './eperson.mock';
-import { EPerson } from '../../core/eperson/models/eperson.model';
-import { createSuccessfulRemoteDataObject$ } from '../remote-data.utils';
 import { AuthMethod } from '../../core/auth/models/auth.method';
+import { EPerson } from '../../core/eperson/models/eperson.model';
 import { hasValue } from '../empty.util';
+import { createSuccessfulRemoteDataObject$ } from '../remote-data.utils';
+import { EPersonMock } from './eperson.mock';
 
 export const authMethodsMock = [
   new AuthMethod('password'),
-  new AuthMethod('shibboleth', 'dspace.test/shibboleth')
+  new AuthMethod('shibboleth', 'dspace.test/shibboleth'),
 ];
 
 export class AuthServiceStub {
-
   token: AuthTokenInfo = new AuthTokenInfo('token_test');
   impersonating: string;
   private _tokenExpired = false;
   private redirectUrl;
 
   constructor() {
-    this.token.expires = Date.now() + (1000 * 60 * 60);
+    this.token.expires = Date.now() + 1000 * 60 * 60;
   }
 
   public authenticate(user: string, password: string): Observable<AuthStatus> {
@@ -33,7 +32,7 @@ export class AuthServiceStub {
       return observableOf(authStatus);
     } else {
       console.log('error');
-      throw (new Error('Message Error test'));
+      throw new Error('Message Error test');
     }
   }
 
@@ -41,7 +40,7 @@ export class AuthServiceStub {
     if (token.accessToken === 'token_test') {
       return observableOf(EPersonMock._links.self.href);
     } else {
-      throw (new Error('Message Error test'));
+      throw new Error('Message Error test');
     }
   }
 
@@ -91,7 +90,9 @@ export class AuthServiceStub {
     return observableOf(false);
   }
 
-  public refreshAuthenticationToken(token: AuthTokenInfo): Observable<AuthTokenInfo> {
+  public refreshAuthenticationToken(
+    token: AuthTokenInfo
+  ): Observable<AuthTokenInfo> {
     return observableOf(this.token);
   }
 

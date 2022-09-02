@@ -3,28 +3,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject } from 'rxjs';
 import { RemoteData } from '../../core/data/remote-data';
-import { Item } from '../../core/shared/item.model';
-import {
-  DSOSelectorModalWrapperComponent
-} from '../../shared/dso-selector/modal-wrappers/dso-selector-modal-wrapper.component';
-import { getItemPageRoute } from '../../item-page/item-page-routing-paths';
 import { EPerson } from '../../core/eperson/models/eperson.model';
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
+import { Item } from '../../core/shared/item.model';
+import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { ViewMode } from '../../core/shared/view-mode.model';
-import { ProfileClaimService } from '../profile-claim/profile-claim.service';
+import { getItemPageRoute } from '../../item-page/item-page-routing-paths';
+import { DSOSelectorModalWrapperComponent } from '../../shared/dso-selector/modal-wrappers/dso-selector-modal-wrapper.component';
 import { CollectionElementLinkType } from '../../shared/object-collection/collection-element-link.type';
 import { SearchObjects } from '../../shared/search/models/search-objects.model';
-import { getFirstCompletedRemoteData } from '../../core/shared/operators';
+import { ProfileClaimService } from '../profile-claim/profile-claim.service';
 
 /**
  * Component representing a modal that show a list of suggested profile item to claim
  */
 @Component({
   selector: 'ds-profile-claim-item-modal',
-  templateUrl: './profile-claim-item-modal.component.html'
+  templateUrl: './profile-claim-item-modal.component.html',
 })
-export class ProfileClaimItemModalComponent extends DSOSelectorModalWrapperComponent implements OnInit {
-
+export class ProfileClaimItemModalComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   /**
    * The current page's DSO
    */
@@ -33,7 +33,8 @@ export class ProfileClaimItemModalComponent extends DSOSelectorModalWrapperCompo
   /**
    * List of suggested profiles, if any
    */
-  listEntries$: BehaviorSubject<RemoteData<SearchObjects<DSpaceObject>>> = new BehaviorSubject(null);
+  listEntries$: BehaviorSubject<RemoteData<SearchObjects<DSpaceObject>>> =
+    new BehaviorSubject(null);
 
   /**
    * The view mode of the listed objects
@@ -55,8 +56,12 @@ export class ProfileClaimItemModalComponent extends DSOSelectorModalWrapperCompo
    */
   @Output() create: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router,
-              private profileClaimService: ProfileClaimService) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router,
+    private profileClaimService: ProfileClaimService
+  ) {
     super(activeModal, route);
   }
 
@@ -64,11 +69,12 @@ export class ProfileClaimItemModalComponent extends DSOSelectorModalWrapperCompo
    * Retrieve suggested profiles, if any
    */
   ngOnInit(): void {
-    this.profileClaimService.searchForSuggestions(this.dso as EPerson).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe(
-      (result: RemoteData<SearchObjects<DSpaceObject>>) => this.listEntries$.next(result)
-    );
+    this.profileClaimService
+      .searchForSuggestions(this.dso as EPerson)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((result: RemoteData<SearchObjects<DSpaceObject>>) =>
+        this.listEntries$.next(result)
+      );
   }
 
   /**
@@ -104,5 +110,4 @@ export class ProfileClaimItemModalComponent extends DSOSelectorModalWrapperCompo
     this.create.emit();
     this.close();
   }
-
 }

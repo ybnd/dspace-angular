@@ -1,21 +1,21 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { hasValue } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { dataService } from '../cache/builders/build-decorators';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
+import { CoreState } from '../core-state.model';
 import { MetadataSchema } from '../metadata/metadata-schema.model';
 import { METADATA_SCHEMA } from '../metadata/metadata-schema.resource-type';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { DataService } from './data.service';
 import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
-import { RequestService } from './request.service';
-import { Observable } from 'rxjs';
-import { hasValue } from '../../shared/empty.util';
-import { tap } from 'rxjs/operators';
 import { RemoteData } from './remote-data';
-import { CoreState } from '../core-state.model';
+import { RequestService } from './request.service';
 
 /**
  * A service responsible for fetching/sending data from/to the REST API on the metadataschemas endpoint
@@ -33,7 +33,8 @@ export class MetadataSchemaDataService extends DataService<MetadataSchema> {
     protected objectCache: ObjectCacheService,
     protected comparator: DefaultChangeAnalyzer<MetadataSchema>,
     protected http: HttpClient,
-    protected notificationsService: NotificationsService) {
+    protected notificationsService: NotificationsService
+  ) {
     super();
   }
 
@@ -45,7 +46,9 @@ export class MetadataSchemaDataService extends DataService<MetadataSchema> {
    *  - On update, a PutRequest is used
    * @param schema    The MetadataSchema to create or update
    */
-  createOrUpdateMetadataSchema(schema: MetadataSchema): Observable<RemoteData<MetadataSchema>> {
+  createOrUpdateMetadataSchema(
+    schema: MetadataSchema
+  ): Observable<RemoteData<MetadataSchema>> {
     const isUpdate = hasValue(schema.id);
 
     if (isUpdate) {
@@ -64,5 +67,4 @@ export class MetadataSchemaDataService extends DataService<MetadataSchema> {
       tap((href: string) => this.requestService.removeByHrefSubstring(href))
     );
   }
-
 }

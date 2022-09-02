@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-
-import { SearchConfigurationOption } from '../search-switch-configuration/search-configuration-option.model';
 import { Observable } from 'rxjs';
-import { PaginatedSearchOptions } from '../models/paginated-search-options.model';
 import { SortOptions } from '../../../core/cache/models/sort-options.model';
 import { ViewMode } from '../../../core/shared/view-mode.model';
+import { PaginatedSearchOptions } from '../models/paginated-search-options.model';
+import { SearchConfigurationOption } from '../search-switch-configuration/search-configuration-option.model';
 
 /**
  * This component renders a simple item page.
@@ -22,7 +21,6 @@ import { ViewMode } from '../../../core/shared/view-mode.model';
  * Component representing the sidebar on the search page
  */
 export class SearchSidebarComponent {
-
   /**
    * The configuration to use for the search options
    */
@@ -86,11 +84,12 @@ export class SearchSidebarComponent {
   /**
    * Emits event when the user select a new configuration
    */
-  @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> = new EventEmitter<SearchConfigurationOption>();
+  @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> =
+    new EventEmitter<SearchConfigurationOption>();
 
   /**
    * Emits event when the user select a new view mode
    */
-  @Output() changeViewMode: EventEmitter<ViewMode> = new EventEmitter<ViewMode>();
-
+  @Output() changeViewMode: EventEmitter<ViewMode> =
+    new EventEmitter<ViewMode>();
 }

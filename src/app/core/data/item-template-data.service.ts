@@ -1,29 +1,29 @@
 /* eslint-disable max-classes-per-file */
-import { Injectable } from '@angular/core';
-import { ItemDataService } from './item-data.service';
-import { UpdateDataService } from './update-data.service';
-import { Item } from '../shared/item.model';
-import { RestRequestMethod } from './rest-request-method';
-import { RemoteData } from './remote-data';
-import { Observable } from 'rxjs';
-import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
-import { RequestService } from './request.service';
-import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
-import { Store } from '@ngrx/store';
-import { ObjectCacheService } from '../cache/object-cache.service';
-import { HALEndpointService } from '../shared/hal-endpoint.service';
-import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { HttpClient } from '@angular/common/http';
-import { BrowseService } from '../browse/browse.service';
-import { CollectionDataService } from './collection-data.service';
-import { map, switchMap } from 'rxjs/operators';
-import { BundleDataService } from './bundle-data.service';
-import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
-import { NoContent } from '../shared/NoContent.model';
-import { hasValue } from '../../shared/empty.util';
+import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Operation } from 'fast-json-patch';
-import { getFirstCompletedRemoteData } from '../shared/operators';
+import { Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
+import { hasValue } from '../../shared/empty.util';
+import { NotificationsService } from '../../shared/notifications/notifications.service';
+import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
+import { BrowseService } from '../browse/browse.service';
+import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
+import { ObjectCacheService } from '../cache/object-cache.service';
 import { CoreState } from '../core-state.model';
+import { HALEndpointService } from '../shared/hal-endpoint.service';
+import { Item } from '../shared/item.model';
+import { NoContent } from '../shared/NoContent.model';
+import { getFirstCompletedRemoteData } from '../shared/operators';
+import { BundleDataService } from './bundle-data.service';
+import { CollectionDataService } from './collection-data.service';
+import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
+import { ItemDataService } from './item-data.service';
+import { RemoteData } from './remote-data';
+import { RequestService } from './request.service';
+import { RestRequestMethod } from './rest-request-method';
+import { UpdateDataService } from './update-data.service';
 
 /**
  * A custom implementation of the ItemDataService, but for collection item templates
@@ -54,8 +54,20 @@ class DataServiceImpl extends ItemDataService {
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<Item>,
     protected bundleService: BundleDataService,
-    protected collectionService: CollectionDataService) {
-    super(requestService, rdbService, store, bs, objectCache, halService, notificationsService, http, comparator, bundleService);
+    protected collectionService: CollectionDataService
+  ) {
+    super(
+      requestService,
+      rdbService,
+      store,
+      bs,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator,
+      bundleService
+    );
   }
 
   /**
@@ -63,9 +75,13 @@ class DataServiceImpl extends ItemDataService {
    * @param collectionID  The ID of the collection to base the endpoint on
    */
   public getCollectionEndpoint(collectionID: string): Observable<string> {
-    return this.collectionService.getIDHrefObs(collectionID).pipe(
-      switchMap((href: string) => this.halService.getEndpoint(this.collectionLinkPath, href))
-    );
+    return this.collectionService
+      .getIDHrefObs(collectionID)
+      .pipe(
+        switchMap((href: string) =>
+          this.halService.getEndpoint(this.collectionLinkPath, href)
+        )
+      );
   }
 
   /**
@@ -116,9 +132,19 @@ class DataServiceImpl extends ItemDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByCollectionID(collectionID: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Item>[]): Observable<RemoteData<Item>> {
+  findByCollectionID(
+    collectionID: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Item>[]
+  ): Observable<RemoteData<Item>> {
     this.setCollectionEndpoint(collectionID);
-    return super.findById(collectionID, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return super.findById(
+      collectionID,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**
@@ -126,7 +152,10 @@ class DataServiceImpl extends ItemDataService {
    * @param item
    * @param collectionID
    */
-  createTemplate(item: Item, collectionID: string): Observable<RemoteData<Item>> {
+  createTemplate(
+    item: Item,
+    collectionID: string
+  ): Observable<RemoteData<Item>> {
     this.setCollectionEndpoint(collectionID);
     return super.create(item);
   }
@@ -140,7 +169,10 @@ class DataServiceImpl extends ItemDataService {
     this.setRegularEndpoint();
     return super.delete(item.uuid).pipe(
       getFirstCompletedRemoteData(),
-      map((response: RemoteData<NoContent>) => hasValue(response) && response.hasSucceeded)
+      map(
+        (response: RemoteData<NoContent>) =>
+          hasValue(response) && response.hasSucceeded
+      )
     );
   }
 }
@@ -166,8 +198,21 @@ export class ItemTemplateDataService implements UpdateDataService<Item> {
     protected http: HttpClient,
     protected comparator: DSOChangeAnalyzer<Item>,
     protected bundleService: BundleDataService,
-    protected collectionService: CollectionDataService) {
-    this.dataService = new DataServiceImpl(requestService, rdbService, store, bs, objectCache, halService, notificationsService, http, comparator, bundleService, collectionService);
+    protected collectionService: CollectionDataService
+  ) {
+    this.dataService = new DataServiceImpl(
+      requestService,
+      rdbService,
+      store,
+      bs,
+      objectCache,
+      halService,
+      notificationsService,
+      http,
+      comparator,
+      bundleService,
+      collectionService
+    );
   }
 
   /**
@@ -198,8 +243,18 @@ export class ItemTemplateDataService implements UpdateDataService<Item> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByCollectionID(collectionID: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Item>[]): Observable<RemoteData<Item>> {
-    return this.dataService.findByCollectionID(collectionID, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByCollectionID(
+    collectionID: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Item>[]
+  ): Observable<RemoteData<Item>> {
+    return this.dataService.findByCollectionID(
+      collectionID,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow
+    );
   }
 
   /**

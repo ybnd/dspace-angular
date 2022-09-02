@@ -1,33 +1,31 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { SearchHierarchyFilterComponent } from './search-hierarchy-filter.component';
-import { SearchService } from '../../../../../core/shared/search/search.service';
-import {
-  SearchFilterService,
-  FILTER_CONFIG,
-  IN_PLACE_SEARCH
-} from '../../../../../core/shared/search/search-filter.service';
-import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
-import { SearchFiltersComponent } from '../../search-filters.component';
-import { Router } from '@angular/router';
-import { RouterStub } from '../../../../testing/router.stub';
-import { SearchServiceStub } from '../../../../testing/search-service.stub';
-import { of as observableOf, Observable } from 'rxjs';
-import { SEARCH_CONFIG_SERVICE } from '../../../../../my-dspace-page/my-dspace-page.component';
-import { SearchConfigurationServiceStub } from '../../../../testing/search-configuration-service.stub';
-import { SearchFilterConfig } from '../../../models/search-filter-config.model';
-import { TranslateModule } from '@ngx-translate/core';
-import {
-  FilterInputSuggestionsComponent
-} from '../../../../input-suggestions/filter-suggestions/filter-input-suggestions.component';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NO_ERRORS_SCHEMA, ChangeDetectionStrategy } from '@angular/core';
+import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+import { Observable, of as observableOf } from 'rxjs';
+import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
+import { PaginatedList } from '../../../../../core/data/paginated-list.model';
+import { RemoteData } from '../../../../../core/data/remote-data';
+import {
+  FILTER_CONFIG,
+  IN_PLACE_SEARCH,
+  SearchFilterService,
+} from '../../../../../core/shared/search/search-filter.service';
+import { SearchService } from '../../../../../core/shared/search/search.service';
+import { SEARCH_CONFIG_SERVICE } from '../../../../../my-dspace-page/my-dspace-page.component';
+import { FilterInputSuggestionsComponent } from '../../../../input-suggestions/filter-suggestions/filter-input-suggestions.component';
 import { createSuccessfulRemoteDataObject$ } from '../../../../remote-data.utils';
+import { RouterStub } from '../../../../testing/router.stub';
+import { SearchConfigurationServiceStub } from '../../../../testing/search-configuration-service.stub';
+import { SearchServiceStub } from '../../../../testing/search-service.stub';
+import { createPaginatedList } from '../../../../testing/utils.test';
 import { FacetValue } from '../../../models/facet-value.model';
 import { FilterType } from '../../../models/filter-type.model';
-import { createPaginatedList } from '../../../../testing/utils.test';
-import { RemoteData } from '../../../../../core/data/remote-data';
-import { PaginatedList } from '../../../../../core/data/paginated-list.model';
+import { SearchFilterConfig } from '../../../models/search-filter-config.model';
+import { SearchFiltersComponent } from '../../search-filters.component';
+import { SearchHierarchyFilterComponent } from './search-hierarchy-filter.component';
 
 describe('SearchHierarchyFilterComponent', () => {
   let comp: SearchHierarchyFilterComponent;
@@ -45,42 +43,48 @@ describe('SearchHierarchyFilterComponent', () => {
       count: 52,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }, {
+          href: '',
+        },
+      },
+    },
+    {
       label: value2,
       value: value2,
       count: 20,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }, {
+          href: '',
+        },
+      },
+    },
+    {
       label: value3,
       value: value3,
       count: 5,
       _links: {
         self: {
-          href: ''
+          href: '',
         },
         search: {
-          href: ''
-        }
-      }
-    }
+          href: '',
+        },
+      },
+    },
   ];
-  const mockValues = createSuccessfulRemoteDataObject$(createPaginatedList(values));
+  const mockValues = createSuccessfulRemoteDataObject$(
+    createPaginatedList(values)
+  );
 
   const searchFilterServiceStub = {
-    getSelectedValuesForFilter(_filterConfig: SearchFilterConfig): Observable<string[]> {
+    getSelectedValuesForFilter(
+      _filterConfig: SearchFilterConfig
+    ): Observable<string[]> {
       return observableOf(values.map((value: FacetValue) => value.value));
     },
     getPage(_paramName: string): Observable<number> {
@@ -88,13 +92,15 @@ describe('SearchHierarchyFilterComponent', () => {
     },
     resetPage(_filterName: string): void {
       // empty
-    }
+    },
   };
 
   const remoteDataBuildServiceStub = {
-    aggregate(_input: Observable<RemoteData<FacetValue>>[]): Observable<RemoteData<PaginatedList<FacetValue>[]>> {
+    aggregate(
+      _input: Observable<RemoteData<FacetValue>>[]
+    ): Observable<RemoteData<PaginatedList<FacetValue>[]>> {
       return createSuccessfulRemoteDataObject$([createPaginatedList(values)]);
-    }
+    },
   };
 
   beforeEach(async () => {
@@ -103,30 +109,40 @@ describe('SearchHierarchyFilterComponent', () => {
       declarations: [
         SearchHierarchyFilterComponent,
         SearchFiltersComponent,
-        FilterInputSuggestionsComponent
+        FilterInputSuggestionsComponent,
       ],
       providers: [
         { provide: SearchService, useValue: new SearchServiceStub() },
         { provide: SearchFilterService, useValue: searchFilterServiceStub },
-        { provide: RemoteDataBuildService, useValue: remoteDataBuildServiceStub },
+        {
+          provide: RemoteDataBuildService,
+          useValue: remoteDataBuildServiceStub,
+        },
         { provide: Router, useValue: new RouterStub() },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: IN_PLACE_SEARCH, useValue: false },
-        { provide: FILTER_CONFIG, useValue: new SearchFilterConfig() }
+        { provide: FILTER_CONFIG, useValue: new SearchFilterConfig() },
       ],
-      schemas: [NO_ERRORS_SCHEMA]
-    }).overrideComponent(SearchHierarchyFilterComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default }
-    }).compileComponents();
-  })
-  ;
-  const mockFilterConfig: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-    name: 'filterName1',
-    filterType: FilterType.text,
-    hasFacets: false,
-    isOpenByDefault: false,
-    pageSize: 2
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(SearchHierarchyFilterComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   });
+  const mockFilterConfig: SearchFilterConfig = Object.assign(
+    new SearchFilterConfig(),
+    {
+      name: 'filterName1',
+      filterType: FilterType.text,
+      hasFacets: false,
+      isOpenByDefault: false,
+      pageSize: 2,
+    }
+  );
 
   beforeEach(async () => {
     fixture = TestBed.createComponent(SearchHierarchyFilterComponent);
@@ -140,14 +156,26 @@ describe('SearchHierarchyFilterComponent', () => {
   });
 
   it('should navigate to the correct filter with the query operator', () => {
-    expect((comp as any).searchService.getFacetValuesFor).toHaveBeenCalledWith(comp.filterConfig, 0, {});
+    expect((comp as any).searchService.getFacetValuesFor).toHaveBeenCalledWith(
+      comp.filterConfig,
+      0,
+      {}
+    );
 
     const searchQuery = 'MARVEL';
     comp.onSubmit(searchQuery);
 
-    expect(router.navigate).toHaveBeenCalledWith(['', 'search'], Object({
-      queryParams: Object({ [mockFilterConfig.paramName]: [...values.map((value: FacetValue) => `${value.value},equals`), `${searchQuery},query`] }),
-      queryParamsHandling: 'merge'
-    }));
+    expect(router.navigate).toHaveBeenCalledWith(
+      ['', 'search'],
+      Object({
+        queryParams: Object({
+          [mockFilterConfig.paramName]: [
+            ...values.map((value: FacetValue) => `${value.value},equals`),
+            `${searchQuery},query`,
+          ],
+        }),
+        queryParamsHandling: 'merge',
+      })
+    );
   });
 });

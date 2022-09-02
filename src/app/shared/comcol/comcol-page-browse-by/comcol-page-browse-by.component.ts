@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { getCommunityPageRoute } from '../../../community-page/community-page-routing-paths';
 import { getCollectionPageRoute } from '../../../collection-page/collection-page-routing-paths';
-import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
-import { PaginatedList } from '../../../core/data/paginated-list.model';
-import { BrowseDefinition } from '../../../core/shared/browse-definition.model';
-import { RemoteData } from '../../../core/data/remote-data';
+import { getCommunityPageRoute } from '../../../community-page/community-page-routing-paths';
 import { BrowseService } from '../../../core/browse/browse.service';
+import { PaginatedList } from '../../../core/data/paginated-list.model';
+import { RemoteData } from '../../../core/data/remote-data';
+import { BrowseDefinition } from '../../../core/shared/browse-definition.model';
+import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
 
 export interface ComColPageNavOption {
   id: string;
@@ -24,7 +24,7 @@ export interface ComColPageNavOption {
 @Component({
   selector: 'ds-comcol-page-browse-by',
   styleUrls: ['./comcol-page-browse-by.component.scss'],
-  templateUrl: './comcol-page-browse-by.component.html'
+  templateUrl: './comcol-page-browse-by.component.html',
 })
 export class ComcolPageBrowseByComponent implements OnInit {
   /**
@@ -41,37 +41,46 @@ export class ComcolPageBrowseByComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private browseService: BrowseService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.browseService.getBrowseDefinitions()
+    this.browseService
+      .getBrowseDefinitions()
       .pipe(getFirstCompletedRemoteData<PaginatedList<BrowseDefinition>>())
-      .subscribe((browseDefListRD: RemoteData<PaginatedList<BrowseDefinition>>) => {
-        if (browseDefListRD.hasSucceeded) {
-          this.allOptions = browseDefListRD.payload.page
-            .map((config: BrowseDefinition) => ({
-              id: config.id,
-              label: `browse.comcol.by.${config.id}`,
-              routerLink: `/browse/${config.id}`,
-              params: { scope: this.id }
-            }));
+      .subscribe(
+        (browseDefListRD: RemoteData<PaginatedList<BrowseDefinition>>) => {
+          if (browseDefListRD.hasSucceeded) {
+            this.allOptions = browseDefListRD.payload.page.map(
+              (config: BrowseDefinition) => ({
+                id: config.id,
+                label: `browse.comcol.by.${config.id}`,
+                routerLink: `/browse/${config.id}`,
+                params: { scope: this.id },
+              })
+            );
 
-          if (this.contentType === 'collection') {
-            this.allOptions = [{
-              id: this.id,
-              label: 'collection.page.browse.recent.head',
-              routerLink: getCollectionPageRoute(this.id)
-            }, ...this.allOptions];
-          } else if (this.contentType === 'community') {
-            this.allOptions = [{
-              id: this.id,
-              label: 'community.all-lists.head',
-              routerLink: getCommunityPageRoute(this.id)
-            }, ...this.allOptions];
+            if (this.contentType === 'collection') {
+              this.allOptions = [
+                {
+                  id: this.id,
+                  label: 'collection.page.browse.recent.head',
+                  routerLink: getCollectionPageRoute(this.id),
+                },
+                ...this.allOptions,
+              ];
+            } else if (this.contentType === 'community') {
+              this.allOptions = [
+                {
+                  id: this.id,
+                  label: 'community.all-lists.head',
+                  routerLink: getCommunityPageRoute(this.id),
+                },
+                ...this.allOptions,
+              ];
+            }
           }
         }
-      });
+      );
 
     this.currentOptionId$ = this.route.params.pipe(
       map((params: Params) => params.id)
@@ -79,9 +88,12 @@ export class ComcolPageBrowseByComponent implements OnInit {
   }
 
   onSelectChange(newId: string) {
-    const selectedOption = this.allOptions
-      .find((option: ComColPageNavOption) => option.id === newId);
+    const selectedOption = this.allOptions.find(
+      (option: ComColPageNavOption) => option.id === newId
+    );
 
-    this.router.navigate([selectedOption.routerLink], { queryParams: selectedOption.params });
+    this.router.navigate([selectedOption.routerLink], {
+      queryParams: selectedOption.params,
+    });
   }
 }
