@@ -307,6 +307,7 @@ function initCache() {
       max: environment.cache.serverSide.max || 10000,                            // 10000 items in cache maximum
       maxSize: environment.cache.serverSide.maxSize || 1 * 1000 * 1000 * 1000,   // max 1GB memory
       ttl: environment.cache.serverSide.timeToLive || 15 * 60 * 1000,            // 1 week
+      sizeCalculation: (value) => Buffer.byteLength(value, 'utf8'),
       allowStale: true // If object is found to be stale, return stale value before deleting
     });
   }
