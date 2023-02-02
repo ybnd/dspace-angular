@@ -28,6 +28,7 @@ import * as expressStaticGzip from 'express-static-gzip';
 
 import axios from 'axios';
 import LRU from 'lru-cache';
+import isbot from 'isbot';
 import { createCertificate } from 'pem';
 import { createServer } from 'https';
 import { json } from 'body-parser';
@@ -303,8 +304,9 @@ function initCache() {
     // Initialize a new "least-recently-used" item cache (where least recently used items are removed first)
     // See https://www.npmjs.com/package/lru-cache
     cache = new LRU( {
-      max: environment.cache.serverSide.max || 100,            // 100 items in cache maximum
-      ttl: environment.cache.serverSide.timeToLive || 15 * 60 * 1000, // 15 minute cache
+      max: environment.cache.serverSide.max || 10000,                            // 10000 items in cache maximum
+      maxSize: environment.cache.serverSide.maxSize || 1 * 1000 * 1000 * 1000,   // max 1GB memory
+      ttl: environment.cache.serverSide.timeToLive || 15 * 60 * 1000,            // 1 week
       allowStale: true // If object is found to be stale, return stale value before deleting
     });
   }
@@ -330,7 +332,7 @@ function cacheCheck(req, res, next) {
   // Only check cache if cache enabled & NOT authenticated.
   // NOTE: Authenticated users cannot use the SSR cache. Cached pages only show data available to anonymous users.
   // Only public pages can currently be cached, as the cached data is not user-specific.
-  if (cacheEnabled() && !isUserAuthenticated(req)) {
+  if (cacheEnabled() && isbot(req.get('user-agent'))) {
     const key = getCacheKey(req);
 
     // Check if this page is in our cache

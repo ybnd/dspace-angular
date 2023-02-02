@@ -59,7 +59,8 @@ export const environment: BuildConfig = {
     // In-memory cache of server-side rendered pages. Disabled in test environment (max=0)
     serverSide: {
       max: 0,
-      timeToLive: 15 * 60 * 1000, // 15 minutes
+      maxSize: 0,
+      timeToLive: 0,
     }
   },
 

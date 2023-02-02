@@ -77,9 +77,11 @@ export class DefaultAppConfig implements AppConfig {
     // In-memory cache of server-side rendered content
     serverSide: {
       // Maximum number of pages (rendered via SSR) to cache. Set to zero to disable server side caching.
-      max: 100,
+      max: 10000,
+      // Maximum amount of memory to use for the cache (in bytes)
+      maxSize: 1 * 1000 * 1000 * 1000,  // 1 GB
       // Amount of time after which cached pages are considered stale (in ms)
-      timeToLive: 15 * 60 * 1000 // 15 minutes
+      timeToLive: 1 * 7 * 24 * 60 * 60 * 1000 // one week
     }
   };
 
