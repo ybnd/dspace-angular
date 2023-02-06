@@ -1,4 +1,4 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpParams, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
 import { Observable } from 'rxjs';
@@ -33,8 +33,15 @@ export class SsrRestUrlInterceptor implements HttpInterceptor {
     if (this.from !== this.to && httpRequest.url.startsWith(this.from)) {
       console.log(`SSR replace ${this.from} with ${this.to}`);
       const url = httpRequest.url.replace(this.from, this.to);
+
+      const params = new HttpParams();
+      for (const key of httpRequest.params.keys()) {
+        const value = httpRequest.params.get(key);
+        params.set(key, value.replace(this.from, this.to));
+      }
+
       console.log(`SSR request after ${url}`);
-      return next.handle(httpRequest.clone({ url }));
+      return next.handle(httpRequest.clone({ url, params }));
     }
     return next.handle(httpRequest);
   }
