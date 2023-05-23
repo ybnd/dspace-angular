@@ -13,6 +13,9 @@
     "eslint-plugin-simple-import-sort",
     "eslint-plugin-import-newlines"
   ],
+  "extends": [
+    "prettier"
+  ],
   "overrides": [
     {
       "files": [
@@ -34,13 +37,6 @@
         "plugin:rxjs/recommended"
       ],
       "rules": {
-        "indent": [
-          "error",
-          2,
-          {
-            "SwitchCase": 1
-          }
-        ],
         "max-classes-per-file": [
           "error",
           1
@@ -86,13 +82,6 @@
           }
         ],
         "curly": "error",
-        "brace-style": [
-          "error",
-          "1tbs",
-          {
-            "allowSingleLine": true
-          }
-        ],
         "eqeqeq": [
           "error",
           "always",
@@ -109,8 +98,6 @@
         "no-redeclare": "error",
         "no-eval": "error",
         "no-fallthrough": "error",
-        "no-trailing-spaces": "error",
-        "space-infix-ops": "error",
         "keyword-spacing": "error",
         "no-var": "error",
         "no-unused-expressions": [
@@ -171,7 +158,6 @@
             "allowTemplateLiterals": true
           }
         ],
-        "@typescript-eslint/semi": "error",
         "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/dot-notation": "error",
         "@typescript-eslint/consistent-type-definitions": "error",
@@ -194,7 +180,6 @@
             ]
           }
         ],
-        "@typescript-eslint/type-annotation-spacing": "error",
         "@typescript-eslint/unified-signatures": "error",
         "@typescript-eslint/ban-types": "error",
         "@typescript-eslint/no-floating-promises": "warn",
@@ -224,14 +209,6 @@
         "import/no-duplicates": "error",
         "import/no-deprecated": "warn",
         "import/no-namespace": "error",
-        "import-newlines/enforce": [
-          "error",
-          {
-            "items": 1,
-            "semi": true,
-            "forceSingleLine": true
-          }
-        ],
 
         "unused-imports/no-unused-imports": "error",
         "lodash/import-scope": [
@@ -239,7 +216,18 @@
           "method"
         ],
 
-        "rxjs/no-nested-subscribe": "off"     // todo: go over _all_ cases
+        "rxjs/no-nested-subscribe": "off",     // todo: go over _all_ cases
+
+        // Disable rules that may conflict with Prettier
+        "no-mixed-spaces-and-tabs": "off",
+        "no-trailing-spaces": "off",
+        "space-infix-ops": "off",
+        "no-unexpected-multiline": "off",
+        "@typescript-eslint/semi": "off",
+        "@typescript-eslint/no-extra-semi": "off",
+        "@typescript-eslint/type-annotation-spacing": "off",
+        "import-newlines/enforce": "off",
+        "indent": "off"
       }
     },
     {
@@ -279,10 +267,6 @@
           "error",
           "always-multiline"
         ],
-        "jsonc/indent": [
-          "error",
-          2
-        ],
         "jsonc/key-spacing": [
           "error",
           {
@@ -292,13 +276,10 @@
           }
         ],
         "jsonc/no-dupe-keys": "off",
-        "jsonc/quotes": [
-          "error",
-          "double",
-          {
-            "avoidEscape": false
-          }
-        ]
+
+        // the following rules interfere with Prettier
+        "jsonc/quotes": "off",
+        "jsonc/quote-props": "off"
       }
     }
   ]
