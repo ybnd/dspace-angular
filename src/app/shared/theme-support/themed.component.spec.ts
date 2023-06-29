@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { ThemedComponent } from './themed.component';
-import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, Input, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { VarDirective } from '../utils/var.directive';
 import { ThemeService } from './theme.service';
@@ -13,8 +13,7 @@ import { ThemeConfig } from '../../../config/theme.model';
   templateUrl: './themed.component.html'
 })
 class TestThemedComponent extends ThemedComponent<TestComponent> {
-  protected inAndOutputNames: (keyof TestComponent & keyof this)[] = ['testInput'];
-
+  @Input()
   testInput = 'unset';
 
   protected getComponentName(): string {

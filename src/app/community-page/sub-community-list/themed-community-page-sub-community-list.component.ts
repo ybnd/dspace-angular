@@ -9,10 +9,8 @@ import { Community } from '../../core/shared/community.model';
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedCommunityPageSubCommunityListComponent extends ThemedComponent<CommunityPageSubCommunityListComponent> {
-
   @Input() community: Community;
   @Input() pageSize: number;
-  protected inAndOutputNames: (keyof CommunityPageSubCommunityListComponent & keyof this)[] = ['community', 'pageSize'];
 
   protected getComponentName(): string {
     return 'CommunityPageSubCommunityListComponent';

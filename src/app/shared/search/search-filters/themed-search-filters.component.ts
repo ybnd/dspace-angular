@@ -14,15 +14,11 @@ import { SearchFilterConfig } from '../models/search-filter-config.model';
   templateUrl: '../../theme-support/themed.component.html',
 })
 export class ThemedSearchFiltersComponent extends ThemedComponent<SearchFiltersComponent> {
-
   @Input() currentConfiguration;
   @Input() currentScope: string;
   @Input() inPlaceSearch;
   @Input() refreshFilters: Observable<any>;
   @Input() filters: Observable<RemoteData<SearchFilterConfig[]>>;
-
-  protected inAndOutputNames: (keyof SearchFiltersComponent & keyof this)[] = [
-    'filters', 'currentConfiguration', 'currentScope', 'inPlaceSearch', 'refreshFilters'];
 
   protected getComponentName(): string {
     return 'SearchFiltersComponent';

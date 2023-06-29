@@ -17,8 +17,6 @@ export class ThemedBadgesComponent extends ThemedComponent<BadgesComponent> {
   @Input() context: Context;
   @Input() showAccessStatus = false;
 
-  protected inAndOutputNames: (keyof BadgesComponent & keyof this)[] = ['object', 'context', 'showAccessStatus'];
-
   protected getComponentName(): string {
     return 'BadgesComponent';
   }

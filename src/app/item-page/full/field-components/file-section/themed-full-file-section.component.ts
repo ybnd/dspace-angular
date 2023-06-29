@@ -12,10 +12,7 @@ import { Item } from '../../../../core/shared/item.model';
   templateUrl: './../../../../shared/theme-support/themed.component.html',
 })
 export class ThemedFullFileSectionComponent extends ThemedComponent<FullFileSectionComponent> {
-
   @Input() item: Item;
-
-  protected inAndOutputNames: (keyof FullFileSectionComponent & keyof this)[] = ['item'];
 
   protected getComponentName(): string {
     return 'FullFileSectionComponent';

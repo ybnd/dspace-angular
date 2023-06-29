@@ -12,16 +12,9 @@ import { MediaViewerItem } from '../../../core/shared/media-viewer-item.model';
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })
 export class ThemedMediaViewerImageComponent extends ThemedComponent<MediaViewerImageComponent> {
-
   @Input() images: MediaViewerItem[];
   @Input() preview?: boolean;
   @Input() image?: string;
-
-  protected inAndOutputNames: (keyof MediaViewerImageComponent & keyof this)[] = [
-    'images',
-    'preview',
-    'image',
-  ];
 
   protected getComponentName(): string {
     return 'MediaViewerImageComponent';

@@ -14,8 +14,6 @@ import { DSpaceObject } from '../../../../../core/shared/dspace-object.model';
 export class ThemedStatusBadgeComponent extends ThemedComponent<StatusBadgeComponent> {
   @Input() object: DSpaceObject;
 
-  protected inAndOutputNames: (keyof StatusBadgeComponent & keyof this)[] = ['object'];
-
   protected getComponentName(): string {
     return 'StatusBadgeComponent';
   }

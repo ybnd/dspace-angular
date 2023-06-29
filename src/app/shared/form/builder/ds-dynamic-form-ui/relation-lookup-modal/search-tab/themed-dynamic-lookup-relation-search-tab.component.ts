@@ -17,10 +17,6 @@ import { DSpaceObject } from '../../../../../../core/shared/dspace-object.model'
   templateUrl: '../../../../../theme-support/themed.component.html',
 })
 export class ThemedDynamicLookupRelationSearchTabComponent extends ThemedComponent<DsDynamicLookupRelationSearchTabComponent> {
-  protected inAndOutputNames: (keyof DsDynamicLookupRelationSearchTabComponent & keyof this)[] = ['relationship', 'listId',
-    'query', 'repeatable', 'selection$', 'context', 'relationshipType', 'item', 'isLeft', 'toRemove', 'isEditRelationship',
-    'deselectObject', 'selectObject', 'resultFound'];
-
   @Input() relationship: RelationshipOptions;
 
   @Input() listId: string;

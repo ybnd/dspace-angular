@@ -35,11 +35,6 @@ export class ThemedSearchSidebarComponent extends ThemedComponent<SearchSidebarC
   @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> = new EventEmitter<SearchConfigurationOption>();
   @Output() changeViewMode: EventEmitter<ViewMode> = new EventEmitter<ViewMode>();
 
-  protected inAndOutputNames: (keyof SearchSidebarComponent & keyof this)[] = [
-    'configuration', 'configurationList', 'currentScope', 'currentSortOption',
-    'resultCount', 'filters', 'viewModeList', 'showViewModes', 'inPlaceSearch',
-    'searchOptions', 'sortOptionsList', 'refreshFilters', 'toggleSidebar', 'changeConfiguration', 'changeViewMode'];
-
   protected getComponentName(): string {
     return 'SearchSidebarComponent';
   }

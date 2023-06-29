@@ -67,7 +67,7 @@ export class ClaimedTaskActionsLoaderComponent implements OnInit, OnChanges {
   /**
    * The list of input and output names for the dynamic component
    */
-  protected inAndOutputNames: (keyof ClaimedTaskActionsAbstractComponent & keyof this)[] = [
+  private inAndOutputNames: (keyof ClaimedTaskActionsAbstractComponent & keyof this)[] = [
     'object',
     'option',
     'processCompleted',

@@ -12,8 +12,6 @@ import { ThemedComponent } from '../../shared/theme-support/themed.component';
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedItemAlertsComponent extends ThemedComponent<ItemAlertsComponent> {
-  protected inAndOutputNames: (keyof ItemAlertsComponent & keyof this)[] = ['item'];
-
   @Input() item: Item;
 
   protected getComponentName(): string {

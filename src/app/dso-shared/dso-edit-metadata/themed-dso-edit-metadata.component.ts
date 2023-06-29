@@ -10,12 +10,9 @@ import { UpdateDataService } from '../../core/data/update-data.service';
   templateUrl: './../../shared/theme-support/themed.component.html',
 })
 export class ThemedDsoEditMetadataComponent extends ThemedComponent<DsoEditMetadataComponent> {
-
   @Input() dso: DSpaceObject;
 
   @Input() updateDataService: UpdateDataService<DSpaceObject>;
-
-  protected inAndOutputNames: (keyof DsoEditMetadataComponent & keyof this)[] = ['dso', 'updateDataService'];
 
   protected getComponentName(): string {
     return 'DsoEditMetadataComponent';

@@ -13,14 +13,8 @@ import { MediaViewerConfig } from '../../../config/media-viewer-config.interface
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedMediaViewerComponent extends ThemedComponent<MediaViewerComponent> {
-
   @Input() item: Item;
   @Input() mediaOptions: MediaViewerConfig;
-
-  protected inAndOutputNames: (keyof MediaViewerComponent & keyof this)[] = [
-    'item',
-    'mediaOptions',
-  ];
 
   protected getComponentName(): string {
     return 'MediaViewerComponent';

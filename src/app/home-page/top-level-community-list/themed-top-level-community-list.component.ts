@@ -8,8 +8,6 @@ import { ThemedComponent } from '../../shared/theme-support/themed.component';
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedTopLevelCommunityListComponent extends ThemedComponent<TopLevelCommunityListComponent> {
-  protected inAndOutputNames: (keyof TopLevelCommunityListComponent & keyof this)[];
-
   protected getComponentName(): string {
     return 'TopLevelCommunityListComponent';
   }

@@ -8,10 +8,7 @@ import {Item} from '../../../../core/shared/item.model';
     templateUrl: '../../../../shared/theme-support/themed.component.html',
 })
 export class ThemedFileSectionComponent extends ThemedComponent<FileSectionComponent> {
-
     @Input() item: Item;
-
-    protected inAndOutputNames: (keyof FileSectionComponent & keyof this)[] = ['item'];
 
     protected getComponentName(): string {
         return 'FileSectionComponent';

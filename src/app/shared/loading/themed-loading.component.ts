@@ -12,12 +12,9 @@ import { ThemeService } from '../theme-support/theme.service';
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedLoadingComponent extends ThemedComponent<LoadingComponent> {
-
   @Input() message: string;
   @Input() showMessage: boolean;
   @Input() spinner: boolean;
-
-  protected inAndOutputNames: (keyof LoadingComponent & keyof this)[] = ['message', 'showMessage', 'spinner'];
 
   constructor(
     protected resolver: ComponentFactoryResolver,

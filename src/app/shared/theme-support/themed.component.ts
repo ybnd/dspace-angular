@@ -39,7 +39,7 @@ export abstract class ThemedComponent<T> implements OnInit, OnDestroy, OnChanges
   protected lazyLoadSub: Subscription;
   protected themeSub: Subscription;
 
-  protected inAndOutputNames: (keyof T & keyof this)[] = [];
+  private inAndOutputNames: any[] = [];
 
   /**
    * A data attribute on the ThemedComponent to indicate which theme the rendered component came from.
@@ -121,6 +121,12 @@ export abstract class ThemedComponent<T> implements OnInit, OnDestroy, OnChanges
 
     this.lazyLoadSub = this.lazyLoadObs.subscribe(([simpleChanges, constructor]: [SimpleChanges, GenericConstructor<T>]) => {
       const factory = this.resolver.resolveComponentFactory(constructor);
+
+      this.inAndOutputNames = [
+        ...factory.inputs.map(input => input.propName),
+        ...factory.outputs.map(output => output.propName),
+      ];
+
       this.compRef = this.vcr.createComponent(factory, undefined, undefined, [this.themedElementContent.nativeElement.childNodes]);
       if (hasValue(simpleChanges)) {
         this.ngOnChanges(simpleChanges);

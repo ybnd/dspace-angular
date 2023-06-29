@@ -13,15 +13,9 @@ import { Bitstream } from '../../../core/shared/bitstream.model';
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })
 export class ThemedMediaViewerVideoComponent extends ThemedComponent<MediaViewerVideoComponent> {
-
   @Input() medias: MediaViewerItem[];
 
   @Input() captions: Bitstream[];
-
-  protected inAndOutputNames: (keyof MediaViewerVideoComponent & keyof this)[] = [
-    'medias',
-    'captions',
-  ];
 
   protected getComponentName(): string {
     return 'MediaViewerVideoComponent';

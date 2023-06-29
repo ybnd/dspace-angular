@@ -9,8 +9,6 @@ import { Item } from '../../../core/shared/item.model';
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })
 export class ThemedMetadataRepresentationListComponent extends ThemedComponent<MetadataRepresentationListComponent> {
-  protected inAndOutputNames: (keyof MetadataRepresentationListComponent & keyof this)[] = ['parentItem', 'itemType', 'metadataFields', 'label', 'incrementBy'];
-
   @Input() parentItem: Item;
 
   @Input() itemType: string;
