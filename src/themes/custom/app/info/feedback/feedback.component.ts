@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FeedbackComponent as BaseComponent } from '../../../../../app/info/feedback/feedback.component';
 
 @Component({
-  selector: 'ds-feedback',
+  selector: 'ds-custom-feedback',
   // styleUrls: ['./feedback.component.scss'],
   styleUrls: ['../../../../../app/info/feedback/feedback.component.scss'],
   // templateUrl: './feedback.component.html'

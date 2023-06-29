@@ -8,7 +8,7 @@ import { fadeInOut } from '../../../../../app/shared/animations/fade';
  * All fields of the item that should be displayed, are defined in its template.
  */
 @Component({
-  selector: 'ds-item-page',
+  selector: 'ds-custom-item-page',
   // styleUrls: ['./item-page.component.scss'],
   styleUrls: ['../../../../../app/item-page/simple/item-page.component.scss'],
   // templateUrl: './item-page.component.html',

@@ -4,7 +4,7 @@ import { KlaroService } from '../shared/cookies/klaro.service';
 import { environment } from '../../environments/environment';
 
 @Component({
-  selector: 'ds-footer',
+  selector: 'ds-unthemed-footer',
   styleUrls: ['footer.component.scss'],
   templateUrl: 'footer.component.html'
 })

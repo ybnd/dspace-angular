@@ -15,7 +15,7 @@ import { getCommunityEditRoute } from '../../../../community-page/community-page
  */
 
 @Component({
-  selector: 'ds-edit-community-selector',
+  selector: 'ds-unthemed-edit-community-selector',
   templateUrl: '../dso-selector-modal-wrapper.component.html',
 })
 

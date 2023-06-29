@@ -10,7 +10,7 @@ import { AuthService } from '../../core/auth/auth.service';
  * Component representing the statistics page for an item.
  */
 @Component({
-  selector: 'ds-item-statistics-page',
+  selector: 'ds-unthemed-item-statistics-page',
   templateUrl: '../statistics-page/statistics-page.component.html',
   styleUrls: ['./item-statistics-page.component.scss']
 })

@@ -6,7 +6,7 @@ import { PrivacyComponent } from './privacy.component';
  * Themed wrapper for PrivacyComponent
  */
 @Component({
-  selector: 'ds-themed-privacy',
+  selector: 'ds-privacy',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

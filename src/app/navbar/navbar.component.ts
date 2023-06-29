@@ -13,7 +13,7 @@ import { ThemeService } from '../shared/theme-support/theme.service';
  * Component representing the public navbar
  */
 @Component({
-  selector: 'ds-navbar',
+  selector: 'ds-unthemed-navbar',
   styleUrls: ['./navbar.component.scss'],
   templateUrl: './navbar.component.html',
   animations: [slideMobileNav]

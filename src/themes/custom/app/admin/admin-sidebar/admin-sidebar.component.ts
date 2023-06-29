@@ -5,7 +5,7 @@ import { AdminSidebarComponent as BaseComponent } from '../../../../../app/admin
  * Component representing the admin sidebar
  */
 @Component({
-  selector: 'ds-admin-sidebar',
+  selector: 'ds-custom-admin-sidebar',
   // templateUrl: './admin-sidebar.component.html',
   templateUrl: '../../../../../app/admin/admin-sidebar/admin-sidebar.component.html',
   // styleUrls: ['./admin-sidebar.component.scss']

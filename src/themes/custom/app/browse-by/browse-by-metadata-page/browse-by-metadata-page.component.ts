@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BrowseByMetadataPageComponent as BaseComponent } from '../../../../../app/browse-by/browse-by-metadata-page/browse-by-metadata-page.component';
 
 @Component({
-  selector: 'ds-browse-by-metadata-page',
+  selector: 'ds-custom-browse-by-metadata-page',
   // styleUrls: ['./browse-by-metadata-page.component.scss'],
   styleUrls: ['../../../../../app/browse-by/browse-by-metadata-page/browse-by-metadata-page.component.scss'],
   // templateUrl: './browse-by-metadata-page.component.html'

@@ -11,7 +11,7 @@ import {Context} from '../../../../../../app/core/shared/context.model';
 @listableObjectComponent(Community,  ViewMode.ListElement, Context.Any, 'custom')
 
 @Component({
-  selector: 'ds-community-list-element',
+  selector: 'ds-custom-community-list-element',
   // styleUrls: ['./community-list-element.component.scss'],
   styleUrls: ['../../../../../../app/shared/object-list/community-list-element/community-list-element.component.scss'],
   // templateUrl: './community-list-element.component.html'

@@ -21,7 +21,7 @@ import { getCommunityPageRoute } from './community-page-routing-paths';
 import { redirectOn4xx } from '../core/shared/authorized.operators';
 
 @Component({
-  selector: 'ds-community-page',
+  selector: 'ds-unthemed-community-page',
   styleUrls: ['./community-page.component.scss'],
   templateUrl: './community-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

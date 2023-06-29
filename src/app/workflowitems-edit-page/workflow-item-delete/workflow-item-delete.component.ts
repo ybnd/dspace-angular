@@ -13,7 +13,7 @@ import { NoContent } from '../../core/shared/NoContent.model';
 import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 
 @Component({
-  selector: 'ds-workflow-item-delete',
+  selector: 'ds-unthemed-workflow-item-delete',
   templateUrl: '../workflow-item-action-page.component.html'
 })
 /**

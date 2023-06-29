@@ -18,7 +18,7 @@ import { Operation } from 'fast-json-patch';
 import { MetadataPatchOperationService } from '../../../core/data/object-updates/patch-operation-service/metadata-patch-operation.service';
 
 @Component({
-  selector: 'ds-item-metadata',
+  selector: 'ds-unthemed-item-metadata',
   styleUrls: ['./item-metadata.component.scss'],
   templateUrl: './item-metadata.component.html',
 })

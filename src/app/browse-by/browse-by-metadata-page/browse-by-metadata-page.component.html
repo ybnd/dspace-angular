@@ -6,10 +6,10 @@
         <ds-comcol-page-header [name]="parentContext.name">
         </ds-comcol-page-header>
         <!-- Handle -->
-        <ds-themed-comcol-page-handle
+        <ds-comcol-page-handle
             [content]="parentContext.handle"
             [title]="parentContext.type+'.page.handle'" >
-        </ds-themed-comcol-page-handle>
+        </ds-comcol-page-handle>
         <!-- Introductory text -->
         <ds-comcol-page-content [content]="parentContext.introductoryText" [hasInnerHtml]="true">
         </ds-comcol-page-content>
@@ -18,7 +18,7 @@
         </ds-comcol-page-content>
       </header>
       <!-- Browse-By Links -->
-      <ds-themed-comcol-page-browse-by [id]="parentContext.id" [contentType]="parentContext.type"></ds-themed-comcol-page-browse-by>
+      <ds-comcol-page-browse-by [id]="parentContext.id" [contentType]="parentContext.type"></ds-comcol-page-browse-by>
       </ng-container></ng-container>
 
     <section class="comcol-page-browse-section">
@@ -40,7 +40,7 @@
       (prev)="goPrev()"
       (next)="goNext()">
     </ds-browse-by>
-    <ds-themed-loading *ngIf="!startsWithOptions" message="{{'loading.browse-by-page' | translate}}"></ds-themed-loading>
+    <ds-loading *ngIf="!startsWithOptions" message="{{'loading.browse-by-page' | translate}}"></ds-loading>
   </div>
   </section>
   <ng-container *ngVar="(parent$ | async) as parent">

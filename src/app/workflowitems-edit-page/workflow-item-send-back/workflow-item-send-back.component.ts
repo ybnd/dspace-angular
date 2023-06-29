@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { RequestService } from '../../core/data/request.service';
 
 @Component({
-  selector: 'ds-workflow-item-send-back',
+  selector: 'ds-unthemed-workflow-item-send-back',
   templateUrl: '../workflow-item-action-page.component.html'
 })
 /**

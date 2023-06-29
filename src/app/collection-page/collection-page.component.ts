@@ -31,7 +31,7 @@ import { redirectOn4xx } from '../core/shared/authorized.operators';
 import { BROWSE_LINKS_TO_FOLLOW } from '../core/browse/browse.service';
 
 @Component({
-  selector: 'ds-collection-page',
+  selector: 'ds-unthemed-collection-page',
   styleUrls: ['./collection-page.component.scss'],
   templateUrl: './collection-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

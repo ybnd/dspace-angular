@@ -7,7 +7,7 @@ import {BrowseByDataType, rendersBrowseBy} from '../browse-by-switcher/browse-by
  * Themed wrapper for BrowseByDatePageComponent
  * */
 @Component({
-  selector: 'ds-themed-browse-by-metadata-page',
+  selector: 'ds-browse-by-metadata-page',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

@@ -21,7 +21,7 @@ import { MenuID } from '../shared/menu/menu-id.model';
 import { getPageInternalServerErrorRoute } from '../app-routing-paths';
 
 @Component({
-  selector: 'ds-root',
+  selector: 'ds-unthemed-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   animations: [slideSidebarPadding],

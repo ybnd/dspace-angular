@@ -14,7 +14,7 @@ import { SearchConfigurationService } from '../../../../../../app/core/shared/se
 
 
 @Component({
-  selector: 'ds-search-settings',
+  selector: 'ds-custom-search-settings',
   // styleUrls: ['./search-settings.component.scss'],
   styleUrls: ['../../../../../../app/shared/search/search-settings/search-settings.component.scss'],
   // templateUrl: './search-settings.component.html',

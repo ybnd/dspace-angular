@@ -15,7 +15,7 @@ import { PaginationComponentOptions } from '../../shared/pagination/pagination-c
 import { AppConfig, APP_CONFIG } from '../../../config/app-config.interface';
 
 @Component({
-  selector: 'ds-browse-by-title-page',
+  selector: 'ds-unthemed-browse-by-title-page',
   styleUrls: ['../browse-by-metadata-page/browse-by-metadata-page.component.scss'],
   templateUrl: '../browse-by-metadata-page/browse-by-metadata-page.component.html'
 })

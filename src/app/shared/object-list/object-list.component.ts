@@ -13,7 +13,7 @@ import { CollectionElementLinkType } from '../object-collection/collection-eleme
 @Component({
   changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.Emulated,
-  selector: 'ds-object-list',
+  selector: 'ds-unthemed-object-list',
   styleUrls: ['./object-list.component.scss'],
   templateUrl: './object-list.component.html',
   animations: [fadeIn]

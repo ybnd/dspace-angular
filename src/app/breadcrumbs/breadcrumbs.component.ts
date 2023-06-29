@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
  * Component representing the breadcrumbs of a page
  */
 @Component({
-  selector: 'ds-breadcrumbs',
+  selector: 'ds-unthemed-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss']
 })

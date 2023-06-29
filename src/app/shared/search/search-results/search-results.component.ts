@@ -18,7 +18,7 @@ export interface SelectionConfig {
 }
 
 @Component({
-  selector: 'ds-search-results',
+  selector: 'ds-unthemed-search-results',
   templateUrl: './search-results.component.html',
   animations: [
     fadeIn,

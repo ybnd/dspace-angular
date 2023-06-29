@@ -10,7 +10,7 @@ import { Context } from '../../../../../../../app/core/shared/context.model';
 
 @listableObjectComponent('JournalIssue', ViewMode.StandalonePage, Context.Any, 'custom')
 @Component({
-  selector: 'ds-journal-issue',
+  selector: 'ds-custom-journal-issue',
   // styleUrls: ['./journal-issue.component.scss'],
   styleUrls: ['../../../../../../../app/entity-groups/journal-entities/item-pages/journal-issue/journal-issue.component.scss'],
   // templateUrl: './journal-issue.component.html',

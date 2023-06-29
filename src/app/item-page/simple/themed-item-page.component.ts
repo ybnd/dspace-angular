@@ -6,7 +6,7 @@ import { ItemPageComponent } from './item-page.component';
  * Themed wrapper for ItemPageComponent
  */
 @Component({
-  selector: 'ds-themed-item-page',
+  selector: 'ds-item-page',
   styleUrls: [],
   templateUrl: './../../shared/theme-support/themed.component.html',
 })

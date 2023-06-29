@@ -36,7 +36,7 @@ import { SubmissionObject } from '../../core/submission/models/submission-object
 import { SearchFilterConfig } from './models/search-filter-config.model';
 
 @Component({
-  selector: 'ds-search',
+  selector: 'ds-unthemed-search',
   styleUrls: ['./search.component.scss'],
   templateUrl: './search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

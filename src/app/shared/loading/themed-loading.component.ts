@@ -7,7 +7,7 @@ import { ThemeService } from '../theme-support/theme.service';
  * Themed wrapper for LoadingComponent
  */
 @Component({
-  selector: 'ds-themed-loading',
+  selector: 'ds-loading',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

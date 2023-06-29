@@ -4,7 +4,7 @@ import {
 } from '../../../../../../app/item-page/edit-item-page/item-metadata/item-metadata.component';
 
 @Component({
-  selector: 'ds-item-metadata',
+  selector: 'ds-custom-item-metadata',
   // styleUrls: ['./item-metadata.component.scss'],
   styleUrls: ['../../../../../../app/item-page/edit-item-page/item-metadata/item-metadata.component.scss'],
   // templateUrl: './item-metadata.component.html',

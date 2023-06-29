@@ -20,7 +20,7 @@ import { isAuthenticated } from '../core/auth/selectors';
  * This component represents the login page
  */
 @Component({
-  selector: 'ds-login-page',
+  selector: 'ds-unthemed-login-page',
   styleUrls: ['./login-page.component.scss'],
   templateUrl: './login-page.component.html'
 })

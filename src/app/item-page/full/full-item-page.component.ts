@@ -24,7 +24,7 @@ import { AuthorizationDataService } from '../../core/data/feature-authorization/
  */
 
 @Component({
-  selector: 'ds-full-item-page',
+  selector: 'ds-unthemed-full-item-page',
   styleUrls: ['./full-item-page.component.scss'],
   templateUrl: './full-item-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

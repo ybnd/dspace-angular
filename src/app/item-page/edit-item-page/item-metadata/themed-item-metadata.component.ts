@@ -5,7 +5,7 @@ import { ItemMetadataComponent } from './item-metadata.component';
 import { ThemedComponent } from '../../../shared/theme-support/themed.component';
 
 @Component({
-  selector: 'ds-themed-item-metadata',
+  selector: 'ds-item-metadata',
   styleUrls: [],
   templateUrl: './../../../shared/theme-support/themed.component.html',
 })

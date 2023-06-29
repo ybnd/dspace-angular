@@ -9,7 +9,7 @@ import { MenuID } from '../../shared/menu/menu-id.model';
  */
 @Component({
   /* eslint-disable @angular-eslint/component-selector */
-  selector: 'li[ds-themed-expandable-navbar-section]',
+  selector: 'li[ds-expandable-navbar-section]',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

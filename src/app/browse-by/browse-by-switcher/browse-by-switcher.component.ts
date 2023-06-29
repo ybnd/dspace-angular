@@ -8,7 +8,7 @@ import { BrowseDefinition } from '../../core/shared/browse-definition.model';
 import { ThemeService } from '../../shared/theme-support/theme.service';
 
 @Component({
-  selector: 'ds-browse-by-switcher',
+  selector: 'ds-unthemed-browse-by-switcher',
   templateUrl: './browse-by-switcher.component.html'
 })
 /**

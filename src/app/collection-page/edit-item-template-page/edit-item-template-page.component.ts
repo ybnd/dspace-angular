@@ -11,7 +11,7 @@ import { getFirstSucceededRemoteDataPayload } from '../../core/shared/operators'
 import { AlertType } from '../../shared/alert/aletr-type';
 
 @Component({
-  selector: 'ds-edit-item-template-page',
+  selector: 'ds-unthemed-edit-item-template-page',
   templateUrl: './edit-item-template-page.component.html',
 })
 /**

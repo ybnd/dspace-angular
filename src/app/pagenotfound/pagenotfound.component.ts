@@ -6,7 +6,7 @@ import { AuthService } from '../core/auth/auth.service';
  * This component representing the `PageNotFound` DSpace page.
  */
 @Component({
-  selector: 'ds-pagenotfound',
+  selector: 'ds-unthemed-pagenotfound',
   styleUrls: ['./pagenotfound.component.scss'],
   templateUrl: './pagenotfound.component.html',
   changeDetection: ChangeDetectionStrategy.Default

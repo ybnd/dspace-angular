@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
  * navigated to with community-list.page.routing.module
  */
 @Component({
-  selector: 'ds-community-list-page',
+  selector: 'ds-unthemed-community-list-page',
   templateUrl: './community-list-page.component.html',
 })
 export class CommunityListPageComponent {

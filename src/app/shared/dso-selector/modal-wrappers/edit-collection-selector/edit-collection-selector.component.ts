@@ -15,7 +15,7 @@ import { getCollectionEditRoute } from '../../../../collection-page/collection-p
  */
 
 @Component({
-  selector: 'ds-edit-collection-selector',
+  selector: 'ds-unthemed-edit-collection-selector',
   templateUrl: '../dso-selector-modal-wrapper.component.html',
 })
 export class EditCollectionSelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {

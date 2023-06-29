@@ -19,7 +19,7 @@ import { isValidDate } from '../../shared/date.util';
 import { AppConfig, APP_CONFIG } from '../../../config/app-config.interface';
 
 @Component({
-  selector: 'ds-browse-by-date-page',
+  selector: 'ds-unthemed-browse-by-date-page',
   styleUrls: ['../browse-by-metadata-page/browse-by-metadata-page.component.scss'],
   templateUrl: '../browse-by-metadata-page/browse-by-metadata-page.component.html'
 })

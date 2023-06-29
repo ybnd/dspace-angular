@@ -7,7 +7,7 @@ import { BrowseBySwitcherComponent } from './browse-by-switcher.component';
  * Themed wrapper for BrowseBySwitcherComponent
  */
 @Component({
-  selector: 'ds-themed-browse-by-switcher',
+  selector: 'ds-browse-by-switcher',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html'
 })

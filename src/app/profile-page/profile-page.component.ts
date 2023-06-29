@@ -20,7 +20,7 @@ import { ConfigurationDataService } from '../core/data/configuration-data.servic
 import { ConfigurationProperty } from '../core/shared/configuration-property.model';
 
 @Component({
-  selector: 'ds-profile-page',
+  selector: 'ds-unthemed-profile-page',
   styleUrls: ['./profile-page.component.scss'],
   templateUrl: './profile-page.component.html'
 })

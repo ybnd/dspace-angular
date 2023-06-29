@@ -11,7 +11,7 @@ import { DSOSelectorModalWrapperComponent, SelectorActionType } from '../dso-sel
  */
 
 @Component({
-  selector: 'ds-create-item-parent-selector',
+  selector: 'ds-unthemed-create-item-parent-selector',
   // styleUrls: ['./create-item-parent-selector.component.scss'],
   // templateUrl: '../dso-selector-modal-wrapper.component.html',
   templateUrl: './create-item-parent-selector.component.html'

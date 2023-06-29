@@ -20,7 +20,7 @@ import { ItemDataService } from '../../core/data/item-data.service';
  * This component allows to submit a new workspaceitem.
  */
 @Component({
-  selector: 'ds-submission-submit',
+  selector: 'ds-unthemed-submission-submit',
   styleUrls: ['./submission-submit.component.scss'],
   templateUrl: './submission-submit.component.html'
 })

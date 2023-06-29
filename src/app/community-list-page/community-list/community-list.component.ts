@@ -16,7 +16,7 @@ import { FindListOptions } from '../../core/data/find-list-options.model';
  * Which nodes were expanded is kept in the store, so this persists across pages.
  */
 @Component({
-  selector: 'ds-community-list',
+  selector: 'ds-unthemed-community-list',
   templateUrl: './community-list.component.html',
 })
 export class CommunityListComponent implements OnInit, OnDestroy {

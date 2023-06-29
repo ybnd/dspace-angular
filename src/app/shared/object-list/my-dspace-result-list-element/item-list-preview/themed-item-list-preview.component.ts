@@ -9,7 +9,7 @@ import { SearchResult } from '../../../search/models/search-result.model';
  * Themed wrapper for ItemListPreviewComponent
  */
 @Component({
-  selector: 'ds-themed-item-list-preview',
+  selector: 'ds-item-list-preview',
   styleUrls: [],
   templateUrl: '../../../theme-support/themed.component.html',
 })
