@@ -11,7 +11,7 @@ import { ThemeService } from 'src/app/shared/theme-support/theme.service';
 import { HierarchicalBrowseDefinition } from '../../core/shared/hierarchical-browse-definition.model';
 
 @Component({
-  selector: 'ds-browse-by-taxonomy-page',
+  selector: 'ds-unthemed-browse-by-taxonomy-page',
   templateUrl: './browse-by-taxonomy-page.component.html',
   styleUrls: ['./browse-by-taxonomy-page.component.scss']
 })

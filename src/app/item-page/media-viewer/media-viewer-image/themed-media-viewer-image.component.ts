@@ -7,7 +7,7 @@ import { MediaViewerItem } from '../../../core/shared/media-viewer-item.model';
  * Themed wrapper for {@link MediaViewerImageComponent}.
  */
 @Component({
-  selector: 'ds-themed-media-viewer-image',
+  selector: 'ds-media-viewer-image',
   styleUrls: [],
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })

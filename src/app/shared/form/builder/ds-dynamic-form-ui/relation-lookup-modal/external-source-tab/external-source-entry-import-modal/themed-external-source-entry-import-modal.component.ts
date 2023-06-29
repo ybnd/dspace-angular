@@ -3,7 +3,7 @@ import { ThemedComponent } from '../../../../../../theme-support/themed.componen
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ds-themed-external-source-entry-import-modal',
+  selector: 'ds-external-source-entry-import-modal',
   styleUrls: [],
   templateUrl: '../../../../../../../shared/theme-support/themed.component.html',
 })

@@ -9,7 +9,7 @@ import { SearchFilterConfig } from '../models/search-filter-config.model';
  * Themed wrapper for SearchFiltersComponent
  */
 @Component({
-  selector: 'ds-themed-search-filters',
+  selector: 'ds-search-filters',
   styleUrls: [],
   templateUrl: '../../theme-support/themed.component.html',
 })

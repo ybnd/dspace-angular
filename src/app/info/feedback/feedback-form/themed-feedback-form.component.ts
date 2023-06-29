@@ -6,7 +6,7 @@ import { FeedbackFormComponent } from './feedback-form.component';
  * Themed wrapper for {@link FeedbackFormComponent}
  */
 @Component({
-  selector: 'ds-themed-feedback-form',
+  selector: 'ds-feedback-form',
   styleUrls: [],
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })

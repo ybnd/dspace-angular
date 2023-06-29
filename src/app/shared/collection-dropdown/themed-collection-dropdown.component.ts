@@ -3,7 +3,7 @@ import { ThemedComponent } from '../theme-support/themed.component';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
-  selector: 'ds-themed-collection-dropdown',
+  selector: 'ds-collection-dropdown',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

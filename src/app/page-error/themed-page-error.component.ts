@@ -6,7 +6,7 @@ import { PageErrorComponent } from './page-error.component';
  * Themed wrapper for PageErrorComponent
  */
 @Component({
-  selector: 'ds-themed-page-error',
+  selector: 'ds-page-error',
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })

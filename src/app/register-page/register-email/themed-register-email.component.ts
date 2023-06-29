@@ -6,7 +6,7 @@ import { RegisterEmailComponent } from './register-email.component';
  * Themed wrapper for RegisterEmailComponent
  */
 @Component({
-  selector: 'ds-themed-register-email',
+  selector: 'ds-register-email',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

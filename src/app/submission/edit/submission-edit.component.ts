@@ -24,7 +24,7 @@ import { SubmissionError } from '../objects/submission-error.model';
  * This component allows to edit an existing workspaceitem/workflowitem.
  */
 @Component({
-  selector: 'ds-submission-edit',
+  selector: 'ds-unthemed-submission-edit',
   styleUrls: ['./submission-edit.component.scss'],
   templateUrl: './submission-edit.component.html'
 })

@@ -6,7 +6,7 @@ import { ProfilePageComponent } from './profile-page.component';
  * Themed wrapper for ProfilePageComponent
  */
 @Component({
-  selector: 'ds-themed-profile-page',
+  selector: 'ds-profile-page',
   styleUrls: [],
   templateUrl: './../shared/theme-support/themed.component.html'
 })

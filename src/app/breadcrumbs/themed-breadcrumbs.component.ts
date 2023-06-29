@@ -6,7 +6,7 @@ import { BreadcrumbsComponent } from './breadcrumbs.component';
  * Themed wrapper for BreadcrumbsComponent
  */
 @Component({
-  selector: 'ds-themed-breadcrumbs',
+  selector: 'ds-breadcrumbs',
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })

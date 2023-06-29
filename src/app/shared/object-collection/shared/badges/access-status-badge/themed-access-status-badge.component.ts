@@ -7,7 +7,7 @@ import { DSpaceObject } from '../../../../../core/shared/dspace-object.model';
  * Themed wrapper for AccessStatusBadgeComponent
  */
 @Component({
-  selector: 'ds-themed-access-status-badge',
+  selector: 'ds-access-status-badge',
   styleUrls: [],
   templateUrl: '../../../../theme-support/themed.component.html',
 })

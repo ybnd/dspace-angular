@@ -4,7 +4,7 @@ import {
 } from 'src/app/request-copy/grant-request-copy/grant-request-copy.component';
 
 @Component({
-    selector: 'ds-grant-request-copy',
+    selector: 'ds-custom-grant-request-copy',
     // styleUrls: ['./grant-request-copy.component.scss'],
     styleUrls: [],
     // templateUrl: './grant-request-copy.component.html',

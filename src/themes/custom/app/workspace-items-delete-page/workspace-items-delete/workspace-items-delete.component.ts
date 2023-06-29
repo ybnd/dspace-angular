@@ -3,7 +3,7 @@ import { WorkspaceItemsDeletePageComponent as BaseComponent } from '../../../../
 
 
 @Component({
-  selector: 'ds-workspaceitems-delete-page',
+  selector: 'ds-custom-workspaceitems-delete-page',
   templateUrl: '../../../../../app/workspaceitems-edit-page/workspaceitems-delete-page/workspaceitems-delete-page.component.html',
 })
 export class WorkspaceItemsDeletePageComponent extends BaseComponent {

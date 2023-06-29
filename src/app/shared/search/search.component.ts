@@ -40,7 +40,7 @@ import { COLLECTION_MODULE_PATH } from '../../collection-page/collection-page-ro
 import { COMMUNITY_MODULE_PATH } from '../../community-page/community-page-routing-paths';
 
 @Component({
-  selector: 'ds-search',
+  selector: 'ds-unthemed-search',
   styleUrls: ['./search.component.scss'],
   templateUrl: './search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

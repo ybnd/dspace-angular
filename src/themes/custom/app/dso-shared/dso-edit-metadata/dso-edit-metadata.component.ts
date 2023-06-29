@@ -2,7 +2,7 @@ import { DsoEditMetadataComponent as BaseComponent } from '../../../../../app/ds
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ds-dso-edit-metadata',
+  selector: 'ds-custom-dso-edit-metadata',
   // styleUrls: ['./dso-edit-metadata.component.scss'],
   styleUrls: ['../../../../../app/dso-shared/dso-edit-metadata/dso-edit-metadata.component.scss'],
   // templateUrl: './dso-edit-metadata.component.html',

@@ -18,7 +18,7 @@ import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
  * inside a 'ds-metadata-field-wrapper' component.
  */
 @Component({
-  selector: 'ds-item-page-file-section',
+  selector: 'ds-unthemed-item-page-file-section',
   templateUrl: './file-section.component.html'
 })
 export class FileSectionComponent implements OnInit {

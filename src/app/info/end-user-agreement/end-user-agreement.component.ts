@@ -12,7 +12,7 @@ import { of as observableOf } from 'rxjs';
 import { isNotEmpty } from '../../shared/empty.util';
 
 @Component({
-  selector: 'ds-end-user-agreement',
+  selector: 'ds-unthemed-end-user-agreement',
   templateUrl: './end-user-agreement.component.html',
   styleUrls: ['./end-user-agreement.component.scss']
 })

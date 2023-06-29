@@ -23,7 +23,7 @@ import { environment } from '../../../../../environments/environment';
  */
 
 @Component({
-  selector: 'ds-create-community-parent-selector',
+  selector: 'ds-unthemed-create-community-parent-selector',
   styleUrls: ['./create-community-parent-selector.component.scss'],
   templateUrl: './create-community-parent-selector.component.html',
 })

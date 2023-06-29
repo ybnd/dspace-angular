@@ -9,7 +9,7 @@ import { of as observableOf, combineLatest as observableCombineLatest, Observabl
 import { Item } from '../../core/shared/item.model';
 
 @Component({
-  selector: 'ds-file-download-link',
+  selector: 'ds-unthemed-file-download-link',
   templateUrl: './file-download-link.component.html',
   styleUrls: ['./file-download-link.component.scss']
 })

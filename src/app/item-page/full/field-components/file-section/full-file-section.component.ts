@@ -23,7 +23,7 @@ import { AppConfig, APP_CONFIG } from 'src/config/app-config.interface';
  */
 
 @Component({
-  selector: 'ds-item-page-full-file-section',
+  selector: 'ds-unthemed-item-page-full-file-section',
   styleUrls: ['./full-file-section.component.scss'],
   templateUrl: './full-file-section.component.html'
 })

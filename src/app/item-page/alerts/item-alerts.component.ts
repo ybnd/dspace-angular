@@ -3,7 +3,7 @@ import { Item } from '../../core/shared/item.model';
 import { AlertType } from '../../shared/alert/aletr-type';
 
 @Component({
-  selector: 'ds-item-alerts',
+  selector: 'ds-unthemed-item-alerts',
   templateUrl: './item-alerts.component.html',
   styleUrls: ['./item-alerts.component.scss']
 })

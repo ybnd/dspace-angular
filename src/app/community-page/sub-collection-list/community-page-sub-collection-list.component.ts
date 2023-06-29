@@ -16,7 +16,7 @@ import { switchMap } from 'rxjs/operators';
 import { hasValue } from '../../shared/empty.util';
 
 @Component({
-  selector: 'ds-community-page-sub-collection-list',
+  selector: 'ds-unthemed-community-page-sub-collection-list',
   styleUrls: ['./community-page-sub-collection-list.component.scss'],
   templateUrl: './community-page-sub-collection-list.component.html',
   animations:[fadeIn]

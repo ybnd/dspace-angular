@@ -3,7 +3,7 @@ import { RequestCopyEmail } from './request-copy-email.model';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'ds-email-request-copy',
+  selector: 'ds-unthemed-email-request-copy',
   styleUrls: ['./email-request-copy.component.scss'],
   templateUrl: './email-request-copy.component.html'
 })

@@ -6,7 +6,7 @@ import {ThemedComponent} from 'src/app/shared/theme-support/themed.component';
  * Themed wrapper for EditItemSelectorComponent
  */
 @Component({
-    selector: 'ds-themed-edit-item-selector',
+    selector: 'ds-edit-item-selector',
     styleUrls: [],
     templateUrl: '../../../theme-support/themed.component.html'
 })

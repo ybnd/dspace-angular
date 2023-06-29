@@ -21,7 +21,7 @@ import { Item } from '../../core/shared/item.model';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 
 @Component({
-  selector: 'ds-browse-by-date-page',
+  selector: 'ds-unthemed-browse-by-date-page',
   styleUrls: ['../browse-by-metadata-page/browse-by-metadata-page.component.scss'],
   templateUrl: '../browse-by-metadata-page/browse-by-metadata-page.component.html'
 })

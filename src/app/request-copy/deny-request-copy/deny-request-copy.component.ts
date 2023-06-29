@@ -21,7 +21,7 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { redirectOn4xx } from '../../core/shared/authorized.operators';
 
 @Component({
-  selector: 'ds-deny-request-copy',
+  selector: 'ds-unthemed-deny-request-copy',
   styleUrls: ['./deny-request-copy.component.scss'],
   templateUrl: './deny-request-copy.component.html'
 })

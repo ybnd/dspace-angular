@@ -7,7 +7,7 @@ import { Item } from '../../../../core/shared/item.model';
  * Themed wrapper for {@link FullFileSectionComponent}
  */
 @Component({
-  selector: 'ds-themed-item-page-full-file-section',
+  selector: 'ds-item-page-full-file-section',
   styleUrls: [],
   templateUrl: './../../../../shared/theme-support/themed.component.html',
 })

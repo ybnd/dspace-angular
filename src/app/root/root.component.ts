@@ -22,7 +22,7 @@ import { getPageInternalServerErrorRoute } from '../app-routing-paths';
 import { hasValueOperator } from '../shared/empty.util';
 
 @Component({
-  selector: 'ds-root',
+  selector: 'ds-unthemed-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   animations: [slideSidebarPadding],

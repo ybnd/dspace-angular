@@ -6,7 +6,7 @@ import { CommunityListPageComponent } from './community-list-page.component';
  * Themed wrapper for CommunityListPageComponent
  */
 @Component({
-  selector: 'ds-themed-community-list-page',
+  selector: 'ds-community-list-page',
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })

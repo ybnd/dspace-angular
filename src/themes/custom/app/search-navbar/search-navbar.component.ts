@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { SearchNavbarComponent as BaseComponent } from '../../../../app/search-navbar/search-navbar.component';
 
 @Component({
-  selector: 'ds-search-navbar',
+  selector: 'ds-custom-search-navbar',
   // styleUrls: ['./search-navbar.component.scss'],
   styleUrls: ['../../../../app/search-navbar/search-navbar.component.scss'],
   // templateUrl: './search-navbar.component.html'

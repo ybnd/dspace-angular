@@ -33,7 +33,7 @@ import { DSONameService } from '../core/breadcrumbs/dso-name.service';
 import { APP_CONFIG, AppConfig } from '../../../src/config/app-config.interface';
 
 @Component({
-  selector: 'ds-collection-page',
+  selector: 'ds-unthemed-collection-page',
   styleUrls: ['./collection-page.component.scss'],
   templateUrl: './collection-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

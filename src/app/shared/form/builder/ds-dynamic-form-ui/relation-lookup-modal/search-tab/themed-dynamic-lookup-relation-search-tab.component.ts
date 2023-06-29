@@ -12,7 +12,7 @@ import { SearchObjects } from '../../../../../search/models/search-objects.model
 import { DSpaceObject } from '../../../../../../core/shared/dspace-object.model';
 
 @Component({
-  selector: 'ds-themed-dynamic-lookup-relation-search-tab',
+  selector: 'ds-dynamic-lookup-relation-search-tab',
   styleUrls: [],
   templateUrl: '../../../../../theme-support/themed.component.html',
 })

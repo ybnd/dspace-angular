@@ -4,7 +4,7 @@ import {
 } from '../../../../../../../app/shared/dso-selector/modal-wrappers/create-community-parent-selector/create-community-parent-selector.component';
 
 @Component({
-  selector: 'ds-create-community-parent-selector',
+  selector: 'ds-custom-create-community-parent-selector',
   // styleUrls: ['./create-community-parent-selector.component.scss'],
   styleUrls: ['../../../../../../../app/shared/dso-selector/modal-wrappers/create-community-parent-selector/create-community-parent-selector.component.scss'],
   // templateUrl: './create-community-parent-selector.component.html',

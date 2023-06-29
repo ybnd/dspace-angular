@@ -17,7 +17,7 @@ import { environment } from '../../../../../environments/environment';
  */
 
 @Component({
-  selector: 'ds-edit-community-selector',
+  selector: 'ds-unthemed-edit-community-selector',
   templateUrl: '../dso-selector-modal-wrapper.component.html',
 })
 

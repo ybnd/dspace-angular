@@ -6,7 +6,7 @@ import { FooterComponent } from './footer.component';
  * Themed wrapper for FooterComponent
  */
 @Component({
-  selector: 'ds-themed-footer',
+  selector: 'ds-footer',
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })

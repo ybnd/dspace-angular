@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Site } from '../core/shared/site.model';
 import { environment } from '../../environments/environment';
 @Component({
-  selector: 'ds-home-page',
+  selector: 'ds-unthemed-home-page',
   styleUrls: ['./home-page.component.scss'],
   templateUrl: './home-page.component.html'
 })

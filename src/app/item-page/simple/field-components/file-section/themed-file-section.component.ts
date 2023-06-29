@@ -4,7 +4,7 @@ import {Component, Input} from '@angular/core';
 import {Item} from '../../../../core/shared/item.model';
 
 @Component({
-    selector: 'ds-themed-item-page-file-section',
+    selector: 'ds-item-page-file-section',
     templateUrl: '../../../../shared/theme-support/themed.component.html',
 })
 export class ThemedFileSectionComponent extends ThemedComponent<FileSectionComponent> {

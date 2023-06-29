@@ -7,7 +7,7 @@ import { DSpaceObject } from '../../../../../core/shared/dspace-object.model';
  * Themed wrapper for StatusBadgeComponent
  */
 @Component({
-  selector: 'ds-themed-status-badge',
+  selector: 'ds-status-badge',
   styleUrls: [],
   templateUrl: '../../../../theme-support/themed.component.html',
 })

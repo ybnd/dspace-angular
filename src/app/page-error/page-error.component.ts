@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
  * This component representing the `PageError` DSpace page.
  */
 @Component({
-  selector: 'ds-page-error',
+  selector: 'ds-unthemed-page-error',
   styleUrls: ['./page-error.component.scss'],
   templateUrl: './page-error.component.html',
   changeDetection: ChangeDetectionStrategy.Default

@@ -26,7 +26,7 @@ import { LinkHeadService } from '../../core/services/link-head.service';
  */
 
 @Component({
-  selector: 'ds-full-item-page',
+  selector: 'ds-unthemed-full-item-page',
   styleUrls: ['./full-item-page.component.scss'],
   templateUrl: './full-item-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

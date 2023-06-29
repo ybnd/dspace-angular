@@ -14,7 +14,7 @@ import { getFirstCompletedRemoteData, getFirstSucceededRemoteDataPayload, } from
 import { CoreState } from '../../core/core-state.model';
 
 @Component({
-  selector: 'ds-forgot-password-form',
+  selector: 'ds-unthemed-forgot-password-form',
   styleUrls: ['./forgot-password-form.component.scss'],
   templateUrl: './forgot-password-form.component.html'
 })

@@ -17,7 +17,7 @@ import { BrowseService } from '../../../core/browse/browse.service';
 import { BrowseDefinitionDataService } from '../../../core/browse/browse-definition-data.service';
 
 @Component({
-  selector: 'ds-metadata-representation-list',
+  selector: 'ds-unthemed-metadata-representation-list',
   templateUrl: './metadata-representation-list.component.html'
 })
 /**

@@ -4,7 +4,7 @@ import {
 } from '../../../../../app/collection-page/edit-item-template-page/edit-item-template-page.component';
 
 @Component({
-  selector: 'ds-edit-item-template-page',
+  selector: 'ds-custom-edit-item-template-page',
   styleUrls: ['./edit-item-template-page.component.scss'],
   // templateUrl: './edit-item-template-page.component.html',
   templateUrl: '../../../../../app/collection-page/edit-item-template-page/edit-item-template-page.component.html',

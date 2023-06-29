@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { TYPE_REQUEST_FORGOT } from '../../register-email-form/register-email-form.component';
 
 @Component({
-  selector: 'ds-forgot-email',
+  selector: 'ds-unthemed-forgot-email',
   styleUrls: ['./forgot-email.component.scss'],
   templateUrl: './forgot-email.component.html'
 })

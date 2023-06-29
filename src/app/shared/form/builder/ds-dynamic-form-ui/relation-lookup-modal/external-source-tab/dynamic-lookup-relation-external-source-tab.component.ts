@@ -27,7 +27,7 @@ import { ItemType } from '../../../../../../core/shared/item-relationships/item-
 import { getFirstCompletedRemoteData } from '../../../../../../core/shared/operators';
 
 @Component({
-  selector: 'ds-dynamic-lookup-relation-external-source-tab',
+  selector: 'ds-unthemed-dynamic-lookup-relation-external-source-tab',
   styleUrls: ['./dynamic-lookup-relation-external-source-tab.component.scss'],
   templateUrl: './dynamic-lookup-relation-external-source-tab.component.html',
   providers: [

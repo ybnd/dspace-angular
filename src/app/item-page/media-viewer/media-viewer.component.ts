@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
  * This component renders the media viewers
  */
 @Component({
-  selector: 'ds-media-viewer',
+  selector: 'ds-unthemed-media-viewer',
   templateUrl: './media-viewer.component.html',
   styleUrls: ['./media-viewer.component.scss'],
 })

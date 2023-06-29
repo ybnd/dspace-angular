@@ -16,7 +16,7 @@ import { AppConfig, APP_CONFIG } from '../../../config/app-config.interface';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 
 @Component({
-  selector: 'ds-browse-by-title-page',
+  selector: 'ds-unthemed-browse-by-title-page',
   styleUrls: ['../browse-by-metadata-page/browse-by-metadata-page.component.scss'],
   templateUrl: '../browse-by-metadata-page/browse-by-metadata-page.component.html'
 })

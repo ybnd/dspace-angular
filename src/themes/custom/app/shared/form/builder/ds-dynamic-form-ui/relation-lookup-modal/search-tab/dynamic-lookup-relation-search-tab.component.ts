@@ -4,7 +4,7 @@ import { SEARCH_CONFIG_SERVICE } from '../../../../../../../../../app/my-dspace-
 import { SearchConfigurationService } from '../../../../../../../../../app/core/shared/search/search-configuration.service';
 
 @Component({
-  selector: 'ds-dynamic-lookup-relation-search-tab',
+  selector: 'ds-custom-dynamic-lookup-relation-search-tab',
   // styleUrls: ['./dynamic-lookup-relation-search-tab.component.scss'],
   styleUrls: ['../../../../../../../../../app/shared/form/builder/ds-dynamic-form-ui/relation-lookup-modal/search-tab/dynamic-lookup-relation-search-tab.component.scss'],
   // templateUrl: './dynamic-lookup-relation-search-tab.component.html',

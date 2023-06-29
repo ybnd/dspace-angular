@@ -15,7 +15,7 @@ import { PaginationService } from '../../core/pagination/pagination.service';
 import { hasValue } from '../../shared/empty.util';
 
 @Component({
-  selector: 'ds-community-page-sub-community-list',
+  selector: 'ds-unthemed-community-page-sub-community-list',
   styleUrls: ['./community-page-sub-community-list.component.scss'],
   templateUrl: './community-page-sub-community-list.component.html',
   animations: [fadeIn]

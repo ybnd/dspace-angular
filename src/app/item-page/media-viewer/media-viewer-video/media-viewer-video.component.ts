@@ -9,7 +9,7 @@ import { Bitstream } from 'src/app/core/shared/bitstream.model';
  * This component renders a video viewer and playlist for the media viewer
  */
 @Component({
-  selector: 'ds-media-viewer-video',
+  selector: 'ds-unthemed-media-viewer-video',
   templateUrl: './media-viewer-video.component.html',
   styleUrls: ['./media-viewer-video.component.scss'],
 })

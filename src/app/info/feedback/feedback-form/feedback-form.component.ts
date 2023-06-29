@@ -16,7 +16,7 @@ import { NativeWindowRef, NativeWindowService } from '../../../core/services/win
 import { URLCombiner } from '../../../core/url-combiner/url-combiner';
 
 @Component({
-  selector: 'ds-feedback-form',
+  selector: 'ds-unthemed-feedback-form',
   templateUrl: './feedback-form.component.html',
   styleUrls: ['./feedback-form.component.scss']
 })

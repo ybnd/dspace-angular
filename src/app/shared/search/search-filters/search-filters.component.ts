@@ -14,7 +14,7 @@ import { currentPath } from '../../utils/route.utils';
 import { hasValue } from '../../empty.util';
 
 @Component({
-  selector: 'ds-search-filters',
+  selector: 'ds-unthemed-search-filters',
   styleUrls: ['./search-filters.component.scss'],
   templateUrl: './search-filters.component.html',
 

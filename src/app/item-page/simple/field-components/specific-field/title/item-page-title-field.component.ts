@@ -4,7 +4,7 @@ import { Item } from '../../../../../core/shared/item.model';
 import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service';
 
 @Component({
-  selector: 'ds-item-page-title-field',
+  selector: 'ds-unthemed-item-page-title-field',
   templateUrl: './item-page-title-field.component.html'
 })
 /**

@@ -20,7 +20,7 @@ import { ConfigurationDataService } from '../../../core/data/configuration-data.
 import { IdentifierData } from '../../../shared/object-list/identifier-data/identifier-data.model';
 
 @Component({
-  selector: 'ds-item-status',
+  selector: 'ds-unthemed-item-status',
   templateUrl: './item-status.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
   animations: [

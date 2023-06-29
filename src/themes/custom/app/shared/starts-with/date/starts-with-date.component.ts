@@ -5,7 +5,7 @@ import {
 } from '../../../../../../app/shared/starts-with/date/starts-with-date.component';
 
 @Component({
-  selector: 'ds-starts-with-date',
+  selector: 'ds-custom-starts-with-date',
   // styleUrls: ['./starts-with-date.component.scss'],
   styleUrls: ['../../../../../../app/shared/starts-with/date/starts-with-date.component.scss'],
   // templateUrl: './starts-with-date.component.html',

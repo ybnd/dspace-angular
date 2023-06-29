@@ -15,7 +15,7 @@ import { FileService } from '../core/shared/file.service';
  * If no Bitstream is provided, an HTML placeholder will be rendered instead.
  */
 @Component({
-  selector: 'ds-thumbnail',
+  selector: 'ds-unthemed-thumbnail',
   styleUrls: ['./thumbnail.component.scss'],
   templateUrl: './thumbnail.component.html',
 })

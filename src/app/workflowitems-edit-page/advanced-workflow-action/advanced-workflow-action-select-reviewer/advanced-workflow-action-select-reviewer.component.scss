@@ -1,6 +1,6 @@
 :host ::ng-deep {
    .reviewersListWithGroup {
-    #search, #search + form, #search + form + ds-pagination {
+    #search, #search + form, #search + form + ds-pagination * {
       display: none !important;
     }
   }

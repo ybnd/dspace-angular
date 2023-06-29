@@ -6,7 +6,7 @@ import { ThemedComponent } from '../../theme-support/themed.component';
  * Themed wrapper for ComcolPageBrowseByComponent
  */
 @Component({
-  selector: 'ds-themed-comcol-page-browse-by',
+  selector: 'ds-comcol-page-browse-by',
   styleUrls: [],
   templateUrl: '../../theme-support/themed.component.html',
 })

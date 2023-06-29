@@ -26,7 +26,7 @@ import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 export const BBM_PAGINATION_ID = 'bbm';
 
 @Component({
-  selector: 'ds-browse-by-metadata-page',
+  selector: 'ds-unthemed-browse-by-metadata-page',
   styleUrls: ['./browse-by-metadata-page.component.scss'],
   templateUrl: './browse-by-metadata-page.component.html'
 })

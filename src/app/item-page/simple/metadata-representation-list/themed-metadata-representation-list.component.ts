@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
 import { Item } from '../../../core/shared/item.model';
 
 @Component({
-  selector: 'ds-themed-metadata-representation-list',
+  selector: 'ds-metadata-representation-list',
   styleUrls: [],
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })

@@ -19,7 +19,7 @@ export const SEARCH_CONFIG_SERVICE: InjectionToken<SearchConfigurationService> =
  * This component represents the whole mydspace page
  */
 @Component({
-  selector: 'ds-my-dspace-page',
+  selector: 'ds-unthemed-my-dspace-page',
   styleUrls: ['./my-dspace-page.component.scss'],
   templateUrl: './my-dspace-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

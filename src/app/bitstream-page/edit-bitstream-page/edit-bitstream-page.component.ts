@@ -28,7 +28,7 @@ import { DsDynamicTextAreaModel } from '../../shared/form/builder/ds-dynamic-for
 import { PrimaryBitstreamService } from '../../core/data/primary-bitstream.service';
 
 @Component({
-  selector: 'ds-edit-bitstream-page',
+  selector: 'ds-unthemed-edit-bitstream-page',
   styleUrls: ['./edit-bitstream-page.component.scss'],
   templateUrl: './edit-bitstream-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush

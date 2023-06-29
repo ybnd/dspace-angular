@@ -14,7 +14,7 @@ import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'ds-workflow-item-delete',
+  selector: 'ds-unthemed-workflow-item-delete',
   templateUrl: '../workflow-item-action-page.component.html'
 })
 /**

@@ -5,7 +5,7 @@ import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import { UpdateDataService } from '../../core/data/update-data.service';
 
 @Component({
-  selector: 'ds-themed-dso-edit-metadata',
+  selector: 'ds-dso-edit-metadata',
   styleUrls: [],
   templateUrl: './../../shared/theme-support/themed.component.html',
 })

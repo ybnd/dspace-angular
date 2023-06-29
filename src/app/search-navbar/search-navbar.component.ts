@@ -8,7 +8,7 @@ import { expandSearchInput } from '../shared/animations/slide';
  * The search box in the header that expands on focus and collapses on focus out
  */
 @Component({
-  selector: 'ds-search-navbar',
+  selector: 'ds-unthemed-search-navbar',
   templateUrl: './search-navbar.component.html',
   styleUrls: ['./search-navbar.component.scss'],
   animations: [expandSearchInput]

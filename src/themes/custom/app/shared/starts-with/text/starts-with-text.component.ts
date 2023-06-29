@@ -5,7 +5,7 @@ import {
 } from '../../../../../../app/shared/starts-with/text/starts-with-text.component';
 
 @Component({
-  selector: 'ds-starts-with-text',
+  selector: 'ds-custom-starts-with-text',
   // styleUrls: ['./starts-with-text.component.scss'],
   styleUrls: ['../../../../../../app/shared/starts-with/text/starts-with-text.component.scss'],
   // templateUrl: './starts-with-text.component.html',

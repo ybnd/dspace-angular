@@ -4,7 +4,7 @@ import { ThemedComponent } from 'src/app/shared/theme-support/themed.component';
 import { SubmissionSectionUploadFileComponent } from './section-upload-file.component';
 
 @Component({
-    selector: 'ds-themed-submission-upload-section-file',
+    selector: 'ds-submission-upload-section-file',
     styleUrls: [],
     templateUrl: '../../../../shared/theme-support/themed.component.html'
 })

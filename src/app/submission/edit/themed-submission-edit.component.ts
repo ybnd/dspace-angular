@@ -6,7 +6,7 @@ import { ThemedComponent } from '../../shared/theme-support/themed.component';
 import { SubmissionEditComponent } from './submission-edit.component';
 
 @Component({
-  selector: 'ds-themed-submission-edit',
+  selector: 'ds-submission-edit',
   styleUrls: [],
   templateUrl: './../../shared/theme-support/themed.component.html'
 })

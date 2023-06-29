@@ -4,7 +4,7 @@ import {
 } from 'src/app/request-copy/deny-request-copy/deny-request-copy.component';
 
 @Component({
-    selector: 'ds-deny-request-copy',
+    selector: 'ds-custom-deny-request-copy',
     // styleUrls: ['./deny-request-copy.component.scss'],
     styleUrls: [],
     // templateUrl: './deny-request-copy.component.html',

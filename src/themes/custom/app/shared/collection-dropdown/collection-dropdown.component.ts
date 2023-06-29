@@ -4,7 +4,7 @@ import {
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ds-collection-dropdown',
+  selector: 'ds-custom-collection-dropdown',
   templateUrl: '../../../../../app/shared/collection-dropdown/collection-dropdown.component.html',
   // templateUrl: './collection-dropdown.component.html',
   styleUrls: ['../../../../../app/shared/collection-dropdown/collection-dropdown.component.scss']

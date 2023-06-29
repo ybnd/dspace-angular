@@ -15,7 +15,7 @@ import { SearchFilterConfig } from '../models/search-filter-config.model';
  */
 
 @Component({
-  selector: 'ds-search-sidebar',
+  selector: 'ds-unthemed-search-sidebar',
   styleUrls: ['./search-sidebar.component.scss'],
   templateUrl: './search-sidebar.component.html',
 })

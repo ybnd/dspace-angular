@@ -7,7 +7,7 @@ import { SEARCH_CONFIG_SERVICE } from '../../../my-dspace-page/my-dspace-page.co
 import { PaginationService } from '../../../core/pagination/pagination.service';
 
 @Component({
-  selector: 'ds-search-settings',
+  selector: 'ds-unthemed-search-settings',
   styleUrls: ['./search-settings.component.scss'],
   templateUrl: './search-settings.component.html'
 })

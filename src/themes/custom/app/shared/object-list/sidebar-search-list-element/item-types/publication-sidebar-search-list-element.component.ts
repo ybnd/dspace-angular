@@ -12,7 +12,7 @@ import {
 @listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.SideBarSearchModal, 'custom')
 @listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.SideBarSearchModalCurrent, 'custom')
 @Component({
-  selector: 'ds-publication-sidebar-search-list-element',
+  selector: 'ds-custom-publication-sidebar-search-list-element',
   // templateUrl: './publication-sidebar-search-list-element.component.html',
   templateUrl: '../../../../../../../app/shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
 })

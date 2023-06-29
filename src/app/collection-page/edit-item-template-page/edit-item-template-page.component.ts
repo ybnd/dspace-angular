@@ -12,7 +12,7 @@ import { AlertType } from '../../shared/alert/aletr-type';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 
 @Component({
-  selector: 'ds-edit-item-template-page',
+  selector: 'ds-unthemed-edit-item-template-page',
   templateUrl: './edit-item-template-page.component.html',
 })
 /**
