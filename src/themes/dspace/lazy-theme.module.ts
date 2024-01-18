@@ -50,8 +50,7 @@ import { StatisticsModule } from '../../app/statistics/statistics.module';
 import { StatisticsPageModule } from '../../app/statistics-page/statistics-page.module';
 import { SubmissionModule } from '../../app/submission/submission.module';
 
-const DECLARATIONS = [
-];
+const DECLARATIONS = [];
 
 @NgModule({
   imports: [
@@ -117,5 +116,4 @@ const DECLARATIONS = [
  * It is purposefully not exported, it should never be imported anywhere else, its only purpose is
  * to give lazily loaded components a context in which they can be compiled successfully
  */
-class LazyThemeModule {
-}
+class LazyThemeModule {}

@@ -1,25 +1,24 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { MetadatumRepresentation } from '../../../../core/shared/metadata-representation/metadatum/metadatum-representation.model';
 import { BrowseLinkMetadataListElementComponent } from './browse-link-metadata-list-element.component';
 
-const mockMetadataRepresentation = Object.assign(new MetadatumRepresentation('type'), {
-  key: 'dc.contributor.author',
-  value: 'Test Author',
-});
+const mockMetadataRepresentation = Object.assign(
+  new MetadatumRepresentation('type'),
+  {
+    key: 'dc.contributor.author',
+    value: 'Test Author',
+  },
+);
 
-const mockMetadataRepresentationWithUrl = Object.assign(new MetadatumRepresentation('type'), {
-  key: 'dc.subject',
-  value: 'http://purl.org/test/subject',
-});
+const mockMetadataRepresentationWithUrl = Object.assign(
+  new MetadatumRepresentation('type'),
+  {
+    key: 'dc.subject',
+    value: 'http://purl.org/test/subject',
+  },
+);
 
 describe('BrowseLinkMetadataListElementComponent', () => {
   let comp: BrowseLinkMetadataListElementComponent;
@@ -30,9 +29,11 @@ describe('BrowseLinkMetadataListElementComponent', () => {
       imports: [],
       declarations: [BrowseLinkMetadataListElementComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(BrowseLinkMetadataListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(BrowseLinkMetadataListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -44,7 +45,9 @@ describe('BrowseLinkMetadataListElementComponent', () => {
 
   waitForAsync(() => {
     it('should contain the value as a browse link', () => {
-      expect(fixture.debugElement.nativeElement.textContent).toContain(mockMetadataRepresentation.value);
+      expect(fixture.debugElement.nativeElement.textContent).toContain(
+        mockMetadataRepresentation.value,
+      );
     });
     it('should NOT match isLink', () => {
       expect(comp.isLink).toBe(false);
@@ -60,11 +63,12 @@ describe('BrowseLinkMetadataListElementComponent', () => {
 
   waitForAsync(() => {
     it('should contain the value expected', () => {
-      expect(fixture.debugElement.nativeElement.textContent).toContain(mockMetadataRepresentationWithUrl.value);
+      expect(fixture.debugElement.nativeElement.textContent).toContain(
+        mockMetadataRepresentationWithUrl.value,
+      );
     });
     it('should match isLink', () => {
       expect(comp.isLink).toBe(true);
     });
   });
-
 });

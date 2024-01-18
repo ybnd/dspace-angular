@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -15,18 +12,14 @@ import { Site } from '../core/shared/site.model';
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent implements OnInit {
-
   site$: Observable<Site>;
   recentSubmissionspageSize: number;
-  constructor(
-    private route: ActivatedRoute,
-  ) {
-    this.recentSubmissionspageSize = environment.homePage.recentSubmissions.pageSize;
+  constructor(private route: ActivatedRoute) {
+    this.recentSubmissionspageSize =
+      environment.homePage.recentSubmissions.pageSize;
   }
 
   ngOnInit(): void {
-    this.site$ = this.route.data.pipe(
-      map((data) => data.site as Site),
-    );
+    this.site$ = this.route.data.pipe(map((data) => data.site as Site));
   }
 }

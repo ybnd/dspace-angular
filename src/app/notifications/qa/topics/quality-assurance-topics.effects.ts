@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Actions,
-  createEffect,
-  ofType,
-} from '@ngrx/effects';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -32,52 +28,71 @@ import { QualityAssuranceTopicsService } from './quality-assurance-topics.servic
  */
 @Injectable()
 export class QualityAssuranceTopicsEffects {
-
   /**
    * Retrieve all Quality Assurance topics managing pagination and errors.
    */
-  retrieveAllTopics$ = createEffect(() => this.actions$.pipe(
-    ofType(QualityAssuranceTopicActionTypes.RETRIEVE_ALL_TOPICS),
-    withLatestFrom(this.store$),
-    switchMap(([action, currentState]: [RetrieveAllTopicsAction, any]) => {
-      return this.qualityAssuranceTopicService.getTopics(
-        action.payload.elementsPerPage,
-        action.payload.currentPage,
-      ).pipe(
-        map((topics: PaginatedList<QualityAssuranceTopicObject>) =>
-          new AddTopicsAction(topics.page, topics.totalPages, topics.currentPage, topics.totalElements),
-        ),
-        catchError((error: unknown) => {
-          if (error instanceof Error) {
-            console.error(error.message);
-          } else {
-            console.error('Unexpected object thrown', error);
-          }
-          return observableOf(new RetrieveAllTopicsErrorAction());
-        }),
-      );
-    }),
-  ));
+  retrieveAllTopics$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(QualityAssuranceTopicActionTypes.RETRIEVE_ALL_TOPICS),
+      withLatestFrom(this.store$),
+      switchMap(([action, currentState]: [RetrieveAllTopicsAction, any]) => {
+        return this.qualityAssuranceTopicService
+          .getTopics(action.payload.elementsPerPage, action.payload.currentPage)
+          .pipe(
+            map(
+              (topics: PaginatedList<QualityAssuranceTopicObject>) =>
+                new AddTopicsAction(
+                  topics.page,
+                  topics.totalPages,
+                  topics.currentPage,
+                  topics.totalElements,
+                ),
+            ),
+            catchError((error: unknown) => {
+              if (error instanceof Error) {
+                console.error(error.message);
+              } else {
+                console.error('Unexpected object thrown', error);
+              }
+              return observableOf(new RetrieveAllTopicsErrorAction());
+            }),
+          );
+      }),
+    ),
+  );
 
   /**
    * Show a notification on error.
    */
-  retrieveAllTopicsErrorAction$ = createEffect(() => this.actions$.pipe(
-    ofType(QualityAssuranceTopicActionTypes.RETRIEVE_ALL_TOPICS_ERROR),
-    tap(() => {
-      this.notificationsService.error(null, this.translate.get('quality-assurance.topic.error.service.retrieve'));
-    }),
-  ), { dispatch: false });
+  retrieveAllTopicsErrorAction$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(QualityAssuranceTopicActionTypes.RETRIEVE_ALL_TOPICS_ERROR),
+        tap(() => {
+          this.notificationsService.error(
+            null,
+            this.translate.get(
+              'quality-assurance.topic.error.service.retrieve',
+            ),
+          );
+        }),
+      ),
+    { dispatch: false },
+  );
 
   /**
    * Clear find all topics requests from cache.
    */
-  addTopicsAction$ = createEffect(() => this.actions$.pipe(
-    ofType(QualityAssuranceTopicActionTypes.ADD_TOPICS),
-    tap(() => {
-      this.qualityAssuranceTopicDataService.clearFindAllTopicsRequests();
-    }),
-  ), { dispatch: false });
+  addTopicsAction$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(QualityAssuranceTopicActionTypes.ADD_TOPICS),
+        tap(() => {
+          this.qualityAssuranceTopicDataService.clearFindAllTopicsRequests();
+        }),
+      ),
+    { dispatch: false },
+  );
 
   /**
    * Initialize the effect class variables.
@@ -95,5 +110,5 @@ export class QualityAssuranceTopicsEffects {
     private notificationsService: NotificationsService,
     private qualityAssuranceTopicService: QualityAssuranceTopicsService,
     private qualityAssuranceTopicDataService: QualityAssuranceTopicDataService,
-  ) { }
+  ) {}
 }

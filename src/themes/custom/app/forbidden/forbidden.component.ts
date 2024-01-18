@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 import { ForbiddenComponent as BaseComponent } from '../../../../app/forbidden/forbidden.component';
 
-
 @Component({
   selector: 'ds-forbidden',
   // templateUrl: './forbidden.component.html',

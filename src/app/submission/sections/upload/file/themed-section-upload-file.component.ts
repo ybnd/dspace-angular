@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { SubmissionFormsModel } from 'src/app/core/config/models/config-submission-forms.model';
 import { ThemedComponent } from 'src/app/shared/theme-support/themed.component';
 
@@ -12,9 +9,7 @@ import { SubmissionSectionUploadFileComponent } from './section-upload-file.comp
   styleUrls: [],
   templateUrl: '../../../../shared/theme-support/themed.component.html',
 })
-export class ThemedSubmissionSectionUploadFileComponent
-  extends ThemedComponent<SubmissionSectionUploadFileComponent> {
-
+export class ThemedSubmissionSectionUploadFileComponent extends ThemedComponent<SubmissionSectionUploadFileComponent> {
   /**
    * The list of available access condition
    * @type {Array}
@@ -71,7 +66,8 @@ export class ThemedSubmissionSectionUploadFileComponent
    */
   @Input() submissionId: string;
 
-  protected inAndOutputNames: (keyof SubmissionSectionUploadFileComponent & keyof this)[] = [
+  protected inAndOutputNames: (keyof SubmissionSectionUploadFileComponent &
+    keyof this)[] = [
     'availableAccessConditionOptions',
     'collectionId',
     'collectionPolicyType',
@@ -88,7 +84,9 @@ export class ThemedSubmissionSectionUploadFileComponent
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../themes/${themeName}/app/submission/sections/upload/file/section-upload-file.component`);
+    return import(
+      `../../../../../themes/${themeName}/app/submission/sections/upload/file/section-upload-file.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

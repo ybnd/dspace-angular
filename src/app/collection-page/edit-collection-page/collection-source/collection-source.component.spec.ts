@@ -1,18 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   DynamicFormControlModel,
@@ -44,9 +34,21 @@ import {
 import { RouterStub } from '../../../shared/testing/router.stub';
 import { CollectionSourceComponent } from './collection-source.component';
 
-const infoNotification: INotification = new Notification('id', NotificationType.Info, 'info');
-const warningNotification: INotification = new Notification('id', NotificationType.Warning, 'warning');
-const successNotification: INotification = new Notification('id', NotificationType.Success, 'success');
+const infoNotification: INotification = new Notification(
+  'id',
+  NotificationType.Info,
+  'info',
+);
+const warningNotification: INotification = new Notification(
+  'id',
+  NotificationType.Warning,
+  'warning',
+);
+const successNotification: INotification = new Notification(
+  'id',
+  NotificationType.Success,
+  'success',
+);
 
 const uuid = '29481ed7-ae6b-409a-8c51-34dd347a0ce4';
 let date: Date;
@@ -92,36 +94,34 @@ describe('CollectionSourceComponent', () => {
       field: contentSource,
       changeType: undefined,
     };
-    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService',
-      {
-        getFieldUpdates: observableOf({
-          [contentSource.uuid]: fieldUpdate,
-        }),
-        saveAddFieldUpdate: {},
-        discardFieldUpdates: {},
-        reinstateFieldUpdates: observableOf(true),
-        initialize: {},
-        getUpdatedFields: observableOf([contentSource]),
-        getLastModified: observableOf(date),
-        hasUpdates: observableOf(true),
-        isReinstatable: observableOf(false),
-        isValidPage: observableOf(true),
-      },
-    );
-    notificationsService = jasmine.createSpyObj('notificationsService',
-      {
-        info: infoNotification,
-        warning: warningNotification,
-        success: successNotification,
-      },
-    );
+    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService', {
+      getFieldUpdates: observableOf({
+        [contentSource.uuid]: fieldUpdate,
+      }),
+      saveAddFieldUpdate: {},
+      discardFieldUpdates: {},
+      reinstateFieldUpdates: observableOf(true),
+      initialize: {},
+      getUpdatedFields: observableOf([contentSource]),
+      getLastModified: observableOf(date),
+      hasUpdates: observableOf(true),
+      isReinstatable: observableOf(false),
+      isValidPage: observableOf(true),
+    });
+    notificationsService = jasmine.createSpyObj('notificationsService', {
+      info: infoNotification,
+      warning: warningNotification,
+      success: successNotification,
+    });
     location = jasmine.createSpyObj('location', ['back']);
     formService = Object.assign({
       createFormGroup: (fModel: DynamicFormControlModel[]) => {
         const controls = {};
         if (hasValue(fModel)) {
           fModel.forEach((controlModel) => {
-            controls[controlModel.id] = new UntypedFormControl((controlModel as any).value);
+            controls[controlModel.id] = new UntypedFormControl(
+              (controlModel as any).value,
+            );
           });
           return new UntypedFormGroup(controls);
         }
@@ -139,7 +139,10 @@ describe('CollectionSourceComponent', () => {
       updateContentSource: observableOf(contentSource),
       getHarvesterEndpoint: observableOf('harvester-endpoint'),
     });
-    requestService = jasmine.createSpyObj('requestService', ['removeByHrefSubstring', 'setStaleByHrefSubstring']);
+    requestService = jasmine.createSpyObj('requestService', [
+      'removeByHrefSubstring',
+      'setStaleByHrefSubstring',
+    ]);
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), RouterTestingModule],
@@ -149,7 +152,16 @@ describe('CollectionSourceComponent', () => {
         { provide: NotificationsService, useValue: notificationsService },
         { provide: Location, useValue: location },
         { provide: DynamicFormService, useValue: formService },
-        { provide: ActivatedRoute, useValue: { parent: { data: observableOf({ dso: createSuccessfulRemoteDataObject(collection) }) } } },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            parent: {
+              data: observableOf({
+                dso: createSuccessfulRemoteDataObject(collection),
+              }),
+            },
+          },
+        },
         { provide: Router, useValue: router },
         { provide: CollectionDataService, useValue: collectionService },
         { provide: RequestService, useValue: requestService },
@@ -172,7 +184,9 @@ describe('CollectionSourceComponent', () => {
     });
 
     it('ContentSource should be disabled', () => {
-      expect(comp.contentSource.harvestType).toEqual(ContentSourceHarvestType.None);
+      expect(comp.contentSource.harvestType).toEqual(
+        ContentSourceHarvestType.None,
+      );
     });
 
     it('the input-form should be hidden', () => {
@@ -185,18 +199,25 @@ describe('CollectionSourceComponent', () => {
     let form;
 
     beforeEach(() => {
-      input = fixture.debugElement.query(By.css('#externalSourceCheck')).nativeElement;
+      input = fixture.debugElement.query(
+        By.css('#externalSourceCheck'),
+      ).nativeElement;
       input.click();
       fixture.detectChanges();
       form = fixture.debugElement.query(By.css('ds-form'));
     });
 
     it('should enable ContentSource', () => {
-      expect(comp.contentSource.harvestType).not.toEqual(ContentSourceHarvestType.None);
+      expect(comp.contentSource.harvestType).not.toEqual(
+        ContentSourceHarvestType.None,
+      );
     });
 
     it('should send a field update', () => {
-      expect(objectUpdatesService.saveAddFieldUpdate).toHaveBeenCalledWith(router.url, comp.contentSource);
+      expect(objectUpdatesService.saveAddFieldUpdate).toHaveBeenCalledWith(
+        router.url,
+        comp.contentSource,
+      );
     });
 
     it('should display the form', () => {

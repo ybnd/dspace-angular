@@ -1,12 +1,6 @@
-import {
-  CommonModule,
-  DOCUMENT,
-} from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { TestBed } from '@angular/core/testing';
-import {
-  ActivatedRouteSnapshot,
-  Router,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { ROUTER_NAVIGATED } from '@ngrx/router-store';
 import { provideMockStore } from '@ngrx/store/testing';
@@ -43,8 +37,7 @@ import { ThemeService } from './theme.service';
 class MockLinkService {
   index = -1;
 
-  constructor(private ancestorDSOs: DSpaceObject[]) {
-  }
+  constructor(private ancestorDSOs: DSpaceObject[]) {}
 
   resolveLinkWithoutAttaching() {
     if (this.index >= this.ancestorDSOs.length - 1) {
@@ -98,9 +91,7 @@ describe('ThemeService', () => {
       findById: () => createSuccessfulRemoteDataObject$(mockCommunity),
     };
     TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-      ],
+      imports: [CommonModule],
       providers: [
         ThemeService,
         { provide: LinkService, useValue: linkService },
@@ -124,9 +115,15 @@ describe('ThemeService', () => {
     });
 
     function spyOnPrivateMethods() {
-      spyOn((themeService as any), 'getAncestorDSOs').and.returnValue(() => observableOf([dso]));
-      spyOn((themeService as any), 'matchThemeToDSOs').and.returnValue(observableOf(new Theme({ name: 'custom' })));
-      spyOn((themeService as any), 'getActionForMatch').and.returnValue(new SetThemeAction('custom'));
+      spyOn(themeService as any, 'getAncestorDSOs').and.returnValue(() =>
+        observableOf([dso]),
+      );
+      spyOn(themeService as any, 'matchThemeToDSOs').and.returnValue(
+        observableOf(new Theme({ name: 'custom' })),
+      );
+      spyOn(themeService as any, 'getActionForMatch').and.returnValue(
+        new SetThemeAction('custom'),
+      );
     }
 
     describe('when no resolved action is present', () => {
@@ -143,17 +140,23 @@ describe('ThemeService', () => {
       });
 
       it('should set the theme it receives from the route url', (done) => {
-        themeService.updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot).subscribe(() => {
-          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(new SetThemeAction('custom') as any);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot)
+          .subscribe(() => {
+            expect((themeService as any).store.dispatch).toHaveBeenCalledWith(
+              new SetThemeAction('custom') as any,
+            );
+            done();
+          });
       });
 
       it('should return true', (done) => {
-        themeService.updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
 
@@ -171,21 +174,25 @@ describe('ThemeService', () => {
       });
 
       it('should not dispatch any action', (done) => {
-        themeService.updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot).subscribe(() => {
-          expect((themeService as any).store.dispatch).not.toHaveBeenCalled();
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot)
+          .subscribe(() => {
+            expect((themeService as any).store.dispatch).not.toHaveBeenCalled();
+            done();
+          });
       });
 
       it('should return false', (done) => {
-        themeService.updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot).subscribe((result) => {
-          expect(result).toEqual(false);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, {} as ActivatedRouteSnapshot)
+          .subscribe((result) => {
+            expect(result).toEqual(false);
+            done();
+          });
       });
     });
 
-    describe('when a dso is present in the snapshot\'s data', () => {
+    describe("when a dso is present in the snapshot's data", () => {
       let snapshot;
 
       beforeEach(() => {
@@ -214,20 +221,24 @@ describe('ThemeService', () => {
 
       it('should set the theme it receives from the data dso', (done) => {
         themeService.updateThemeOnRouteChange$(url, snapshot).subscribe(() => {
-          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(new SetThemeAction('custom') as any);
+          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(
+            new SetThemeAction('custom') as any,
+          );
           done();
         });
       });
 
       it('should return true', (done) => {
-        themeService.updateThemeOnRouteChange$(url, snapshot).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, snapshot)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
 
-    describe('when a scope is present in the snapshot\'s parameters', () => {
+    describe("when a scope is present in the snapshot's parameters", () => {
       let snapshot;
 
       beforeEach(() => {
@@ -256,16 +267,20 @@ describe('ThemeService', () => {
 
       it('should set the theme it receives from the dso found through the scope', (done) => {
         themeService.updateThemeOnRouteChange$(url, snapshot).subscribe(() => {
-          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(new SetThemeAction('custom') as any);
+          expect((themeService as any).store.dispatch).toHaveBeenCalledWith(
+            new SetThemeAction('custom') as any,
+          );
           done();
         });
       });
 
       it('should return true', (done) => {
-        themeService.updateThemeOnRouteChange$(url, snapshot).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        themeService
+          .updateThemeOnRouteChange$(url, snapshot)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
   });
@@ -278,12 +293,16 @@ describe('ThemeService', () => {
     describe('getActionForMatch', () => {
       it('should return a SET action if the new theme differs from the current theme', () => {
         const theme = new Theme({ name: 'new-theme' });
-        expect((themeService as any).getActionForMatch(theme, 'old-theme')).toEqual(new SetThemeAction('new-theme'));
+        expect(
+          (themeService as any).getActionForMatch(theme, 'old-theme'),
+        ).toEqual(new SetThemeAction('new-theme'));
       });
 
       it('should return an empty action if the new theme equals the current theme', () => {
         const theme = new Theme({ name: 'old-theme' });
-        expect((themeService as any).getActionForMatch(theme, 'old-theme')).toEqual(new NoOpAction());
+        expect(
+          (themeService as any).getActionForMatch(theme, 'old-theme'),
+        ).toEqual(new NoOpAction());
       });
     });
 
@@ -295,15 +314,26 @@ describe('ThemeService', () => {
       let dsos: DSpaceObject[];
 
       beforeEach(() => {
-        nonMatchingTheme = Object.assign(new Theme({ name: 'non-matching-theme' }), {
-          matches: () => observableOf(false),
-        });
-        itemMatchingTheme = Object.assign(new Theme({ name: 'item-matching-theme' }), {
-          matches: (url, dso) => observableOf((dso as any).type === ITEM.value),
-        });
-        communityMatchingTheme = Object.assign(new Theme({ name: 'community-matching-theme' }), {
-          matches: (url, dso) => observableOf((dso as any).type === COMMUNITY.value),
-        });
+        nonMatchingTheme = Object.assign(
+          new Theme({ name: 'non-matching-theme' }),
+          {
+            matches: () => observableOf(false),
+          },
+        );
+        itemMatchingTheme = Object.assign(
+          new Theme({ name: 'item-matching-theme' }),
+          {
+            matches: (url, dso) =>
+              observableOf((dso as any).type === ITEM.value),
+          },
+        );
+        communityMatchingTheme = Object.assign(
+          new Theme({ name: 'community-matching-theme' }),
+          {
+            matches: (url, dso) =>
+              observableOf((dso as any).type === COMMUNITY.value),
+          },
+        );
         dsos = [
           Object.assign(new Item(), {
             type: ITEM.value,
@@ -322,49 +352,65 @@ describe('ThemeService', () => {
 
       describe('when no themes match any of the DSOs', () => {
         beforeEach(() => {
-          themes = [ nonMatchingTheme ];
+          themes = [nonMatchingTheme];
           themeService.themes = themes;
         });
 
         it('should return undefined', (done: DoneFn) => {
-          (themeService as any).matchThemeToDSOs(dsos, '').subscribe((theme: Theme) => {
-            expect(theme).toBeUndefined();
-            done();
-          });
+          (themeService as any)
+            .matchThemeToDSOs(dsos, '')
+            .subscribe((theme: Theme) => {
+              expect(theme).toBeUndefined();
+              done();
+            });
         });
       });
 
       describe('when one of the themes match a DSOs', () => {
         beforeEach(() => {
-          themes = [ nonMatchingTheme, itemMatchingTheme ];
+          themes = [nonMatchingTheme, itemMatchingTheme];
           themeService.themes = themes;
         });
 
         it('should return the matching theme', (done: DoneFn) => {
-          (themeService as any).matchThemeToDSOs(dsos, '').subscribe((theme: Theme) => {
-            expect(theme).toBe(itemMatchingTheme);
-            done();
-          });
+          (themeService as any)
+            .matchThemeToDSOs(dsos, '')
+            .subscribe((theme: Theme) => {
+              expect(theme).toBe(itemMatchingTheme);
+              done();
+            });
         });
       });
 
       describe('when multiple themes match some of the DSOs', () => {
         it('should return the first matching theme (itemMatchingTheme)', (done: DoneFn) => {
-          themes = [ nonMatchingTheme, itemMatchingTheme, communityMatchingTheme ];
+          themes = [
+            nonMatchingTheme,
+            itemMatchingTheme,
+            communityMatchingTheme,
+          ];
           themeService.themes = themes;
-          (themeService as any).matchThemeToDSOs(dsos, '').subscribe((theme: Theme) => {
-            expect(theme).toBe(itemMatchingTheme);
-            done();
-          });
+          (themeService as any)
+            .matchThemeToDSOs(dsos, '')
+            .subscribe((theme: Theme) => {
+              expect(theme).toBe(itemMatchingTheme);
+              done();
+            });
         });
 
         it('should return the first matching theme (communityMatchingTheme)', (done: DoneFn) => {
-          themes = [ nonMatchingTheme, communityMatchingTheme, itemMatchingTheme ];
+          themes = [
+            nonMatchingTheme,
+            communityMatchingTheme,
+            itemMatchingTheme,
+          ];
           themeService.themes = themes;
-          (themeService as any).matchThemeToDSOs(dsos, '').subscribe((theme: Theme) => {
-            expect(theme).toBe(communityMatchingTheme);
-            done();
-          });
+          (themeService as any)
+            .matchThemeToDSOs(dsos, '')
+            .subscribe((theme: Theme) => {
+              expect(theme).toBe(communityMatchingTheme);
+              done();
+            });
         });
       });
     });
@@ -377,26 +423,26 @@ describe('ThemeService', () => {
           _links: { owningCollection: { href: 'owning-collection-link' } },
         });
 
-        observableOf(dso).pipe(
-          (themeService as any).getAncestorDSOs(),
-        ).subscribe((result) => {
-          expect(result).toEqual([dso, ...ancestorDSOs]);
-          done();
-        });
+        observableOf(dso)
+          .pipe((themeService as any).getAncestorDSOs())
+          .subscribe((result) => {
+            expect(result).toEqual([dso, ...ancestorDSOs]);
+            done();
+          });
       });
 
-      it('should return an array of just the provided DSO if it doesn\'t have any parents', (done) => {
+      it("should return an array of just the provided DSO if it doesn't have any parents", (done) => {
         const dso = {
           type: ITEM.value,
           uuid: 'item-uuid',
         };
 
-        observableOf(dso).pipe(
-          (themeService as any).getAncestorDSOs(),
-        ).subscribe((result) => {
-          expect(result).toEqual([dso]);
-          done();
-        });
+        observableOf(dso)
+          .pipe((themeService as any).getAncestorDSOs())
+          .subscribe((result) => {
+            expect(result).toEqual([dso]);
+            done();
+          });
       });
     });
   });
@@ -412,9 +458,7 @@ describe('ThemeService', () => {
       configurationService = new ConfigurationDataServiceStub();
 
       TestBed.configureTestingModule({
-        imports: [
-          CommonModule,
-        ],
+        imports: [CommonModule],
         providers: [
           ThemeService,
           { provide: LinkService, useValue: linkService },
@@ -426,13 +470,18 @@ describe('ThemeService', () => {
       });
 
       document = TestBed.inject(DOCUMENT);
-      headSpy = jasmine.createSpyObj('head', ['appendChild', 'getElementsByClassName']);
+      headSpy = jasmine.createSpyObj('head', [
+        'appendChild',
+        'getElementsByClassName',
+      ]);
       headSpy.getElementsByClassName.and.returnValue([]);
       spyOn(document, 'getElementsByTagName').and.returnValue([headSpy]);
 
       themeService = TestBed.inject(ThemeService);
       spyOn(themeService, 'getThemeName').and.returnValue('custom');
-      spyOn(themeService, 'getThemeName$').and.returnValue(observableOf('custom'));
+      spyOn(themeService, 'getThemeName$').and.returnValue(
+        observableOf('custom'),
+      );
     });
 
     it('should append a link element with the correct attributes to the head element', () => {

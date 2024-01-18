@@ -6,15 +6,15 @@ import { Config } from './config.interface';
 export interface HomeConfig extends Config {
   recentSubmissions: {
     /**
-   * The number of item showing in recent submission components
-   */
+     * The number of item showing in recent submission components
+     */
     pageSize: number;
 
     /**
      * sort record of recent submission
      */
     sortField: string;
-  }
+  };
 
   topLevelCommunityList: {
     pageSize: number;

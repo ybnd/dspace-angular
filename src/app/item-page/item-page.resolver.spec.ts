@@ -11,10 +11,14 @@ import { ItemPageResolver } from './item-page.resolver';
 describe('ItemPageResolver', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes([{
-        path: 'entities/:entity-type/:id',
-        component: {} as any,
-      }])],
+      imports: [
+        RouterTestingModule.withRoutes([
+          {
+            path: 'entities/:entity-type/:id',
+            component: {} as any,
+          },
+        ]),
+      ],
     });
   });
 
@@ -32,7 +36,10 @@ describe('ItemPageResolver', () => {
         router = TestBed.inject(Router);
         item = Object.assign(new DSpaceObject(), {
           uuid: uuid,
-          firstMetadataValue(_keyOrKeys: string | string[], _valueFilter?: MetadataValueFilter): string {
+          firstMetadataValue(
+            _keyOrKeys: string | string[],
+            _valueFilter?: MetadataValueFilter,
+          ): string {
             return entityType;
           },
         });
@@ -49,28 +56,38 @@ describe('ItemPageResolver', () => {
         spyOn(item, 'firstMetadataValue').and.returnValue(entityType);
         spyOn(router, 'navigateByUrl').and.callThrough();
 
-        resolver.resolve({ params: { id: uuid } } as any, { url: router.parseUrl(`/items/${uuid}`).toString() } as any)
+        resolver
+          .resolve(
+            { params: { id: uuid } } as any,
+            { url: router.parseUrl(`/items/${uuid}`).toString() } as any,
+          )
           .pipe(first())
-          .subscribe(
-            () => {
-              expect(router.navigateByUrl).toHaveBeenCalledWith(router.parseUrl(`/entities/${entityType}/${uuid}`).toString());
-              done();
-            },
-          );
+          .subscribe(() => {
+            expect(router.navigateByUrl).toHaveBeenCalledWith(
+              router.parseUrl(`/entities/${entityType}/${uuid}`).toString(),
+            );
+            done();
+          });
       });
 
       it('should not redirect if we’re already on the correct route', (done) => {
         spyOn(item, 'firstMetadataValue').and.returnValue(entityType);
         spyOn(router, 'navigateByUrl').and.callThrough();
 
-        resolver.resolve({ params: { id: uuid } } as any, { url: router.parseUrl(`/entities/${entityType}/${uuid}`).toString() } as any)
+        resolver
+          .resolve(
+            { params: { id: uuid } } as any,
+            {
+              url: router
+                .parseUrl(`/entities/${entityType}/${uuid}`)
+                .toString(),
+            } as any,
+          )
           .pipe(first())
-          .subscribe(
-            () => {
-              expect(router.navigateByUrl).not.toHaveBeenCalled();
-              done();
-            },
-          );
+          .subscribe(() => {
+            expect(router.navigateByUrl).not.toHaveBeenCalled();
+            done();
+          });
       });
     }
 
@@ -83,6 +100,5 @@ describe('ItemPageResolver', () => {
       runTestsWithEntityType('🐊');
       runTestsWithEntityType(' ');
     });
-
   });
 });

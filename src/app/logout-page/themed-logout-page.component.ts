@@ -17,7 +17,9 @@ export class ThemedLogoutPageComponent extends ThemedComponent<LogoutPageCompone
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/logout-page/logout-page.component`);
+    return import(
+      `../../themes/${themeName}/app/logout-page/logout-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

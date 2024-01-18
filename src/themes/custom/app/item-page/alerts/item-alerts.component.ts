@@ -9,5 +9,4 @@ import { ItemAlertsComponent as BaseComponent } from '../../../../../app/item-pa
   // styleUrls: ['./item-alerts.component.scss'],
   styleUrls: ['../../../../../app/item-page/alerts/item-alerts.component.scss'],
 })
-export class ItemAlertsComponent extends BaseComponent {
-}
+export class ItemAlertsComponent extends BaseComponent {}

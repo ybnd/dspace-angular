@@ -1,18 +1,6 @@
-import {
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  EMPTY,
-  Observable,
-} from 'rxjs';
-import {
-  mergeMap,
-  tap,
-} from 'rxjs/operators';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, EMPTY, Observable } from 'rxjs';
+import { mergeMap, tap } from 'rxjs/operators';
 
 import {
   APP_CONFIG,
@@ -28,10 +16,7 @@ import { getFirstCompletedRemoteData } from '../../../../core/shared/operators';
 import { ViewMode } from '../../../../core/shared/view-mode.model';
 import { WorkflowItem } from '../../../../core/submission/models/workflowitem.model';
 import { PoolTask } from '../../../../core/tasks/models/pool-task-object.model';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../empty.util';
+import { hasValue, isNotEmpty } from '../../../empty.util';
 import { listableObjectComponent } from '../../../object-collection/shared/listable-object/listable-object.decorator';
 import { PoolTaskSearchResult } from '../../../object-collection/shared/pool-task-search-result.model';
 import { TruncatableService } from '../../../truncatable/truncatable.service';
@@ -43,13 +28,16 @@ import { SearchResultListElementComponent } from '../../search-result-list-eleme
  */
 @Component({
   selector: 'ds-pool-search-result-list-element',
-  styleUrls: ['../../search-result-list-element/search-result-list-element.component.scss'],
+  styleUrls: [
+    '../../search-result-list-element/search-result-list-element.component.scss',
+  ],
   templateUrl: './pool-search-result-list-element.component.html',
 })
-
 @listableObjectComponent(PoolTaskSearchResult, ViewMode.ListElement)
-export class PoolSearchResultListElementComponent extends SearchResultListElementComponent<PoolTaskSearchResult, PoolTask>  implements OnInit, OnDestroy {
-
+export class PoolSearchResultListElementComponent
+  extends SearchResultListElementComponent<PoolTaskSearchResult, PoolTask>
+  implements OnInit, OnDestroy
+{
   /**
    * A boolean representing if to show submitter information
    */
@@ -68,7 +56,8 @@ export class PoolSearchResultListElementComponent extends SearchResultListElemen
   /**
    * The workflowitem object that belonging to the result object
    */
-  public workflowitem$: BehaviorSubject<WorkflowItem> = new BehaviorSubject<WorkflowItem>(null);
+  public workflowitem$: BehaviorSubject<WorkflowItem> =
+    new BehaviorSubject<WorkflowItem>(null);
 
   /**
    * The index of this list element
@@ -95,29 +84,37 @@ export class PoolSearchResultListElementComponent extends SearchResultListElemen
    */
   ngOnInit() {
     super.ngOnInit();
-    this.linkService.resolveLinks(this.dso, followLink('workflowitem', {},
-      followLink('item', {}, followLink('bundles')),
-      followLink('submitter'),
-    ), followLink('action'));
+    this.linkService.resolveLinks(
+      this.dso,
+      followLink(
+        'workflowitem',
+        {},
+        followLink('item', {}, followLink('bundles')),
+        followLink('submitter'),
+      ),
+      followLink('action'),
+    );
 
-    (this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>).pipe(
-      getFirstCompletedRemoteData(),
-      mergeMap((wfiRD: RemoteData<WorkflowItem>) => {
-        if (wfiRD.hasSucceeded) {
-          this.workflowitem$.next(wfiRD.payload);
-          return (wfiRD.payload.item as Observable<RemoteData<Item>>).pipe(
-            getFirstCompletedRemoteData(),
-          );
-        } else {
-          return EMPTY;
-        }
-      }),
-      tap((itemRD: RemoteData<Item>) => {
-        if (isNotEmpty(itemRD) && itemRD.hasSucceeded) {
-          this.item$.next(itemRD.payload);
-        }
-      }),
-    ).subscribe();
+    (this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        mergeMap((wfiRD: RemoteData<WorkflowItem>) => {
+          if (wfiRD.hasSucceeded) {
+            this.workflowitem$.next(wfiRD.payload);
+            return (wfiRD.payload.item as Observable<RemoteData<Item>>).pipe(
+              getFirstCompletedRemoteData(),
+            );
+          } else {
+            return EMPTY;
+          }
+        }),
+        tap((itemRD: RemoteData<Item>) => {
+          if (isNotEmpty(itemRD) && itemRD.hasSucceeded) {
+            this.item$.next(itemRD.payload);
+          }
+        }),
+      )
+      .subscribe();
 
     this.showThumbnails = this.appConfig.browseBy.showThumbnails;
   }

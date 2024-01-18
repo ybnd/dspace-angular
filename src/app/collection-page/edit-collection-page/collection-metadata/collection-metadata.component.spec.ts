@@ -1,15 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -72,12 +64,26 @@ describe('CollectionMetadataComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [CollectionMetadataComponent],
       providers: [
         { provide: CollectionDataService, useValue: {} },
         { provide: ItemTemplateDataService, useValue: itemTemplateServiceStub },
-        { provide: ActivatedRoute, useValue: { parent: { data: observableOf({ dso: createSuccessfulRemoteDataObject(collection) }) } } },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            parent: {
+              data: observableOf({
+                dso: createSuccessfulRemoteDataObject(collection),
+              }),
+            },
+          },
+        },
         { provide: NotificationsService, useValue: notificationsService },
         { provide: RequestService, useValue: requestService },
         { provide: Router, useValue: routerMock },
@@ -104,15 +110,19 @@ describe('CollectionMetadataComponent', () => {
   });
 
   describe('addItemTemplate', () => {
-    it('should navigate to the collection\'s itemtemplate page', () => {
+    it("should navigate to the collection's itemtemplate page", () => {
       comp.addItemTemplate();
-      expect(routerMock.navigate).toHaveBeenCalledWith([getCollectionItemTemplateRoute(collection.uuid)]);
+      expect(routerMock.navigate).toHaveBeenCalledWith([
+        getCollectionItemTemplateRoute(collection.uuid),
+      ]);
     });
   });
 
   describe('deleteItemTemplate', () => {
     beforeEach(() => {
-      (itemTemplateService.delete as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$({}));
+      (itemTemplateService.delete as jasmine.Spy).and.returnValue(
+        createSuccessfulRemoteDataObject$({}),
+      );
       comp.deleteItemTemplate();
     });
 
@@ -128,7 +138,9 @@ describe('CollectionMetadataComponent', () => {
 
     describe('when delete returns a failure', () => {
       beforeEach(() => {
-        (itemTemplateService.delete as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$());
+        (itemTemplateService.delete as jasmine.Spy).and.returnValue(
+          createFailedRemoteDataObject$(),
+        );
         comp.deleteItemTemplate();
       });
 

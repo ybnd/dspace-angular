@@ -1,16 +1,6 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -27,7 +17,14 @@ describe('EditItemSelectorComponent', () => {
 
   const item = new Item();
   item.uuid = '1234-1234-1234-1234';
-  item.metadata = { 'dc.title': [Object.assign(new MetadataValue(), { value: 'Item title', language: undefined })] };
+  item.metadata = {
+    'dc.title': [
+      Object.assign(new MetadataValue(), {
+        value: 'Item title',
+        language: undefined,
+      }),
+    ],
+  };
   const router = new RouterStub();
   const itemRD = createSuccessfulRemoteDataObject(item);
   const modalStub = jasmine.createSpyObj('modalStub', ['close']);
@@ -52,12 +49,12 @@ describe('EditItemSelectorComponent', () => {
           },
         },
         {
-          provide: Router, useValue: router,
+          provide: Router,
+          useValue: router,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -75,5 +72,4 @@ describe('EditItemSelectorComponent', () => {
     component.navigate(item);
     expect(router.navigate).toHaveBeenCalledWith([editPath]);
   });
-
 });

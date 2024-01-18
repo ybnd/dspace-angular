@@ -10,5 +10,4 @@ export class SidebarServiceStub {
   expand(): void {
     this.isCollapsed = observableOf(false);
   }
-
 }

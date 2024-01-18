@@ -1,7 +1,4 @@
-import {
-  deserializeAs,
-  inheritSerialization,
-} from 'cerialize';
+import { deserializeAs, inheritSerialization } from 'cerialize';
 
 import {
   inheritLinkAnnotations,
@@ -26,5 +23,5 @@ export class WorkspaceItem extends SubmissionObject {
    * It is based on the ID, so it will be the same for each refresh.
    */
   @deserializeAs(new IDToUUIDSerializer(WorkspaceItem.type.value), 'id')
-    uuid: string;
+  uuid: string;
 }

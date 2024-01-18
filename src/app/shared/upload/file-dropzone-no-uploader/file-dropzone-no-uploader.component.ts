@@ -8,10 +8,7 @@ import {
 } from '@angular/core';
 import uniqueId from 'lodash/uniqueId';
 import { FileUploader } from 'ng2-file-upload';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { UploaderOptions } from '../uploader/uploader-options.model';
 
@@ -28,7 +25,6 @@ import { UploaderOptions } from '../uploader/uploader-options.model';
   styleUrls: ['./file-dropzone-no-uploader.scss'],
 })
 export class FileDropzoneNoUploaderComponent implements OnInit {
-
   public isOverDocumentDropZone: Observable<boolean>;
   public uploader: FileUploader;
   public uploaderId: string;
@@ -98,5 +94,4 @@ export class FileDropzoneNoUploaderComponent implements OnInit {
     this.fileObject = files.length > 0 ? files[0] : undefined;
     this.onFileAdded.emit(this.fileObject);
   }
-
 }

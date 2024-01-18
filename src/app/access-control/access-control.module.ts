@@ -26,10 +26,15 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
 /**
  * Condition for displaying error messages on email form field
  */
-export const ValidateEmailErrorStateMatcher: DynamicErrorMessagesMatcher =
-  (control: AbstractControl, model: any, hasFocus: boolean) => {
-    return (control.touched && !hasFocus) || (control.errors?.emailTaken && hasFocus);
-  };
+export const ValidateEmailErrorStateMatcher: DynamicErrorMessagesMatcher = (
+  control: AbstractControl,
+  model: any,
+  hasFocus: boolean,
+) => {
+  return (
+    (control.touched && !hasFocus) || (control.errors?.emailTaken && hasFocus)
+  );
+};
 
 @NgModule({
   imports: [
@@ -42,9 +47,7 @@ export const ValidateEmailErrorStateMatcher: DynamicErrorMessagesMatcher =
     SearchModule,
     AccessControlFormModule,
   ],
-  exports: [
-    MembersListComponent,
-  ],
+  exports: [MembersListComponent],
   declarations: [
     EPeopleRegistryComponent,
     EPersonFormComponent,
@@ -66,6 +69,4 @@ export const ValidateEmailErrorStateMatcher: DynamicErrorMessagesMatcher =
 /**
  * This module handles all components related to the access control pages
  */
-export class AccessControlModule {
-
-}
+export class AccessControlModule {}

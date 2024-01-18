@@ -1,5 +1,4 @@
 {
-
   // "401.help": "You're not authorized to access this page. You can use the button below to get back to the home page.",
   "401.help": "Bu sayfaya erişim yetkiniz bulunmamaktadır. Ana sayfaya dönmek için aşağıdaki butonu kullanabilirsiniz.",
 
@@ -9,8 +8,6 @@
   // "401.unauthorized": "unauthorized",
   "401.unauthorized": "yetkisiz",
 
-
-
   // "403.help": "You don't have permission to access this page. You can use the button below to get back to the home page.",
   "403.help": "Bu sayfaya erişim yetkiniz bulunmamaktadır. Ana sayfaya dönmek için aşağıdaki butonu kullanabilirsiniz.",
 
@@ -19,8 +16,6 @@
 
   // "403.forbidden": "forbidden",
   "403.forbidden": "yasaklı",
-
-
 
   // "404.help": "We can't find the page you're looking for. The page may have been moved or deleted. You can use the button below to get back to the home page. ",
   "404.help": "Aradığınız sayfayı bulamıyoruz. Sayfa taşınmış veya silinmiş olabilir. Ana sayfaya geri dönmek için aşağıdaki butonu kullanabilirsiniz. ",
@@ -177,8 +172,6 @@
   // "admin.registries.bitstream-formats.title": "DSpace Angular :: Bitstream Format Registry",
   "admin.registries.bitstream-formats.title": "DSpace Angular :: Bitstream Biçimi Kayıt Defteri ",
 
-
-
   // "admin.registries.metadata.breadcrumbs": "Metadata registry",
   "admin.registries.metadata.breadcrumbs": "Metadata kayıt defteri",
 
@@ -218,13 +211,11 @@
   // "admin.registries.metadata.title": "DSpace Angular :: Metadata Registry",
   "admin.registries.metadata.title": "DSpace Angular :: Metadata Kayıt Defteri",
 
-
-
   // "admin.registries.schema.breadcrumbs": "Metadata schema",
   "admin.registries.schema.breadcrumbs": "Metadata şeması",
 
   // "admin.registries.schema.description": "This is the metadata schema for \"{{namespace}}\".",
-  "admin.registries.schema.description": "Bu, \"{{namesapce}}\" için metadata şemasıdır.",
+  "admin.registries.schema.description": 'Bu, "{{namesapce}}" için metadata şemasıdır.',
 
   // "admin.registries.schema.fields.head": "Schema metadata fields",
   "admin.registries.schema.fields.head": "Şema metadata alanları",
@@ -262,7 +253,7 @@
   "admin.registries.schema.head": "Metadata Şeması",
 
   // "admin.registries.schema.notification.created": "Successfully created metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.created": "Metadata şeması \"{{prefix}}\" başarıyla oluşturuldu",
+  "admin.registries.schema.notification.created": 'Metadata şeması "{{prefix}}" başarıyla oluşturuldu',
 
   // "admin.registries.schema.notification.deleted.failure": "Failed to delete {{amount}} metadata schemas",
   "admin.registries.schema.notification.deleted.failure": "{{amount}} metadata şeması silinemedi",
@@ -271,13 +262,13 @@
   "admin.registries.schema.notification.deleted.success": "{{amount}} metadata şeması başarıyla silindi",
 
   // "admin.registries.schema.notification.edited": "Successfully edited metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.edited": "Metadata şeması \"{{prefix}}\" başarıyla düzenlendi",
+  "admin.registries.schema.notification.edited": 'Metadata şeması "{{prefix}}" başarıyla düzenlendi',
 
   // "admin.registries.schema.notification.failure": "Error",
   "admin.registries.schema.notification.failure": "Hata",
 
   // "admin.registries.schema.notification.field.created": "Successfully created metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.created": "\"{{field}}\" metadata alanı başarıyla oluşturuldu",
+  "admin.registries.schema.notification.field.created": '"{{field}}" metadata alanı başarıyla oluşturuldu',
 
   // "admin.registries.schema.notification.field.deleted.failure": "Failed to delete {{amount}} metadata fields",
   "admin.registries.schema.notification.field.deleted.failure": "{{amount}} metadata alanı silinemedi",
@@ -286,7 +277,7 @@
   "admin.registries.schema.notification.field.deleted.success": "{{amount}} metadata alanı başarıyla silindi",
 
   // "admin.registries.schema.notification.field.edited": "Successfully edited metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.edited": "Metadata alanı \"{{field}}\" başarıyla düzenlendi",
+  "admin.registries.schema.notification.field.edited": 'Metadata alanı "{{field}}" başarıyla düzenlendi',
 
   // "admin.registries.schema.notification.success": "Success",
   "admin.registries.schema.notification.success": "Başarılı",
@@ -296,8 +287,6 @@
 
   // "admin.registries.schema.title": "DSpace Angular :: Metadata Schema Registry",
   "admin.registries.schema.title": "DSpace Angular :: Metadata Şeması Kayıt Defteri",
-
-
 
   // "admin.access-control.epeople.actions.delete": "Delete EPerson",
   "admin.access-control.epeople.actions.delete": "E-Kişiyi Sil",
@@ -348,10 +337,10 @@
   "admin.access-control.epeople.table.edit": "Düzenle",
 
   // "admin.access-control.epeople.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.edit": "Düzenle \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.edit": 'Düzenle "{{name}}"',
 
   // "admin.access-control.epeople.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.remove": "Sil \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.remove": 'Sil "{{name}}"',
 
   // "admin.access-control.epeople.no-items": "No EPeople to show.",
   "admin.access-control.epeople.no-items": "Gösterilecek E-Kişiler yok.",
@@ -381,28 +370,28 @@
   "admin.access-control.epeople.form.requireCertificate": "Sertifika gerektirir",
 
   // "admin.access-control.epeople.form.notification.created.success": "Successfully created EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.success": "E-Kişi \"{{name}}\" başarıyla oluşturuldu",
+  "admin.access-control.epeople.form.notification.created.success": 'E-Kişi "{{name}}" başarıyla oluşturuldu',
 
   // "admin.access-control.epeople.form.notification.created.failure": "Failed to create EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.failure": "E-Kişi \"{{name}}\" oluşturulamadı",
+  "admin.access-control.epeople.form.notification.created.failure": 'E-Kişi "{{name}}" oluşturulamadı',
 
   // "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Failed to create EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "E-Kişi \"{{name}}\" oluşturulamadı, e-posta \"{{email}}\" zaten kullanımda.",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": 'E-Kişi "{{name}}" oluşturulamadı, e-posta "{{email}}" zaten kullanımda.',
 
   // "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Failed to edit EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "E-Kişi \"{{name}}\" düzenlenemedi, e-posta \"{{email}}\" zaten kullanımda.",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'E-Kişi "{{name}}" düzenlenemedi, e-posta "{{email}}" zaten kullanımda.',
 
   // "admin.access-control.epeople.form.notification.edited.success": "Successfully edited EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.success": "E-kişi \"{{name}}\" başarıyla düzenlendi",
+  "admin.access-control.epeople.form.notification.edited.success": 'E-kişi "{{name}}" başarıyla düzenlendi',
 
   // "admin.access-control.epeople.form.notification.edited.failure": "Failed to edit EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.failure": "E-Kişi \"{{name}}\" düzenlenemedi",
+  "admin.access-control.epeople.form.notification.edited.failure": 'E-Kişi "{{name}}" düzenlenemedi',
 
   // "admin.access-control.epeople.form.notification.deleted.success": "Successfully deleted EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.success": "E-Kişi \"{{name}}\" başarıyla silindi",
+  "admin.access-control.epeople.form.notification.deleted.success": 'E-Kişi "{{name}}" başarıyla silindi',
 
   // "admin.access-control.epeople.form.notification.deleted.failure": "Failed to delete EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.failure": "E-Kişi \"{{name}}\" silinemedi",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'E-Kişi "{{name}}" silinemedi',
 
   // "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Member of these groups:",
   "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Bu grupların üyesi:",
@@ -420,12 +409,10 @@
   "admin.access-control.epeople.form.goToGroups": "Gruplar ekle",
 
   // "admin.access-control.epeople.notification.deleted.failure": "Failed to delete EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.failure": "E-Kişi silinemedi: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.failure": 'E-Kişi silinemedi: "{{name}}"',
 
   // "admin.access-control.epeople.notification.deleted.success": "Successfully deleted EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.success": "E-Kişiler başarıyla silindi: \"{{name}}\"",
-
-
+  "admin.access-control.epeople.notification.deleted.success": 'E-Kişiler başarıyla silindi: "{{name}}"',
 
   // "admin.access-control.groups.title": "DSpace Angular :: Groups",
   "admin.access-control.groups.title": "DSpace Angular :: Gruplar",
@@ -464,30 +451,28 @@
   "admin.access-control.groups.table.edit": "Düzenle",
 
   // "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.edit": "Düzenle \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.edit": 'Düzenle "{{name}}"',
 
   // "admin.access-control.groups.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.remove": "Sil \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.remove": 'Sil "{{name}}"',
 
   // "admin.access-control.groups.no-items": "No groups found with this in their name or this as UUID",
   "admin.access-control.groups.no-items": "Bu adla veya bu UUID olarak hiçbir grup bulunamadı",
 
   // "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.success": "\"{{name}}\" grubu başarıyla silindi",
+  "admin.access-control.groups.notification.deleted.success": '"{{name}}" grubu başarıyla silindi',
 
   // "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.failure.title": "\"{{name}}\" grubu silinemedi",
+  "admin.access-control.groups.notification.deleted.failure.title": '"{{name}}" grubu silinemedi',
 
   // "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
-  "admin.access-control.groups.notification.deleted.failure.content": "Sorun: \"{{cause}}\"",
-
-
+  "admin.access-control.groups.notification.deleted.failure.content": 'Sorun: "{{cause}}"',
 
   // "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
   "admin.access-control.groups.form.alert.permanent": "Bu grup kalıcıdır, bu nedenle düzenlenemez veya silinemez. Yine de bu sayfayı kullanarak grup üyeleri ekleyip kaldırabilirsiniz.",
 
   // "admin.access-control.groups.form.alert.workflowGroup": "This group can’t be modified or deleted because it corresponds to a role in the submission and workflow process in the \"{{name}}\" {{comcol}}. You can delete it from the <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> tab on the edit {{comcol}} page. You can still add and remove group members using this page.",
-  "admin.access-control.groups.form.alert.workflowGroup": "Bu grup, \"{{name}}\" {{comcol}} içindeki gönderim ve iş akışı sürecindeki bir role karşılık geldiği için değiştirilemez veya silinemez. Bunu, {{comcol}} düzenleme sayfasındaki <a href='{{comcolEditRolesRoute}}'>\"rol ata\"</a> sekmesinden silebilirsiniz. Yine de bu sayfayı kullanarak grup üyeleri ekleyip kaldırabilirsiniz.",
+  "admin.access-control.groups.form.alert.workflowGroup": 'Bu grup, "{{name}}" {{comcol}} içindeki gönderim ve iş akışı sürecindeki bir role karşılık geldiği için değiştirilemez veya silinemez. Bunu, {{comcol}} düzenleme sayfasındaki <a href=\'{{comcolEditRolesRoute}}\'>"rol ata"</a> sekmesinden silebilirsiniz. Yine de bu sayfayı kullanarak grup üyeleri ekleyip kaldırabilirsiniz.',
 
   // "admin.access-control.groups.form.head.create": "Create group",
   "admin.access-control.groups.form.head.create": "Grup oluştur",
@@ -502,31 +487,31 @@
   "admin.access-control.groups.form.groupDescription": "Açıklama",
 
   // "admin.access-control.groups.form.notification.created.success": "Successfully created Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.success": "Grup \"{{name}}\" başarıyla oluşturuldu",
+  "admin.access-control.groups.form.notification.created.success": 'Grup "{{name}}" başarıyla oluşturuldu',
 
   // "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.failure": "\"{{name}}\" Grubu oluşturulamadı",
+  "admin.access-control.groups.form.notification.created.failure": '"{{name}}" Grubu oluşturulamadı',
 
   // "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Şu ada sahip Grup oluşturulamadı: \"{{name}}\", adın halihazırda kullanımda olmadığından emin olun.",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": 'Şu ada sahip Grup oluşturulamadı: "{{name}}", adın halihazırda kullanımda olmadığından emin olun.',
 
   // "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.failure": "\"{{name}}\" Grubu düzenlenemedi",
+  "admin.access-control.groups.form.notification.edited.failure": '"{{name}}" Grubu düzenlenemedi',
 
   // "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Name \"{{name}}\" already in use!",
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "\"{{name}}\" adı zaten kullanılıyor!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": '"{{name}}" adı zaten kullanılıyor!',
 
   // "admin.access-control.groups.form.notification.edited.success": "Successfully edited Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.success": "\"{{name}}\" Grubu başarıyla düzenlendi",
+  "admin.access-control.groups.form.notification.edited.success": '"{{name}}" Grubu başarıyla düzenlendi',
 
   // "admin.access-control.groups.form.actions.delete": "Delete Group",
   "admin.access-control.groups.form.actions.delete": "Grubu Sil",
 
   // "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.header": "\"{{ dsoName }}\" Grubunu Sil",
+  "admin.access-control.groups.form.delete-group.modal.header": '"{{ dsoName }}" Grubunu Sil',
 
   // "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.info": "\"{{ dsoName }}\" Grubunu silmek istediğinizden emin misiniz?",
+  "admin.access-control.groups.form.delete-group.modal.info": '"{{ dsoName }}" Grubunu silmek istediğinizden emin misiniz?',
 
   // "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
   "admin.access-control.groups.form.delete-group.modal.cancel": "İptal",
@@ -535,13 +520,13 @@
   "admin.access-control.groups.form.delete-group.modal.confirm": "Sil",
 
   // "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.success": "\"{{ name }}\" grubu başarıyla silindi",
+  "admin.access-control.groups.form.notification.deleted.success": '"{{ name }}" grubu başarıyla silindi',
 
   // "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.title": "\"{{ name }}\" grubu silinemedi",
+  "admin.access-control.groups.form.notification.deleted.failure.title": '"{{ name }}" grubu silinemedi',
 
   // "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.content": "Sorun: \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'Sorun: "{{ cause }}"',
 
   // "admin.access-control.groups.form.members-list.head": "EPeople",
   "admin.access-control.groups.form.members-list.head": "E-Kişiler",
@@ -574,22 +559,22 @@
   "admin.access-control.groups.form.members-list.table.edit": "Kaldır / Ekle",
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "\"{{name}}\" adlı üyeyi kaldırın",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": '"{{name}}" adlı üyeyi kaldırın',
 
   // "admin.access-control.groups.form.members-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "Üye başarıyla eklendi: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": 'Üye başarıyla eklendi: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "Üye eklenemedi: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'Üye eklenemedi: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Üye başarıyla silindi: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": 'Üye başarıyla silindi: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Üye silinemedi: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'Üye silinemedi: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "\"{{name}}\" adlı üye ekleyin",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": '"{{name}}" adlı üye ekleyin',
 
   // "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "Mevcut aktif grup yok, önce bir isim gönderin.",
@@ -601,7 +586,7 @@
   "admin.access-control.groups.form.members-list.no-items": "Bu aramada E-Kişiler bulunamadı",
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "Bir şeyler yanlış gitti: \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'Bir şeyler yanlış gitti: "{{cause}}"',
 
   // "admin.access-control.groups.form.subgroups-list.head": "Groups",
   "admin.access-control.groups.form.subgroups-list.head": "Gruplar",
@@ -628,25 +613,25 @@
   "admin.access-control.groups.form.subgroups-list.table.edit": "Kaldır / Ekle",
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remove subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "\"{{name}}\" adlı alt grubu kaldırın",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": '"{{name}}" adlı alt grubu kaldırın',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Add subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "\"{{name}}\" adlı alt grup ekleyin",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": '"{{name}}" adlı alt grup ekleyin',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Current group",
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Mevcut grup",
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Successfully added subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Alt grup başarıyla eklendi: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'Alt grup başarıyla eklendi: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Failed to add subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Alt grup eklenemedi: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'Alt grup eklenemedi: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Successfully deleted subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Alt grup başarıyla silindi: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": 'Alt grup başarıyla silindi: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Failed to delete subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Alt grup silinemedi: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": 'Alt grup silinemedi: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "Aktif grup mevcut değil, önce bir isim gönderin.",
@@ -662,8 +647,6 @@
 
   // "admin.access-control.groups.form.return": "Return to groups",
   "admin.access-control.groups.form.return": "Gruplara dön",
-
-
 
   // "admin.search.breadcrumbs": "Administrative Search",
   "admin.search.breadcrumbs": "Yönetimsel Arama",
@@ -701,9 +684,6 @@
   // "administrativeView.search.results.head": "Administrative Search",
   "administrativeView.search.results.head": "Yönetimsel Arama",
 
-
-
-
   // "admin.workflow.breadcrumbs": "Administer Workflow",
   "admin.workflow.breadcrumbs": "İş Akışını Yönet",
 
@@ -718,8 +698,6 @@
 
   // "admin.workflow.item.send-back": "Send back",
   "admin.workflow.item.send-back": "Geri gönder",
-
-
 
   // "admin.metadata-import.breadcrumbs": "Import Metadata",
   "admin.metadata-import.breadcrumbs": "Metadataları İçe Aktar",
@@ -748,22 +726,17 @@
   // "admin.metadata-import.page.error.addFile": "Select file first!",
   "admin.metadata-import.page.error.addFile": "Önce dosyayı seçin!",
 
-
-
-
   // "auth.errors.invalid-user": "Invalid email address or password.",
   "auth.errors.invalid-user": "Geçersiz e-posta adresi veya parola.",
 
   // "auth.messages.expired": "Your session has expired. Please log in again.",
   "auth.messages.expired": "Oturumunuz sona erdi. Lütfen tekrar giriş yapın.",
 
-
-
   // "bitstream.edit.bitstream": "Bitstream: ",
   "bitstream.edit.bitstream": "Bitstream: ",
 
   // "bitstream.edit.form.description.hint": "Optionally, provide a brief description of the file, for example \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
-  "bitstream.edit.form.description.hint": "İsteğe bağlı olarak, dosyanın kısa bir açıklamasını sağlayın, örneğin \"<i>Ana makale</i>\" veya \"<i>Deneme veri okumaları</i>\".",
+  "bitstream.edit.form.description.hint": 'İsteğe bağlı olarak, dosyanın kısa bir açıklamasını sağlayın, örneğin "<i>Ana makale</i>" veya "<i>Deneme veri okumaları</i>".',
 
   // "bitstream.edit.form.description.label": "Description",
   "bitstream.edit.form.description.label": "Açıklama",
@@ -784,13 +757,13 @@
   "bitstream.edit.form.newFormat.label": "Yeni biçimi tanımla",
 
   // "bitstream.edit.form.newFormat.hint": "The application you used to create the file, and the version number (for example, \"<i>ACMESoft SuperApp version 1.5</i>\").",
-  "bitstream.edit.form.newFormat.hint": "Dosyayı oluşturmak için kullandığınız uygulama ve sürüm numarası (örneğin, \"<i>ACMESoft SuperApp versiyon 1.5</i>\").",
+  "bitstream.edit.form.newFormat.hint": 'Dosyayı oluşturmak için kullandığınız uygulama ve sürüm numarası (örneğin, "<i>ACMESoft SuperApp versiyon 1.5</i>").',
 
   // "bitstream.edit.form.primaryBitstream.label": "Primary bitstream",
   "bitstream.edit.form.primaryBitstream.label": "Birincil bitstream",
 
   // "bitstream.edit.form.selectedFormat.hint": "If the format is not in the above list, <b>select \"format not in list\" above</b> and describe it under \"Describe new format\".",
-  "bitstream.edit.form.selectedFormat.hint": "Biçim yukarıdaki listede yoksa, <b>select \"listede olmayan biçim\"i above</b> ve \"Yeni biçimi tanımla\" altında açıklayın.",
+  "bitstream.edit.form.selectedFormat.hint": 'Biçim yukarıdaki listede yoksa, <b>select "listede olmayan biçim"i above</b> ve "Yeni biçimi tanımla" altında açıklayın.',
 
   // "bitstream.edit.form.selectedFormat.label": "Selected Format",
   "bitstream.edit.form.selectedFormat.label": "Seçilen Biçim",
@@ -809,8 +782,6 @@
 
   // "bitstream.edit.title": "Edit bitstream",
   "bitstream.edit.title": "Bitstreamı düzenle",
-
-
 
   // "browse.comcol.by.author": "By Author",
   "browse.comcol.by.author": "Yazara Göre",
@@ -914,11 +885,8 @@
   // "browse.title": "Browsing {{ collection }} by {{ field }} {{ value }}",
   "browse.title": "{{ field }} {{ value }} ile {{ collection }}'a göz atma",
 
-
   // "chips.remove": "Remove chip",
   "chips.remove": "Çipi kaldır",
-
-
 
   // "collection.create.head": "Create a Collection",
   "collection.create.head": "Koleksiyon Oluştur",
@@ -948,9 +916,7 @@
   "collection.delete.notification.success": "Koleksiyon başarıyla silindi",
 
   // "collection.delete.text": "Are you sure you want to delete collection \"{{ dso }}\"",
-  "collection.delete.text": "\"{{ dso }}\" koleksiyonunu silmek istediğinizden emin misiniz?",
-
-
+  "collection.delete.text": '"{{ dso }}" koleksiyonunu silmek istediğinizden emin misiniz?',
 
   // "collection.edit.delete": "Delete this collection",
   "collection.edit.delete": "Bu koleksiyonu sil",
@@ -960,8 +926,6 @@
 
   // "collection.edit.breadcrumbs": "Edit Collection",
   "collection.edit.breadcrumbs": "Koleksiyonu Düzenle",
-
-
 
   // "collection.edit.tabs.mapper.head": "Item Mapper",
   "collection.edit.tabs.mapper.head": "Öğe eşleştirici",
@@ -973,7 +937,7 @@
   "collection.edit.item-mapper.cancel": "İptal",
 
   // "collection.edit.item-mapper.collection": "Collection: \"<b>{{name}}</b>\"",
-  "collection.edit.item-mapper.collection": "Koleksiyon: \"<b>{{name}}</b>\"",
+  "collection.edit.item-mapper.collection": 'Koleksiyon: "<b>{{name}}</b>"',
 
   // "collection.edit.item-mapper.confirm": "Map selected items",
   "collection.edit.item-mapper.confirm": "Seçilen öğeleri eşle",
@@ -1020,8 +984,6 @@
   // "collection.edit.item-mapper.tabs.map": "Map new items",
   "collection.edit.item-mapper.tabs.map": "Yeni öğeleri işle",
 
-
-
   // "collection.edit.logo.label": "Collection logo",
   "collection.edit.logo.label": "Koleksiyon logosu",
 
@@ -1043,15 +1005,11 @@
   // "collection.edit.logo.upload": "Drop a Collection Logo to upload",
   "collection.edit.logo.upload": "Yüklenecek bir koleksiyon logosu bırakın",
 
-
-
   // "collection.edit.notifications.success": "Successfully edited the Collection",
   "collection.edit.notifications.success": "Koleksiyon başarıyla düzenlendi.",
 
   // "collection.edit.return": "Return",
   "collection.edit.return": "Dönüş",
-
-
 
   // "collection.edit.tabs.curate.head": "Curate",
   "collection.edit.tabs.curate.head": "Kuratör",
@@ -1131,8 +1089,6 @@
   // "collection.edit.tabs.source.title": "Collection Edit - Content Source",
   "collection.edit.tabs.source.title": "Koleksiyon düzenleme - İçerik Kaynağı",
 
-
-
   // "collection.edit.template.add-button": "Add",
   "collection.edit.template.add-button": "Ekle",
 
@@ -1149,7 +1105,7 @@
   "collection.edit.template.edit-button": "Düzenle",
 
   // "collection.edit.template.head": "Edit Template Item for Collection \"{{ collection }}\"",
-  "collection.edit.template.head": "Koleksiyon için Sablon Öğesini Düzenleyin \"{{ collection }}\"",
+  "collection.edit.template.head": 'Koleksiyon için Sablon Öğesini Düzenleyin "{{ collection }}"',
 
   // "collection.edit.template.label": "Template item",
   "collection.edit.template.label": "Şablon öğe",
@@ -1162,8 +1118,6 @@
 
   // "collection.edit.template.title": "Edit Template Item",
   "collection.edit.template.title": "Şablon Öğesini Düzenle",
-
-
 
   // "collection.form.abstract": "Short Description",
   "collection.form.abstract": "Kısa Açıklama",
@@ -1189,12 +1143,8 @@
   // "collection.form.title": "Name",
   "collection.form.title": "İsim",
 
-
-
   // "collection.listelement.badge": "Collection",
   "collection.listelement.badge": "Koleksiyon",
-
-
 
   // "collection.page.browse.recent.head": "Recent Submissions",
   "collection.page.browse.recent.head": "Son Başvurular",
@@ -1214,8 +1164,6 @@
   // "collection.page.news": "News",
   "collection.page.news": "Haberler",
 
-
-
   // "collection.select.confirm": "Confirm selected",
   "collection.select.confirm": "Seçilileri onayla",
 
@@ -1225,15 +1173,11 @@
   // "collection.select.table.title": "Title",
   "collection.select.table.title": "Başlık",
 
-
-
   // "collection.source.update.notifications.error.content": "The provided settings have been tested and didn't work.",
   "collection.source.update.notifications.error.content": "Sağlanan ayarlar test edildi ve işe yaramadı.",
 
   // "collection.source.update.notifications.error.title": "Server Error",
   "collection.source.update.notifications.error.title": "Sunucu Hatası",
-
-
 
   // "communityList.tabTitle": "DSpace - Community List",
   "communityList.tabTitle": "DSpace - Komünite Listesi",
@@ -1243,8 +1187,6 @@
 
   // "communityList.showMore": "Show More",
   "communityList.showMore": "Daha fazla göster",
-
-
 
   // "community.create.head": "Create a Community",
   "community.create.head": "Bir komünite oluştur",
@@ -1274,7 +1216,7 @@
   "community.delete.notification.success": "Komünite başarıyla silindi",
 
   // "community.delete.text": "Are you sure you want to delete community \"{{ dso }}\"",
-  "community.delete.text": "Komüniteyi silmek istediğinize emin misiniz \"{{ dso }}\"",
+  "community.delete.text": 'Komüniteyi silmek istediğinize emin misiniz "{{ dso }}"',
 
   // "community.edit.delete": "Delete this community",
   "community.edit.delete": "Bu komüniteyi sil",
@@ -1284,7 +1226,6 @@
 
   // "community.edit.breadcrumbs": "Edit Community",
   "community.edit.breadcrumbs": "Komüniteyi düzenle",
-
 
   // "community.edit.logo.label": "Community logo",
   "community.edit.logo.label": "Komünite logosu",
@@ -1307,8 +1248,6 @@
   // "community.edit.logo.upload": "Drop a Community Logo to upload",
   "community.edit.logo.upload": "Yüklenecek bir komünite logosu bırak",
 
-
-
   // "community.edit.notifications.success": "Successfully edited the Community",
   "community.edit.notifications.success": "Komünite başarıyla düzenlendi",
 
@@ -1320,8 +1259,6 @@
 
   // "community.edit.return": "Return",
   "community.edit.return": "Dönüş",
-
-
 
   // "community.edit.tabs.curate.head": "Curate",
   "community.edit.tabs.curate.head": "Kuratör",
@@ -1347,12 +1284,8 @@
   // "community.edit.tabs.authorizations.title": "Community Edit - Authorizations",
   "community.edit.tabs.authorizations.title": "Komünite Düzenle - Yetkilendirmeler",
 
-
-
   // "community.listelement.badge": "Community",
   "community.listelement.badge": "Komünite",
-
-
 
   // "comcol-role.edit.no-group": "None",
   "comcol-role.edit.no-group": "Hiçbiri",
@@ -1366,13 +1299,11 @@
   // "comcol-role.edit.delete": "Delete",
   "comcol-role.edit.delete": "Sil",
 
-
   // "comcol-role.edit.community-admin.name": "Yöneticiler",
   "comcol-role.edit.community-admin.name": "Administrators",
 
   // "comcol-role.edit.collection-admin.name": "Administrators",
   "comcol-role.edit.collection-admin.name": "Yöneticiler",
-
 
   // "comcol-role.edit.community-admin.description": "Community administrators can create sub-communities or collections, and manage or assign management for those sub-communities or collections. In addition, they decide who can submit items to any sub-collections, edit item metadata (after submission), and add (map) existing items from other collections (subject to authorization).",
   "comcol-role.edit.community-admin.description": "Komünite yöneticileri alt komüniteler veya koleksiyonlar oluşturabilir ve bu alt komüniteler veya koleksiyonlar için yönetimi yönetebilir veya atayabilir. Ek olarak, kimsenin herhangi bir alt koleksiyona kimin gönderebileceğine, madde metadatalarını (sunulduktan sonra) düzenleyebileceğine karar verirler ve mevcut eşyaları diğer koleksiyonlardan (yetkilendirmeye tabi) ekleyin.",
@@ -1380,13 +1311,11 @@
   // "comcol-role.edit.collection-admin.description": "Collection administrators decide who can submit items to the collection, edit item metadata (after submission), and add (map) existing items from other collections to this collection (subject to authorization for that collection).",
   "comcol-role.edit.collection-admin.description": "Koleksiyon yöneticileri, eşyaları koleksiyona kimin gönderebileceğine, öğe metadatalarını (gönderimden sonra) düzenleyebileceğine karar verir ve mevcut eşyaları diğer koleksiyonlardan (bu koleksiyon için yetkilendirmeye tabi) ekleyin.",
 
-
   // "comcol-role.edit.submitters.name": "Submitters",
   "comcol-role.edit.submitters.name": "Göndericiler",
 
   // "comcol-role.edit.submitters.description": "The E-People and Groups that have permission to submit new items to this collection.",
   "comcol-role.edit.submitters.description": "Bu koleksiyona yeni eşya gönderme iznine sahip olan E-insanlar ve gruplar.",
-
 
   // "comcol-role.edit.item_read.name": "Default item read access",
   "comcol-role.edit.item_read.name": "Varsayılan öğe okuma erişimi",
@@ -1397,7 +1326,6 @@
   // "comcol-role.edit.item_read.anonymous-group": "Default read for incoming items is currently set to Anonymous.",
   "comcol-role.edit.item_read.anonymous-group": "Gelen öğeler için varsayılan okuma şu anda isimsiz olarak ayarlanmıştır.",
 
-
   // "comcol-role.edit.bitstream_read.name": "Default bitstream read access",
   "comcol-role.edit.bitstream_read.name": "Varsayılan bitstream okuma erişimi",
 
@@ -1407,13 +1335,11 @@
   // "comcol-role.edit.bitstream_read.anonymous-group": "Default read for incoming bitstreams is currently set to Anonymous.",
   "comcol-role.edit.bitstream_read.anonymous-group": "Gelen bitstream için varsayılan okuma şu anda anonim olarak ayarlanmıştır.",
 
-
   // "comcol-role.edit.editor.name": "Editors",
   "comcol-role.edit.editor.name": "Editörler",
 
   // "comcol-role.edit.editor.description": "Editors are able to edit the metadata of incoming submissions, and then accept or reject them.",
   "comcol-role.edit.editor.description": "Editörler, gelen gönderilerin metadatalarını düzenleyebilir ve ardından onları kabul edebilir veya reddedebilir.",
-
 
   // "comcol-role.edit.finaleditor.name": "Final editors",
   "comcol-role.edit.finaleditor.name": "Son editörler",
@@ -1421,14 +1347,11 @@
   // "comcol-role.edit.finaleditor.description": "Final editors are able to edit the metadata of incoming submissions, but will not be able to reject them.",
   "comcol-role.edit.finaleditor.description": "Nihai editörler gelen başvuruların metadatalarını düzenleyebilir, ancak onları reddedebilir.",
 
-
   // "comcol-role.edit.reviewer.name": "Reviewers",
   "comcol-role.edit.reviewer.name": "Yorumcular",
 
   // "comcol-role.edit.reviewer.description": "Reviewers are able to accept or reject incoming submissions. However, they are not able to edit the submission's metadata.",
   "comcol-role.edit.reviewer.description": "Yorumcular gelen başvuruları kabul edebilir veya reddedebilirler. Ancak, gönderimin metadatalarını düzenleyemezler.",
-
-
 
   // "community.form.abstract": "Short Description",
   "community.form.abstract": "Kısa Açıklama",
@@ -1468,8 +1391,6 @@
 
   // "community.sub-community-list.head": "Communities of this Community",
   "community.sub-community-list.head": "Bu komünitenin koleksiyonları",
-
-
 
   // "cookies.consent.accept-all": "Accept all",
   "cookies.consent.accept-all": "Hepsini kabul et",
@@ -1519,14 +1440,11 @@
   // "cookies.consent.content-modal.title": "Information that we collect",
   "cookies.consent.content-modal.title": "Topladığımız bilgiler",
 
-
-
   // "cookies.consent.app.title.authentication": "Authentication",
   "cookies.consent.app.title.authentication": "Kimlik doğrulama",
 
   // "cookies.consent.app.description.authentication": "Required for signing you in",
   "cookies.consent.app.description.authentication": "Kayıt olmak için gerekli",
-
 
   // "cookies.consent.app.title.preferences": "Preferences",
   "cookies.consent.app.title.preferences": "Tercihler",
@@ -1534,15 +1452,11 @@
   // "cookies.consent.app.description.preferences": "Required for saving your preferences",
   "cookies.consent.app.description.preferences": "Tercihlerinizi kaydetmek için gerekli",
 
-
-
   // "cookies.consent.app.title.acknowledgement": "Acknowledgement",
   "cookies.consent.app.title.acknowledgement": "Onaylama",
 
   // "cookies.consent.app.description.acknowledgement": "Required for saving your acknowledgements and consents",
   "cookies.consent.app.description.acknowledgement": "Teşekkürlerinizi ve onayları kurtarmak için gerekli",
-
-
 
   // "cookies.consent.app.title.google-analytics": "Google Analytics",
   "cookies.consent.app.title.google-analytics": "Google Analitiği",
@@ -1550,14 +1464,11 @@
   // "cookies.consent.app.description.google-analytics": "Allows us to track statistical data",
   "cookies.consent.app.description.google-analytics": "İstatistiksel verileri izlememize izin verir",
 
-
-
   // "cookies.consent.purpose.functional": "Functional",
   "cookies.consent.purpose.functional": "Fonksiyonel",
 
   // "cookies.consent.purpose.statistical": "Statistical",
   "cookies.consent.purpose.statistical": "İstatistiksel",
-
 
   // "curation-task.task.checklinks.label":  "Check Links in Metadata",
   "curation-task.task.checklinks.label": "Metadatalardaki Bağlantıları Kontrol Et",
@@ -1576,8 +1487,6 @@
 
   // "curation-task.task.vscan.label": "Virus Scan",
   "curation-task.task.vscan.label": "Virüs Taraması",
-
-
 
   // "curation.form.task-select.label": "Task:",
   "curation.form.task-select.label": "Görev:",
@@ -1602,8 +1511,6 @@
 
   // "curation.form.handle.hint": "Hint: Enter [your-handle-prefix]/0 to run a task across entire site (not all tasks may support this capability)",
   "curation.form.handle.hint": "İpucu: Gir [your-handle-prefix]/0 tüm sitede bir görevi çalıştırmak için (tüm görevler bu özelliği destekleyemez)",
-
-
 
   // "dso-selector.create.collection.head": "New collection",
   "dso-selector.create.collection.head": "Yeni koleksiyon",
@@ -1647,8 +1554,6 @@
   // "dso-selector.placeholder": "Search for a {{ type }}",
   "dso-selector.placeholder": " Ara {{ type }}",
 
-
-
   // "confirmation-modal.export-metadata.header": "Export metadata for {{ dsoName }}",
   "confirmation-modal.export-metadata.header": "Metadatalarını dışa aktar {{ dsoName }}",
 
@@ -1662,17 +1567,16 @@
   "confirmation-modal.export-metadata.confirm": "Dışarı aktar",
 
   // "confirmation-modal.delete-eperson.header": "Delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.header": "EPerson'ı sil \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.header": 'EPerson\'ı sil "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.info": "Are you sure you want to delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.info": "Eperson'u silmek istediğinize emin misiniz? \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.info": 'Eperson\'u silmek istediğinize emin misiniz? "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.cancel": "Cancel",
   "confirmation-modal.delete-eperson.cancel": "İptal",
 
   // "confirmation-modal.delete-eperson.confirm": "Delete",
   "confirmation-modal.delete-eperson.confirm": "Sil",
-
 
   // "error.bitstream": "Error fetching bitstream",
   "error.bitstream": "Alınan bitstream hatası",
@@ -1731,12 +1635,8 @@
   // "error.validation.filerequired": "The file upload is mandatory",
   "error.validation.filerequired": "Dosya yükleme zorunludur",
 
-
-
   // "file-section.error.header": "Error obtaining files for this item",
   "file-section.error.header": "Bu öğe için dosyaları elde etme hatası",
-
-
 
   // "footer.copyright": "copyright © 2002-{{ year }}",
   "footer.copyright": "telif hakkı © 2002-{{ year }}",
@@ -1755,8 +1655,6 @@
 
   // "footer.link.end-user-agreement":"End User Agreement",
   "footer.link.end-user-agreement": "Son Kullanıcı Sözleşmesi",
-
-
 
   // "forgot-email.form.header": "Forgot Password",
   "forgot-email.form.header": "Parolanızı mı unuttunuz",
@@ -1790,8 +1688,6 @@
 
   // "forgot-email.form.error.content": "An error occured when registering the following email address: {{ email }}",
   "forgot-email.form.error.content": "E-posta adresini kaydederken bir hata oluştu: {{ email }}",
-
-
 
   // "forgot-password.title": "Forgot Password",
   "forgot-password.title": "Parolanızı mı unuttunuz",
@@ -1837,8 +1733,6 @@
 
   // "forgot-password.form.submit": "Submit password",
   "forgot-password.form.submit": "Parolayı kaydet",
-
-
 
   // "form.add": "Add",
   "form.add": "Ekle",
@@ -1912,8 +1806,6 @@
   // "form.submit": "Submit",
   "form.submit": "Gönder",
 
-
-
   // "home.description": "",
   "home.description": "",
 
@@ -1931,7 +1823,6 @@
 
   // "home.search-form.placeholder": "Search the repository ...",
   "home.search-form.placeholder": "Depoda ara ...",
-
 
   // "info.end-user-agreement.accept": "I have read and I agree to the End User Agreement",
   "info.end-user-agreement.accept": "Okudum ve son kullanıcı sözleşmesini kabul ediyorum",
@@ -1966,15 +1857,11 @@
   // "info.privacy.title": "Privacy Statement",
   "info.privacy.title": "Gizlilik bildirimi",
 
-
-
   // "item.alerts.private": "This item is private",
   "item.alerts.private": "Bu öğe özel",
 
   // "item.alerts.withdrawn": "This item has been withdrawn",
   "item.alerts.withdrawn": "Bu ürün geri çekildi",
-
-
 
   // "item.edit.authorizations.heading": "With this editor you can view and alter the policies of an item, plus alter policies of individual item components: bundles and bitstreams. Briefly, an item is a container of bundles, and bundles are containers of bitstreams. Containers usually have ADD/REMOVE/READ/WRITE policies, while bitstreams only have READ/WRITE policies.",
   "item.edit.authorizations.heading": "Bu editör ile bir öğenin politikalarını görüntüleyebilir ve değiştirebilirsiniz, ayrıca bireysel ürün bileşenlerinin politikalarını değiştirebilirsiniz: Paketler ve Bitstream. Kısaca, bir öğe bir paket konteynırıdır ve paketler bitstream konteynırıdır. Konteynerler genellikle, bitstream yalnızca okuma / yazma politikalarına sahip olur.",
@@ -1982,15 +1869,11 @@
   // "item.edit.authorizations.title": "Edit item's Policies",
   "item.edit.authorizations.title": "Edit item's Politikalar",
 
-
-
   // "item.badge.private": "Private",
   "item.badge.private": "Özel",
 
   // "item.badge.withdrawn": "Withdrawn",
   "item.badge.withdrawn": "Çekilmiş",
-
-
 
   // "item.bitstreams.upload.bundle": "Bundle",
   "item.bitstreams.upload.bundle": "Paket",
@@ -2024,8 +1907,6 @@
 
   // "item.bitstreams.upload.title": "Upload bitstream",
   "item.bitstreams.upload.title": "Bitstream yükle",
-
-
 
   // "item.edit.bitstreams.bundle.edit.buttons.upload": "Upload",
   "item.edit.bitstreams.bundle.edit.buttons.upload": "Yükle",
@@ -2117,8 +1998,6 @@
   // "item.edit.bitstreams.upload-button": "Upload",
   "item.edit.bitstreams.upload-button": "Yükle",
 
-
-
   // "item.edit.delete.cancel": "Cancel",
   "item.edit.delete.cancel": "İptal et",
 
@@ -2143,7 +2022,6 @@
   // "item.edit.breadcrumbs": "Edit Item",
   "item.edit.breadcrumbs": "Ögeleri düzenle",
 
-
   // "item.edit.tabs.mapper.head": "Collection Mapper",
   "item.edit.tabs.mapper.head": "Koleksiyon eşleştiricisi",
 
@@ -2166,7 +2044,7 @@
   "item.edit.item-mapper.head": "Öge eşleştirici - Ögeleri koleksiyonlarla eşleştirir",
 
   // "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
-  "item.edit.item-mapper.item": "Öge: \"<b>{{name}}</b>\"",
+  "item.edit.item-mapper.item": 'Öge: "<b>{{name}}</b>"',
 
   // "item.edit.item-mapper.no-search": "Please enter a query to search",
   "item.edit.item-mapper.no-search": "Lütfen arama yapmak için bir soru giriniz.",
@@ -2200,8 +2078,6 @@
 
   // "item.edit.item-mapper.tabs.map": "Map new collections",
   "item.edit.item-mapper.tabs.map": "Yeni koleksiyonları eşleştir",
-
-
 
   // "item.edit.metadata.add-button": "Add",
   "item.edit.metadata.add-button": "Ekle",
@@ -2272,8 +2148,6 @@
   // "item.edit.metadata.save-button": "Save",
   "item.edit.metadata.save-button": "Kaydet",
 
-
-
   // "item.edit.modify.overview.field": "Field",
   "item.edit.modify.overview.field": "Alan",
 
@@ -2282,8 +2156,6 @@
 
   // "item.edit.modify.overview.value": "Value",
   "item.edit.modify.overview.value": "Değer",
-
-
 
   // "item.edit.move.cancel": "Cancel",
   "item.edit.move.cancel": "İptal et",
@@ -2318,8 +2190,6 @@
   // "item.edit.move.title": "Move item",
   "item.edit.move.title": "Ögeleri taşı",
 
-
-
   // "item.edit.private.cancel": "Cancel",
   "item.edit.private.cancel": "İptal et",
 
@@ -2337,8 +2207,6 @@
 
   // "item.edit.private.success": "The item is now private",
   "item.edit.private.success": "Öge gizlendi",
-
-
 
   // "item.edit.public.cancel": "Cancel",
   "item.edit.public.cancel": "İptal et",
@@ -2358,8 +2226,6 @@
   // "item.edit.public.success": "The item is now public",
   "item.edit.public.success": "Öge herkese açık yapıldı",
 
-
-
   // "item.edit.reinstate.cancel": "Cancel",
   "item.edit.reinstate.cancel": "İptal et",
 
@@ -2377,8 +2243,6 @@
 
   // "item.edit.reinstate.success": "The item was reinstated successfully",
   "item.edit.reinstate.success": "Öge başarıyla geri yüklendi",
-
-
 
   // "item.edit.relationships.discard-button": "Discard",
   "item.edit.relationships.discard-button": "Sil",
@@ -2424,8 +2288,6 @@
 
   // "item.edit.relationships.no-entity-type": "Add 'dspace.entity.type' metadata to enable relationships for this item",
   "item.edit.relationships.no-entity-type": "Bu öğe için ilişkileri etkinleştirmek için 'dspace.entity.type' metadatalarını ekleyin",
-
-
 
   // "item.edit.tabs.bitstreams.head": "Bitstreams",
   "item.edit.tabs.bitstreams.head": "Bitstreamlar",
@@ -2535,8 +2397,6 @@
   // "item.edit.tabs.view.title": "Item Edit -  View",
   "item.edit.tabs.view.title": "Öge düzenle -  incele",
 
-
-
   // "item.edit.withdraw.cancel": "Cancel",
   "item.edit.withdraw.cancel": "İptal et",
 
@@ -2554,8 +2414,6 @@
 
   // "item.edit.withdraw.success": "The item was withdrawn successfully",
   "item.edit.withdraw.success": "Öğe başarıyla çıkartıldı",
-
-
 
   // "item.listelement.badge": "Item",
   "item.listelement.badge": "Öge",
@@ -2583,7 +2441,6 @@
 
   // "item.search.title": "DSpace Angular :: Item Search",
   "item.search.title": "DSpace Angular :: Öge Arama",
-
 
   // "item.page.abstract": "Abstract",
   "item.page.abstract": "Özet",
@@ -2702,7 +2559,6 @@
   // "item.preview.person.identifier.orcid": "ORCID:",
   "item.preview.person.identifier.orcid": "ORCID:",
 
-
   // "item.select.confirm": "Confirm selected",
   "item.select.confirm": "Seçileni onayla",
 
@@ -2717,7 +2573,6 @@
 
   // "item.select.table.title": "Title",
   "item.select.table.title": "Başlık",
-
 
   // "item.version.history.empty": "There are no other versions for this item yet.",
   "item.version.history.empty": "Bu öğe için henüz başka sürüm yok.",
@@ -2746,12 +2601,8 @@
   // "item.version.history.table.summary": "Summary",
   "item.version.history.table.summary": "Özet",
 
-
-
   // "item.version.notice": "This is not the latest version of this item. The latest version can be found <a href='{{destination}}'>here</a>.",
   "item.version.notice": "Bu, bu öğenin en son sürümü değil. En son sürüm <a href='{{destination}}'>burada</a> bulunabilir.",
-
-
 
   // "journal.listelement.badge": "Journal",
   "journal.listelement.badge": "Süreli yayın",
@@ -2780,8 +2631,6 @@
   // "journal.search.title": "DSpace Angular :: Journal Search",
   "journal.search.title": "DSpace Angular :: Süreli Yayın Arama",
 
-
-
   // "journalissue.listelement.badge": "Journal Issue",
   "journalissue.listelement.badge": "Süreli Yayın Sayısı",
 
@@ -2809,8 +2658,6 @@
   // "journalissue.page.titleprefix": "Journal Issue: ",
   "journalissue.page.titleprefix": "Süreli yayın sayısı: ",
 
-
-
   // "journalvolume.listelement.badge": "Journal Volume",
   "journalvolume.listelement.badge": "Süreli yayın cilti",
 
@@ -2828,8 +2675,6 @@
 
   // "journalvolume.page.volume": "Volume",
   "journalvolume.page.volume": "Cilt",
-
-
 
   // "loading.bitstream": "Loading bitstream...",
   "loading.bitstream": "Bitstream yükleniyor...",
@@ -2885,8 +2730,6 @@
   // "loading.top-level-communities": "Loading top-level communities...",
   "loading.top-level-communities": "Üst düzey komüniteler yükleniyor...",
 
-
-
   // "login.form.email": "Email address",
   "login.form.email": "E-posta adresi",
 
@@ -2917,8 +2760,6 @@
   // "login.breadcrumbs": "Login",
   "login.breadcrumbs": "Giriş",
 
-
-
   // "logout.form.header": "Log out from DSpace",
   "logout.form.header": "DSpace'den çıkış yapın",
 
@@ -2928,15 +2769,11 @@
   // "logout.title": "Logout",
   "logout.title": "Çıkış yap",
 
-
-
   // "menu.header.admin": "Admin",
   "menu.header.admin": "Yönetici",
 
   // "menu.header.image.logo": "Repository logo",
   "menu.header.image.logo": "Depo logosu",
-
-
 
   // "menu.section.access_control": "Access Control",
   "menu.section.access_control": "Giriş kontrolü",
@@ -2950,12 +2787,8 @@
   // "menu.section.access_control_people": "People",
   "menu.section.access_control_people": "Kişiler",
 
-
-
   // "menu.section.admin_search": "Admin Search",
   "menu.section.admin_search": "Yönetici araması",
-
-
 
   // "menu.section.browse_community": "This Community",
   "menu.section.browse_community": "Bu Komünite",
@@ -2987,15 +2820,11 @@
   // "menu.section.browse_global_communities_and_collections": "Communities & Collections",
   "menu.section.browse_global_communities_and_collections": "Komüniteler ve Koleksiyonlar",
 
-
-
   // "menu.section.control_panel": "Control Panel",
   "menu.section.control_panel": "Kontrol Paneli",
 
   // "menu.section.curation_task": "Curation Task",
   "menu.section.curation_task": "Düzenleme görevi",
-
-
 
   // "menu.section.edit": "Edit",
   "menu.section.edit": "Düzenle",
@@ -3008,8 +2837,6 @@
 
   // "menu.section.edit_item": "Item",
   "menu.section.edit_item": "Öge",
-
-
 
   // "menu.section.export": "Export",
   "menu.section.export": "Dışa aktar",
@@ -3025,8 +2852,6 @@
 
   // "menu.section.export_metadata": "Metadata",
   "menu.section.export_metadata": "Metadata",
-
-
 
   // "menu.section.icon.access_control": "Access Control menu section",
   "menu.section.icon.access_control": "Erişim Kontrolü menüsü bölümü",
@@ -3070,8 +2895,6 @@
   // "menu.section.icon.unpin": "Unpin sidebar",
   "menu.section.icon.unpin": "Kenar çubuğunu kaldır",
 
-
-
   // "menu.section.import": "Import",
   "menu.section.import": "İçe aktar",
 
@@ -3080,8 +2903,6 @@
 
   // "menu.section.import_metadata": "Metadata",
   "menu.section.import_metadata": "Metadata",
-
-
 
   // "menu.section.new": "New",
   "menu.section.new": "Yeni",
@@ -3101,20 +2922,14 @@
   // "menu.section.new_process": "Process",
   "menu.section.new_process": "Süreç",
 
-
-
   // "menu.section.pin": "Pin sidebar",
   "menu.section.pin": "Kenar çubuğunu sabitle",
 
   // "menu.section.unpin": "Unpin sidebar",
   "menu.section.unpin": "Kenar çubuğunun sabitlemesini kaldır",
 
-
-
   // "menu.section.processes": "Processes",
   "menu.section.processes": "Süreçler",
-
-
 
   // "menu.section.registries": "Registries",
   "menu.section.registries": "Kayıt",
@@ -3125,15 +2940,11 @@
   // "menu.section.registries_metadata": "Metadata",
   "menu.section.registries_metadata": "Metadata",
 
-
-
   // "menu.section.statistics": "Statistics",
   "menu.section.statistics": "İstatistik",
 
   // "menu.section.statistics_task": "Statistics Task",
   "menu.section.statistics_task": "İstatistiksel Görev",
-
-
 
   // "menu.section.toggle.access_control": "Toggle Access Control section",
   "menu.section.toggle.access_control": "Erişim kontrolü bölümünü aç/kapat",
@@ -3165,10 +2976,8 @@
   // "menu.section.toggle.statistics_task": "Toggle Statistics Task section",
   "menu.section.toggle.statistics_task": "İstatistik Görev bölümünü aç/kapat",
 
-
   // "menu.section.workflow": "Administer Workflow",
   "menu.section.workflow": "İş Akışını Yönet",
-
 
   // "mydspace.description": "",
   "mydspace.description": "",
@@ -3293,8 +3102,6 @@
   // "mydspace.view-btn": "View",
   "mydspace.view-btn": "Görünüm",
 
-
-
   // "nav.browse.header": "All of DSpace",
   "nav.browse.header": "DSpace'in tümü",
 
@@ -3325,8 +3132,6 @@
   // "nav.stop-impersonating": "Stop impersonating EPerson",
   "nav.stop-impersonating": "EPerson'ı taklit etmeyi bırakın",
 
-
-
   // "orgunit.listelement.badge": "Organizational Unit",
   "orgunit.listelement.badge": "Organizasyon Birimi",
 
@@ -3351,8 +3156,6 @@
   // "orgunit.page.titleprefix": "Organizational Unit: ",
   "orgunit.page.titleprefix": "Organizasyon Birimi: ",
 
-
-
   // "pagination.results-per-page": "Results Per Page",
   "pagination.results-per-page": "Sayfa başına sonuç",
 
@@ -3364,8 +3167,6 @@
 
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Sıralama Seçenekleri",
-
-
 
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Kişi",
@@ -3408,8 +3209,6 @@
 
   // "person.search.title": "DSpace Angular :: Person Search",
   "person.search.title": "DSpace Angular :: Kişi Arama",
-
-
 
   // "process.new.select-parameters": "Parameters",
   "process.new.select-parameters": "Parametreler",
@@ -3468,8 +3267,6 @@
   // "process.new.breadcrumbs": "Create a new process",
   "process.new.breadcrumbs": "Yeni bir süreç oluştur",
 
-
-
   // "process.detail.arguments" : "Arguments",
   "process.detail.arguments": "Argümanlar",
 
@@ -3515,8 +3312,6 @@
   // "process.detail.create" : "Create similar process",
   "process.detail.create": "Benzer süreç oluştur",
 
-
-
   // "process.overview.table.finish" : "Finish time",
   "process.overview.table.finish": "Bitiş zamanı",
 
@@ -3543,7 +3338,6 @@
 
   // "process.overview.new": "New",
   "process.overview.new": "Yeni",
-
 
   // "profile.breadcrumbs": "Update Profile",
   "profile.breadcrumbs": "Profili Güncelle",
@@ -3629,8 +3423,6 @@
   // "profile.title": "Update Profile",
   "profile.title": "Profili Güncelle",
 
-
-
   // "project.listelement.badge": "Research Project",
   "project.listelement.badge": "Araştırma projesi",
 
@@ -3664,8 +3456,6 @@
   // "project.search.results.head": "Project Search Results",
   "project.search.results.head": "Proje Arama Sonuçları",
 
-
-
   // "publication.listelement.badge": "Publication",
   "publication.listelement.badge": "Yayın",
 
@@ -3695,7 +3485,6 @@
 
   // "publication.search.title": "DSpace Angular :: Publication Search",
   "publication.search.title": "DSpace Angular :: Yayın Arama",
-
 
   // "register-email.title": "New user registration",
   "register-email.title": "Yeni kullanıcı kaydı",
@@ -3763,7 +3552,6 @@
   // "register-page.create-profile.submit.success.head": "Registration completed",
   "register-page.create-profile.submit.success.head": "Kayıt tamamlandı",
 
-
   // "register-page.registration.header": "New user registration",
   "register-page.registration.header": "Yeni kullanıcı kaydı",
 
@@ -3796,8 +3584,6 @@
 
   // "register-page.registration.error.content": "An error occured when registering the following email address: {{ email }}",
   "register-page.registration.error.content": "Aşağıdaki e-posta adresi kaydedilirken bir hata oluştu: {{ email }}",
-
-
 
   // "relationships.add.error.relationship-type.content": "No suitable match could be found for relationship type {{ type }} between the two items",
   "relationships.add.error.relationship-type.content": "İki öğe arasında {{ type }} ilişki türü için uygun bir eşleşme bulunamadı",
@@ -3852,8 +3638,6 @@
 
   // "relationships.isContributorOf": "Contributors",
   "relationships.isContributorOf": "Katkıda Bulunanlar",
-
-
 
   // "resource-policies.add.button": "Add",
   "resource-policies.add.button": "Ekle",
@@ -4005,8 +3789,6 @@
   // "resource-policies.table.headers.title.for.collection": "Policies for Collection",
   "resource-policies.table.headers.title.for.collection": "Koleksiyon Politikaları",
 
-
-
   // "search.description": "",
   "search.description": "",
 
@@ -4018,7 +3800,6 @@
 
   // "search.breadcrumbs": "Search",
   "search.breadcrumbs": "Ara",
-
 
   // "search.filters.applied.f.author": "Author",
   "search.filters.applied.f.author": "Yazar",
@@ -4064,8 +3845,6 @@
 
   // "search.filters.applied.f.withdrawn": "Withdrawn",
   "search.filters.applied.f.withdrawn": "Geri çekildi",
-
-
 
   // "search.filters.filter.author.head": "Author",
   "search.filters.filter.author.head": "Yazar",
@@ -4205,8 +3984,6 @@
   // "search.filters.filter.submitter.placeholder": "Submitter",
   "search.filters.filter.submitter.placeholder": "Teslim Eden",
 
-
-
   // "search.filters.entityType.JournalIssue": "Journal Issue",
   "search.filters.entityType.JournalIssue": "Makale Konusu",
 
@@ -4234,14 +4011,11 @@
   // "search.filters.withdrawn.false": "No",
   "search.filters.withdrawn.false": "Hayır",
 
-
   // "search.filters.head": "Filters",
   "search.filters.head": "Filtreler",
 
   // "search.filters.reset": "Reset filters",
   "search.filters.reset": "Filtreleri Sıfırla",
-
-
 
   // "search.form.search": "Search",
   "search.form.search": "Ara",
@@ -4251,8 +4025,6 @@
 
   // "search.form.search_mydspace": "Search MyDSpace",
   "search.form.search_mydspace": "MyDSpace içinde Ara",
-
-
 
   // "search.results.head": "Search Results",
   "search.results.head": "Sonuçları Ara",
@@ -4265,8 +4037,6 @@
 
   // "search.results.empty": "Your search returned no results.",
   "search.results.empty": "Aramanız hiçbir sonuç vermedi.",
-
-
 
   // "search.sidebar.close": "Back to results",
   "search.sidebar.close": "Sonuçlara Dön",
@@ -4289,8 +4059,6 @@
   // "search.sidebar.settings.title": "Settings",
   "search.sidebar.settings.title": "Ayarlar",
 
-
-
   // "search.view-switch.show-detail": "Show detail",
   "search.view-switch.show-detail": "Detayları Göster",
 
@@ -4299,8 +4067,6 @@
 
   // "search.view-switch.show-list": "Show as list",
   "search.view-switch.show-list": "Liste Olarak Göster",
-
-
 
   // "sorting.ASC": "Ascending",
   "sorting.ASC": "Artan",
@@ -4316,8 +4082,6 @@
 
   // "sorting.score.DESC": "Relevance",
   "sorting.score.DESC": "Bağıntılı",
-
-
 
   // "statistics.title": "Statistics",
   "statistics.title": "İstatistikler",
@@ -4352,8 +4116,6 @@
   // "statistics.table.header.views": "Views",
   "statistics.table.header.views": "Gösterilmeler",
 
-
-
   // "submission.edit.title": "Edit Submission",
   "submission.edit.title": "Teslimi Düzenle",
 
@@ -4383,7 +4145,6 @@
 
   // "submission.general.save-later": "Save for later",
   "submission.general.save-later": "Sonrası İçin Kaydet",
-
 
   // "submission.import-external.page.title": "Import metadata from an external source",
   "submission.import-external.page.title": "Harici bir kaynaktan metadataları içe aktarın",
@@ -4752,7 +4513,7 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title.arxiv": "Sonuçları Ara",
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Would you like to save \"{{ value }}\" as a name variant for this person so you and others can reuse it for future submissions? If you don't you can still use it for this submission.",
-  "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Bu kişi için \"{{ value }}\" ilerideki gönderilerde kullanılabilmek için Yeni İsim olarak kaydedilsin mi? Bunu yapmazsanız, yine de bu gönderim için kullanabilirsiniz .",
+  "submission.sections.describe.relationship-lookup.name-variant.notification.content": 'Bu kişi için "{{ value }}" ilerideki gönderilerde kullanılabilmek için Yeni İsim olarak kaydedilsin mi? Bunu yapmazsanız, yine de bu gönderim için kullanabilirsiniz .',
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Save a new name variant",
   "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Yeni İsim değişikliğini kaydet.",
@@ -4823,8 +4584,6 @@
   // "submission.sections.general.sections_not_valid": "There are incomplete sections.",
   "submission.sections.general.sections_not_valid": "Eksik bölümler var.",
 
-
-
   // "submission.sections.submit.progressbar.CClicense": "Creative commons license",
   "submission.sections.submit.progressbar.CClicense": "Yaratıcı Ortak Lisansları",
 
@@ -4848,8 +4607,6 @@
 
   // "submission.sections.submit.progressbar.upload": "Upload files",
   "submission.sections.submit.progressbar.upload": "Dosyaları yükle",
-
-
 
   // "submission.sections.upload.delete.confirm.cancel": "Cancel",
   "submission.sections.upload.delete.confirm.cancel": "İptal",
@@ -4920,18 +4677,14 @@
   // "submission.sections.upload.upload-successful": "Upload successful",
   "submission.sections.upload.upload-successful": "Yükleme Başarılı",
 
-
-
   // "submission.submit.title": "Submission",
   "submission.submit.title": "Gönder",
-
-
 
   // "submission.workflow.generic.delete": "Delete",
   "submission.workflow.generic.delete": "Sil",
 
   // "submission.workflow.generic.delete-help": "If you would to discard this item, select \"Delete\".  You will then be asked to confirm it.",
-  "submission.workflow.generic.delete-help": "Bu öğeyi atmak istiyorsanız, \"Sil\" öğesini seçin. Daha sonra onaylamanız istenecektir.",
+  "submission.workflow.generic.delete-help": 'Bu öğeyi atmak istiyorsanız, "Sil" öğesini seçin. Daha sonra onaylamanız istenecektir.',
 
   // "submission.workflow.generic.edit": "Edit",
   "submission.workflow.generic.edit": "Değiştir",
@@ -4945,13 +4698,11 @@
   // "submission.workflow.generic.view-help": "Select this option to view the item's metadata.",
   "submission.workflow.generic.view-help": "Öğenin metadatalarını görüntülemek için bu seçeneği belirleyin.",
 
-
-
   // "submission.workflow.tasks.claimed.approve": "Approve",
   "submission.workflow.tasks.claimed.approve": "Kabul Et.",
 
   // "submission.workflow.tasks.claimed.approve_help": "If you have reviewed the item and it is suitable for inclusion in the collection, select \"Approve\".",
-  "submission.workflow.tasks.claimed.approve_help": "Öğeyi incelediyseniz ve koleksiyona dahil edilmeye uygunsa, \"Onayla\"yı seçin.",
+  "submission.workflow.tasks.claimed.approve_help": 'Öğeyi incelediyseniz ve koleksiyona dahil edilmeye uygunsa, "Onayla"yı seçin.',
 
   // "submission.workflow.tasks.claimed.edit": "Edit",
   "submission.workflow.tasks.claimed.edit": "Değiştir",
@@ -4975,15 +4726,13 @@
   "submission.workflow.tasks.claimed.reject.submit": "Kabul Etme",
 
   // "submission.workflow.tasks.claimed.reject_help": "If you have reviewed the item and found it is <strong>not</strong> suitable for inclusion in the collection, select \"Reject\".  You will then be asked to enter a message indicating why the item is unsuitable, and whether the submitter should change something and resubmit.",
-  "submission.workflow.tasks.claimed.reject_help": "Öğeyi incelediyseniz ve koleksiyona dahil edilmeye <strong>uygun olmadığını</strong> bulduysanız, \"Reddet\"i seçin. Ardından, öğenin neden uygun olmadığını ve gönderenin bir şeyi değiştirip yeniden göndermesi gerekip gerekmediğini belirten bir mesaj girmeniz istenecektir.",
+  "submission.workflow.tasks.claimed.reject_help": 'Öğeyi incelediyseniz ve koleksiyona dahil edilmeye <strong>uygun olmadığını</strong> bulduysanız, "Reddet"i seçin. Ardından, öğenin neden uygun olmadığını ve gönderenin bir şeyi değiştirip yeniden göndermesi gerekip gerekmediğini belirten bir mesaj girmeniz istenecektir.',
 
   // "submission.workflow.tasks.claimed.return": "Return to pool",
   "submission.workflow.tasks.claimed.return": "Havuza Dön",
 
   // "submission.workflow.tasks.claimed.return_help": "Return the task to the pool so that another user may perform the task.",
   "submission.workflow.tasks.claimed.return_help": "Başka bir kullanıcının görevi gerçekleştirebilmesi için görevi havuza geri döndürün.",
-
-
 
   // "submission.workflow.tasks.generic.error": "Error occurred during operation...",
   "submission.workflow.tasks.generic.error": "İşlem sırasında hata oluştu...",
@@ -4997,8 +4746,6 @@
   // "submission.workflow.tasks.generic.success": "Operation successful",
   "submission.workflow.tasks.generic.success": "İşlem Başarılı",
 
-
-
   // "submission.workflow.tasks.pool.claim": "Claim",
   "submission.workflow.tasks.pool.claim": "Talep Et",
 
@@ -5011,12 +4758,8 @@
   // "submission.workflow.tasks.pool.show-detail": "Show detail",
   "submission.workflow.tasks.pool.show-detail": "Detayaları göster",
 
-
-
   // "title": "DSpace",
-  "title": "DSpace",
-
-
+  title: "DSpace",
 
   // "vocabulary-treeview.header": "Hierarchical tree view",
   "vocabulary-treeview.header": "Hiyerarşik ağaç görünümü",
@@ -5038,8 +4781,6 @@
 
   // "vocabulary-treeview.tree.description.srsc": "Research Subject Categories",
   "vocabulary-treeview.tree.description.srsc": "Araştırma Konusu Kategorileri",
-
-
 
   // "uploader.browse": "browse",
   "uploader.browse": "Tara",
@@ -5066,12 +4807,8 @@
   // "virtual-metadata.delete-relationship.modal-head": "Select the items for which you want to save the virtual metadata as real metadata",
   "virtual-metadata.delete-relationship.modal-head": "Sanal metadatalarını gerçek metadatalar olarak kaydetmek istediğiniz öğeleri seçin",
 
-
-
   // "workflowAdmin.search.results.head": "Administer Workflow",
   "workflowAdmin.search.results.head": "İş Akışını Yönet",
-
-
 
   // "workflow-item.delete.notification.success.title": "Deleted",
   "workflow-item.delete.notification.success.title": "Silindi",
@@ -5097,7 +4834,6 @@
   // "workflow-item.delete.button.confirm": "Delete",
   "workflow-item.delete.button.confirm": "Sil",
 
-
   // "workflow-item.send-back.notification.success.title": "Sent back to submitter",
   "workflow-item.send-back.notification.success.title": "Gönderene geri gönderildi",
 
@@ -5121,5 +4857,4 @@
 
   // "workflow-item.send-back.button.confirm": "Send back"
   "workflow-item.send-back.button.confirm": "Geri Gönder",
-
 }

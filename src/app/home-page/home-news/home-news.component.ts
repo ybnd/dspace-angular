@@ -9,5 +9,4 @@ import { Component } from '@angular/core';
 /**
  * Component to render the news section on the home page
  */
-export class HomeNewsComponent {
-}
+export class HomeNewsComponent {}

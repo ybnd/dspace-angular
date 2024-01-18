@@ -1,15 +1,7 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { cold } from 'jasmine-marbles';
-import {
-  Observable,
-  of as observableOf,
-  Subject,
-} from 'rxjs';
+import { Observable, of as observableOf, Subject } from 'rxjs';
 
 import { BreadcrumbsProviderService } from '../core/breadcrumbs/breadcrumbsProviderService';
 import { Breadcrumb } from './breadcrumb/breadcrumb.model';
@@ -37,8 +29,16 @@ describe('BreadcrumbsService', () => {
    */
   const initBreadcrumbs = () => {
     breadcrumbProvider = new TestBreadcrumbsService();
-    breadcrumbConfigA = { provider: breadcrumbProvider, key: 'example.path', url: 'example.com' };
-    breadcrumbConfigB = { provider: breadcrumbProvider, key: 'another.path', url: 'another.com' };
+    breadcrumbConfigA = {
+      provider: breadcrumbProvider,
+      key: 'example.path',
+      url: 'example.com',
+    };
+    breadcrumbConfigB = {
+      provider: breadcrumbProvider,
+      key: 'another.path',
+      url: 'another.com',
+    };
   };
 
   const changeActivatedRoute = (newRootRoute: any) => {
@@ -97,7 +97,9 @@ describe('BreadcrumbsService', () => {
       ];
 
       changeActivatedRoute(route1);
-      expect(service.breadcrumbs$).toBeObservable(cold('a', { a: expectation1 }));
+      expect(service.breadcrumbs$).toBeObservable(
+        cold('a', { a: expectation1 }),
+      );
 
       const route2 = {
         snapshot: {
@@ -124,7 +126,9 @@ describe('BreadcrumbsService', () => {
       ];
 
       changeActivatedRoute(route2);
-      expect(service.breadcrumbs$).toBeObservable(cold('a', { a: expectation2 }));
+      expect(service.breadcrumbs$).toBeObservable(
+        cold('a', { a: expectation2 }),
+      );
     });
   });
 
@@ -142,7 +146,9 @@ describe('BreadcrumbsService', () => {
         };
 
         changeActivatedRoute(route1);
-        expect(service.showBreadcrumbs$).toBeObservable(cold('a', { a: false }));
+        expect(service.showBreadcrumbs$).toBeObservable(
+          cold('a', { a: false }),
+        );
 
         const route2 = {
           snapshot: {
@@ -171,9 +177,10 @@ describe('BreadcrumbsService', () => {
         };
 
         changeActivatedRoute(route1);
-        expect(service.showBreadcrumbs$).toBeObservable(cold('a', { a: false }));
+        expect(service.showBreadcrumbs$).toBeObservable(
+          cold('a', { a: false }),
+        );
       });
     });
   });
-
 });

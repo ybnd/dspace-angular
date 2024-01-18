@@ -15,12 +15,13 @@ import { RestRequest } from './rest-request.model';
  * wrapped in a FilteredDiscoveryQueryResponse
  */
 @Injectable()
-export class FilteredDiscoveryPageResponseParsingService extends BaseResponseParsingService implements ResponseParsingService {
+export class FilteredDiscoveryPageResponseParsingService
+  extends BaseResponseParsingService
+  implements ResponseParsingService
+{
   objectFactory = {};
   toCache = false;
-  constructor(
-    protected objectCache: ObjectCacheService,
-  ) {
+  constructor(protected objectCache: ObjectCacheService) {
     super();
   }
 
@@ -32,6 +33,10 @@ export class FilteredDiscoveryPageResponseParsingService extends BaseResponsePar
    */
   parse(request: RestRequest, data: RawRestResponse): RestResponse {
     const query = data.payload['discovery-query'];
-    return new FilteredDiscoveryQueryResponse(query, data.statusCode, data.statusText);
+    return new FilteredDiscoveryQueryResponse(
+      query,
+      data.statusCode,
+      data.statusText,
+    );
   }
 }

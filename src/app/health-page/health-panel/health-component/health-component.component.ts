@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { AlertType } from '../../../shared/alert/alert-type';
@@ -20,7 +17,6 @@ import { HealthComponent } from '../../models/health-component.model';
   styleUrls: ['./health-component.component.scss'],
 })
 export class HealthComponentComponent {
-
   /**
    * The HealthComponent object to display
    */
@@ -38,8 +34,7 @@ export class HealthComponentComponent {
    */
   public isCollapsed = false;
 
-  constructor(private translate: TranslateService) {
-  }
+  constructor(private translate: TranslateService) {}
 
   /**
    * Return translated label if exist for the given property
@@ -50,6 +45,6 @@ export class HealthComponentComponent {
     const translationKey = `health-page.property.${property}`;
     const translation = this.translate.instant(translationKey);
 
-    return (translation === translationKey) ? property : translation;
+    return translation === translationKey ? property : translation;
   }
 }

@@ -29,8 +29,10 @@ export const DS_DATE_PICKER_SEPARATOR = '-';
   styleUrls: ['./date-picker.component.scss'],
   templateUrl: './date-picker.component.html',
 })
-
-export class DsDatePickerComponent extends DynamicFormControlComponent implements OnInit {
+export class DsDatePickerComponent
+  extends DynamicFormControlComponent
+  implements OnInit
+{
   @Input() bindId = true;
   @Input() group: UntypedFormGroup;
   @Input() model: DynamicDsDatePickerModel;
@@ -66,10 +68,11 @@ export class DsDatePickerComponent extends DynamicFormControlComponent implement
 
   private readonly fields: DatePickerFieldType[] = ['_year', '_month', '_day'];
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService,
-              private renderer: Renderer2,
-              @Inject(DOCUMENT) private _document: Document,
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
+    private renderer: Renderer2,
+    @Inject(DOCUMENT) private _document: Document,
   ) {
     super(layoutService, validationService);
   }
@@ -81,7 +84,9 @@ export class DsDatePickerComponent extends DynamicFormControlComponent implement
     this.initialDay = now.getUTCDate();
 
     if (this.model && this.model.value !== null) {
-      const values = this.model.value.toString().split(DS_DATE_PICKER_SEPARATOR);
+      const values = this.model.value
+        .toString()
+        .split(DS_DATE_PICKER_SEPARATOR);
       if (values.length > 0) {
         this.initialYear = parseInt(values[0], 10);
         this.year = this.initialYear;
@@ -167,15 +172,17 @@ export class DsDatePickerComponent extends DynamicFormControlComponent implement
       value = yyyy;
     }
     if (hasValue(this.month)) {
-      const mm = this.month.toString().length === 1
-        ? '0' + this.month.toString()
-        : this.month.toString();
+      const mm =
+        this.month.toString().length === 1
+          ? '0' + this.month.toString()
+          : this.month.toString();
       value += DS_DATE_PICKER_SEPARATOR + mm;
     }
     if (hasValue(this.day)) {
-      const dd = this.day.toString().length === 1
-        ? '0' + this.day.toString()
-        : this.day.toString();
+      const dd =
+        this.day.toString().length === 1
+          ? '0' + this.day.toString()
+          : this.day.toString();
       value += DS_DATE_PICKER_SEPARATOR + dd;
     }
 
@@ -215,7 +222,9 @@ export class DsDatePickerComponent extends DynamicFormControlComponent implement
   }
 
   private selectedFieldIndex(activeElement: Element): number {
-    return this.fields.findIndex(field => isEqual(activeElement.id, this.model.id.concat(field)));
+    return this.fields.findIndex((field) =>
+      isEqual(activeElement.id, this.model.id.concat(field)),
+    );
   }
 
   /**
@@ -228,7 +237,6 @@ export class DsDatePickerComponent extends DynamicFormControlComponent implement
   focusInput(type: DatePickerFieldType) {
     const field = this._document.getElementById(this.model.id.concat(type));
     if (field) {
-
       if (hasValue(this.year) && isEqual(type, '_year')) {
         this.disabledMonth = true;
         this.disabledDay = true;
@@ -253,5 +261,4 @@ export class DsDatePickerComponent extends DynamicFormControlComponent implement
     date.setMonth(date.getMonth() + 1, 0);
     return date.getDate();
   }
-
 }

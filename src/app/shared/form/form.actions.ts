@@ -125,13 +125,18 @@ export class FormStatusChangeAction implements Action {
 export class FormAddError implements Action {
   type = FormActionTypes.FORM_ADD_ERROR;
   payload: {
+    formId: string;
+    fieldId: string;
+    fieldIndex: number;
+    errorMessage: string;
+  };
+
+  constructor(
     formId: string,
     fieldId: string,
     fieldIndex: number,
     errorMessage: string,
-  };
-
-  constructor(formId: string, fieldId: string, fieldIndex: number, errorMessage: string) {
+  ) {
     this.payload = { formId, fieldId, fieldIndex, errorMessage };
   }
 }
@@ -139,9 +144,9 @@ export class FormAddError implements Action {
 export class FormRemoveErrorAction implements Action {
   type = FormActionTypes.FORM_REMOVE_ERROR;
   payload: {
-    formId: string,
-    fieldId: string,
-    fieldIndex: number,
+    formId: string;
+    fieldId: string;
+    fieldIndex: number;
   };
 
   constructor(formId: string, fieldId: string, fieldIndex: number) {
@@ -152,7 +157,7 @@ export class FormRemoveErrorAction implements Action {
 export class FormClearErrorsAction implements Action {
   type = FormActionTypes.FORM_CLEAR_ERRORS;
   payload: {
-    formId: string
+    formId: string;
   };
 
   constructor(formId: string) {
@@ -160,12 +165,12 @@ export class FormClearErrorsAction implements Action {
   }
 }
 
-
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  */
-export type FormAction = FormInitAction
+export type FormAction =
+  | FormInitAction
   | FormChangeAction
   | FormAddTouchedAction
   | FormRemoveAction

@@ -12,8 +12,9 @@ import { RestRequest } from './rest-request.model';
 @Injectable({
   providedIn: 'root',
 })
-export class StatusCodeOnlyResponseParsingService implements ResponseParsingService {
-
+export class StatusCodeOnlyResponseParsingService
+  implements ResponseParsingService
+{
   /**
    * Parse the response and only extract the status code and status text
    *

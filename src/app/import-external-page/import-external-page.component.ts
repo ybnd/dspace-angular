@@ -8,6 +8,4 @@ import { Component } from '@angular/core';
   templateUrl: './import-external-page.component.html',
   styleUrls: ['./import-external-page.component.scss'],
 })
-export class ImportExternalPageComponent {
-
-}
+export class ImportExternalPageComponent {}

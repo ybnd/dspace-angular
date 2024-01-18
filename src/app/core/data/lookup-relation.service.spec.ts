@@ -1,8 +1,5 @@
 import { of as observableOf } from 'rxjs';
-import {
-  skip,
-  take,
-} from 'rxjs/operators';
+import { skip, take } from 'rxjs/operators';
 
 import { RelationshipOptions } from '../../shared/form/builder/models/relationship-options.model';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
@@ -47,19 +44,32 @@ describe('LookupRelationService', () => {
 
   function init() {
     externalSourceService = jasmine.createSpyObj('externalSourceService', {
-      getExternalSourceEntries: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-        elementsPerPage: 1,
-        totalElements: totalExternal,
-        totalPages: totalExternal,
-        currentPage: 1,
-      }), [{}])),
+      getExternalSourceEntries: createSuccessfulRemoteDataObject$(
+        buildPaginatedList(
+          new PageInfo({
+            elementsPerPage: 1,
+            totalElements: totalExternal,
+            totalPages: totalExternal,
+            currentPage: 1,
+          }),
+          [{}],
+        ),
+      ),
     });
     searchService = jasmine.createSpyObj('searchService', {
-      search: createSuccessfulRemoteDataObject$(createPaginatedList(localResults)),
+      search: createSuccessfulRemoteDataObject$(
+        createPaginatedList(localResults),
+      ),
       getEndpoint: observableOf(searchServiceEndpoint),
     });
-    requestService = jasmine.createSpyObj('requestService', ['removeByHrefSubstring']);
-    service = new LookupRelationService(externalSourceService, searchService, requestService);
+    requestService = jasmine.createSpyObj('requestService', [
+      'removeByHrefSubstring',
+    ]);
+    service = new LookupRelationService(
+      externalSourceService,
+      searchService,
+      requestService,
+    );
   }
 
   beforeEach(() => {
@@ -80,9 +90,12 @@ describe('LookupRelationService', () => {
     });
 
     it('should set the searchConfig to contain a fixedFilter and configuration', () => {
-      expect(service.searchConfig).toEqual(Object.assign(new PaginatedSearchOptions({}), optionsWithQuery,
-        { fixedFilter: relationship.filter, configuration: relationship.searchConfiguration },
-      ));
+      expect(service.searchConfig).toEqual(
+        Object.assign(new PaginatedSearchOptions({}), optionsWithQuery, {
+          fixedFilter: relationship.filter,
+          configuration: relationship.searchConfiguration,
+        }),
+      );
     });
   });
 
@@ -114,7 +127,10 @@ describe('LookupRelationService', () => {
     let result;
 
     beforeEach(() => {
-      result = service.getTotalExternalResults(externalSource, optionsWithQuery);
+      result = service.getTotalExternalResults(
+        externalSource,
+        optionsWithQuery,
+      );
     });
 
     it('should start with 0', () => {
@@ -135,8 +151,10 @@ describe('LookupRelationService', () => {
       service.removeLocalResultsCache();
     });
 
-    it('should call requestService\'s removeByHrefSubstring with the search endpoint', () => {
-      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(searchServiceEndpoint);
+    it("should call requestService's removeByHrefSubstring with the search endpoint", () => {
+      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(
+        searchServiceEndpoint,
+      );
     });
   });
 });

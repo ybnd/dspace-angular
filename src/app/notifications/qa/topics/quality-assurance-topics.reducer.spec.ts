@@ -33,7 +33,10 @@ describe('qualityAssuranceTopicsReducer test suite', () => {
     expectedState.processing = true;
 
     const action = new RetrieveAllTopicsAction(elementPerPage, currentPage);
-    const newState = qualityAssuranceTopicsReducer(qualityAssuranceTopicInitialState, action);
+    const newState = qualityAssuranceTopicsReducer(
+      qualityAssuranceTopicInitialState,
+      action,
+    );
 
     expect(newState).toEqual(expectedState);
   });
@@ -45,14 +48,20 @@ describe('qualityAssuranceTopicsReducer test suite', () => {
     expectedState.currentPage = 0;
 
     const action = new RetrieveAllTopicsErrorAction();
-    const newState = qualityAssuranceTopicsReducer(qualityAssuranceTopicInitialState, action);
+    const newState = qualityAssuranceTopicsReducer(
+      qualityAssuranceTopicInitialState,
+      action,
+    );
 
     expect(newState).toEqual(expectedState);
   });
 
   it('Action ADD_TOPICS should populate the State with Quality Assurance topics', () => {
     const expectedState = {
-      topics: [ qualityAssuranceTopicObjectMorePid, qualityAssuranceTopicObjectMoreAbstract ],
+      topics: [
+        qualityAssuranceTopicObjectMorePid,
+        qualityAssuranceTopicObjectMoreAbstract,
+      ],
       processing: false,
       loaded: true,
       totalPages: 1,
@@ -61,10 +70,18 @@ describe('qualityAssuranceTopicsReducer test suite', () => {
     };
 
     const action = new AddTopicsAction(
-      [ qualityAssuranceTopicObjectMorePid, qualityAssuranceTopicObjectMoreAbstract ],
-      1, 0, 2,
+      [
+        qualityAssuranceTopicObjectMorePid,
+        qualityAssuranceTopicObjectMoreAbstract,
+      ],
+      1,
+      0,
+      2,
     );
-    const newState = qualityAssuranceTopicsReducer(qualityAssuranceTopicInitialState, action);
+    const newState = qualityAssuranceTopicsReducer(
+      qualityAssuranceTopicInitialState,
+      action,
+    );
 
     expect(newState).toEqual(expectedState);
   });

@@ -1,11 +1,5 @@
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { Observable, of as observableOf } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { hasValue } from '../../shared/empty.util';
 import { AuthorizationDataService } from '../data/feature-authorization/authorization-data.service';
@@ -15,7 +9,8 @@ import { Bitstream } from './bitstream.model';
 /**
  * Operator to check if the given bitstream is downloadable
  */
-export const getDownloadableBitstream = (authService: AuthorizationDataService) =>
+export const getDownloadableBitstream =
+  (authService: AuthorizationDataService) =>
   (source: Observable<Bitstream>): Observable<Bitstream | null> =>
     source.pipe(
       switchMap((bit: Bitstream) => {
@@ -23,7 +18,8 @@ export const getDownloadableBitstream = (authService: AuthorizationDataService) 
           return authService.isAuthorized(FeatureID.CanDownload, bit.self).pipe(
             map((canDownload: boolean) => {
               return canDownload ? bit : null;
-            }));
+            }),
+          );
         } else {
           return observableOf(null);
         }

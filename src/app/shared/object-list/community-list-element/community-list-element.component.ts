@@ -16,11 +16,7 @@ import { AbstractListableElementComponent } from '../../object-collection/shared
  */
 @listableObjectComponent(Community, ViewMode.ListElement)
 export class CommunityListElementComponent extends AbstractListableElementComponent<Community> {
-
-  constructor(
-    public dsoNameService: DSONameService,
-  ) {
+  constructor(public dsoNameService: DSONameService) {
     super(dsoNameService);
   }
-
 }

@@ -1,19 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-} from '@angular/router';
-import {
-  createSelector,
-  MemoizedSelector,
-  select,
-  Store,
-} from '@ngrx/store';
-import {
-  combineLatest as observableCombineLatest,
-  Observable,
-} from 'rxjs';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -22,10 +10,7 @@ import {
   take,
 } from 'rxjs/operators';
 
-import {
-  AppState,
-  keySelector,
-} from '../../app.reducer';
+import { AppState, keySelector } from '../../app.reducer';
 import { compareArraysUsingIds } from '../../item-page/simple/item-types/shared/item-relationships-utils';
 import {
   hasNoValue,
@@ -55,7 +40,10 @@ import { MenuSection } from './menu-section.model';
 import { MenuSections } from './menu-sections.model';
 import { MenuState } from './menu-state.model';
 
-export function menuKeySelector<T>(key: string, selector): MemoizedSelector<MenuState, T> {
+export function menuKeySelector<T>(
+  key: string,
+  selector,
+): MemoizedSelector<MenuState, T> {
   return createSelector(selector, (state) => {
     if (hasValue(state)) {
       return state[key];
@@ -67,31 +55,37 @@ export function menuKeySelector<T>(key: string, selector): MemoizedSelector<Menu
 
 const menusStateSelector = (state) => state.menus;
 
-const menuByIDSelector = (menuID: MenuID): MemoizedSelector<AppState, MenuState> => {
+const menuByIDSelector = (
+  menuID: MenuID,
+): MemoizedSelector<AppState, MenuState> => {
   return keySelector<MenuState>(menuID, menusStateSelector);
 };
 
-const menuSectionStateSelector = (state: MenuState) => hasValue(state) ? state.sections : {};
+const menuSectionStateSelector = (state: MenuState) =>
+  hasValue(state) ? state.sections : {};
 
-const menuSectionByIDSelector = (id: string): MemoizedSelector<MenuState, MenuSection> => {
+const menuSectionByIDSelector = (
+  id: string,
+): MemoizedSelector<MenuState, MenuSection> => {
   return menuKeySelector<MenuSection>(id, menuSectionStateSelector);
 };
 
-const menuSectionIndexStateSelector = (state: MenuState) => state.sectionToSubsectionIndex;
+const menuSectionIndexStateSelector = (state: MenuState) =>
+  state.sectionToSubsectionIndex;
 
-const getSubSectionsFromSectionSelector = (id: string): MemoizedSelector<MenuState, string[]> => {
+const getSubSectionsFromSectionSelector = (
+  id: string,
+): MemoizedSelector<MenuState, string[]> => {
   return menuKeySelector<string[]>(id, menuSectionIndexStateSelector);
 };
 
 @Injectable()
 export class MenuService {
-
   constructor(
     protected store: Store<AppState>,
     protected route: ActivatedRoute,
     protected router: Router,
-  ) {
-  }
+  ) {}
 
   /**
    * Retrieve a menu's state by its ID
@@ -108,7 +102,10 @@ export class MenuService {
    * @param {boolean} mustBeVisible True if you only want to request visible sections, false if you want to request all top level sections
    * @returns {Observable<MenuSection[]>} Observable that emits a list of MenuSections that are top sections of the given menu
    */
-  getMenuTopSections(menuID: MenuID, mustBeVisible = true): Observable<MenuSection[]> {
+  getMenuTopSections(
+    menuID: MenuID,
+    mustBeVisible = true,
+  ): Observable<MenuSection[]> {
     return this.store.pipe(
       select(menuByIDSelector(menuID)),
       select(menuSectionStateSelector),
@@ -118,8 +115,7 @@ export class MenuService {
         return sections
           .filter((section: MenuSection) => hasNoValue(section.parentID))
           .filter((section: MenuSection) => !mustBeVisible || section.visible);
-      },
-      ),
+      }),
     );
   }
 
@@ -130,15 +126,26 @@ export class MenuService {
    * @param {boolean} mustBeVisible True if you only want to request visible sections, false if you want to request all sections
    * @returns {Observable<MenuSection[]>} Observable that emits a list of MenuSections that are sub sections of the given menu and parent section
    */
-  getSubSectionsByParentID(menuID: MenuID, parentID: string, mustBeVisible = true): Observable<MenuSection[]> {
+  getSubSectionsByParentID(
+    menuID: MenuID,
+    parentID: string,
+    mustBeVisible = true,
+  ): Observable<MenuSection[]> {
     return this.store.pipe(
       select(menuByIDSelector(menuID)),
       select(getSubSectionsFromSectionSelector(parentID)),
-      map((ids: string[]) => isNotEmpty(ids) ? ids : []),
+      map((ids: string[]) => (isNotEmpty(ids) ? ids : [])),
       switchMap((ids: string[]) =>
-        observableCombineLatest(ids.map((id: string) => this.getMenuSection(menuID, id))),
+        observableCombineLatest(
+          ids.map((id: string) => this.getMenuSection(menuID, id)),
+        ),
       ),
-      map((sections: MenuSection[]) => sections.filter((section: MenuSection) => hasValue(section) && (!mustBeVisible || section.visible))),
+      map((sections: MenuSection[]) =>
+        sections.filter(
+          (section: MenuSection) =>
+            hasValue(section) && (!mustBeVisible || section.visible),
+        ),
+      ),
     );
   }
 
@@ -175,7 +182,11 @@ export class MenuService {
    */
   getNonPersistentMenuSections(menuID: MenuID): Observable<MenuSection[]> {
     return this.getMenu(menuID).pipe(
-      map((state: MenuState) => Object.values(state.sections).filter((section: MenuSection) => !section.shouldPersistOnRouteChange)),
+      map((state: MenuState) =>
+        Object.values(state.sections).filter(
+          (section: MenuSection) => !section.shouldPersistOnRouteChange,
+        ),
+      ),
     );
   }
 
@@ -204,7 +215,9 @@ export class MenuService {
    */
   isMenuCollapsed(menuID: MenuID): Observable<boolean> {
     return this.getMenu(menuID).pipe(
-      map((state: MenuState) => hasValue(state) ? state.collapsed : undefined),
+      map((state: MenuState) =>
+        hasValue(state) ? state.collapsed : undefined,
+      ),
     );
   }
 
@@ -215,7 +228,9 @@ export class MenuService {
    */
   isMenuPreviewCollapsed(menuID: MenuID): Observable<boolean> {
     return this.getMenu(menuID).pipe(
-      map((state: MenuState) => hasValue(state) ? state.previewCollapsed : undefined),
+      map((state: MenuState) =>
+        hasValue(state) ? state.previewCollapsed : undefined,
+      ),
     );
   }
 
@@ -226,7 +241,10 @@ export class MenuService {
    *   visible and has visible sections, emits false when it's hidden
    */
   isMenuVisibleWithVisibleSections(menuID: MenuID): Observable<boolean> {
-    return observableCombineLatest([this.isMenuVisible(menuID), this.menuHasVisibleSections(menuID)]).pipe(
+    return observableCombineLatest([
+      this.isMenuVisible(menuID),
+      this.menuHasVisibleSections(menuID),
+    ]).pipe(
       map(([menuVisible, visibleSections]) => menuVisible && visibleSections),
     );
   }
@@ -238,7 +256,7 @@ export class MenuService {
    */
   isMenuVisible(menuID: MenuID): Observable<boolean> {
     return this.getMenu(menuID).pipe(
-      map((state: MenuState) => hasValue(state) ? state.visible : undefined),
+      map((state: MenuState) => (hasValue(state) ? state.visible : undefined)),
     );
   }
 
@@ -249,10 +267,13 @@ export class MenuService {
    */
   menuHasVisibleSections(menuID: MenuID): Observable<boolean> {
     return this.getMenu(menuID).pipe(
-      map((state: MenuState) => hasValue(state)
-        ? Object.values(state.sections)
-          .some(section => section.visible && section.parentID === undefined)
-        : undefined),
+      map((state: MenuState) =>
+        hasValue(state)
+          ? Object.values(state.sections).some(
+              (section) => section.visible && section.parentID === undefined,
+            )
+          : undefined,
+      ),
     );
   }
 
@@ -364,7 +385,10 @@ export class MenuService {
    * @returns {Observable<boolean>} Emits true when the given section is currently active, false when the given section is currently inactive
    */
   isSectionActive(menuID: MenuID, id: string): Observable<boolean> {
-    return this.getMenuSection(menuID, id).pipe(hasValueOperator(), map((section) => section.active));
+    return this.getMenuSection(menuID, id).pipe(
+      hasValueOperator(),
+      map((section) => section.active),
+    );
   }
 
   /**
@@ -374,17 +398,19 @@ export class MenuService {
    * @returns {Observable<boolean>} Emits true when the given section is currently visible, false when the given section is currently hidden
    */
   isSectionVisible(menuID: MenuID, id: string): Observable<boolean> {
-    return this.getMenuSection(menuID, id).pipe(map((section) => section.visible));
+    return this.getMenuSection(menuID, id).pipe(
+      map((section) => section.visible),
+    );
   }
 
   listenForRouteChanges(): void {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-    ).subscribe(() => {
-      Object.values(MenuID).forEach((menuID) => {
-        this.buildRouteMenuSections(menuID);
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        Object.values(MenuID).forEach((menuID) => {
+          this.buildRouteMenuSections(menuID);
+        });
       });
-    });
   }
 
   /**
@@ -394,23 +420,28 @@ export class MenuService {
    * @param menuID  The menu to add/remove sections to/from
    */
   buildRouteMenuSections(menuID: MenuID) {
-    this.getNonPersistentMenuSections(menuID).pipe(
-      map((sections) => sections.map((section) => section.id)),
-      take(1),
-    ).subscribe((shouldNotPersistIDs: string[]) => {
-      const resolvedSections = this.resolveRouteMenuSections(this.route.root, menuID);
-      resolvedSections.forEach((section) => {
-        const index = shouldNotPersistIDs.indexOf(section.id);
-        if (index > -1) {
-          shouldNotPersistIDs.splice(index, 1);
-        } else {
-          this.addSection(menuID, section);
-        }
+    this.getNonPersistentMenuSections(menuID)
+      .pipe(
+        map((sections) => sections.map((section) => section.id)),
+        take(1),
+      )
+      .subscribe((shouldNotPersistIDs: string[]) => {
+        const resolvedSections = this.resolveRouteMenuSections(
+          this.route.root,
+          menuID,
+        );
+        resolvedSections.forEach((section) => {
+          const index = shouldNotPersistIDs.indexOf(section.id);
+          if (index > -1) {
+            shouldNotPersistIDs.splice(index, 1);
+          } else {
+            this.addSection(menuID, section);
+          }
+        });
+        shouldNotPersistIDs.forEach((id) => {
+          this.removeSection(menuID, id);
+        });
       });
-      shouldNotPersistIDs.forEach((id) => {
-        this.removeSection(menuID, id);
-      });
-    });
   }
 
   /**
@@ -418,7 +449,10 @@ export class MenuService {
    * @param route   The route to resolve data for
    * @param menuID  The menu to resolve data for
    */
-  resolveRouteMenuSections(route: ActivatedRoute, menuID: MenuID): MenuSection[] {
+  resolveRouteMenuSections(
+    route: ActivatedRoute,
+    menuID: MenuID,
+  ): MenuSection[] {
     const data = route.snapshot.data;
     const params = route.snapshot.params;
     const last: boolean = hasNoValue(route.firstChild);
@@ -432,8 +466,19 @@ export class MenuService {
       }
 
       if (!last) {
-        const childMenuSections = this.resolveRouteMenuSections(route.firstChild, menuID);
-        return [...menuSections.filter(menu => !(childMenuSections).map(childMenu => childMenu.id).includes(menu.id)), ...childMenuSections];
+        const childMenuSections = this.resolveRouteMenuSections(
+          route.firstChild,
+          menuID,
+        );
+        return [
+          ...menuSections.filter(
+            (menu) =>
+              !childMenuSections
+                .map((childMenu) => childMenu.id)
+                .includes(menu.id),
+          ),
+          ...childMenuSections,
+        ];
       } else {
         return [...menuSections];
       }
@@ -448,8 +493,9 @@ export class MenuService {
       resolved = object;
     } else if (typeof object === 'string') {
       resolved = object;
-      Object.entries(params).forEach(([key, value]: [string, string]) =>
-        resolved = resolved.replaceAll(`:${key}`, value),
+      Object.entries(params).forEach(
+        ([key, value]: [string, string]) =>
+          (resolved = resolved.replaceAll(`:${key}`, value)),
       );
     } else if (Array.isArray(object)) {
       resolved = [];
@@ -466,6 +512,4 @@ export class MenuService {
     }
     return resolved;
   }
-
-
 }

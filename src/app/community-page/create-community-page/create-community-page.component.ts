@@ -31,6 +31,15 @@ export class CreateCommunityPageComponent extends CreateComColPageComponent<Comm
     protected translate: TranslateService,
     protected requestService: RequestService,
   ) {
-    super(communityDataService, dsoNameService, communityDataService, routeService, router, notificationsService, translate, requestService);
+    super(
+      communityDataService,
+      dsoNameService,
+      communityDataService,
+      routeService,
+      router,
+      notificationsService,
+      translate,
+      requestService,
+    );
   }
 }

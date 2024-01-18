@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import {
-  compare,
-  Operation,
-} from 'fast-json-patch';
+import { compare, Operation } from 'fast-json-patch';
 
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
@@ -54,7 +51,6 @@ describe('BundleDataService', () => {
     http = {} as HttpClient;
     comparator = new DummyChangeAnalyzer() as any;
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
@@ -77,7 +73,8 @@ describe('BundleDataService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new BundleDataService(null, null, null, null, null);
+    const initService = () =>
+      new BundleDataService(null, null, null, null, null);
 
     testPatchDataImplementation(initService);
   });
@@ -88,8 +85,13 @@ describe('BundleDataService', () => {
       service.findAllByItem(item);
     });
 
-    it('should call findListByHref with the item\'s bundles link', () => {
-      expect(service.findListByHref).toHaveBeenCalledWith(bundleLink, undefined, true, true);
+    it("should call findListByHref with the item's bundles link", () => {
+      expect(service.findListByHref).toHaveBeenCalledWith(
+        bundleLink,
+        undefined,
+        true,
+        true,
+      );
     });
   });
 
@@ -129,7 +131,9 @@ describe('BundleDataService', () => {
           },
         }),
       ];
-      spyOn(service, 'findAllByItem').and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList(bundles)));
+      spyOn(service, 'findAllByItem').and.returnValue(
+        createSuccessfulRemoteDataObject$(createPaginatedList(bundles)),
+      );
     });
 
     it('should only return the requested bundle by name', (done) => {

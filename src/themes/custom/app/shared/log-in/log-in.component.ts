@@ -9,5 +9,4 @@ import { LogInComponent as BaseComponent } from '../../../../../app/shared/log-i
   // styleUrls: ['./log-in.component.scss'],
   styleUrls: ['../../../../../app/shared/log-in/log-in.component.scss'],
 })
-export class LogInComponent extends BaseComponent {
-}
+export class LogInComponent extends BaseComponent {}

@@ -17,5 +17,4 @@ import { AbstractListableElementComponent } from '../../../../object-collection/
 /**
  * The component for displaying a grid element for an item of the type Publication
  */
-export class ItemGridElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class ItemGridElementComponent extends AbstractListableElementComponent<Item> {}

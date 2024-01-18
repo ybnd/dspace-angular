@@ -1,21 +1,8 @@
-import {
-  NO_ERRORS_SCHEMA,
-  ViewContainerRef,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { NO_ERRORS_SCHEMA, ViewContainerRef } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { ItemDataService } from '../../core/data/item-data.service';
@@ -31,7 +18,6 @@ import { SubmissionService } from '../submission.service';
 import { SubmissionSubmitComponent } from './submission-submit.component';
 
 describe('SubmissionSubmitComponent Component', () => {
-
   let comp: SubmissionSubmitComponent;
   let fixture: ComponentFixture<SubmissionSubmitComponent>;
   let submissionServiceStub: SubmissionServiceStub;
@@ -78,28 +64,28 @@ describe('SubmissionSubmitComponent Component', () => {
     router = null;
   });
 
-  it('should redirect to mydspace when an empty SubmissionObject has been retrieved',() => {
-
+  it('should redirect to mydspace when an empty SubmissionObject has been retrieved', () => {
     submissionServiceStub.createSubmission.and.returnValue(observableOf({}));
 
     fixture.detectChanges();
 
     expect(router.navigate).toHaveBeenCalledWith(['/mydspace']);
-
   });
 
-  it('should redirect to workspaceitem edit when a not empty SubmissionObject has been retrieved',() => {
-
-    submissionServiceStub.createSubmission.and.returnValue(observableOf({ id: '1234' }));
+  it('should redirect to workspaceitem edit when a not empty SubmissionObject has been retrieved', () => {
+    submissionServiceStub.createSubmission.and.returnValue(
+      observableOf({ id: '1234' }),
+    );
 
     fixture.detectChanges();
 
-    expect(router.navigate).toHaveBeenCalledWith(['/workspaceitems', '1234', 'edit'], { replaceUrl: true });
-
+    expect(router.navigate).toHaveBeenCalledWith(
+      ['/workspaceitems', '1234', 'edit'],
+      { replaceUrl: true },
+    );
   });
 
-  it('should not has effects when an invalid SubmissionObject has been retrieved',() => {
-
+  it('should not has effects when an invalid SubmissionObject has been retrieved', () => {
     submissionServiceStub.createSubmission.and.returnValue(observableOf(null));
 
     fixture.detectChanges();
@@ -109,5 +95,4 @@ describe('SubmissionSubmitComponent Component', () => {
     expect(comp.selfUrl).toBeUndefined();
     expect(comp.submissionDefinition).toBeUndefined();
   });
-
 });

@@ -9,7 +9,9 @@ import { ProjectSearchResultGridElementComponent } from './project-search-result
 const mockItemWithMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithMetadata.hitHighlights = {};
 mockItemWithMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'dc.title': [
       {
@@ -29,7 +31,9 @@ mockItemWithMetadata.indexableObject = Object.assign(new Item(), {
 const mockItemWithoutMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithoutMetadata.hitHighlights = {};
 mockItemWithoutMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'dc.title': [
       {
@@ -40,4 +44,12 @@ mockItemWithoutMetadata.indexableObject = Object.assign(new Item(), {
   },
 });
 
-describe('ProjectSearchResultGridElementComponent', getEntityGridElementTestComponent(ProjectSearchResultGridElementComponent, mockItemWithMetadata, mockItemWithoutMetadata, ['description']));
+describe(
+  'ProjectSearchResultGridElementComponent',
+  getEntityGridElementTestComponent(
+    ProjectSearchResultGridElementComponent,
+    mockItemWithMetadata,
+    mockItemWithoutMetadata,
+    ['description'],
+  ),
+);

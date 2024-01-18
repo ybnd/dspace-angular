@@ -18,11 +18,15 @@ import { hasValue } from '../../shared/empty.util';
  */
 @Injectable()
 export class LogInterceptor implements HttpInterceptor {
+  constructor(
+    private cidService: CorrelationIdService,
+    private router: Router,
+  ) {}
 
-  constructor(private cidService: CorrelationIdService, private router: Router) {}
-
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<any>> {
     // Get the correlation id for the user from the store
     const correlationId = this.cidService.getCorrelationId();
 

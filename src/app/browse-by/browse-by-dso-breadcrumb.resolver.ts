@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -23,8 +20,10 @@ import { hasValue } from '../shared/empty.util';
  */
 @Injectable()
 export class BrowseByDSOBreadcrumbResolver {
-  constructor(protected breadcrumbService: DSOBreadcrumbsService, protected dataService: DSpaceObjectDataService) {
-  }
+  constructor(
+    protected breadcrumbService: DSOBreadcrumbsService,
+    protected dataService: DSpaceObjectDataService,
+  ) {}
 
   /**
    * Method for resolving a breadcrumb config object
@@ -32,14 +31,21 @@ export class BrowseByDSOBreadcrumbResolver {
    * @param {RouterStateSnapshot} state The current RouterStateSnapshot
    * @returns BreadcrumbConfig object
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<BreadcrumbConfig<Community | Collection>> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<BreadcrumbConfig<Community | Collection>> {
     const uuid = route.queryParams.scope;
     if (hasValue(uuid)) {
       return this.dataService.findById(uuid).pipe(
         getFirstSucceededRemoteData(),
         getRemoteDataPayload(),
         map((object: Community | Collection) => {
-          return { provider: this.breadcrumbService, key: object, url: getDSORoute(object) };
+          return {
+            provider: this.breadcrumbService,
+            key: object,
+            url: getDSORoute(object),
+          };
         }),
       );
     }

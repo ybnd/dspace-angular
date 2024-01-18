@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -28,9 +21,11 @@ describe('ItemStatusBadgeComponent', () => {
       imports: [TranslateModule.forRoot()],
       declarations: [StatusBadgeComponent, TruncatePipe],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(StatusBadgeComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(StatusBadgeComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
     init();
   }));
 
@@ -44,7 +39,6 @@ describe('ItemStatusBadgeComponent', () => {
     fixture = TestBed.createComponent(StatusBadgeComponent);
     comp = fixture.componentInstance;
   }));
-
 
   describe('when the item is not withdrawn', () => {
     beforeEach(() => {

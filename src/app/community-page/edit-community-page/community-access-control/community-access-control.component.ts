@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -21,8 +18,8 @@ export class CommunityAccessControlComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.itemRD$ = this.route.parent.parent.data.pipe(
-      map((data) => data.dso),
-    ).pipe(getFirstSucceededRemoteData()) as Observable<RemoteData<Community>>;
+    this.itemRD$ = this.route.parent.parent.data
+      .pipe(map((data) => data.dso))
+      .pipe(getFirstSucceededRemoteData()) as Observable<RemoteData<Community>>;
   }
 }

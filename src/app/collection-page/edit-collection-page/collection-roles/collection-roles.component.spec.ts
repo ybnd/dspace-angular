@@ -1,11 +1,5 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
@@ -29,13 +23,11 @@ import { NotificationsServiceStub } from '../../../shared/testing/notifications-
 import { CollectionRolesComponent } from './collection-roles.component';
 
 describe('CollectionRolesComponent', () => {
-
   let fixture: ComponentFixture<CollectionRolesComponent>;
   let comp: CollectionRolesComponent;
   let de: DebugElement;
 
   beforeEach(() => {
-
     const route = {
       parent: {
         data: observableOf({
@@ -86,9 +78,7 @@ describe('CollectionRolesComponent', () => {
         TranslateModule.forRoot(),
         NoopAnimationsModule,
       ],
-      declarations: [
-        CollectionRolesComponent,
-      ],
+      declarations: [CollectionRolesComponent],
       providers: [
         { provide: ActivatedRoute, useValue: route },
         { provide: DSONameService, useValue: new DSONameServiceMock() },
@@ -107,32 +97,27 @@ describe('CollectionRolesComponent', () => {
   });
 
   it('should display a collection admin role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .collection-admin')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .collection-admin'))).toBeTruthy();
     done();
   });
 
   it('should display a submitters role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .submitters')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .submitters'))).toBeTruthy();
     done();
   });
 
   it('should display a default item read role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .item_read')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .item_read'))).toBeTruthy();
     done();
   });
 
   it('should display a default bitstream read role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .bitstream_read')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .bitstream_read'))).toBeTruthy();
     done();
   });
 
   it('should display a test workflow role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .test')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .test'))).toBeTruthy();
     done();
   });
 });

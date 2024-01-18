@@ -33,7 +33,10 @@ describe('qualityAssuranceSourceReducer test suite', () => {
     expectedState.processing = true;
 
     const action = new RetrieveAllSourceAction(elementPerPage, currentPage);
-    const newState = qualityAssuranceSourceReducer(qualityAssuranceSourceInitialState, action);
+    const newState = qualityAssuranceSourceReducer(
+      qualityAssuranceSourceInitialState,
+      action,
+    );
 
     expect(newState).toEqual(expectedState);
   });
@@ -45,14 +48,20 @@ describe('qualityAssuranceSourceReducer test suite', () => {
     expectedState.currentPage = 0;
 
     const action = new RetrieveAllSourceErrorAction();
-    const newState = qualityAssuranceSourceReducer(qualityAssuranceSourceInitialState, action);
+    const newState = qualityAssuranceSourceReducer(
+      qualityAssuranceSourceInitialState,
+      action,
+    );
 
     expect(newState).toEqual(expectedState);
   });
 
   it('Action ADD_SOURCE should populate the State with Quality Assurance source', () => {
     const expectedState = {
-      source: [ qualityAssuranceSourceObjectMorePid, qualityAssuranceSourceObjectMoreAbstract ],
+      source: [
+        qualityAssuranceSourceObjectMorePid,
+        qualityAssuranceSourceObjectMoreAbstract,
+      ],
       processing: false,
       loaded: true,
       totalPages: 1,
@@ -61,10 +70,18 @@ describe('qualityAssuranceSourceReducer test suite', () => {
     };
 
     const action = new AddSourceAction(
-      [ qualityAssuranceSourceObjectMorePid, qualityAssuranceSourceObjectMoreAbstract ],
-      1, 0, 2,
+      [
+        qualityAssuranceSourceObjectMorePid,
+        qualityAssuranceSourceObjectMoreAbstract,
+      ],
+      1,
+      0,
+      2,
     );
-    const newState = qualityAssuranceSourceReducer(qualityAssuranceSourceInitialState, action);
+    const newState = qualityAssuranceSourceReducer(
+      qualityAssuranceSourceInitialState,
+      action,
+    );
 
     expect(newState).toEqual(expectedState);
   });

@@ -60,7 +60,7 @@ export class ObjectListComponent {
    */
   @Input() hidePagerWhenSinglePage = true;
   @Input() selectable = false;
-  @Input() selectionConfig: { repeatable: boolean, listId: string };
+  @Input() selectionConfig: { repeatable: boolean; listId: string };
 
   /**
    * The link type of the listable elements
@@ -137,11 +137,11 @@ export class ObjectListComponent {
    * Event's payload equals to the newly selected page.
    */
   @Output() change: EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }> = new EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }>();
 
   /**
@@ -160,21 +160,25 @@ export class ObjectListComponent {
    * An event fired when the sort direction is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter<SortDirection>();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter<SortDirection>();
 
   /**
    * An event fired when on of the pagination parameters changes
    */
   @Output() paginationChange: EventEmitter<any> = new EventEmitter<any>();
 
-  @Output() deselectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() deselectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
-  @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() selectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * Send an import event to the parent component
    */
-  @Output() importObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() importObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * An event fired when the sort field is changed.
@@ -182,8 +186,7 @@ export class ObjectListComponent {
    */
   @Output() sortFieldChange: EventEmitter<string> = new EventEmitter<string>();
 
-  constructor(protected selectionService: SelectableListService) {
-  }
+  constructor(protected selectionService: SelectableListService) {}
 
   /**
    * Emits the current page when it changes
@@ -232,10 +235,9 @@ export class ObjectListComponent {
   }
 
   /**
-  * Go to the next page
-  */
+   * Go to the next page
+   */
   goNext() {
     this.next.emit(true);
   }
-
 }

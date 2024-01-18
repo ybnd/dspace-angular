@@ -1,7 +1,4 @@
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import {
   DynamicCheckboxModel,
   DynamicSelectModel,
@@ -26,10 +23,22 @@ export const accessConditionChangeEvent = {
     errors: null,
     pristine: false,
     status: 'VALID',
-    statusChanges: { _isScalar: false, observers: [], closed: false, isStopped: false, hasError: false },
+    statusChanges: {
+      _isScalar: false,
+      observers: [],
+      closed: false,
+      isStopped: false,
+      hasError: false,
+    },
     touched: true,
     value: { year: 2021, month: 12, day: 30 },
-    valueChanges: { _isScalar: false, observers: [], closed: false, isStopped: false, hasError: false },
+    valueChanges: {
+      _isScalar: false,
+      observers: [],
+      closed: false,
+      isStopped: false,
+      hasError: false,
+    },
     _updateOn: 'change',
   }),
   group: new UntypedFormGroup({}),
@@ -37,7 +46,9 @@ export const accessConditionChangeEvent = {
     additional: null,
     asyncValidators: null,
     controlTooltip: null,
-    errorMessages: { required: 'submission.sections.upload.form.date-required-until' },
+    errorMessages: {
+      required: 'submission.sections.upload.form.date-required-until',
+    },
     hidden: false,
     hint: null,
     id: 'endDate',
@@ -55,7 +66,6 @@ export const accessConditionChangeEvent = {
   }),
   type: 'change',
 };
-
 
 export const checkboxChangeEvent = {
   $event: {
@@ -76,10 +86,22 @@ export const checkboxChangeEvent = {
     errors: null,
     pristine: false,
     status: 'VALID',
-    statusChanges: { _isScalar: false, observers: [], closed: false, isStopped: false, hasError: false },
+    statusChanges: {
+      _isScalar: false,
+      observers: [],
+      closed: false,
+      isStopped: false,
+      hasError: false,
+    },
     touched: true,
     value: { year: 2021, month: 12, day: 30 },
-    valueChanges: { _isScalar: false, observers: [], closed: false, isStopped: false, hasError: false },
+    valueChanges: {
+      _isScalar: false,
+      observers: [],
+      closed: false,
+      isStopped: false,
+      hasError: false,
+    },
     _updateOn: 'change',
   }),
   group: new UntypedFormGroup({}),

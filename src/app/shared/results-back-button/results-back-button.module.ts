@@ -6,18 +6,8 @@ import { ResultsBackButtonComponent } from './results-back-button.component';
 import { ThemedResultsBackButtonComponent } from './themed-results-back-button.component';
 
 @NgModule({
-  declarations: [
-    ResultsBackButtonComponent,
-    ThemedResultsBackButtonComponent,
-  ],
-  imports: [
-    CommonModule,
-    TranslateModule,
-  ],
-  exports: [
-    ThemedResultsBackButtonComponent,
-  ],
+  declarations: [ResultsBackButtonComponent, ThemedResultsBackButtonComponent],
+  imports: [CommonModule, TranslateModule],
+  exports: [ThemedResultsBackButtonComponent],
 })
-export class ResultsBackButtonModule {
-
-}
+export class ResultsBackButtonModule {}

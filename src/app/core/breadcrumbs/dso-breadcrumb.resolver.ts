@@ -25,12 +25,14 @@ import { DSOBreadcrumbsService } from './dso-breadcrumbs.service';
 @Injectable({
   providedIn: 'root',
 })
-export abstract class DSOBreadcrumbResolver<T extends ChildHALResource & DSpaceObject> implements Resolve<BreadcrumbConfig<T>> {
+export abstract class DSOBreadcrumbResolver<
+  T extends ChildHALResource & DSpaceObject,
+> implements Resolve<BreadcrumbConfig<T>>
+{
   protected constructor(
     protected breadcrumbService: DSOBreadcrumbsService,
     protected dataService: IdentifiableDataService<T>,
-  ) {
-  }
+  ) {}
 
   /**
    * Method for resolving a breadcrumb config object
@@ -38,21 +40,26 @@ export abstract class DSOBreadcrumbResolver<T extends ChildHALResource & DSpaceO
    * @param {RouterStateSnapshot} state The current RouterStateSnapshot
    * @returns BreadcrumbConfig object
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<BreadcrumbConfig<T>> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<BreadcrumbConfig<T>> {
     const uuid = route.params.id;
-    return this.dataService.findById(uuid, true, false, ...this.followLinks).pipe(
-      getFirstCompletedRemoteData(),
-      getRemoteDataPayload(),
-      map((object: T) => {
-        if (hasValue(object)) {
-          const fullPath = state.url;
-          const url = fullPath.substr(0, fullPath.indexOf(uuid)) + uuid;
-          return { provider: this.breadcrumbService, key: object, url: url };
-        } else {
-          return undefined;
-        }
-      }),
-    );
+    return this.dataService
+      .findById(uuid, true, false, ...this.followLinks)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        getRemoteDataPayload(),
+        map((object: T) => {
+          if (hasValue(object)) {
+            const fullPath = state.url;
+            const url = fullPath.substr(0, fullPath.indexOf(uuid)) + uuid;
+            return { provider: this.breadcrumbService, key: object, url: url };
+          } else {
+            return undefined;
+          }
+        }),
+      );
   }
 
   /**

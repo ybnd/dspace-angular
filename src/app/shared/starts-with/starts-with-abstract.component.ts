@@ -1,17 +1,6 @@
-import {
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { PaginationService } from '../../core/pagination/pagination.service';
@@ -40,12 +29,13 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
    */
   subs: Subscription[] = [];
 
-  public constructor(@Inject('startsWithOptions') public startsWithOptions: any[],
-                     @Inject('paginationId') public paginationId: string,
-                     protected paginationService: PaginationService,
-                     protected route: ActivatedRoute,
-                     protected router: Router) {
-  }
+  public constructor(
+    @Inject('startsWithOptions') public startsWithOptions: any[],
+    @Inject('paginationId') public paginationId: string,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.subs.push(
@@ -92,7 +82,11 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
       this.startsWith = undefined;
     }
     if (resetPage) {
-      this.paginationService.updateRoute(this.paginationId, { page: 1 }, { startsWith: this.startsWith });
+      this.paginationService.updateRoute(
+        this.paginationId,
+        { page: 1 },
+        { startsWith: this.startsWith },
+      );
     } else {
       this.router.navigate([], {
         queryParams: Object.assign({ startsWith: this.startsWith }),
@@ -111,6 +105,8 @@ export abstract class StartsWithAbstractComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
 }

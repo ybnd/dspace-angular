@@ -4,10 +4,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-data.utils';
 import { AuthService } from '../../../auth/auth.service';
@@ -21,15 +18,20 @@ import { DsoPageSingleFeatureGuard } from './dso-page-single-feature.guard';
  * Test implementation of abstract class DsoPageSingleFeatureGuard
  */
 class DsoPageSingleFeatureGuardImpl extends DsoPageSingleFeatureGuard<any> {
-  constructor(protected resolver: Resolve<RemoteData<any>>,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService,
-              protected featureID: FeatureID) {
+  constructor(
+    protected resolver: Resolve<RemoteData<any>>,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+    protected featureID: FeatureID,
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 
-  getFeatureID(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FeatureID> {
+  getFeatureID(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<FeatureID> {
     return observableOf(this.featureID);
   }
 }
@@ -67,11 +69,16 @@ describe('DsoPageSingleFeatureGuard', () => {
       },
     };
     route = {
-      params: {
-      },
+      params: {},
       parent: parentRoute,
     };
-    guard = new DsoPageSingleFeatureGuardImpl(resolver, authorizationService, router, authService, undefined);
+    guard = new DsoPageSingleFeatureGuardImpl(
+      resolver,
+      authorizationService,
+      router,
+      authService,
+      undefined,
+    );
   }
 
   beforeEach(() => {
@@ -79,7 +86,7 @@ describe('DsoPageSingleFeatureGuard', () => {
   });
 
   describe('getObjectUrl', () => {
-    it('should return the resolved object\'s selflink', (done) => {
+    it("should return the resolved object's selflink", (done) => {
       guard.getObjectUrl(route, undefined).subscribe((selflink) => {
         expect(selflink).toEqual(object.self);
         done();

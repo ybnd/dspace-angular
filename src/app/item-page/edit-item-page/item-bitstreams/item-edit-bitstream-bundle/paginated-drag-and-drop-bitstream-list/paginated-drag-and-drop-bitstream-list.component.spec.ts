@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -75,39 +71,39 @@ describe('PaginatedDragAndDropBitstreamListComponent', () => {
   };
 
   beforeEach(waitForAsync(() => {
-    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService',
-      {
-        getFieldUpdates: observableOf({
-          [bitstream1.uuid]: fieldUpdate1,
-          [bitstream2.uuid]: fieldUpdate2,
-        }),
-        getFieldUpdatesExclusive: observableOf({
-          [bitstream1.uuid]: fieldUpdate1,
-          [bitstream2.uuid]: fieldUpdate2,
-        }),
-        getFieldUpdatesByCustomOrder: observableOf({
-          [bitstream1.uuid]: fieldUpdate1,
-          [bitstream2.uuid]: fieldUpdate2,
-        }),
-        saveMoveFieldUpdate: {},
-        saveRemoveFieldUpdate: {},
-        removeSingleFieldUpdate: {},
-        saveAddFieldUpdate: {},
-        discardFieldUpdates: {},
-        reinstateFieldUpdates: observableOf(true),
-        initialize: {},
-        getUpdatedFields: observableOf([bitstream1, bitstream2]),
-        getLastModified: observableOf(date),
-        hasUpdates: observableOf(true),
-        isReinstatable: observableOf(false),
-        isValidPage: observableOf(true),
-        initializeWithCustomOrder: {},
-        addPageToCustomOrder: {},
-      },
-    );
+    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService', {
+      getFieldUpdates: observableOf({
+        [bitstream1.uuid]: fieldUpdate1,
+        [bitstream2.uuid]: fieldUpdate2,
+      }),
+      getFieldUpdatesExclusive: observableOf({
+        [bitstream1.uuid]: fieldUpdate1,
+        [bitstream2.uuid]: fieldUpdate2,
+      }),
+      getFieldUpdatesByCustomOrder: observableOf({
+        [bitstream1.uuid]: fieldUpdate1,
+        [bitstream2.uuid]: fieldUpdate2,
+      }),
+      saveMoveFieldUpdate: {},
+      saveRemoveFieldUpdate: {},
+      removeSingleFieldUpdate: {},
+      saveAddFieldUpdate: {},
+      discardFieldUpdates: {},
+      reinstateFieldUpdates: observableOf(true),
+      initialize: {},
+      getUpdatedFields: observableOf([bitstream1, bitstream2]),
+      getLastModified: observableOf(date),
+      hasUpdates: observableOf(true),
+      isReinstatable: observableOf(false),
+      isValidPage: observableOf(true),
+      initializeWithCustomOrder: {},
+      addPageToCustomOrder: {},
+    });
 
     bundleService = jasmine.createSpyObj('bundleService', {
-      getBitstreams: createSuccessfulRemoteDataObject$(createPaginatedList([bitstream1, bitstream2])),
+      getBitstreams: createSuccessfulRemoteDataObject$(
+        createPaginatedList([bitstream1, bitstream2]),
+      ),
       getBitstreamsEndpoint: observableOf(''),
     });
 
@@ -128,14 +124,15 @@ describe('PaginatedDragAndDropBitstreamListComponent', () => {
         { provide: ObjectValuesPipe, useValue: objectValuesPipe },
         { provide: RequestService, useValue: requestService },
         { provide: PaginationService, useValue: paginationService },
-      ], schemas: [
-        NO_ERRORS_SCHEMA,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(PaginatedDragAndDropBitstreamListComponent);
+    fixture = TestBed.createComponent(
+      PaginatedDragAndDropBitstreamListComponent,
+    );
     comp = fixture.componentInstance;
     comp.bundle = bundle;
     comp.columnSizes = columnSizes;

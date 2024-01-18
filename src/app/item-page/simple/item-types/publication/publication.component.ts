@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { ViewMode } from '../../../../core/shared/view-mode.model';
 import { listableObjectComponent } from '../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
@@ -18,6 +15,4 @@ import { ItemComponent } from '../shared/item.component';
   templateUrl: './publication.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PublicationComponent extends ItemComponent {
-
-}
+export class PublicationComponent extends ItemComponent {}

@@ -8,10 +8,7 @@
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
-import {
-  hasNoValue,
-  hasValue,
-} from '../../../shared/empty.util';
+import { hasNoValue, hasValue } from '../../../shared/empty.util';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
 import { CacheableObject } from '../../cache/cacheable-object.model';
@@ -35,7 +32,10 @@ export interface DeleteData<T extends CacheableObject> {
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>>;
+  delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>>;
 
   /**
    * Delete an existing object on the server
@@ -46,10 +46,16 @@ export interface DeleteData<T extends CacheableObject> {
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>>;
+  deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>>;
 }
 
-export class DeleteDataImpl<T extends CacheableObject> extends IdentifiableDataService<T> implements DeleteData<T> {
+export class DeleteDataImpl<T extends CacheableObject>
+  extends IdentifiableDataService<T>
+  implements DeleteData<T>
+{
   constructor(
     protected linkPath: string,
     protected requestService: RequestService,
@@ -60,26 +66,42 @@ export class DeleteDataImpl<T extends CacheableObject> extends IdentifiableDataS
     protected responseMsToLive: number,
     protected constructIdEndpoint: ConstructIdEndpoint,
   ) {
-    super(linkPath, requestService, rdbService, objectCache, halService, responseMsToLive, constructIdEndpoint);
+    super(
+      linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      responseMsToLive,
+      constructIdEndpoint,
+    );
     if (hasNoValue(constructIdEndpoint)) {
-      throw new Error(`DeleteDataImpl initialized without a constructIdEndpoint method (linkPath: ${linkPath})`);
+      throw new Error(
+        `DeleteDataImpl initialized without a constructIdEndpoint method (linkPath: ${linkPath})`,
+      );
     }
   }
 
-  delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.getIDHrefObs(objectId).pipe(
       switchMap((href: string) => this.deleteByHref(href, copyVirtualMetadata)),
     );
   }
 
-  deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     const requestId = this.requestService.generateRequestId();
 
     if (copyVirtualMetadata) {
-      copyVirtualMetadata.forEach((id) =>
-        href += (href.includes('?') ? '&' : '?')
-          + 'copyVirtualMetadata='
-          + id,
+      copyVirtualMetadata.forEach(
+        (id) =>
+          (href +=
+            (href.includes('?') ? '&' : '?') + 'copyVirtualMetadata=' + id),
       );
     }
 
@@ -89,6 +111,8 @@ export class DeleteDataImpl<T extends CacheableObject> extends IdentifiableDataS
     }
     this.requestService.send(request);
 
-    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () => this.invalidateByHref(href));
+    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () =>
+      this.invalidateByHref(href),
+    );
   }
 }

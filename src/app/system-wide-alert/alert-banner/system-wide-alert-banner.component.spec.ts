@@ -20,7 +20,6 @@ import { createPaginatedList } from '../../shared/testing/utils.test';
 import { SystemWideAlert } from '../system-wide-alert.model';
 import { SystemWideAlertBannerComponent } from './system-wide-alert-banner.component';
 
-
 describe('SystemWideAlertBannerComponent', () => {
   let comp: SystemWideAlertBannerComponent;
   let fixture: ComponentFixture<SystemWideAlertBannerComponent>;
@@ -44,16 +43,27 @@ describe('SystemWideAlertBannerComponent', () => {
       countdownTo: utcToZonedTime(countDownDate, 'UTC').toISOString(),
     });
 
-    systemWideAlertDataService = jasmine.createSpyObj('systemWideAlertDataService', {
-      searchBy: createSuccessfulRemoteDataObject$(createPaginatedList([systemWideAlert])),
-    });
+    systemWideAlertDataService = jasmine.createSpyObj(
+      'systemWideAlertDataService',
+      {
+        searchBy: createSuccessfulRemoteDataObject$(
+          createPaginatedList([systemWideAlert]),
+        ),
+      },
+    );
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [SystemWideAlertBannerComponent],
       providers: [
-        { provide: SystemWideAlertDataService, useValue: systemWideAlertDataService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: SystemWideAlertDataService,
+          useValue: systemWideAlertDataService,
+        },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
       ],
     }).compileComponents();
   }));
@@ -78,7 +88,6 @@ describe('SystemWideAlertBannerComponent', () => {
       expect(comp.countDownHours.next).toHaveBeenCalled();
       expect(comp.countDownMinutes.next).toHaveBeenCalled();
       discardPeriodicTasks();
-
     }));
   });
 
@@ -92,12 +101,22 @@ describe('SystemWideAlertBannerComponent', () => {
       const banner = fixture.debugElement.queryAll(By.css('span'));
       expect(banner.length).toEqual(6);
 
-      expect(banner[0].nativeElement.innerHTML).toContain('system-wide-alert-banner.countdown.prefix');
-      expect(banner[0].nativeElement.innerHTML).toContain('system-wide-alert-banner.countdown.days');
-      expect(banner[0].nativeElement.innerHTML).toContain('system-wide-alert-banner.countdown.hours');
-      expect(banner[0].nativeElement.innerHTML).toContain('system-wide-alert-banner.countdown.minutes');
+      expect(banner[0].nativeElement.innerHTML).toContain(
+        'system-wide-alert-banner.countdown.prefix',
+      );
+      expect(banner[0].nativeElement.innerHTML).toContain(
+        'system-wide-alert-banner.countdown.days',
+      );
+      expect(banner[0].nativeElement.innerHTML).toContain(
+        'system-wide-alert-banner.countdown.hours',
+      );
+      expect(banner[0].nativeElement.innerHTML).toContain(
+        'system-wide-alert-banner.countdown.minutes',
+      );
 
-      expect(banner[5].nativeElement.innerHTML).toContain(systemWideAlert.message);
+      expect(banner[5].nativeElement.innerHTML).toContain(
+        systemWideAlert.message,
+      );
     });
 
     it('should display the alert message but no timer when no timer is present', () => {
@@ -108,7 +127,9 @@ describe('SystemWideAlertBannerComponent', () => {
 
       const banner = fixture.debugElement.queryAll(By.css('span'));
       expect(banner.length).toEqual(2);
-      expect(banner[1].nativeElement.innerHTML).toContain(systemWideAlert.message);
+      expect(banner[1].nativeElement.innerHTML).toContain(
+        systemWideAlert.message,
+      );
     });
 
     it('should not display an alert when none is present', () => {

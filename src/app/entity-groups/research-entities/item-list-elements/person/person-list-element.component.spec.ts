@@ -1,11 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -50,9 +44,11 @@ describe('PersonListElementComponent', () => {
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(PersonListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(PersonListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -67,7 +63,9 @@ describe('PersonListElementComponent', () => {
     });
 
     it(`should contain a PersonListElementComponent`, () => {
-      const personListElement = fixture.debugElement.query(By.css(`ds-person-search-result-list-element`));
+      const personListElement = fixture.debugElement.query(
+        By.css(`ds-person-search-result-list-element`),
+      );
       expect(personListElement).not.toBeNull();
     });
   });

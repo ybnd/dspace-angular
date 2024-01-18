@@ -1,7 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
 
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
@@ -65,7 +62,10 @@ describe('DSpaceObjectDataService', () => {
       scheduler.schedule(() => service.findById(testObject.uuid));
       scheduler.flush();
 
-      expect(requestService.send).toHaveBeenCalledWith(new GetRequest(requestUUID, requestURL), true);
+      expect(requestService.send).toHaveBeenCalledWith(
+        new GetRequest(requestUUID, requestURL),
+        true,
+      );
     });
 
     it('should return a RemoteData<DSpaceObject> for the object with the given ID', () => {

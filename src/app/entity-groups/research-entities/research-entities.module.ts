@@ -35,7 +35,7 @@ import { PersonInputSuggestionsComponent } from './submission/item-list-elements
 import { NameVariantModalComponent } from './submission/name-variant-modal/name-variant-modal.component';
 
 const ENTRY_COMPONENTS = [
-// put only entry components that use custom decorator
+  // put only entry components that use custom decorator
   OrgUnitComponent,
   PersonComponent,
   ProjectItemMetadataListElementComponent,
@@ -78,9 +78,7 @@ const COMPONENTS = [
     ResultsBackButtonModule,
     DsoPageModule,
   ],
-  declarations: [
-    ...COMPONENTS,
-  ],
+  declarations: [...COMPONENTS],
 })
 export class ResearchEntitiesModule {
   /**

@@ -1,26 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  compare,
-  Operation,
-} from 'fast-json-patch';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { compare, Operation } from 'fast-json-patch';
 import { getTestScheduler } from 'jasmine-marbles';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import {
@@ -34,10 +19,7 @@ import {
   createNoContentRemoteDataObject$,
   createSuccessfulRemoteDataObject$,
 } from '../../shared/remote-data.utils';
-import {
-  EPersonMock,
-  EPersonMock2,
-} from '../../shared/testing/eperson.mock';
+import { EPersonMock, EPersonMock2 } from '../../shared/testing/eperson.mock';
 import { GroupMock } from '../../shared/testing/group-mock';
 import { HALEndpointServiceStub } from '../../shared/testing/hal-endpoint-service.stub';
 import {
@@ -48,10 +30,7 @@ import { RequestParam } from '../cache/models/request-param.model';
 import { CoreState } from '../core-state.model';
 import { ChangeAnalyzer } from '../data/change-analyzer';
 import { FindListOptions } from '../data/find-list-options.model';
-import {
-  PatchRequest,
-  PostRequest,
-} from '../data/request.models';
+import { PatchRequest, PostRequest } from '../data/request.models';
 import { RequestService } from '../data/request.service';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { Item } from '../shared/item.model';
@@ -88,8 +67,12 @@ describe('EPersonDataService', () => {
     restEndpointURL = 'https://rest.api/dspace-spring-rest/api/eperson';
     epersonsEndpoint = `${restEndpointURL}/epersons`;
     epeople = [EPersonMock, EPersonMock2];
-    epeople$ = createSuccessfulRemoteDataObject$(createPaginatedList([epeople]));
-    rdbService = getMockRemoteDataBuildServiceHrefMap(undefined, { 'https://rest.api/dspace-spring-rest/api/eperson/epersons': epeople$ });
+    epeople$ = createSuccessfulRemoteDataObject$(
+      createPaginatedList([epeople]),
+    );
+    rdbService = getMockRemoteDataBuildServiceHrefMap(undefined, {
+      'https://rest.api/dspace-spring-rest/api/eperson/epersons': epeople$,
+    });
     halService = new HALEndpointServiceStub(restEndpointURL);
 
     TestBed.configureTestingModule({
@@ -125,47 +108,96 @@ describe('EPersonDataService', () => {
     it('search by default scope (byMetadata) and no query', () => {
       service.searchByScope(null, '');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', encodeURIComponent('')))],
+        searchParams: [
+          Object.assign(new RequestParam('query', encodeURIComponent(''))),
+        ],
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options, true, true);
+      expect(service.searchBy).toHaveBeenCalledWith(
+        'byMetadata',
+        options,
+        true,
+        true,
+      );
     });
 
     it('search metadata scope and no query', () => {
       service.searchByScope('metadata', '');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', encodeURIComponent('')))],
+        searchParams: [
+          Object.assign(new RequestParam('query', encodeURIComponent(''))),
+        ],
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options, true, true);
+      expect(service.searchBy).toHaveBeenCalledWith(
+        'byMetadata',
+        options,
+        true,
+        true,
+      );
     });
 
     it('search metadata scope and with query', () => {
       service.searchByScope('metadata', 'test');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', encodeURIComponent('test')))],
+        searchParams: [
+          Object.assign(new RequestParam('query', encodeURIComponent('test'))),
+        ],
       });
-      expect(service.searchBy).toHaveBeenCalledWith('byMetadata', options, true, true);
+      expect(service.searchBy).toHaveBeenCalledWith(
+        'byMetadata',
+        options,
+        true,
+        true,
+      );
     });
 
     it('search email scope and no query', () => {
-      spyOn((service as any).searchData, 'getSearchByHref').and.returnValue(epersonsEndpoint);
-      spyOn(service, 'findByHref').and.returnValue(createSuccessfulRemoteDataObject$(null));
+      spyOn((service as any).searchData, 'getSearchByHref').and.returnValue(
+        epersonsEndpoint,
+      );
+      spyOn(service, 'findByHref').and.returnValue(
+        createSuccessfulRemoteDataObject$(null),
+      );
       service.searchByScope('email', '');
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('email', encodeURIComponent('')))],
+        searchParams: [
+          Object.assign(new RequestParam('email', encodeURIComponent(''))),
+        ],
       });
-      expect((service as any).searchData.getSearchByHref).toHaveBeenCalledWith('byEmail', options);
-      expect(service.findByHref).toHaveBeenCalledWith(epersonsEndpoint, true, true);
+      expect((service as any).searchData.getSearchByHref).toHaveBeenCalledWith(
+        'byEmail',
+        options,
+      );
+      expect(service.findByHref).toHaveBeenCalledWith(
+        epersonsEndpoint,
+        true,
+        true,
+      );
     });
 
     it('search email scope with a query', () => {
-      spyOn((service as any).searchData, 'getSearchByHref').and.returnValue(epersonsEndpoint);
-      spyOn(service, 'findByHref').and.returnValue(createSuccessfulRemoteDataObject$(EPersonMock));
+      spyOn((service as any).searchData, 'getSearchByHref').and.returnValue(
+        epersonsEndpoint,
+      );
+      spyOn(service, 'findByHref').and.returnValue(
+        createSuccessfulRemoteDataObject$(EPersonMock),
+      );
       service.searchByScope('email', EPersonMock.email);
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('email', encodeURIComponent(EPersonMock.email)))],
+        searchParams: [
+          Object.assign(
+            new RequestParam('email', encodeURIComponent(EPersonMock.email)),
+          ),
+        ],
       });
-      expect((service as any).searchData.getSearchByHref).toHaveBeenCalledWith('byEmail', options);
-      expect(service.findByHref).toHaveBeenCalledWith(epersonsEndpoint, true, true);
+      expect((service as any).searchData.getSearchByHref).toHaveBeenCalledWith(
+        'byEmail',
+        options,
+      );
+      expect(service.findByHref).toHaveBeenCalledWith(
+        epersonsEndpoint,
+        true,
+        true,
+      );
     });
   });
 
@@ -177,25 +209,41 @@ describe('EPersonDataService', () => {
     it('search with empty query and a group ID', () => {
       service.searchNonMembers('', GroupMock.id);
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', '')),
-          Object.assign(new RequestParam('group', GroupMock.id))],
+        searchParams: [
+          Object.assign(new RequestParam('query', '')),
+          Object.assign(new RequestParam('group', GroupMock.id)),
+        ],
       });
-      expect(service.searchBy).toHaveBeenCalledWith('isNotMemberOf', options, true, true);
+      expect(service.searchBy).toHaveBeenCalledWith(
+        'isNotMemberOf',
+        options,
+        true,
+        true,
+      );
     });
 
     it('search with query and a group ID', () => {
       service.searchNonMembers('test', GroupMock.id);
       const options = Object.assign(new FindListOptions(), {
-        searchParams: [Object.assign(new RequestParam('query', 'test')),
-          Object.assign(new RequestParam('group', GroupMock.id))],
+        searchParams: [
+          Object.assign(new RequestParam('query', 'test')),
+          Object.assign(new RequestParam('group', GroupMock.id)),
+        ],
       });
-      expect(service.searchBy).toHaveBeenCalledWith('isNotMemberOf', options, true, true);
+      expect(service.searchBy).toHaveBeenCalledWith(
+        'isNotMemberOf',
+        options,
+        true,
+        true,
+      );
     });
   });
 
   describe('updateEPerson', () => {
     beforeEach(() => {
-      spyOn(service, 'findByHref').and.returnValue(createSuccessfulRemoteDataObject$(EPersonMock));
+      spyOn(service, 'findByHref').and.returnValue(
+        createSuccessfulRemoteDataObject$(EPersonMock),
+      );
     });
 
     describe('change Email', () => {
@@ -213,7 +261,11 @@ describe('EPersonDataService', () => {
       });
       it('should send PatchRequest with replace email operation', () => {
         const operations = [{ op: 'replace', path: '/email', value: newEmail }];
-        const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, operations);
+        const expected = new PatchRequest(
+          requestService.generateRequestId(),
+          epersonsEndpoint + '/' + EPersonMock.uuid,
+          operations,
+        );
         expect(requestService.send).toHaveBeenCalledWith(expected);
       });
     });
@@ -231,8 +283,18 @@ describe('EPersonDataService', () => {
         service.updateEPerson(changedEPerson).subscribe();
       });
       it('should send PatchRequest with replace certificate operation', () => {
-        const operations = [{ op: 'replace', path: '/certificate', value: !EPersonMock.requireCertificate }];
-        const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, operations);
+        const operations = [
+          {
+            op: 'replace',
+            path: '/certificate',
+            value: !EPersonMock.requireCertificate,
+          },
+        ];
+        const expected = new PatchRequest(
+          requestService.generateRequestId(),
+          epersonsEndpoint + '/' + EPersonMock.uuid,
+          operations,
+        );
         expect(requestService.send).toHaveBeenCalledWith(expected);
       });
     });
@@ -250,8 +312,14 @@ describe('EPersonDataService', () => {
         service.updateEPerson(changedEPerson).subscribe();
       });
       it('should send PatchRequest with replace canLogIn operation', () => {
-        const operations = [{ op: 'replace', path: '/canLogIn', value: !EPersonMock.canLogIn }];
-        const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, operations);
+        const operations = [
+          { op: 'replace', path: '/canLogIn', value: !EPersonMock.canLogIn },
+        ];
+        const expected = new PatchRequest(
+          requestService.generateRequestId(),
+          epersonsEndpoint + '/' + EPersonMock.uuid,
+          operations,
+        );
         expect(requestService.send).toHaveBeenCalledWith(expected);
       });
     });
@@ -283,9 +351,22 @@ describe('EPersonDataService', () => {
       });
       it('should send PatchRequest with replace name metadata operations', () => {
         const operations = [
-          { op: 'replace', path: '/eperson.lastname/0/value', value: newLastName },
-          { op: 'replace', path: '/eperson.firstname/0/value', value: newFirstName }];
-        const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/' + EPersonMock.uuid, operations);
+          {
+            op: 'replace',
+            path: '/eperson.lastname/0/value',
+            value: newLastName,
+          },
+          {
+            op: 'replace',
+            path: '/eperson.firstname/0/value',
+            value: newFirstName,
+          },
+        ];
+        const expected = new PatchRequest(
+          requestService.generateRequestId(),
+          epersonsEndpoint + '/' + EPersonMock.uuid,
+          operations,
+        );
         expect(requestService.send).toHaveBeenCalledWith(expected);
       });
     });
@@ -303,7 +384,9 @@ describe('EPersonDataService', () => {
       service.clearEPersonRequests();
     }));
     it('should remove the eperson hrefs in the request service', () => {
-      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(epersonsEndpoint);
+      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(
+        epersonsEndpoint,
+      );
     });
   });
 
@@ -326,24 +409,30 @@ describe('EPersonDataService', () => {
   describe('cancelEditEPerson', () => {
     it('should dispatch a CANCEL_EDIT_EPERSON action', () => {
       service.cancelEditEPerson();
-      expect(store.dispatch).toHaveBeenCalledWith(new EPeopleRegistryCancelEPersonAction());
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new EPeopleRegistryCancelEPersonAction(),
+      );
     });
   });
 
   describe('editEPerson', () => {
     it('should dispatch a EDIT_EPERSON action with the EPerson to start editing', () => {
       service.editEPerson(EPersonMock);
-      expect(store.dispatch).toHaveBeenCalledWith(new EPeopleRegistryEditEPersonAction(EPersonMock));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new EPeopleRegistryEditEPersonAction(EPersonMock),
+      );
     });
   });
 
   describe('deleteEPerson', () => {
     beforeEach(() => {
-      spyOn(service, 'delete').and.returnValue(createNoContentRemoteDataObject$());
+      spyOn(service, 'delete').and.returnValue(
+        createNoContentRemoteDataObject$(),
+      );
       service.deleteEPerson(EPersonMock).subscribe();
     });
 
-    it('should call DataService.delete with the EPerson\'s UUID', () => {
+    it("should call DataService.delete with the EPerson's UUID", () => {
       expect(service.delete).toHaveBeenCalledWith(EPersonMock.id);
     });
   });
@@ -352,21 +441,36 @@ describe('EPersonDataService', () => {
     it('should sent a postRquest with an eperson to the token endpoint', () => {
       service.createEPersonForToken(EPersonMock, 'test-token');
 
-      const expected = new PostRequest(requestService.generateRequestId(), epersonsEndpoint + '?token=test-token', EPersonMock);
+      const expected = new PostRequest(
+        requestService.generateRequestId(),
+        epersonsEndpoint + '?token=test-token',
+        EPersonMock,
+      );
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
   describe('patchPasswordWithToken', () => {
     it('should sent a patch request with an uuid, token and new password to the epersons endpoint', () => {
-      service.patchPasswordWithToken('test-uuid', 'test-token', 'test-password');
+      service.patchPasswordWithToken(
+        'test-uuid',
+        'test-token',
+        'test-password',
+      );
 
-      const operation = Object.assign({ op: 'add', path: '/password', value: { new_password: 'test-password' } });
-      const expected = new PatchRequest(requestService.generateRequestId(), epersonsEndpoint + '/test-uuid?token=test-token', [operation]);
+      const operation = Object.assign({
+        op: 'add',
+        path: '/password',
+        value: { new_password: 'test-password' },
+      });
+      const expected = new PatchRequest(
+        requestService.generateRequestId(),
+        epersonsEndpoint + '/test-uuid?token=test-token',
+        [operation],
+      );
 
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
   });
-
 });
 
 class DummyChangeAnalyzer implements ChangeAnalyzer<Item> {

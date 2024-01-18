@@ -9,7 +9,9 @@ import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-dat
 import { JournalVolumeComponent } from './journal-volume.component';
 
 const mockItem: Item = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'publicationvolume.volumeNumber': [
       {
@@ -33,4 +35,7 @@ const mockItem: Item = Object.assign(new Item(), {
   relationships: createRelationshipsObservable(),
 });
 
-describe('JournalVolumeComponent', getItemPageFieldsTest(mockItem, JournalVolumeComponent));
+describe(
+  'JournalVolumeComponent',
+  getItemPageFieldsTest(mockItem, JournalVolumeComponent),
+);

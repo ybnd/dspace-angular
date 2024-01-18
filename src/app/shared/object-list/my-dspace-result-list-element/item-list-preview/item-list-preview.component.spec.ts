@@ -1,18 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { APP_CONFIG } from '../../../../../config/app-config.interface';
@@ -102,20 +92,24 @@ describe('ItemListPreviewComponent', () => {
       ],
       declarations: [ItemListPreviewComponent, TruncatePipe],
       providers: [
-        { provide: 'objectElementProvider', useValue: { mockItemWithAuthorAndDate } },
+        {
+          provide: 'objectElementProvider',
+          useValue: { mockItemWithAuthorAndDate },
+        },
         { provide: APP_CONFIG, useValue: environmentUseThumbs },
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemListPreviewComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemListPreviewComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(ItemListPreviewComponent);
     component = fixture.componentInstance;
-
   }));
 
   beforeEach(() => {
@@ -140,7 +134,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should show the author paragraph', () => {
-      const itemAuthorField = fixture.debugElement.query(By.css('span.item-list-authors'));
+      const itemAuthorField = fixture.debugElement.query(
+        By.css('span.item-list-authors'),
+      );
       expect(itemAuthorField).not.toBeNull();
     });
   });
@@ -152,7 +148,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should not show the author paragraph', () => {
-      const itemAuthorField = fixture.debugElement.query(By.css('span.item-list-authors'));
+      const itemAuthorField = fixture.debugElement.query(
+        By.css('span.item-list-authors'),
+      );
       expect(itemAuthorField).toBeNull();
     });
   });
@@ -164,7 +162,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should show the issuedate span', () => {
-      const dateField = fixture.debugElement.query(By.css('span.item-list-date'));
+      const dateField = fixture.debugElement.query(
+        By.css('span.item-list-date'),
+      );
       expect(dateField).not.toBeNull();
     });
   });
@@ -176,7 +176,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should show the issuedate empty placeholder', () => {
-      const dateField = fixture.debugElement.query(By.css('span.item-list-date'));
+      const dateField = fixture.debugElement.query(
+        By.css('span.item-list-date'),
+      );
       expect(dateField).not.toBeNull();
     });
   });
@@ -188,7 +190,9 @@ describe('ItemListPreviewComponent', () => {
     });
 
     it('should show the badges', () => {
-      const entityField = fixture.debugElement.query(By.css('ds-themed-badges'));
+      const entityField = fixture.debugElement.query(
+        By.css('ds-themed-badges'),
+      );
       expect(entityField).not.toBeNull();
     });
   });
@@ -208,19 +212,23 @@ describe('ItemListPreviewComponent', () => {
       ],
       declarations: [ItemListPreviewComponent, TruncatePipe],
       providers: [
-        { provide: 'objectElementProvider', useValue: { mockItemWithAuthorAndDate } },
+        {
+          provide: 'objectElementProvider',
+          useValue: { mockItemWithAuthorAndDate },
+        },
         { provide: APP_CONFIG, useValue: enviromentNoThumbs },
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemListPreviewComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemListPreviewComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(ItemListPreviewComponent);
     component = fixture.componentInstance;
-
   }));
 
   beforeEach(() => {

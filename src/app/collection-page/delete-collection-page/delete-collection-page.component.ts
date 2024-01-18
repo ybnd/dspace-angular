@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -30,6 +27,13 @@ export class DeleteCollectionPageComponent extends DeleteComColPageComponent<Col
     protected notifications: NotificationsService,
     protected translate: TranslateService,
   ) {
-    super(dsoDataService, dsoNameService, router, route, notifications, translate);
+    super(
+      dsoDataService,
+      dsoNameService,
+      router,
+      route,
+      notifications,
+      translate,
+    );
   }
 }

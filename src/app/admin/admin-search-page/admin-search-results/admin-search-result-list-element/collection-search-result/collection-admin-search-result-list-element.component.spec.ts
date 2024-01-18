@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -36,21 +32,21 @@ describe('CollectionAdminSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        RouterTestingModule.withRoutes([]),
-      ],
+      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
       declarations: [CollectionAdminSearchResultListElementComponent],
-      providers: [{ provide: TruncatableService, useValue: {} },
+      providers: [
+        { provide: TruncatableService, useValue: {} },
         { provide: DSONameService, useClass: DSONameServiceMock },
-        { provide: APP_CONFIG, useValue: environment }],
+        { provide: APP_CONFIG, useValue: environment },
+      ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CollectionAdminSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      CollectionAdminSearchResultListElementComponent,
+    );
     component = fixture.componentInstance;
     component.object = searchResult;
     component.linkTypes = CollectionElementLinkType;

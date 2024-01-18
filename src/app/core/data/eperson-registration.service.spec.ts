@@ -44,8 +44,11 @@ describe('EpersonRegistrationService', () => {
     requestService = jasmine.createSpyObj('requestService', {
       generateRequestId: 'request-id',
       send: {},
-      getByUUID: cold('a',
-        { a: Object.assign(new RequestEntry(), { response: new RestResponse(true, 200, 'Success') }) }),
+      getByUUID: cold('a', {
+        a: Object.assign(new RequestEntry(), {
+          response: new RestResponse(true, 200, 'Success'),
+        }),
+      }),
     });
     rdbService = jasmine.createSpyObj('rdbService', {
       buildSingle: observableOf(rd),
@@ -62,9 +65,9 @@ describe('EpersonRegistrationService', () => {
     it('should retrieve the registration endpoint', () => {
       const expected = service.getRegistrationEndpoint();
 
-      expected.subscribe(((value) => {
+      expected.subscribe((value) => {
         expect(value).toEqual('rest-url/registrations');
-      }));
+      });
     });
   });
 
@@ -72,33 +75,50 @@ describe('EpersonRegistrationService', () => {
     it('should return the token search endpoint for a specified token', () => {
       const expected = service.getTokenSearchEndpoint('test-token');
 
-      expected.subscribe(((value) => {
-        expect(value).toEqual('rest-url/registrations/search/findByToken?token=test-token');
-      }));
+      expected.subscribe((value) => {
+        expect(value).toEqual(
+          'rest-url/registrations/search/findByToken?token=test-token',
+        );
+      });
     });
   });
 
   describe('registerEmail', () => {
     it('should send an email registration', () => {
-
       const expected = service.registerEmail('test@mail.org');
       let headers = new HttpHeaders();
       const options: HttpOptions = Object.create({});
       options.headers = headers;
 
-      expect(requestService.send).toHaveBeenCalledWith(new PostRequest('request-id', 'rest-url/registrations', registration, options));
+      expect(requestService.send).toHaveBeenCalledWith(
+        new PostRequest(
+          'request-id',
+          'rest-url/registrations',
+          registration,
+          options,
+        ),
+      );
       expect(expected).toBeObservable(cold('(a|)', { a: rd }));
     });
 
     it('should send an email registration with captcha', () => {
-
-      const expected = service.registerEmail('test@mail.org', 'afreshcaptchatoken');
+      const expected = service.registerEmail(
+        'test@mail.org',
+        'afreshcaptchatoken',
+      );
       let headers = new HttpHeaders();
       const options: HttpOptions = Object.create({});
       headers = headers.append('x-recaptcha-token', 'afreshcaptchatoken');
       options.headers = headers;
 
-      expect(requestService.send).toHaveBeenCalledWith(new PostRequest('request-id', 'rest-url/registrations', registration, options));
+      expect(requestService.send).toHaveBeenCalledWith(
+        new PostRequest(
+          'request-id',
+          'rest-url/registrations',
+          registration,
+          options,
+        ),
+      );
       expect(expected).toBeObservable(cold('(a|)', { a: rd }));
     });
   });
@@ -107,15 +127,17 @@ describe('EpersonRegistrationService', () => {
     it('should return a registration corresponding to the provided token', () => {
       const expected = service.searchByToken('test-token');
 
-      expect(expected).toBeObservable(cold('(a|)', {
-        a: jasmine.objectContaining({
-          payload: Object.assign(new Registration(), {
-            email: registrationWithUser.email,
-            token: 'test-token',
-            user: registrationWithUser.user,
+      expect(expected).toBeObservable(
+        cold('(a|)', {
+          a: jasmine.objectContaining({
+            payload: Object.assign(new Registration(), {
+              email: registrationWithUser.email,
+              token: 'test-token',
+              user: registrationWithUser.user,
+            }),
           }),
         }),
-      }));
+      );
     });
 
     /* eslint-disable @typescript-eslint/no-shadow */
@@ -127,17 +149,20 @@ describe('EpersonRegistrationService', () => {
 
         expect(requestService.send).toHaveBeenCalledWith(
           jasmine.objectContaining({
-            uuid: 'request-id', method: 'GET',
+            uuid: 'request-id',
+            method: 'GET',
             href: 'rest-url/registrations/search/findByToken?token=test-token',
-          }), true,
+          }),
+          true,
         );
-        expectObservable(rdbService.buildSingle.calls.argsFor(0)[0]).toBe('(a|)', {
-          a: 'rest-url/registrations/search/findByToken?token=test-token',
-        });
+        expectObservable(rdbService.buildSingle.calls.argsFor(0)[0]).toBe(
+          '(a|)',
+          {
+            a: 'rest-url/registrations/search/findByToken?token=test-token',
+          },
+        );
       });
     });
-
   });
-
 });
 /**/

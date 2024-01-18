@@ -1,21 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { APP_CONFIG } from '../../../../../../config/app-config.interface';
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
@@ -62,42 +52,42 @@ const enviromentNoThumbs = {
 };
 
 function init() {
-  mockItemWithMetadata = Object.assign(
-    new ItemSearchResult(),
-    {
-      indexableObject: Object.assign(new Item(), {
-        bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, [])),
-        metadata: {
-          'dc.title': [
-            {
-              language: 'en_US',
-              value: 'This is just another title',
-            },
-          ],
-          'person.jobTitle': [
-            {
-              language: 'en_US',
-              value: 'Developer',
-            },
-          ],
-        },
-      }),
-    });
-  mockItemWithoutMetadata = Object.assign(
-    new ItemSearchResult(),
-    {
-      indexableObject: Object.assign(new Item(), {
-        bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, [])),
-        metadata: {
-          'dc.title': [
-            {
-              language: 'en_US',
-              value: 'This is just another title',
-            },
-          ],
-        },
-      }),
-    });
+  mockItemWithMetadata = Object.assign(new ItemSearchResult(), {
+    indexableObject: Object.assign(new Item(), {
+      bundles: createSuccessfulRemoteDataObject$(
+        buildPaginatedList(undefined, []),
+      ),
+      metadata: {
+        'dc.title': [
+          {
+            language: 'en_US',
+            value: 'This is just another title',
+          },
+        ],
+        'person.jobTitle': [
+          {
+            language: 'en_US',
+            value: 'Developer',
+          },
+        ],
+      },
+    }),
+  });
+  mockItemWithoutMetadata = Object.assign(new ItemSearchResult(), {
+    indexableObject: Object.assign(new Item(), {
+      bundles: createSuccessfulRemoteDataObject$(
+        buildPaginatedList(undefined, []),
+      ),
+      metadata: {
+        'dc.title': [
+          {
+            language: 'en_US',
+            value: 'This is just another title',
+          },
+        ],
+      },
+    }),
+  });
 
   nameVariant = 'Doe J.';
   mockRelationshipService = {
@@ -114,7 +104,10 @@ describe('PersonSearchResultListElementSubmissionComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      declarations: [PersonSearchResultListSubmissionElementComponent, TruncatePipe],
+      declarations: [
+        PersonSearchResultListSubmissionElementComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: RelationshipDataService, useValue: mockRelationshipService },
@@ -137,15 +130,18 @@ describe('PersonSearchResultListElementSubmissionComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(PersonSearchResultListSubmissionElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(PersonSearchResultListSubmissionElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(PersonSearchResultListSubmissionElementComponent);
+    fixture = TestBed.createComponent(
+      PersonSearchResultListSubmissionElementComponent,
+    );
     personListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('When the item has a job title', () => {
@@ -155,7 +151,9 @@ describe('PersonSearchResultListElementSubmissionComponent', () => {
     });
 
     it('should show the job title span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-job-title'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-job-title'),
+      );
       expect(jobTitleField).not.toBeNull();
     });
   });
@@ -167,7 +165,9 @@ describe('PersonSearchResultListElementSubmissionComponent', () => {
     });
 
     it('should not show the job title span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-job-title'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-job-title'),
+      );
       expect(jobTitleField).toBeNull();
     });
   });
@@ -194,7 +194,10 @@ describe('PersonSearchResultListElementSubmissionComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      declarations: [PersonSearchResultListSubmissionElementComponent, TruncatePipe],
+      declarations: [
+        PersonSearchResultListSubmissionElementComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: RelationshipDataService, useValue: mockRelationshipService },
@@ -217,15 +220,18 @@ describe('PersonSearchResultListElementSubmissionComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(PersonSearchResultListSubmissionElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(PersonSearchResultListSubmissionElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(PersonSearchResultListSubmissionElementComponent);
+    fixture = TestBed.createComponent(
+      PersonSearchResultListSubmissionElementComponent,
+    );
     personListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('When the environment is not set to show thumbnails', () => {

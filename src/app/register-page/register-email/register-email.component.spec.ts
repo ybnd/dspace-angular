@@ -1,17 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { RegisterEmailComponent } from './register-email.component';
 
 describe('RegisterEmailComponent', () => {
-
   let comp: RegisterEmailComponent;
   let fixture: ComponentFixture<RegisterEmailComponent>;
 

@@ -1,14 +1,8 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {
-  mergeMap,
-  take,
-} from 'rxjs/operators';
+import { mergeMap, take } from 'rxjs/operators';
 
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 import { RequestParam } from '../../../../core/cache/models/request-param.model';
@@ -21,11 +15,7 @@ import { Collection } from '../../../../core/shared/collection.model';
 import { Community } from '../../../../core/shared/community.model';
 import { getFirstSucceededRemoteDataPayload } from '../../../../core/shared/operators';
 import { ResourceType } from '../../../../core/shared/resource-type';
-import {
-  hasValue,
-  isNotEmpty,
-  isNotUndefined,
-} from '../../../empty.util';
+import { hasValue, isNotEmpty, isNotUndefined } from '../../../empty.util';
 import { NotificationsService } from '../../../notifications/notifications.service';
 
 /**
@@ -35,7 +25,9 @@ import { NotificationsService } from '../../../notifications/notifications.servi
   selector: 'ds-create-comcol',
   template: '',
 })
-export class CreateComColPageComponent<TDomain extends Collection | Community> implements OnInit {
+export class CreateComColPageComponent<TDomain extends Collection | Community>
+  implements OnInit
+{
   /**
    * Frontend endpoint for this type of DSO
    */
@@ -70,9 +62,7 @@ export class CreateComColPageComponent<TDomain extends Collection | Community> i
     protected notificationsService: NotificationsService,
     protected translate: TranslateService,
     protected requestService: RequestService,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.parentUUID$ = this.routeService.getQueryParameterValue('parent');
@@ -91,28 +81,36 @@ export class CreateComColPageComponent<TDomain extends Collection | Community> i
     const dso = event.dso;
     const uploader = event.uploader;
 
-    this.parentUUID$.pipe(
-      take(1),
-      mergeMap((uuid: string) => {
-        const params = uuid ? [new RequestParam('parent', uuid)] : [];
-        return this.dsoDataService.create(dso, ...params)
-          .pipe(getFirstSucceededRemoteDataPayload(),
-          );
-      }))
+    this.parentUUID$
+      .pipe(
+        take(1),
+        mergeMap((uuid: string) => {
+          const params = uuid ? [new RequestParam('parent', uuid)] : [];
+          return this.dsoDataService
+            .create(dso, ...params)
+            .pipe(getFirstSucceededRemoteDataPayload());
+        }),
+      )
       .subscribe((dsoRD: TDomain) => {
         if (isNotUndefined(dsoRD)) {
           this.newUUID = dsoRD.uuid;
           if (uploader.queue.length > 0) {
-            this.dsoDataService.getLogoEndpoint(this.newUUID).pipe(take(1)).subscribe((href: string) => {
-              uploader.options.url = href;
-              uploader.uploadAll();
-            });
+            this.dsoDataService
+              .getLogoEndpoint(this.newUUID)
+              .pipe(take(1))
+              .subscribe((href: string) => {
+                uploader.options.url = href;
+                uploader.uploadAll();
+              });
           } else {
             this.navigateToNewPage();
           }
           this.dsoDataService.refreshCache(dsoRD);
         }
-        this.notificationsService.success(null, this.translate.get(this.type.value + '.create.notifications.success'));
+        this.notificationsService.success(
+          null,
+          this.translate.get(this.type.value + '.create.notifications.success'),
+        );
       });
   }
 

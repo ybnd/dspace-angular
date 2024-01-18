@@ -33,7 +33,10 @@ const initialState: RouteState = {
  * @param state The current or initial state
  * @param action The action to perform on the state
  */
-export function routeReducer(state = initialState, action: RouteActions): RouteState {
+export function routeReducer(
+  state = initialState,
+  action: RouteActions,
+): RouteState {
   switch (action.type) {
     case RouteActionTypes.RESET: {
       return initialState;
@@ -42,19 +45,31 @@ export function routeReducer(state = initialState, action: RouteActions): RouteS
       return setParameters(state, action as SetParametersAction, 'params');
     }
     case RouteActionTypes.SET_QUERY_PARAMETERS: {
-      return setParameters(state, action as SetQueryParametersAction, 'queryParams');
+      return setParameters(
+        state,
+        action as SetQueryParametersAction,
+        'queryParams',
+      );
     }
     case RouteActionTypes.ADD_PARAMETER: {
       return addParameter(state, action as AddParameterAction, 'params');
     }
     case RouteActionTypes.ADD_QUERY_PARAMETER: {
-      return addParameter(state, action as AddQueryParameterAction, 'queryParams');
+      return addParameter(
+        state,
+        action as AddQueryParameterAction,
+        'queryParams',
+      );
     }
     case RouteActionTypes.SET_PARAMETER: {
       return setParameter(state, action as SetParameterAction, 'params');
     }
     case RouteActionTypes.SET_QUERY_PARAMETER: {
-      return setParameter(state, action as SetQueryParameterAction, 'queryParams');
+      return setParameter(
+        state,
+        action as SetQueryParameterAction,
+        'queryParams',
+      );
     }
     default: {
       return state;
@@ -68,11 +83,17 @@ export function routeReducer(state = initialState, action: RouteActions): RouteS
  * @param action The add action to perform on the current state
  * @param paramType The type of parameter to add: route or query parameter
  */
-function addParameter(state: RouteState, action: AddParameterAction | AddQueryParameterAction, paramType: string): RouteState {
+function addParameter(
+  state: RouteState,
+  action: AddParameterAction | AddQueryParameterAction,
+  paramType: string,
+): RouteState {
   const subState = state[paramType];
   const existingValues = subState[action.payload.key] || [];
   const newValues = [...existingValues, action.payload.value];
-  const newSubstate = Object.assign({}, subState, { [action.payload.key]: newValues });
+  const newSubstate = Object.assign({}, subState, {
+    [action.payload.key]: newValues,
+  });
   return Object.assign({}, state, { [paramType]: newSubstate });
 }
 
@@ -82,8 +103,14 @@ function addParameter(state: RouteState, action: AddParameterAction | AddQueryPa
  * @param action The set action to perform on the current state
  * @param paramType The type of parameter to set: route or query parameter
  */
-function setParameters(state: RouteState, action: SetParametersAction | SetQueryParametersAction, paramType: string): RouteState {
-  const param = isNotEmpty(action.payload) ? { [paramType]: { [action.payload.key]: action.payload.value } } : {};
+function setParameters(
+  state: RouteState,
+  action: SetParametersAction | SetQueryParametersAction,
+  paramType: string,
+): RouteState {
+  const param = isNotEmpty(action.payload)
+    ? { [paramType]: { [action.payload.key]: action.payload.value } }
+    : {};
   return Object.assign({}, state, param);
 }
 
@@ -93,8 +120,14 @@ function setParameters(state: RouteState, action: SetParametersAction | SetQuery
  * @param action The set action to perform on the current state
  * @param paramType The type of parameter to set: route or query parameter
  */
-function setParameter(state: RouteState, action: SetParameterAction | SetQueryParameterAction, paramType: string): RouteState {
+function setParameter(
+  state: RouteState,
+  action: SetParameterAction | SetQueryParameterAction,
+  paramType: string,
+): RouteState {
   const subState = state[paramType];
-  const newSubstate = Object.assign({}, subState, { [action.payload.key]: action.payload.value });
+  const newSubstate = Object.assign({}, subState, {
+    [action.payload.key]: action.payload.value,
+  });
   return Object.assign({}, state, { [paramType]: newSubstate });
 }

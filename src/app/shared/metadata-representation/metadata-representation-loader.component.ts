@@ -18,11 +18,7 @@ import {
   MetadataRepresentation,
   MetadataRepresentationType,
 } from '../../core/shared/metadata-representation/metadata-representation.model';
-import {
-  hasNoValue,
-  hasValue,
-  isNotEmpty,
-} from '../empty.util';
+import { hasNoValue, hasValue, isNotEmpty } from '../empty.util';
 import { MetadataRepresentationListElementComponent } from '../object-list/metadata-representation-list-element/metadata-representation-list-element.component';
 import { ThemeService } from '../theme-support/theme.service';
 import { METADATA_REPRESENTATION_COMPONENT_FACTORY } from './metadata-representation.decorator';
@@ -35,8 +31,9 @@ import { MetadataRepresentationDirective } from './metadata-representation.direc
 /**
  * Component for determining what component to use depending on the item's entity type (dspace.entity.type), its metadata representation and, optionally, its context
  */
-export class MetadataRepresentationLoaderComponent implements OnInit, OnChanges {
-
+export class MetadataRepresentationLoaderComponent
+  implements OnInit, OnChanges
+{
   /**
    * The item or metadata to determine the component for
    */
@@ -59,24 +56,27 @@ export class MetadataRepresentationLoaderComponent implements OnInit, OnChanges 
   /**
    * Directive to determine where the dynamic child component is located
    */
-  @ViewChild(MetadataRepresentationDirective, { static: true }) mdRepDirective: MetadataRepresentationDirective;
+  @ViewChild(MetadataRepresentationDirective, { static: true })
+  mdRepDirective: MetadataRepresentationDirective;
 
   /**
    * The reference to the dynamic component
    */
   protected compRef: ComponentRef<MetadataRepresentationListElementComponent>;
 
-  protected inAndOutputNames: (keyof this)[] = [
-    'context',
-    'mdRepresentation',
-  ];
+  protected inAndOutputNames: (keyof this)[] = ['context', 'mdRepresentation'];
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private themeService: ThemeService,
-    @Inject(METADATA_REPRESENTATION_COMPONENT_FACTORY) private getMetadataRepresentationComponent: (entityType: string, mdRepresentationType: MetadataRepresentationType, context: Context, theme: string) => GenericConstructor<any>,
-  ) {
-  }
+    @Inject(METADATA_REPRESENTATION_COMPONENT_FACTORY)
+    private getMetadataRepresentationComponent: (
+      entityType: string,
+      mdRepresentationType: MetadataRepresentationType,
+      context: Context,
+      theme: string,
+    ) => GenericConstructor<any>,
+  ) {}
 
   /**
    * Set up the dynamic child component
@@ -105,9 +105,13 @@ export class MetadataRepresentationLoaderComponent implements OnInit, OnChanges 
   }
 
   private instantiateComponent(changes?: SimpleChanges): void {
-    const componentFactory: ComponentFactory<MetadataRepresentationListElementComponent> = this.componentFactoryResolver.resolveComponentFactory(this.getComponent());
+    const componentFactory: ComponentFactory<MetadataRepresentationListElementComponent> =
+      this.componentFactoryResolver.resolveComponentFactory(
+        this.getComponent(),
+      );
 
-    const viewContainerRef: ViewContainerRef = this.mdRepDirective.viewContainerRef;
+    const viewContainerRef: ViewContainerRef =
+      this.mdRepDirective.viewContainerRef;
     viewContainerRef.clear();
 
     this.compRef = viewContainerRef.createComponent(componentFactory);
@@ -124,7 +128,12 @@ export class MetadataRepresentationLoaderComponent implements OnInit, OnChanges 
    * @returns {string}
    */
   private getComponent(): GenericConstructor<MetadataRepresentationListElementComponent> {
-    return this.getMetadataRepresentationComponent(this.mdRepresentation.itemType, this.mdRepresentation.representationType, this.context, this.themeService.getThemeName());
+    return this.getMetadataRepresentationComponent(
+      this.mdRepresentation.itemType,
+      this.mdRepresentation.representationType,
+      this.context,
+      this.themeService.getThemeName(),
+    );
   }
 
   /**
@@ -132,10 +141,16 @@ export class MetadataRepresentationLoaderComponent implements OnInit, OnChanges 
    * to ensure they're in sync
    */
   protected connectInputsAndOutputs(): void {
-    if (isNotEmpty(this.inAndOutputNames) && hasValue(this.compRef) && hasValue(this.compRef.instance)) {
-      this.inAndOutputNames.filter((name: any) => this[name] !== undefined).forEach((name: any) => {
-        this.compRef.instance[name] = this[name];
-      });
+    if (
+      isNotEmpty(this.inAndOutputNames) &&
+      hasValue(this.compRef) &&
+      hasValue(this.compRef.instance)
+    ) {
+      this.inAndOutputNames
+        .filter((name: any) => this[name] !== undefined)
+        .forEach((name: any) => {
+          this.compRef.instance[name] = this[name];
+        });
     }
   }
 }

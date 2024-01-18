@@ -48,12 +48,19 @@ describe('ExternalSourceService', () => {
       send: {},
     });
     rdbService = jasmine.createSpyObj('rdbService', {
-      buildList: createSuccessfulRemoteDataObject$(createPaginatedList(entries)),
+      buildList: createSuccessfulRemoteDataObject$(
+        createPaginatedList(entries),
+      ),
     });
     halService = jasmine.createSpyObj('halService', {
       getEndpoint: observableOf('external-sources-REST-endpoint'),
     });
-    service = new ExternalSourceDataService(requestService, rdbService, undefined, halService);
+    service = new ExternalSourceDataService(
+      requestService,
+      rdbService,
+      undefined,
+      halService,
+    );
   }
 
   beforeEach(() => {
@@ -61,22 +68,27 @@ describe('ExternalSourceService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new ExternalSourceDataService(null, null, null, null);
+    const initService = () =>
+      new ExternalSourceDataService(null, null, null, null);
     testSearchDataImplementation(initService);
   });
 
   describe('getExternalSourceEntries', () => {
-
     describe('when no error response is cached', () => {
       let result;
       beforeEach(() => {
-        spyOn(service, 'hasCachedErrorResponse').and.returnValue(observableOf(false));
+        spyOn(service, 'hasCachedErrorResponse').and.returnValue(
+          observableOf(false),
+        );
         result = service.getExternalSourceEntries('test');
       });
 
       it('should send a GetRequest', () => {
         result.pipe(take(1)).subscribe();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(GetRequest), true);
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(GetRequest),
+          true,
+        );
       });
 
       it('should return the entries', () => {
@@ -89,13 +101,18 @@ describe('ExternalSourceService', () => {
     describe('when an error response is cached', () => {
       let result;
       beforeEach(() => {
-        spyOn(service, 'hasCachedErrorResponse').and.returnValue(observableOf(true));
+        spyOn(service, 'hasCachedErrorResponse').and.returnValue(
+          observableOf(true),
+        );
         result = service.getExternalSourceEntries('test');
       });
 
       it('should send a GetRequest', () => {
         result.pipe(take(1)).subscribe();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(GetRequest), false);
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(GetRequest),
+          false,
+        );
       });
 
       it('should return the entries', () => {

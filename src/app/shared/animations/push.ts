@@ -7,7 +7,6 @@ import {
 } from '@angular/animations';
 
 export const pushInOut = trigger('pushInOut', [
-
   /*
   state('expanded', style({ right: '100%' }));
 

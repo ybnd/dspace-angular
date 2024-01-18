@@ -1,15 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderMock } from '../../../../../shared/mocks/translate-loader.mock';
 import { FileValueAccessorDirective } from '../../../../../shared/utils/file-value-accessor.directive';
@@ -29,12 +22,15 @@ describe('FileValueInputComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
-      declarations: [FileValueInputComponent, FileValueAccessorDirective, FileValidator],
+        }),
+      ],
+      declarations: [
+        FileValueInputComponent,
+        FileValueAccessorDirective,
+        FileValidator,
+      ],
       schemas: [NO_ERRORS_SCHEMA],
-
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -48,17 +44,21 @@ describe('FileValueInputComponent', () => {
   });
 
   it('should not show a validation error if the input field was left untouched but left empty', () => {
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error'),
+    );
     expect(validationError).toBeFalsy();
   });
 
-  it('should show a validation error if the input field was touched but left empty',  () => {
+  it('should show a validation error if the input field was touched but left empty', () => {
     const input = fixture.debugElement.query(By.css('input'));
     input.triggerEventHandler('blur', null);
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error'),
+    );
     expect(validationError).toBeTruthy();
   });
 });

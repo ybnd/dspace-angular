@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
   combineLatest as observableCombineLatest,
   Observable,
@@ -18,10 +14,7 @@ import { AuthorizationDataService } from '../../core/data/feature-authorization/
 import { FeatureID } from '../../core/data/feature-authorization/feature-id';
 import { Bitstream } from '../../core/shared/bitstream.model';
 import { Item } from '../../core/shared/item.model';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../empty.util';
+import { hasValue, isNotEmpty } from '../empty.util';
 
 @Component({
   selector: 'ds-file-download-link',
@@ -34,7 +27,6 @@ import {
  * ensuring the user is authorized to download the file.
  */
 export class FileDownloadLinkComponent implements OnInit {
-
   /**
    * Optional bitstream instead of href and file name
    */
@@ -55,23 +47,31 @@ export class FileDownloadLinkComponent implements OnInit {
   @Input() enableRequestACopy = true;
 
   bitstreamPath$: Observable<{
-    routerLink: string,
-    queryParams: any,
+    routerLink: string;
+    queryParams: any;
   }>;
 
   canDownload$: Observable<boolean>;
 
-  constructor(
-    private authorizationService: AuthorizationDataService,
-  ) {
-  }
+  constructor(private authorizationService: AuthorizationDataService) {}
 
   ngOnInit() {
     if (this.enableRequestACopy) {
-      this.canDownload$ = this.authorizationService.isAuthorized(FeatureID.CanDownload, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
-      const canRequestACopy$ = this.authorizationService.isAuthorized(FeatureID.CanRequestACopy, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
-      this.bitstreamPath$ = observableCombineLatest([this.canDownload$, canRequestACopy$]).pipe(
-        map(([canDownload, canRequestACopy]) => this.getBitstreamPath(canDownload, canRequestACopy)),
+      this.canDownload$ = this.authorizationService.isAuthorized(
+        FeatureID.CanDownload,
+        isNotEmpty(this.bitstream) ? this.bitstream.self : undefined,
+      );
+      const canRequestACopy$ = this.authorizationService.isAuthorized(
+        FeatureID.CanRequestACopy,
+        isNotEmpty(this.bitstream) ? this.bitstream.self : undefined,
+      );
+      this.bitstreamPath$ = observableCombineLatest([
+        this.canDownload$,
+        canRequestACopy$,
+      ]).pipe(
+        map(([canDownload, canRequestACopy]) =>
+          this.getBitstreamPath(canDownload, canRequestACopy),
+        ),
       );
     } else {
       this.bitstreamPath$ = observableOf(this.getBitstreamDownloadPath());

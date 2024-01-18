@@ -1,12 +1,6 @@
-import {
-  Component,
-  Injector,
-} from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../app.reducer';
@@ -44,14 +38,15 @@ export class NavbarComponent extends MenuComponent {
 
   public isXsOrSm$: Observable<boolean>;
 
-  constructor(protected menuService: MenuService,
+  constructor(
+    protected menuService: MenuService,
     protected injector: Injector,
-              public windowService: HostWindowService,
-              public browseService: BrowseService,
-              public authorizationService: AuthorizationDataService,
-              public route: ActivatedRoute,
-              protected themeService: ThemeService,
-              private store: Store<AppState>,
+    public windowService: HostWindowService,
+    public browseService: BrowseService,
+    public authorizationService: AuthorizationDataService,
+    public route: ActivatedRoute,
+    protected themeService: ThemeService,
+    private store: Store<AppState>,
   ) {
     super(menuService, injector, authorizationService, route, themeService);
   }

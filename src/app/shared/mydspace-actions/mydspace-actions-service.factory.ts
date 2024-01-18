@@ -15,7 +15,10 @@ import { PoolTaskDataService } from '../../core/tasks/pool-task-data.service';
 /**
  * Class to return DataService for given ResourceType
  */
-export class MyDSpaceActionsServiceFactory<T extends CacheableObject, TService extends IdentifiableDataService<T>> {
+export class MyDSpaceActionsServiceFactory<
+  T extends CacheableObject,
+  TService extends IdentifiableDataService<T>,
+> {
   public getConstructor(type: ResourceType): TService {
     switch (type) {
       case Item.type: {

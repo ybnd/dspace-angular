@@ -21,10 +21,7 @@ import { createPaginatedList } from '../testing/utils.test';
 import { Subscription } from './models/subscription.model';
 import { SubscriptionsDataService } from './subscriptions-data.service';
 
-
 describe('SubscriptionsDataService', () => {
-
-
   let service: SubscriptionsDataService;
   let searchData: SearchDataImpl<Subscription>;
 
@@ -45,12 +42,23 @@ describe('SubscriptionsDataService', () => {
     requestService = getMockRequestService();
     rdbService = getMockRemoteDataBuildService();
     halService = new HALEndpointServiceStub('linkPath') as any;
-    service = new SubscriptionsDataService(comparator, http, notificationsService, requestService, rdbService, store, objectCache, halService, nameService);
-    spyOn((service as any).deleteData, 'delete').and.returnValue(createNoContentRemoteDataObject$());
+    service = new SubscriptionsDataService(
+      comparator,
+      http,
+      notificationsService,
+      requestService,
+      rdbService,
+      store,
+      objectCache,
+      halService,
+      nameService,
+    );
+    spyOn((service as any).deleteData, 'delete').and.returnValue(
+      createNoContentRemoteDataObject$(),
+    );
   }
 
   describe('createSubscription', () => {
-
     beforeEach(() => {
       initService();
     });
@@ -64,11 +72,9 @@ describe('SubscriptionsDataService', () => {
         expect(res.hasCompleted).toBeTrue();
       });
     });
-
   });
 
   describe('deleteSubscription', () => {
-
     beforeEach(() => {
       initService();
     });
@@ -80,11 +86,9 @@ describe('SubscriptionsDataService', () => {
         expect(res.hasCompleted).toBeTrue();
       });
     });
-
   });
 
   describe('updateSubscription', () => {
-
     beforeEach(() => {
       initService();
     });
@@ -98,28 +102,26 @@ describe('SubscriptionsDataService', () => {
         expect(res.hasCompleted).toBeTrue();
       });
     });
-
   });
 
   describe('findByEPerson', () => {
-
     beforeEach(() => {
       initService();
     });
 
     it('should update the subscription', () => {
       const ePersonId = 'test-ePersonId';
-      spyOn(service, 'findListByHref').and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList()));
+      spyOn(service, 'findListByHref').and.returnValue(
+        createSuccessfulRemoteDataObject$(createPaginatedList()),
+      );
       service.findByEPerson(ePersonId).subscribe((res) => {
         expect(service.findListByHref).toHaveBeenCalled();
         expect(res.hasCompleted).toBeTrue();
       });
     });
-
   });
 
   describe('getSubscriptionsByPersonDSO', () => {
-
     beforeEach(() => {
       initService();
     });
@@ -131,7 +133,5 @@ describe('SubscriptionsDataService', () => {
         expect(searchData.searchBy).toHaveBeenCalled();
       });
     });
-
   });
-
 });

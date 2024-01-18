@@ -3,17 +3,10 @@ import {
   Injector,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { RequestService } from '../../../core/data/request.service';
@@ -94,10 +87,19 @@ function init() {
     },
   });
   rdItem = createSuccessfulRemoteDataObject(item);
-  workflowitem = Object.assign(new WorkflowItem(), { item: observableOf(rdItem), id: '333' });
+  workflowitem = Object.assign(new WorkflowItem(), {
+    item: observableOf(rdItem),
+    id: '333',
+  });
   rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-  mockObject = Object.assign(new ClaimedTask(), { workflowitem: observableOf(rdWorkflowitem), id: '1234' });
-  workflowAction = Object.assign(new WorkflowAction(), { id: 'action-1', options: ['option-1', 'option-2'] });
+  mockObject = Object.assign(new ClaimedTask(), {
+    workflowitem: observableOf(rdWorkflowitem),
+    id: '1234',
+  });
+  workflowAction = Object.assign(new WorkflowAction(), {
+    id: 'action-1',
+    options: ['option-1', 'option-2'],
+  });
 
   workflowActionService = jasmine.createSpyObj('workflowActionService', {
     findById: createSuccessfulRemoteDataObject$(workflowAction),
@@ -119,7 +121,10 @@ describe('ClaimedTaskActionsComponent', () => {
       declarations: [ClaimedTaskActionsComponent, VarDirective],
       providers: [
         { provide: Injector, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: ClaimedTaskDataService, useValue: mockDataService },
         { provide: SearchService, useValue: searchService },
@@ -127,9 +132,11 @@ describe('ClaimedTaskActionsComponent', () => {
         { provide: WorkflowActionDataService, useValue: workflowActionService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ClaimedTaskActionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ClaimedTaskActionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -183,14 +190,14 @@ describe('ClaimedTaskActionsComponent', () => {
     fixture.whenStable().then(() => {
       const debugElement = fixture.debugElement.query(By.css('.workflow-view'));
       expect(debugElement).toBeTruthy();
-      expect(debugElement.nativeElement.innerText.trim()).toBe('submission.workflow.generic.view');
+      expect(debugElement.nativeElement.innerText.trim()).toBe(
+        'submission.workflow.generic.view',
+      );
     });
-
   }));
 
   it('getWorkflowItemViewRoute should return the combined uri to show a workspaceitem', waitForAsync(() => {
     const href = component.getWorkflowItemViewRoute(workflowitem);
     expect(href).toEqual('/workflowitems/333/view');
   }));
-
 });

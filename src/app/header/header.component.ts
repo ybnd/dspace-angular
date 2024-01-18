@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { HostWindowService } from '../shared/host-window.service';
@@ -28,8 +25,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     protected menuService: MenuService,
     protected windowService: HostWindowService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isXsOrSm$ = this.windowService.isXsOrSm();

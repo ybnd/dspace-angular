@@ -13,7 +13,6 @@ import { CollectionListEntry } from '../../shared/collection-dropdown/collection
   styleUrls: ['./collection-selector.component.scss'],
 })
 export class CollectionSelectorComponent {
-
   constructor(protected activeModal: NgbActiveModal) {}
 
   /**

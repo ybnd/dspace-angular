@@ -1,18 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  NavigationExtras,
-  Router,
-} from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { NavigationExtras, Router } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { Context } from '../../../core/shared/context.model';
@@ -28,7 +18,6 @@ import { SearchConfigurationServiceStub } from '../../testing/search-configurati
 import { SearchSwitchConfigurationComponent } from './search-switch-configuration.component';
 
 describe('SearchSwitchConfigurationComponent', () => {
-
   let comp: SearchSwitchConfigurationComponent;
   let fixture: ComponentFixture<SearchSwitchConfigurationComponent>;
   let searchConfService: SearchConfigurationServiceStub;
@@ -64,7 +53,10 @@ describe('SearchSwitchConfigurationComponent', () => {
       providers: [
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -75,13 +67,14 @@ describe('SearchSwitchConfigurationComponent', () => {
     comp = fixture.componentInstance;
     searchConfService = TestBed.inject(SEARCH_CONFIG_SERVICE as any);
 
-    spyOn(searchConfService, 'getCurrentConfiguration').and.returnValue(observableOf(MyDSpaceConfigurationValueType.Workspace));
+    spyOn(searchConfService, 'getCurrentConfiguration').and.returnValue(
+      observableOf(MyDSpaceConfigurationValueType.Workspace),
+    );
 
     comp.configurationList = configurationList;
 
     // SearchSwitchConfigurationComponent test instance
     fixture.detectChanges();
-
   });
 
   it('should init the current configuration name', () => {
@@ -101,7 +94,7 @@ describe('SearchSwitchConfigurationComponent', () => {
       spyOn(comp, 'onSelect');
       select = fixture.debugElement.query(By.css('select'));
       const selectEl = select.nativeElement;
-      selectEl.value = selectEl.options[1].value;  // <-- select a new value
+      selectEl.value = selectEl.options[1].value; // <-- select a new value
       selectEl.dispatchEvent(new Event('change'));
       fixture.detectChanges();
       expect(comp.onSelect).toHaveBeenCalled();
@@ -109,7 +102,7 @@ describe('SearchSwitchConfigurationComponent', () => {
   }));
 
   it('should navigate to the route when selecting an option', () => {
-    spyOn((comp as any), 'getSearchLinkParts').and.returnValue([MYDSPACE_ROUTE]);
+    spyOn(comp as any, 'getSearchLinkParts').and.returnValue([MYDSPACE_ROUTE]);
     spyOn((comp as any).changeConfiguration, 'emit');
     comp.selectedOption = configurationList[1];
     const navigationExtras: NavigationExtras = {
@@ -120,7 +113,10 @@ describe('SearchSwitchConfigurationComponent', () => {
 
     comp.onSelect();
 
-    expect((comp as any).router.navigate).toHaveBeenCalledWith([MYDSPACE_ROUTE], navigationExtras);
+    expect((comp as any).router.navigate).toHaveBeenCalledWith(
+      [MYDSPACE_ROUTE],
+      navigationExtras,
+    );
     expect((comp as any).changeConfiguration.emit).toHaveBeenCalled();
   });
 });

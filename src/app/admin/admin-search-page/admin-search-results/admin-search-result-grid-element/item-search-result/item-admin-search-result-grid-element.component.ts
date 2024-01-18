@@ -22,7 +22,11 @@ import { SearchResultGridElementComponent } from '../../../../../shared/object-g
 import { ThemeService } from '../../../../../shared/theme-support/theme.service';
 import { TruncatableService } from '../../../../../shared/truncatable/truncatable.service';
 
-@listableObjectComponent(ItemSearchResult, ViewMode.GridElement, Context.AdminSearch)
+@listableObjectComponent(
+  ItemSearchResult,
+  ViewMode.GridElement,
+  Context.AdminSearch,
+)
 @Component({
   selector: 'ds-item-admin-search-result-grid-element',
   styleUrls: ['./item-admin-search-result-grid-element.component.scss'],
@@ -31,8 +35,12 @@ import { TruncatableService } from '../../../../../shared/truncatable/truncatabl
 /**
  * The component for displaying a list element for an item search result on the admin search page
  */
-export class ItemAdminSearchResultGridElementComponent extends SearchResultGridElementComponent<ItemSearchResult, Item> implements OnInit {
-  @ViewChild(ListableObjectDirective, { static: true }) listableObjectDirective: ListableObjectDirective;
+export class ItemAdminSearchResultGridElementComponent
+  extends SearchResultGridElementComponent<ItemSearchResult, Item>
+  implements OnInit
+{
+  @ViewChild(ListableObjectDirective, { static: true })
+  listableObjectDirective: ListableObjectDirective;
   @ViewChild('badges', { static: true }) badges: ElementRef;
   @ViewChild('buttons', { static: true }) buttons: ElementRef;
 
@@ -51,7 +59,10 @@ export class ItemAdminSearchResultGridElementComponent extends SearchResultGridE
    */
   ngOnInit(): void {
     super.ngOnInit();
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent());
+    const componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(
+        this.getComponent(),
+      );
 
     const viewContainerRef = this.listableObjectDirective.viewContainerRef;
     viewContainerRef.clear();
@@ -60,10 +71,8 @@ export class ItemAdminSearchResultGridElementComponent extends SearchResultGridE
       componentFactory,
       0,
       undefined,
-      [
-        [this.badges.nativeElement],
-        [this.buttons.nativeElement],
-      ]);
+      [[this.badges.nativeElement], [this.buttons.nativeElement]],
+    );
     (componentRef.instance as any).object = this.object;
     (componentRef.instance as any).index = this.index;
     (componentRef.instance as any).linkType = this.linkType;
@@ -75,6 +84,11 @@ export class ItemAdminSearchResultGridElementComponent extends SearchResultGridE
    * @returns {GenericConstructor<Component>}
    */
   private getComponent(): GenericConstructor<Component> {
-    return getListableObjectComponent(this.object.getRenderTypes(), ViewMode.GridElement, undefined, this.themeService.getThemeName());
+    return getListableObjectComponent(
+      this.object.getRenderTypes(),
+      ViewMode.GridElement,
+      undefined,
+      this.themeService.getThemeName(),
+    );
   }
 }

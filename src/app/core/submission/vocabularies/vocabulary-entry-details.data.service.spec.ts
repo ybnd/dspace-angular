@@ -16,7 +16,8 @@ describe('VocabularyEntryDetailsDataService', () => {
   }
 
   describe('composition', () => {
-    const initService = () => new VocabularyEntryDetailsDataService(null, null, null, null);
+    const initService = () =>
+      new VocabularyEntryDetailsDataService(null, null, null, null);
     testFindAllDataImplementation(initService);
     testSearchDataImplementation(initService);
   });

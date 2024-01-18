@@ -1,18 +1,8 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {
-  combineLatest as observableCombineLatest,
-  Subscription,
-} from 'rxjs';
-import {
-  filter,
-  take,
-} from 'rxjs/operators';
+import { combineLatest as observableCombineLatest, Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
 import { AppState } from '../app.reducer';
 import {
@@ -23,10 +13,7 @@ import {
 } from '../core/auth/auth.actions';
 import { AuthTokenInfo } from '../core/auth/models/auth-token-info.model';
 import { isAuthenticated } from '../core/auth/selectors';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../shared/empty.util';
+import { hasValue, isNotEmpty } from '../shared/empty.util';
 
 /**
  * This component represents the login page
@@ -37,7 +24,6 @@ import {
   templateUrl: './login-page.component.html',
 })
 export class LoginPageComponent implements OnDestroy, OnInit {
-
   /**
    * Subscription to unsubscribe onDestroy
    * @type {Subscription}
@@ -50,8 +36,10 @@ export class LoginPageComponent implements OnDestroy, OnInit {
    * @param {ActivatedRoute} route
    * @param {Store<AppState>} store
    */
-  constructor(private route: ActivatedRoute,
-              private store: Store<AppState>) {}
+  constructor(
+    private route: ActivatedRoute,
+    private store: Store<AppState>,
+  ) {}
 
   /**
    * Initialize instance variables
@@ -59,26 +47,33 @@ export class LoginPageComponent implements OnDestroy, OnInit {
   ngOnInit() {
     const queryParamsObs = this.route.queryParams;
     const authenticated = this.store.select(isAuthenticated);
-    this.sub = observableCombineLatest(queryParamsObs, authenticated).pipe(
-      filter(([params, auth]) => isNotEmpty(params.token) || isNotEmpty(params.expired)),
-      take(1),
-    ).subscribe(([params, auth]) => {
-      const token = params.token;
-      let authToken: AuthTokenInfo;
-      if (!auth) {
-        if (isNotEmpty(token)) {
-          authToken = new AuthTokenInfo(token);
-          this.store.dispatch(new AuthenticatedAction(authToken));
-        } else if (isNotEmpty(params.expired)) {
-          this.store.dispatch(new AddAuthenticationMessageAction('auth.messages.expired'));
+    this.sub = observableCombineLatest(queryParamsObs, authenticated)
+      .pipe(
+        filter(
+          ([params, auth]) =>
+            isNotEmpty(params.token) || isNotEmpty(params.expired),
+        ),
+        take(1),
+      )
+      .subscribe(([params, auth]) => {
+        const token = params.token;
+        let authToken: AuthTokenInfo;
+        if (!auth) {
+          if (isNotEmpty(token)) {
+            authToken = new AuthTokenInfo(token);
+            this.store.dispatch(new AuthenticatedAction(authToken));
+          } else if (isNotEmpty(params.expired)) {
+            this.store.dispatch(
+              new AddAuthenticationMessageAction('auth.messages.expired'),
+            );
+          }
+        } else {
+          if (isNotEmpty(token)) {
+            authToken = new AuthTokenInfo(token);
+            this.store.dispatch(new AuthenticationSuccessAction(authToken));
+          }
         }
-      } else {
-        if (isNotEmpty(token)) {
-          authToken = new AuthTokenInfo(token);
-          this.store.dispatch(new AuthenticationSuccessAction(authToken));
-        }
-      }
-    });
+      });
   }
 
   /**

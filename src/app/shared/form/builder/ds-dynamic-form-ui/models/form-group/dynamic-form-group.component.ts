@@ -26,25 +26,31 @@ import {
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class DsDynamicFormGroupComponent extends DynamicFormControlComponent {
-
   @Input() formModel: DynamicFormControlModel[];
   @Input() formLayout: DynamicFormLayout;
   @Input() group: UntypedFormGroup;
   @Input() layout: DynamicFormControlLayout;
   @Input() model: DynamicFormGroupModel;
-  @Input() templates: QueryList<DynamicTemplateDirective> | DynamicTemplateDirective[] | undefined;
+  @Input() templates:
+    | QueryList<DynamicTemplateDirective>
+    | DynamicTemplateDirective[]
+    | undefined;
 
   /* eslint-disable @angular-eslint/no-output-rename */
-  @Output('dfBlur') blur: EventEmitter<DynamicFormControlEvent> = new EventEmitter<DynamicFormControlEvent>();
-  @Output('dfChange') change: EventEmitter<DynamicFormControlEvent> = new EventEmitter<DynamicFormControlEvent>();
-  @Output('dfFocus') focus: EventEmitter<DynamicFormControlEvent> = new EventEmitter<DynamicFormControlEvent>();
-  @Output('ngbEvent') customEvent: EventEmitter<DynamicFormControlCustomEvent> = new EventEmitter();
+  @Output('dfBlur') blur: EventEmitter<DynamicFormControlEvent> =
+    new EventEmitter<DynamicFormControlEvent>();
+  @Output('dfChange') change: EventEmitter<DynamicFormControlEvent> =
+    new EventEmitter<DynamicFormControlEvent>();
+  @Output('dfFocus') focus: EventEmitter<DynamicFormControlEvent> =
+    new EventEmitter<DynamicFormControlEvent>();
+  @Output('ngbEvent') customEvent: EventEmitter<DynamicFormControlCustomEvent> =
+    new EventEmitter();
   /* eslint-enable @angular-eslint/no-output-rename */
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService) {
-
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
+  ) {
     super(layoutService, validationService);
   }
-
 }

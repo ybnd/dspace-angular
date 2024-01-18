@@ -1,14 +1,6 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  Inject,
-  Injectable,
-  Injector,
-} from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  ResolveEnd,
-  Router,
-} from '@angular/router';
+import { Inject, Injectable, Injector } from '@angular/core';
+import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
 import {
   createFeatureSelector,
   createSelector,
@@ -34,10 +26,7 @@ import {
 } from 'rxjs/operators';
 
 import { getDefaultThemeConfig } from '../../../config/config.util';
-import {
-  HeadTagConfig,
-  ThemeConfig,
-} from '../../../config/theme.config';
+import { HeadTagConfig, ThemeConfig } from '../../../config/theme.config';
 import { environment } from '../../../environments/environment';
 import { LinkService } from '../../core/cache/builders/link.service';
 import { DSpaceObjectDataService } from '../../core/data/dspace-object-data.service';
@@ -49,33 +38,21 @@ import {
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
 } from '../../core/shared/operators';
-import {
-  hasNoValue,
-  hasValue,
-  isNotEmpty,
-} from '../empty.util';
-import {
-  NO_OP_ACTION_TYPE,
-  NoOpAction,
-} from '../ngrx/no-op.action';
+import { hasNoValue, hasValue, isNotEmpty } from '../empty.util';
+import { NO_OP_ACTION_TYPE, NoOpAction } from '../ngrx/no-op.action';
 import { GET_THEME_CONFIG_FOR_FACTORY } from '../object-collection/shared/listable-object/listable-object.decorator';
 import { followLink } from '../utils/follow-link-config.model';
-import {
-  SetThemeAction,
-  ThemeActionTypes,
-} from './theme.actions';
+import { SetThemeAction, ThemeActionTypes } from './theme.actions';
 import { BASE_THEME_NAME } from './theme.constants';
-import {
-  Theme,
-  themeFactory,
-} from './theme.model';
+import { Theme, themeFactory } from './theme.model';
 import { ThemeState } from './theme.reducer';
 
 export const themeStateSelector = createFeatureSelector<ThemeState>('theme');
 
 export const currentThemeSelector = createSelector(
   themeStateSelector,
-  (state: ThemeState): string => hasValue(state) ? state.currentTheme : BASE_THEME_NAME,
+  (state: ThemeState): string =>
+    hasValue(state) ? state.currentTheme : BASE_THEME_NAME,
 );
 
 @Injectable({
@@ -105,11 +82,14 @@ export class ThemeService {
     @Inject(DOCUMENT) private document: any,
   ) {
     // Create objects from the theme configs in the environment file
-    this.themes = environment.themes.map((themeConfig: ThemeConfig) => themeFactory(themeConfig, injector));
-    this.hasDynamicTheme = environment.themes.some((themeConfig: any) =>
-      hasValue(themeConfig.regex) ||
-      hasValue(themeConfig.handle) ||
-      hasValue(themeConfig.uuid),
+    this.themes = environment.themes.map((themeConfig: ThemeConfig) =>
+      themeFactory(themeConfig, injector),
+    );
+    this.hasDynamicTheme = environment.themes.some(
+      (themeConfig: any) =>
+        hasValue(themeConfig.regex) ||
+        hasValue(themeConfig.handle) ||
+        hasValue(themeConfig.uuid),
     );
   }
 
@@ -126,12 +106,9 @@ export class ThemeService {
    */
   getThemeName(): string {
     let currentTheme: string;
-    this.store.pipe(
-      select(currentThemeSelector),
-      take(1),
-    ).subscribe((name: string) =>
-      currentTheme = name,
-    );
+    this.store
+      .pipe(select(currentThemeSelector), take(1))
+      .subscribe((name: string) => (currentTheme = name));
     return currentTheme;
   }
 
@@ -139,9 +116,7 @@ export class ThemeService {
    * The name of the current theme (asynchronous, tracks changes)
    */
   getThemeName$(): Observable<string> {
-    return this.store.pipe(
-      select(currentThemeSelector),
-    );
+    return this.store.pipe(select(currentThemeSelector));
   }
 
   /**
@@ -182,19 +157,26 @@ export class ThemeService {
    * Should be called when initializing the app.
    */
   listenForRouteChanges(): void {
-    this.router.events.pipe(
-      filter(event => event instanceof ResolveEnd),
-      switchMap((event: ResolveEnd) => this.updateThemeOnRouteChange$(event.urlAfterRedirects, event.state.root)),
-      switchMap((changed) => {
-        if (changed) {
-          return this._isThemeCSSLoading$;
-        } else {
-          return [false];
-        }
-      }),
-    ).subscribe((changed) => {
-      distinctNext(this._isThemeLoading$, changed);
-    });
+    this.router.events
+      .pipe(
+        filter((event) => event instanceof ResolveEnd),
+        switchMap((event: ResolveEnd) =>
+          this.updateThemeOnRouteChange$(
+            event.urlAfterRedirects,
+            event.state.root,
+          ),
+        ),
+        switchMap((changed) => {
+          if (changed) {
+            return this._isThemeCSSLoading$;
+          } else {
+            return [false];
+          }
+        }),
+      )
+      .subscribe((changed) => {
+        distinctNext(this._isThemeLoading$, changed);
+      });
   }
 
   /**
@@ -223,7 +205,9 @@ export class ThemeService {
 
     // Array.from to ensure we end up with an array, not an HTMLCollection, which would be
     // automatically updated if we add nodes later
-    const currentThemeLinks = Array.from(head.getElementsByClassName('theme-css'));
+    const currentThemeLinks = Array.from(
+      head.getElementsByClassName('theme-css'),
+    );
     const link = this.document.createElement('link');
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('type', 'text/css');
@@ -257,15 +241,18 @@ export class ThemeService {
     }
 
     // clear head tags
-    const currentHeadTags = Array.from(head.getElementsByClassName('theme-head-tag'));
+    const currentHeadTags = Array.from(
+      head.getElementsByClassName('theme-head-tag'),
+    );
     if (hasValue(currentHeadTags)) {
       currentHeadTags.forEach((currentHeadTag: any) => currentHeadTag.remove());
     }
 
     // create new head tags (not yet added to DOM)
     const headTagFragment = this.document.createDocumentFragment();
-    this.createHeadTags(themeName)
-      .forEach(newHeadTag => headTagFragment.appendChild(newHeadTag));
+    this.createHeadTags(themeName).forEach((newHeadTag) =>
+      headTagFragment.appendChild(newHeadTag),
+    );
 
     // add new head tags to DOM
     head.appendChild(headTagFragment);
@@ -290,11 +277,11 @@ export class ThemeService {
         // last resort, use fallback favicon.ico
         return [
           this.createHeadTag({
-            'tagName': 'link',
-            'attributes': {
-              'rel': 'icon',
-              'href': 'assets/images/favicon.ico',
-              'sizes': 'any',
+            tagName: 'link',
+            attributes: {
+              rel: 'icon',
+              href: 'assets/images/favicon.ico',
+              sizes: 'any',
             },
           }),
         ];
@@ -313,8 +300,9 @@ export class ThemeService {
     const tag = this.document.createElement(headTagConfig.tagName);
 
     if (hasValue(headTagConfig.attributes)) {
-      Object.entries(headTagConfig.attributes)
-        .forEach(([key, value]) => tag.setAttribute(key, value));
+      Object.entries(headTagConfig.attributes).forEach(([key, value]) =>
+        tag.setAttribute(key, value),
+      );
     }
 
     // 'class' attribute should always be 'theme-head-tag' for removal
@@ -322,7 +310,6 @@ export class ThemeService {
 
     return tag;
   }
-
 
   /**
    * Determine whether or not the theme needs to change depending on the current route's URL and snapshot data
@@ -334,15 +321,24 @@ export class ThemeService {
    * @param activatedRouteSnapshot
    * @return Observable boolean emitting whether or not the theme has been changed
    */
-  updateThemeOnRouteChange$(currentRouteUrl: string, activatedRouteSnapshot: ActivatedRouteSnapshot): Observable<boolean> {
+  updateThemeOnRouteChange$(
+    currentRouteUrl: string,
+    activatedRouteSnapshot: ActivatedRouteSnapshot,
+  ): Observable<boolean> {
     // and the current theme from the store
-    const currentTheme$: Observable<string> = this.store.pipe(select(currentThemeSelector));
+    const currentTheme$: Observable<string> = this.store.pipe(
+      select(currentThemeSelector),
+    );
 
     const action$: Observable<SetThemeAction | NoOpAction> = currentTheme$.pipe(
       switchMap((currentTheme: string) => {
         const snapshotWithData = this.findRouteData(activatedRouteSnapshot);
         if (this.hasDynamicTheme === true && isNotEmpty(this.themes)) {
-          if (hasValue(snapshotWithData) && hasValue(snapshotWithData.data) && hasValue(snapshotWithData.data.dso)) {
+          if (
+            hasValue(snapshotWithData) &&
+            hasValue(snapshotWithData.data) &&
+            hasValue(snapshotWithData.data.dso)
+          ) {
             const dsoRD: RemoteData<DSpaceObject> = snapshotWithData.data.dso;
             if (dsoRD.hasSucceeded) {
               // Start with the resolved dso and go recursively through its parents until you reach the top-level community
@@ -357,8 +353,14 @@ export class ThemeService {
               );
             }
           }
-          if (hasValue(activatedRouteSnapshot.queryParams) && hasValue(activatedRouteSnapshot.queryParams.scope)) {
-            const dsoFromScope$: Observable<RemoteData<DSpaceObject>> = this.dSpaceObjectDataService.findById(activatedRouteSnapshot.queryParams.scope);
+          if (
+            hasValue(activatedRouteSnapshot.queryParams) &&
+            hasValue(activatedRouteSnapshot.queryParams.scope)
+          ) {
+            const dsoFromScope$: Observable<RemoteData<DSpaceObject>> =
+              this.dSpaceObjectDataService.findById(
+                activatedRouteSnapshot.queryParams.scope,
+              );
             // Start with the resolved dso and go recursively through its parents until you reach the top-level community
             return dsoFromScope$.pipe(
               getFirstSucceededRemoteData(),
@@ -375,11 +377,13 @@ export class ThemeService {
 
           // check whether the route itself matches
           return from(this.themes).pipe(
-            concatMap((theme: Theme) => theme.matches(currentRouteUrl, undefined).pipe(
-              filter((result: boolean) => result === true),
-              map(() => theme),
-              take(1),
-            )),
+            concatMap((theme: Theme) =>
+              theme.matches(currentRouteUrl, undefined).pipe(
+                filter((result: boolean) => result === true),
+                map(() => theme),
+                take(1),
+              ),
+            ),
             take(1),
             map((theme: Theme) => this.getActionForMatch(theme, currentTheme)),
           );
@@ -391,14 +395,22 @@ export class ThemeService {
       take(1),
     );
 
-    action$.pipe(
-      filter((action: SetThemeAction | NoOpAction) => action.type !== NO_OP_ACTION_TYPE),
-    ).subscribe((action: SetThemeAction | NoOpAction) => {
-      this.store.dispatch(action);
-    });
+    action$
+      .pipe(
+        filter(
+          (action: SetThemeAction | NoOpAction) =>
+            action.type !== NO_OP_ACTION_TYPE,
+        ),
+      )
+      .subscribe((action: SetThemeAction | NoOpAction) => {
+        this.store.dispatch(action);
+      });
 
     return action$.pipe(
-      map((action: SetThemeAction | NoOpAction) => action.type === ThemeActionTypes.SET),
+      map(
+        (action: SetThemeAction | NoOpAction) =>
+          action.type === ThemeActionTypes.SET,
+      ),
     );
   }
 
@@ -408,13 +420,20 @@ export class ThemeService {
    * @param routes
    */
   findRouteData(...routes: ActivatedRouteSnapshot[]) {
-    const result = routes.find((route) => hasValue(route.data) && hasValue(route.data.dso));
+    const result = routes.find(
+      (route) => hasValue(route.data) && hasValue(route.data.dso),
+    );
     if (hasValue(result)) {
       return result;
     } else {
       const nextLevelRoutes = routes
         .map((route: ActivatedRouteSnapshot) => route.children)
-        .reduce((combined: ActivatedRouteSnapshot[], current: ActivatedRouteSnapshot[]) => [...combined, ...current]);
+        .reduce(
+          (
+            combined: ActivatedRouteSnapshot[],
+            current: ActivatedRouteSnapshot[],
+          ) => [...combined, ...current],
+        );
       if (isNotEmpty(nextLevelRoutes)) {
         return this.findRouteData(...nextLevelRoutes);
       } else {
@@ -435,22 +454,30 @@ export class ThemeService {
       source.pipe(
         expand((dso: DSpaceObject) => {
           // Check if the dso exists and has a parent link
-          if (hasValue(dso) && typeof (dso as any).getParentLinkKey === 'function') {
+          if (
+            hasValue(dso) &&
+            typeof (dso as any).getParentLinkKey === 'function'
+          ) {
             const linkName = (dso as any).getParentLinkKey();
             // If it does, retrieve it.
-            return this.linkService.resolveLinkWithoutAttaching<DSpaceObject, DSpaceObject>(dso, followLink(linkName)).pipe(
-              getFirstCompletedRemoteData(),
-              map((rd: RemoteData<DSpaceObject>) => {
-                if (hasValue(rd.payload)) {
-                  // If there's a parent, use it for the next iteration
-                  return rd.payload;
-                } else {
-                  // If there's no parent, or an error, return null, which will stop recursion
-                  // in the next iteration
-                  return null;
-                }
-              }),
-            );
+            return this.linkService
+              .resolveLinkWithoutAttaching<
+                DSpaceObject,
+                DSpaceObject
+              >(dso, followLink(linkName))
+              .pipe(
+                getFirstCompletedRemoteData(),
+                map((rd: RemoteData<DSpaceObject>) => {
+                  if (hasValue(rd.payload)) {
+                    // If there's a parent, use it for the next iteration
+                    return rd.payload;
+                  } else {
+                    // If there's no parent, or an error, return null, which will stop recursion
+                    // in the next iteration
+                    return null;
+                  }
+                }),
+              );
           }
 
           // The current dso has no value, or no parent. Return EMPTY to stop recursion
@@ -470,7 +497,10 @@ export class ThemeService {
    * @param currentThemeName The name of the currently active theme
    * @private
    */
-  private getActionForMatch(newTheme: Theme, currentThemeName: string): SetThemeAction | NoOpAction {
+  private getActionForMatch(
+    newTheme: Theme,
+    currentThemeName: string,
+  ): SetThemeAction | NoOpAction {
     const newThemeName: string = newTheme?.config.name ?? BASE_THEME_NAME;
     if (newThemeName !== currentThemeName) {
       // If we have a match, and it isn't already the active theme, set it as the new theme
@@ -489,14 +519,19 @@ export class ThemeService {
    * @param currentRouteUrl The url for the current route
    * @private
    */
-  private matchThemeToDSOs(dsos: DSpaceObject[], currentRouteUrl: string): Observable<Theme> {
+  private matchThemeToDSOs(
+    dsos: DSpaceObject[],
+    currentRouteUrl: string,
+  ): Observable<Theme> {
     return from(this.themes).pipe(
-      concatMap((theme: Theme) => from(dsos).pipe(
-        concatMap((dso: DSpaceObject) => theme.matches(currentRouteUrl, dso)),
-        filter((result: boolean) => result === true),
-        map(() => theme),
-        take(1),
-      )),
+      concatMap((theme: Theme) =>
+        from(dsos).pipe(
+          concatMap((dso: DSpaceObject) => theme.matches(currentRouteUrl, dso)),
+          filter((result: boolean) => result === true),
+          map(() => theme),
+          take(1),
+        ),
+      ),
       take(1),
       defaultIfEmpty(undefined),
     );

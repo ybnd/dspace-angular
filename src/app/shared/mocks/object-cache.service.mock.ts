@@ -16,5 +16,4 @@ export function getMockObjectCacheService(): ObjectCacheService {
     'addDependency',
     'removeDependents',
   ]);
-
 }

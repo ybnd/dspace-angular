@@ -8,10 +8,7 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 
-import {
-  fadeOutLeave,
-  fadeOutState,
-} from '../animations/fade';
+import { fadeOutLeave, fadeOutState } from '../animations/fade';
 import { AlertType } from './alert-type';
 
 /**
@@ -20,16 +17,11 @@ import { AlertType } from './alert-type';
 @Component({
   selector: 'ds-alert',
   encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger('enterLeave', [
-      fadeOutLeave, fadeOutState,
-    ]),
-  ],
+  animations: [trigger('enterLeave', [fadeOutLeave, fadeOutState])],
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
 })
 export class AlertComponent {
-
   /**
    * The alert content
    */
@@ -65,8 +57,7 @@ export class AlertComponent {
    *
    * @param {ChangeDetectorRef} cdr
    */
-  constructor(private cdr: ChangeDetectorRef) {
-  }
+  constructor(private cdr: ChangeDetectorRef) {}
 
   /**
    * Dismiss div with animation
@@ -80,7 +71,6 @@ export class AlertComponent {
         this.close.emit();
         this.cdr.detectChanges();
       }, 300);
-
     }
   }
 }

@@ -1,8 +1,4 @@
-import {
-  Component,
-  Injectable,
-  Input,
-} from '@angular/core';
+import { Component, Injectable, Input } from '@angular/core';
 
 /**
  * This component builds a URL from the value of "handle"
@@ -13,10 +9,8 @@ import {
   styleUrls: ['./comcol-page-handle.component.scss'],
   templateUrl: './comcol-page-handle.component.html',
 })
-
 @Injectable()
 export class ComcolPageHandleComponent {
-
   // Optional title
   @Input() title: string;
 

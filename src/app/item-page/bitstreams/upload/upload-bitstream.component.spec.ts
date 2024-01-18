@@ -1,14 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -95,7 +88,9 @@ describe('UploadBitstreamComponent', () => {
   const mockItemDataService = jasmine.createSpyObj('mockItemDataService', {
     getBitstreamsEndpoint: observableOf(restEndpoint),
     createBundle: createSuccessfulRemoteDataObject$(createdBundle),
-    getBundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [bundle])),
+    getBundles: createSuccessfulRemoteDataObject$(
+      buildPaginatedList(new PageInfo(), [bundle]),
+    ),
   });
   const bundleService = jasmine.createSpyObj('bundleService', {
     getBitstreamsEndpoint: observableOf(restEndpoint),
@@ -106,7 +101,10 @@ describe('UploadBitstreamComponent', () => {
     buildAuthHeader: () => authToken,
   });
   const notificationsServiceStub = new NotificationsServiceStub();
-  const uploaderComponent = jasmine.createSpyObj('uploaderComponent', ['ngOnInit', 'ngAfterViewInit']);
+  const uploaderComponent = jasmine.createSpyObj('uploaderComponent', [
+    'ngOnInit',
+    'ngAfterViewInit',
+  ]);
   const requestService = jasmine.createSpyObj('requestService', {
     removeByHrefSubstring: {},
   });
@@ -156,22 +154,26 @@ describe('UploadBitstreamComponent', () => {
       loadFixtureAndComp();
     });
 
-    it('should set the selected id to the bundle\'s id', () => {
+    it("should set the selected id to the bundle's id", () => {
       expect(comp.selectedBundleId).toEqual(bundle.id);
     });
 
-    it('should set the selected name to the bundle\'s name', () => {
+    it("should set the selected name to the bundle's name", () => {
       expect(comp.selectedBundleName).toEqual(bundle.name);
     });
 
     describe('and bundle name changed', () => {
       beforeEach(waitForAsync(() => {
         jasmine.getEnv().allowRespy(true);
-        mockItemDataService.getBundles.and.returnValue(createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [bundle])));
+        mockItemDataService.getBundles.and.returnValue(
+          createSuccessfulRemoteDataObject$(
+            buildPaginatedList(new PageInfo(), [bundle]),
+          ),
+        );
         loadFixtureAndComp();
       }));
 
-      it('should clear out the selected id if the name doesn\'t exist', () => {
+      it("should clear out the selected id if the name doesn't exist", () => {
         comp.selectedBundleName = '';
         comp.bundleNameChange();
 
@@ -203,7 +205,10 @@ describe('UploadBitstreamComponent', () => {
       });
 
       it('should create a new bundle', () => {
-        expect(mockItemDataService.createBundle).toHaveBeenCalledWith(mockItem.id, customName);
+        expect(mockItemDataService.createBundle).toHaveBeenCalledWith(
+          mockItem.id,
+          customName,
+        );
       });
 
       it('should set the selected id to the id of the new bundle', () => {
@@ -222,7 +227,11 @@ describe('UploadBitstreamComponent', () => {
         bundle: bundle.id,
       });
       jasmine.getEnv().allowRespy(true);
-      mockItemDataService.getBundles.and.returnValue(createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])));
+      mockItemDataService.getBundles.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          buildPaginatedList(new PageInfo(), []),
+        ),
+      );
       loadFixtureAndComp();
     }));
 
@@ -241,7 +250,11 @@ describe('UploadBitstreamComponent', () => {
         bundle: bundle.id,
       });
       jasmine.getEnv().allowRespy(true);
-      mockItemDataService.getBundles.and.returnValue(createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [bundle])));
+      mockItemDataService.getBundles.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          buildPaginatedList(new PageInfo(), [bundle]),
+        ),
+      );
       loadFixtureAndComp();
     }));
 
@@ -265,12 +278,22 @@ describe('UploadBitstreamComponent', () => {
         bundle: clonedBundle.id,
       });
       jasmine.getEnv().allowRespy(true);
-      mockItemDataService.getBundles.and.returnValue(createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [clonedBundle])));
+      mockItemDataService.getBundles.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          buildPaginatedList(new PageInfo(), [clonedBundle]),
+        ),
+      );
       loadFixtureAndComp();
     }));
 
     it('should not show duplicate bundle names', () => {
-      const expectedSuggestions = [clonedBundle.name, ...standardBundleSuggestions.filter((standardBundleSuggestion: string) => standardBundleSuggestion !== clonedBundle.name)];
+      const expectedSuggestions = [
+        clonedBundle.name,
+        ...standardBundleSuggestions.filter(
+          (standardBundleSuggestion: string) =>
+            standardBundleSuggestion !== clonedBundle.name,
+        ),
+      ];
       expect(comp.bundles.length).toEqual(expectedSuggestions.length);
       for (let i = 0; i < expectedSuggestions.length; i++) {
         // noinspection JSDeprecatedSymbols
@@ -298,7 +321,12 @@ describe('UploadBitstreamComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [UploadBitstreamComponent, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
@@ -308,9 +336,8 @@ describe('UploadBitstreamComponent', () => {
         { provide: AuthService, useValue: authServiceStub },
         { provide: BundleDataService, useValue: bundleService },
         { provide: RequestService, useValue: requestService },
-      ], schemas: [
-        NO_ERRORS_SCHEMA,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }
 
@@ -323,5 +350,4 @@ describe('UploadBitstreamComponent', () => {
     comp.uploaderComponent = uploaderComponent;
     fixture.detectChanges();
   }
-
 });

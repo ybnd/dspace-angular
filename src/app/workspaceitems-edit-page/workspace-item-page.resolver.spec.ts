@@ -18,14 +18,13 @@ describe('WorkflowItemPageResolver', () => {
     });
 
     it('should resolve a workspace item with the correct id', (done) => {
-      resolver.resolve({ params: { id: uuid } } as any, undefined)
+      resolver
+        .resolve({ params: { id: uuid } } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (resolved) => {
-            expect(resolved.payload.id).toEqual(uuid);
-            done();
-          },
-        );
+        .subscribe((resolved) => {
+          expect(resolved.payload.id).toEqual(uuid);
+          done();
+        });
     });
   });
 });

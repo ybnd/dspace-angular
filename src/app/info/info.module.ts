@@ -15,7 +15,6 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { PrivacyContentComponent } from './privacy/privacy-content/privacy-content.component';
 import { ThemedPrivacyComponent } from './privacy/themed-privacy.component';
 
-
 const DECLARATIONS = [
   EndUserAgreementComponent,
   ThemedEndUserAgreementComponent,
@@ -30,18 +29,9 @@ const DECLARATIONS = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    InfoRoutingModule,
-  ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  imports: [CommonModule, SharedModule, InfoRoutingModule],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
   providers: [FeedbackGuard],
 })
-export class InfoModule {
-}
+export class InfoModule {}

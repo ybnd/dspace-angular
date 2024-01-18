@@ -1,13 +1,7 @@
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import {
-  cold,
-  hot,
-} from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 
 import { NoOpAction } from '../../shared/ngrx/no-op.action';
@@ -73,7 +67,13 @@ describe('ObjectUpdatesEffects', () => {
   describe('addAlternativeObjectLink$', () => {
     let action;
     it('should emit a new ADD_TO_INDEX action when a AddToObjectCacheAction with alternativeLink is dispatched', () => {
-      action = new AddToObjectCacheAction(objectToCache, timeCompleted, msToLive, requestUUID, alternativeLink);
+      action = new AddToObjectCacheAction(
+        objectToCache,
+        timeCompleted,
+        msToLive,
+        requestUUID,
+        alternativeLink,
+      );
       const newAction = new AddToIndexAction(
         IndexName.ALTERNATIVE_OBJECT_LINK,
         alternativeLink,
@@ -85,14 +85,26 @@ describe('ObjectUpdatesEffects', () => {
     });
 
     it('should emit NO_ACTION when a AddToObjectCacheAction without an alternativeLink is dispatched', () => {
-      action = new AddToObjectCacheAction(objectToCache, timeCompleted, msToLive, requestUUID, undefined);
+      action = new AddToObjectCacheAction(
+        objectToCache,
+        timeCompleted,
+        msToLive,
+        requestUUID,
+        undefined,
+      );
       actions = hot('--a-', { a: action });
       const expected = cold('--b-', { b: new NoOpAction() });
       expect(indexEffects.addAlternativeObjectLink$).toBeObservable(expected);
     });
 
-    it('should emit NO_ACTION when a AddToObjectCacheAction with an alternativeLink that\'s the same as the objectToCache\'s selfLink is dispatched', () => {
-      action = new AddToObjectCacheAction(objectToCache, timeCompleted, msToLive, requestUUID, objectToCache._links.self.href);
+    it("should emit NO_ACTION when a AddToObjectCacheAction with an alternativeLink that's the same as the objectToCache's selfLink is dispatched", () => {
+      action = new AddToObjectCacheAction(
+        objectToCache,
+        timeCompleted,
+        msToLive,
+        requestUUID,
+        objectToCache._links.self.href,
+      );
       actions = hot('--a-', { a: action });
       const expected = cold('--b-', { b: new NoOpAction() });
       expect(indexEffects.addAlternativeObjectLink$).toBeObservable(expected);

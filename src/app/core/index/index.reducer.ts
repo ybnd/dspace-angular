@@ -18,7 +18,7 @@ export interface IndexState {
  * The state that contains all indices
  */
 export type MetaIndexState = {
-  [name in IndexName]: IndexState
+  [name in IndexName]: IndexState;
 };
 
 // Object.create(null) ensures the object has no default js properties (e.g. `__proto__`)
@@ -34,19 +34,27 @@ const initialState: MetaIndexState = Object.create(null);
  * @return MetaIndexState
  *    the new state
  */
-export function indexReducer(state = initialState, action: IndexAction): MetaIndexState {
+export function indexReducer(
+  state = initialState,
+  action: IndexAction,
+): MetaIndexState {
   switch (action.type) {
-
     case IndexActionTypes.ADD: {
       return addToIndex(state, action as AddToIndexAction);
     }
 
     case IndexActionTypes.REMOVE_BY_VALUE: {
-      return removeFromIndexByValue(state, action as RemoveFromIndexByValueAction);
+      return removeFromIndexByValue(
+        state,
+        action as RemoveFromIndexByValueAction,
+      );
     }
 
     case IndexActionTypes.REMOVE_BY_SUBSTRING: {
-      return removeFromIndexBySubstring(state, action as RemoveFromIndexBySubstringAction);
+      return removeFromIndexBySubstring(
+        state,
+        action as RemoveFromIndexBySubstringAction,
+      );
     }
 
     default: {
@@ -65,7 +73,10 @@ export function indexReducer(state = initialState, action: IndexAction): MetaInd
  * @return MetaIndexState
  *    the new state
  */
-function addToIndex(state: MetaIndexState, action: AddToIndexAction): MetaIndexState {
+function addToIndex(
+  state: MetaIndexState,
+  action: AddToIndexAction,
+): MetaIndexState {
   const subState = state[action.payload.name];
   const newSubState = Object.assign({}, subState, {
     [action.payload.key]: action.payload.value,
@@ -86,7 +97,10 @@ function addToIndex(state: MetaIndexState, action: AddToIndexAction): MetaIndexS
  * @return MetaIndexState
  *    the new state
  */
-function removeFromIndexByValue(state: MetaIndexState, action: RemoveFromIndexByValueAction): MetaIndexState {
+function removeFromIndexByValue(
+  state: MetaIndexState,
+  action: RemoveFromIndexByValueAction,
+): MetaIndexState {
   const subState = state[action.payload.name];
   const newSubState = Object.create(null);
   for (const value in subState) {
@@ -109,7 +123,10 @@ function removeFromIndexByValue(state: MetaIndexState, action: RemoveFromIndexBy
  * @return MetaIndexState
  *    the new state
  */
-function removeFromIndexBySubstring(state: MetaIndexState, action: RemoveFromIndexByValueAction | RemoveFromIndexBySubstringAction): MetaIndexState {
+function removeFromIndexBySubstring(
+  state: MetaIndexState,
+  action: RemoveFromIndexByValueAction | RemoveFromIndexBySubstringAction,
+): MetaIndexState {
   const subState = state[action.payload.name];
   const newSubState = Object.create(null);
   for (const value in subState) {

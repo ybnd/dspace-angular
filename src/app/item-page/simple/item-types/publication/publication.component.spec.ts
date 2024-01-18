@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -13,14 +10,8 @@ import {
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  Observable,
-  of,
-} from 'rxjs';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
 
 import { BrowseDefinitionDataService } from '../../../../core/browse/browse-definition-data.service';
 import { RemoteDataBuildService } from '../../../../core/cache/builders/remote-data-build.service';
@@ -38,7 +29,7 @@ import { RouteService } from '../../../../core/services/route.service';
 import { Bitstream } from '../../../../core/shared/bitstream.model';
 import { HALEndpointService } from '../../../../core/shared/hal-endpoint.service';
 import { Item } from '../../../../core/shared/item.model';
-import { MetadataMap  } from '../../../../core/shared/metadata.models';
+import { MetadataMap } from '../../../../core/shared/metadata.models';
 import { SearchService } from '../../../../core/shared/search/search.service';
 import { UUIDService } from '../../../../core/shared/uuid.service';
 import { WorkspaceitemDataService } from '../../../../core/submission/workspaceitem-data.service';
@@ -88,7 +79,11 @@ describe('PublicationComponent', () => {
         }),
         RouterTestingModule,
       ],
-      declarations: [PublicationComponent, GenericItemPageFieldComponent, TruncatePipe],
+      declarations: [
+        PublicationComponent,
+        GenericItemPageFieldComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: ItemDataService, useValue: {} },
         { provide: TruncatableService, useValue: {} },
@@ -109,7 +104,10 @@ describe('PublicationComponent', () => {
         { provide: WorkspaceitemDataService, useValue: {} },
         { provide: SearchService, useValue: {} },
         { provide: RouteService, useValue: mockRouteService },
-        { provide: BrowseDefinitionDataService, useValue: BrowseDefinitionDataServiceStub },
+        {
+          provide: BrowseDefinitionDataService,
+          useValue: BrowseDefinitionDataServiceStub,
+        },
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
@@ -128,38 +126,49 @@ describe('PublicationComponent', () => {
     }));
 
     it('should contain a component to display the date', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-date-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-date-field'),
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should not contain a metadata only author field', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-author-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-author-field'),
+      );
       expect(fields.length).toBe(0);
     });
 
     it('should contain a mixed metadata and relationship field for authors', () => {
-      const fields = fixture.debugElement.queryAll(By.css('.ds-item-page-mixed-author-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('.ds-item-page-mixed-author-field'),
+      );
       expect(fields.length).toBe(1);
     });
 
     it('should contain a component to display the abstract', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-abstract-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-abstract-field'),
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should contain a component to display the uri', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-uri-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-uri-field'),
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should contain a component to display the collections', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-collections'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-collections'),
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
   });
 
   describe('with IIIF viewer', () => {
-
     beforeEach(waitForAsync(() => {
       const iiifEnabledMap: MetadataMap = {
         'dspace.iiif.enabled': [getIIIFEnabled(true)],
@@ -180,11 +189,9 @@ describe('PublicationComponent', () => {
       //tick(10)
       expect(comp.iiifQuery$).toBeFalsy();
     }));
-
   });
 
   describe('with IIIF viewer and search', () => {
-
     const localMockRouteService = {
       getPreviousUrl(): Observable<string> {
         return of('/search?query=test%20query&fakeParam=true');
@@ -195,7 +202,9 @@ describe('PublicationComponent', () => {
         'dspace.iiif.enabled': [getIIIFEnabled(true)],
         'iiif.search.enabled': [getIIIFSearchEnabled(true)],
       };
-      TestBed.overrideProvider(RouteService, { useValue: localMockRouteService });
+      TestBed.overrideProvider(RouteService, {
+        useValue: localMockRouteService,
+      });
       TestBed.compileComponents();
       fixture = TestBed.createComponent(PublicationComponent);
       comp = fixture.componentInstance;
@@ -209,9 +218,12 @@ describe('PublicationComponent', () => {
     });
 
     it('should retrieve the query term for previous route', fakeAsync((): void => {
-      expect(comp.iiifQuery$.subscribe(result => expect(result).toEqual('test query')));
+      expect(
+        comp.iiifQuery$.subscribe((result) =>
+          expect(result).toEqual('test query'),
+        ),
+      );
     }));
-
   });
 
   describe('with IIIF viewer and search but no previous search query', () => {
@@ -225,7 +237,9 @@ describe('PublicationComponent', () => {
         'dspace.iiif.enabled': [getIIIFEnabled(true)],
         'iiif.search.enabled': [getIIIFSearchEnabled(true)],
       };
-      TestBed.overrideProvider(RouteService, { useValue: localMockRouteService });
+      TestBed.overrideProvider(RouteService, {
+        useValue: localMockRouteService,
+      });
       TestBed.compileComponents();
       fixture = TestBed.createComponent(PublicationComponent);
       comp = fixture.componentInstance;
@@ -238,12 +252,11 @@ describe('PublicationComponent', () => {
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
-    it('should not retrieve the query term for previous route', fakeAsync( () => {
+    it('should not retrieve the query term for previous route', fakeAsync(() => {
       let emitted;
-      comp.iiifQuery$.subscribe(result => emitted = result);
+      comp.iiifQuery$.subscribe((result) => (emitted = result));
       tick(10);
       expect(emitted).toBeUndefined();
     }));
-
   });
 });

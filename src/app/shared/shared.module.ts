@@ -1,10 +1,7 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import {
   NgbDropdownModule,
@@ -201,7 +198,10 @@ const MODULES = [
 
 const ROOT_MODULES = [
   TranslateModule.forChild({
-    missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MissingTranslationHelper },
+    missingTranslationHandler: {
+      provide: MissingTranslationHandler,
+      useClass: MissingTranslationHelper,
+    },
     useDefaultLang: true,
   }),
 ];
@@ -393,19 +393,9 @@ const DIRECTIVES = [
 ];
 
 @NgModule({
-  imports: [
-    ...MODULES,
-    ...ROOT_MODULES,
-  ],
-  declarations: [
-    ...PIPES,
-    ...COMPONENTS,
-    ...ENTRY_COMPONENTS,
-    ...DIRECTIVES,
-  ],
-  providers: [
-    ...PROVIDERS,
-  ],
+  imports: [...MODULES, ...ROOT_MODULES],
+  declarations: [...PIPES, ...COMPONENTS, ...ENTRY_COMPONENTS, ...DIRECTIVES],
+  providers: [...PROVIDERS],
   exports: [
     ...MODULES,
     ...PIPES,

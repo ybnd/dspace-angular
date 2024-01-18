@@ -1,7 +1,4 @@
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AuthMethod } from '../../core/auth/models/auth.method';
 import { AuthMethodType } from '../../core/auth/models/auth.method-type';
@@ -18,7 +15,6 @@ export const authMethodsMock: AuthMethod[] = [
 ];
 
 export class AuthServiceStub {
-
   token: AuthTokenInfo = new AuthTokenInfo('token_test');
   impersonating: string;
   private _tokenExpired = false;
@@ -26,7 +22,7 @@ export class AuthServiceStub {
   private redirectUrl;
 
   constructor() {
-    this.token.expires = Date.now() + (1000 * 60 * 60);
+    this.token.expires = Date.now() + 1000 * 60 * 60;
   }
 
   public authenticate(user: string, password: string): Observable<AuthStatus> {
@@ -39,7 +35,7 @@ export class AuthServiceStub {
       return observableOf(authStatus);
     } else {
       console.log('error');
-      throw (new Error('Message Error test'));
+      throw new Error('Message Error test');
     }
   }
 
@@ -47,7 +43,7 @@ export class AuthServiceStub {
     if (token.accessToken === 'token_test') {
       return observableOf(EPersonMock._links.self.href);
     } else {
-      throw (new Error('Message Error test'));
+      throw new Error('Message Error test');
     }
   }
 
@@ -97,7 +93,9 @@ export class AuthServiceStub {
     return observableOf(false);
   }
 
-  public refreshAuthenticationToken(token: AuthTokenInfo): Observable<AuthTokenInfo> {
+  public refreshAuthenticationToken(
+    token: AuthTokenInfo,
+  ): Observable<AuthTokenInfo> {
     return observableOf(this.token);
   }
 

@@ -44,8 +44,8 @@ export interface UUIDThemeConfig extends NamedThemeConfig {
   uuid: string;
 }
 
-export type ThemeConfig
-  = NamedThemeConfig
+export type ThemeConfig =
+  | NamedThemeConfig
   | RegExThemeConfig
   | HandleThemeConfig
   | UUIDThemeConfig;

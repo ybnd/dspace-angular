@@ -1,17 +1,11 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -29,7 +23,6 @@ import { createTestComponent } from '../../testing/utils.test';
 import { LogInContainerComponent } from './log-in-container.component';
 
 describe('LogInContainerComponent', () => {
-
   let component: LogInContainerComponent;
   let fixture: ComponentFixture<LogInContainerComponent>;
 
@@ -52,21 +45,18 @@ describe('LogInContainerComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule,
       ],
-      declarations: [
-        TestComponent,
-      ],
+      declarations: [TestComponent],
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
-        { provide: AuthorizationDataService, useClass: AuthorizationDataServiceStub },
+        {
+          provide: AuthorizationDataService,
+          useClass: AuthorizationDataServiceStub,
+        },
         { provide: HardRedirectService, useValue: hardRedirectService },
         LogInContainerComponent,
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-      ],
-    })
-      .compileComponents();
-
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   describe('', () => {
@@ -77,20 +67,23 @@ describe('LogInContainerComponent', () => {
     beforeEach(() => {
       const html = `<ds-log-in-container [authMethod]="authMethod"> </ds-log-in-container>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
-
     });
 
     afterEach(() => {
       testFixture.destroy();
     });
 
-    it('should create LogInContainerComponent', inject([LogInContainerComponent], (app: LogInContainerComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create LogInContainerComponent', inject(
+      [LogInContainerComponent],
+      (app: LogInContainerComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -109,16 +102,12 @@ describe('LogInContainerComponent', () => {
     });
 
     it('should inject component properly', () => {
-
       component.ngOnInit();
       fixture.detectChanges();
 
       expect(component.getAuthMethodContent).toHaveBeenCalled();
-
     });
-
   });
-
 });
 
 // declare a test component
@@ -127,8 +116,6 @@ describe('LogInContainerComponent', () => {
   template: ``,
 })
 class TestComponent {
-
   isStandalonePage = true;
   authMethod = new AuthMethod(AuthMethodType.Password, 0);
-
 }

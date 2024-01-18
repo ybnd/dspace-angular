@@ -18,15 +18,13 @@ import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
  */
 @Injectable()
 export class QualityAssuranceSourceService {
-
   /**
    * Initialize the service variables.
    * @param {QualityAssuranceSourceDataService} qualityAssuranceSourceRestService
    */
   constructor(
     private qualityAssuranceSourceRestService: QualityAssuranceSourceDataService,
-  ) {
-  }
+  ) {}
 
   /**
    * Return the list of Quality Assurance source managing pagination and errors.
@@ -38,7 +36,10 @@ export class QualityAssuranceSourceService {
    * @return Observable<PaginatedList<QualityAssuranceSourceObject>>
    *    The list of Quality Assurance source.
    */
-  public getSources(elementsPerPage, currentPage): Observable<PaginatedList<QualityAssuranceSourceObject>> {
+  public getSources(
+    elementsPerPage,
+    currentPage,
+  ): Observable<PaginatedList<QualityAssuranceSourceObject>> {
     const sortOptions = new SortOptions('name', SortDirection.ASC);
 
     const findListOptions: FindListOptions = {
@@ -47,15 +48,19 @@ export class QualityAssuranceSourceService {
       sort: sortOptions,
     };
 
-    return this.qualityAssuranceSourceRestService.getSources(findListOptions).pipe(
-      getFirstCompletedRemoteData(),
-      map((rd: RemoteData<PaginatedList<QualityAssuranceSourceObject>>) => {
-        if (rd.hasSucceeded) {
-          return rd.payload;
-        } else {
-          throw new Error('Can\'t retrieve Quality Assurance source from the Broker source REST service');
-        }
-      }),
-    );
+    return this.qualityAssuranceSourceRestService
+      .getSources(findListOptions)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((rd: RemoteData<PaginatedList<QualityAssuranceSourceObject>>) => {
+          if (rd.hasSucceeded) {
+            return rd.payload;
+          } else {
+            throw new Error(
+              "Can't retrieve Quality Assurance source from the Broker source REST service",
+            );
+          }
+        }),
+      );
   }
 }

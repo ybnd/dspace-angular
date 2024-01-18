@@ -1,11 +1,5 @@
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { Observable, of as observableOf } from 'rxjs';
 
 import {
   buildPaginatedList,
@@ -37,7 +31,10 @@ export const hasClass = (element: any, className: string): boolean => {
  * @param type
  *    the type of the component to instantiate
  */
-export const createTestComponent = <T>(html: string, type: new (...args: any[]) => T ): ComponentFixture<T> => {
+export const createTestComponent = <T>(
+  html: string,
+  type: new (...args: any[]) => T,
+): ComponentFixture<T> => {
   TestBed.overrideComponent(type, {
     set: { template: html },
   });
@@ -92,7 +89,11 @@ export function spyOnExported<T>(target: T, prop: keyof T): jasmine.Spy {
  * @param statusCode
  * @param errorMessage
  */
-export function createRequestEntry$(unCacheableObject?: UnCacheableObject, statusCode = 200, errorMessage?: string): Observable<RequestEntry> {
+export function createRequestEntry$(
+  unCacheableObject?: UnCacheableObject,
+  statusCode = 200,
+  errorMessage?: string,
+): Observable<RequestEntry> {
   return observableOf({
     request: undefined,
     state: RequestEntryState.Success,
@@ -115,6 +116,9 @@ export function createRequestEntry$(unCacheableObject?: UnCacheableObject, statu
  * @param spyMethod     The method that got spied on
  * @param argumentIndex The index of the argument, only necessary if the spy method contains more than one parameter
  */
-export function getFirstUsedArgumentOfSpyMethod(spyMethod: jasmine.Spy, argumentIndex: number = 0): any {
+export function getFirstUsedArgumentOfSpyMethod(
+  spyMethod: jasmine.Spy,
+  argumentIndex: number = 0,
+): any {
   return spyMethod.calls.argsFor(0)[argumentIndex];
 }

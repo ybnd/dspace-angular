@@ -1,13 +1,7 @@
 import { DebugElement } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { SherpaDataResponse } from '../../../../shared/mocks/section-sherpa-policies.service.mock';
 import { TranslateLoaderMock } from '../../../../shared/testing/translate-loader.mock';
@@ -29,8 +23,7 @@ describe('MetadataInformationComponent', () => {
         }),
       ],
       declarations: [MetadataInformationComponent],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -48,5 +41,4 @@ describe('MetadataInformationComponent', () => {
   it('should show 4 rows', () => {
     expect(de.queryAll(By.css('.row')).length).toEqual(4);
   });
-
 });

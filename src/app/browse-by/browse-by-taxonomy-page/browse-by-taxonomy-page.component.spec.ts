@@ -1,8 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
@@ -20,7 +17,9 @@ describe('BrowseByTaxonomyPageComponent', () => {
   let detail1: VocabularyEntryDetail;
   let detail2: VocabularyEntryDetail;
 
-  const data = new BehaviorSubject(createDataWithBrowseDefinition(new HierarchicalBrowseDefinition()));
+  const data = new BehaviorSubject(
+    createDataWithBrowseDefinition(new HierarchicalBrowseDefinition()),
+  );
   const activatedRouteStub = {
     data,
   };
@@ -31,15 +30,14 @@ describe('BrowseByTaxonomyPageComponent', () => {
     });
 
     await TestBed.configureTestingModule({
-      imports: [ TranslateModule.forRoot() ],
-      declarations: [ BrowseByTaxonomyPageComponent ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [BrowseByTaxonomyPageComponent],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: ThemeService, useValue: themeService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -63,7 +61,7 @@ describe('BrowseByTaxonomyPageComponent', () => {
     expect(component.selectedItems.length).toBe(1);
     expect(component.selectedItems).toContain(detail1);
     expect(component.selectedItems.length).toBe(1);
-    expect(component.filterValues).toEqual(['HUMANITIES and RELIGION,equals'] );
+    expect(component.filterValues).toEqual(['HUMANITIES and RELIGION,equals']);
   });
 
   it('should handle select event with multiple selected items', () => {
@@ -72,7 +70,10 @@ describe('BrowseByTaxonomyPageComponent', () => {
     expect(component.selectedItems.length).toBe(2);
     expect(component.selectedItems).toContain(detail1, detail2);
     expect(component.selectedItems.length).toBe(2);
-    expect(component.filterValues).toEqual(['HUMANITIES and RELIGION,equals', 'TECHNOLOGY,equals'] );
+    expect(component.filterValues).toEqual([
+      'HUMANITIES and RELIGION,equals',
+      'TECHNOLOGY,equals',
+    ]);
   });
 
   it('should handle deselect event', () => {
@@ -84,7 +85,7 @@ describe('BrowseByTaxonomyPageComponent', () => {
     expect(component.selectedItems.length).toBe(1);
     expect(component.selectedItems).toContain(detail2);
     expect(component.selectedItems.length).toBe(1);
-    expect(component.filterValues).toEqual(['TECHNOLOGY,equals'] );
+    expect(component.filterValues).toEqual(['TECHNOLOGY,equals']);
   });
 
   afterEach(() => {

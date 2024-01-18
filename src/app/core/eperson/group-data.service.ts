@@ -1,15 +1,8 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  createSelector,
-  select,
-  Store,
-} from '@ngrx/store';
+import { createSelector, select, Store } from '@ngrx/store';
 import { Operation } from 'fast-json-patch';
-import {
-  Observable,
-  zip as observableZip,
-} from 'rxjs';
+import { Observable, zip as observableZip } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { getGroupEditRoute } from '../../access-control/access-control-routing-paths';
@@ -25,24 +18,12 @@ import { DSONameService } from '../breadcrumbs/dso-name.service';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
-import {
-  CreateData,
-  CreateDataImpl,
-} from '../data/base/create-data';
+import { CreateData, CreateDataImpl } from '../data/base/create-data';
 import { dataService } from '../data/base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from '../data/base/delete-data';
+import { DeleteData, DeleteDataImpl } from '../data/base/delete-data';
 import { IdentifiableDataService } from '../data/base/identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from '../data/base/patch-data';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../data/base/search-data';
+import { PatchData, PatchDataImpl } from '../data/base/patch-data';
+import { SearchData, SearchDataImpl } from '../data/base/search-data';
 import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
 import { FindListOptions } from '../data/find-list-options.model';
 import { PaginatedList } from '../data/paginated-list.model';
@@ -65,14 +46,24 @@ import { Group } from './models/group.model';
 import { GROUP } from './models/group.resource-type';
 
 const groupRegistryStateSelector = (state: AppState) => state.groupRegistry;
-const editGroupSelector = createSelector(groupRegistryStateSelector, (groupRegistryState: GroupRegistryState) => groupRegistryState.editGroup);
+const editGroupSelector = createSelector(
+  groupRegistryStateSelector,
+  (groupRegistryState: GroupRegistryState) => groupRegistryState.editGroup,
+);
 
 /**
  * Provides methods to retrieve eperson group resources from the REST API & Group related CRUD actions.
  */
 @Injectable()
 @dataService(GROUP)
-export class GroupDataService extends IdentifiableDataService<Group> implements CreateData<Group>, SearchData<Group>, PatchData<Group>, DeleteData<Group> {
+export class GroupDataService
+  extends IdentifiableDataService<Group>
+  implements
+    CreateData<Group>,
+    SearchData<Group>,
+    PatchData<Group>,
+    DeleteData<Group>
+{
   protected browseEndpoint = '';
   public ePersonsEndpoint = 'epersons';
   public subgroupsEndpoint = 'subgroups';
@@ -94,10 +85,43 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
   ) {
     super('groups', requestService, rdbService, objectCache, halService);
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.patchData = new PatchDataImpl<Group>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.patchData = new PatchDataImpl<Group>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -112,18 +136,33 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public searchGroups(query: string, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Group>[]): Observable<RemoteData<PaginatedList<Group>>> {
+  public searchGroups(
+    query: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Group>[]
+  ): Observable<RemoteData<PaginatedList<Group>>> {
     const searchParams = [new RequestParam('query', query)];
     let findListOptions = new FindListOptions();
     if (options) {
       findListOptions = Object.assign(new FindListOptions(), options);
     }
     if (findListOptions.searchParams) {
-      findListOptions.searchParams = [...findListOptions.searchParams, ...searchParams];
+      findListOptions.searchParams = [
+        ...findListOptions.searchParams,
+        ...searchParams,
+      ];
     } else {
       findListOptions.searchParams = searchParams;
     }
-    return this.searchBy('byMetadata', findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchBy(
+      'byMetadata',
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -140,18 +179,37 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public searchNonMemberGroups(query: string, group: string, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Group>[]): Observable<RemoteData<PaginatedList<Group>>> {
-    const searchParams = [new RequestParam('query', query), new RequestParam('group', group)];
+  public searchNonMemberGroups(
+    query: string,
+    group: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Group>[]
+  ): Observable<RemoteData<PaginatedList<Group>>> {
+    const searchParams = [
+      new RequestParam('query', query),
+      new RequestParam('group', group),
+    ];
     let findListOptions = new FindListOptions();
     if (options) {
       findListOptions = Object.assign(new FindListOptions(), options);
     }
     if (findListOptions.searchParams) {
-      findListOptions.searchParams = [...findListOptions.searchParams, ...searchParams];
+      findListOptions.searchParams = [
+        ...findListOptions.searchParams,
+        ...searchParams,
+      ];
     } else {
       findListOptions.searchParams = searchParams;
     }
-    return this.searchBy('isNotMemberOf', findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchBy(
+      'isNotMemberOf',
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -160,19 +218,31 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param activeGroup   Group we want to add subgroup to
    * @param subgroup      Group we want to add as subgroup to activeGroup
    */
-  addSubGroupToGroup(activeGroup: Group, subgroup: Group): Observable<RemoteData<Group>> {
+  addSubGroupToGroup(
+    activeGroup: Group,
+    subgroup: Group,
+  ): Observable<RemoteData<Group>> {
     const requestId = this.requestService.generateRequestId();
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'text/uri-list');
     options.headers = headers;
-    const postRequest = new PostRequest(requestId, activeGroup.self + '/' + this.subgroupsEndpoint, subgroup.self, options);
+    const postRequest = new PostRequest(
+      requestId,
+      activeGroup.self + '/' + this.subgroupsEndpoint,
+      subgroup.self,
+      options,
+    );
     this.requestService.send(postRequest);
 
-    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () => observableZip(
-      this.invalidateByHref(activeGroup._links.self.href),
-      this.requestService.setStaleByHrefSubstring(activeGroup._links.subgroups.href).pipe(take(1)),
-    ));
+    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () =>
+      observableZip(
+        this.invalidateByHref(activeGroup._links.self.href),
+        this.requestService
+          .setStaleByHrefSubstring(activeGroup._links.subgroups.href)
+          .pipe(take(1)),
+      ),
+    );
   }
 
   /**
@@ -182,15 +252,25 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param activeGroup   Group we want to delete subgroup from
    * @param subgroup      Subgroup we want to delete from activeGroup
    */
-  deleteSubGroupFromGroup(activeGroup: Group, subgroup: Group): Observable<RemoteData<NoContent>> {
+  deleteSubGroupFromGroup(
+    activeGroup: Group,
+    subgroup: Group,
+  ): Observable<RemoteData<NoContent>> {
     const requestId = this.requestService.generateRequestId();
-    const deleteRequest = new DeleteRequest(requestId, activeGroup.self + '/' + this.subgroupsEndpoint + '/' + subgroup.id);
+    const deleteRequest = new DeleteRequest(
+      requestId,
+      activeGroup.self + '/' + this.subgroupsEndpoint + '/' + subgroup.id,
+    );
     this.requestService.send(deleteRequest);
 
-    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () => observableZip(
-      this.invalidateByHref(activeGroup._links.self.href),
-      this.requestService.setStaleByHrefSubstring(activeGroup._links.subgroups.href).pipe(take(1)),
-    ));
+    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () =>
+      observableZip(
+        this.invalidateByHref(activeGroup._links.self.href),
+        this.requestService
+          .setStaleByHrefSubstring(activeGroup._links.subgroups.href)
+          .pipe(take(1)),
+      ),
+    );
   }
 
   /**
@@ -199,20 +279,34 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param activeGroup   Group we want to add member to
    * @param ePerson       EPerson we want to add as member to given activeGroup
    */
-  addMemberToGroup(activeGroup: Group, ePerson: EPerson): Observable<RemoteData<Group>> {
+  addMemberToGroup(
+    activeGroup: Group,
+    ePerson: EPerson,
+  ): Observable<RemoteData<Group>> {
     const requestId = this.requestService.generateRequestId();
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'text/uri-list');
     options.headers = headers;
-    const postRequest = new PostRequest(requestId, activeGroup.self + '/' + this.ePersonsEndpoint, ePerson.self, options);
+    const postRequest = new PostRequest(
+      requestId,
+      activeGroup.self + '/' + this.ePersonsEndpoint,
+      ePerson.self,
+      options,
+    );
     this.requestService.send(postRequest);
 
-    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () => observableZip(
-      this.invalidateByHref(ePerson._links.self.href),
-      this.requestService.setStaleByHrefSubstring(ePerson._links.groups.href).pipe(take(1)),
-      this.requestService.setStaleByHrefSubstring(activeGroup._links.epersons.href).pipe(take(1)),
-    ));
+    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () =>
+      observableZip(
+        this.invalidateByHref(ePerson._links.self.href),
+        this.requestService
+          .setStaleByHrefSubstring(ePerson._links.groups.href)
+          .pipe(take(1)),
+        this.requestService
+          .setStaleByHrefSubstring(activeGroup._links.epersons.href)
+          .pipe(take(1)),
+      ),
+    );
   }
 
   /**
@@ -221,16 +315,28 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param activeGroup   Group we want to delete member from
    * @param ePerson       EPerson we want to delete from members of given activeGroup
    */
-  deleteMemberFromGroup(activeGroup: Group, ePerson: EPerson): Observable<RemoteData<NoContent>> {
+  deleteMemberFromGroup(
+    activeGroup: Group,
+    ePerson: EPerson,
+  ): Observable<RemoteData<NoContent>> {
     const requestId = this.requestService.generateRequestId();
-    const deleteRequest = new DeleteRequest(requestId, activeGroup.self + '/' + this.ePersonsEndpoint + '/' + ePerson.id);
+    const deleteRequest = new DeleteRequest(
+      requestId,
+      activeGroup.self + '/' + this.ePersonsEndpoint + '/' + ePerson.id,
+    );
     this.requestService.send(deleteRequest);
 
-    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () => observableZip(
-      this.invalidateByHref(ePerson._links.self.href),
-      this.requestService.setStaleByHrefSubstring(ePerson._links.groups.href).pipe(take(1)),
-      this.requestService.setStaleByHrefSubstring(activeGroup._links.epersons.href).pipe(take(1)),
-    ));
+    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () =>
+      observableZip(
+        this.invalidateByHref(ePerson._links.self.href),
+        this.requestService
+          .setStaleByHrefSubstring(ePerson._links.groups.href)
+          .pipe(take(1)),
+        this.requestService
+          .setStaleByHrefSubstring(activeGroup._links.epersons.href)
+          .pipe(take(1)),
+      ),
+    );
   }
 
   /**
@@ -259,9 +365,11 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * Method that clears a cached groups request
    */
   public clearGroupsRequests(): void {
-    this.getBrowseEndpoint().pipe(take(1)).subscribe((link: string) => {
-      this.requestService.removeByHrefSubstring(link);
-    });
+    this.getBrowseEndpoint()
+      .pipe(take(1))
+      .subscribe((link: string) => {
+        this.requestService.removeByHrefSubstring(link);
+      });
   }
 
   /**
@@ -280,13 +388,15 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param newGroup New group to edit
    */
   public startEditingNewGroup(newGroup: Group): string {
-    this.getActiveGroup().pipe(take(1)).subscribe((activeGroup: Group) => {
-      if (newGroup === activeGroup) {
-        this.cancelEditGroup();
-      } else {
-        this.editGroup(newGroup);
-      }
-    });
+    this.getActiveGroup()
+      .pipe(take(1))
+      .subscribe((activeGroup: Group) => {
+        if (newGroup === activeGroup) {
+          this.cancelEditGroup();
+        } else {
+          this.editGroup(newGroup);
+        }
+      });
     return this.getGroupEditPageRouterLinkWithID(newGroup.id);
   }
 
@@ -312,7 +422,9 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    */
   public getUUIDFromString(stringWithUUID: string): string {
     let foundUUID = '';
-    const uuidMatches = stringWithUUID.match(/[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/g);
+    const uuidMatches = stringWithUUID.match(
+      /[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/g,
+    );
     if (uuidMatches != null) {
       foundUUID = uuidMatches[0];
     }
@@ -326,8 +438,11 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param role        The name of the role for which to create a group
    * @param link        The REST endpoint to create the group
    */
-  createComcolGroup(dso: Community | Collection, role: string, link: string): Observable<RemoteData<Group>> {
-
+  createComcolGroup(
+    dso: Community | Collection,
+    role: string,
+    link: string,
+  ): Observable<RemoteData<Group>> {
     const requestId = this.requestService.generateRequestId();
     const group = Object.assign(new Group(), {
       metadata: {
@@ -340,15 +455,12 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
     });
 
     this.requestService.send(
-      new CreateRequest(
-        requestId,
-        link,
-        JSON.stringify(group),
-      ));
-
-    const responseRD$ = this.rdbService.buildFromRequestUUID<Group>(requestId).pipe(
-      getFirstCompletedRemoteData(),
+      new CreateRequest(requestId, link, JSON.stringify(group)),
     );
+
+    const responseRD$ = this.rdbService
+      .buildFromRequestUUID<Group>(requestId)
+      .pipe(getFirstCompletedRemoteData());
 
     responseRD$.subscribe((responseRD: RemoteData<Group>) => {
       if (responseRD.hasSucceeded) {
@@ -365,18 +477,13 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
    * @param link        The REST endpoint to delete the group
    */
   deleteComcolGroup(link: string): Observable<RemoteData<NoContent>> {
-
     const requestId = this.requestService.generateRequestId();
 
-    this.requestService.send(
-      new DeleteRequest(
-        requestId,
-        link,
-      ));
+    this.requestService.send(new DeleteRequest(requestId, link));
 
-    const responseRD$ = this.rdbService.buildFromRequestUUID(requestId).pipe(
-      getFirstCompletedRemoteData(),
-    );
+    const responseRD$ = this.rdbService
+      .buildFromRequestUUID(requestId)
+      .pipe(getFirstCompletedRemoteData());
 
     responseRD$.subscribe((responseRD: RemoteData<NoContent>) => {
       if (responseRD.hasSucceeded) {
@@ -387,14 +494,27 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
     return responseRD$;
   }
 
-
-  public create(object: Group, ...params: RequestParam[]): Observable<RemoteData<Group>> {
+  public create(
+    object: Group,
+    ...params: RequestParam[]
+  ): Observable<RemoteData<Group>> {
     return this.createData.create(object, ...params);
   }
 
-
-  searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<Group>[]): Observable<RemoteData<PaginatedList<Group>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<Group>[]
+  ): Observable<RemoteData<PaginatedList<Group>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   public createPatchFromCache(object: Group): Observable<Operation[]> {
@@ -413,11 +533,17 @@ export class GroupDataService extends IdentifiableDataService<Group> implements 
     this.patchData.commitUpdates(method);
   }
 
-  delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
 }

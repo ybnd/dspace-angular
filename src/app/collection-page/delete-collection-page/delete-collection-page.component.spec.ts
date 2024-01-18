@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,12 +20,20 @@ describe('DeleteCollectionPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [DeleteCollectionPageComponent],
       providers: [
         { provide: DSONameService, useValue: new DSONameServiceMock() },
         { provide: CollectionDataService, useValue: {} },
-        { provide: ActivatedRoute, useValue: { data: observableOf({ dso: { payload: {} } }) } },
+        {
+          provide: ActivatedRoute,
+          useValue: { data: observableOf({ dso: { payload: {} } }) },
+        },
         { provide: NotificationsService, useValue: {} },
         { provide: RequestService, useValue: {} },
       ],

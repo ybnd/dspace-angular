@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -70,13 +67,17 @@ describe('ItemMyDSpaceResultListElementComponent', () => {
         { provide: APP_CONFIG, useValue: environment },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemSearchResultListElementSubmissionComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemSearchResultListElementSubmissionComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(ItemSearchResultListElementSubmissionComponent);
+    fixture = TestBed.createComponent(
+      ItemSearchResultListElementSubmissionComponent,
+    );
     component = fixture.componentInstance;
   }));
 
@@ -93,11 +94,14 @@ describe('ItemMyDSpaceResultListElementComponent', () => {
     spyOn(component.reloadedObject, 'emit').and.callThrough();
     const actionPayload: any = { reloadedObject: {} };
 
-    const actionsComponent = fixture.debugElement.query(By.css('ds-item-actions'));
+    const actionsComponent = fixture.debugElement.query(
+      By.css('ds-item-actions'),
+    );
     actionsComponent.triggerEventHandler('processCompleted', actionPayload);
     tick();
 
-    expect(component.reloadedObject.emit).toHaveBeenCalledWith(actionPayload.reloadedObject);
-
+    expect(component.reloadedObject.emit).toHaveBeenCalledWith(
+      actionPayload.reloadedObject,
+    );
   }));
 });

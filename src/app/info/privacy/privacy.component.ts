@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
 /**
  * Component displaying the Privacy Statement
  */
-export class PrivacyComponent {
-}
+export class PrivacyComponent {}

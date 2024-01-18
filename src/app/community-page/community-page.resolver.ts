@@ -36,8 +36,7 @@ export class CommunityPageResolver implements Resolve<RemoteData<Community>> {
   constructor(
     private communityService: CommunityDataService,
     private store: Store<any>,
-  ) {
-  }
+  ) {}
 
   /**
    * Method for resolving a community based on the parameters in the current route
@@ -46,15 +45,13 @@ export class CommunityPageResolver implements Resolve<RemoteData<Community>> {
    * @returns Observable<<RemoteData<Community>> Emits the found community based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Community>> {
-    const communityRD$ = this.communityService.findById(
-      route.params.id,
-      true,
-      false,
-      ...COMMUNITY_PAGE_LINKS_TO_FOLLOW,
-    ).pipe(
-      getFirstCompletedRemoteData(),
-    );
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<Community>> {
+    const communityRD$ = this.communityService
+      .findById(route.params.id, true, false, ...COMMUNITY_PAGE_LINKS_TO_FOLLOW)
+      .pipe(getFirstCompletedRemoteData());
 
     communityRD$.subscribe((communityRD: RemoteData<Community>) => {
       this.store.dispatch(new ResolvedAction(state.url, communityRD.payload));

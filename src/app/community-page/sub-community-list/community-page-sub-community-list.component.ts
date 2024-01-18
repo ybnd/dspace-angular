@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
@@ -34,7 +29,9 @@ import { PaginationComponentOptions } from '../../shared/pagination/pagination-c
 /**
  * Component to render the sub-communities of a Community
  */
-export class CommunityPageSubCommunityListComponent implements OnInit, OnDestroy {
+export class CommunityPageSubCommunityListComponent
+  implements OnInit, OnDestroy
+{
   @Input() community: Community;
 
   /**
@@ -61,7 +58,8 @@ export class CommunityPageSubCommunityListComponent implements OnInit, OnDestroy
   /**
    * A list of remote data objects of communities' collections
    */
-  subCommunitiesRDObs: BehaviorSubject<RemoteData<PaginatedList<Community>>> = new BehaviorSubject<RemoteData<PaginatedList<Community>>>({} as any);
+  subCommunitiesRDObs: BehaviorSubject<RemoteData<PaginatedList<Community>>> =
+    new BehaviorSubject<RemoteData<PaginatedList<Community>>>({} as any);
 
   subscriptions: Subscription[] = [];
 
@@ -69,8 +67,7 @@ export class CommunityPageSubCommunityListComponent implements OnInit, OnDestroy
     protected cds: CommunityDataService,
     protected paginationService: PaginationService,
     protected route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.config = new PaginationComponentOptions();
@@ -78,10 +75,17 @@ export class CommunityPageSubCommunityListComponent implements OnInit, OnDestroy
     if (hasValue(this.pageSize)) {
       this.config.pageSize = this.pageSize;
     } else {
-      this.config.pageSize = this.route.snapshot.queryParams[this.pageId + '.rpp'] ?? this.config.pageSize;
+      this.config.pageSize =
+        this.route.snapshot.queryParams[this.pageId + '.rpp'] ??
+        this.config.pageSize;
     }
-    this.config.currentPage = this.route.snapshot.queryParams[this.pageId + '.page'] ?? 1;
-    this.sortConfig = new SortOptions('dc.title', SortDirection[this.route.snapshot.queryParams[this.pageId + '.sd']] ?? SortDirection.ASC);
+    this.config.currentPage =
+      this.route.snapshot.queryParams[this.pageId + '.page'] ?? 1;
+    this.sortConfig = new SortOptions(
+      'dc.title',
+      SortDirection[this.route.snapshot.queryParams[this.pageId + '.sd']] ??
+        SortDirection.ASC,
+    );
     this.initPage();
   }
 
@@ -89,25 +93,39 @@ export class CommunityPageSubCommunityListComponent implements OnInit, OnDestroy
    * Update the list of sub-communities
    */
   initPage() {
-    const pagination$ = this.paginationService.getCurrentPagination(this.config.id, this.config);
-    const sort$ = this.paginationService.getCurrentSort(this.config.id, this.sortConfig);
+    const pagination$ = this.paginationService.getCurrentPagination(
+      this.config.id,
+      this.config,
+    );
+    const sort$ = this.paginationService.getCurrentSort(
+      this.config.id,
+      this.sortConfig,
+    );
 
-    this.subscriptions.push(observableCombineLatest([pagination$, sort$]).pipe(
-      switchMap(([currentPagination, currentSort]) => {
-        return     this.cds.findByParent(this.community.id, {
-          currentPage: currentPagination.currentPage,
-          elementsPerPage: currentPagination.pageSize,
-          sort: { field: currentSort.field, direction: currentSort.direction },
-        });
-      }),
-    ).subscribe((results) => {
-      this.subCommunitiesRDObs.next(results);
-    }));
+    this.subscriptions.push(
+      observableCombineLatest([pagination$, sort$])
+        .pipe(
+          switchMap(([currentPagination, currentSort]) => {
+            return this.cds.findByParent(this.community.id, {
+              currentPage: currentPagination.currentPage,
+              elementsPerPage: currentPagination.pageSize,
+              sort: {
+                field: currentSort.field,
+                direction: currentSort.direction,
+              },
+            });
+          }),
+        )
+        .subscribe((results) => {
+          this.subCommunitiesRDObs.next(results);
+        }),
+    );
   }
 
   ngOnDestroy(): void {
     this.paginationService.clearPagination(this.config?.id);
-    this.subscriptions.map((subscription: Subscription) => subscription.unsubscribe());
+    this.subscriptions.map((subscription: Subscription) =>
+      subscription.unsubscribe(),
+    );
   }
-
 }

@@ -1,16 +1,14 @@
-import {
-  Component,
-  forwardRef,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { InputSuggestionsComponent } from '../../../../../../shared/input-suggestions/input-suggestions.component';
 
 @Component({
   selector: 'ds-org-unit-input-suggestions',
-  styleUrls: ['./org-unit-input-suggestions.component.scss', './../../../../../../shared/input-suggestions/input-suggestions.component.scss'],
+  styleUrls: [
+    './org-unit-input-suggestions.component.scss',
+    './../../../../../../shared/input-suggestions/input-suggestions.component.scss',
+  ],
   templateUrl: './org-unit-input-suggestions.component.html',
   providers: [
     {
@@ -26,7 +24,10 @@ import { InputSuggestionsComponent } from '../../../../../../shared/input-sugges
 /**
  * Component representing a form with a autocomplete functionality
  */
-export class OrgUnitInputSuggestionsComponent extends InputSuggestionsComponent implements OnInit {
+export class OrgUnitInputSuggestionsComponent
+  extends InputSuggestionsComponent
+  implements OnInit
+{
   /**
    * The suggestions that should be shown
    */

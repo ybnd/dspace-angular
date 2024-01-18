@@ -1,7 +1,4 @@
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AuthStatus } from '../../core/auth/models/auth-status.model';
 import { AuthTokenInfo } from '../../core/auth/models/auth-token-info.model';
@@ -16,7 +13,11 @@ export class AuthRequestServiceStub {
   protected mockTokenInfo = new AuthTokenInfo('test_token');
   protected mockShortLivedToken = 'test-shortlived-token';
 
-  public postToEndpoint(method: string, body: any, options?: HttpOptions): Observable<any> {
+  public postToEndpoint(
+    method: string,
+    body: any,
+    options?: HttpOptions,
+  ): Observable<any> {
     const authStatusStub: AuthStatus = new AuthStatus();
     if (isNotEmpty(body)) {
       const parsedBody = this.parseQueryString(body);
@@ -60,7 +61,9 @@ export class AuthRequestServiceStub {
         break;
       }
       case 'status': {
-        const token = ((options.headers as any).lazyUpdate[1]) ? (options.headers as any).lazyUpdate[1].value : null;
+        const token = (options.headers as any).lazyUpdate[1]
+          ? (options.headers as any).lazyUpdate[1].value
+          : null;
         if (this.validateToken(token)) {
           authStatusStub.authenticated = true;
           authStatusStub.token = this.mockTokenInfo;
@@ -85,7 +88,7 @@ export class AuthRequestServiceStub {
   }
 
   private validateToken(token): boolean {
-    return (token === 'Bearer test_token');
+    return token === 'Bearer test_token';
   }
   private parseQueryString(query): any {
     const obj = Object.create({});

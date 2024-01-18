@@ -1,21 +1,9 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  combineLatest as combineLatestObservable,
-  Observable,
-  of,
-} from 'rxjs';
-import {
-  map,
-  startWith,
-} from 'rxjs/operators';
+import { combineLatest as combineLatestObservable, Observable, of } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 
 import { ThemeConfig } from '../../config/theme.config';
 import { environment } from '../../environments/environment';
@@ -76,17 +64,25 @@ export class RootComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sidebarVisible = this.menuService.isMenuVisibleWithVisibleSections(MenuID.ADMIN);
+    this.sidebarVisible = this.menuService.isMenuVisibleWithVisibleSections(
+      MenuID.ADMIN,
+    );
 
-    this.collapsedSidebarWidth = this.cssService.getVariable('--ds-collapsed-sidebar-width').pipe(hasValueOperator());
-    this.totalSidebarWidth = this.cssService.getVariable('--ds-total-sidebar-width').pipe(hasValueOperator());
+    this.collapsedSidebarWidth = this.cssService
+      .getVariable('--ds-collapsed-sidebar-width')
+      .pipe(hasValueOperator());
+    this.totalSidebarWidth = this.cssService
+      .getVariable('--ds-total-sidebar-width')
+      .pipe(hasValueOperator());
 
     const sidebarCollapsed = this.menuService.isMenuCollapsed(MenuID.ADMIN);
-    this.slideSidebarOver = combineLatestObservable([sidebarCollapsed, this.windowService.isXsOrSm()])
-      .pipe(
-        map(([collapsed, mobile]) => collapsed || mobile),
-        startWith(true),
-      );
+    this.slideSidebarOver = combineLatestObservable([
+      sidebarCollapsed,
+      this.windowService.isXsOrSm(),
+    ]).pipe(
+      map(([collapsed, mobile]) => collapsed || mobile),
+      startWith(true),
+    );
 
     if (this.router.url === getPageInternalServerErrorRoute()) {
       this.shouldShowRouteLoader = false;

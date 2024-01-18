@@ -1,11 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -50,9 +44,11 @@ describe('OrgUnitListElementComponent', () => {
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(OrgUnitListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(OrgUnitListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -67,7 +63,9 @@ describe('OrgUnitListElementComponent', () => {
     });
 
     it(`should contain a OrgUnitListElementComponent`, () => {
-      const orgUnitListElement = fixture.debugElement.query(By.css(`ds-org-unit-search-result-list-element`));
+      const orgUnitListElement = fixture.debugElement.query(
+        By.css(`ds-org-unit-search-result-list-element`),
+      );
       expect(orgUnitListElement).not.toBeNull();
     });
   });

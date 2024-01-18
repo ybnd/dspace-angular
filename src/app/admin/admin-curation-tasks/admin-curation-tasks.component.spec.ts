@@ -1,9 +1,5 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { AdminCurationTasksComponent } from './admin-curation-tasks.component';
@@ -27,7 +23,9 @@ describe('AdminCurationTasksComponent', () => {
   describe('init', () => {
     it('should initialise the comp', () => {
       expect(comp).toBeDefined();
-      expect(fixture.debugElement.nativeElement.innerHTML).toContain('ds-curation-form');
+      expect(fixture.debugElement.nativeElement.innerHTML).toContain(
+        'ds-curation-form',
+      );
     });
   });
 });

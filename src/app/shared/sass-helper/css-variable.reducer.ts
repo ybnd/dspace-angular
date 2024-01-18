@@ -15,15 +15,26 @@ const initialState: CSSVariablesState = Object.create({});
  * @param state The current state of the store
  * @param action The action to apply onto the current state of the store
  */
-export function cssVariablesReducer(state = initialState, action: CSSVariableAction): CSSVariablesState {
+export function cssVariablesReducer(
+  state = initialState,
+  action: CSSVariableAction,
+): CSSVariablesState {
   switch (action.type) {
     case CSSVariableActionTypes.ADD: {
       const variable = action.payload;
       return Object.assign({}, state, { [variable.name]: variable.value });
-    } case CSSVariableActionTypes.ADD_ALL: {
+    }
+    case CSSVariableActionTypes.ADD_ALL: {
       const variables = action.payload;
-      return Object.assign({}, state, ...variables.map(({ key, value }: KeyValuePair<string, string>) => {return { [key]: value };}));
-    } case CSSVariableActionTypes.CLEAR: {
+      return Object.assign(
+        {},
+        state,
+        ...variables.map(({ key, value }: KeyValuePair<string, string>) => {
+          return { [key]: value };
+        }),
+      );
+    }
+    case CSSVariableActionTypes.CLEAR: {
       return initialState;
     }
     default: {

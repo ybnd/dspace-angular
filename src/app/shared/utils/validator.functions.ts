@@ -1,7 +1,4 @@
-import {
-  AbstractControl,
-  ValidatorFn,
-} from '@angular/forms';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 import { isNotEmpty } from '../empty.util';
 
@@ -16,6 +13,6 @@ export function inListValidator(list: string[]): ValidatorFn {
     if (isNotEmpty(list)) {
       inList = list.indexOf(control.value) > -1;
     }
-    return (hasValue && inList) ? null : { inList: { value: control.value } };
+    return hasValue && inList ? null : { inList: { value: control.value } };
   };
 }

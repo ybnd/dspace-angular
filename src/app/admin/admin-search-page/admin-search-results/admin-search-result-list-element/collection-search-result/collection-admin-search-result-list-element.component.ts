@@ -8,7 +8,11 @@ import { CollectionSearchResult } from '../../../../../shared/object-collection/
 import { listableObjectComponent } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
 import { SearchResultListElementComponent } from '../../../../../shared/object-list/search-result-list-element/search-result-list-element.component';
 
-@listableObjectComponent(CollectionSearchResult, ViewMode.ListElement, Context.AdminSearch)
+@listableObjectComponent(
+  CollectionSearchResult,
+  ViewMode.ListElement,
+  Context.AdminSearch,
+)
 @Component({
   selector: 'ds-collection-admin-search-result-list-element',
   styleUrls: ['./collection-admin-search-result-list-element.component.scss'],
@@ -17,7 +21,10 @@ import { SearchResultListElementComponent } from '../../../../../shared/object-l
 /**
  * The component for displaying a list element for a collection search result on the admin search page
  */
-export class CollectionAdminSearchResultListElementComponent extends SearchResultListElementComponent<CollectionSearchResult, Collection> {
+export class CollectionAdminSearchResultListElementComponent extends SearchResultListElementComponent<
+  CollectionSearchResult,
+  Collection
+> {
   editPath: string;
 
   ngOnInit() {

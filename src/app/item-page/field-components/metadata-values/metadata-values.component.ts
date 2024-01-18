@@ -6,10 +6,7 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../../../../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../../../../config/app-config.interface';
 import { BrowseDefinition } from '../../../core/shared/browse-definition.model';
 import { MetadataValue } from '../../../core/shared/metadata.models';
 import { VALUE_LIST_BROWSE_DEFINITION } from '../../../core/shared/value-list-browse-definition.resource-type';
@@ -25,11 +22,7 @@ import { hasValue } from '../../../shared/empty.util';
   templateUrl: './metadata-values.component.html',
 })
 export class MetadataValuesComponent implements OnChanges {
-
-  constructor(
-    @Inject(APP_CONFIG) private appConfig: AppConfig,
-  ) {
-  }
+  constructor(@Inject(APP_CONFIG) private appConfig: AppConfig) {}
 
   /**
    * The metadata values to display
@@ -66,7 +59,8 @@ export class MetadataValuesComponent implements OnChanges {
   @Input() browseDefinition?: BrowseDefinition;
 
   ngOnChanges(changes: SimpleChanges): void {
-    this.renderMarkdown = !!this.appConfig.markdown.enabled && this.enableMarkdown;
+    this.renderMarkdown =
+      !!this.appConfig.markdown.enabled && this.enableMarkdown;
   }
 
   /**
@@ -95,7 +89,10 @@ export class MetadataValuesComponent implements OnChanges {
    */
   getQueryParams(value) {
     const queryParams = { startsWith: value };
-    if (this.browseDefinition.getRenderType() === VALUE_LIST_BROWSE_DEFINITION.value) {
+    if (
+      this.browseDefinition.getRenderType() ===
+      VALUE_LIST_BROWSE_DEFINITION.value
+    ) {
       return { value: value };
     }
     return queryParams;

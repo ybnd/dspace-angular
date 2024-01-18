@@ -1,18 +1,8 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { Component, Input } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  of as observableOf,
-} from 'rxjs';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
 
 import {
   ContextHelpDirective,
@@ -40,7 +30,8 @@ class TestComponent {
 
 const messages = {
   lorem: 'lorem ipsum dolor sit amet',
-  linkTest: 'This is text, [this](https://dspace.lyrasis.org) is a link, and [so is this](https://google.com)',
+  linkTest:
+    'This is text, [this](https://dspace.lyrasis.org) is a link, and [so is this](https://google.com)',
 };
 const exampleContextHelp: ContextHelp = {
   id: 'test-tooltip',
@@ -73,7 +64,11 @@ describe('ContextHelpDirective', () => {
         { provide: TranslateService, useValue: translateService },
         { provide: ContextHelpService, useValue: contextHelpService },
       ],
-      declarations: [TestComponent, ContextHelpWrapperComponent, ContextHelpDirective],
+      declarations: [
+        TestComponent,
+        ContextHelpWrapperComponent,
+        ContextHelpDirective,
+      ],
     }).compileComponents();
   }));
 
@@ -83,7 +78,9 @@ describe('ContextHelpDirective', () => {
     shouldShowIcons$ = new BehaviorSubject<boolean>(false);
     contextHelpService.getContextHelp$.and.returnValue(getContextHelp$);
     contextHelpService.shouldShowIcons$.and.returnValue(shouldShowIcons$);
-    translateService.get.and.callFake((content) => observableOf(messages[content]));
+    translateService.get.and.callFake((content) =>
+      observableOf(messages[content]),
+    );
 
     // Set up fixture and component.
     fixture = TestBed.createComponent(TestComponent);

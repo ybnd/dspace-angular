@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of as observableOf } from 'rxjs';
 import { Context } from 'src/app/core/shared/context.model';
@@ -26,7 +19,8 @@ let fixture: ComponentFixture<WorkspaceItemSearchResultDetailElementComponent>;
 
 const compIndex = 1;
 
-const mockResultObject: WorkflowItemSearchResult = new WorkflowItemSearchResult();
+const mockResultObject: WorkflowItemSearchResult =
+  new WorkflowItemSearchResult();
 mockResultObject.hitHighlights = {};
 const linkService = getMockLinkService();
 
@@ -60,7 +54,9 @@ const item = Object.assign(new Item(), {
   },
 });
 const rd = createSuccessfulRemoteDataObject(item);
-mockResultObject.indexableObject = Object.assign(new WorkspaceItem(), { item: observableOf(rd) });
+mockResultObject.indexableObject = Object.assign(new WorkspaceItem(), {
+  item: observableOf(rd),
+});
 
 describe('WorkspaceItemSearchResultDetailElementComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -68,19 +64,23 @@ describe('WorkspaceItemSearchResultDetailElementComponent', () => {
       imports: [NoopAnimationsModule],
       declarations: [WorkspaceItemSearchResultDetailElementComponent],
       providers: [
-        { provide: 'objectElementProvider', useValue: (mockResultObject) },
-        { provide: 'indexElementProvider', useValue: (compIndex) },
+        { provide: 'objectElementProvider', useValue: mockResultObject },
+        { provide: 'indexElementProvider', useValue: compIndex },
         { provide: LinkService, useValue: linkService },
         { provide: DSONameService, useClass: DSONameServiceMock },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(WorkspaceItemSearchResultDetailElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(WorkspaceItemSearchResultDetailElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(WorkspaceItemSearchResultDetailElementComponent);
+    fixture = TestBed.createComponent(
+      WorkspaceItemSearchResultDetailElementComponent,
+    );
     component = fixture.componentInstance;
   }));
 

@@ -1,25 +1,16 @@
 // Import modules
 import { CommonModule } from '@angular/common';
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   ComponentFixtureAutoDetect,
   TestBed,
 } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { Item } from '../../../core/shared/item.model';
@@ -44,11 +35,14 @@ describe('SubscriptionViewComponent', () => {
   let de: DebugElement;
   let modalService;
 
-  const subscriptionServiceStub = jasmine.createSpyObj('SubscriptionsDataService', {
-    getSubscriptionByPersonDSO: observableOf(findByEPersonAndDsoResEmpty),
-    deleteSubscription: createSuccessfulRemoteDataObject$({}),
-    updateSubscription: createSuccessfulRemoteDataObject$({}),
-  });
+  const subscriptionServiceStub = jasmine.createSpyObj(
+    'SubscriptionsDataService',
+    {
+      getSubscriptionByPersonDSO: observableOf(findByEPersonAndDsoResEmpty),
+      deleteSubscription: createSuccessfulRemoteDataObject$({}),
+      updateSubscription: createSuccessfulRemoteDataObject$({}),
+    },
+  );
 
   const mockItem = Object.assign(new Item(), {
     id: 'fake-id',
@@ -78,15 +72,17 @@ describe('SubscriptionViewComponent', () => {
           },
         }),
       ],
-      declarations: [ SubscriptionViewComponent ],
+      declarations: [SubscriptionViewComponent],
       providers: [
         { provide: ComponentFixtureAutoDetect, useValue: true },
         { provide: NotificationsService, useValue: NotificationsServiceStub },
-        { provide: SubscriptionsDataService, useValue: subscriptionServiceStub },
+        {
+          provide: SubscriptionsDataService,
+          useValue: subscriptionServiceStub,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -94,7 +90,10 @@ describe('SubscriptionViewComponent', () => {
     component = fixture.componentInstance;
     component.eperson = 'testid123';
     component.dso = mockItem;
-    component.subscription = Object.assign(new Subscription(), subscriptionMock);
+    component.subscription = Object.assign(
+      new Subscription(),
+      subscriptionMock,
+    );
     de = fixture.debugElement;
     fixture.detectChanges();
   });
@@ -139,5 +138,4 @@ describe('SubscriptionViewComponent', () => {
 
     expect(deleteSpy).toHaveBeenCalled();
   });
-
 });

@@ -1,13 +1,7 @@
-import {
-  Component,
-  Injector,
-} from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  of,
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { RemoteData } from '../../../../core/data/remote-data';
 import { RequestService } from '../../../../core/data/request.service';
@@ -35,13 +29,22 @@ export class ClaimedTaskActionsApproveComponent extends ClaimedTaskActionsAbstra
    */
   option = WORKFLOW_TASK_OPTION_APPROVE;
 
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
-    super(injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+  ) {
+    super(
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService,
+    );
   }
 
   reloadObjectExecution(): Observable<RemoteData<DSpaceObject> | DSpaceObject> {
@@ -49,10 +52,13 @@ export class ClaimedTaskActionsApproveComponent extends ClaimedTaskActionsAbstra
   }
 
   convertReloadedObject(dso: DSpaceObject): DSpaceObject {
-    const reloadedObject = Object.assign(new ClaimedApprovedTaskSearchResult(), dso, {
-      indexableObject: dso,
-    });
+    const reloadedObject = Object.assign(
+      new ClaimedApprovedTaskSearchResult(),
+      dso,
+      {
+        indexableObject: dso,
+      },
+    );
     return reloadedObject;
   }
-
 }

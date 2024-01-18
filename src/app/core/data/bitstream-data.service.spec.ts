@@ -1,8 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { getMockRemoteDataBuildService } from '../../shared/mocks/remote-data-build.service.mock';
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
@@ -20,10 +17,7 @@ import { testSearchDataImplementation } from './base/search-data.spec';
 import { BitstreamDataService } from './bitstream-data.service';
 import { BitstreamFormatDataService } from './bitstream-format-data.service';
 import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
-import {
-  PatchRequest,
-  PutRequest,
-} from './request.models';
+import { PatchRequest, PutRequest } from './request.models';
 import { RequestService } from './request.service';
 import objectContaining = jasmine.objectContaining;
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
@@ -76,7 +70,10 @@ describe('BitstreamDataService', () => {
         { provide: ObjectCacheService, useValue: objectCache },
         { provide: RequestService, useValue: requestService },
         { provide: HALEndpointService, useValue: halService },
-        { provide: BitstreamFormatDataService, useValue: bitstreamFormatService },
+        {
+          provide: BitstreamFormatDataService,
+          useValue: bitstreamFormatService,
+        },
         { provide: RemoteDataBuildService, useValue: rdbService },
         { provide: DSOChangeAnalyzer, useValue: {} },
         { provide: NotificationsService, useValue: {} },
@@ -86,13 +83,14 @@ describe('BitstreamDataService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new BitstreamDataService(null, null, null, null, null, null, null, null);
+    const initService = () =>
+      new BitstreamDataService(null, null, null, null, null, null, null, null);
     testSearchDataImplementation(initService);
     testPatchDataImplementation(initService);
     testDeleteDataImplementation(initService);
   });
 
-  describe('when updating the bitstream\'s format', () => {
+  describe("when updating the bitstream's format", () => {
     beforeEach(() => {
       service.updateFormat(bitstream1, format);
     });
@@ -103,40 +101,63 @@ describe('BitstreamDataService', () => {
   });
 
   describe('removeMultiple', () => {
-    function mockBuildFromRequestUUIDAndAwait(requestUUID$: string | Observable<string>, callback: (rd?: RemoteData<any>) => Observable<unknown>, ..._linksToFollow: FollowLinkConfig<any>[]): Observable<RemoteData<any>> {
+    function mockBuildFromRequestUUIDAndAwait(
+      requestUUID$: string | Observable<string>,
+      callback: (rd?: RemoteData<any>) => Observable<unknown>,
+      ..._linksToFollow: FollowLinkConfig<any>[]
+    ): Observable<RemoteData<any>> {
       callback();
       return;
     }
 
     beforeEach(() => {
       spyOn(service, 'invalidateByHref');
-      spyOn(rdbService, 'buildFromRequestUUIDAndAwait').and.callFake((requestUUID$: string | Observable<string>, callback: (rd?: RemoteData<any>) => Observable<unknown>, ...linksToFollow: FollowLinkConfig<any>[]) => mockBuildFromRequestUUIDAndAwait(requestUUID$, callback, ...linksToFollow));
+      spyOn(rdbService, 'buildFromRequestUUIDAndAwait').and.callFake(
+        (
+          requestUUID$: string | Observable<string>,
+          callback: (rd?: RemoteData<any>) => Observable<unknown>,
+          ...linksToFollow: FollowLinkConfig<any>[]
+        ) =>
+          mockBuildFromRequestUUIDAndAwait(
+            requestUUID$,
+            callback,
+            ...linksToFollow,
+          ),
+      );
     });
 
     it('should be able to 1 bitstream', () => {
       service.removeMultiple([bitstream1]);
 
-      expect(requestService.send).toHaveBeenCalledWith(objectContaining({
-        href: `${url}/bitstreams`,
-        body: [
-          { op: 'remove', path: '/bitstreams/fake-bitstream1' },
-        ],
-      } as PatchRequest));
-      expect(service.invalidateByHref).toHaveBeenCalledWith('fake-bitstream1-self');
+      expect(requestService.send).toHaveBeenCalledWith(
+        objectContaining({
+          href: `${url}/bitstreams`,
+          body: [{ op: 'remove', path: '/bitstreams/fake-bitstream1' }],
+        } as PatchRequest),
+      );
+      expect(service.invalidateByHref).toHaveBeenCalledWith(
+        'fake-bitstream1-self',
+      );
     });
 
     it('should be able to delete multiple bitstreams', () => {
       service.removeMultiple([bitstream1, bitstream2]);
 
-      expect(requestService.send).toHaveBeenCalledWith(objectContaining({
-        href: `${url}/bitstreams`,
-        body: [
-          { op: 'remove', path: '/bitstreams/fake-bitstream1' },
-          { op: 'remove', path: '/bitstreams/fake-bitstream2' },
-        ],
-      } as PatchRequest));
-      expect(service.invalidateByHref).toHaveBeenCalledWith('fake-bitstream1-self');
-      expect(service.invalidateByHref).toHaveBeenCalledWith('fake-bitstream2-self');
+      expect(requestService.send).toHaveBeenCalledWith(
+        objectContaining({
+          href: `${url}/bitstreams`,
+          body: [
+            { op: 'remove', path: '/bitstreams/fake-bitstream1' },
+            { op: 'remove', path: '/bitstreams/fake-bitstream2' },
+          ],
+        } as PatchRequest),
+      );
+      expect(service.invalidateByHref).toHaveBeenCalledWith(
+        'fake-bitstream1-self',
+      );
+      expect(service.invalidateByHref).toHaveBeenCalledWith(
+        'fake-bitstream2-self',
+      );
     });
   });
 });

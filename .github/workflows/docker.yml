@@ -5,7 +5,7 @@ name: Docker images
 # Also run for PRs to ensure PR doesn't break Docker build process
 # NOTE: uses "reusable-docker-build.yml" in DSpace/DSpace to actually build each of the Docker images
 # https://github.com/DSpace/DSpace/blob/main/.github/workflows/reusable-docker-build.yml
-# 
+#
 on:
   push:
     branches:
@@ -16,7 +16,7 @@ on:
   pull_request:
 
 permissions:
-  contents: read  #  to fetch code (actions/checkout)
+  contents: read #  to fetch code (actions/checkout)
 
 jobs:
   #############################################################
@@ -55,5 +55,5 @@ jobs:
       DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       # Enable redeploy of sandbox & demo if the branch for this image matches the deployment branch of
       # these sites as specified in reusable-docker-build.xml
-      REDEPLOY_SANDBOX_URL:  ${{ secrets.REDEPLOY_SANDBOX_URL }}
-      REDEPLOY_DEMO_URL:  ${{ secrets.REDEPLOY_DEMO_URL }}
+      REDEPLOY_SANDBOX_URL: ${{ secrets.REDEPLOY_SANDBOX_URL }}
+      REDEPLOY_DEMO_URL: ${{ secrets.REDEPLOY_DEMO_URL }}

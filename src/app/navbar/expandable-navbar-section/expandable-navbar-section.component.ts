@@ -1,9 +1,4 @@
-import {
-  Component,
-  Inject,
-  Injector,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 
 import { slide } from '../../shared/animations/slide';
@@ -21,16 +16,20 @@ import { NavbarSectionComponent } from '../navbar-section/navbar-section.compone
   styleUrls: ['./expandable-navbar-section.component.scss'],
   animations: [slide],
 })
-export class ExpandableNavbarSectionComponent extends NavbarSectionComponent implements OnInit {
+export class ExpandableNavbarSectionComponent
+  extends NavbarSectionComponent
+  implements OnInit
+{
   /**
    * This section resides in the Public Navbar
    */
   menuID = MenuID.PUBLIC;
 
-  constructor(@Inject('sectionDataProvider') menuSection,
-              protected menuService: MenuService,
-              protected injector: Injector,
-              private windowService: HostWindowService,
+  constructor(
+    @Inject('sectionDataProvider') menuSection,
+    protected menuService: MenuService,
+    protected injector: Injector,
+    private windowService: HostWindowService,
   ) {
     super(menuSection, menuService, injector);
   }
@@ -45,13 +44,14 @@ export class ExpandableNavbarSectionComponent extends NavbarSectionComponent imp
    * @param {Event} event The user event that triggered this function
    */
   activateSection(event): void {
-    this.windowService.isXsOrSm().pipe(
-      first(),
-    ).subscribe((isMobile) => {
-      if (!isMobile) {
-        super.activateSection(event);
-      }
-    });
+    this.windowService
+      .isXsOrSm()
+      .pipe(first())
+      .subscribe((isMobile) => {
+        if (!isMobile) {
+          super.activateSection(event);
+        }
+      });
   }
 
   /**
@@ -60,13 +60,14 @@ export class ExpandableNavbarSectionComponent extends NavbarSectionComponent imp
    * @param {Event} event The user event that triggered this function
    */
   deactivateSection(event): void {
-    this.windowService.isXsOrSm().pipe(
-      first(),
-    ).subscribe((isMobile) => {
-      if (!isMobile) {
-        super.deactivateSection(event);
-      }
-    });
+    this.windowService
+      .isXsOrSm()
+      .pipe(first())
+      .subscribe((isMobile) => {
+        if (!isMobile) {
+          super.deactivateSection(event);
+        }
+      });
   }
 
   /**
@@ -76,12 +77,13 @@ export class ExpandableNavbarSectionComponent extends NavbarSectionComponent imp
    */
   toggleSection(event): void {
     event.preventDefault();
-    this.windowService.isXsOrSm().pipe(
-      first(),
-    ).subscribe((isMobile) => {
-      if (isMobile) {
-        super.toggleSection(event);
-      }
-    });
+    this.windowService
+      .isXsOrSm()
+      .pipe(first())
+      .subscribe((isMobile) => {
+        if (isMobile) {
+          super.toggleSection(event);
+        }
+      });
   }
 }

@@ -1,7 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CollectionAccessControlComponent } from './collection-access-control.component';
 
@@ -11,9 +8,8 @@ xdescribe('CollectionAccessControlComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CollectionAccessControlComponent ],
-    })
-      .compileComponents();
+      declarations: [CollectionAccessControlComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

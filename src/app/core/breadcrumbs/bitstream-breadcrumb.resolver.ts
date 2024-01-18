@@ -15,7 +15,9 @@ import { DSOBreadcrumbResolver } from './dso-breadcrumb.resolver';
 })
 export class BitstreamBreadcrumbResolver extends DSOBreadcrumbResolver<Bitstream> {
   constructor(
-    protected breadcrumbService: BitstreamBreadcrumbsService, protected dataService: BitstreamDataService) {
+    protected breadcrumbService: BitstreamBreadcrumbsService,
+    protected dataService: BitstreamDataService,
+  ) {
     super(breadcrumbService, dataService);
   }
 
@@ -27,5 +29,4 @@ export class BitstreamBreadcrumbResolver extends DSOBreadcrumbResolver<Bitstream
   get followLinks(): FollowLinkConfig<Bitstream>[] {
     return BITSTREAM_PAGE_LINKS_TO_FOLLOW;
   }
-
 }

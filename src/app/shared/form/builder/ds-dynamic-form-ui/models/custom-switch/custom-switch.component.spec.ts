@@ -5,10 +5,7 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  ReactiveFormsModule,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { ReactiveFormsModule, UntypedFormGroup } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -20,7 +17,6 @@ import { CustomSwitchComponent } from './custom-switch.component';
 import { DynamicCustomSwitchModel } from './custom-switch.model';
 
 describe('CustomSwitchComponent', () => {
-
   const testModel = new DynamicCustomSwitchModel({ id: 'switch' });
   const formModel = [testModel];
   let formGroup: UntypedFormGroup;
@@ -37,13 +33,14 @@ describe('CustomSwitchComponent', () => {
         DynamicFormsCoreModule.forRoot(),
       ],
       declarations: [CustomSwitchComponent],
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(CustomSwitchComponent);
 
-    }).compileComponents().then(() => {
-      fixture = TestBed.createComponent(CustomSwitchComponent);
-
-      component = fixture.componentInstance;
-      debugElement = fixture.debugElement;
-    });
+        component = fixture.componentInstance;
+        debugElement = fixture.debugElement;
+      });
   }));
 
   beforeEach(inject([DynamicFormService], (service: DynamicFormService) => {

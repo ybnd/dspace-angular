@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { AdminSearchPageComponent } from './admin-search-page.component';
 
@@ -15,8 +11,7 @@ describe('AdminSearchPageComponent', () => {
     TestBed.configureTestingModule({
       declarations: [AdminSearchPageComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

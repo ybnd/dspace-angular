@@ -26,7 +26,6 @@ import { ChipsComponent } from './chips.component';
 import { Chips } from './models/chips.model';
 
 describe('ChipsComponent test suite', () => {
-
   let testComp: TestComponent;
   let chipsComp: ChipsComponent;
   let testFixture: ComponentFixture<TestComponent>;
@@ -36,7 +35,6 @@ describe('ChipsComponent test suite', () => {
 
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
       imports: [
         NgbModule,
@@ -48,13 +46,9 @@ describe('ChipsComponent test suite', () => {
         TestComponent,
         AuthorityConfidenceStateDirective,
       ], // declare the test component
-      providers: [
-        ChangeDetectorRef,
-        ChipsComponent,
-      ],
+      providers: [ChangeDetectorRef, ChipsComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   describe('', () => {
@@ -67,13 +61,19 @@ describe('ChipsComponent test suite', () => {
         [editable]="editable"
         (selected)="onChipSelected($event)"></ds-chips>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
-    it('should create Chips Component', inject([ChipsComponent], (app: ChipsComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create Chips Component', inject(
+      [ChipsComponent],
+      (app: ChipsComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('when has items as string', () => {
@@ -92,7 +92,6 @@ describe('ChipsComponent test suite', () => {
     });
 
     it('should set edit mode when a chip item is selected', fakeAsync(() => {
-
       spyOn(chipsComp.selected, 'emit');
 
       chipsComp.chipsSelected(new Event('click'), 1);
@@ -120,7 +119,6 @@ describe('ChipsComponent test suite', () => {
     }));
 
     it('should emit when a chip item is removed and editable is true', fakeAsync(() => {
-
       spyOn(chipsComp.chips, 'remove');
 
       const item = chipsComp.chips.getChipByIndex(1);
@@ -154,12 +152,33 @@ describe('ChipsComponent test suite', () => {
   describe('when has items as object', () => {
     beforeEach(() => {
       const item = {
-        mainField: new FormFieldMetadataValueObject('main test', null, 'test001', 'main test', 0, ConfidenceType.CF_ACCEPTED),
-        relatedField: new FormFieldMetadataValueObject('related test', null, 'test002', 'related test', 0, ConfidenceType.CF_ACCEPTED),
-        otherRelatedField: new FormFieldMetadataValueObject('other related test'),
+        mainField: new FormFieldMetadataValueObject(
+          'main test',
+          null,
+          'test001',
+          'main test',
+          0,
+          ConfidenceType.CF_ACCEPTED,
+        ),
+        relatedField: new FormFieldMetadataValueObject(
+          'related test',
+          null,
+          'test002',
+          'related test',
+          0,
+          ConfidenceType.CF_ACCEPTED,
+        ),
+        otherRelatedField: new FormFieldMetadataValueObject(
+          'other related test',
+        ),
       };
 
-      chips = new Chips([item], 'display', 'mainField', environment.submission.icons.metadata);
+      chips = new Chips(
+        [item],
+        'display',
+        'mainField',
+        environment.submission.icons.metadata,
+      );
       chipsFixture = TestBed.createComponent(ChipsComponent);
       chipsComp = chipsFixture.componentInstance; // TruncatableComponent test instance
       chipsComp.editable = true;
@@ -173,7 +192,6 @@ describe('ChipsComponent test suite', () => {
       const icons = de.queryAll(By.css('i.fas'));
 
       expect(icons.length).toBe(4);
-
     });
 
     it('should show tooltip on mouse over an icon', () => {
@@ -193,7 +211,6 @@ describe('ChipsComponent test suite', () => {
   template: ``,
 })
 class TestComponent {
-
   public chips = new Chips(['a', 'b', 'c']);
   public editable = true;
 }

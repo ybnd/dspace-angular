@@ -1,17 +1,10 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -50,7 +43,6 @@ import { renderAuthMethodFor } from '../log-in.methods-decorator';
 })
 @renderAuthMethodFor(AuthMethodType.Password)
 export class LogInPasswordComponent implements OnInit {
-
   /**
    * The authentication method data.
    * @type {AuthMethod}
@@ -109,7 +101,6 @@ export class LogInPasswordComponent implements OnInit {
    * @method ngOnInit
    */
   public ngOnInit() {
-
     // set formGroup
     this.form = this.formBuilder.group({
       email: ['', Validators.required],
@@ -117,24 +108,26 @@ export class LogInPasswordComponent implements OnInit {
     });
 
     // set error
-    this.error = this.store.pipe(select(
-      getAuthenticationError),
-    map((error) => {
-      this.hasError = (isNotEmpty(error));
-      return error;
-    }),
+    this.error = this.store.pipe(
+      select(getAuthenticationError),
+      map((error) => {
+        this.hasError = isNotEmpty(error);
+        return error;
+      }),
     );
 
     // set error
     this.message = this.store.pipe(
       select(getAuthenticationInfo),
       map((message) => {
-        this.hasMessage = (isNotEmpty(message));
+        this.hasMessage = isNotEmpty(message);
         return message;
       }),
     );
 
-    this.canRegister$ = this.authorizationService.isAuthorized(FeatureID.EPersonRegistration);
+    this.canRegister$ = this.authorizationService.isAuthorized(
+      FeatureID.EPersonRegistration,
+    );
   }
 
   getRegisterRoute() {
@@ -171,7 +164,9 @@ export class LogInPasswordComponent implements OnInit {
     password.trim();
 
     if (!this.isStandalonePage) {
-      this.authService.setRedirectUrl(this.hardRedirectService.getCurrentRoute());
+      this.authService.setRedirectUrl(
+        this.hardRedirectService.getCurrentRoute(),
+      );
     } else {
       this.authService.setRedirectUrlIfNotSet('/');
     }
@@ -182,5 +177,4 @@ export class LogInPasswordComponent implements OnInit {
     // clear form
     this.form.reset();
   }
-
 }

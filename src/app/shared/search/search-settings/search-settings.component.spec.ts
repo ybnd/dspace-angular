@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -27,7 +23,6 @@ import { VarDirective } from '../../utils/var.directive';
 import { SearchSettingsComponent } from './search-settings.component';
 
 describe('SearchSettingsComponent', () => {
-
   let comp: SearchSettingsComponent;
   let fixture: ComponentFixture<SearchSettingsComponent>;
   let searchServiceObject: SearchService;
@@ -122,12 +117,13 @@ describe('SearchSettingsComponent', () => {
     searchServiceObject = (comp as any).service;
     spyOn(comp, 'reloadOrder');
     spyOn(searchServiceObject, 'search').and.callThrough();
-
   });
 
   it('it should show the order settings with the respective selectable options', () => {
     fixture.detectChanges();
-    const orderSetting = fixture.debugElement.query(By.css('div.result-order-settings'));
+    const orderSetting = fixture.debugElement.query(
+      By.css('div.result-order-settings'),
+    );
     expect(orderSetting).toBeDefined();
     const childElements = orderSetting.queryAll(By.css('option'));
     expect(childElements.length).toEqual(comp.sortOptionsList.length);
@@ -135,14 +131,20 @@ describe('SearchSettingsComponent', () => {
 
   it('it should show the size settings', () => {
     fixture.detectChanges();
-    const pageSizeSetting = fixture.debugElement.query(By.css('page-size-settings'));
+    const pageSizeSetting = fixture.debugElement.query(
+      By.css('page-size-settings'),
+    );
     expect(pageSizeSetting).toBeDefined();
   });
 
   it('should have the proper order value selected by default', () => {
     fixture.detectChanges();
-    const orderSetting = fixture.debugElement.query(By.css('div.result-order-settings'));
-    const childElementToBeSelected = orderSetting.query(By.css('option[value="score,DESC"]'));
+    const orderSetting = fixture.debugElement.query(
+      By.css('div.result-order-settings'),
+    );
+    const childElementToBeSelected = orderSetting.query(
+      By.css('option[value="score,DESC"]'),
+    );
     expect(childElementToBeSelected).not.toBeNull();
     expect(childElementToBeSelected.nativeElement.selected).toBeTrue();
   });

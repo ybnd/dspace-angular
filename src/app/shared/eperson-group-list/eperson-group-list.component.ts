@@ -8,11 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import uniqueId from 'lodash/uniqueId';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -29,10 +25,7 @@ import { DSpaceObject } from '../../core/shared/dspace-object.model';
 import { getFirstCompletedRemoteData } from '../../core/shared/operators';
 import { ResourceType } from '../../core/shared/resource-type';
 import { fadeInOut } from '../animations/fade';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../empty.util';
+import { hasValue, isNotEmpty } from '../empty.util';
 import { PaginationComponentOptions } from '../pagination/pagination-component-options.model';
 
 export interface SearchEvent {
@@ -44,15 +37,12 @@ export interface SearchEvent {
   selector: 'ds-eperson-group-list',
   styleUrls: ['./eperson-group-list.component.scss'],
   templateUrl: './eperson-group-list.component.html',
-  animations: [
-    fadeInOut,
-  ],
+  animations: [fadeInOut],
 })
 /**
  * Component that shows a list of eperson or group
  */
 export class EpersonGroupListComponent implements OnInit, OnDestroy {
-
   /**
    * A boolean representing id component should list eperson or group
    */
@@ -67,7 +57,8 @@ export class EpersonGroupListComponent implements OnInit, OnDestroy {
    * An event fired when a eperson or group is selected.
    * Event's payload equals to DSpaceObject.
    */
-  @Output() select: EventEmitter<DSpaceObject> = new EventEmitter<DSpaceObject>();
+  @Output() select: EventEmitter<DSpaceObject> =
+    new EventEmitter<DSpaceObject>();
 
   /**
    * Current search query
@@ -82,7 +73,8 @@ export class EpersonGroupListComponent implements OnInit, OnDestroy {
   /**
    * Pagination config used to display the list
    */
-  public paginationOptions: PaginationComponentOptions = new PaginationComponentOptions();
+  public paginationOptions: PaginationComponentOptions =
+    new PaginationComponentOptions();
 
   /**
    * The data service used to make request.
@@ -93,13 +85,15 @@ export class EpersonGroupListComponent implements OnInit, OnDestroy {
   /**
    * A list of eperson or group
    */
-  private list$: BehaviorSubject<RemoteData<PaginatedList<DSpaceObject>>> = new BehaviorSubject<RemoteData<PaginatedList<DSpaceObject>>>({} as any);
+  private list$: BehaviorSubject<RemoteData<PaginatedList<DSpaceObject>>> =
+    new BehaviorSubject<RemoteData<PaginatedList<DSpaceObject>>>({} as any);
 
   /**
    * The eperson or group's id selected
    * @type {string}
    */
-  private entrySelectedId: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private entrySelectedId: BehaviorSubject<string> =
+    new BehaviorSubject<string>('');
 
   /**
    * Array to track all subscriptions and unsubscribe them onDestroy
@@ -115,15 +109,17 @@ export class EpersonGroupListComponent implements OnInit, OnDestroy {
    * @param {DSONameService} dsoNameService
    * @param {Injector} parentInjector
    */
-  constructor(public dsoNameService: DSONameService, private parentInjector: Injector,
-              private paginationService: PaginationService) {
-  }
+  constructor(
+    public dsoNameService: DSONameService,
+    private parentInjector: Injector,
+    private paginationService: PaginationService,
+  ) {}
 
   /**
    * Initialize the component
    */
   ngOnInit(): void {
-    const resourceType: ResourceType = (this.isListOfEPerson) ? EPERSON : GROUP;
+    const resourceType: ResourceType = this.isListOfEPerson ? EPERSON : GROUP;
     const provider = getDataServiceFor(resourceType);
     this.dataService = Injector.create({
       providers: [],
@@ -163,11 +159,12 @@ export class EpersonGroupListComponent implements OnInit, OnDestroy {
    * @return {boolean}
    */
   isSelected(entry: DSpaceObject): Observable<boolean> {
-    return this.entrySelectedId.asObservable().pipe(
-      map((selectedId) => isNotEmpty(selectedId) && selectedId === entry.id),
-    );
+    return this.entrySelectedId
+      .asObservable()
+      .pipe(
+        map((selectedId) => isNotEmpty(selectedId) && selectedId === entry.id),
+      );
   }
-
 
   /**
    * Method called on search
@@ -186,23 +183,38 @@ export class EpersonGroupListComponent implements OnInit, OnDestroy {
     if (hasValue(this.pageConfigSub)) {
       this.pageConfigSub.unsubscribe();
     }
-    this.pageConfigSub = this.paginationService.getCurrentPagination(this.paginationOptions.id, this.paginationOptions)
+    this.pageConfigSub = this.paginationService
+      .getCurrentPagination(this.paginationOptions.id, this.paginationOptions)
       .subscribe((paginationOptions) => {
-        const options: FindListOptions = Object.assign({}, new FindListOptions(), {
-          elementsPerPage: paginationOptions.pageSize,
-          currentPage: paginationOptions.currentPage,
-        });
+        const options: FindListOptions = Object.assign(
+          {},
+          new FindListOptions(),
+          {
+            elementsPerPage: paginationOptions.pageSize,
+            currentPage: paginationOptions.currentPage,
+          },
+        );
 
-        const search$: Observable<RemoteData<PaginatedList<DSpaceObject>>> = this.isListOfEPerson ?
-          (this.dataService as EPersonDataService).searchByScope(scope, query, options) :
-          (this.dataService as GroupDataService).searchGroups(query, options);
+        const search$: Observable<RemoteData<PaginatedList<DSpaceObject>>> =
+          this.isListOfEPerson
+            ? (this.dataService as EPersonDataService).searchByScope(
+                scope,
+                query,
+                options,
+              )
+            : (this.dataService as GroupDataService).searchGroups(
+                query,
+                options,
+              );
 
-        this.subs.push(search$.pipe(getFirstCompletedRemoteData())
-          .subscribe((list: RemoteData<PaginatedList<DSpaceObject>>) => {
-            if (hasValue(this.list$)) {
-              this.list$.next(list);
-            }
-          }),
+        this.subs.push(
+          search$
+            .pipe(getFirstCompletedRemoteData())
+            .subscribe((list: RemoteData<PaginatedList<DSpaceObject>>) => {
+              if (hasValue(this.list$)) {
+                this.list$.next(list);
+              }
+            }),
         );
       });
   }
@@ -217,6 +229,4 @@ export class EpersonGroupListComponent implements OnInit, OnDestroy {
       .forEach((subscription) => subscription.unsubscribe());
     this.paginationService.clearPagination(this.paginationOptions.id);
   }
-
-
 }

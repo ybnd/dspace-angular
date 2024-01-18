@@ -11,21 +11,20 @@ import { SearchConfigurationService } from '../../../../../../app/core/shared/se
 import { SEARCH_CONFIG_SERVICE } from '../../../../../../app/my-dspace-page/my-dspace-page.component';
 import { SearchSidebarComponent as BaseComponent } from '../../../../../../app/shared/search/search-sidebar/search-sidebar.component';
 
-
 @Component({
   selector: 'ds-search-sidebar',
   // styleUrls: ['./search-sidebar.component.scss'],
-  styleUrls: ['../../../../../../app/shared/search/search-sidebar/search-sidebar.component.scss'],
+  styleUrls: [
+    '../../../../../../app/shared/search/search-sidebar/search-sidebar.component.scss',
+  ],
   // templateUrl: './search-sidebar.component.html',
-  templateUrl: '../../../../../../app/shared/search/search-sidebar/search-sidebar.component.html',
+  templateUrl:
+    '../../../../../../app/shared/search/search-sidebar/search-sidebar.component.html',
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,
       useClass: SearchConfigurationService,
     },
   ],
-
 })
-
-export class SearchSidebarComponent extends BaseComponent {
-}
+export class SearchSidebarComponent extends BaseComponent {}

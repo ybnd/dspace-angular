@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 
@@ -18,7 +13,6 @@ import { hasValue } from '../empty.util';
   templateUrl: 'idle-modal.component.html',
 })
 export class IdleModalComponent implements OnInit {
-
   /**
    * Total time of idleness before session expires (in minutes)
    * (environment.auth.ui.timeUntilIdle + environment.auth.ui.idleGracePeriod / 1000 / 60)
@@ -34,12 +28,18 @@ export class IdleModalComponent implements OnInit {
    * An event fired when the modal is closed
    */
   @Output()
-    response = new EventEmitter<boolean>();
+  response = new EventEmitter<boolean>();
 
-  constructor(private activeModal: NgbActiveModal,
-              private authService: AuthService,
-              private store: Store<AppState>) {
-    this.timeToExpire = (environment.auth.ui.timeUntilIdle + environment.auth.ui.idleGracePeriod) / 1000 / 60; // ms => min
+  constructor(
+    private activeModal: NgbActiveModal,
+    private authService: AuthService,
+    private store: Store<AppState>,
+  ) {
+    this.timeToExpire =
+      (environment.auth.ui.timeUntilIdle +
+        environment.auth.ui.idleGracePeriod) /
+      1000 /
+      60; // ms => min
   }
 
   ngOnInit() {

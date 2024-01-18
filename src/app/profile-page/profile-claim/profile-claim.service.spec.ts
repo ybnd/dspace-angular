@@ -1,7 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -104,9 +101,15 @@ describe('ProfileClaimService', () => {
     },
   });
 
-  const searchResult1 = Object.assign(new ItemSearchResult(), { indexableObject: item1 });
-  const searchResult2 = Object.assign(new ItemSearchResult(), { indexableObject: item2 });
-  const searchResult3 = Object.assign(new ItemSearchResult(), { indexableObject: item3 });
+  const searchResult1 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item1,
+  });
+  const searchResult2 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item2,
+  });
+  const searchResult3 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item3,
+  });
 
   const searchResult = Object.assign(new SearchObjects(), {
     page: [searchResult1, searchResult2, searchResult3],
@@ -115,7 +118,8 @@ describe('ProfileClaimService', () => {
     page: [],
   });
   const searchResultRD = createSuccessfulRemoteDataObject(searchResult);
-  const emptySearchResultRD = createSuccessfulRemoteDataObject(emptySearchResult);
+  const emptySearchResultRD =
+    createSuccessfulRemoteDataObject(emptySearchResult);
 
   beforeEach(() => {
     scheduler = getTestScheduler();
@@ -129,10 +133,11 @@ describe('ProfileClaimService', () => {
   });
 
   describe('hasProfilesToSuggest', () => {
-
     describe('when has suggestions', () => {
       beforeEach(() => {
-        spyOn(service, 'searchForSuggestions').and.returnValue(observableOf(searchResultRD));
+        spyOn(service, 'searchForSuggestions').and.returnValue(
+          observableOf(searchResultRD),
+        );
       });
 
       it('should return true', () => {
@@ -142,12 +147,13 @@ describe('ProfileClaimService', () => {
         });
         expect(result).toBeObservable(expected);
       });
-
     });
 
     describe('when has not suggestions', () => {
       beforeEach(() => {
-        spyOn(service, 'searchForSuggestions').and.returnValue(observableOf(emptySearchResultRD));
+        spyOn(service, 'searchForSuggestions').and.returnValue(
+          observableOf(emptySearchResultRD),
+        );
       });
 
       it('should return false', () => {
@@ -157,7 +163,6 @@ describe('ProfileClaimService', () => {
         });
         expect(result).toBeObservable(expected);
       });
-
     });
 
     describe('when has not valid eperson', () => {
@@ -168,13 +173,10 @@ describe('ProfileClaimService', () => {
         });
         expect(result).toBeObservable(expected);
       });
-
     });
-
   });
 
   describe('search', () => {
-
     describe('when has search results', () => {
       beforeEach(() => {
         searchService.search.and.returnValue(observableOf(searchResultRD));
@@ -187,7 +189,6 @@ describe('ProfileClaimService', () => {
         });
         expect(result).toBeObservable(expected);
       });
-
     });
 
     describe('when has not suggestions', () => {
@@ -202,7 +203,6 @@ describe('ProfileClaimService', () => {
         });
         expect(result).toBeObservable(expected);
       });
-
     });
 
     describe('when has not valid eperson', () => {
@@ -213,8 +213,6 @@ describe('ProfileClaimService', () => {
         });
         expect(result).toBeObservable(expected);
       });
-
     });
-
   });
 });

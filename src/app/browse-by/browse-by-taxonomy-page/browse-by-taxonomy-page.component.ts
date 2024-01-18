@@ -1,14 +1,6 @@
-import {
-  Component,
-  Inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ThemeService } from 'src/app/shared/theme-support/theme.service';
 
@@ -28,7 +20,6 @@ import { BROWSE_BY_COMPONENT_FACTORY } from '../browse-by-switcher/browse-by-dec
  * Component for browsing items by metadata in a hierarchical controlled vocabulary
  */
 export class BrowseByTaxonomyPageComponent implements OnInit, OnDestroy {
-
   /**
    * The {@link VocabularyOptions} object
    */
@@ -69,23 +60,35 @@ export class BrowseByTaxonomyPageComponent implements OnInit, OnDestroy {
    */
   browseByComponentSubs: Subscription[] = [];
 
-  public constructor( protected route: ActivatedRoute,
-                      protected themeService: ThemeService,
-                      @Inject(BROWSE_BY_COMPONENT_FACTORY) private getComponentByBrowseByType: (browseByType, theme) => GenericConstructor<any>) {
-  }
+  public constructor(
+    protected route: ActivatedRoute,
+    protected themeService: ThemeService,
+    @Inject(BROWSE_BY_COMPONENT_FACTORY)
+    private getComponentByBrowseByType: (
+      browseByType,
+      theme,
+    ) => GenericConstructor<any>,
+  ) {}
 
   ngOnInit(): void {
     this.browseByComponent = this.route.data.pipe(
       map((data: { browseDefinition: BrowseDefinition }) => {
-        this.getComponentByBrowseByType(data.browseDefinition.getRenderType(), this.themeService.getThemeName());
+        this.getComponentByBrowseByType(
+          data.browseDefinition.getRenderType(),
+          this.themeService.getThemeName(),
+        );
         return data.browseDefinition;
       }),
     );
-    this.browseByComponentSubs.push(this.browseByComponent.subscribe((browseDefinition: HierarchicalBrowseDefinition) => {
-      this.facetType = browseDefinition.facetType;
-      this.vocabularyName = browseDefinition.vocabulary;
-      this.vocabularyOptions = { name: this.vocabularyName, closed: true };
-    }));
+    this.browseByComponentSubs.push(
+      this.browseByComponent.subscribe(
+        (browseDefinition: HierarchicalBrowseDefinition) => {
+          this.facetType = browseDefinition.facetType;
+          this.vocabularyName = browseDefinition.vocabulary;
+          this.vocabularyOptions = { name: this.vocabularyName, closed: true };
+        },
+      ),
+    );
   }
 
   /**
@@ -96,8 +99,9 @@ export class BrowseByTaxonomyPageComponent implements OnInit, OnDestroy {
    */
   onSelect(detail: VocabularyEntryDetail): void {
     this.selectedItems.push(detail);
-    this.filterValues = this.selectedItems
-      .map((item: VocabularyEntryDetail) => `${item.value},equals`);
+    this.filterValues = this.selectedItems.map(
+      (item: VocabularyEntryDetail) => `${item.value},equals`,
+    );
     this.updateQueryParams();
   }
 
@@ -107,8 +111,14 @@ export class BrowseByTaxonomyPageComponent implements OnInit, OnDestroy {
    * @param detail VocabularyEntryDetail to be removed
    */
   onDeselect(detail: VocabularyEntryDetail): void {
-    this.selectedItems = this.selectedItems.filter((entry: VocabularyEntryDetail) => { return entry.id !== detail.id; });
-    this.filterValues = this.filterValues.filter((value: string) => { return value !== `${detail.value},equals`; });
+    this.selectedItems = this.selectedItems.filter(
+      (entry: VocabularyEntryDetail) => {
+        return entry.id !== detail.id;
+      },
+    );
+    this.filterValues = this.filterValues.filter((value: string) => {
+      return value !== `${detail.value},equals`;
+    });
     this.updateQueryParams();
   }
 
@@ -122,6 +132,8 @@ export class BrowseByTaxonomyPageComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.browseByComponentSubs.forEach((sub: Subscription) => sub.unsubscribe());
+    this.browseByComponentSubs.forEach((sub: Subscription) =>
+      sub.unsubscribe(),
+    );
   }
 }

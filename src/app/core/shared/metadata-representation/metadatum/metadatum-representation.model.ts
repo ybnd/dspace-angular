@@ -9,8 +9,10 @@ import {
 /**
  * This class defines the way the metadatum it extends should be represented
  */
-export class MetadatumRepresentation extends MetadataValue implements MetadataRepresentation {
-
+export class MetadatumRepresentation
+  extends MetadataValue
+  implements MetadataRepresentation
+{
   /**
    * The type of item this metadatum can be represented as
    */
@@ -46,5 +48,4 @@ export class MetadatumRepresentation extends MetadataValue implements MetadataRe
   getValue(): string {
     return this.value;
   }
-
 }

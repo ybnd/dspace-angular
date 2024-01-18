@@ -1,24 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  NgbModal,
-  NgbModalRef,
-} from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  map,
-  Observable,
-} from 'rxjs';
-import {
-  switchMap,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { map, Observable } from 'rxjs';
+import { switchMap, take, tap } from 'rxjs/operators';
 
 import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service';
 import { DSpaceObject } from '../../../../../core/shared/dspace-object.model';
@@ -45,7 +29,6 @@ import { SupervisionOrderListEntry } from './supervision-order-status/supervisio
  * The component for displaying the actions for a list element for a workspace-item on the admin workflow search page
  */
 export class WorkspaceItemAdminWorkflowActionsComponent implements OnInit {
-
   /**
    * The workspace item to perform the actions on
    */
@@ -80,12 +63,14 @@ export class WorkspaceItemAdminWorkflowActionsComponent implements OnInit {
   /**
    * Event emitted when a new SupervisionOrder has been created
    */
-  @Output() create: EventEmitter<DSpaceObject> = new EventEmitter<DSpaceObject>();
+  @Output() create: EventEmitter<DSpaceObject> =
+    new EventEmitter<DSpaceObject>();
 
   /**
    * Event emitted when new SupervisionOrder has been deleted
    */
-  @Output() delete: EventEmitter<DSpaceObject> = new EventEmitter<DSpaceObject>();
+  @Output() delete: EventEmitter<DSpaceObject> =
+    new EventEmitter<DSpaceObject>();
 
   /**
    * Event emitted when a new SupervisionOrder has been created
@@ -96,19 +81,18 @@ export class WorkspaceItemAdminWorkflowActionsComponent implements OnInit {
     protected notificationsService: NotificationsService,
     protected supervisionOrderDataService: SupervisionOrderDataService,
     protected translateService: TranslateService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     const item$: Observable<Item> = this.wsi.item.pipe(
       getFirstSucceededRemoteDataPayload(),
     );
 
-    item$.pipe(
-      map((item: Item) => this.getPoliciesRoute(item)),
-    ).subscribe((route: string[]) => {
-      this.resourcePoliciesPageRoute = route;
-    });
+    item$
+      .pipe(map((item: Item) => this.getPoliciesRoute(item)))
+      .subscribe((route: string[]) => {
+        this.resourcePoliciesPageRoute = route;
+      });
 
     item$.subscribe((item: Item) => {
       this.item = item;
@@ -136,55 +120,74 @@ export class WorkspaceItemAdminWorkflowActionsComponent implements OnInit {
   deleteSupervisionOrder(supervisionOrderEntry: SupervisionOrderListEntry) {
     const modalRef = this.modalService.open(ConfirmationModalComponent);
     modalRef.componentInstance.dso = supervisionOrderEntry.group;
-    modalRef.componentInstance.headerLabel = this.messagePrefix + '.delete-supervision.modal.header';
-    modalRef.componentInstance.infoLabel = this.messagePrefix + '.delete-supervision.modal.info';
-    modalRef.componentInstance.cancelLabel = this.messagePrefix + '.delete-supervision.modal.cancel';
-    modalRef.componentInstance.confirmLabel = this.messagePrefix + '.delete-supervision.modal.confirm';
+    modalRef.componentInstance.headerLabel =
+      this.messagePrefix + '.delete-supervision.modal.header';
+    modalRef.componentInstance.infoLabel =
+      this.messagePrefix + '.delete-supervision.modal.info';
+    modalRef.componentInstance.cancelLabel =
+      this.messagePrefix + '.delete-supervision.modal.cancel';
+    modalRef.componentInstance.confirmLabel =
+      this.messagePrefix + '.delete-supervision.modal.confirm';
     modalRef.componentInstance.brandColor = 'danger';
     modalRef.componentInstance.confirmIcon = 'fas fa-trash';
-    modalRef.componentInstance.response.pipe(
-      take(1),
-      switchMap((confirm: boolean) => {
-        if (confirm && hasValue(supervisionOrderEntry.supervisionOrder.id)) {
-          return this.supervisionOrderDataService.delete(supervisionOrderEntry.supervisionOrder.id).pipe(
-            take(1),
-            tap((result: boolean) => {
-              if (result) {
-                this.notificationsService.success(
-                  null,
-                  this.translateService.get(
-                    this.messagePrefix + '.notification.deleted.success',
-                    { name: this.dsoNameService.getName(supervisionOrderEntry.group) },
-                  ),
-                );
-              } else {
-                this.notificationsService.error(
-                  null,
-                  this.translateService.get(
-                    this.messagePrefix + '.notification.deleted.failure',
-                    { name: this.dsoNameService.getName(supervisionOrderEntry.group) },
-                  ),
-                );
-              }
-            }),
-          );
+    modalRef.componentInstance.response
+      .pipe(
+        take(1),
+        switchMap((confirm: boolean) => {
+          if (confirm && hasValue(supervisionOrderEntry.supervisionOrder.id)) {
+            return this.supervisionOrderDataService
+              .delete(supervisionOrderEntry.supervisionOrder.id)
+              .pipe(
+                take(1),
+                tap((result: boolean) => {
+                  if (result) {
+                    this.notificationsService.success(
+                      null,
+                      this.translateService.get(
+                        this.messagePrefix + '.notification.deleted.success',
+                        {
+                          name: this.dsoNameService.getName(
+                            supervisionOrderEntry.group,
+                          ),
+                        },
+                      ),
+                    );
+                  } else {
+                    this.notificationsService.error(
+                      null,
+                      this.translateService.get(
+                        this.messagePrefix + '.notification.deleted.failure',
+                        {
+                          name: this.dsoNameService.getName(
+                            supervisionOrderEntry.group,
+                          ),
+                        },
+                      ),
+                    );
+                  }
+                }),
+              );
+          }
+        }),
+      )
+      .subscribe((result: boolean) => {
+        if (result) {
+          this.delete.emit(this.convertReloadedObject());
         }
-      }),
-    ).subscribe((result: boolean) => {
-      if (result) {
-        this.delete.emit(this.convertReloadedObject());
-      }
-    });
+      });
   }
 
   /**
    * Opens the Supervision Modal to create a supervision order
    */
   openSupervisionModal() {
-    const supervisionModal: NgbModalRef = this.modalService.open(SupervisionOrderGroupSelectorComponent, {
-      size: 'lg',
-      backdrop: 'static',
-    });
+    const supervisionModal: NgbModalRef = this.modalService.open(
+      SupervisionOrderGroupSelectorComponent,
+      {
+        size: 'lg',
+        backdrop: 'static',
+      },
+    );
     supervisionModal.componentInstance.itemUUID = this.item.uuid;
     supervisionModal.componentInstance.create.subscribe(() => {
       this.create.emit(this.convertReloadedObject());

@@ -12,11 +12,7 @@ import { ThemedGrantRequestCopyComponent } from './grant-request-copy/themed-gra
 import { RequestCopyRoutingModule } from './request-copy-routing.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    RequestCopyRoutingModule,
-  ],
+  imports: [CommonModule, SharedModule, RequestCopyRoutingModule],
   declarations: [
     GrantDenyRequestCopyComponent,
     DenyRequestCopyComponent,
@@ -26,15 +22,11 @@ import { RequestCopyRoutingModule } from './request-copy-routing.module';
     GrantRequestCopyComponent,
     ThemedGrantRequestCopyComponent,
   ],
-  exports: [
-    ThemedEmailRequestCopyComponent,
-  ],
+  exports: [ThemedEmailRequestCopyComponent],
   providers: [],
 })
 
 /**
  * Module related to components used to grant or deny an item request
  */
-export class RequestCopyModule {
-
-}
+export class RequestCopyModule {}

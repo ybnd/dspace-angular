@@ -1,14 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -92,9 +85,15 @@ describe('ProfileClaimItemModalComponent', () => {
     },
   });
 
-  const searchResult1 = Object.assign(new ItemSearchResult(), { indexableObject: item1 });
-  const searchResult2 = Object.assign(new ItemSearchResult(), { indexableObject: item2 });
-  const searchResult3 = Object.assign(new ItemSearchResult(), { indexableObject: item3 });
+  const searchResult1 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item1,
+  });
+  const searchResult2 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item2,
+  });
+  const searchResult3 = Object.assign(new ItemSearchResult(), {
+    indexableObject: item3,
+  });
 
   const searchResult = Object.assign(new SearchObjects(), {
     page: [searchResult1, searchResult2, searchResult3],
@@ -103,7 +102,8 @@ describe('ProfileClaimItemModalComponent', () => {
     page: [],
   });
   const searchResultRD = createSuccessfulRemoteDataObject(searchResult);
-  const emptySearchResultRD = createSuccessfulRemoteDataObject(emptySearchResult);
+  const emptySearchResultRD =
+    createSuccessfulRemoteDataObject(emptySearchResult);
 
   const profileClaimService = jasmine.createSpyObj('profileClaimService', {
     searchForSuggestions: jasmine.createSpy('searchForSuggestions'),
@@ -120,8 +120,7 @@ describe('ProfileClaimItemModalComponent', () => {
         { provide: ProfileClaimService, useValue: profileClaimService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -130,9 +129,10 @@ describe('ProfileClaimItemModalComponent', () => {
   });
 
   describe('when there are suggestions', () => {
-
     beforeEach(() => {
-      profileClaimService.searchForSuggestions.and.returnValue(of(searchResultRD));
+      profileClaimService.searchForSuggestions.and.returnValue(
+        of(searchResultRD),
+      );
       fixture.detectChanges();
     });
 
@@ -179,9 +179,10 @@ describe('ProfileClaimItemModalComponent', () => {
   });
 
   describe('when there are not suggestions', () => {
-
     beforeEach(() => {
-      profileClaimService.searchForSuggestions.and.returnValue(of(emptySearchResultRD));
+      profileClaimService.searchForSuggestions.and.returnValue(
+        of(emptySearchResultRD),
+      );
       fixture.detectChanges();
     });
 

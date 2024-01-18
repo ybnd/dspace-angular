@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 
 import { isNotEmpty } from '../../empty.util';
 import { rendersMenuItemForType } from '../menu-item.decorator';
@@ -22,9 +18,7 @@ export class ExternalLinkMenuItemComponent implements OnInit {
 
   hasLink: boolean;
 
-  constructor(
-    @Inject('itemModelProvider') item: ExternalLinkMenuItemModel,
-  ) {
+  constructor(@Inject('itemModelProvider') item: ExternalLinkMenuItemModel) {
     this.item = item;
   }
 

@@ -1,5 +1,4 @@
 {
-
   // Dspace v7.x > i18n pt-PT > last reviewed 16-06-2023
 
   // "401.help": "You're not authorized to access this page. You can use the button below to get back to the home page.",
@@ -258,7 +257,7 @@
   "admin.registries.schema.breadcrumbs": "Esquema de metadados",
 
   // "admin.registries.schema.description": "This is the metadata schema for \"{{namespace}}\".",
-  "admin.registries.schema.description": "Este é o esquema de metadados para \"{{namespace}}\".",
+  "admin.registries.schema.description": 'Este é o esquema de metadados para "{{namespace}}".',
 
   // "admin.registries.schema.fields.head": "Schema metadata fields",
   "admin.registries.schema.fields.head": "Campos do esquema de metadados",
@@ -297,7 +296,7 @@
   "admin.registries.schema.head": "Esquema de metadados",
 
   // "admin.registries.schema.notification.created": "Successfully created metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.created": "Criou o esquema de metadados \"{{prefix}}\" com sucesso",
+  "admin.registries.schema.notification.created": 'Criou o esquema de metadados "{{prefix}}" com sucesso',
 
   // "admin.registries.schema.notification.deleted.failure": "Failed to delete {{amount}} metadata schemas",
   "admin.registries.schema.notification.deleted.failure": "Falhou ao apagar {{amount}} esquema(s) de metadados",
@@ -306,13 +305,13 @@
   "admin.registries.schema.notification.deleted.success": "Apagou {{amount}} esquema(s) de metadados com sucesso",
 
   // "admin.registries.schema.notification.edited": "Successfully edited metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.edited": "Editou o esquema de metadados \"{{prefix}}\" com sucesso",
+  "admin.registries.schema.notification.edited": 'Editou o esquema de metadados "{{prefix}}" com sucesso',
 
   // "admin.registries.schema.notification.failure": "Error",
   "admin.registries.schema.notification.failure": "Erro",
 
   // "admin.registries.schema.notification.field.created": "Successfully created metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.created": "Criou o campo de metadado \"{{field}}\" com sucesso",
+  "admin.registries.schema.notification.field.created": 'Criou o campo de metadado "{{field}}" com sucesso',
 
   // "admin.registries.schema.notification.field.deleted.failure": "Failed to delete {{amount}} metadata fields",
   "admin.registries.schema.notification.field.deleted.failure": "Falhou ao apagar {{amount}} campo(s) de metadados",
@@ -321,7 +320,7 @@
   "admin.registries.schema.notification.field.deleted.success": "Apagou {{amount}} campo(s) de metadados com sucesso",
 
   // "admin.registries.schema.notification.field.edited": "Successfully edited metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.edited": "Editou o campo de metadado \"{{field}}\" com sucesso",
+  "admin.registries.schema.notification.field.edited": 'Editou o campo de metadado "{{field}}" com sucesso',
 
   // "admin.registries.schema.notification.success": "Success",
   "admin.registries.schema.notification.success": "Sucesso",
@@ -387,13 +386,13 @@
   "admin.access-control.epeople.table.edit": "Editar",
 
   // "admin.access-control.epeople.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.edit": "Editar \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.edit": 'Editar "{{name}}"',
 
   // "admin.access-control.epeople.table.edit.buttons.edit-disabled": "You are not authorized to edit this group",
   "admin.access-control.epeople.table.edit.buttons.edit-disabled": "Não possui autorização para editar este grupo",
 
   // "admin.access-control.epeople.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.remove": "Apagar \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.remove": 'Apagar "{{name}}"',
 
   // "admin.access-control.epeople.no-items": "No EPeople to show.",
   "admin.access-control.epeople.no-items": "Sem utilizadores para mostrar.",
@@ -426,28 +425,28 @@
   "admin.access-control.epeople.form.return": "Voltar",
 
   // "admin.access-control.epeople.form.notification.created.success": "Successfully created EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.success": "Utilizador criado com sucesso \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.created.success": 'Utilizador criado com sucesso "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.created.failure": "Failed to create EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.failure": "Falha ao criar o Utilizador \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.created.failure": 'Falha ao criar o Utilizador "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Failed to create EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Falha ao criar o Utilizador \"{{name}}\", o email \"{{email}}\" já está registado no repositório.",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": 'Falha ao criar o Utilizador "{{name}}", o email "{{email}}" já está registado no repositório.',
 
   // "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Failed to edit EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Falha ao editar o Utilizador \"{{name}}\", o email \"{{email}}\" já está registado no repositório.",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'Falha ao editar o Utilizador "{{name}}", o email "{{email}}" já está registado no repositório.',
 
   // "admin.access-control.epeople.form.notification.edited.success": "Successfully edited EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.success": "Utilizador editado com successo \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.edited.success": 'Utilizador editado com successo "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.edited.failure": "Failed to edit EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.failure": "Falha ao editor Utilizador \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.edited.failure": 'Falha ao editor Utilizador "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.deleted.success": "Successfully deleted EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.success": "Utilizador removido com sucesso \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.deleted.success": 'Utilizador removido com sucesso "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.deleted.failure": "Failed to delete EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.failure": "Falha ao remover o utilizador \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'Falha ao remover o utilizador "{{name}}"',
 
   // "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Member of these groups:",
   "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Membro dos grupos:",
@@ -468,10 +467,10 @@
   "admin.access-control.epeople.form.goToGroups": "Adicionar a grupos",
 
   // "admin.access-control.epeople.notification.deleted.failure": "Failed to delete EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.failure": "Falha ao apagar utilizador: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.failure": 'Falha ao apagar utilizador: "{{name}}"',
 
   // "admin.access-control.epeople.notification.deleted.success": "Successfully deleted EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.success": "Utilizador removido com sucesso: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.success": 'Utilizador removido com sucesso: "{{name}}"',
 
   // "admin.access-control.groups.title": "Groups",
   "admin.access-control.groups.title": "Grupos",
@@ -525,22 +524,22 @@
   "admin.access-control.groups.table.edit": "Editar",
 
   // "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.edit": "Editar \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.edit": 'Editar "{{name}}"',
 
   // "admin.access-control.groups.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.remove": "Apagar \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.remove": 'Apagar "{{name}}"',
 
   // "admin.access-control.groups.no-items": "No groups found with this in their name or this as UUID",
   "admin.access-control.groups.no-items": "Não foram encontrados grupos através do nome ou o UUID",
 
   // "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.success": "Grupo removido com sucesso \"{{name}}\"",
+  "admin.access-control.groups.notification.deleted.success": 'Grupo removido com sucesso "{{name}}"',
 
   // "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.failure.title": "Falha ao remover grupo \"{{name}}\"",
+  "admin.access-control.groups.notification.deleted.failure.title": 'Falha ao remover grupo "{{name}}"',
 
   // "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
-  "admin.access-control.groups.notification.deleted.failure.content": "Causa: \"{{cause}}\"",
+  "admin.access-control.groups.notification.deleted.failure.content": 'Causa: "{{cause}}"',
 
   // "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
   "admin.access-control.groups.form.alert.permanent": "Este grupo é permanente, não pode ser editado ou apagado. Pode adicionar ou remover membros deste grupo nesta página.",
@@ -564,31 +563,31 @@
   "admin.access-control.groups.form.groupDescription": "Descrição",
 
   // "admin.access-control.groups.form.notification.created.success": "Successfully created Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.success": "Grupo criado com sucesso \"{{name}}\"",
+  "admin.access-control.groups.form.notification.created.success": 'Grupo criado com sucesso "{{name}}"',
 
   // "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.failure": "Falha ao criar grupo \"{{name}}\"",
+  "admin.access-control.groups.form.notification.created.failure": 'Falha ao criar grupo "{{name}}"',
 
   // "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Falha ao criar o grupo com o nome: \"{{name}}\", verifique se o nome do grupo já está a ser utilizado.",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": 'Falha ao criar o grupo com o nome: "{{name}}", verifique se o nome do grupo já está a ser utilizado.',
 
   // "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.failure": "Falha ao editar grupo \"{{name}}\"",
+  "admin.access-control.groups.form.notification.edited.failure": 'Falha ao editar grupo "{{name}}"',
 
   // "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Name \"{{name}}\" already in use!",
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Nome \"{{name}}\" já utilizado!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": 'Nome "{{name}}" já utilizado!',
 
   // "admin.access-control.groups.form.notification.edited.success": "Successfully edited Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.success": "Grupo editado com sucesso \"{{name}}\"",
+  "admin.access-control.groups.form.notification.edited.success": 'Grupo editado com sucesso "{{name}}"',
 
   // "admin.access-control.groups.form.actions.delete": "Delete Group",
   "admin.access-control.groups.form.actions.delete": "Apagar grupo",
 
   // "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.header": "Apagar grupo \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.header": 'Apagar grupo "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.info": "Pretende mesmo apagar o grupo \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.info": 'Pretende mesmo apagar o grupo "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
   "admin.access-control.groups.form.delete-group.modal.cancel": "Cancelar",
@@ -597,13 +596,13 @@
   "admin.access-control.groups.form.delete-group.modal.confirm": "Apagar",
 
   // "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.success": "Grupo apagado com sucesso \"{{ name }}\"",
+  "admin.access-control.groups.form.notification.deleted.success": 'Grupo apagado com sucesso "{{ name }}"',
 
   // "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.title": "Falha ao apagar grupo \"{{ name }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.title": 'Falha ao apagar grupo "{{ name }}"',
 
   // "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.content": "Causa: \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'Causa: "{{ cause }}"',
 
   // "admin.access-control.groups.form.members-list.head": "EPeople",
   "admin.access-control.groups.form.members-list.head": "Utilizador",
@@ -645,22 +644,22 @@
   "admin.access-control.groups.form.members-list.table.edit": "Remover / Adicionar",
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remover o membro com nome \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": 'Remover o membro com nome "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "Membro adicionado com sucesso: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": 'Membro adicionado com sucesso: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "Falha ao adicionar membro: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'Falha ao adicionar membro: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Membro removido com sucesso: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": 'Membro removido com sucesso: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Falha ao remover o membro: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'Falha ao remover o membro: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Adicionar membro com o nome \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": 'Adicionar membro com o nome "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "Sem grupos ativos, indique um nome primeiro.",
@@ -672,7 +671,7 @@
   "admin.access-control.groups.form.members-list.no-items": "Não foram encontrados Utilizadores nesta pesquisa",
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "Algo correu mal: \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'Algo correu mal: "{{cause}}"',
 
   // "admin.access-control.groups.form.subgroups-list.head": "Groups",
   "admin.access-control.groups.form.subgroups-list.head": "Grupos",
@@ -702,25 +701,25 @@
   "admin.access-control.groups.form.subgroups-list.table.edit": "Remover / Adicionar",
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remove subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remover subgrupo com o nome \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": 'Remover subgrupo com o nome "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Add subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Adicionar subgrupo com o nome \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": 'Adicionar subgrupo com o nome "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Current group",
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Grupo atual",
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Successfully added subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Subgrupo adicionado com sucesso: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'Subgrupo adicionado com sucesso: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Failed to add subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Falha ao adicionar subgrupo: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'Falha ao adicionar subgrupo: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Successfully deleted subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Subgrupo removido com sucesso: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": 'Subgrupo removido com sucesso: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Failed to delete subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Falha ao remover o subgrupo: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": 'Falha ao remover o subgrupo: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "Sem grupo ativo, indique um nome primeiro.",
@@ -942,22 +941,22 @@
   "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit": "Remover / Adicionar",
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": "Remover membro com o nome \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": 'Remover membro com o nome "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": "Membro adicionado com sucessso: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": 'Membro adicionado com sucessso: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": "Falha ao adicionar o membro: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": 'Falha ao adicionar o membro: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": "Membro removido com sucesso: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": 'Membro removido com sucesso: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": "Falha ao remover o membro: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": 'Falha ao remover o membro: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": "Adicionar membro com nome \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": 'Adicionar membro com nome "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.noActiveGroup": "Atualmente sem grupo ativo, submeter um nome primeiro.",
@@ -1005,7 +1004,7 @@
   "bitstream.edit.bitstream": "Ficheiros: ",
 
   // "bitstream.edit.form.description.hint": "Optionally, provide a brief description of the file, for example \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
-  "bitstream.edit.form.description.hint": "Opcionalmente, pode indicar uma breve descrição do ficheiro, por exemplo \"<i>Texto Principal</i>\" ou \"<i>Dados da experiência</i>\".",
+  "bitstream.edit.form.description.hint": 'Opcionalmente, pode indicar uma breve descrição do ficheiro, por exemplo "<i>Texto Principal</i>" ou "<i>Dados da experiência</i>".',
 
   // "bitstream.edit.form.description.label": "Description",
   "bitstream.edit.form.description.label": "Descrição",
@@ -1026,13 +1025,13 @@
   "bitstream.edit.form.newFormat.label": "Descreva o novo formato",
 
   // "bitstream.edit.form.newFormat.hint": "The application you used to create the file, and the version number (for example, \"<i>ACMESoft SuperApp version 1.5</i>\").",
-  "bitstream.edit.form.newFormat.hint": "A aplicação usada para criar o ficheiro e a respetiva versão (por exemplo, \"<i>ACMESoft SuperApp versão 1.5</i>\").",
+  "bitstream.edit.form.newFormat.hint": 'A aplicação usada para criar o ficheiro e a respetiva versão (por exemplo, "<i>ACMESoft SuperApp versão 1.5</i>").',
 
   // "bitstream.edit.form.primaryBitstream.label": "Primary bitstream",
   "bitstream.edit.form.primaryBitstream.label": "Ficheiro primário",
 
   // "bitstream.edit.form.selectedFormat.hint": "If the format is not in the above list, <b>select \"format not in list\" above</b> and describe it under \"Describe new format\".",
-  "bitstream.edit.form.selectedFormat.hint": "Se o formato não se encontrar listado, selecione por favor a opção <b> \"Formato não está na lista\" </b> e faculte detalhes em \"Descreva o novo formato\".",
+  "bitstream.edit.form.selectedFormat.hint": 'Se o formato não se encontrar listado, selecione por favor a opção <b> "Formato não está na lista" </b> e faculte detalhes em "Descreva o novo formato".',
 
   // "bitstream.edit.form.selectedFormat.label": "Selected Format",
   "bitstream.edit.form.selectedFormat.label": "Formato selecionado",
@@ -1323,7 +1322,7 @@
   "collection.delete.notification.success": "Apagou a coleção com sucesso",
 
   // "collection.delete.text": "Are you sure you want to delete collection \"{{ dso }}\"",
-  "collection.delete.text": "Tem certeza que pretende apagar a coleção \"{{ dso }}?\"",
+  "collection.delete.text": 'Tem certeza que pretende apagar a coleção "{{ dso }}?"',
 
   // "collection.edit.delete": "Delete this collection",
   "collection.edit.delete": "Apagar esta coleção",
@@ -1344,7 +1343,7 @@
   "collection.edit.item-mapper.cancel": "Cancelar",
 
   // "collection.edit.item-mapper.collection": "Collection: \"<b>{{name}}</b>\"",
-  "collection.edit.item-mapper.collection": "Coleção: \"<b>{{name}}</b>\"",
+  "collection.edit.item-mapper.collection": 'Coleção: "<b>{{name}}</b>"',
 
   // "collection.edit.item-mapper.confirm": "Map selected items",
   "collection.edit.item-mapper.confirm": "Mapear itens selecionados",
@@ -1533,7 +1532,7 @@
   "collection.edit.template.error": "Ocorreu um erro na recuperação do template do item",
 
   // "collection.edit.template.head": "Edit Template Item for Collection \"{{ collection }}\"",
-  "collection.edit.template.head": "Editar template do item para a coleção \"{{ collection }}\"",
+  "collection.edit.template.head": 'Editar template do item para a coleção "{{ collection }}"',
 
   // "collection.edit.template.label": "Template item",
   "collection.edit.template.label": "Template do item",
@@ -1725,7 +1724,7 @@
   "community.delete.notification.success": "Comunidade apagada com sucesso",
 
   // "community.delete.text": "Are you sure you want to delete community \"{{ dso }}\"",
-  "community.delete.text": "Você tem certeza que quer apagar a comunidade \"{{ dso }}\"?",
+  "community.delete.text": 'Você tem certeza que quer apagar a comunidade "{{ dso }}"?',
 
   // "community.edit.delete": "Delete this community",
   "community.edit.delete": "Apagar esta comunidade",
@@ -2085,7 +2084,7 @@
   "curation.form.handle.hint": "Dica: Introduza [o-seu-prefixo-handle]/0 para executar a tarefa em todo o repositório (nem todas as tarefas são compatíveis com esta opção)",
 
   // "deny-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I regret to inform you that it's not possible to send you a copy of the file(s) you have requested, concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
-  "deny-request-copy.email.message": "Caro {{ recipientName }}, Em resposta ao seu pedido, lamento informá-lo que não me é possível enviar-lhe uma cópia do(s) Ficheiro(s) que solicitou, relativamente ao documento: \"{{ itemUrl }}\" ({{ itemName }}), do qual sou autor.\n\n Com os melhores cumprimentos,\n {{ authorName }} <{{ authorEmail }}>",
+  "deny-request-copy.email.message": 'Caro {{ recipientName }}, Em resposta ao seu pedido, lamento informá-lo que não me é possível enviar-lhe uma cópia do(s) Ficheiro(s) que solicitou, relativamente ao documento: "{{ itemUrl }}" ({{ itemName }}), do qual sou autor.\n\n Com os melhores cumprimentos,\n {{ authorName }} <{{ authorEmail }}>',
 
   // "deny-request-copy.email.subject": "Request copy of document",
   "deny-request-copy.email.subject": "Solicitar cópia ao autor",
@@ -2256,10 +2255,10 @@
   "confirmation-modal.export-batch.confirm": "Exportar",
 
   // "confirmation-modal.delete-eperson.header": "Delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.header": "Apagar Utilizador \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.header": 'Apagar Utilizador "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.info": "Are you sure you want to delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.info": "Pretende apagar o utilizador \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.info": 'Pretende apagar o utilizador "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.cancel": "Cancel",
   "confirmation-modal.delete-eperson.cancel": "Cancelar",
@@ -2283,7 +2282,7 @@
   "confirmation-modal.delete-subscription.header": "Apagar subscrição",
 
   // "confirmation-modal.delete-subscription.info": "Are you sure you want to delete subscription for \"{{ dsoName }}\"",
-  "confirmation-modal.delete-subscription.info": "Tem a certeza de que pretende apagar a subscrição de \"{{ dsoName }}\"",
+  "confirmation-modal.delete-subscription.info": 'Tem a certeza de que pretende apagar a subscrição de "{{ dsoName }}"',
 
   // "confirmation-modal.delete-subscription.cancel": "Cancel",
   "confirmation-modal.delete-subscription.cancel": "Cancelar",
@@ -2328,7 +2327,7 @@
   "error.search-results": "Erro ao carregar os resultados da pesquisa!",
 
   // "error.invalid-search-query": "Search query is not valid. Please check <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> best practices for further information about this error.",
-  "error.invalid-search-query": "A query da pesquisa não é válida! Por favor verifique <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> best practices for further information about this error.",
+  "error.invalid-search-query": 'A query da pesquisa não é válida! Por favor verifique <a href="https://solr.apache.org/guide/query-syntax-and-parsing.html" target="_blank">Solr query syntax</a> best practices for further information about this error.',
 
   // "error.sub-collections": "Error fetching sub-collections",
   "error.sub-collections": "Erro ao carregar sub-coleções!",
@@ -3053,7 +3052,7 @@
   "item.edit.item-mapper.head": "Mapeador de item - Mapear itens em coleções",
 
   // "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
-  "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
+  "item.edit.item-mapper.item": 'Item: "<b>{{name}}</b>"',
 
   // "item.edit.item-mapper.no-search": "Please enter a query to search",
   "item.edit.item-mapper.no-search": "Insira um termo para efetuar a pesquisa",
@@ -3506,10 +3505,10 @@
   "workflow-item.search.result.delete-supervision.modal.confirm": "Remover",
 
   // "workflow-item.search.result.notification.deleted.success": "Successfully deleted supervision order \"{{name}}\"",
-  "workflow-item.search.result.notification.deleted.success": "Ordem de supervisão removida com sucesso \"{{name}}\"",
+  "workflow-item.search.result.notification.deleted.success": 'Ordem de supervisão removida com sucesso "{{name}}"',
 
   // "workflow-item.search.result.notification.deleted.failure": "Failed to delete supervision order \"{{name}}\"",
-  "workflow-item.search.result.notification.deleted.failure": "Falha ao remover ordem de supervisão \"{{name}}\"",
+  "workflow-item.search.result.notification.deleted.failure": 'Falha ao remover ordem de supervisão "{{name}}"',
 
   // "workflow-item.search.result.list.element.supervised-by": "Supervised by:",
   "workflow-item.search.result.list.element.supervised-by": "Supervisionado por:",
@@ -6414,7 +6413,7 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title": "Resultados da pesquisa",
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Would you like to save \"{{ value }}\" as a name variant for this person so you and others can reuse it for future submissions? If you don't you can still use it for this submission.",
-  "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Pretende guardar \"{{ value }}\" como um nome alternativo para esta pessoa permitindo a sua reutilização por si e outros em futuros depósitos? Se não, pode usar apenas neste depósito.",
+  "submission.sections.describe.relationship-lookup.name-variant.notification.content": 'Pretende guardar "{{ value }}" como um nome alternativo para esta pessoa permitindo a sua reutilização por si e outros em futuros depósitos? Se não, pode usar apenas neste depósito.',
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Save a new name variant",
   "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Guardar um Nome alternativo",
@@ -7044,7 +7043,7 @@
   "thumbnail.person.placeholder": "Foto indisponível",
 
   // "title": "DSpace",
-  "title": "Repositório",
+  title: "Repositório",
 
   // "vocabulary-treeview.header": "Hierarchical tree view",
   "vocabulary-treeview.header": "Vista hierárquica",
@@ -7703,8 +7702,6 @@
   // "admin.system-wide-alert.title": "System-wide Alerts",
   "admin.system-wide-alert.title": "Alertas gerais do sistema",
 
-
-
   // Other strings...
   // Missing, Duplicate or Redundant ???
 
@@ -7813,12 +7810,11 @@
   "journalissue-relationships.search.results.head": "Resultados da pesquisa de números",
 
   // "grant-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I have the pleasure to send you in attachment a copy of the file(s) concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
-  "grant-request-copy.email.message": "Caro {{ recipientName }},\nEm resposta ao seu pedido de cópia, tenho o prazer de lhe enviar em anexo uma cópia do(s) ficheiro(s) relativo(s) ao documento: \"{{ itemUrl }}\" ({{ itemName }}), do qual sou autor.\n\nCom os melhores cumprimentos,\n{{ authorName }} <{{ authorEmail }}>",
+  "grant-request-copy.email.message": 'Caro {{ recipientName }},\nEm resposta ao seu pedido de cópia, tenho o prazer de lhe enviar em anexo uma cópia do(s) ficheiro(s) relativo(s) ao documento: "{{ itemUrl }}" ({{ itemName }}), do qual sou autor.\n\nCom os melhores cumprimentos,\n{{ authorName }} <{{ authorEmail }}>',
 
   // "item.preview.dc.relation.eissn": "EISSN",
   "item.preview.dc.relation.eissn": "EISSN",
 
   // "item.preview.dc.identifier.eisbn": "EISBN",
   "item.preview.dc.identifier.eisbn": "EISBN",
-
 }

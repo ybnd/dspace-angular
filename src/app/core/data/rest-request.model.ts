@@ -10,11 +10,10 @@ export abstract class RestRequest {
   public isMultipart = false;
 
   constructor(
-        public uuid: string,
-        public href: string,
-        public method: RestRequestMethod = RestRequestMethod.GET,
-        public body?: any,
-        public options?: HttpOptions,
-  ) {
-  }
+    public uuid: string,
+    public href: string,
+    public method: RestRequestMethod = RestRequestMethod.GET,
+    public body?: any,
+    public options?: HttpOptions,
+  ) {}
 }

@@ -22,4 +22,3 @@ import { SearchPageComponent as BaseComponent } from '../../../../app/search-pag
  * It renders search results depending on the current search options
  */
 export class SearchPageComponent extends BaseComponent {}
-

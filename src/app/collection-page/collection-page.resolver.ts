@@ -22,9 +22,7 @@ import {
  * Requesting them as embeds will limit the number of requests
  */
 export const COLLECTION_PAGE_LINKS_TO_FOLLOW: FollowLinkConfig<Collection>[] = [
-  followLink('parentCommunity', {},
-    followLink('parentCommunity'),
-  ),
+  followLink('parentCommunity', {}, followLink('parentCommunity')),
   followLink('logo'),
 ];
 
@@ -36,8 +34,7 @@ export class CollectionPageResolver implements Resolve<RemoteData<Collection>> {
   constructor(
     private collectionService: CollectionDataService,
     private store: Store<any>,
-  ) {
-  }
+  ) {}
 
   /**
    * Method for resolving a collection based on the parameters in the current route
@@ -46,15 +43,18 @@ export class CollectionPageResolver implements Resolve<RemoteData<Collection>> {
    * @returns Observable<<RemoteData<Collection>> Emits the found collection based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Collection>> {
-    const collectionRD$ = this.collectionService.findById(
-      route.params.id,
-      true,
-      false,
-      ...COLLECTION_PAGE_LINKS_TO_FOLLOW,
-    ).pipe(
-      getFirstCompletedRemoteData(),
-    );
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<Collection>> {
+    const collectionRD$ = this.collectionService
+      .findById(
+        route.params.id,
+        true,
+        false,
+        ...COLLECTION_PAGE_LINKS_TO_FOLLOW,
+      )
+      .pipe(getFirstCompletedRemoteData());
 
     collectionRD$.subscribe((collectionRD: RemoteData<Collection>) => {
       this.store.dispatch(new ResolvedAction(state.url, collectionRD.payload));

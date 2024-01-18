@@ -1,8 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-} from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { LangConfig } from '../../../config/lang-config.interface';
@@ -20,7 +16,6 @@ import { LocaleService } from '../../core/locale/locale.service';
  * If only one language is active, the component will disappear as there are no languages to switch to.
  */
 export class LangSwitchComponent implements OnInit {
-
   // All of the languages that are active, meaning that a user can switch between them.
   activeLangs: LangConfig[];
 
@@ -31,12 +26,13 @@ export class LangSwitchComponent implements OnInit {
     public el: ElementRef,
     public translate: TranslateService,
     private localeService: LocaleService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.activeLangs = environment.languages.filter((MyLangConfig) => MyLangConfig.active === true);
-    this.moreThanOneLanguage = (this.activeLangs.length > 1);
+    this.activeLangs = environment.languages.filter(
+      (MyLangConfig) => MyLangConfig.active === true,
+    );
+    this.moreThanOneLanguage = this.activeLangs.length > 1;
     if (!this.moreThanOneLanguage) {
       this.el.nativeElement.parentElement.classList.add('d-none');
     }
@@ -46,14 +42,18 @@ export class LangSwitchComponent implements OnInit {
    * Returns the label for the current language
    */
   currentLangLabel(): string {
-    return this.activeLangs.find((MyLangConfig) => MyLangConfig.code === this.translate.currentLang).label;
+    return this.activeLangs.find(
+      (MyLangConfig) => MyLangConfig.code === this.translate.currentLang,
+    ).label;
   }
 
   /**
    * Returns the label for a specific language code
    */
   langLabel(langcode: string): string {
-    return this.activeLangs.find((MyLangConfig) => MyLangConfig.code === langcode).label;
+    return this.activeLangs.find(
+      (MyLangConfig) => MyLangConfig.code === langcode,
+    ).label;
   }
 
   /**
@@ -64,5 +64,4 @@ export class LangSwitchComponent implements OnInit {
     this.localeService.setCurrentLanguageCode(lang);
     this.localeService.refreshAfterChangeLanguage();
   }
-
 }

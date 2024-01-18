@@ -1,15 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { DebugElement } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
@@ -25,28 +18,23 @@ import { StatisticsTableComponent } from '../statistics-table/statistics-table.c
 import { SiteStatisticsPageComponent } from './site-statistics-page.component';
 
 describe('SiteStatisticsPageComponent', () => {
-
   let component: SiteStatisticsPageComponent;
   let de: DebugElement;
   let fixture: ComponentFixture<SiteStatisticsPageComponent>;
 
   beforeEach(waitForAsync(() => {
+    const activatedRoute = {};
 
-    const activatedRoute = {
-    };
-
-    const router = {
-    };
+    const router = {};
 
     const usageReportService = {
-      searchStatistics: () => observableOf([
-        Object.assign(
-          new UsageReport(), {
+      searchStatistics: () =>
+        observableOf([
+          Object.assign(new UsageReport(), {
             id: `site_id-TotalVisits-report`,
             points: [],
-          },
-        ),
-      ]),
+          }),
+        ]),
     };
 
     const nameService = {
@@ -54,14 +42,17 @@ describe('SiteStatisticsPageComponent', () => {
     };
 
     const siteService = {
-      find: () => observableOf(Object.assign(new Site(), {
-        id: 'site_id',
-        _links: {
-          self: {
-            href: 'test_site_link',
-          },
-        },
-      })),
+      find: () =>
+        observableOf(
+          Object.assign(new Site(), {
+            id: 'site_id',
+            _links: {
+              self: {
+                href: 'test_site_link',
+              },
+            },
+          }),
+        ),
     };
 
     const authService = jasmine.createSpyObj('authService', {
@@ -70,15 +61,8 @@ describe('SiteStatisticsPageComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        CommonModule,
-        SharedModule,
-      ],
-      declarations: [
-        SiteStatisticsPageComponent,
-        StatisticsTableComponent,
-      ],
+      imports: [TranslateModule.forRoot(), CommonModule, SharedModule],
+      declarations: [SiteStatisticsPageComponent, StatisticsTableComponent],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRoute },
         { provide: Router, useValue: router },
@@ -88,8 +72,7 @@ describe('SiteStatisticsPageComponent', () => {
         { provide: SiteDataService, useValue: siteService },
         { provide: AuthService, useValue: authService },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -104,12 +87,13 @@ describe('SiteStatisticsPageComponent', () => {
   });
 
   it('should resolve to the correct site', () => {
-    expect(de.query(By.css('.header')).nativeElement.id)
-      .toEqual('site_id');
+    expect(de.query(By.css('.header')).nativeElement.id).toEqual('site_id');
   });
 
   it('should show a statistics table for each usage report', () => {
-    expect(de.query(By.css('ds-statistics-table.site_id-TotalVisits-report')).nativeElement)
-      .toBeTruthy();
+    expect(
+      de.query(By.css('ds-statistics-table.site_id-TotalVisits-report'))
+        .nativeElement,
+    ).toBeTruthy();
   });
 });

@@ -1,15 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  Observable,
-  of as observableOf,
-  Subscription,
-} from 'rxjs';
+import { Observable, of as observableOf, Subscription } from 'rxjs';
 
 import { PaginatedList } from '../../../core/data/paginated-list.model';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -21,10 +12,7 @@ import { Context } from '../../../core/shared/context.model';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { Item } from '../../../core/shared/item.model';
 import { SearchService } from '../../../core/shared/search/search.service';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { CollectionElementLinkType } from '../../../shared/object-collection/collection-element-link.type';
 import { ListableObject } from '../../../shared/object-collection/shared/listable-object.model';
 import { SelectableListService } from '../../../shared/object-list/selectable-list/selectable-list.service';
@@ -40,7 +28,7 @@ export enum ImportType {
   LocalEntity = 'LocalEntity',
   LocalAuthority = 'LocalAuthority',
   NewEntity = 'NewEntity',
-  NewAuthority = 'NewAuthority'
+  NewAuthority = 'NewAuthority',
 }
 
 /**
@@ -126,7 +114,9 @@ export class ProjectEntryImportModalComponent implements OnInit {
   /**
    * The search results
    */
-  localEntitiesRD$: Observable<RemoteData<PaginatedList<SearchResult<DSpaceObject>>>>;
+  localEntitiesRD$: Observable<
+    RemoteData<PaginatedList<SearchResult<DSpaceObject>>>
+  >;
   /**
    * Information about the data loading status
    */
@@ -166,7 +156,8 @@ export class ProjectEntryImportModalComponent implements OnInit {
   /**
    * An project has been selected, send it to the parent component
    */
-  importedObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  importedObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
   /**
    * Pagination options
    */
@@ -183,28 +174,38 @@ export class ProjectEntryImportModalComponent implements OnInit {
    * @param {SearchService} searchService
    * @param {SelectableListService} selectService
    */
-  constructor(public modal: NgbActiveModal,
-              public searchService: SearchService,
-              private selectService: SelectableListService) { }
+  constructor(
+    public modal: NgbActiveModal,
+    public searchService: SearchService,
+    private selectService: SelectableListService,
+  ) {}
 
   /**
    * Component intitialization.
    */
   public ngOnInit(): void {
-    this.pagination = Object.assign(new PaginationComponentOptions(), { id: 'notifications-project-bound', pageSize: this.pageSize });
-    this.projectTitle = (this.externalSourceEntry.projectTitle !== null) ? this.externalSourceEntry.projectTitle
-      : (this.externalSourceEntry.event.message as SourceQualityAssuranceEventMessageObject).title;
-    this.searchOptions = Object.assign(new PaginatedSearchOptions(
-      {
+    this.pagination = Object.assign(new PaginationComponentOptions(), {
+      id: 'notifications-project-bound',
+      pageSize: this.pageSize,
+    });
+    this.projectTitle =
+      this.externalSourceEntry.projectTitle !== null
+        ? this.externalSourceEntry.projectTitle
+        : (
+            this.externalSourceEntry.event
+              .message as SourceQualityAssuranceEventMessageObject
+          ).title;
+    this.searchOptions = Object.assign(
+      new PaginatedSearchOptions({
         configuration: this.configuration,
         query: this.projectTitle,
         pagination: this.pagination,
-      },
-    ));
+      }),
+    );
     this.localEntitiesRD$ = this.searchService.search(this.searchOptions);
     this.subs.push(
       this.localEntitiesRD$.subscribe(
-        () => this.isLoading$ = observableOf(false),
+        () => (this.isLoading$ = observableOf(false)),
       ),
     );
   }
@@ -224,17 +225,19 @@ export class ProjectEntryImportModalComponent implements OnInit {
     if (isNotEmpty(searchTitle)) {
       const filterRegEx = /[:]/g;
       this.isLoading$ = observableOf(true);
-      this.searchOptions = Object.assign(new PaginatedSearchOptions(
-        {
+      this.searchOptions = Object.assign(
+        new PaginatedSearchOptions({
           configuration: this.configuration,
-          query: (searchTitle) ? searchTitle.replace(filterRegEx, '') : searchTitle,
+          query: searchTitle
+            ? searchTitle.replace(filterRegEx, '')
+            : searchTitle,
           pagination: this.pagination,
-        },
-      ));
+        }),
+      );
       this.localEntitiesRD$ = this.searchService.search(this.searchOptions);
       this.subs.push(
         this.localEntitiesRD$.subscribe(
-          () => this.isLoading$ = observableOf(false),
+          () => (this.isLoading$ = observableOf(false)),
         ),
       );
     }

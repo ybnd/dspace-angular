@@ -1,11 +1,5 @@
-import {
-  AddOperation,
-  RemoveOperation,
-} from 'fast-json-patch';
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { AddOperation, RemoveOperation } from 'fast-json-patch';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
 
 import { NativeWindowRefMock } from '../../shared/mocks/mock-native-window-ref';
@@ -36,109 +30,136 @@ describe('OrcidAuthService', () => {
   const researcherProfileId = 'beef9946-rt56-479e-8f11-b90cbe9f7241';
   const itemId = 'beef9946-rt56-479e-8f11-b90cbe9f7241';
 
-  const researcherProfile: ResearcherProfile = Object.assign(new ResearcherProfile(), {
-    id: researcherProfileId,
-    visible: false,
-    type: 'profile',
-    _links: {
-      item: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId}/item`,
-      },
-      self: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId}`,
+  const researcherProfile: ResearcherProfile = Object.assign(
+    new ResearcherProfile(),
+    {
+      id: researcherProfileId,
+      visible: false,
+      type: 'profile',
+      _links: {
+        item: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId}/item`,
+        },
+        self: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId}`,
+        },
       },
     },
-  });
+  );
 
-  const researcherProfilePatched: ResearcherProfile = Object.assign(new ResearcherProfile(), {
-    id: researcherProfileId,
-    visible: true,
-    type: 'profile',
-    _links: {
-      item: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId}/item`,
-      },
-      self: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId}`,
+  const researcherProfilePatched: ResearcherProfile = Object.assign(
+    new ResearcherProfile(),
+    {
+      id: researcherProfileId,
+      visible: true,
+      type: 'profile',
+      _links: {
+        item: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId}/item`,
+        },
+        self: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId}`,
+        },
       },
     },
-  });
+  );
 
   const mockItemUnlinkedToOrcid: Item = Object.assign(new Item(), {
     id: 'mockItemUnlinkedToOrcid',
     bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
     metadata: {
-      'dc.title': [{
-        value: 'test person',
-      }],
-      'dspace.entity.type': [{
-        'value': 'Person',
-      }],
-      'dspace.object.owner': [{
-        'value': 'test person',
-        'language': null,
-        'authority': 'researcher-profile-id',
-        'confidence': 600,
-        'place': 0,
-      }],
+      'dc.title': [
+        {
+          value: 'test person',
+        },
+      ],
+      'dspace.entity.type': [
+        {
+          value: 'Person',
+        },
+      ],
+      'dspace.object.owner': [
+        {
+          value: 'test person',
+          language: null,
+          authority: 'researcher-profile-id',
+          confidence: 600,
+          place: 0,
+        },
+      ],
     },
   });
 
   const mockItemLinkedToOrcid: Item = Object.assign(new Item(), {
     bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
     metadata: {
-      'dc.title': [{
-        value: 'test person',
-      }],
-      'dspace.entity.type': [{
-        'value': 'Person',
-      }],
-      'dspace.object.owner': [{
-        'value': 'test person',
-        'language': null,
-        'authority': 'researcher-profile-id',
-        'confidence': 600,
-        'place': 0,
-      }],
-      'dspace.orcid.authenticated': [{
-        'value': '2022-06-10T15:15:12.952872',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 0,
-      }],
-      'dspace.orcid.scope': [{
-        'value': '/authenticate',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 0,
-      }, {
-        'value': '/read-limited',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 1,
-      }, {
-        'value': '/activities/update',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 2,
-      }, {
-        'value': '/person/update',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 3,
-      }],
-      'person.identifier.orcid': [{
-        'value': 'orcid-id',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 0,
-      }],
+      'dc.title': [
+        {
+          value: 'test person',
+        },
+      ],
+      'dspace.entity.type': [
+        {
+          value: 'Person',
+        },
+      ],
+      'dspace.object.owner': [
+        {
+          value: 'test person',
+          language: null,
+          authority: 'researcher-profile-id',
+          confidence: 600,
+          place: 0,
+        },
+      ],
+      'dspace.orcid.authenticated': [
+        {
+          value: '2022-06-10T15:15:12.952872',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 0,
+        },
+      ],
+      'dspace.orcid.scope': [
+        {
+          value: '/authenticate',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 0,
+        },
+        {
+          value: '/read-limited',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 1,
+        },
+        {
+          value: '/activities/update',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 2,
+        },
+        {
+          value: '/person/update',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 3,
+        },
+      ],
+      'person.identifier.orcid': [
+        {
+          value: 'orcid-id',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 0,
+        },
+      ],
     },
   });
 
@@ -173,25 +194,31 @@ describe('OrcidAuthService', () => {
   beforeEach(() => {
     scheduler = getTestScheduler();
     routerStub = new RouterMock();
-    researcherProfileService = jasmine.createSpyObj('ResearcherProfileService', {
-      findById: jasmine.createSpy('findById'),
-      patch: jasmine.createSpy('patch'),
-      updateByOrcidOperations: jasmine.createSpy('updateByOrcidOperations'),
-    });
-    configurationDataService = jasmine.createSpyObj('configurationDataService', {
-      findByPropertyName: jasmine.createSpy('findByPropertyName'),
-    });
+    researcherProfileService = jasmine.createSpyObj(
+      'ResearcherProfileService',
+      {
+        findById: jasmine.createSpy('findById'),
+        patch: jasmine.createSpy('patch'),
+        updateByOrcidOperations: jasmine.createSpy('updateByOrcidOperations'),
+      },
+    );
+    configurationDataService = jasmine.createSpyObj(
+      'configurationDataService',
+      {
+        findByPropertyName: jasmine.createSpy('findByPropertyName'),
+      },
+    );
     nativeWindowService = new NativeWindowRefMock();
 
     service = new OrcidAuthService(
       nativeWindowService,
       configurationDataService,
       researcherProfileService,
-      routerStub);
+      routerStub,
+    );
 
     serviceAsAny = service;
   });
-
 
   describe('isLinkedToOrcid', () => {
     it('should return true when item has metadata', () => {
@@ -207,7 +234,12 @@ describe('OrcidAuthService', () => {
 
   describe('onlyAdminCanDisconnectProfileFromOrcid', () => {
     it('should return true when property is only_admin', () => {
-      spyOn((service as any), 'getOrcidDisconnectionAllowedUsersConfiguration').and.returnValue(createSuccessfulRemoteDataObject$(disconnectionAllowAdmin));
+      spyOn(
+        service as any,
+        'getOrcidDisconnectionAllowedUsersConfiguration',
+      ).and.returnValue(
+        createSuccessfulRemoteDataObject$(disconnectionAllowAdmin),
+      );
       const result = service.onlyAdminCanDisconnectProfileFromOrcid();
       const expected = cold('(a|)', {
         a: true,
@@ -216,7 +248,10 @@ describe('OrcidAuthService', () => {
     });
 
     it('should return false on faild', () => {
-      spyOn((service as any), 'getOrcidDisconnectionAllowedUsersConfiguration').and.returnValue(createFailedRemoteDataObject$());
+      spyOn(
+        service as any,
+        'getOrcidDisconnectionAllowedUsersConfiguration',
+      ).and.returnValue(createFailedRemoteDataObject$());
       const result = service.onlyAdminCanDisconnectProfileFromOrcid();
       const expected = cold('(a|)', {
         a: false,
@@ -227,7 +262,12 @@ describe('OrcidAuthService', () => {
 
   describe('ownerCanDisconnectProfileFromOrcid', () => {
     it('should return true when property is admin_and_owner', () => {
-      spyOn((service as any), 'getOrcidDisconnectionAllowedUsersConfiguration').and.returnValue(createSuccessfulRemoteDataObject$(disconnectionAllowAdminOwner));
+      spyOn(
+        service as any,
+        'getOrcidDisconnectionAllowedUsersConfiguration',
+      ).and.returnValue(
+        createSuccessfulRemoteDataObject$(disconnectionAllowAdminOwner),
+      );
       const result = service.ownerCanDisconnectProfileFromOrcid();
       const expected = cold('(a|)', {
         a: true,
@@ -236,7 +276,10 @@ describe('OrcidAuthService', () => {
     });
 
     it('should return false on faild', () => {
-      spyOn((service as any), 'getOrcidDisconnectionAllowedUsersConfiguration').and.returnValue(createFailedRemoteDataObject$());
+      spyOn(
+        service as any,
+        'getOrcidDisconnectionAllowedUsersConfiguration',
+      ).and.returnValue(createFailedRemoteDataObject$());
       const result = service.ownerCanDisconnectProfileFromOrcid();
       const expected = cold('(a|)', {
         a: false,
@@ -248,41 +291,65 @@ describe('OrcidAuthService', () => {
   describe('linkOrcidByItem', () => {
     beforeEach(() => {
       scheduler = getTestScheduler();
-      researcherProfileService.patch.and.returnValue(createSuccessfulRemoteDataObject$(researcherProfilePatched));
-      researcherProfileService.findById.and.returnValue(createSuccessfulRemoteDataObject$(researcherProfile));
+      researcherProfileService.patch.and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfilePatched),
+      );
+      researcherProfileService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfile),
+      );
     });
 
     it('should call updateByOrcidOperations method properly', () => {
-      const operations: AddOperation<string>[] = [{
-        path: '/orcid',
-        op: 'add',
-        value: 'test-code',
-      }];
+      const operations: AddOperation<string>[] = [
+        {
+          path: '/orcid',
+          op: 'add',
+          value: 'test-code',
+        },
+      ];
 
-      scheduler.schedule(() => service.linkOrcidByItem(mockItemUnlinkedToOrcid, 'test-code').subscribe());
+      scheduler.schedule(() =>
+        service
+          .linkOrcidByItem(mockItemUnlinkedToOrcid, 'test-code')
+          .subscribe(),
+      );
       scheduler.flush();
 
-      expect(researcherProfileService.patch).toHaveBeenCalledWith(researcherProfile, operations);
+      expect(researcherProfileService.patch).toHaveBeenCalledWith(
+        researcherProfile,
+        operations,
+      );
     });
   });
 
   describe('unlinkOrcidByItem', () => {
     beforeEach(() => {
       scheduler = getTestScheduler();
-      researcherProfileService.patch.and.returnValue(createSuccessfulRemoteDataObject$(researcherProfilePatched));
-      researcherProfileService.findById.and.returnValue(createSuccessfulRemoteDataObject$(researcherProfile));
+      researcherProfileService.patch.and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfilePatched),
+      );
+      researcherProfileService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfile),
+      );
     });
 
     it('should call updateByOrcidOperations method properly', () => {
-      const operations: RemoveOperation[] = [{
-        path: '/orcid',
-        op: 'remove',
-      }];
+      const operations: RemoveOperation[] = [
+        {
+          path: '/orcid',
+          op: 'remove',
+        },
+      ];
 
-      scheduler.schedule(() => service.unlinkOrcidByItem(mockItemLinkedToOrcid).subscribe());
+      scheduler.schedule(() =>
+        service.unlinkOrcidByItem(mockItemLinkedToOrcid).subscribe(),
+      );
       scheduler.flush();
 
-      expect(researcherProfileService.patch).toHaveBeenCalledWith(researcherProfile, operations);
+      expect(researcherProfileService.patch).toHaveBeenCalledWith(
+        researcherProfile,
+        operations,
+      );
     });
   });
 
@@ -298,8 +365,14 @@ describe('OrcidAuthService', () => {
 
     it('should build the url properly', () => {
       const result = service.getOrcidAuthorizeUrl(mockItemUnlinkedToOrcid);
-      const redirectUri: string = new URLCombiner(nativeWindowService.nativeWindow.origin, encodeURIComponent(routerStub.url.split('?')[0])).toString();
-      const url = 'orcid.authorize-url?client_id=orcid.application-client-id&redirect_uri=' + redirectUri + '&response_type=code&scope=/authenticate /read-limited';
+      const redirectUri: string = new URLCombiner(
+        nativeWindowService.nativeWindow.origin,
+        encodeURIComponent(routerStub.url.split('?')[0]),
+      ).toString();
+      const url =
+        'orcid.authorize-url?client_id=orcid.application-client-id&redirect_uri=' +
+        redirectUri +
+        '&response_type=code&scope=/authenticate /read-limited';
 
       const expected = cold('(a|)', {
         a: url,
@@ -316,7 +389,9 @@ describe('OrcidAuthService', () => {
         '/activities/update',
         '/person/update',
       ];
-      const result = service.getOrcidAuthorizationScopesByItem(mockItemLinkedToOrcid);
+      const result = service.getOrcidAuthorizationScopesByItem(
+        mockItemLinkedToOrcid,
+      );
       expect(result).toEqual(orcidScopes);
     });
   });
@@ -326,10 +401,7 @@ describe('OrcidAuthService', () => {
       (service as any).configurationService.findByPropertyName.and.returnValue(
         createSuccessfulRemoteDataObject$(orcidScope),
       );
-      const orcidScopes = [
-        '/authenticate',
-        '/read-limited',
-      ];
+      const orcidScopes = ['/authenticate', '/read-limited'];
       const expected = cold('(a|)', {
         a: orcidScopes,
       });

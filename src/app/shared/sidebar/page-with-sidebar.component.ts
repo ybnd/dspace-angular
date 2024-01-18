@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  TemplateRef,
-} from '@angular/core';
+import { Component, Input, OnInit, TemplateRef } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -36,7 +31,7 @@ export class PageWithSidebarComponent implements OnInit {
    * The width of the sidebar (bootstrap columns)
    */
   @Input()
-    sideBarWidth = 3;
+  sideBarWidth = 3;
 
   /**
    * Observable for whether or not the sidebar is currently collapsed
@@ -45,16 +40,16 @@ export class PageWithSidebarComponent implements OnInit {
 
   sidebarClasses: Observable<string>;
 
-  constructor(protected sidebarService: SidebarService,
-              protected windowService: HostWindowService,
-  ) {
-  }
+  constructor(
+    protected sidebarService: SidebarService,
+    protected windowService: HostWindowService,
+  ) {}
 
   ngOnInit(): void {
     this.isXsOrSm$ = this.windowService.isXsOrSm();
     this.isSidebarCollapsed$ = this.isSidebarCollapsed();
     this.sidebarClasses = this.isSidebarCollapsed$.pipe(
-      map((isCollapsed) => isCollapsed ? '' : 'active'),
+      map((isCollapsed) => (isCollapsed ? '' : 'active')),
     );
   }
 
@@ -79,5 +74,4 @@ export class PageWithSidebarComponent implements OnInit {
   public openSidebar(): void {
     this.sidebarService.expand();
   }
-
 }

@@ -14,7 +14,9 @@ export class ThemedEditBitstreamPageComponent extends ThemedComponent<EditBitstr
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/bitstream-page/edit-bitstream-page/edit-bitstream-page.component`);
+    return import(
+      `../../../themes/${themeName}/app/bitstream-page/edit-bitstream-page/edit-bitstream-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

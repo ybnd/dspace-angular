@@ -15,5 +15,4 @@ export const logStartupMessage = (environment: Partial<BuildConfig>) => {
   console.info(`Version: %c${PACKAGE_JSON.version}`, `font-weight: bold;`);
   console.info(`Environment: %c${env}`, `color: ${color}; font-weight: bold;`);
   console.info('');
-
-}
+};

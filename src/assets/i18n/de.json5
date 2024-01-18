@@ -1,5 +1,4 @@
 {
-
   // "401.help": "You're not authorized to access this page. You can use the button below to get back to the home page.",
   "401.help": "Sie sind nicht berechtigt, auf diese Seite zuzugreifen. Mit dem Link unten kommen Sie zurück zur Startseite.",
 
@@ -9,8 +8,6 @@
   // "401.unauthorized": "unauthorized",
   "401.unauthorized": "unautorisiert",
 
-
-
   // "403.help": "You don't have permission to access this page. You can use the button below to get back to the home page.",
   "403.help": "Sie sind nicht berechtigt, auf diese Seite zuzugreifen. Über den Button unten auf der Seite gelangen Sie zurück zur Startseite.",
 
@@ -19,8 +16,6 @@
 
   // "403.forbidden": "forbidden",
   "403.forbidden": "verboten",
-
-
 
   // "404.help": "We can't find the page you're looking for. The page may have been moved or deleted. You can use the button below to get back to the home page. ",
   "404.help": "Die Seite konnte nicht gefunden werden. Eventuell wurde sie verschoben oder gelöscht. Über den Button unten auf der Seite gelangen Sie zurück zur Startseite.",
@@ -128,7 +123,7 @@
   "admin.registries.bitstream-formats.edit.head": "Dateiformat: {{ format }}",
 
   // "admin.registries.bitstream-formats.edit.internal.hint": "Formats marked as internal are hidden from the user, and used for administrative purposes.",
-  "admin.registries.bitstream-formats.edit.internal.hint": "Als \"intern\" gekennzeichnete Dateiformate dienen administrativen Zwecken und sind nicht öffentlich sichtbar.",
+  "admin.registries.bitstream-formats.edit.internal.hint": 'Als "intern" gekennzeichnete Dateiformate dienen administrativen Zwecken und sind nicht öffentlich sichtbar.',
 
   // "admin.registries.bitstream-formats.edit.internal.label": "Internal",
   "admin.registries.bitstream-formats.edit.internal.label": "intern",
@@ -198,8 +193,6 @@
   // "admin.registries.bitstream-formats.title": "Bitstream Format Registry",
   "admin.registries.bitstream-formats.title": "Referenzliste der Dateiformate",
 
-
-
   // "admin.registries.metadata.breadcrumbs": "Metadata registry",
   "admin.registries.metadata.breadcrumbs": "Referenzliste der Metadaten",
 
@@ -239,13 +232,11 @@
   // "admin.registries.metadata.title": "Metadata Registry",
   "admin.registries.metadata.title": "Metadatenreferenzliste",
 
-
-
   // "admin.registries.schema.breadcrumbs": "Metadata schema",
   "admin.registries.schema.breadcrumbs": "Metadatenschema",
 
   // "admin.registries.schema.description": "This is the metadata schema for \"{{namespace}}\".",
-  "admin.registries.schema.description": "Dies ist das Metadatenschema für den Namensraum \"{{namespace}}\".",
+  "admin.registries.schema.description": 'Dies ist das Metadatenschema für den Namensraum "{{namespace}}".',
 
   // "admin.registries.schema.fields.head": "Schema metadata fields",
   "admin.registries.schema.fields.head": "Im Schema enthaltene Metadatenfelder",
@@ -283,7 +274,7 @@
   "admin.registries.schema.head": "Metadatenschema",
 
   // "admin.registries.schema.notification.created": "Successfully created metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.created": "\"{{prefix}}\" wurde erfolgreich angelegt.",
+  "admin.registries.schema.notification.created": '"{{prefix}}" wurde erfolgreich angelegt.',
 
   // "admin.registries.schema.notification.deleted.failure": "Failed to delete {{amount}} metadata schemas",
   "admin.registries.schema.notification.deleted.failure": "{{amount}} Metadatenschema(ta) konnte(n) nicht gelöscht werden.",
@@ -292,13 +283,13 @@
   "admin.registries.schema.notification.deleted.success": "{{amount}} Metadatenschema(ta) wurde(n) gelöscht.",
 
   // "admin.registries.schema.notification.edited": "Successfully edited metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.edited": "Das Schema \"{{prefix}}\" wurde erfolgreich bearbeitet.",
+  "admin.registries.schema.notification.edited": 'Das Schema "{{prefix}}" wurde erfolgreich bearbeitet.',
 
   // "admin.registries.schema.notification.failure": "Error",
   "admin.registries.schema.notification.failure": "Fehler",
 
   // "admin.registries.schema.notification.field.created": "Successfully created metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.created": "Das Feld \"{{field}}\" wurde erfolgreich angelegt.",
+  "admin.registries.schema.notification.field.created": 'Das Feld "{{field}}" wurde erfolgreich angelegt.',
 
   // "admin.registries.schema.notification.field.deleted.failure": "Failed to delete {{amount}} metadata fields",
   "admin.registries.schema.notification.field.deleted.failure": "{{amount}} Metadatenfeld(er) konnte(n) nicht gelöscht werden.",
@@ -307,7 +298,7 @@
   "admin.registries.schema.notification.field.deleted.success": "{{amount}} Metadatenfeld(er) wurde(n) erfolgreich gelöscht.",
 
   // "admin.registries.schema.notification.field.edited": "Successfully edited metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.edited": "Das Feld \"{{field}}\" wurde erfolgreich bearbeitet.",
+  "admin.registries.schema.notification.field.edited": 'Das Feld "{{field}}" wurde erfolgreich bearbeitet.',
 
   // "admin.registries.schema.notification.success": "Success",
   "admin.registries.schema.notification.success": "Erfolg",
@@ -317,8 +308,6 @@
 
   // "admin.registries.schema.title": "Metadata Schema Registry",
   "admin.registries.schema.title": "Referenzliste der Metadatenschemata",
-
-
 
   // "admin.access-control.epeople.actions.delete": "Delete EPerson",
   "admin.access-control.epeople.actions.delete": "Person löschen",
@@ -369,10 +358,10 @@
   "admin.access-control.epeople.table.edit": "Bearbeiten",
 
   // "admin.access-control.epeople.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.edit": "\"{{name}}\" bearbeiten",
+  "admin.access-control.epeople.table.edit.buttons.edit": '"{{name}}" bearbeiten',
 
   // "admin.access-control.epeople.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.remove": "\"{{name}}\" löschen",
+  "admin.access-control.epeople.table.edit.buttons.remove": '"{{name}}" löschen',
 
   // "admin.access-control.epeople.no-items": "No EPeople to show.",
   "admin.access-control.epeople.no-items": "Keine Personen dazu.",
@@ -402,28 +391,28 @@
   "admin.access-control.epeople.form.requireCertificate": "Es wird ein Zertifikat benötigt.",
 
   // "admin.access-control.epeople.form.notification.created.success": "Successfully created EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.success": "Die Person \"{{name}}\" wurde erstellt.",
+  "admin.access-control.epeople.form.notification.created.success": 'Die Person "{{name}}" wurde erstellt.',
 
   // "admin.access-control.epeople.form.notification.created.failure": "Failed to create EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.failure": "Die Person \"{{name}}\" konnte nicht erstellt werden.",
+  "admin.access-control.epeople.form.notification.created.failure": 'Die Person "{{name}}" konnte nicht erstellt werden.',
 
   // "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Failed to create EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Die Person \"{{name}}\" konnte nicht erstellt werden, weil die E-Mail-Adresse \"{{email}}\" bereits verwendet wird.",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": 'Die Person "{{name}}" konnte nicht erstellt werden, weil die E-Mail-Adresse "{{email}}" bereits verwendet wird.',
 
   // "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Failed to edit EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Die Person \"{{name}}\" konnte nicht bearbeitet werden, weil die E-Mail-Adresse \"{{email}}\" bereits verwendet wird.",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'Die Person "{{name}}" konnte nicht bearbeitet werden, weil die E-Mail-Adresse "{{email}}" bereits verwendet wird.',
 
   // "admin.access-control.epeople.form.notification.edited.success": "Successfully edited EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.success": "Die Person \"{{name}}\" wurde erfolgreich bearbeitet.",
+  "admin.access-control.epeople.form.notification.edited.success": 'Die Person "{{name}}" wurde erfolgreich bearbeitet.',
 
   // "admin.access-control.epeople.form.notification.edited.failure": "Failed to edit EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.failure": "Die Person \"{{name}}\" konnte nicht bearbeitet werden.",
+  "admin.access-control.epeople.form.notification.edited.failure": 'Die Person "{{name}}" konnte nicht bearbeitet werden.',
 
   // "admin.access-control.epeople.form.notification.deleted.success": "Successfully deleted EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.success": "Die Person \"{{name}}\" wurde gelöscht.",
+  "admin.access-control.epeople.form.notification.deleted.success": 'Die Person "{{name}}" wurde gelöscht.',
 
   // "admin.access-control.epeople.form.notification.deleted.failure": "Failed to delete EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.failure": "Die Person \"{{name}}\" konnte nicht gelöscht werden.",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'Die Person "{{name}}" konnte nicht gelöscht werden.',
 
   // "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Member of these groups:",
   "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Mitglied dieser Gruppen:",
@@ -441,12 +430,10 @@
   "admin.access-control.epeople.form.goToGroups": "Zu Gruppen hinzufügen",
 
   // "admin.access-control.epeople.notification.deleted.failure": "Failed to delete EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.failure": "Person: \"{{name}}\" konnte nicht gelöscht werden",
+  "admin.access-control.epeople.notification.deleted.failure": 'Person: "{{name}}" konnte nicht gelöscht werden',
 
   // "admin.access-control.epeople.notification.deleted.success": "Successfully deleted EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.success": "Person: \"{{name}}\" erfolgreich gelöscht",
-
-
+  "admin.access-control.epeople.notification.deleted.success": 'Person: "{{name}}" erfolgreich gelöscht',
 
   // "admin.access-control.groups.title": "Groups",
   "admin.access-control.groups.title": "Gruppen",
@@ -485,30 +472,28 @@
   "admin.access-control.groups.table.edit": "Bearbeiten",
 
   // "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.edit": "\"{{name}}\" bearbeiten",
+  "admin.access-control.groups.table.edit.buttons.edit": '"{{name}}" bearbeiten',
 
   // "admin.access-control.groups.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.remove": "\"{{name}}\" löschen",
+  "admin.access-control.groups.table.edit.buttons.remove": '"{{name}}" löschen',
 
   // "admin.access-control.groups.no-items": "No groups found with this in their name or this as UUID",
   "admin.access-control.groups.no-items": "Keine Gruppen gefunden, die dies in ihrem Namen oder als UUID haben",
 
   // "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.success": "Gruppe \"{{name}}\" erfolgreich gelöscht",
+  "admin.access-control.groups.notification.deleted.success": 'Gruppe "{{name}}" erfolgreich gelöscht',
 
   // "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.failure.title": "Gruppe \"{{name}}\" konnte nicht gelöscht werden",
+  "admin.access-control.groups.notification.deleted.failure.title": 'Gruppe "{{name}}" konnte nicht gelöscht werden',
 
   // "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
-  "admin.access-control.groups.notification.deleted.failure.content": "Ursache: \"{{cause}}\"",
-
-
+  "admin.access-control.groups.notification.deleted.failure.content": 'Ursache: "{{cause}}"',
 
   // "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
   "admin.access-control.groups.form.alert.permanent": "Diese Gruppe ist permanent, das heißt sie kann nicht bearbeitet oder gelöscht werden. Sie können jedoch über diese Seite Gruppenmitglieder hinzufügen und entfernen.",
 
   // "admin.access-control.groups.form.alert.workflowGroup": "This group can’t be modified or deleted because it corresponds to a role in the submission and workflow process in the \"{{name}}\" {{comcol}}. You can delete it from the <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> tab on the edit {{comcol}} page. You can still add and remove group members using this page.",
-  "admin.access-control.groups.form.alert.workflowGroup": "Diese Gruppe kann nicht geändert oder gelöscht werden, da sie einer Rolle im Einreichungs- und Workflow-Prozess im \"{{name}}\" {{comcol}} zugeordnet ist. Sie können sie auf der Bearbeitungsseite {{comcol}} im Tab <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> löschen. Hier können Sie  Gruppenmitglieder hinzufügen und entfernen.",
+  "admin.access-control.groups.form.alert.workflowGroup": 'Diese Gruppe kann nicht geändert oder gelöscht werden, da sie einer Rolle im Einreichungs- und Workflow-Prozess im "{{name}}" {{comcol}} zugeordnet ist. Sie können sie auf der Bearbeitungsseite {{comcol}} im Tab <a href=\'{{comcolEditRolesRoute}}\'>"assign roles"</a> löschen. Hier können Sie  Gruppenmitglieder hinzufügen und entfernen.',
 
   // "admin.access-control.groups.form.head.create": "Create group",
   "admin.access-control.groups.form.head.create": "Gruppe erstellen",
@@ -523,31 +508,31 @@
   "admin.access-control.groups.form.groupDescription": "Beschreibung",
 
   // "admin.access-control.groups.form.notification.created.success": "Successfully created Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.success": "Gruppe \"{{name}}\" erfolgreich erstellt",
+  "admin.access-control.groups.form.notification.created.success": 'Gruppe "{{name}}" erfolgreich erstellt',
 
   // "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.failure": "Gruppe \"{{name}}\" konnte nicht erstellt werden",
+  "admin.access-control.groups.form.notification.created.failure": 'Gruppe "{{name}}" konnte nicht erstellt werden',
 
   // "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Die Gruppe mit dem Namen: \"{{name}}\" konnte nicht erstellt werden. Stellen Sie sicher, dass der Name nicht bereits verwendet wird.",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": 'Die Gruppe mit dem Namen: "{{name}}" konnte nicht erstellt werden. Stellen Sie sicher, dass der Name nicht bereits verwendet wird.',
 
   // "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.failure": "Gruppe \"{{name}}\" konnte nicht bearbeitet werden",
+  "admin.access-control.groups.form.notification.edited.failure": 'Gruppe "{{name}}" konnte nicht bearbeitet werden',
 
   // "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Name \"{{name}}\" already in use!",
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Der Name \"{{name}}\" wird bereits verwendet!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": 'Der Name "{{name}}" wird bereits verwendet!',
 
   // "admin.access-control.groups.form.notification.edited.success": "Successfully edited Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.success": "Gruppe \"{{name}}\" erfolgreich bearbeitet",
+  "admin.access-control.groups.form.notification.edited.success": 'Gruppe "{{name}}" erfolgreich bearbeitet',
 
   // "admin.access-control.groups.form.actions.delete": "Delete Group",
   "admin.access-control.groups.form.actions.delete": "Gruppe löschen",
 
   // "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.header": "Gruppe \"{{ dsoName }}\" löschen",
+  "admin.access-control.groups.form.delete-group.modal.header": 'Gruppe "{{ dsoName }}" löschen',
 
   // "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.info": "Sind Sie sicher, dass Sie die Gruppe \"{{ dsoName }}\" löschen möchten",
+  "admin.access-control.groups.form.delete-group.modal.info": 'Sind Sie sicher, dass Sie die Gruppe "{{ dsoName }}" löschen möchten',
 
   // "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
   "admin.access-control.groups.form.delete-group.modal.cancel": "Abbrechen",
@@ -556,13 +541,13 @@
   "admin.access-control.groups.form.delete-group.modal.confirm": "Löschen",
 
   // "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.success": "Gruppe \"{{ name }}\" erfolgreich gelöscht",
+  "admin.access-control.groups.form.notification.deleted.success": 'Gruppe "{{ name }}" erfolgreich gelöscht',
 
   // "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.title": "Gruppe \"{{ name }}\" konnte nicht gelöscht werden",
+  "admin.access-control.groups.form.notification.deleted.failure.title": 'Gruppe "{{ name }}" konnte nicht gelöscht werden',
 
   // "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.content": "Ursache: \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'Ursache: "{{ cause }}"',
 
   // "admin.access-control.groups.form.members-list.head": "EPeople",
   "admin.access-control.groups.form.members-list.head": "Personen",
@@ -595,22 +580,22 @@
   "admin.access-control.groups.form.members-list.table.edit": "Entfernen / Hinzufügen",
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Mitglieder mit dem Namen \"{{name}}\" entfernen",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": 'Mitglieder mit dem Namen "{{name}}" entfernen',
 
   // "admin.access-control.groups.form.members-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "Das Mitglied \"{{name}}\" wurde hinzugefügt.",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": 'Das Mitglied "{{name}}" wurde hinzugefügt.',
 
   // "admin.access-control.groups.form.members-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "Das Mitglied \"{{name}}\" konnte nicht hinzugefügt werden.",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'Das Mitglied "{{name}}" konnte nicht hinzugefügt werden.',
 
   // "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Das Mitglied \"{{name}}\" wurde gelöscht.",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": 'Das Mitglied "{{name}}" wurde gelöscht.',
 
   // "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Das Mitglied \"{{name}}\" konnte nicht gelöscht werden.",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'Das Mitglied "{{name}}" konnte nicht gelöscht werden.',
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Mitglied mit dem Namen \"{{name}}\" hinzufügen",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": 'Mitglied mit dem Namen "{{name}}" hinzufügen',
 
   // "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "Keine derzeit aktive Gruppe, bitte erst einen Namen eingeben.",
@@ -622,7 +607,7 @@
   "admin.access-control.groups.form.members-list.no-items": "Keine Personen in dieser Suche gefunden",
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "Etwas ist fehlgeschlagen: \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'Etwas ist fehlgeschlagen: "{{cause}}"',
 
   // "admin.access-control.groups.form.subgroups-list.head": "Groups",
   "admin.access-control.groups.form.subgroups-list.head": "Gruppen",
@@ -649,25 +634,25 @@
   "admin.access-control.groups.form.subgroups-list.table.edit": "Entfernen / Hinzufügen",
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remove subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Untergruppe mit Namen \"{{name}}\" entfernen",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": 'Untergruppe mit Namen "{{name}}" entfernen',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Add subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Untergruppe mit Namen \"{{name}}\" hinzufügen",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": 'Untergruppe mit Namen "{{name}}" hinzufügen',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Current group",
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Derzeitige Gruppe",
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Successfully added subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Untergruppe: \"{{name}}\" erfolgreich hinzugefügt",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'Untergruppe: "{{name}}" erfolgreich hinzugefügt',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Failed to add subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Untergruppe: \"{{name}}\" konnte nicht hinzugefügt werden",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'Untergruppe: "{{name}}" konnte nicht hinzugefügt werden',
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Successfully deleted subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Untergruppe: \"{{name}}\" erfolgreich gelöscht",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": 'Untergruppe: "{{name}}" erfolgreich gelöscht',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Failed to delete subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Untergruppe: \"{{name}}\" konnte nicht gelöscht werden",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": 'Untergruppe: "{{name}}" konnte nicht gelöscht werden',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "Keine derzeit aktive Gruppe, bitte erst einen Namen eingeben.",
@@ -683,8 +668,6 @@
 
   // "admin.access-control.groups.form.return": "Return to groups",
   "admin.access-control.groups.form.return": "Zurück zu den Gruppen",
-
-
 
   // "admin.search.breadcrumbs": "Administrative Search",
   "admin.search.breadcrumbs": "Admin-Suche",
@@ -722,9 +705,6 @@
   // "administrativeView.search.results.head": "Administrative Search",
   "administrativeView.search.results.head": "Admin-Suche",
 
-
-
-
   // "admin.workflow.breadcrumbs": "Administer Workflow",
   "admin.workflow.breadcrumbs": "Workflows verwalten",
 
@@ -739,8 +719,6 @@
 
   // "admin.workflow.item.send-back": "Send back",
   "admin.workflow.item.send-back": "Zurücksenden",
-
-
 
   // "admin.metadata-import.breadcrumbs": "Import Metadata",
   "admin.metadata-import.breadcrumbs": "Metadaten importieren",
@@ -769,16 +747,11 @@
   // "admin.metadata-import.page.error.addFile": "Select file first!",
   "admin.metadata-import.page.error.addFile": "Bitte wählen Sie zuerst eine Datei aus.",
 
-
-
-
   // "auth.errors.invalid-user": "Invalid email address or password.",
   "auth.errors.invalid-user": "Passwort oder E-Mail-Adresse ungültig.",
 
   // "auth.messages.expired": "Your session has expired. Please log in again.",
   "auth.messages.expired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
-
-
 
   // "auth.messages.token-refresh-failed": "Refreshing your session token failed. Please log in again.",
   "auth.messages.token-refresh-failed": "Aktualisierung fehlgeschlagen. Bitte melden Sie sich erneut an.",
@@ -844,14 +817,13 @@
   "bitstream.edit.bitstream": "Bitstream: ",
 
   // "bitstream.edit.form.description.hint": "Optionally, provide a brief description of the file, for example \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
-  "bitstream.edit.form.description.hint": "Hier können Sie eine kurze Beschreibung der Datei angeben, zum Beispiel \"<i>Artikel</i>\" oder \"<i>Tabellenhanhang</i>\".",
+  "bitstream.edit.form.description.hint": 'Hier können Sie eine kurze Beschreibung der Datei angeben, zum Beispiel "<i>Artikel</i>" oder "<i>Tabellenhanhang</i>".',
 
   // "bitstream.edit.form.description.label": "Description",
   "bitstream.edit.form.description.label": "Beschreibung",
 
   // "bitstream.edit.form.embargo.hint": "The first day from which access is allowed. <b>This date cannot be modified on this form.</b> To set an embargo date for a bitstream, go to the <i>Item Status</i> tab, click <i>Authorizations...</i>, create or edit the bitstream's <i>READ</i> policy, and set the <i>Start Date</i> as desired.",
   "bitstream.edit.form.embargo.hint": "Der erste Tag, ab dem der Zugang erlaubt ist. <b>Dieses Datum kann in diesem Formular nicht verändert werden.</b> Um eine Embargo-Frist für eine Datei festzulegen, zu <i>Item Status</i> gehen, auf <i>Authorizations...</i> klicken, die Richtlinie <i>READ</i> für die Datei erstellen oder verändern und das <i>Start Date</i> wie gewünscht einstellen.",
-
 
   // "bitstream.edit.form.embargo.label": "Embargo until specific date",
   "bitstream.edit.form.embargo.label": "Sperrfrist",
@@ -869,13 +841,13 @@
   "bitstream.edit.form.newFormat.label": "Neues Format beschreiben",
 
   // "bitstream.edit.form.newFormat.hint": "The application you used to create the file, and the version number (for example, \"<i>ACMESoft SuperApp version 1.5</i>\").",
-  "bitstream.edit.form.newFormat.hint": "Name und Versionsnummer des Programms, das Sie verwendet haben, um die Datei zu erstellen (z. B. \"<i>ACMESoft SuperApp, Version 1.5</i>\").",
+  "bitstream.edit.form.newFormat.hint": 'Name und Versionsnummer des Programms, das Sie verwendet haben, um die Datei zu erstellen (z. B. "<i>ACMESoft SuperApp, Version 1.5</i>").',
 
   // "bitstream.edit.form.primaryBitstream.label": "Primary bitstream",
   "bitstream.edit.form.primaryBitstream.label": "Primäre Datei",
 
   // "bitstream.edit.form.selectedFormat.hint": "If the format is not in the above list, <b>select \"format not in list\" above</b> and describe it under \"Describe new format\".",
-  "bitstream.edit.form.selectedFormat.hint": "Falls das Format nicht in der obigen Liste enthalten ist, <b>wählen Sie bitte \"Anderes Format\"</b> und beschreiben Sie es unter \"Neues Format beschreiben\".",
+  "bitstream.edit.form.selectedFormat.hint": 'Falls das Format nicht in der obigen Liste enthalten ist, <b>wählen Sie bitte "Anderes Format"</b> und beschreiben Sie es unter "Neues Format beschreiben".',
 
   // "bitstream.edit.form.selectedFormat.label": "Selected Format",
   "bitstream.edit.form.selectedFormat.label": "Ausgewähltes Format",
@@ -897,7 +869,6 @@
 
   // "bitstream.edit.title": "Edit bitstream",
   "bitstream.edit.title": "Datei bearbeiten",
-
 
   // "browse.back.all-results": "All browse results",
   "browse.back.all-results": "Filter zurücksetzen",
@@ -1022,11 +993,8 @@
   // "browse.title.page": "Browsing {{ collection }} by {{ field }} {{ value }}",
   "browse.title.page": "Auflistung {{ collection }} nach {{ field }} {{ value }}",
 
-
   // "chips.remove": "Remove chip",
   "chips.remove": "Teil löschen",
-
-
 
   // "collection.create.head": "Create a Collection",
   "collection.create.head": "Eine Sammlung anlegen",
@@ -1056,9 +1024,7 @@
   "collection.delete.notification.success": "Die Sammlung wurde erfolgreich gelöscht",
 
   // "collection.delete.text": "Are you sure you want to delete collection \"{{ dso }}\"",
-  "collection.delete.text": "Sind Sie sicher, dass Sie die Sammlung \"{{ dso }}\" löschen wollen?",
-
-
+  "collection.delete.text": 'Sind Sie sicher, dass Sie die Sammlung "{{ dso }}" löschen wollen?',
 
   // "collection.edit.delete": "Delete this collection",
   "collection.edit.delete": "Diese Sammlung löschen",
@@ -1068,8 +1034,6 @@
 
   // "collection.edit.breadcrumbs": "Edit Collection",
   "collection.edit.breadcrumbs": "Sammlung bearbeiten",
-
-
 
   // "collection.edit.logo.delete-undo.title": "Undo delete",
   "collection.edit.logo.delete-undo.title": "Löschen rückgängig machen",
@@ -1087,7 +1051,7 @@
   "collection.edit.item-mapper.cancel": "Abbrechen",
 
   // "collection.edit.item-mapper.collection": "Collection: \"<b>{{name}}</b>\"",
-  "collection.edit.item-mapper.collection": "Sammlung: \"<b>{{name}}</b>\"",
+  "collection.edit.item-mapper.collection": 'Sammlung: "<b>{{name}}</b>"',
 
   // "collection.edit.item-mapper.confirm": "Map selected items",
   "collection.edit.item-mapper.confirm": "Ausgewählte Items spiegeln",
@@ -1134,8 +1098,6 @@
   // "collection.edit.item-mapper.tabs.map": "Map new items",
   "collection.edit.item-mapper.tabs.map": "Neue Items spiegeln",
 
-
-
   // "collection.edit.logo.label": "Collection logo",
   "collection.edit.logo.label": "Sammlungslogo",
 
@@ -1157,15 +1119,11 @@
   // "collection.edit.logo.upload": "Drop a Collection Logo to upload",
   "collection.edit.logo.upload": "Ziehen Sie ein Logo herüber, um es hochzuladen.",
 
-
-
   // "collection.edit.notifications.success": "Successfully edited the Collection",
   "collection.edit.notifications.success": "Sammlung erfolgreich bearbeitet",
 
   // "collection.edit.return": "Return",
   "collection.edit.return": "Zurück",
-
-
 
   // "collection.edit.tabs.curate.head": "Curate",
   "collection.edit.tabs.curate.head": "Datenpflege",
@@ -1225,7 +1183,7 @@
   "collection.edit.tabs.source.head": "Herkunft des Inhalts",
 
   // "collection.edit.tabs.source.notifications.discarded.content": "Your changes were discarded. To reinstate your changes click the 'Undo' button",
-  "collection.edit.tabs.source.notifications.discarded.content": "Die Änderungen wurden verworfen. Bitte klicken Sie auf \"Rückgängig\", um sie wieder einzusetzen.",
+  "collection.edit.tabs.source.notifications.discarded.content": 'Die Änderungen wurden verworfen. Bitte klicken Sie auf "Rückgängig", um sie wieder einzusetzen.',
 
   // "collection.edit.tabs.source.notifications.discarded.title": "Changed discarded",
   "collection.edit.tabs.source.notifications.discarded.title": "Änderungen verworfen",
@@ -1245,8 +1203,6 @@
   // "collection.edit.tabs.source.title": "Collection Edit - Content Source",
   "collection.edit.tabs.source.title": "Sammlung bearbeiten - Bezugsquelle für den Inhalt",
 
-
-
   // "collection.edit.template.add-button": "Add",
   "collection.edit.template.add-button": "Hinzufügen",
 
@@ -1263,7 +1219,7 @@
   "collection.edit.template.edit-button": "Bearbeiten",
 
   // "collection.edit.template.head": "Edit Template Item for Collection \"{{ collection }}\"",
-  "collection.edit.template.head": "Itemvorlage für Sammlung \"{{ collection }}\" bearbeiten",
+  "collection.edit.template.head": 'Itemvorlage für Sammlung "{{ collection }}" bearbeiten',
 
   // "collection.edit.template.label": "Template item",
   "collection.edit.template.label": "Itemvorlage",
@@ -1276,8 +1232,6 @@
 
   // "collection.edit.template.title": "Edit Template Item",
   "collection.edit.template.title": "Metadatenvorlage bearbeiten",
-
-
 
   // "collection.form.abstract": "Short Description",
   "collection.form.abstract": "Kurzbeschreibung",
@@ -1303,12 +1257,8 @@
   // "collection.form.title": "Name",
   "collection.form.title": "Name",
 
-
-
   // "collection.listelement.badge": "Collection",
   "collection.listelement.badge": "Sammlung",
-
-
 
   // "collection.page.browse.recent.head": "Recent Submissions",
   "collection.page.browse.recent.head": "Neueste Veröffentlichungen",
@@ -1328,8 +1278,6 @@
   // "collection.page.news": "News",
   "collection.page.news": "Neuigkeiten",
 
-
-
   // "collection.select.confirm": "Confirm selected",
   "collection.select.confirm": "Auswahl bestätigen",
 
@@ -1338,8 +1286,6 @@
 
   // "collection.select.table.title": "Title",
   "collection.select.table.title": "Titel",
-
-
 
   // "collection.source.controls.import.running": "Importing...",
   "collection.source.controls.import.running": "Importiere...",
@@ -1359,8 +1305,6 @@
   // "collection.source.update.notifications.error.title": "Server Error",
   "collection.source.update.notifications.error.title": "Serverfehler",
 
-
-
   // "community.edit.logo.delete-undo.title": "Undo delete",
   "community.edit.logo.delete-undo.title": "Löschen rückgängig machen",
 
@@ -1378,8 +1322,6 @@
 
   // "communityList.showMore": "Show More",
   "communityList.showMore": "Mehr anzeigen",
-
-
 
   // "community.create.head": "Create a Community",
   "community.create.head": "Bereich anlegen",
@@ -1409,7 +1351,7 @@
   "community.delete.notification.success": "Der Bereich wurde erfolgreich gelöscht.",
 
   // "community.delete.text": "Are you sure you want to delete community \"{{ dso }}\"",
-  "community.delete.text": "Sind Sie sicher, dass Sie den Bereich \"{{ dso }}\" löschen möchten?",
+  "community.delete.text": 'Sind Sie sicher, dass Sie den Bereich "{{ dso }}" löschen möchten?',
 
   // "community.edit.delete": "Delete this community",
   "community.edit.delete": "Diesen Bereich löschen",
@@ -1419,7 +1361,6 @@
 
   // "community.edit.breadcrumbs": "Edit Community",
   "community.edit.breadcrumbs": "Bereich bearbeiten",
-
 
   // "community.edit.logo.label": "Community logo",
   "community.edit.logo.label": "Bereichslogo",
@@ -1442,8 +1383,6 @@
   // "community.edit.logo.upload": "Drop a Community Logo to upload",
   "community.edit.logo.upload": "Ziehen Sie ein Bereichslogo herüber, um es hochzuladen",
 
-
-
   // "community.edit.notifications.success": "Successfully edited the Community",
   "community.edit.notifications.success": "Bereich erfolgreich bearbeitet",
 
@@ -1455,8 +1394,6 @@
 
   // "community.edit.return": "Return",
   "community.edit.return": "Zurück",
-
-
 
   // "community.edit.tabs.curate.head": "Curate",
   "community.edit.tabs.curate.head": "Datenpflege",
@@ -1482,12 +1419,8 @@
   // "community.edit.tabs.authorizations.title": "Community Edit - Authorizations",
   "community.edit.tabs.authorizations.title": "Bereich bearbeiten - Berechtigungen",
 
-
-
   // "community.listelement.badge": "Community",
   "community.listelement.badge": "Bereich",
-
-
 
   // "comcol-role.edit.no-group": "None",
   "comcol-role.edit.no-group": "Keine",
@@ -1501,13 +1434,11 @@
   // "comcol-role.edit.delete": "Delete",
   "comcol-role.edit.delete": "Löschen",
 
-
   // "comcol-role.edit.community-admin.name": "Administrators",
   "comcol-role.edit.community-admin.name": "Administrator:innen",
 
   // "comcol-role.edit.collection-admin.name": "Administrators",
   "comcol-role.edit.collection-admin.name": "Administrator:innen",
-
 
   // "comcol-role.edit.community-admin.description": "Community administrators can create sub-communities or collections, and manage or assign management for those sub-communities or collections. In addition, they decide who can submit items to any sub-collections, edit item metadata (after submission), and add (map) existing items from other collections (subject to authorization).",
   "comcol-role.edit.community-admin.description": "Community-Administrator:innen können Teilbereiche oder Sammlungen erstellen, verwalten oder die Verwaltung anderen zuweisen. Darüber hinaus entscheiden sie, wer Items zu einer Teilsammlung einreichen, Item-Metadaten bearbeiten (nach der Einreichung) und bestehende Items von anderen Sammlungen verknüpfen kann (vorbehaltlich einer Berechtigung).",
@@ -1515,13 +1446,11 @@
   // "comcol-role.edit.collection-admin.description": "Collection administrators decide who can submit items to the collection, edit item metadata (after submission), and add (map) existing items from other collections to this collection (subject to authorization for that collection).",
   "comcol-role.edit.collection-admin.description": "Sammlungsadministrator:innen entscheiden, wer Items zu einer Sammlung einreichen, Item-Metadaten bearbeiten (nach der Einreichung) and und bestehende Items von anderen Sammlungen mit dieser Sammlung verknüpfen kann (vorbehaltlich einer Berechtigung für diese Sammlung).",
 
-
   // "comcol-role.edit.submitters.name": "Submitters",
   "comcol-role.edit.submitters.name": "Einreichende",
 
   // "comcol-role.edit.submitters.description": "The E-People and Groups that have permission to submit new items to this collection.",
   "comcol-role.edit.submitters.description": "Personen und Gruppen, die neue Items für diese Sammlung einreichen dürfen",
-
 
   // "comcol-role.edit.item_read.name": "Default item read access",
   "comcol-role.edit.item_read.name": "Standardeinstellungen für den Lesezugriff auf Items",
@@ -1532,7 +1461,6 @@
   // "comcol-role.edit.item_read.anonymous-group": "Default read for incoming items is currently set to Anonymous.",
   "comcol-role.edit.item_read.anonymous-group": "Freigeschaltete Items sind standardmäßig für jede:n öffentlich sichtbar.",
 
-
   // "comcol-role.edit.bitstream_read.name": "Default bitstream read access",
   "comcol-role.edit.bitstream_read.name": "Standardeinstellungen für den Lesezugriff auf Dateien",
 
@@ -1542,13 +1470,11 @@
   // "comcol-role.edit.bitstream_read.anonymous-group": "Default read for incoming bitstreams is currently set to Anonymous.",
   "comcol-role.edit.bitstream_read.anonymous-group": "Freigeschaltete Dateien sind standardmäßig für jede:n öffentlich sichtbar.",
 
-
   // "comcol-role.edit.editor.name": "Editors",
   "comcol-role.edit.editor.name": "Redakteur:innen",
 
   // "comcol-role.edit.editor.description": "Editors are able to edit the metadata of incoming submissions, and then accept or reject them.",
   "comcol-role.edit.editor.description": "Die Redakteure können die Metadaten der eingehenden Beiträge bearbeiten und sie dann annehmen oder ablehnen.",
-
 
   // "comcol-role.edit.finaleditor.name": "Final editors",
   "comcol-role.edit.finaleditor.name": "Endredakteur:innen",
@@ -1556,14 +1482,11 @@
   // "comcol-role.edit.finaleditor.description": "Final editors are able to edit the metadata of incoming submissions, but will not be able to reject them.",
   "comcol-role.edit.finaleditor.description": "Die Endredakteur:innen können die Metadaten der eingehenden Beiträge bearbeiten, sie können sie jedoch nicht ablehnen.",
 
-
   // "comcol-role.edit.reviewer.name": "Reviewers",
   "comcol-role.edit.reviewer.name": "Prüfer:innen",
 
   // "comcol-role.edit.reviewer.description": "Reviewers are able to accept or reject incoming submissions. However, they are not able to edit the submission's metadata.",
   "comcol-role.edit.reviewer.description": "Die Prüfer:innen können eingehende Beiträge annehmen oder ablehnen. Sie können jedoch nicht die Metadaten der Einreichung bearbeiten.",
-
-
 
   // "community.form.abstract": "Short Description",
   "community.form.abstract": "Kurzbeschreibung",
@@ -1603,8 +1526,6 @@
 
   // "community.sub-community-list.head": "Communities of this Community",
   "community.sub-community-list.head": "Teilbereiche in diesem Bereich",
-
-
 
   // "cookies.consent.accept-all": "Accept all",
   "cookies.consent.accept-all": "Alle Cookies akzeptieren",
@@ -1654,14 +1575,11 @@
   // "cookies.consent.content-modal.title": "Information that we collect",
   "cookies.consent.content-modal.title": "Information, die wir sammeln",
 
-
-
   // "cookies.consent.app.title.authentication": "Authentication",
   "cookies.consent.app.title.authentication": "Authentifizierung",
 
   // "cookies.consent.app.description.authentication": "Required for signing you in",
   "cookies.consent.app.description.authentication": "Erforderlich für Ihre Anmeldung",
-
 
   // "cookies.consent.app.title.preferences": "Preferences",
   "cookies.consent.app.title.preferences": "Präferenzen",
@@ -1669,15 +1587,11 @@
   // "cookies.consent.app.description.preferences": "Required for saving your preferences",
   "cookies.consent.app.description.preferences": "Erforderlich zum Speichern Ihrer Präferenzen",
 
-
-
   // "cookies.consent.app.title.acknowledgement": "Acknowledgement",
   "cookies.consent.app.title.acknowledgement": "Bestätigung",
 
   // "cookies.consent.app.description.acknowledgement": "Required for saving your acknowledgements and consents",
   "cookies.consent.app.description.acknowledgement": "Erforderlich für die Speicherung Ihrer Bestätigungen und Einwilligungen",
-
-
 
   // "cookies.consent.app.title.google-analytics": "Google Analytics",
   "cookies.consent.app.title.google-analytics": "Google Analytics",
@@ -1685,14 +1599,11 @@
   // "cookies.consent.app.description.google-analytics": "Allows us to track statistical data",
   "cookies.consent.app.description.google-analytics": "Gestattet es uns, statistische Daten zu erheben",
 
-
-
   // "cookies.consent.purpose.functional": "Functional",
   "cookies.consent.purpose.functional": "Funktionell",
 
   // "cookies.consent.purpose.statistical": "Statistical",
   "cookies.consent.purpose.statistical": "Statistisch",
-
 
   // "curation-task.task.checklinks.label":  "Check Links in Metadata",
   "curation-task.task.checklinks.label": "Links in Metadaten prüfen",
@@ -1739,10 +1650,8 @@
   // "curation.form.handle.hint": "Hint: Enter [your-handle-prefix]/0 to run a task across entire site (not all tasks may support this capability)",
   "curation.form.handle.hint": "Tipp: Geben Sie [your-handle-prefix]/0 ein, um eine Aufgabe für die ganze Website auszuführen. Nicht alle Aufgaben unterstützen diese Funktion.",
 
-
-
   // "deny-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I regret to inform you that it's not possible to send you a copy of the file(s) you have requested, concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
-  "deny-request-copy.email.message": "Sehr geehrte:r {{ recipientName }},\nLeider kann ich Ihnen die angeforderte Datei zu meiner Veröffentlichung \"{{ itemUrl }}\" ({{ itemName }}) nicht schicken.\n\nMit freundlichen Grüßen\n{{ authorName }} <{{ authorEmail }}>",
+  "deny-request-copy.email.message": 'Sehr geehrte:r {{ recipientName }},\nLeider kann ich Ihnen die angeforderte Datei zu meiner Veröffentlichung "{{ itemUrl }}" ({{ itemName }}) nicht schicken.\n\nMit freundlichen Grüßen\n{{ authorName }} <{{ authorEmail }}>',
 
   // "deny-request-copy.error": "An error occurred",
   "deny-request-copy.error": "Es ist ein Fehler aufgetreten.",
@@ -1810,8 +1719,6 @@
   // "dso-selector.set-scope.community.input-header": "Search for a community or collection",
   "dso-selector.set-scope.community.input-header": "Suche Bereich oder Sammlung",
 
-
-
   // "confirmation-modal.export-metadata.header": "Export metadata for {{ dsoName }}",
   "confirmation-modal.export-metadata.header": "Exportieren der Metadaten für {{ dsoName }}",
 
@@ -1825,17 +1732,16 @@
   "confirmation-modal.export-metadata.confirm": "Exportieren",
 
   // "confirmation-modal.delete-eperson.header": "Delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.header": "Person \"{{ dsoName }}\" löschen",
+  "confirmation-modal.delete-eperson.header": 'Person "{{ dsoName }}" löschen',
 
   // "confirmation-modal.delete-eperson.info": "Are you sure you want to delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.info": "Möchten Sie die Person \"{{ dsoName }}\" wirklich löschen?",
+  "confirmation-modal.delete-eperson.info": 'Möchten Sie die Person "{{ dsoName }}" wirklich löschen?',
 
   // "confirmation-modal.delete-eperson.cancel": "Cancel",
   "confirmation-modal.delete-eperson.cancel": "Abbrechen",
 
   // "confirmation-modal.delete-eperson.confirm": "Delete",
   "confirmation-modal.delete-eperson.confirm": "Löschen",
-
 
   // "dso.name.untitled": "Untitled",
   "dso.name.untitled": "Unbenannt",
@@ -1862,7 +1768,7 @@
   "error.default": "Fehler",
 
   // "error.invalid-search-query": "Search query is not valid. Please check <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> best practices for further information about this error.",
-  "error.invalid-search-query": "Ihre Suchanfrage ist ungültig. Weitere Informationen zur Syntax für Solr-Queries finden Sie <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">hier</a>.",
+  "error.invalid-search-query": 'Ihre Suchanfrage ist ungültig. Weitere Informationen zur Syntax für Solr-Queries finden Sie <a href="https://solr.apache.org/guide/query-syntax-and-parsing.html" target="_blank">hier</a>.',
 
   // "error.item": "Error fetching item",
   "error.item": "Fehler beim Laden des Items",
@@ -1909,15 +1815,11 @@
   // "error.validation.filerequired": "The file upload is mandatory",
   "error.validation.filerequired": "Das Hochladen einer Datei ist erforderlich.",
 
-
-
   // "error.validation.required": "This field is required",
   "error.validation.required": "Dieses Feld darf nicht leer bleiben.",
 
   // "file-section.error.header": "Error obtaining files for this item",
   "file-section.error.header": "Fehler beim Abrufen der Dateien für dieses Item",
-
-
 
   // "footer.copyright": "copyright © 2002-{{ year }}",
   "footer.copyright": "Copyright © 2002-{{ year }}",
@@ -1939,8 +1841,6 @@
 
   // "footer.link.end-user-agreement":"End User Agreement",
   "footer.link.end-user-agreement": "Endnutzervereinbarung",
-
-
 
   // "forgot-email.form.header": "Forgot Password",
   "forgot-email.form.header": "Passwort vergessen",
@@ -1974,8 +1874,6 @@
 
   // "forgot-email.form.error.content": "An error occured when registering the following email address: {{ email }}",
   "forgot-email.form.error.content": "Bei der Registrierung der E-Mail-Adresse {{ email }} ist ein Fehler aufgetreten.",
-
-
 
   // "forgot-password.title": "Forgot Password",
   "forgot-password.title": "Passwort vergessen",
@@ -2021,8 +1919,6 @@
 
   // "forgot-password.form.submit": "Submit password",
   "forgot-password.form.submit": "Passwort abschicken",
-
-
 
   // "form.add": "Add",
   "form.add": "Hinzufügen",
@@ -2099,8 +1995,6 @@
   // "form.submit": "Submit",
   "form.submit": "Abschicken",
 
-
-
   // "grant-deny-request-copy.deny": "Don't send copy",
   "grant-deny-request-copy.deny": "Anfrage ablehnen",
 
@@ -2138,7 +2032,7 @@
   "grant-deny-request-copy.intro1": "Wenn Sie ein:e Autor:in des Dokuments <a href='{{ url }}'>{{ name }}</a> sind, wählen Sie bitte eine der Antwortmöglichkeiten aus#.",
 
   // "grant-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I have the pleasure to send you in attachment a copy of the file(s) concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
-  "grant-request-copy.email.message": "Sehr geehrte:r {{ recipientName }}, vielen Dank für Ihre Anfrage. Gerne schicke ich Ihnen die Datei zu meiner Veröffentlichung: \"{{ itemUrl }}\" ({{ itemName }}). \nMit freundlichen Grüßen,\n{{ authorName }} <{{ authorEmail }}>",
+  "grant-request-copy.email.message": 'Sehr geehrte:r {{ recipientName }}, vielen Dank für Ihre Anfrage. Gerne schicke ich Ihnen die Datei zu meiner Veröffentlichung: "{{ itemUrl }}" ({{ itemName }}). \nMit freundlichen Grüßen,\n{{ authorName }} <{{ authorEmail }}>',
 
   // "home.description": "",
   "home.description": "",
@@ -2157,8 +2051,6 @@
 
   // "home.top-level-communities.help": "Select a community to browse its collections.",
   "home.top-level-communities.help": "Wählen Sie einen Bereich, um dessen Inhalt anzusehen.",
-
-
 
   // "info.end-user-agreement.accept": "I have read and I agree to the End User Agreement",
   "info.end-user-agreement.accept": "Ich habe die Endnutzer-Vereinbarung gelesen und stimme ihr zu.",
@@ -2193,15 +2085,11 @@
   // "info.privacy.title": "Privacy Statement",
   "info.privacy.title": "Datenschutzerklärung",
 
-
-
   // "item.alerts.private": "This item is private",
   "item.alerts.private": "Dieses Item ist nicht öffentlich sichtbar.",
 
   // "item.alerts.withdrawn": "This item has been withdrawn",
   "item.alerts.withdrawn": "Dieses Item wurde zurückgezogen.",
-
-
 
   // "item.edit.authorizations.heading": "With this editor you can view and alter the policies of an item, plus alter policies of individual item components: bundles and bitstreams. Briefly, an item is a container of bundles, and bundles are containers of bitstreams. Containers usually have ADD/REMOVE/READ/WRITE policies, while bitstreams only have READ/WRITE policies.",
   "item.edit.authorizations.heading": "Mit diesem Editor können Sie die Richtlinien für Items sowie für einzelne Item-Komponenten (Pakete und Bitstreams) anzeigen und ändern. Ein Item ist ein Container für Pakete, und ein Paket ist ein Container für Bitstreams. Container haben normalerweise ADD/REMOVE/READ/WRITE-Richtlinien, während Bitstreams nur READ/WRITE-Richtlinien haben.",
@@ -2209,15 +2097,11 @@
   // "item.edit.authorizations.title": "Edit item's Policies",
   "item.edit.authorizations.title": "Item-Richtlinien bearbeiten",
 
-
-
   // "item.badge.private": "Private",
   "item.badge.private": "Verborgen",
 
   // "item.badge.withdrawn": "Withdrawn",
   "item.badge.withdrawn": "Zurückgezogen",
-
-
 
   // "item.bitstreams.upload.bundle": "Bundle",
   "item.bitstreams.upload.bundle": "Bündel",
@@ -2251,8 +2135,6 @@
 
   // "item.bitstreams.upload.title": "Upload bitstream",
   "item.bitstreams.upload.title": "Datei hochladen",
-
-
 
   // "item.edit.bitstreams.bundle.edit.buttons.upload": "Upload",
   "item.edit.bitstreams.bundle.edit.buttons.upload": "Hochladen",
@@ -2288,7 +2170,7 @@
   "item.edit.bitstreams.edit.buttons.undo": "Änderungen rückgängig machen",
 
   // "item.edit.bitstreams.empty": "This item doesn't contain any bitstreams. Click the upload button to create one.",
-  "item.edit.bitstreams.empty": "Dieses Item enthält keine Dateien. Klicken Sie auf das Feld \"Hochladen\", um eine Datei hinzuzufügen.",
+  "item.edit.bitstreams.empty": 'Dieses Item enthält keine Dateien. Klicken Sie auf das Feld "Hochladen", um eine Datei hinzuzufügen.',
 
   // "item.edit.bitstreams.headers.actions": "Actions",
   "item.edit.bitstreams.headers.actions": "Aktionen",
@@ -2306,7 +2188,7 @@
   "item.edit.bitstreams.headers.name": "Name",
 
   // "item.edit.bitstreams.notifications.discarded.content": "Your changes were discarded. To reinstate your changes click the 'Undo' button",
-  "item.edit.bitstreams.notifications.discarded.content": "Ihre Änderungen wurden verworfen. Um sie wiederherzustellen, klicken Sie bitte auf \"Rückgängig\".",
+  "item.edit.bitstreams.notifications.discarded.content": 'Ihre Änderungen wurden verworfen. Um sie wiederherzustellen, klicken Sie bitte auf "Rückgängig".',
 
   // "item.edit.bitstreams.notifications.discarded.title": "Changes discarded",
   "item.edit.bitstreams.notifications.discarded.title": "Änderungen verworfen",
@@ -2344,8 +2226,6 @@
   // "item.edit.bitstreams.upload-button": "Upload",
   "item.edit.bitstreams.upload-button": "Hochladen",
 
-
-
   // "item.edit.delete.cancel": "Cancel",
   "item.edit.delete.cancel": "Abbrechen",
 
@@ -2370,7 +2250,6 @@
   // "item.edit.breadcrumbs": "Edit Item",
   "item.edit.breadcrumbs": "Item bearbeiten",
 
-
   // "item.edit.tabs.mapper.head": "Collection Mapper",
   "item.edit.tabs.mapper.head": "Spiegeln",
 
@@ -2393,7 +2272,7 @@
   "item.edit.item-mapper.head": "Item spiegeln - Spiegelt ein Item in andere Sammlungen",
 
   // "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
-  "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
+  "item.edit.item-mapper.item": 'Item: "<b>{{name}}</b>"',
 
   // "item.edit.item-mapper.no-search": "Please enter a query to search",
   "item.edit.item-mapper.no-search": "Bitte geben Sie einen Suchbegriff ein",
@@ -2428,8 +2307,6 @@
   // "item.edit.item-mapper.tabs.map": "Map new collections",
   "item.edit.item-mapper.tabs.map": "Neue Sammlungen spiegeln",
 
-
-
   // "item.edit.metadata.add-button": "Add",
   "item.edit.metadata.add-button": "Hinzufügen",
 
@@ -2449,7 +2326,7 @@
   "item.edit.metadata.edit.buttons.unedit": "Bearbeitung beenden",
 
   // "item.edit.metadata.empty": "The item currently doesn't contain any metadata. Click Add to start adding a metadata value.",
-  "item.edit.metadata.empty": "Das Item enthält derzeit keine Metadaten. Klicken Sie auf \"Hinzufügen\", um Metadaten zu ergänzen.",
+  "item.edit.metadata.empty": 'Das Item enthält derzeit keine Metadaten. Klicken Sie auf "Hinzufügen", um Metadaten zu ergänzen.',
 
   // "item.edit.metadata.headers.edit": "Edit",
   "item.edit.metadata.headers.edit": "Bearbeiten",
@@ -2467,7 +2344,7 @@
   "item.edit.metadata.metadatafield.invalid": "Bitte wählen Sie ein gültiges Metadatenfeld",
 
   // "item.edit.metadata.notifications.discarded.content": "Your changes were discarded. To reinstate your changes click the 'Undo' button",
-  "item.edit.metadata.notifications.discarded.content": "Ihre Änderungen wurden verworfen. Um sie wiederherzustellen, klicken Sie bitte auf \"Rückgängig\".",
+  "item.edit.metadata.notifications.discarded.content": 'Ihre Änderungen wurden verworfen. Um sie wiederherzustellen, klicken Sie bitte auf "Rückgängig".',
 
   // "item.edit.metadata.notifications.discarded.title": "Changed discarded",
   "item.edit.metadata.notifications.discarded.title": "Änderungen verworfen",
@@ -2499,8 +2376,6 @@
   // "item.edit.metadata.save-button": "Save",
   "item.edit.metadata.save-button": "Speichern",
 
-
-
   // "item.edit.modify.overview.field": "Field",
   "item.edit.modify.overview.field": "Feld",
 
@@ -2509,8 +2384,6 @@
 
   // "item.edit.modify.overview.value": "Value",
   "item.edit.modify.overview.value": "Wert",
-
-
 
   // "item.edit.move.cancel": "Cancel",
   "item.edit.move.cancel": "Abbrechen",
@@ -2545,8 +2418,6 @@
   // "item.edit.move.title": "Move item",
   "item.edit.move.title": "Item verschieben",
 
-
-
   // "item.edit.private.cancel": "Cancel",
   "item.edit.private.cancel": "Abbrechen",
 
@@ -2564,8 +2435,6 @@
 
   // "item.edit.private.success": "The item is now private",
   "item.edit.private.success": "Dieses Items ist nicht öffentlich sichtbar",
-
-
 
   // "item.edit.public.cancel": "Cancel",
   "item.edit.public.cancel": "Abbrechen",
@@ -2585,8 +2454,6 @@
   // "item.edit.public.success": "The item is now public",
   "item.edit.public.success": "Das Item ist nun öffentlich sichtbar.",
 
-
-
   // "item.edit.reinstate.cancel": "Cancel",
   "item.edit.reinstate.cancel": "Abbrechen",
 
@@ -2605,8 +2472,6 @@
   // "item.edit.reinstate.success": "The item was reinstated successfully",
   "item.edit.reinstate.success": "Das Item wurde wiederhergestellt.",
 
-
-
   // "item.edit.relationships.discard-button": "Discard",
   "item.edit.relationships.discard-button": "Abbrechen",
 
@@ -2623,7 +2488,7 @@
   "item.edit.relationships.no-relationships": "Keine Beziehungen",
 
   // "item.edit.relationships.notifications.discarded.content": "Your changes were discarded. To reinstate your changes click the 'Undo' button",
-  "item.edit.relationships.notifications.discarded.content": "Ihre Änderungen wurden verworfen. Um sie wiederherzustellen, klicken Sie bitte auf \"Rückgängig\".",
+  "item.edit.relationships.notifications.discarded.content": 'Ihre Änderungen wurden verworfen. Um sie wiederherzustellen, klicken Sie bitte auf "Rückgängig".',
 
   // "item.edit.relationships.notifications.discarded.title": "Changes discarded",
   "item.edit.relationships.notifications.discarded.title": "Änderungen verworfen",
@@ -2651,8 +2516,6 @@
 
   // "item.edit.relationships.no-entity-type": "Add 'dspace.entity.type' metadata to enable relationships for this item",
   "item.edit.relationships.no-entity-type": "Fügt den Metadaten 'dspace.entity.type' hinzu, damit Beziehungen für dieses Item angelegt werden können.",
-
-
 
   // "item.edit.tabs.bitstreams.head": "Bitstreams",
   "item.edit.tabs.bitstreams.head": "Dateien",
@@ -2762,8 +2625,6 @@
   // "item.edit.tabs.view.title": "Item Edit -  View",
   "item.edit.tabs.view.title": "Item bearbeiten -  Ansicht",
 
-
-
   // "item.edit.withdraw.cancel": "Cancel",
   "item.edit.withdraw.cancel": "Abbrechen",
 
@@ -2781,8 +2642,6 @@
 
   // "item.edit.withdraw.success": "The item was withdrawn successfully",
   "item.edit.withdraw.success": "Das Item wurde zurückgezogen.",
-
-
 
   // "item.listelement.badge": "Item",
   "item.listelement.badge": "Item",
@@ -2810,8 +2669,6 @@
 
   // "item.search.title": "Item Search",
   "item.search.title": "Item-Suche",
-
-
 
   // "item.page.abstract": "Abstract",
   "item.page.abstract": "Zusammenfassung",
@@ -2930,7 +2787,6 @@
   // "item.preview.person.identifier.orcid": "ORCID:",
   "item.preview.person.identifier.orcid": "ORCID:",
 
-
   // "item.select.confirm": "Confirm selected",
   "item.select.confirm": "Auswahl bestätigen",
 
@@ -2945,7 +2801,6 @@
 
   // "item.select.table.title": "Title",
   "item.select.table.title": "Titel",
-
 
   // "item.version.history.empty": "There are no other versions for this item yet.",
   "item.version.history.empty": "Dieses Item hat noch keine anderen Versionen.",
@@ -2974,12 +2829,8 @@
   // "item.version.history.table.summary": "Summary",
   "item.version.history.table.summary": "Zusammenfassung",
 
-
-
   // "item.version.notice": "This is not the latest version of this item. The latest version can be found <a href='{{destination}}'>here</a>.",
   "item.version.notice": "Dies ist nicht die neueste Version dieses Items. Die neueste Version finden Sie unter <a href='{{destination}}'>hier</a>.",
-
-
 
   // "journal.listelement.badge": "Journal",
   "journal.listelement.badge": "Zeitschrift",
@@ -3008,8 +2859,6 @@
   // "journal.search.title": "Journal Search",
   "journal.search.title": "Zeitschriftensuche",
 
-
-
   // "journalissue.listelement.badge": "Journal Issue",
   "journalissue.listelement.badge": "Zeitschriftenheft",
 
@@ -3037,8 +2886,6 @@
   // "journalissue.page.titleprefix": "Journal Issue: ",
   "journalissue.page.titleprefix": "Zeitschriftenheft:",
 
-
-
   // "journalvolume.listelement.badge": "Journal Volume",
   "journalvolume.listelement.badge": "Zeitschriftenband",
 
@@ -3056,8 +2903,6 @@
 
   // "journalvolume.page.volume": "Volume",
   "journalvolume.page.volume": "Band",
-
-
 
   // "loading.bitstream": "Loading bitstream...",
   "loading.bitstream": "Lade Datei...",
@@ -3113,8 +2958,6 @@
   // "loading.top-level-communities": "Loading top-level communities...",
   "loading.top-level-communities": "Lade Hauptbereiche...",
 
-
-
   // "login.form.email": "Email address",
   "login.form.email": "E-Mail-Adresse",
 
@@ -3145,8 +2988,6 @@
   // "login.breadcrumbs": "Login",
   "login.breadcrumbs": "Anmelden",
 
-
-
   // "logout.form.header": "Log out from DSpace",
   "logout.form.header": "Abmelden",
 
@@ -3156,15 +2997,11 @@
   // "logout.title": "Logout",
   "logout.title": "Abmelden",
 
-
-
   // "menu.header.admin": "Admin",
   "menu.header.admin": "Administration",
 
   // "menu.header.image.logo": "Repository logo",
   "menu.header.image.logo": "Logo des Repositoriums",
-
-
 
   // "menu.section.access_control": "Access Control",
   "menu.section.access_control": "Zugriffskontrolle",
@@ -3178,12 +3015,8 @@
   // "menu.section.access_control_people": "People",
   "menu.section.access_control_people": "Personen",
 
-
-
   // "menu.section.admin_search": "Admin Search",
   "menu.section.admin_search": "Admin-Suche",
-
-
 
   // "menu.section.browse_community": "This Community",
   "menu.section.browse_community": "Dieser Bereich",
@@ -3215,15 +3048,11 @@
   // "menu.section.browse_global_communities_and_collections": "Communities & Collections",
   "menu.section.browse_global_communities_and_collections": "Bereiche & Sammlungen",
 
-
-
   // "menu.section.control_panel": "Control Panel",
   "menu.section.control_panel": "Kontrollfeld",
 
   // "menu.section.curation_task": "Curation Task",
   "menu.section.curation_task": "Datenpflegeroutinen",
-
-
 
   // "menu.section.edit": "Edit",
   "menu.section.edit": "Bearbeiten",
@@ -3236,8 +3065,6 @@
 
   // "menu.section.edit_item": "Item",
   "menu.section.edit_item": "Item",
-
-
 
   // "menu.section.export": "Export",
   "menu.section.export": "Export",
@@ -3253,8 +3080,6 @@
 
   // "menu.section.export_metadata": "Metadata",
   "menu.section.export_metadata": "Metadaten",
-
-
 
   // "menu.section.icon.access_control": "Access Control menu section",
   "menu.section.icon.access_control": "Menübereich Zugriffskontrolle",
@@ -3298,8 +3123,6 @@
   // "menu.section.icon.unpin": "Unpin sidebar",
   "menu.section.icon.unpin": "Seitenbereich loslösen",
 
-
-
   // "menu.section.import": "Import",
   "menu.section.import": "Import",
 
@@ -3308,8 +3131,6 @@
 
   // "menu.section.import_metadata": "Metadata",
   "menu.section.import_metadata": "Metadaten",
-
-
 
   // "menu.section.new": "New",
   "menu.section.new": "Neu",
@@ -3329,20 +3150,14 @@
   // "menu.section.new_process": "Process",
   "menu.section.new_process": "Prozess",
 
-
-
   // "menu.section.pin": "Pin sidebar",
   "menu.section.pin": "Seitenleiste anheften",
 
   // "menu.section.unpin": "Unpin sidebar",
   "menu.section.unpin": "Seitenleiste loslösen",
 
-
-
   // "menu.section.processes": "Processes",
   "menu.section.processes": "Prozesse",
-
-
 
   // "menu.section.registries": "Registries",
   "menu.section.registries": "Referenzlisten",
@@ -3353,15 +3168,11 @@
   // "menu.section.registries_metadata": "Metadata",
   "menu.section.registries_metadata": "Metadaten",
 
-
-
   // "menu.section.statistics": "Statistics",
   "menu.section.statistics": "Statistiken",
 
   // "menu.section.statistics_task": "Statistics Task",
   "menu.section.statistics_task": "Statistikaufgaben",
-
-
 
   // "menu.section.toggle.access_control": "Toggle Access Control section",
   "menu.section.toggle.access_control": "Bereich Zugriffskontrolle umschalten",
@@ -3393,10 +3204,8 @@
   // "menu.section.toggle.statistics_task": "Toggle Statistics Task section",
   "menu.section.toggle.statistics_task": "Bereich Statistikaufgaben umschalten",
 
-
   // "menu.section.workflow": "Administer Workflow",
   "menu.section.workflow": "Geschäftsgänge verwalten",
-
 
   // "mydspace.description": "",
   "mydspace.description": "",
@@ -3521,8 +3330,6 @@
   // "mydspace.view-btn": "View",
   "mydspace.view-btn": "Anzeige",
 
-
-
   // "nav.browse.header": "All of DSpace",
   "nav.browse.header": "Das gesamte Repositorium",
 
@@ -3553,8 +3360,6 @@
   // "nav.stop-impersonating": "Stop impersonating EPerson",
   "nav.stop-impersonating": "Als Person ausloggen",
 
-
-
   // "orgunit.listelement.badge": "Organizational Unit",
   "orgunit.listelement.badge": "Organisationseinheit",
 
@@ -3579,8 +3384,6 @@
   // "orgunit.page.titleprefix": "Organizational Unit: ",
   "orgunit.page.titleprefix": "Organisationseinheit: ",
 
-
-
   // "pagination.results-per-page": "Results Per Page",
   "pagination.results-per-page": "Treffer pro Seite",
 
@@ -3592,8 +3395,6 @@
 
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Sortieroptionen",
-
-
 
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Person",
@@ -3636,8 +3437,6 @@
 
   // "person.search.title": "Person Search",
   "person.search.title": "Personensuche",
-
-
 
   // "process.new.select-parameters": "Parameters",
   "process.new.select-parameters": "Parameter",
@@ -3696,8 +3495,6 @@
   // "process.new.breadcrumbs": "Create a new process",
   "process.new.breadcrumbs": "Einen neuen Prozess erstellen",
 
-
-
   // "process.detail.arguments" : "Arguments",
   "process.detail.arguments": "Parameter",
 
@@ -3743,8 +3540,6 @@
   // "process.detail.create" : "Create similar process",
   "process.detail.create": "Erstelle ähnlichen Prozess",
 
-
-
   // "process.overview.table.finish" : "Finish time",
   "process.overview.table.finish": "Schlusszeit",
 
@@ -3771,7 +3566,6 @@
 
   // "process.overview.new": "New",
   "process.overview.new": "Neu",
-
 
   // "profile.breadcrumbs": "Update Profile",
   "profile.breadcrumbs": "Profil aktualisieren",
@@ -3863,8 +3657,6 @@
   // "profile.title": "Update Profile",
   "profile.title": "Profil aktualisieren",
 
-
-
   // "project.listelement.badge": "Research Project",
   "project.listelement.badge": "Forschungsprojekt",
 
@@ -3898,8 +3690,6 @@
   // "project.search.results.head": "Project Search Results",
   "project.search.results.head": "Suchergebnisse für Projekte",
 
-
-
   // "publication.listelement.badge": "Publication",
   "publication.listelement.badge": "Veröffentlichung",
 
@@ -3929,7 +3719,6 @@
 
   // "publication.search.title": "Publication Search",
   "publication.search.title": "Publikationssuche",
-
 
   // "register-email.title": "New user registration",
   "register-email.title": "Neu registrieren",
@@ -3997,7 +3786,6 @@
   // "register-page.create-profile.submit.success.head": "Registration completed",
   "register-page.create-profile.submit.success.head": "Registrierung abgeschlossen",
 
-
   // "register-page.registration.header": "New user registration",
   "register-page.registration.header": "Neues Konto anlegen",
 
@@ -4030,8 +3818,6 @@
 
   // "register-page.registration.error.content": "An error occured when registering the following email address: {{ email }}",
   "register-page.registration.error.content": "Bei der Registrierung der folgenden E-Mail-Adresse ist ein Fehler aufgetreten: {{ email }}",
-
-
 
   // "relationships.add.error.relationship-type.content": "No suitable match could be found for relationship type {{ type }} between the two items",
   "relationships.add.error.relationship-type.content": "Für den Beziehungstyp {{ type }} zwischen den beiden Items konnte keine passende Übereinstimmung gefunden werden",
@@ -4096,7 +3882,6 @@
   // "relationships.isFundingAgencyOf.OrgUnit": "Funder",
   "relationships.isFundingAgencyOf.OrgUnit": "Förderer",
 
-
   // "repository.image.logo": "Repository logo",
   "repository.image.logo": "Repository Logo",
 
@@ -4105,7 +3890,6 @@
 
   // "repository.title.prefixDSpace": "DSpace Angular ::",
   "repository.title.prefixDSpace": "DSpace Angular ::",
-
 
   // "resource-policies.add.button": "Add",
   "resource-policies.add.button": "Hinzufügen",
@@ -4257,8 +4041,6 @@
   // "resource-policies.table.headers.title.for.collection": "Policies for Collection",
   "resource-policies.table.headers.title.for.collection": "Richtlinien für Sammlungen",
 
-
-
   // "search.description": "",
   "search.description": "",
 
@@ -4321,8 +4103,6 @@
 
   // "search.filters.applied.f.withdrawn": "Withdrawn",
   "search.filters.applied.f.withdrawn": "Zurückgezogen",
-
-
 
   // "search.filters.filter.author.head": "Author",
   "search.filters.filter.author.head": "Autor:in",
@@ -4465,8 +4245,6 @@
   // "search.filters.filter.submitter.placeholder": "Submitter",
   "search.filters.filter.submitter.placeholder": "Einreichende:r",
 
-
-
   // "search.filters.entityType.JournalIssue": "Journal Issue",
   "search.filters.entityType.JournalIssue": "Zeitschriftenheft",
 
@@ -4509,14 +4287,11 @@
   // "search.filters.withdrawn.false": "No",
   "search.filters.withdrawn.false": "Nein",
 
-
   // "search.filters.head": "Filters",
   "search.filters.head": "Filter",
 
   // "search.filters.reset": "Reset filters",
   "search.filters.reset": "Filter zurücksetzen",
-
-
 
   // "search.form.search": "Search",
   "search.form.search": "Suche",
@@ -4529,7 +4304,6 @@
 
   // "search.form.scope.all": "All of DSpace",
   "search.form.scope.all": "Alles durchsuchen",
-
 
   // "search.results.head": "Search Results",
   "search.results.head": "Suchergebnisse",
@@ -4570,8 +4344,6 @@
   // "search.sidebar.settings.title": "Settings",
   "search.sidebar.settings.title": "Einstellungen",
 
-
-
   // "search.view-switch.show-detail": "Show detail",
   "search.view-switch.show-detail": "Detailanzeige",
 
@@ -4580,8 +4352,6 @@
 
   // "search.view-switch.show-list": "Show as list",
   "search.view-switch.show-list": "Als Liste anzeigen",
-
-
 
   // "sorting.ASC": "Ascending",
   "sorting.ASC": "Aufsteigend",
@@ -4652,7 +4422,6 @@
   // "statistics.table.header.views": "Views",
   "statistics.table.header.views": "Aufrufe",
 
-
   // "submission.edit.breadcrumbs": "Edit Submission",
   "submission.edit.breadcrumbs": "Einreichung bearbeiten",
 
@@ -4691,7 +4460,6 @@
 
   // "submission.general.save-later": "Save for later",
   "submission.general.save-later": "Für später speichern",
-
 
   // "submission.import-external.page.title": "Import metadata from an external source",
   "submission.import-external.page.title": "Importieren von Metadaten aus einer externen Quelle",
@@ -5066,7 +4834,7 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title.arxiv": "Suchergebnisse",
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Would you like to save \"{{ value }}\" as a name variant for this person so you and others can reuse it for future submissions? If you don't you can still use it for this submission.",
-  "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Möchten Sie die Namensvariante \"{{ value }}\" speichern, damit sie bei zukünftigen Veröffentlichungen erneut verwendet werden kann? Sie können die Variante bei dieser Veröffentlichung auch verwenden, ohne sie zu speichern.",
+  "submission.sections.describe.relationship-lookup.name-variant.notification.content": 'Möchten Sie die Namensvariante "{{ value }}" speichern, damit sie bei zukünftigen Veröffentlichungen erneut verwendet werden kann? Sie können die Variante bei dieser Veröffentlichung auch verwenden, ohne sie zu speichern.',
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Save a new name variant",
   "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Als Namensvariante speichern",
@@ -5137,8 +4905,6 @@
   // "submission.sections.general.sections_not_valid": "There are incomplete sections.",
   "submission.sections.general.sections_not_valid": "Es gibt unvollständige Abschnitte.",
 
-
-
   // "submission.sections.submit.progressbar.CClicense": "Creative commons license",
   "submission.sections.submit.progressbar.CClicense": "Creative commons license",
 
@@ -5162,8 +4928,6 @@
 
   // "submission.sections.submit.progressbar.upload": "Upload files",
   "submission.sections.submit.progressbar.upload": "Hochgeladene Dateien",
-
-
 
   // "submission.sections.upload.delete.confirm.cancel": "Cancel",
   "submission.sections.upload.delete.confirm.cancel": "Abbrechen",
@@ -5234,18 +4998,14 @@
   // "submission.sections.upload.upload-successful": "Upload successful",
   "submission.sections.upload.upload-successful": "Hochladen erfolgreich",
 
-
-
   // "submission.submit.title": "Submission",
   "submission.submit.title": "Einreichung",
-
-
 
   // "submission.workflow.generic.delete": "Delete",
   "submission.workflow.generic.delete": "Löschen",
 
   // "submission.workflow.generic.delete-help": "If you would to discard this item, select \"Delete\".  You will then be asked to confirm it.",
-  "submission.workflow.generic.delete-help": "Wenn Sie dieses Item verwerfen möchten, wählen Sie bitte \"Löschen\". Sie werden danach um Bestätigung gebeten.",
+  "submission.workflow.generic.delete-help": 'Wenn Sie dieses Item verwerfen möchten, wählen Sie bitte "Löschen". Sie werden danach um Bestätigung gebeten.',
 
   // "submission.workflow.generic.edit": "Edit",
   "submission.workflow.generic.edit": "Bearbeiten",
@@ -5259,13 +5019,11 @@
   // "submission.workflow.generic.view-help": "Select this option to view the item's metadata.",
   "submission.workflow.generic.view-help": "Wählen Sie diese Option, um die Metadaten des Items anzuzeigen.",
 
-
-
   // "submission.workflow.tasks.claimed.approve": "Approve",
   "submission.workflow.tasks.claimed.approve": "Zustimmen",
 
   // "submission.workflow.tasks.claimed.approve_help": "If you have reviewed the item and it is suitable for inclusion in the collection, select \"Approve\".",
-  "submission.workflow.tasks.claimed.approve_help": "Wenn Sie dieses Item begutachtet haben und die Aufnahme in die Sammlung befürworten, wählen Sie bitte \"Zustimmen\".",
+  "submission.workflow.tasks.claimed.approve_help": 'Wenn Sie dieses Item begutachtet haben und die Aufnahme in die Sammlung befürworten, wählen Sie bitte "Zustimmen".',
 
   // "submission.workflow.tasks.claimed.edit": "Edit",
   "submission.workflow.tasks.claimed.edit": "Bearbeiten",
@@ -5289,15 +5047,13 @@
   "submission.workflow.tasks.claimed.reject.submit": "Ablehnen",
 
   // "submission.workflow.tasks.claimed.reject_help": "If you have reviewed the item and found it is <strong>not</strong> suitable for inclusion in the collection, select \"Reject\".  You will then be asked to enter a message indicating why the item is unsuitable, and whether the submitter should change something and resubmit.",
-  "submission.workflow.tasks.claimed.reject_help": "Wenn Sie dieses Item begutachtet und für <strong>ungeeignet</strong> zur Aufnahme in die Sammlung befunden haben, wählen Sie bitte \"Ablehnen\". Sie können anschließend der:dem Einreichenden den Grund für die Ablehnung und mögliche Änderungswünsche für eine erneute Einreichung mitteilen.",
+  "submission.workflow.tasks.claimed.reject_help": 'Wenn Sie dieses Item begutachtet und für <strong>ungeeignet</strong> zur Aufnahme in die Sammlung befunden haben, wählen Sie bitte "Ablehnen". Sie können anschließend der:dem Einreichenden den Grund für die Ablehnung und mögliche Änderungswünsche für eine erneute Einreichung mitteilen.',
 
   // "submission.workflow.tasks.claimed.return": "Return to pool",
   "submission.workflow.tasks.claimed.return": "Zurück in den gemeinsamen Aufgabenbereich",
 
   // "submission.workflow.tasks.claimed.return_help": "Return the task to the pool so that another user may perform the task.",
   "submission.workflow.tasks.claimed.return_help": "Aufgabe in den Aufgabenpool zurückgeben, so dass jemand Anderes die Aufgabe übernehmen kann",
-
-
 
   // "submission.workflow.tasks.generic.error": "Error occurred during operation...",
   "submission.workflow.tasks.generic.error": "Ein Fehler ist aufgetreten...",
@@ -5310,8 +5066,6 @@
 
   // "submission.workflow.tasks.generic.success": "Operation successful",
   "submission.workflow.tasks.generic.success": "Aktion erfolgreich",
-
-
 
   // "submission.workflow.tasks.pool.claim": "Claim",
   "submission.workflow.tasks.pool.claim": "Übernehmen",
@@ -5330,8 +5084,6 @@
 
   // "submission.workspace.generic.view-help": "Select this option to view the item's metadata.",
   "submission.workspace.generic.view-help": "Wählen Sie diese Option, um die Metadaten des Items anzuzeigen.",
-
-
 
   // "thumbnail.default.alt": "Thumbnail Image",
   "thumbnail.default.alt": "Vorschaubild",
@@ -5357,11 +5109,8 @@
   // "thumbnail.person.placeholder": "No Profile Picture Available",
   "thumbnail.person.placeholder": "Profilbild nicht verfügbar",
 
-
   // "title": "DSpace",
-  "title": "DSpace",
-
-
+  title: "DSpace",
 
   // "vocabulary-treeview.header": "Hierarchical tree view",
   "vocabulary-treeview.header": "Hierarchische Baumansicht",
@@ -5383,8 +5132,6 @@
 
   // "vocabulary-treeview.tree.description.srsc": "Research Subject Categories",
   "vocabulary-treeview.tree.description.srsc": "Forschungsthemen-Kategorien",
-
-
 
   // "uploader.browse": "browse",
   "uploader.browse": "stöbern",
@@ -5411,7 +5158,6 @@
   // "virtual-metadata.delete-relationship.modal-head": "Select the items for which you want to save the virtual metadata as real metadata",
   "virtual-metadata.delete-relationship.modal-head": "Wählen Sie die Items aus, deren virtuelle Metadaten Sie als echte Metadaten speichern möchten.",
 
-
   // "workspace.search.results.head": "Your submissions",
   "workspace.search.results.head": "Ihre Veröffentlichungen",
 
@@ -5420,7 +5166,6 @@
 
   // "workflow.search.results.head": "Workflow tasks",
   "workflow.search.results.head": "Workflow-Aufgaben",
-
 
   // "workflow-item.delete.notification.success.title": "Deleted",
   "workflow-item.delete.notification.success.title": "Gelöscht",
@@ -5446,7 +5191,6 @@
   // "workflow-item.delete.button.confirm": "Delete",
   "workflow-item.delete.button.confirm": "Löschen",
 
-
   // "workflow-item.send-back.notification.success.title": "Sent back to submitter",
   "workflow-item.send-back.notification.success.title": "An die:den Einreichende:n zurückgeschickt",
 
@@ -5470,5 +5214,4 @@
 
   // "workflow-item.send-back.button.confirm": "Send back"
   "workflow-item.send-back.button.confirm": "Zurücksenden",
-
 }

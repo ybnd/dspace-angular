@@ -1,7 +1,4 @@
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { Store } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
@@ -24,10 +21,10 @@ describe('TruncatableService', () => {
   });
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-
       providers: [
         {
-          provide: Store, useValue: store,
+          provide: Store,
+          useValue: store,
         },
       ],
     }).compileComponents();
@@ -43,9 +40,10 @@ describe('TruncatableService', () => {
     });
 
     it('TruncatableCollapseAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new TruncatableCollapseAction(id1));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new TruncatableCollapseAction(id1),
+      );
     });
-
   });
 
   describe('when the expand method is triggered', () => {
@@ -54,8 +52,9 @@ describe('TruncatableService', () => {
     });
 
     it('TruncatableExpandAction should be dispatched to the store', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new TruncatableExpandAction(id2));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new TruncatableExpandAction(id2),
+      );
     });
   });
-
 });

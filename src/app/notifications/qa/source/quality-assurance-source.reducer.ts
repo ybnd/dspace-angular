@@ -38,7 +38,10 @@ const qualityAssuranceSourceInitialState: QualityAssuranceSourceState = {
  * @return QualityAssuranceSourceState
  *    the new state
  */
-export function qualityAssuranceSourceReducer(state = qualityAssuranceSourceInitialState, action: QualityAssuranceSourceActions): QualityAssuranceSourceState {
+export function qualityAssuranceSourceReducer(
+  state = qualityAssuranceSourceInitialState,
+  action: QualityAssuranceSourceActions,
+): QualityAssuranceSourceState {
   switch (action.type) {
     case QualityAssuranceSourceActionTypes.RETRIEVE_ALL_SOURCE: {
       return Object.assign({}, state, {

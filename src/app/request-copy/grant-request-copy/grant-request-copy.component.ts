@@ -1,17 +1,8 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { ItemRequestDataService } from '../../core/data/item-request-data.service';
@@ -61,9 +52,7 @@ export class GrantRequestCopyComponent implements OnInit {
     private translateService: TranslateService,
     private itemRequestService: ItemRequestDataService,
     private notificationsService: NotificationsService,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.itemRequestRD$ = this.route.data.pipe(
@@ -72,7 +61,9 @@ export class GrantRequestCopyComponent implements OnInit {
       redirectOn4xx(this.router, this.authService),
     );
 
-    this.subject$ = this.translateService.get('grant-request-copy.email.subject');
+    this.subject$ = this.translateService.get(
+      'grant-request-copy.email.subject',
+    );
   }
 
   /**
@@ -80,18 +71,30 @@ export class GrantRequestCopyComponent implements OnInit {
    * @param email Subject and contents of the message to send back to the user requesting the item
    */
   grant(email: RequestCopyEmail) {
-    this.itemRequestRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((itemRequest: ItemRequest) => this.itemRequestService.grant(itemRequest.token, email, this.suggestOpenAccess)),
-      getFirstCompletedRemoteData(),
-    ).subscribe((rd) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get('grant-request-copy.success'));
-        this.router.navigateByUrl('/');
-      } else {
-        this.notificationsService.error(this.translateService.get('grant-request-copy.error'), rd.errorMessage);
-      }
-    });
+    this.itemRequestRD$
+      .pipe(
+        getFirstSucceededRemoteDataPayload(),
+        switchMap((itemRequest: ItemRequest) =>
+          this.itemRequestService.grant(
+            itemRequest.token,
+            email,
+            this.suggestOpenAccess,
+          ),
+        ),
+        getFirstCompletedRemoteData(),
+      )
+      .subscribe((rd) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get('grant-request-copy.success'),
+          );
+          this.router.navigateByUrl('/');
+        } else {
+          this.notificationsService.error(
+            this.translateService.get('grant-request-copy.error'),
+            rd.errorMessage,
+          );
+        }
+      });
   }
-
 }

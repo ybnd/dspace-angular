@@ -6,10 +6,7 @@ import {
   RemoveFromIndexBySubstringAction,
   RemoveFromIndexByValueAction,
 } from './index.actions';
-import {
-  indexReducer,
-  MetaIndexState,
-} from './index.reducer';
+import { indexReducer, MetaIndexState } from './index.reducer';
 import { IndexName } from './index-name.model';
 
 class NullAction extends AddToIndexAction {
@@ -24,14 +21,18 @@ class NullAction extends AddToIndexAction {
 describe('requestReducer', () => {
   const key1 = '567a639f-f5ff-4126-807c-b7d0910808c8';
   const key2 = '1911e8a4-6939-490c-b58b-a5d70f8d91fb';
-  const val1 = 'https://dspace7.4science.it/dspace-spring-rest/api/core/items/567a639f-f5ff-4126-807c-b7d0910808c8';
-  const val2 = 'https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb';
+  const val1 =
+    'https://dspace7.4science.it/dspace-spring-rest/api/core/items/567a639f-f5ff-4126-807c-b7d0910808c8';
+  const val2 =
+    'https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb';
   const testState: MetaIndexState = {
     [IndexName.OBJECT]: {
       [key1]: val1,
-    }, [IndexName.ALTERNATIVE_OBJECT_LINK]: {
+    },
+    [IndexName.ALTERNATIVE_OBJECT_LINK]: {
       [key1]: val1,
-    }, [IndexName.REQUEST]: {
+    },
+    [IndexName.REQUEST]: {
       [key1]: val1,
     },
   };
@@ -51,7 +52,7 @@ describe('requestReducer', () => {
     expect(initialState).toEqual(Object.create(null));
   });
 
-  it('should add the \'key\' with the corresponding \'value\' to the correct substate, in response to an ADD action', () => {
+  it("should add the 'key' with the corresponding 'value' to the correct substate, in response to an ADD action", () => {
     const state = testState;
 
     const action = new AddToIndexAction(IndexName.REQUEST, key2, val2);
@@ -60,7 +61,7 @@ describe('requestReducer', () => {
     expect(newState[IndexName.REQUEST][key2]).toEqual(val2);
   });
 
-  it('should remove the given \'value\' from its corresponding \'key\' in the correct substate, in response to a REMOVE_BY_VALUE action', () => {
+  it("should remove the given 'value' from its corresponding 'key' in the correct substate, in response to a REMOVE_BY_VALUE action", () => {
     const state = testState;
 
     const action = new RemoveFromIndexByValueAction(IndexName.OBJECT, val1);
@@ -69,7 +70,7 @@ describe('requestReducer', () => {
     expect(newState[IndexName.OBJECT][key1]).toBeUndefined();
   });
 
-  it('should remove the given \'value\' from its corresponding \'key\' in the correct substate, in response to a REMOVE_BY_SUBSTRING action', () => {
+  it("should remove the given 'value' from its corresponding 'key' in the correct substate, in response to a REMOVE_BY_SUBSTRING action", () => {
     const state = testState;
 
     const action = new RemoveFromIndexBySubstringAction(IndexName.OBJECT, key1);

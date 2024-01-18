@@ -1,17 +1,11 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -70,9 +64,7 @@ export class CreateProfileComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private notificationsService: NotificationsService,
     private endUserAgreementService: EndUserAgreementService,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.registration$ = this.route.data.pipe(
@@ -83,7 +75,9 @@ export class CreateProfileComponent implements OnInit {
       this.email = registration.email;
       this.token = registration.token;
     });
-    this.activeLangs = environment.languages.filter((MyLangConfig) => MyLangConfig.active === true);
+    this.activeLangs = environment.languages.filter(
+      (MyLangConfig) => MyLangConfig.active === true,
+    );
 
     this.userInfoForm = this.formBuilder.group({
       firstName: new UntypedFormControl('', {
@@ -95,7 +89,6 @@ export class CreateProfileComponent implements OnInit {
       contactPhone: new UntypedFormControl(''),
       language: new UntypedFormControl(''),
     });
-
   }
 
   /**
@@ -177,19 +170,32 @@ export class CreateProfileComponent implements OnInit {
       }
 
       const eperson = Object.assign(new EPerson(), values);
-      this.ePersonDataService.createEPersonForToken(eperson, this.token).pipe(
-        getFirstCompletedRemoteData(),
-      ).subscribe((rd: RemoteData<EPerson>) => {
-        if (rd.hasSucceeded) {
-          this.notificationsService.success(this.translateService.get(this.NOTIFICATIONS_PREFIX + 'success.head'),
-            this.translateService.get(this.NOTIFICATIONS_PREFIX + 'success.content'));
-          this.store.dispatch(new AuthenticateAction(this.email, this.password));
-          this.router.navigate(['/home']);
-        } else {
-          this.notificationsService.error(this.translateService.get(this.NOTIFICATIONS_PREFIX + 'error.head'), rd.errorMessage);
-        }
-      });
+      this.ePersonDataService
+        .createEPersonForToken(eperson, this.token)
+        .pipe(getFirstCompletedRemoteData())
+        .subscribe((rd: RemoteData<EPerson>) => {
+          if (rd.hasSucceeded) {
+            this.notificationsService.success(
+              this.translateService.get(
+                this.NOTIFICATIONS_PREFIX + 'success.head',
+              ),
+              this.translateService.get(
+                this.NOTIFICATIONS_PREFIX + 'success.content',
+              ),
+            );
+            this.store.dispatch(
+              new AuthenticateAction(this.email, this.password),
+            );
+            this.router.navigate(['/home']);
+          } else {
+            this.notificationsService.error(
+              this.translateService.get(
+                this.NOTIFICATIONS_PREFIX + 'error.head',
+              ),
+              rd.errorMessage,
+            );
+          }
+        });
     }
   }
-
 }

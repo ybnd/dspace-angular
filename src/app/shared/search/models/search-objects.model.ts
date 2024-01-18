@@ -1,7 +1,4 @@
-import {
-  autoserializeAs,
-  inheritSerialization,
-} from 'cerialize';
+import { autoserializeAs, inheritSerialization } from 'cerialize';
 
 import { typedObject } from '../../../core/cache/builders/build-decorators';
 import { PaginatedList } from '../../../core/data/paginated-list.model';
@@ -17,7 +14,9 @@ import { SEARCH_OBJECTS } from './types/search-objects.resource-type';
 @typedObject
 @inheritSerialization(PaginatedList)
 @inheritSerialization(SearchQueryResponse)
-export class SearchObjects<T extends DSpaceObject> extends SearchQueryResponse<SearchResult<T>> {
+export class SearchObjects<T extends DSpaceObject> extends SearchQueryResponse<
+  SearchResult<T>
+> {
   static type = SEARCH_OBJECTS;
 
   /**
@@ -31,5 +30,5 @@ export class SearchObjects<T extends DSpaceObject> extends SearchQueryResponse<S
    * The results for this query
    */
   @autoserializeAs(SearchResult, 'objects')
-    page: SearchResult<T>[];
+  page: SearchResult<T>[];
 }

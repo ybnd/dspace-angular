@@ -11,7 +11,6 @@ import { RestRequest } from './rest-request.model';
 @Injectable()
 export class FacetConfigResponseParsingService extends DspaceRestResponseParsingService {
   parse(request: RestRequest, data: RawRestResponse): ParsedResponse {
-
     const config = data.payload._embedded.facets;
     const serializer = new DSpaceSerializer(SearchFilterConfig);
     const filters = serializer.deserializeArray(config);

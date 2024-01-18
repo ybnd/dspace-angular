@@ -1,21 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  Inject,
-  Injectable,
-  Renderer2,
-  RendererFactory2,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  of,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { Inject, Injectable, Renderer2, RendererFactory2 } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { isNotEmpty } from '../../shared/empty.util';
 import { ConfigurationDataService } from '../data/configuration-data.service';
@@ -36,7 +22,6 @@ export const CAPTCHA_NAME = 'google-recaptcha';
  */
 @Injectable()
 export class GoogleRecaptchaService {
-
   private renderer: Renderer2;
 
   /**
@@ -74,17 +59,25 @@ export class GoogleRecaptchaService {
     private configService: ConfigurationDataService,
   ) {
     if (this._window.nativeWindow) {
-      this._window.nativeWindow.refreshCaptchaScript = this.refreshCaptchaScript;
+      this._window.nativeWindow.refreshCaptchaScript =
+        this.refreshCaptchaScript;
     }
     this.renderer = rendererFactory.createRenderer(null, null);
-    const registrationVerification$ = this.configService.findByPropertyName('registration.verification.enabled').pipe(
-      take(1),
-      getFirstCompletedRemoteData(),
-      map((res: RemoteData<ConfigurationProperty>) => {
-        return res.hasSucceeded && res.payload && isNotEmpty(res.payload.values) && res.payload.values[0].toLowerCase() === 'true';
-      }),
-    );
-    registrationVerification$.subscribe(registrationVerification => {
+    const registrationVerification$ = this.configService
+      .findByPropertyName('registration.verification.enabled')
+      .pipe(
+        take(1),
+        getFirstCompletedRemoteData(),
+        map((res: RemoteData<ConfigurationProperty>) => {
+          return (
+            res.hasSucceeded &&
+            res.payload &&
+            isNotEmpty(res.payload.values) &&
+            res.payload.values[0].toLowerCase() === 'true'
+          );
+        }),
+      );
+    registrationVerification$.subscribe((registrationVerification) => {
       if (registrationVerification) {
         this.loadRecaptchaProperties();
       }
@@ -92,21 +85,27 @@ export class GoogleRecaptchaService {
   }
 
   loadRecaptchaProperties() {
-    const recaptchaKeyRD$ = this.configService.findByPropertyName('google.recaptcha.key.site').pipe(
-      getFirstCompletedRemoteData(),
-    );
-    const recaptchaVersionRD$ = this.configService.findByPropertyName('google.recaptcha.version').pipe(
-      getFirstCompletedRemoteData(),
-    );
-    const recaptchaModeRD$ = this.configService.findByPropertyName('google.recaptcha.mode').pipe(
-      getFirstCompletedRemoteData(),
-    );
-    combineLatest([recaptchaVersionRD$, recaptchaModeRD$, recaptchaKeyRD$]).subscribe(([recaptchaVersionRD, recaptchaModeRD, recaptchaKeyRD]) => {
-
+    const recaptchaKeyRD$ = this.configService
+      .findByPropertyName('google.recaptcha.key.site')
+      .pipe(getFirstCompletedRemoteData());
+    const recaptchaVersionRD$ = this.configService
+      .findByPropertyName('google.recaptcha.version')
+      .pipe(getFirstCompletedRemoteData());
+    const recaptchaModeRD$ = this.configService
+      .findByPropertyName('google.recaptcha.mode')
+      .pipe(getFirstCompletedRemoteData());
+    combineLatest([
+      recaptchaVersionRD$,
+      recaptchaModeRD$,
+      recaptchaKeyRD$,
+    ]).subscribe(([recaptchaVersionRD, recaptchaModeRD, recaptchaKeyRD]) => {
       if (
-        this.cookieService.get('klaro-anonymous') && this.cookieService.get('klaro-anonymous')[CAPTCHA_NAME] &&
-        recaptchaKeyRD.hasSucceeded && recaptchaVersionRD.hasSucceeded &&
-        isNotEmpty(recaptchaVersionRD.payload?.values) && isNotEmpty(recaptchaKeyRD.payload?.values)
+        this.cookieService.get('klaro-anonymous') &&
+        this.cookieService.get('klaro-anonymous')[CAPTCHA_NAME] &&
+        recaptchaKeyRD.hasSucceeded &&
+        recaptchaVersionRD.hasSucceeded &&
+        isNotEmpty(recaptchaVersionRD.payload?.values) &&
+        isNotEmpty(recaptchaKeyRD.payload?.values)
       ) {
         const key = recaptchaKeyRD.payload?.values[0];
         const version = recaptchaVersionRD.payload?.values[0];
@@ -116,13 +115,19 @@ export class GoogleRecaptchaService {
         let captchaUrl;
         switch (version) {
           case 'v3':
-            if (recaptchaKeyRD.hasSucceeded && isNotEmpty(recaptchaKeyRD.payload?.values)) {
+            if (
+              recaptchaKeyRD.hasSucceeded &&
+              isNotEmpty(recaptchaKeyRD.payload?.values)
+            ) {
               captchaUrl = this.buildCaptchaUrl(key);
               this.captchaModeSubject$.next('invisible');
             }
             break;
           case 'v2':
-            if (recaptchaModeRD.hasSucceeded && isNotEmpty(recaptchaModeRD.payload?.values)) {
+            if (
+              recaptchaModeRD.hasSucceeded &&
+              isNotEmpty(recaptchaModeRD.payload?.values)
+            ) {
               captchaUrl = this.buildCaptchaUrl();
               this.captchaModeSubject$.next(recaptchaModeRD.payload?.values[0]);
             }
@@ -190,5 +195,4 @@ export class GoogleRecaptchaService {
   refreshCaptchaScript = () => {
     this.loadRecaptchaProperties();
   };
-
 }

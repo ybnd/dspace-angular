@@ -1,10 +1,7 @@
 import { inheritSerialization } from 'cerialize';
 import { Observable } from 'rxjs';
 
-import {
-  link,
-  typedObject,
-} from '../cache/builders/build-decorators';
+import { link, typedObject } from '../cache/builders/build-decorators';
 import { RemoteData } from '../data/remote-data';
 import { Collection } from './collection.model';
 import { COLLECTION } from './collection.resource-type';
@@ -23,6 +20,5 @@ export class TemplateItem extends Item {
    * The Collection that this item is a template for
    */
   @link(COLLECTION)
-    templateItemOf: Observable<RemoteData<Collection>>;
-
+  templateItemOf: Observable<RemoteData<Collection>>;
 }

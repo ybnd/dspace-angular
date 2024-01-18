@@ -1,14 +1,8 @@
 import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {
-  first,
-  map,
-} from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { IdentifierDataService } from '../../../core/data/identifier-data.service';
 import { ItemDataService } from '../../../core/data/item-data.service';
@@ -29,19 +23,26 @@ import { AbstractSimpleItemActionComponent } from '../simple-item-action/abstrac
  * Component responsible for rendering the Item Register DOI page
  */
 export class ItemRegisterDoiComponent extends AbstractSimpleItemActionComponent {
-
   protected messageKey = 'register-doi';
   doiToUpdateMessage = 'item.edit.' + this.messageKey + '.to-update';
   identifiers$: Observable<Identifier[]>;
   processing = false;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService,
-              protected identifierDataService: IdentifierDataService) {
-    super(route, router, notificationsService, itemDataService, translateService);
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService,
+    protected identifierDataService: IdentifierDataService,
+  ) {
+    super(
+      route,
+      router,
+      notificationsService,
+      itemDataService,
+      translateService,
+    );
   }
 
   /**
@@ -51,29 +52,31 @@ export class ItemRegisterDoiComponent extends AbstractSimpleItemActionComponent 
     this.itemRD$ = this.route.data.pipe(
       map((data) => data.dso),
       getFirstSucceededRemoteData(),
-    )as Observable<RemoteData<Item>>;
+    ) as Observable<RemoteData<Item>>;
 
     this.itemRD$.pipe(first()).subscribe((rd) => {
       this.item = rd.payload;
       this.itemPageRoute = getItemPageRoute(this.item);
-      this.identifiers$ = this.identifierDataService.getIdentifierDataFor(this.item).pipe(
-        map((identifierRD) => {
-          if (identifierRD.statusCode !== 401 && hasValue(identifierRD.payload)) {
-            return identifierRD.payload.identifiers;
-          } else {
-            return null;
-          }
-        }),
-      );
-    },
-    );
+      this.identifiers$ = this.identifierDataService
+        .getIdentifierDataFor(this.item)
+        .pipe(
+          map((identifierRD) => {
+            if (
+              identifierRD.statusCode !== 401 &&
+              hasValue(identifierRD.payload)
+            ) {
+              return identifierRD.payload.identifiers;
+            } else {
+              return null;
+            }
+          }),
+        );
+    });
 
     this.confirmMessage = 'item.edit.' + this.messageKey + '.confirm';
     this.cancelMessage = 'item.edit.' + this.messageKey + '.cancel';
     this.headerMessage = 'item.edit.' + this.messageKey + '.header';
     this.descriptionMessage = 'item.edit.' + this.messageKey + '.description';
-
-
   }
 
   /**
@@ -88,14 +91,13 @@ export class ItemRegisterDoiComponent extends AbstractSimpleItemActionComponent 
    */
   registerDoi() {
     this.processing = true;
-    this.identifierDataService.registerIdentifier(this.item, 'doi').subscribe(
-      (response: RemoteData<Item>) => {
+    this.identifierDataService
+      .registerIdentifier(this.item, 'doi')
+      .subscribe((response: RemoteData<Item>) => {
         if (response.hasCompleted) {
           this.processing = false;
           this.processRestResponse(response);
         }
-      },
-    );
+      });
   }
-
 }

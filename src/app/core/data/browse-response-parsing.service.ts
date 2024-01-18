@@ -20,9 +20,7 @@ import { DspaceRestResponseParsingService } from './dspace-rest-response-parsing
   providedIn: 'root',
 })
 export class BrowseResponseParsingService extends DspaceRestResponseParsingService {
-  constructor(
-    protected objectCache: ObjectCacheService,
-  ) {
+  constructor(protected objectCache: ObjectCacheService) {
     super(objectCache);
   }
 
@@ -31,17 +29,23 @@ export class BrowseResponseParsingService extends DspaceRestResponseParsingServi
     if (obj.type === BROWSE_DEFINITION.value && hasValue(browseType)) {
       let serializer: Serializer<BrowseDefinition>;
       if (browseType === HIERARCHICAL_BROWSE_DEFINITION.value) {
-        serializer = new this.serializerConstructor(HierarchicalBrowseDefinition);
+        serializer = new this.serializerConstructor(
+          HierarchicalBrowseDefinition,
+        );
       } else if (browseType === FLAT_BROWSE_DEFINITION.value) {
         serializer = new this.serializerConstructor(FlatBrowseDefinition);
       } else if (browseType === VALUE_LIST_BROWSE_DEFINITION.value) {
         serializer = new this.serializerConstructor(ValueListBrowseDefinition);
       } else {
-        throw new Error('An error occurred while retrieving the browse definitions.');
+        throw new Error(
+          'An error occurred while retrieving the browse definitions.',
+        );
       }
       return serializer.deserialize(obj);
     } else {
-      throw new Error('An error occurred while retrieving the browse definitions.');
+      throw new Error(
+        'An error occurred while retrieving the browse definitions.',
+      );
     }
   }
 }

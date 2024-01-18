@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
@@ -17,28 +10,33 @@ import { CollectionListElementComponent } from './collection-list-element.compon
 let collectionListElementComponent: CollectionListElementComponent;
 let fixture: ComponentFixture<CollectionListElementComponent>;
 
-const mockCollectionWithArchivedItems: Collection = Object.assign(new Collection(), {
-  metadata: {
-    'dc.title': [
-      {
-        language: 'en_US',
-        value: 'Test title',
-      },
-    ],
-  }, archivedItemsCount: 1,
-});
+const mockCollectionWithArchivedItems: Collection = Object.assign(
+  new Collection(),
+  {
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'Test title',
+        },
+      ],
+    },
+    archivedItemsCount: 1,
+  },
+);
 
-const mockCollectionWithArchivedItemsDisabledAtBackend: Collection = Object.assign(new Collection(), {
-  metadata: {
-    'dc.title': [
-      {
-        language: 'en_US',
-        value: 'Test title',
-      },
-    ],
-  }, archivedItemsCount: -1,
-});
-
+const mockCollectionWithArchivedItemsDisabledAtBackend: Collection =
+  Object.assign(new Collection(), {
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'Test title',
+        },
+      ],
+    },
+    archivedItemsCount: -1,
+  });
 
 const mockCollectionWithAbstract: Collection = Object.assign(new Collection(), {
   metadata: {
@@ -48,19 +46,24 @@ const mockCollectionWithAbstract: Collection = Object.assign(new Collection(), {
         value: 'Short description',
       },
     ],
-  }, archivedItemsCount: 1,
+  },
+  archivedItemsCount: 1,
 });
 
-const mockCollectionWithoutAbstract: Collection = Object.assign(new Collection(), {
-  metadata: {
-    'dc.title': [
-      {
-        language: 'en_US',
-        value: 'Test title',
-      },
-    ],
-  }, archivedItemsCount: 1,
-});
+const mockCollectionWithoutAbstract: Collection = Object.assign(
+  new Collection(),
+  {
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'Test title',
+        },
+      ],
+    },
+    archivedItemsCount: 1,
+  },
+);
 
 describe('CollectionListElementComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -68,13 +71,18 @@ describe('CollectionListElementComponent', () => {
       declarations: [CollectionListElementComponent],
       providers: [
         { provide: DSONameService, useValue: new DSONameServiceMock() },
-        { provide: 'objectElementProvider', useValue: (mockCollectionWithAbstract) },
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCollectionWithAbstract,
+        },
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(CollectionListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(CollectionListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -89,7 +97,9 @@ describe('CollectionListElementComponent', () => {
     });
 
     it('should show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text'),
+      );
       expect(collectionAbstractField).not.toBeNull();
     });
   });
@@ -101,11 +111,12 @@ describe('CollectionListElementComponent', () => {
     });
 
     it('should not show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text'),
+      );
       expect(collectionAbstractField).toBeNull();
     });
   });
-
 
   describe('When the collection has archived items', () => {
     beforeEach(() => {
@@ -114,19 +125,24 @@ describe('CollectionListElementComponent', () => {
     });
 
     it('should show the archived items paragraph', () => {
-      const field = fixture.debugElement.query(By.css('span.archived-items-lead'));
+      const field = fixture.debugElement.query(
+        By.css('span.archived-items-lead'),
+      );
       expect(field).not.toBeNull();
     });
   });
 
   describe('When the collection archived items are disabled at backend', () => {
     beforeEach(() => {
-      collectionListElementComponent.object = mockCollectionWithArchivedItemsDisabledAtBackend;
+      collectionListElementComponent.object =
+        mockCollectionWithArchivedItemsDisabledAtBackend;
       fixture.detectChanges();
     });
 
     it('should not show the archived items paragraph', () => {
-      const field = fixture.debugElement.query(By.css('span.archived-items-lead'));
+      const field = fixture.debugElement.query(
+        By.css('span.archived-items-lead'),
+      );
       expect(field).toBeNull();
     });
   });

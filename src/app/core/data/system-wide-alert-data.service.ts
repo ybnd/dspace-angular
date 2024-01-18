@@ -9,24 +9,12 @@ import { RemoteDataBuildService } from '../cache/builders/remote-data-build.serv
 import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
-import {
-  CreateData,
-  CreateDataImpl,
-} from './base/create-data';
+import { CreateData, CreateDataImpl } from './base/create-data';
 import { dataService } from './base/data-service.decorator';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from './base/find-all-data';
+import { FindAllData, FindAllDataImpl } from './base/find-all-data';
 import { IdentifiableDataService } from './base/identifiable-data.service';
-import {
-  PutData,
-  PutDataImpl,
-} from './base/put-data';
-import {
-  SearchData,
-  SearchDataImpl,
-} from './base/search-data';
+import { PutData, PutDataImpl } from './base/put-data';
+import { SearchData, SearchDataImpl } from './base/search-data';
 import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
@@ -37,7 +25,14 @@ import { RequestService } from './request.service';
  */
 @Injectable()
 @dataService(SYSTEMWIDEALERT)
-export class SystemWideAlertDataService extends IdentifiableDataService<SystemWideAlert> implements FindAllData<SystemWideAlert>, CreateData<SystemWideAlert>, PutData<SystemWideAlert>, SearchData<SystemWideAlert> {
+export class SystemWideAlertDataService
+  extends IdentifiableDataService<SystemWideAlert>
+  implements
+    FindAllData<SystemWideAlert>,
+    CreateData<SystemWideAlert>,
+    PutData<SystemWideAlert>,
+    SearchData<SystemWideAlert>
+{
   private findAllData: FindAllDataImpl<SystemWideAlert>;
   private createData: CreateDataImpl<SystemWideAlert>;
   private putData: PutDataImpl<SystemWideAlert>;
@@ -50,12 +45,47 @@ export class SystemWideAlertDataService extends IdentifiableDataService<SystemWi
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
   ) {
-    super('systemwidealerts', requestService, rdbService, objectCache, halService);
+    super(
+      'systemwidealerts',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.putData = new PutDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.putData = new PutDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -72,8 +102,18 @@ export class SystemWideAlertDataService extends IdentifiableDataService<SystemWi
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<SystemWideAlert>[]): Observable<RemoteData<PaginatedList<SystemWideAlert>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<SystemWideAlert>[]
+  ): Observable<RemoteData<PaginatedList<SystemWideAlert>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -82,7 +122,10 @@ export class SystemWideAlertDataService extends IdentifiableDataService<SystemWi
    * @param object    The object to create
    * @param params    Array with additional params to combine with query string
    */
-  create(object: SystemWideAlert, ...params: RequestParam[]): Observable<RemoteData<SystemWideAlert>> {
+  create(
+    object: SystemWideAlert,
+    ...params: RequestParam[]
+  ): Observable<RemoteData<SystemWideAlert>> {
     return this.createData.create(object, ...params);
   }
 
@@ -109,9 +152,19 @@ export class SystemWideAlertDataService extends IdentifiableDataService<SystemWi
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<SystemWideAlert>[]): Observable<RemoteData<PaginatedList<SystemWideAlert>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<SystemWideAlert>[]
+  ): Observable<RemoteData<PaginatedList<SystemWideAlert>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
-
-
 }

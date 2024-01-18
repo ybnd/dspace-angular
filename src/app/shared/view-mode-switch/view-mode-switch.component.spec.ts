@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -11,10 +8,7 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { SearchService } from '../../core/shared/search/search.service';
 import { ViewMode } from '../../core/shared/view-mode.model';
@@ -24,8 +18,7 @@ import { SearchServiceStub } from '../testing/search-service.stub';
 import { ViewModeSwitchComponent } from './view-mode-switch.component';
 
 @Component({ template: '' })
-class DummyComponent {
-}
+class DummyComponent {}
 
 describe('ViewModeSwitchComponent', () => {
   let comp: ViewModeSwitchComponent;
@@ -52,12 +45,12 @@ describe('ViewModeSwitchComponent', () => {
         DummyComponent,
         BrowserOnlyMockPipe,
       ],
-      providers: [
-        { provide: SearchService, useValue: searchService },
-      ],
-    }).overrideComponent(ViewModeSwitchComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+      providers: [{ provide: SearchService, useValue: searchService }],
+    })
+      .overrideComponent(ViewModeSwitchComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -86,12 +79,13 @@ describe('ViewModeSwitchComponent', () => {
       expect(comp.currentMode).toBe(ViewMode.ListElement);
       expect(listButton.classList).toContain('active');
       expect(gridButton.classList).not.toContain('active');
-
     }));
 
     it('should set grid button as active when on grid mode', fakeAsync(() => {
       comp.switchViewTo(ViewMode.GridElement);
-      expect(comp.changeViewMode.emit).toHaveBeenCalledWith(ViewMode.GridElement);
+      expect(comp.changeViewMode.emit).toHaveBeenCalledWith(
+        ViewMode.GridElement,
+      );
       tick();
       fixture.detectChanges();
       expect(comp.currentMode).toBe(ViewMode.GridElement);
@@ -99,7 +93,6 @@ describe('ViewModeSwitchComponent', () => {
       expect(gridButton.classList).toContain('active');
     }));
   });
-
 
   describe('', () => {
     beforeEach(fakeAsync(() => {
@@ -125,7 +118,9 @@ describe('ViewModeSwitchComponent', () => {
 
     it('should set detail button as active when on detailed mode', fakeAsync(() => {
       comp.switchViewTo(ViewMode.DetailedListElement);
-      expect(comp.changeViewMode.emit).toHaveBeenCalledWith(ViewMode.DetailedListElement);
+      expect(comp.changeViewMode.emit).toHaveBeenCalledWith(
+        ViewMode.DetailedListElement,
+      );
       tick();
       fixture.detectChanges();
       expect(comp.currentMode).toBe(ViewMode.DetailedListElement);
@@ -133,6 +128,4 @@ describe('ViewModeSwitchComponent', () => {
       expect(detailButton.classList).toContain('active');
     }));
   });
-
-
 });

@@ -1,13 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import {
-  NgbModal,
-  NgbModalRef,
-} from '@ng-bootstrap/ng-bootstrap';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { take } from 'rxjs/operators';
 
 import { getCollectionModuleRoute } from '../../../collection-page/collection-page-routing-paths';
@@ -31,7 +23,6 @@ import { SubscriptionsDataService } from '../subscriptions-data.service';
  * Table row representing a subscription that displays all information and action buttons to manage it
  */
 export class SubscriptionViewComponent {
-
   /**
    * Subscription to be rendered
    */
@@ -61,7 +52,7 @@ export class SubscriptionViewComponent {
     private modalService: NgbModal,
     private subscriptionService: SubscriptionsDataService,
     public dsoNameService: DSONameService,
-  ) { }
+  ) {}
 
   /**
    * Return the prefix of the route to the dso object page ( e.g. "items")
@@ -90,19 +81,27 @@ export class SubscriptionViewComponent {
     if (hasValue(subscription.id)) {
       const modalRef = this.modalService.open(ConfirmationModalComponent);
       modalRef.componentInstance.dso = this.dso;
-      modalRef.componentInstance.headerLabel = 'confirmation-modal.delete-subscription.header';
-      modalRef.componentInstance.infoLabel = 'confirmation-modal.delete-subscription.info';
-      modalRef.componentInstance.cancelLabel = 'confirmation-modal.delete-subscription.cancel';
-      modalRef.componentInstance.confirmLabel = 'confirmation-modal.delete-subscription.confirm';
+      modalRef.componentInstance.headerLabel =
+        'confirmation-modal.delete-subscription.header';
+      modalRef.componentInstance.infoLabel =
+        'confirmation-modal.delete-subscription.info';
+      modalRef.componentInstance.cancelLabel =
+        'confirmation-modal.delete-subscription.cancel';
+      modalRef.componentInstance.confirmLabel =
+        'confirmation-modal.delete-subscription.confirm';
       modalRef.componentInstance.brandColor = 'danger';
       modalRef.componentInstance.confirmIcon = 'fas fa-trash';
-      modalRef.componentInstance.response.pipe(take(1)).subscribe((confirm: boolean) => {
-        if (confirm) {
-          this.subscriptionService.deleteSubscription(subscription.id).subscribe( (res) => {
-            this.reload.emit();
-          });
-        }
-      });
+      modalRef.componentInstance.response
+        .pipe(take(1))
+        .subscribe((confirm: boolean) => {
+          if (confirm) {
+            this.subscriptionService
+              .deleteSubscription(subscription.id)
+              .subscribe((res) => {
+                this.reload.emit();
+              });
+          }
+        });
     }
   }
 
@@ -110,9 +109,10 @@ export class SubscriptionViewComponent {
     this.modalRef = this.modalService.open(SubscriptionModalComponent);
     this.modalRef.componentInstance.dso = this.dso;
     this.modalRef.componentInstance.subscription = this.subscription;
-    this.modalRef.componentInstance.updateSubscription.pipe(take(1)).subscribe((subscription: Subscription) => {
-      this.subscription = subscription;
-    });
-
+    this.modalRef.componentInstance.updateSubscription
+      .pipe(take(1))
+      .subscribe((subscription: Subscription) => {
+        this.subscription = subscription;
+      });
   }
 }

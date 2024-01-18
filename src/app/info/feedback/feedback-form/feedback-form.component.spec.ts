@@ -1,12 +1,5 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { UntypedFormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -26,7 +19,6 @@ import { EPersonMock } from '../../../shared/testing/eperson.mock';
 import { NotificationsServiceStub } from '../../../shared/testing/notifications-service.stub';
 import { routeServiceStub } from '../../../shared/testing/route-service.stub';
 import { FeedbackFormComponent } from './feedback-form.component';
-
 
 describe('FeedbackFormComponent', () => {
   let component: FeedbackFormComponent;
@@ -72,11 +64,15 @@ describe('FeedbackFormComponent', () => {
   });
 
   it('should have page value', () => {
-    expect(component.feedbackForm.controls.page.value).toEqual('http://localhost/home');
+    expect(component.feedbackForm.controls.page.value).toEqual(
+      'http://localhost/home',
+    );
   });
 
   it('should have email if ePerson', () => {
-    expect(component.feedbackForm.controls.email.value).toEqual('test@test.com');
+    expect(component.feedbackForm.controls.email.value).toEqual(
+      'test@test.com',
+    );
   });
 
   it('should have disabled button', () => {
@@ -84,7 +80,6 @@ describe('FeedbackFormComponent', () => {
   });
 
   describe('when message is inserted', () => {
-
     beforeEach(() => {
       component.feedbackForm.patchValue({ message: 'new feedback' });
       fixture.detectChanges();
@@ -100,6 +95,4 @@ describe('FeedbackFormComponent', () => {
       expect(feedbackDataServiceStub.create).toHaveBeenCalled();
     });
   });
-
-
 });

@@ -9,17 +9,17 @@ import { HomePageComponent } from './home-page.component';
   templateUrl: '../shared/theme-support/themed.component.html',
 })
 export class ThemedHomePageComponent extends ThemedComponent<HomePageComponent> {
-
   protected getComponentName(): string {
     return 'HomePageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/home-page/home-page.component`);
+    return import(
+      `../../themes/${themeName}/app/home-page/home-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./home-page.component`);
   }
-
 }

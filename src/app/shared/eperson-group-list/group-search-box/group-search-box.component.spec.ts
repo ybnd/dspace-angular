@@ -1,7 +1,4 @@
-import {
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -28,22 +25,10 @@ describe('GroupSearchBoxComponent test suite', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        GroupSearchBoxComponent,
-        TestComponent,
-      ],
-      providers: [
-        UntypedFormBuilder,
-        GroupSearchBoxComponent,
-      ],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-      ],
+      imports: [FormsModule, ReactiveFormsModule, TranslateModule.forRoot()],
+      declarations: [GroupSearchBoxComponent, TestComponent],
+      providers: [UntypedFormBuilder, GroupSearchBoxComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -56,7 +41,10 @@ describe('GroupSearchBoxComponent test suite', () => {
       const html = `
         <ds-group-search-box></ds-group-search-box>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -64,11 +52,12 @@ describe('GroupSearchBoxComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create GroupSearchBoxComponent', inject([GroupSearchBoxComponent], (app: GroupSearchBoxComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create GroupSearchBoxComponent', inject(
+      [GroupSearchBoxComponent],
+      (app: GroupSearchBoxComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -88,9 +77,9 @@ describe('GroupSearchBoxComponent test suite', () => {
     });
 
     it('should reset the form', () => {
-      comp.searchForm = formBuilder.group(({
+      comp.searchForm = formBuilder.group({
         query: 'test',
-      }));
+      });
 
       comp.reset();
 
@@ -120,6 +109,4 @@ describe('GroupSearchBoxComponent test suite', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

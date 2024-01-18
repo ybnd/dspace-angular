@@ -39,10 +39,6 @@ import { ThemedCollectionPageComponent } from './themed-collection-page.componen
     ThemedEditItemTemplatePageComponent,
     CollectionItemMapperComponent,
   ],
-  providers: [
-    SearchService,
-  ],
+  providers: [SearchService],
 })
-export class CollectionPageModule {
-
-}
+export class CollectionPageModule {}

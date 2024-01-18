@@ -13,7 +13,10 @@ const initialstate: MetaTagState = {
   tagsInUse: [],
 };
 
-export const metaTagReducer = (state: MetaTagState = initialstate, action: MetaTagAction): MetaTagState => {
+export const metaTagReducer = (
+  state: MetaTagState = initialstate,
+  action: MetaTagAction,
+): MetaTagState => {
   switch (action.type) {
     case MetaTagTypes.ADD: {
       return addMetaTag(state, action as AddMetaTagAction);
@@ -27,12 +30,18 @@ export const metaTagReducer = (state: MetaTagState = initialstate, action: MetaT
   }
 };
 
-const addMetaTag = (state: MetaTagState, action: AddMetaTagAction): MetaTagState => {
+const addMetaTag = (
+  state: MetaTagState,
+  action: AddMetaTagAction,
+): MetaTagState => {
   return {
     tagsInUse: [...state.tagsInUse, action.payload],
   };
 };
 
-const clearMetaTags = (state: MetaTagState, action: ClearMetaTagAction): MetaTagState => {
+const clearMetaTags = (
+  state: MetaTagState,
+  action: ClearMetaTagAction,
+): MetaTagState => {
   return Object.assign({}, initialstate);
 };

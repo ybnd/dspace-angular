@@ -21,8 +21,7 @@ export class ItemTemplatePageResolver implements Resolve<RemoteData<Item>> {
   constructor(
     public dsoNameService: DSONameService,
     private itemTemplateService: ItemTemplateDataService,
-  ) {
-  }
+  ) {}
 
   /**
    * Method for resolving a collection's item template based on the parameters in the current route
@@ -31,9 +30,17 @@ export class ItemTemplatePageResolver implements Resolve<RemoteData<Item>> {
    * @returns Observable<<RemoteData<Collection>> Emits the found item template based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Item>> {
-    return this.itemTemplateService.findByCollectionID(route.params.id, true, false, followLink('templateItemOf')).pipe(
-      getFirstCompletedRemoteData(),
-    );
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<Item>> {
+    return this.itemTemplateService
+      .findByCollectionID(
+        route.params.id,
+        true,
+        false,
+        followLink('templateItemOf'),
+      )
+      .pipe(getFirstCompletedRemoteData());
   }
 }

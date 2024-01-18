@@ -1,7 +1,4 @@
-import {
-  Component,
-  Inject,
-} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import {
@@ -28,12 +25,17 @@ import { SearchResultListElementComponent } from '../../search-result-list-eleme
  */
 @Component({
   selector: 'ds-workspace-item-search-result-list-element',
-  styleUrls: ['../../search-result-list-element/search-result-list-element.component.scss', './workspace-item-search-result-list-element.component.scss'],
+  styleUrls: [
+    '../../search-result-list-element/search-result-list-element.component.scss',
+    './workspace-item-search-result-list-element.component.scss',
+  ],
   templateUrl: './workspace-item-search-result-list-element.component.html',
 })
-
 @listableObjectComponent(WorkspaceItemSearchResult, ViewMode.ListElement)
-export class  WorkspaceItemSearchResultListElementComponent extends SearchResultListElementComponent<WorkspaceItemSearchResult, WorkspaceItem> {
+export class WorkspaceItemSearchResultListElementComponent extends SearchResultListElementComponent<
+  WorkspaceItemSearchResult,
+  WorkspaceItem
+> {
   LinkTypes = CollectionElementLinkType;
 
   ViewModes = ViewMode;
@@ -41,7 +43,9 @@ export class  WorkspaceItemSearchResultListElementComponent extends SearchResult
   /**
    * The item search result derived from the WorkspaceItemSearchResult
    */
-  derivedSearchResult$: BehaviorSubject<ItemSearchResult> = new BehaviorSubject(undefined);
+  derivedSearchResult$: BehaviorSubject<ItemSearchResult> = new BehaviorSubject(
+    undefined,
+  );
 
   /**
    * Represents the badge context
@@ -72,15 +76,20 @@ export class  WorkspaceItemSearchResultListElementComponent extends SearchResult
   }
 
   private deriveSearchResult() {
-    this.linkService.resolveLink(this.object.indexableObject, followLink('item'));
-    this.object.indexableObject.item.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    ).subscribe((item: Item) => {
-      const result = new ItemSearchResult();
-      this.derivedSearchResult$.next(Object.assign(new ItemSearchResult(), {
-        indexableObject: item,
-        hitHighlights: this.object.hitHighlights,
-      }));
-    });
+    this.linkService.resolveLink(
+      this.object.indexableObject,
+      followLink('item'),
+    );
+    this.object.indexableObject.item
+      .pipe(getFirstSucceededRemoteDataPayload())
+      .subscribe((item: Item) => {
+        const result = new ItemSearchResult();
+        this.derivedSearchResult$.next(
+          Object.assign(new ItemSearchResult(), {
+            indexableObject: item,
+            hitHighlights: this.object.hitHighlights,
+          }),
+        );
+      });
   }
 }

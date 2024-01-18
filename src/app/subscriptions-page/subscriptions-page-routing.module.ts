@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { SubscriptionsPageComponent } from './subscriptions-page.component';
 import { SubscriptionsPageModule } from './subscriptions-page.module';
 
-
 @NgModule({
   imports: [
     SubscriptionsPageModule,
@@ -24,5 +23,4 @@ import { SubscriptionsPageModule } from './subscriptions-page.module';
     ]),
   ],
 })
-export class SubscriptionsPageRoutingModule {
-}
+export class SubscriptionsPageRoutingModule {}

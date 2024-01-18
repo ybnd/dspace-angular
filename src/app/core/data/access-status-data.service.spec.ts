@@ -1,7 +1,4 @@
-import {
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { fakeAsync, tick } from '@angular/core/testing';
 import { Observable } from 'rxjs';
 
 import { hasNoValue } from '../../shared/empty.util';
@@ -56,7 +53,10 @@ describe('AccessStatusDataService', () => {
       it('should send a new GetRequest', fakeAsync(() => {
         contentSource$.subscribe();
         tick();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(GetRequest), true);
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(GetRequest),
+          true,
+        );
       }));
     });
   });
@@ -80,6 +80,11 @@ describe('AccessStatusDataService', () => {
     });
     halService = new HALEndpointServiceStub(url);
     notificationsService = new NotificationsServiceStub();
-    service = new AccessStatusDataService(requestService, rdbService, objectCache, halService);
+    service = new AccessStatusDataService(
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
   }
 });

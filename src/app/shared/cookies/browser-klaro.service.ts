@@ -1,8 +1,4 @@
-import {
-  Inject,
-  Injectable,
-  InjectionToken,
-} from '@angular/core';
+import { Inject, Injectable, InjectionToken } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Operation } from 'fast-json-patch';
 import cloneDeep from 'lodash/cloneDeep';
@@ -12,11 +8,7 @@ import {
   Observable,
   of as observableOf,
 } from 'rxjs';
-import {
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../core/auth/auth.service';
@@ -26,11 +18,7 @@ import { EPerson } from '../../core/eperson/models/eperson.model';
 import { CAPTCHA_NAME } from '../../core/google-recaptcha/google-recaptcha.service';
 import { CookieService } from '../../core/services/cookie.service';
 import { getFirstCompletedRemoteData } from '../../core/shared/operators';
-import {
-  hasValue,
-  isEmpty,
-  isNotEmpty,
-} from '../empty.util';
+import { hasValue, isEmpty, isNotEmpty } from '../empty.util';
 import { KlaroService } from './klaro.service';
 import {
   ANONYMOUS_STORAGE_NAME_KLARO,
@@ -65,23 +53,20 @@ const updateDebounce = 300;
 /**
  * By using this injection token instead of importing directly we can keep Klaro out of the main bundle
  */
-const LAZY_KLARO = new InjectionToken<Promise<any>>(
-  'Lazily loaded Klaro',
-  {
-    providedIn: 'root',
-    factory: async () => (await import('klaro/dist/klaro-no-translations')),
-  },
-);
+const LAZY_KLARO = new InjectionToken<Promise<any>>('Lazily loaded Klaro', {
+  providedIn: 'root',
+  factory: async () => await import('klaro/dist/klaro-no-translations'),
+});
 
 /**
  * Browser implementation for the KlaroService, representing a service for handling Klaro consent preferences and UI
  */
 @Injectable()
 export class BrowserKlaroService extends KlaroService {
-
   private readonly GOOGLE_ANALYTICS_KEY = 'google.analytics.key';
 
-  private readonly REGISTRATION_VERIFICATION_ENABLED_KEY = 'registration.verification.enabled';
+  private readonly REGISTRATION_VERIFICATION_ENABLED_KEY =
+    'registration.verification.enabled';
 
   private readonly GOOGLE_ANALYTICS_SERVICE_NAME = 'google-analytics';
 
@@ -111,22 +96,39 @@ export class BrowserKlaroService extends KlaroService {
   initialize() {
     if (!environment.info.enablePrivacyStatement) {
       delete this.klaroConfig.privacyPolicy;
-      this.klaroConfig.translations.zz.consentNotice.description = 'cookies.consent.content-notice.description.no-privacy';
+      this.klaroConfig.translations.zz.consentNotice.description =
+        'cookies.consent.content-notice.description.no-privacy';
     }
 
-    const hideGoogleAnalytics$ = this.configService.findByPropertyName(this.GOOGLE_ANALYTICS_KEY).pipe(
-      getFirstCompletedRemoteData(),
-      map(remoteData => !remoteData.hasSucceeded || !remoteData.payload || isEmpty(remoteData.payload.values)),
-    );
+    const hideGoogleAnalytics$ = this.configService
+      .findByPropertyName(this.GOOGLE_ANALYTICS_KEY)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map(
+          (remoteData) =>
+            !remoteData.hasSucceeded ||
+            !remoteData.payload ||
+            isEmpty(remoteData.payload.values),
+        ),
+      );
 
-    const hideRegistrationVerification$ = this.configService.findByPropertyName(this.REGISTRATION_VERIFICATION_ENABLED_KEY).pipe(
-      getFirstCompletedRemoteData(),
-      map((remoteData) =>
-        !remoteData.hasSucceeded || !remoteData.payload || isEmpty(remoteData.payload.values) || remoteData.payload.values[0].toLowerCase() !== 'true',
-      ),
-    );
+    const hideRegistrationVerification$ = this.configService
+      .findByPropertyName(this.REGISTRATION_VERIFICATION_ENABLED_KEY)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map(
+          (remoteData) =>
+            !remoteData.hasSucceeded ||
+            !remoteData.payload ||
+            isEmpty(remoteData.payload.values) ||
+            remoteData.payload.values[0].toLowerCase() !== 'true',
+        ),
+      );
 
-    const servicesToHide$: Observable<string[]> = observableCombineLatest([hideGoogleAnalytics$, hideRegistrationVerification$]).pipe(
+    const servicesToHide$: Observable<string[]> = observableCombineLatest([
+      hideGoogleAnalytics$,
+      hideRegistrationVerification$,
+    ]).pipe(
       map(([hideGoogleAnalytics, hideRegistrationVerification]) => {
         const servicesToHideArray: string[] = [];
         if (hideGoogleAnalytics) {
@@ -143,31 +145,36 @@ export class BrowserKlaroService extends KlaroService {
 
     const user$: Observable<EPerson> = this.getUser$();
 
-    const translationServiceReady$ = this.translateService.get('loading.default').pipe(take(1));
+    const translationServiceReady$ = this.translateService
+      .get('loading.default')
+      .pipe(take(1));
 
-    observableCombineLatest([user$, servicesToHide$, translationServiceReady$])
-      .subscribe(([user, servicesToHide, _]: [EPerson, string[], string]) => {
-        user = cloneDeep(user);
+    observableCombineLatest([
+      user$,
+      servicesToHide$,
+      translationServiceReady$,
+    ]).subscribe(([user, servicesToHide, _]: [EPerson, string[], string]) => {
+      user = cloneDeep(user);
 
-        if (hasValue(user)) {
-          this.initializeUser(user);
-        }
+      if (hasValue(user)) {
+        this.initializeUser(user);
+      }
 
-        /**
-         * Add all message keys for services and purposes
-         */
-        this.addAppMessages();
+      /**
+       * Add all message keys for services and purposes
+       */
+      this.addAppMessages();
 
-        /**
-         * Subscribe on a message to make sure the translation service is ready
-         * Translate all keys in the translation section of the configuration
-         * Show the configuration if the configuration has not been confirmed
-         */
-        this.translateConfiguration();
+      /**
+       * Subscribe on a message to make sure the translation service is ready
+       * Translate all keys in the translation section of the configuration
+       * Show the configuration if the configuration has not been confirmed
+       */
+      this.translateConfiguration();
 
-        this.klaroConfig.services = this.filterConfigServices(servicesToHide);
-        this.lazyKlaro.then(({ setup }) => setup(this.klaroConfig));
-      });
+      this.klaroConfig.services = this.filterConfigServices(servicesToHide);
+      this.lazyKlaro.then(({ setup }) => setup(this.klaroConfig));
+    });
   }
 
   /**
@@ -192,7 +199,10 @@ export class BrowserKlaroService extends KlaroService {
    * @param user The authenticated user
    */
   private initializeUser(user: EPerson) {
-    this.klaroConfig.callback = debounce((consent, app) => this.updateSettingsForUsers(user), updateDebounce);
+    this.klaroConfig.callback = debounce(
+      (consent, app) => this.updateSettingsForUsers(user),
+      updateDebounce,
+    );
     this.klaroConfig.storageName = this.getStorageName(user.uuid);
 
     const anonCookie = this.cookieService.get(ANONYMOUS_STORAGE_NAME_KLARO);
@@ -209,17 +219,16 @@ export class BrowserKlaroService extends KlaroService {
    * Returns undefined when no one is logged in
    */
   private getUser$() {
-    return this.authService.isAuthenticated()
-      .pipe(
-        take(1),
-        switchMap((loggedIn: boolean) => {
-          if (loggedIn) {
-            return this.authService.getAuthenticatedUserFromStore();
-          }
-          return observableOf(undefined);
-        }),
-        take(1),
-      );
+    return this.authService.isAuthenticated().pipe(
+      take(1),
+      switchMap((loggedIn: boolean) => {
+        if (loggedIn) {
+          return this.authService.getAuthenticatedUserFromStore();
+        }
+        return observableOf(undefined);
+      }),
+      take(1),
+    );
   }
 
   /**
@@ -263,7 +272,8 @@ export class BrowserKlaroService extends KlaroService {
         description: this.getDescriptionTranslation(app.name),
       };
       app.purposes.forEach((purpose) => {
-        this.klaroConfig.translations.zz.purposes[purpose] = this.getPurposeTranslation(purpose);
+        this.klaroConfig.translations.zz.purposes[purpose] =
+          this.getPurposeTranslation(purpose);
       });
     });
   }
@@ -285,7 +295,7 @@ export class BrowserKlaroService extends KlaroService {
    * @param object The object containing translation keys
    */
   private translate(object) {
-    if (typeof (object) === 'string') {
+    if (typeof object === 'string') {
       return this.translateService.instant(object);
     }
     Object.entries(object).forEach(([key, value]: [string, any]) => {
@@ -314,7 +324,8 @@ export class BrowserKlaroService extends KlaroService {
     } else {
       user.removeMetadata(COOKIE_MDFIELD);
     }
-    this.ePersonService.createPatchFromCache(user)
+    this.ePersonService
+      .createPatchFromCache(user)
       .pipe(
         take(1),
         switchMap((operations: Operation[]) => {
@@ -322,9 +333,9 @@ export class BrowserKlaroService extends KlaroService {
             return this.ePersonService.patch(user, operations);
           }
           return observableOf(undefined);
-        },
-        ),
-      ).subscribe();
+        }),
+      )
+      .subscribe();
   }
 
   /**
@@ -332,7 +343,10 @@ export class BrowserKlaroService extends KlaroService {
    * @param user The user to save the settings for
    */
   restoreSettingsForUsers(user: EPerson) {
-    this.cookieService.set(this.getStorageName(user.uuid), this.getSettingsForUser(user));
+    this.cookieService.set(
+      this.getStorageName(user.uuid),
+      this.getSettingsForUser(user),
+    );
   }
 
   /**
@@ -340,7 +354,10 @@ export class BrowserKlaroService extends KlaroService {
    * @param user
    */
   updateSettingsForUsers(user: EPerson) {
-    this.setSettingsForUser(user, this.cookieService.get(this.getStorageName(user.uuid)));
+    this.setSettingsForUser(
+      user,
+      this.cookieService.get(this.getStorageName(user.uuid)),
+    );
   }
 
   /**
@@ -354,8 +371,11 @@ export class BrowserKlaroService extends KlaroService {
   /**
    * remove the google analytics from the services
    */
-  private filterConfigServices(servicesToHide: string[]): Pick<typeof klaroConfiguration, 'services'>[] {
-    return this.klaroConfig.services.filter(service => !servicesToHide.some(name => name === service.name));
+  private filterConfigServices(
+    servicesToHide: string[],
+  ): Pick<typeof klaroConfiguration, 'services'>[] {
+    return this.klaroConfig.services.filter(
+      (service) => !servicesToHide.some((name) => name === service.name),
+    );
   }
-
 }

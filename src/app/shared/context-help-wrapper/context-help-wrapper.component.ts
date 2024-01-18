@@ -9,24 +9,15 @@ import {
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { PlacementArray } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  mergeMap,
-} from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, map, mergeMap } from 'rxjs/operators';
 
 import { ContextHelp } from '../context-help.model';
 import { ContextHelpService } from '../context-help.service';
 import { hasValueOperator } from '../empty.util';
 import { PlacementDir } from './placement-dir.model';
 
-type ParsedContent = (string | {href: string, text: string})[];
+type ParsedContent = (string | { href: string; text: string })[];
 
 /**
  * This component renders an info icon next to the wrapped element which
@@ -65,7 +56,9 @@ export class ContextHelpWrapperComponent implements OnInit, OnDestroy {
   @Input() set dontParseLinks(dont: boolean) {
     this.dontParseLinks$.next(dont);
   }
-  private dontParseLinks$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  private dontParseLinks$: BehaviorSubject<boolean> = new BehaviorSubject(
+    false,
+  );
 
   shouldShowIcon$: Observable<boolean>;
 
@@ -74,7 +67,9 @@ export class ContextHelpWrapperComponent implements OnInit, OnDestroy {
   @Input() set content(translateKey: string) {
     this.content$.next(translateKey);
   }
-  private content$: BehaviorSubject<string | undefined> = new BehaviorSubject(undefined);
+  private content$: BehaviorSubject<string | undefined> = new BehaviorSubject(
+    undefined,
+  );
 
   parsedContent$: Observable<ParsedContent>;
 
@@ -83,15 +78,19 @@ export class ContextHelpWrapperComponent implements OnInit, OnDestroy {
   constructor(
     private translateService: TranslateService,
     private contextHelpService: ContextHelpService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.parsedContent$ = combineLatest([
-      this.content$.pipe(distinctUntilChanged(), mergeMap(translateKey => this.translateService.get(translateKey))),
+      this.content$.pipe(
+        distinctUntilChanged(),
+        mergeMap((translateKey) => this.translateService.get(translateKey)),
+      ),
       this.dontParseLinks$.pipe(distinctUntilChanged()),
     ]).pipe(
       map(([text, dontParseLinks]) =>
-        dontParseLinks ? [text] : this.parseLinks(text)),
+        dontParseLinks ? [text] : this.parseLinks(text),
+      ),
     );
     this.shouldShowIcon$ = this.contextHelpService.shouldShowIcons$();
   }
@@ -101,10 +100,10 @@ export class ContextHelpWrapperComponent implements OnInit, OnDestroy {
     this.clearSubs();
     if (this.tooltip !== undefined) {
       this.subs = [
-        this.contextHelpService.getContextHelp$(this.id)
+        this.contextHelpService
+          .getContextHelp$(this.id)
           .pipe(hasValueOperator())
           .subscribe((ch: ContextHelp) => {
-
             if (ch.isTooltipVisible && !this.tooltip.isOpen()) {
               this.tooltip.open();
             } else if (!ch.isTooltipVisible && this.tooltip.isOpen()) {
@@ -168,14 +167,12 @@ export class ContextHelpWrapperComponent implements OnInit, OnDestroy {
 
     return text.match(splitRegexp).map((substring: string) => {
       const match = substring.match(parseRegexp);
-      return match === null
-        ? substring
-        : ({ href: match[2], text: match[1] });
+      return match === null ? substring : { href: match[2], text: match[1] };
     });
   }
 
   private clearSubs() {
-    this.subs.forEach(sub => sub.unsubscribe());
+    this.subs.forEach((sub) => sub.unsubscribe());
     this.subs = [];
   }
 }

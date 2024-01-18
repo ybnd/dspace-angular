@@ -3,17 +3,10 @@ import {
   Injector,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { RequestService } from '../../../../core/data/request.service';
 import { SearchService } from '../../../../core/shared/search/search.service';
@@ -53,7 +46,10 @@ describe('ClaimedTaskActionsEditMetadataComponent', () => {
       providers: [
         { provide: ClaimedTaskDataService, useValue: {} },
         { provide: Injector, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestService },
@@ -61,9 +57,11 @@ describe('ClaimedTaskActionsEditMetadataComponent', () => {
       ],
       declarations: [ClaimedTaskActionsEditMetadataComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ClaimedTaskActionsEditMetadataComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ClaimedTaskActionsEditMetadataComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -79,5 +77,4 @@ describe('ClaimedTaskActionsEditMetadataComponent', () => {
 
     expect(btn).not.toBeNull();
   });
-
 });

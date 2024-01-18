@@ -8,7 +8,6 @@ import { ListableObject } from './listable-object.model';
 @searchResultFor(Item)
 @inheritEquatable(SearchResult)
 export class ItemSearchResult extends SearchResult<Item> {
-
   /**
    * Method that returns as which type of object this object should be rendered
    */

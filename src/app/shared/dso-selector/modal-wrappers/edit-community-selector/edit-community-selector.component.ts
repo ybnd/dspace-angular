@@ -1,11 +1,5 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { environment } from '../../../../../environments/environment';
@@ -30,14 +24,23 @@ import {
   selector: 'ds-edit-community-selector',
   templateUrl: '../dso-selector-modal-wrapper.component.html',
 })
-
-export class EditCommunitySelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class EditCommunitySelectorComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.COMMUNITY;
   selectorTypes = [DSpaceObjectType.COMMUNITY];
   action = SelectorActionType.EDIT;
-  defaultSort = new SortOptions(environment.comcolSelectionSort.sortField, environment.comcolSelectionSort.sortDirection as SortDirection);
+  defaultSort = new SortOptions(
+    environment.comcolSelectionSort.sortField,
+    environment.comcolSelectionSort.sortDirection as SortDirection,
+  );
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router,
+  ) {
     super(activeModal, route);
   }
 

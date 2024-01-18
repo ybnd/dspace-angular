@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
@@ -18,21 +14,23 @@ import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
 import { hasValue } from '../../empty.util';
 import { PaginationComponentOptions } from '../../pagination/pagination-component-options.model';
 
-export const ITEM_ACCESS_CONTROL_SELECT_BITSTREAMS_LIST_ID = 'item-access-control-select-bitstreams';
+export const ITEM_ACCESS_CONTROL_SELECT_BITSTREAMS_LIST_ID =
+  'item-access-control-select-bitstreams';
 
 @Component({
   selector: 'ds-item-access-control-select-bitstreams-modal',
   templateUrl: './item-access-control-select-bitstreams-modal.component.html',
-  styleUrls: [ './item-access-control-select-bitstreams-modal.component.scss' ],
+  styleUrls: ['./item-access-control-select-bitstreams-modal.component.scss'],
 })
 export class ItemAccessControlSelectBitstreamsModalComponent implements OnInit {
-
   LIST_ID = ITEM_ACCESS_CONTROL_SELECT_BITSTREAMS_LIST_ID;
 
   @Input() item!: Item;
   @Input() selectedBitstreams: string[] = [];
 
-  data$ = new BehaviorSubject<RemoteData<PaginatedList<Bitstream>> | null>(null);
+  data$ = new BehaviorSubject<RemoteData<PaginatedList<Bitstream>> | null>(
+    null,
+  );
   paginationConfig: PaginationComponentOptions;
   pageSize = 5;
 
@@ -43,7 +41,7 @@ export class ItemAccessControlSelectBitstreamsModalComponent implements OnInit {
     protected paginationService: PaginationService,
     protected translateService: TranslateService,
     public activeModal: NgbActiveModal,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.loadForPage(1);
@@ -57,11 +55,14 @@ export class ItemAccessControlSelectBitstreamsModalComponent implements OnInit {
   }
 
   loadForPage(page: number) {
-    this.bitstreamService.findAllByItemAndBundleName(this.item, 'ORIGINAL', { currentPage: page }, false)
-      .pipe(
-        getFirstCompletedRemoteData(),
+    this.bitstreamService
+      .findAllByItemAndBundleName(
+        this.item,
+        'ORIGINAL',
+        { currentPage: page },
+        false,
       )
+      .pipe(getFirstCompletedRemoteData())
       .subscribe(this.data$);
   }
-
 }

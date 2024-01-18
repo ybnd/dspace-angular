@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ThemedComponent } from 'src/app/shared/theme-support/themed.component';
 
 import { EmailRequestCopyComponent } from './email-request-copy.component';
@@ -21,7 +16,8 @@ export class ThemedEmailRequestCopyComponent extends ThemedComponent<EmailReques
   /**
    * Event emitter for sending the email
    */
-  @Output() send: EventEmitter<RequestCopyEmail> = new EventEmitter<RequestCopyEmail>();
+  @Output() send: EventEmitter<RequestCopyEmail> =
+    new EventEmitter<RequestCopyEmail>();
 
   /**
    * The subject of the email
@@ -33,14 +29,17 @@ export class ThemedEmailRequestCopyComponent extends ThemedComponent<EmailReques
    */
   @Input() message: string;
 
-  protected inAndOutputNames: (keyof EmailRequestCopyComponent & keyof this)[] = ['send', 'subject', 'message'];
+  protected inAndOutputNames: (keyof EmailRequestCopyComponent & keyof this)[] =
+    ['send', 'subject', 'message'];
 
   protected getComponentName(): string {
     return 'EmailRequestCopyComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/request-copy/email-request-copy/email-request-copy.component`);
+    return import(
+      `../../../themes/${themeName}/app/request-copy/email-request-copy/email-request-copy.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

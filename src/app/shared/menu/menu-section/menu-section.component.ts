@@ -1,24 +1,9 @@
-import {
-  Component,
-  Injector,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  distinctUntilChanged,
-  switchMap,
-} from 'rxjs/operators';
+import { Component, Injector, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 import { GenericConstructor } from '../../../core/shared/generic-constructor';
-import {
-  hasNoValue,
-  hasValue,
-} from '../../empty.util';
+import { hasNoValue, hasValue } from '../../empty.util';
 import { MenuService } from '../menu.service';
 import { MenuID } from '../menu-id.model';
 import { getComponentForMenuItemType } from '../menu-item.decorator';
@@ -34,7 +19,6 @@ import { MenuSection } from '../menu-section.model';
   template: '',
 })
 export class MenuSectionComponent implements OnInit, OnDestroy {
-
   /**
    * Observable that emits whether or not this section is currently active
    */
@@ -53,10 +37,15 @@ export class MenuSectionComponent implements OnInit, OnDestroy {
   /**
    * Map of components and injectors for each dynamically rendered menu section
    */
-  sectionMap$: BehaviorSubject<Map<string, {
-    injector: Injector,
-    component: GenericConstructor<MenuSectionComponent>
-  }>> = new BehaviorSubject(new Map());
+  sectionMap$: BehaviorSubject<
+    Map<
+      string,
+      {
+        injector: Injector;
+        component: GenericConstructor<MenuSectionComponent>;
+      }
+    >
+  > = new BehaviorSubject(new Map());
 
   /**
    * Array to track all subscriptions and unsubscribe them onDestroy
@@ -64,14 +53,19 @@ export class MenuSectionComponent implements OnInit, OnDestroy {
    */
   subs: Subscription[] = [];
 
-  constructor(public section: MenuSection, protected menuService: MenuService, protected injector: Injector) {
-  }
+  constructor(
+    public section: MenuSection,
+    protected menuService: MenuService,
+    protected injector: Injector,
+  ) {}
 
   /**
    * Set initial values for instance variables
    */
   ngOnInit(): void {
-    this.active = this.menuService.isSectionActive(this.menuID, this.section.id).pipe(distinctUntilChanged());
+    this.active = this.menuService
+      .isSectionActive(this.menuID, this.section.id)
+      .pipe(distinctUntilChanged());
     this.initializeInjectorData();
   }
 
@@ -115,19 +109,24 @@ export class MenuSectionComponent implements OnInit, OnDestroy {
       this.getItemModelInjector(this.section.model),
       this.getMenuItemComponent(this.section.model),
     );
-    this.subSections$ = this.menuService.getSubSectionsByParentID(this.menuID, this.section.id);
+    this.subSections$ = this.menuService.getSubSectionsByParentID(
+      this.menuID,
+      this.section.id,
+    );
     this.subs.push(
-      this.subSections$.pipe(
-        // if you return an array from a switchMap it will emit each element as a separate event.
-        // So this switchMap is equivalent to a subscribe with a forEach inside
-        switchMap((sections: MenuSection[]) => sections),
-      ).subscribe((section: MenuSection) => {
-        this.updateSectionMap(
-          section.id,
-          this.getItemModelInjector(section.model),
-          this.getMenuItemComponent(section.model),
-        );
-      }),
+      this.subSections$
+        .pipe(
+          // if you return an array from a switchMap it will emit each element as a separate event.
+          // So this switchMap is equivalent to a subscribe with a forEach inside
+          switchMap((sections: MenuSection[]) => sections),
+        )
+        .subscribe((section: MenuSection) => {
+          this.updateSectionMap(
+            section.id,
+            this.getItemModelInjector(section.model),
+            this.getMenuItemComponent(section.model),
+          );
+        }),
     );
   }
 
@@ -163,7 +162,9 @@ export class MenuSectionComponent implements OnInit, OnDestroy {
       itemModel = this.section.model;
     }
     return Injector.create({
-      providers: [{ provide: 'itemModelProvider', useFactory: () => (itemModel), deps: [] }],
+      providers: [
+        { provide: 'itemModelProvider', useFactory: () => itemModel, deps: [] },
+      ],
       parent: this.injector,
     });
   }

@@ -6,12 +6,20 @@ import { ContextHelp } from './context-help.model';
 import { type } from './ngrx/type';
 
 export const ContextHelpActionTypes = {
-  'CONTEXT_HELP_TOGGLE_ICONS': type('dspace/context-help/CONTEXT_HELP_TOGGLE_ICONS'),
-  'CONTEXT_HELP_ADD': type('dspace/context-help/CONTEXT_HELP_ADD'),
-  'CONTEXT_HELP_REMOVE': type('dspace/context-help/CONTEXT_HELP_REMOVE'),
-  'CONTEXT_HELP_TOGGLE_TOOLTIP': type('dspace/context-help/CONTEXT_HELP_TOGGLE_TOOLTIP'),
-  'CONTEXT_HELP_SHOW_TOOLTIP': type('dspace/context-help/CONTEXT_HELP_SHOW_TOOLTIP'),
-  'CONTEXT_HELP_HIDE_TOOLTIP' : type('dspace/context-help/CONTEXT_HELP_HIDE_TOOLTIP'),
+  CONTEXT_HELP_TOGGLE_ICONS: type(
+    'dspace/context-help/CONTEXT_HELP_TOGGLE_ICONS',
+  ),
+  CONTEXT_HELP_ADD: type('dspace/context-help/CONTEXT_HELP_ADD'),
+  CONTEXT_HELP_REMOVE: type('dspace/context-help/CONTEXT_HELP_REMOVE'),
+  CONTEXT_HELP_TOGGLE_TOOLTIP: type(
+    'dspace/context-help/CONTEXT_HELP_TOGGLE_TOOLTIP',
+  ),
+  CONTEXT_HELP_SHOW_TOOLTIP: type(
+    'dspace/context-help/CONTEXT_HELP_SHOW_TOOLTIP',
+  ),
+  CONTEXT_HELP_HIDE_TOOLTIP: type(
+    'dspace/context-help/CONTEXT_HELP_HIDE_TOOLTIP',
+  ),
 };
 
 /**
@@ -28,7 +36,7 @@ export class ContextHelpAddAction implements Action {
   type = ContextHelpActionTypes.CONTEXT_HELP_ADD;
   model: ContextHelp;
 
-  constructor (model: ContextHelp) {
+  constructor(model: ContextHelp) {
     this.model = model;
   }
 }
@@ -75,8 +83,8 @@ export class ContextHelpHideTooltipAction extends ContextHelpTooltipAction {
   type = ContextHelpActionTypes.CONTEXT_HELP_HIDE_TOOLTIP;
 }
 
-export type ContextHelpAction
-  = ContextHelpToggleIconsAction
+export type ContextHelpAction =
+  | ContextHelpToggleIconsAction
   | ContextHelpAddAction
   | ContextHelpRemoveAction
   | ContextHelpToggleTooltipAction

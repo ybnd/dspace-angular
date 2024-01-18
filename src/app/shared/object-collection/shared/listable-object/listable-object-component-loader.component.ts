@@ -23,11 +23,7 @@ import { Context } from '../../../../core/shared/context.model';
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
 import { GenericConstructor } from '../../../../core/shared/generic-constructor';
 import { ViewMode } from '../../../../core/shared/view-mode.model';
-import {
-  hasNoValue,
-  hasValue,
-  isNotEmpty,
-} from '../../../empty.util';
+import { hasNoValue, hasValue, isNotEmpty } from '../../../empty.util';
 import { ThemeService } from '../../../theme-support/theme.service';
 import { CollectionElementLinkType } from '../../collection-element-link.type';
 import { ListableObject } from '../listable-object.model';
@@ -42,7 +38,9 @@ import { ListableObjectDirective } from './listable-object.directive';
 /**
  * Component for determining what component to use depending on the item's entity type (dspace.entity.type)
  */
-export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges, OnDestroy {
+export class ListableObjectComponentLoaderComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   /**
    * The item or metadata to determine the component for
    */
@@ -91,7 +89,8 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
   /**
    * Directive hook used to place the dynamic child component
    */
-  @ViewChild(ListableObjectDirective, { static: true }) listableObjectDirective: ListableObjectDirective;
+  @ViewChild(ListableObjectDirective, { static: true })
+  listableObjectDirective: ListableObjectDirective;
 
   /**
    * Emit when the listable object has been reloaded.
@@ -126,8 +125,10 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
     'contentChange',
   ];
 
-  constructor(private cdr: ChangeDetectorRef, private themeService: ThemeService) {
-  }
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private themeService: ThemeService,
+  ) {}
 
   /**
    * Setup the dynamic child component
@@ -161,19 +162,23 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
       .forEach((subscription) => subscription.unsubscribe());
   }
 
-  private instantiateComponent(object: ListableObject, changes?: SimpleChanges): void {
-
-    const component = this.getComponent(object.getRenderTypes(), this.viewMode, this.context);
+  private instantiateComponent(
+    object: ListableObject,
+    changes?: SimpleChanges,
+  ): void {
+    const component = this.getComponent(
+      object.getRenderTypes(),
+      this.viewMode,
+      this.context,
+    );
 
     const viewContainerRef = this.listableObjectDirective.viewContainerRef;
     viewContainerRef.clear();
 
-    this.compRef = viewContainerRef.createComponent(
-      component, {
-        index: 0,
-        injector: undefined,
-      },
-    );
+    this.compRef = viewContainerRef.createComponent(component, {
+      index: 0,
+      injector: undefined,
+    });
 
     if (hasValue(changes)) {
       this.ngOnChanges(changes);
@@ -184,16 +189,20 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
     if ((this.compRef.instance as any).reloadedObject) {
       combineLatest([
         observableOf(changes),
-        (this.compRef.instance as any).reloadedObject.pipe(take(1)) as Observable<DSpaceObject>,
-      ]).subscribe(([simpleChanges, reloadedObject]: [SimpleChanges, DSpaceObject]) => {
-        if (reloadedObject) {
-          this.compRef.destroy();
-          this.object = reloadedObject;
-          this.instantiateComponent(reloadedObject, simpleChanges);
-          this.cdr.detectChanges();
-          this.contentChange.emit(reloadedObject);
-        }
-      });
+        (this.compRef.instance as any).reloadedObject.pipe(
+          take(1),
+        ) as Observable<DSpaceObject>,
+      ]).subscribe(
+        ([simpleChanges, reloadedObject]: [SimpleChanges, DSpaceObject]) => {
+          if (reloadedObject) {
+            this.compRef.destroy();
+            this.object = reloadedObject;
+            this.instantiateComponent(reloadedObject, simpleChanges);
+            this.cdr.detectChanges();
+            this.contentChange.emit(reloadedObject);
+          }
+        },
+      );
     }
   }
 
@@ -201,10 +210,17 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
    * Fetch the component depending on the item's entity type, view mode and context
    * @returns {GenericConstructor<Component>}
    */
-  getComponent(renderTypes: (string | GenericConstructor<ListableObject>)[],
+  getComponent(
+    renderTypes: (string | GenericConstructor<ListableObject>)[],
     viewMode: ViewMode,
-    context: Context): GenericConstructor<Component> {
-    return getListableObjectComponent(renderTypes, viewMode, context, this.themeService.getThemeName());
+    context: Context,
+  ): GenericConstructor<Component> {
+    return getListableObjectComponent(
+      renderTypes,
+      viewMode,
+      context,
+      this.themeService.getThemeName(),
+    );
   }
 
   /**
@@ -212,11 +228,16 @@ export class ListableObjectComponentLoaderComponent implements OnInit, OnChanges
    * to ensure they're in sync
    */
   protected connectInputsAndOutputs(): void {
-    if (isNotEmpty(this.inAndOutputNames) && hasValue(this.compRef) && hasValue(this.compRef.instance)) {
-      this.inAndOutputNames.filter((name: any) => this[name] !== undefined).forEach((name: any) => {
-        this.compRef.instance[name] = this[name];
-      });
+    if (
+      isNotEmpty(this.inAndOutputNames) &&
+      hasValue(this.compRef) &&
+      hasValue(this.compRef.instance)
+    ) {
+      this.inAndOutputNames
+        .filter((name: any) => this[name] !== undefined)
+        .forEach((name: any) => {
+          this.compRef.instance[name] = this[name];
+        });
     }
   }
-
 }

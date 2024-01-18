@@ -1,21 +1,15 @@
 {
   "401.help": "आप इस पृष्ठ का प्रयोग करने की अनुमति नहीं हैं। होम पेज पर वापस जाने के लिए आप नीचे दिए गए बटन का उपयोग कर सकते हैं।",
 
-
   "401.link.home-page": "मुझे होम पेज पर ले चलो",
-
 
   "401.unauthorized": "अनधिकृत",
 
-
   "403.forbidden": "वर्जित",
-
 
   "403.help": "आपको इस पृष्ठ का अभिगमन करने की अनुमति नहीं है। होम पेज पर वापस जाने के लिए आप नीचे दिए गए बटन का उपयोग कर सकते हैं।",
 
-
   "403.link.home-page": "मुझे होम पेज पर ले चलो",
-
 
   "404.help": "आप जिस पेज की तलाश कर रहे हैं, वह हमें नहीं मिल रहा है। हो सकता है कि पृष्ठ को स्थानांतरित या हटा दिया गया हो। होम पेज पर वापस जाने के लिए आप नीचे दिए गए बटन का उपयोग कर सकते हैं।",
 
@@ -73,21 +67,21 @@
 
   "admin.access-control.epeople.form.memberOfNoGroups": "यह ई-व्यक्ति किसी भी समूह का सदस्य नहीं है",
 
-  "admin.access-control.epeople.form.notification.created.failure": "\"{{name}}\" ई-व्यक्ति बनाने में विफल",
+  "admin.access-control.epeople.form.notification.created.failure": '"{{name}}" ई-व्यक्ति बनाने में विफल',
 
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "\"{{email}}\" ईमेल पहले से प्रयोग में होने के कारण \"{{name}}\" ई-व्यक्ति बनाना विफल हुआ। ",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": '"{{email}}" ईमेल पहले से प्रयोग में होने के कारण "{{name}}" ई-व्यक्ति बनाना विफल हुआ। ',
 
-  "admin.access-control.epeople.form.notification.created.success": "\"{{name}}\" ई-व्यक्ति सफलतापूर्वक बनाया गया  ",
+  "admin.access-control.epeople.form.notification.created.success": '"{{name}}" ई-व्यक्ति सफलतापूर्वक बनाया गया  ',
 
-  "admin.access-control.epeople.form.notification.deleted.failure": "ई-व्यक्ति \"{{name}}\" को हटाने में विफल",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'ई-व्यक्ति "{{name}}" को हटाने में विफल',
 
-  "admin.access-control.epeople.form.notification.deleted.success": "ई-व्यक्ति \"{{name}}\" को सफलतापूर्वक हटा दिया गया",
+  "admin.access-control.epeople.form.notification.deleted.success": 'ई-व्यक्ति "{{name}}" को सफलतापूर्वक हटा दिया गया',
 
-  "admin.access-control.epeople.form.notification.edited.failure": "\"{{name}}\" ई-व्यक्ति संपादित करने में विफल",
+  "admin.access-control.epeople.form.notification.edited.failure": '"{{name}}" ई-व्यक्ति संपादित करने में विफल',
 
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "ई-व्यक्ति \"{{name}}\", ईमेल \"{{email}}\" पहले से प्रयोग में संपादित करने में विफल।",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'ई-व्यक्ति "{{name}}", ईमेल "{{email}}" पहले से प्रयोग में संपादित करने में विफल।',
 
-  "admin.access-control.epeople.form.notification.edited.success": "ई-व्यक्ति \"{{name}}\" को सफलतापूर्वक संपादित किया गया",
+  "admin.access-control.epeople.form.notification.edited.success": 'ई-व्यक्ति "{{name}}" को सफलतापूर्वक संपादित किया गया',
 
   "admin.access-control.epeople.form.requireCertificate": "प्रमाण पत्र की आवश्यकता है",
 
@@ -103,9 +97,9 @@
 
   "admin.access-control.epeople.no-items": "कोई ई-लोग दिखाने के लिए नहीं।",
 
-  "admin.access-control.epeople.notification.deleted.failure": "ई-व्यक्ति को हटाने में विफल: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.failure": 'ई-व्यक्ति को हटाने में विफल: "{{name}}"',
 
-  "admin.access-control.epeople.notification.deleted.success": "ई-व्यक्ति को सफलतापूर्वक हटाया गया: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.success": 'ई-व्यक्ति को सफलतापूर्वक हटाया गया: "{{name}}"',
 
   "admin.access-control.epeople.search.button": "खोजें",
 
@@ -119,11 +113,11 @@
 
   "admin.access-control.epeople.table.edit": "संपादित करें",
 
-  "admin.access-control.epeople.table.edit.buttons.edit": "\"{{name}}\" संपादित करें",
+  "admin.access-control.epeople.table.edit.buttons.edit": '"{{name}}" संपादित करें',
 
   "admin.access-control.epeople.table.edit.buttons.edit-disabled": "आप इस समूह को संपादित करने के लिए अधिकृत नहीं हैं",
 
-  "admin.access-control.epeople.table.edit.buttons.remove": "\"{{name}}\" मिटाएं",
+  "admin.access-control.epeople.table.edit.buttons.remove": '"{{name}}" मिटाएं',
 
   "admin.access-control.epeople.table.email": "ईमेल (सटीक)",
 
@@ -145,15 +139,15 @@
 
   "admin.access-control.groups.form.alert.permanent": "यह समूह स्थायी है, इसलिए इसे संपादित या हटाया नहीं जा सकता है। आप अभी भी इस  पृष्ठ का उपयोग करके समूह के सदस्यों को जोड़ और हटा सकते हैं।",
 
-  "admin.access-control.groups.form.alert.workflowGroup": "इस समूह को संशोधित या हटाया नहीं जा सकता क्योंकि \"{{name}}\" {{comcol}}  प्रस्तुतीकरण और कार्यप्रवाह प्रक्रिया में एक भूमिका से संबंधित है। आप इसे हटाने के लिए {{comcol}} संपादन पृष्ठ पर <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> टैब का प्रयोग कर सकते है। आप अभी भी इस पेज का उपयोग करके समूह के सदस्यों को जोड़ और हटा सकते हैं।",
+  "admin.access-control.groups.form.alert.workflowGroup": 'इस समूह को संशोधित या हटाया नहीं जा सकता क्योंकि "{{name}}" {{comcol}}  प्रस्तुतीकरण और कार्यप्रवाह प्रक्रिया में एक भूमिका से संबंधित है। आप इसे हटाने के लिए {{comcol}} संपादन पृष्ठ पर <a href=\'{{comcolEditRolesRoute}}\'>"assign roles"</a> टैब का प्रयोग कर सकते है। आप अभी भी इस पेज का उपयोग करके समूह के सदस्यों को जोड़ और हटा सकते हैं।',
 
   "admin.access-control.groups.form.delete-group.modal.cancel": "रद्द करें",
 
   "admin.access-control.groups.form.delete-group.modal.confirm": "हटाएं",
 
-  "admin.access-control.groups.form.delete-group.modal.header": "\"{{dsoName}}\" समूह हटाएं",
+  "admin.access-control.groups.form.delete-group.modal.header": '"{{dsoName}}" समूह हटाएं',
 
-  "admin.access-control.groups.form.delete-group.modal.info": "क्या आप वाकई \"{{dsoName}}\" समूह को हटाना चाहते हैं",
+  "admin.access-control.groups.form.delete-group.modal.info": 'क्या आप वाकई "{{dsoName}}" समूह को हटाना चाहते हैं',
 
   "admin.access-control.groups.form.groupCommunity": "समुदाय या संग्रह",
 
@@ -175,15 +169,15 @@
 
   "admin.access-control.groups.form.members-list.no-members-yet": "समूह में अभी तक कोई सदस्य नहीं है, सदस्य खोजें और जोड़ें।",
 
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "सदस्य जोड़ने में विफल: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'सदस्य जोड़ने में विफल: "{{name}}"',
 
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "सदस्य को हटाने में विफल: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'सदस्य को हटाने में विफल: "{{name}}"',
 
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "पहले एक नाम प्रस्तुत करें, कोई वर्तमान सक्रिय समूह नहीं है।",
 
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "\"{{name}}\" सदस्य सफलतापूर्वक जोड़ा गया",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": '"{{name}}" सदस्य सफलतापूर्वक जोड़ा गया',
 
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "\"{{name}}\" सदस्य को सफलतापूर्वक हटाया गया",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": '"{{name}}" सदस्य को सफलतापूर्वक हटाया गया',
 
   "admin.access-control.groups.form.members-list.search.button": "खोजें",
 
@@ -195,9 +189,9 @@
 
   "admin.access-control.groups.form.members-list.table.edit": "हटाएं / जोड़ें",
 
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "\"{{name}}\" नाम वाले सदस्य को जोड़ें",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": '"{{name}}" नाम वाले सदस्य को जोड़ें',
 
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "\"{{name}}\" नाम वाले सदस्य को हटाएं",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": '"{{name}}" नाम वाले सदस्य को हटाएं',
 
   "admin.access-control.groups.form.members-list.table.email": "ईमेल",
 
@@ -209,23 +203,23 @@
 
   "admin.access-control.groups.form.members-list.table.netid": "NetID",
 
-  "admin.access-control.groups.form.notification.created.failure": "\"{{name}}\" समूह बनाने में विफल",
+  "admin.access-control.groups.form.notification.created.failure": '"{{name}}" समूह बनाने में विफल',
 
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "\"{{name}}\" नाम के साथ समूह बनाने में विफल, सुनिश्चित करें कि नाम पहले से उपयोग में नहीं है।",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": '"{{name}}" नाम के साथ समूह बनाने में विफल, सुनिश्चित करें कि नाम पहले से उपयोग में नहीं है।',
 
-  "admin.access-control.groups.form.notification.created.success": "\"{{name}}\" समूह सफलतापूर्वक बनाया गया",
+  "admin.access-control.groups.form.notification.created.success": '"{{name}}" समूह सफलतापूर्वक बनाया गया',
 
-  "admin.access-control.groups.form.notification.deleted.failure.content": "कारण: \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'कारण: "{{ cause }}"',
 
-  "admin.access-control.groups.form.notification.deleted.failure.title": "\"{{ name }}\" समूह को हटाने में विफल",
+  "admin.access-control.groups.form.notification.deleted.failure.title": '"{{ name }}" समूह को हटाने में विफल',
 
-  "admin.access-control.groups.form.notification.deleted.success": "\"{{ name }}\" समूह को सफलतापूर्वक हटाया गया",
+  "admin.access-control.groups.form.notification.deleted.success": '"{{ name }}" समूह को सफलतापूर्वक हटाया गया',
 
-  "admin.access-control.groups.form.notification.edited.failure": "\"{{name}}\" समूह को संपादित करने में विफल",
+  "admin.access-control.groups.form.notification.edited.failure": '"{{name}}" समूह को संपादित करने में विफल',
 
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "\"{{name}}\" नाम पहले से प्रयोग में है!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": '"{{name}}" नाम पहले से प्रयोग में है!',
 
-  "admin.access-control.groups.form.notification.edited.success": "\"{{name}}\" समूह को सफलतापूर्वक संपादित किया गया",
+  "admin.access-control.groups.form.notification.edited.success": '"{{name}}" समूह को सफलतापूर्वक संपादित किया गया',
 
   "admin.access-control.groups.form.return": "वापस",
 
@@ -239,19 +233,19 @@
 
   "admin.access-control.groups.form.subgroups-list.no-subgroups-yet": "समूह में अभी तक कोई उपसमूह नहीं है।",
 
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "कुछ गलत हुआ: \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'कुछ गलत हुआ: "{{cause}}"',
 
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "उपसमूह जोड़ने में विफल: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'उपसमूह जोड़ने में विफल: "{{name}}"',
 
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "\"{{name}}\" उपसमूह को हटाने में विफल",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": '"{{name}}" उपसमूह को हटाने में विफल',
 
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "कोई वर्तमान सक्रिय समूह नहीं है, पहले एक नाम प्रस्तुत करें।",
 
   "admin.access-control.groups.form.subgroups-list.notification.failure.subgroupToAddIsActiveGroup": "यह वर्तमान समूह है, जोड़ा नहीं जा सकता।",
 
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "उपसमूह सफलतापूर्वक जोड़ा गया: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'उपसमूह सफलतापूर्वक जोड़ा गया: "{{name}}"',
 
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "\"{{name}}\" उपसमूह को सफलतापूर्वक हटाया गया",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": '"{{name}}" उपसमूह को सफलतापूर्वक हटाया गया',
 
   "admin.access-control.groups.form.subgroups-list.search.button": "खोजें",
 
@@ -261,9 +255,9 @@
 
   "admin.access-control.groups.form.subgroups-list.table.edit": "हटाएं / जोड़ें",
 
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "\"{{name}}\" नाम से उपसमूह जोड़ें",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": '"{{name}}" नाम से उपसमूह जोड़ें',
 
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "\"{{name}}\" नाम से उपसमूह हटाएं",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": '"{{name}}" नाम से उपसमूह हटाएं',
 
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "वर्तमान समूह",
 
@@ -275,11 +269,11 @@
 
   "admin.access-control.groups.no-items": "इसके नाम से कोई समूह नहीं मिला या यह UUID के रूप में नहीं है",
 
-  "admin.access-control.groups.notification.deleted.failure.content": "कारण: \"{{cause}}\"",
+  "admin.access-control.groups.notification.deleted.failure.content": 'कारण: "{{cause}}"',
 
-  "admin.access-control.groups.notification.deleted.failure.title": "\"{{name}}\" समूह को हटाने में विफल",
+  "admin.access-control.groups.notification.deleted.failure.title": '"{{name}}" समूह को हटाने में विफल',
 
-  "admin.access-control.groups.notification.deleted.success": "समूह \"{{name}}\" को सफलतापूर्वक हटाया गया",
+  "admin.access-control.groups.notification.deleted.success": 'समूह "{{name}}" को सफलतापूर्वक हटाया गया',
 
   "admin.access-control.groups.search.button": "खोजें",
 
@@ -293,9 +287,9 @@
 
   "admin.access-control.groups.table.edit": "संपादित करें",
 
-  "admin.access-control.groups.table.edit.buttons.edit": "\"{{name}}\" संपादित करें",
+  "admin.access-control.groups.table.edit.buttons.edit": '"{{name}}" संपादित करें',
 
-  "admin.access-control.groups.table.edit.buttons.remove": "\"{{name}}\" हटाएं",
+  "admin.access-control.groups.table.edit.buttons.remove": '"{{name}}" हटाएं',
 
   "admin.access-control.groups.table.id": "पहचान",
 
@@ -455,7 +449,7 @@
 
   "admin.registries.schema.breadcrumbs": "मेटाडेटा स्कीमा",
 
-  "admin.registries.schema.description": "यह \"{{namespace}}\" के लिए मेटाडेटा स्कीमा है।",
+  "admin.registries.schema.description": 'यह "{{namespace}}" के लिए मेटाडेटा स्कीमा है।',
 
   "admin.registries.schema.fields.head": "स्कीमा मेटाडेटा फ़ील्ड",
 
@@ -479,23 +473,23 @@
 
   "admin.registries.schema.head": "मेटाडेटा स्कीमा",
 
-  "admin.registries.schema.notification.created": "\"{{prefix}}\" मेटाडेटा स्कीमा सफलतापूर्वक बनाया गया",
+  "admin.registries.schema.notification.created": '"{{prefix}}" मेटाडेटा स्कीमा सफलतापूर्वक बनाया गया',
 
   "admin.registries.schema.notification.deleted.failure": "{{amount}} मेटाडेटा स्कीमा हटाने में विफल",
 
   "admin.registries.schema.notification.deleted.success": "{{amount}} मेटाडेटा स्कीमा सफलतापूर्वक हटा दिए गए",
 
-  "admin.registries.schema.notification.edited": "\"{{prefix}}\" मेटाडेटा स्कीमा को सफलतापूर्वक संपादित किया गया",
+  "admin.registries.schema.notification.edited": '"{{prefix}}" मेटाडेटा स्कीमा को सफलतापूर्वक संपादित किया गया',
 
   "admin.registries.schema.notification.failure": "त्रुटि",
 
-  "admin.registries.schema.notification.field.created": "\"{{field}}\" मेटाडेटा फ़ील्ड को सफलतापूर्वक बनाया गया",
+  "admin.registries.schema.notification.field.created": '"{{field}}" मेटाडेटा फ़ील्ड को सफलतापूर्वक बनाया गया',
 
   "admin.registries.schema.notification.field.deleted.failure": "{{amount}} मेटाडेटा फ़ील्ड हटाने में विफल",
 
   "admin.registries.schema.notification.field.deleted.success": "{{amount}} मेटाडेटा फ़ील्ड को सफलतापूर्वक हटाया गया",
 
-  "admin.registries.schema.notification.field.edited": "\"{{field}}\" मेटाडेटा फ़ील्ड को सफलतापूर्वक संपादित किया गया",
+  "admin.registries.schema.notification.field.edited": '"{{field}}" मेटाडेटा फ़ील्ड को सफलतापूर्वक संपादित किया गया',
 
   "admin.registries.schema.notification.success": "सफलता",
 
@@ -595,7 +589,7 @@
 
   "bitstream.edit.bitstream": "बिटस्ट्रीम: ",
 
-  "bitstream.edit.form.description.hint": "वैकल्पिक रूप से, फ़ाइल का संक्षिप्त विवरण प्रदान करें, उदाहरण के लिए \"<i>मुख्य लेख</i>\" या \"<i>डेटा रीडिंग का प्रयोग करें</i>\"।",
+  "bitstream.edit.form.description.hint": 'वैकल्पिक रूप से, फ़ाइल का संक्षिप्त विवरण प्रदान करें, उदाहरण के लिए "<i>मुख्य लेख</i>" या "<i>डेटा रीडिंग का प्रयोग करें</i>"।',
 
   "bitstream.edit.form.description.label": "विवरण",
 
@@ -623,13 +617,13 @@
 
   "bitstream.edit.form.iiifWidth.label": "आईआईआईएफ कैनवास चौड़ाई",
 
-  "bitstream.edit.form.newFormat.hint": "फ़ाइल बनाने के लिए आपके द्वारा उपयोग किया जाने वाला एप्लिकेशन, और संस्करण संख्या (उदाहरण के लिए, \"<i>ACMESoft SuperApp संस्करण 1.5</i>\")।",
+  "bitstream.edit.form.newFormat.hint": 'फ़ाइल बनाने के लिए आपके द्वारा उपयोग किया जाने वाला एप्लिकेशन, और संस्करण संख्या (उदाहरण के लिए, "<i>ACMESoft SuperApp संस्करण 1.5</i>")।',
 
   "bitstream.edit.form.newFormat.label": "नए प्रारूप का वर्णन करें",
 
   "bitstream.edit.form.primaryBitstream.label": "प्राथमिक बिटस्ट्रीम",
 
-  "bitstream.edit.form.selectedFormat.hint": "यदि प्रारूप उपरोक्त सूची में नहीं है, तो <b>उपरोक्त \"प्रारूप सूची में नहीं है\" चुनें</b> और \"नए प्रारूप का वर्णन करें\" के तहत इसका वर्णन करें।",
+  "bitstream.edit.form.selectedFormat.hint": 'यदि प्रारूप उपरोक्त सूची में नहीं है, तो <b>उपरोक्त "प्रारूप सूची में नहीं है" चुनें</b> और "नए प्रारूप का वर्णन करें" के तहत इसका वर्णन करें।',
 
   "bitstream.edit.form.selectedFormat.label": "चयनित प्रारूप",
 
@@ -747,7 +741,7 @@
 
   "collection.delete.processing": "हटाया जा रहा है",
 
-  "collection.delete.text": "क्या आप वाकई \"{{ dso }}\" संग्रह हटाना चाहते हैं",
+  "collection.delete.text": 'क्या आप वाकई "{{ dso }}" संग्रह हटाना चाहते हैं',
 
   "collection.edit.breadcrumbs": "संग्रह संपादित करें",
 
@@ -757,7 +751,7 @@
 
   "collection.edit.item-mapper.cancel": "रद्द करें",
 
-  "collection.edit.item-mapper.collection": "संग्रह: \"<b>{{name}}</b>\"",
+  "collection.edit.item-mapper.collection": 'संग्रह: "<b>{{name}}</b>"',
 
   "collection.edit.item-mapper.confirm": "चयनित आइटम मैप करें",
 
@@ -887,7 +881,7 @@
 
   "collection.edit.template.error": "टेम्पलेट आइटम प्राप्त करने में त्रुटि हुई",
 
-  "collection.edit.template.head": "संग्रह के लिए टेम्पलेट आइटम संपादित करें \"{{ collection }}\"",
+  "collection.edit.template.head": 'संग्रह के लिए टेम्पलेट आइटम संपादित करें "{{ collection }}"',
 
   "collection.edit.template.label": "टेम्पलेट आइटम",
 
@@ -1059,7 +1053,7 @@
 
   "community.delete.processing": "हटाया जा रहा है...",
 
-  "community.delete.text": "क्या आप वाकई \"{{dso }}\" समुदाय को हटाना चाहते हैं?",
+  "community.delete.text": 'क्या आप वाकई "{{dso }}" समुदाय को हटाना चाहते हैं?',
 
   "community.edit.breadcrumbs": "समुदाय संपादित करें",
 
@@ -1147,9 +1141,9 @@
 
   "confirmation-modal.delete-eperson.confirm": "हटाएं",
 
-  "confirmation-modal.delete-eperson.header": "\"{{ dsoName }}\" ई-व्यक्ति हटाएं",
+  "confirmation-modal.delete-eperson.header": '"{{ dsoName }}" ई-व्यक्ति हटाएं',
 
-  "confirmation-modal.delete-eperson.info": "क्या आप वाकई ई-व्यक्ति \"{{dsoName}}\" को हटाना चाहते हैं",
+  "confirmation-modal.delete-eperson.info": 'क्या आप वाकई ई-व्यक्ति "{{dsoName}}" को हटाना चाहते हैं',
 
   "confirmation-modal.delete-profile.cancel": "रद्द करें",
 
@@ -1255,7 +1249,7 @@
 
   "default.search.results.head": "खोज के परिणाम",
 
-  "deny-request-copy.email.message": "प्रिय {{ recipientName }}, \nआपके अनुरोध के प्रत्युत्तर में मुझे आपको यह बताते हुए खेद हो रहा है कि आपके द्वारा अनुरोधित फ़ाइल (फ़ाइलों) की एक प्रति, दस्तावेज़ के संबंध में भेजना संभव नहीं है: \"{{itemUrl }}\" ({{itemName }}), जिनमें से मैं एक लेखक हूँ।\n\nसाभार, \n{{ authorName }} <{{ authorEmail }}>",
+  "deny-request-copy.email.message": 'प्रिय {{ recipientName }}, \nआपके अनुरोध के प्रत्युत्तर में मुझे आपको यह बताते हुए खेद हो रहा है कि आपके द्वारा अनुरोधित फ़ाइल (फ़ाइलों) की एक प्रति, दस्तावेज़ के संबंध में भेजना संभव नहीं है: "{{itemUrl }}" ({{itemName }}), जिनमें से मैं एक लेखक हूँ।\n\nसाभार, \n{{ authorName }} <{{ authorEmail }}>',
 
   "deny-request-copy.email.subject": "दस्तावेज़ की प्रति का अनुरोध करें",
 
@@ -1339,7 +1333,7 @@
 
   "error.identifier": "पहचानकर्ता के लिए कोई आइटम नहीं मिला",
 
-  "error.invalid-search-query": "खोज क्वेरी मान्य नहीं है. कृपया इस त्रुटि के बारे में अधिक जानकारी के लिए <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> सर्वोत्तम अभ्यास देखें .",
+  "error.invalid-search-query": 'खोज क्वेरी मान्य नहीं है. कृपया इस त्रुटि के बारे में अधिक जानकारी के लिए <a href="https://solr.apache.org/guide/query-syntax-and-parsing.html" target="_blank">Solr query syntax</a> सर्वोत्तम अभ्यास देखें .',
 
   "error.item": "आइटम लाने में त्रुटि",
 
@@ -1539,7 +1533,7 @@
 
   "grant-deny-request-copy.processed": "यह अनुरोध पहले ही संसाधित किया जा चुका है। होम पृष्ठ पर वापस जाने के लिए आप नीचे दिए गए बटन का उपयोग कर सकते हैं।",
 
-  "grant-request-copy.email.message": "प्रिय {{ recipientName }}, \nआपके अनुरोध के प्रत्युत्तर में मुझे आपको \"{{ itemUrl }}\" ({{itemName }}) दस्तावेज़ से संबंधित फ़ाइल(ो), जिसका मैं एक लेखक हूं, की प्रति संलग्न करते हुए प्रसन्नता हो रही है।\n\nसाभार, \n{{ authorName }} <{{ authorEmail }}>",
+  "grant-request-copy.email.message": 'प्रिय {{ recipientName }}, \nआपके अनुरोध के प्रत्युत्तर में मुझे आपको "{{ itemUrl }}" ({{itemName }}) दस्तावेज़ से संबंधित फ़ाइल(ो), जिसका मैं एक लेखक हूं, की प्रति संलग्न करते हुए प्रसन्नता हो रही है।\n\nसाभार, \n{{ authorName }} <{{ authorEmail }}>',
 
   "grant-request-copy.email.subject": "दस्तावेज़ की प्रति का अनुरोध करें",
 
@@ -1591,7 +1585,7 @@
 
   "health.breadcrumbs": "स्वास्थ्य",
 
-  "hello": "नमस्ते",
+  hello: "नमस्ते",
 
   "home.breadcrumbs": "मुख्य पृष्ठ",
 
@@ -1803,7 +1797,7 @@
 
   "item.edit.item-mapper.head": "आइटम मैपर - संग्रह के लिए आइटम मैप करें",
 
-  "item.edit.item-mapper.item": "आइटम: \"<b>{{name}}</b>\"",
+  "item.edit.item-mapper.item": 'आइटम: "<b>{{name}}</b>"',
 
   "item.edit.item-mapper.no-search": "खोज करने के लिए कृपया एक प्रश्न दर्ज करें",
 
@@ -2967,7 +2961,7 @@
 
   "person.page.orcid.synchronization-mode-funding-message": "चुनें कि आपकी लिंक की गई परियोजना संस्थाओं को आपके ORCID रिकॉर्ड की फंडिंग जानकारी की सूची में भेजना है या नहीं।",
 
-  "person.page.orcid.synchronization-mode-message": "कृपया ORCID के साथ तुल्यकालन (सिंक्रोनाइजेशन) विकल्प चुनें। विकल्पों में \"मानव चलित\" (आपको अपना डेटा अपने आप ORCID को भेजना होगा), या \"बैच\" (सिस्टम आपके डेटा को एक निर्धारित स्क्रिप्ट के माध्यम से ORCID को भेजेगा)।",
+  "person.page.orcid.synchronization-mode-message": 'कृपया ORCID के साथ तुल्यकालन (सिंक्रोनाइजेशन) विकल्प चुनें। विकल्पों में "मानव चलित" (आपको अपना डेटा अपने आप ORCID को भेजना होगा), या "बैच" (सिस्टम आपके डेटा को एक निर्धारित स्क्रिप्ट के माध्यम से ORCID को भेजेगा)।',
 
   "person.page.orcid.synchronization-mode-profile-message": "क्या आपका जैविक डेटा या व्यक्तिगत पहचानकर्ता आपके ओआरसीआईडी रिकॉर्ड में भेजना है?",
 
@@ -3999,7 +3993,7 @@
 
   "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "एक नया नाम प्रकार सहेजें",
 
-  "submission.sections.describe.relationship-lookup.name-variant.notification.content": "क्या आप \"{{ value }}\" को इस व्यक्ति के लिए एक नाम प्रकार के रूप में सहेजना चाहते हैं ताकि आप और अन्य इसे भविष्य में प्रस्तुतीकरण के लिए पुन: उपयोग कर सकें? यदि आप नहीं करते हैं तो भी आप इस प्रस्तुतीकरण के लिए इसका उपयोग कर सकते हैं।",
+  "submission.sections.describe.relationship-lookup.name-variant.notification.content": 'क्या आप "{{ value }}" को इस व्यक्ति के लिए एक नाम प्रकार के रूप में सहेजना चाहते हैं ताकि आप और अन्य इसे भविष्य में प्रस्तुतीकरण के लिए पुन: उपयोग कर सकें? यदि आप नहीं करते हैं तो भी आप इस प्रस्तुतीकरण के लिए इसका उपयोग कर सकते हैं।',
 
   "submission.sections.describe.relationship-lookup.name-variant.notification.decline": "इस प्रस्तुति के लिए ही प्रयोग करें",
 
@@ -4381,7 +4375,7 @@
 
   "submission.workflow.generic.delete": "हटाएं",
 
-  "submission.workflow.generic.delete-help": "यदि आप इस आइटम को त्यागना चाहते हैं, तो \"हटाएं\" चुनें। फिर आपको इसकी पुष्टि करने के लिए कहा जाएगा।",
+  "submission.workflow.generic.delete-help": 'यदि आप इस आइटम को त्यागना चाहते हैं, तो "हटाएं" चुनें। फिर आपको इसकी पुष्टि करने के लिए कहा जाएगा।',
 
   "submission.workflow.generic.edit": "संपादित करें",
 
@@ -4393,13 +4387,13 @@
 
   "submission.workflow.tasks.claimed.approve": "स्वीकृत करें",
 
-  "submission.workflow.tasks.claimed.approve_help": "यदि आपने आइटम की समीक्षा की है और यह संग्रह में शामिल करने के लिए उपयुक्त है, तो \"स्वीकृत करें\" चुनें।",
+  "submission.workflow.tasks.claimed.approve_help": 'यदि आपने आइटम की समीक्षा की है और यह संग्रह में शामिल करने के लिए उपयुक्त है, तो "स्वीकृत करें" चुनें।',
 
   "submission.workflow.tasks.claimed.edit": "संपादित करें",
 
   "submission.workflow.tasks.claimed.edit_help": "आइटम का मेटाडेटा बदलने के लिए इस विकल्प का चयन करें।",
 
-  "submission.workflow.tasks.claimed.reject_help": "यदि आपने आइटम की समीक्षा की है और पाया है कि यह संग्रह में शामिल करने के लिए उपयुक्त <strong>नहीं</strong> है,  तो \"अस्वीकार करें\" चुनें। फिर आपको एक संदेश दर्ज करने के लिए कहा जाएगा जो यह दर्शाता है कि आइटम अनुपयुक्त क्यों है, और क्या जमाकर्ता को कुछ बदलना चाहिए और फिर से सबमिट करना चाहिए।",
+  "submission.workflow.tasks.claimed.reject_help": 'यदि आपने आइटम की समीक्षा की है और पाया है कि यह संग्रह में शामिल करने के लिए उपयुक्त <strong>नहीं</strong> है,  तो "अस्वीकार करें" चुनें। फिर आपको एक संदेश दर्ज करने के लिए कहा जाएगा जो यह दर्शाता है कि आइटम अनुपयुक्त क्यों है, और क्या जमाकर्ता को कुछ बदलना चाहिए और फिर से सबमिट करना चाहिए।',
 
   "submission.workflow.tasks.claimed.reject.reason.info": "कृपया नीचे दिए गए बॉक्स में प्रस्तुति को अस्वीकार करने का अपना कारण दर्ज करें, यह इंगित करते हुए कि क्या प्रस्तुतकर्ता किसी समस्या को ठीक कर सकता है और फिर से प्रस्तुत कर सकता है।  ",
 
@@ -4451,7 +4445,7 @@
 
   "thumbnail.project.placeholder": "परियोजना स्थानधारक छवि",
 
-  "title": "डीस्पेस",
+  title: "डीस्पेस",
 
   "uploader.browse": "ब्राउज़ करें",
 
@@ -4532,5 +4526,4 @@
   "workspace-item.view.title": "कार्यक्षेत्र दृश्य",
 
   "workspace.search.results.head": "आपकी प्रस्तुतियाँ",
-
 }

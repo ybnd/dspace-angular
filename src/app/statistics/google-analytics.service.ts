@@ -1,8 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   Angulartics2GoogleAnalytics,
   Angulartics2GoogleGlobalSiteTag,
@@ -21,15 +18,13 @@ import { isEmpty } from '../shared/empty.util';
  */
 @Injectable()
 export class GoogleAnalyticsService {
-
   constructor(
     private googleAnalytics: Angulartics2GoogleAnalytics,
     private googleGlobalSiteTag: Angulartics2GoogleGlobalSiteTag,
     private klaroService: KlaroService,
     private configService: ConfigurationDataService,
     @Inject(DOCUMENT) private document: any,
-  ) {
-  }
+  ) {}
 
   /**
    * Call this method once when Angular initializes on the client side.
@@ -38,15 +33,19 @@ export class GoogleAnalyticsService {
    * page and starts tracking.
    */
   addTrackingIdToPage(): void {
-    const googleKey$ = this.configService.findByPropertyName('google.analytics.key').pipe(
-      getFirstCompletedRemoteData(),
-    );
+    const googleKey$ = this.configService
+      .findByPropertyName('google.analytics.key')
+      .pipe(getFirstCompletedRemoteData());
     const preferences$ = this.klaroService.getSavedPreferences();
 
-    combineLatest([preferences$, googleKey$])
-      .subscribe(([preferences, remoteData]) => {
+    combineLatest([preferences$, googleKey$]).subscribe(
+      ([preferences, remoteData]) => {
         // make sure user has accepted Google Analytics consents
-        if (isEmpty(preferences) || isEmpty(preferences[GOOGLE_ANALYTICS_KLARO_KEY]) || !preferences[GOOGLE_ANALYTICS_KLARO_KEY]) {
+        if (
+          isEmpty(preferences) ||
+          isEmpty(preferences[GOOGLE_ANALYTICS_KLARO_KEY]) ||
+          !preferences[GOOGLE_ANALYTICS_KLARO_KEY]
+        ) {
           return;
         }
 
@@ -63,7 +62,6 @@ export class GoogleAnalyticsService {
         }
 
         if (this.isGTagVersion(trackingId)) {
-
           // add GTag snippet to page
           const keyScript = this.document.createElement('script');
           keyScript.src = `https://www.googletagmanager.com/gtag/js?id=${trackingId}`;
@@ -79,7 +77,7 @@ export class GoogleAnalyticsService {
         } else {
           // add trackingId snippet to page
           const keyScript = this.document.createElement('script');
-          keyScript.innerHTML =   `(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+          keyScript.innerHTML = `(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
                               (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                               m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                               })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
@@ -89,7 +87,8 @@ export class GoogleAnalyticsService {
           // start tracking
           this.googleAnalytics.startTracking();
         }
-      });
+      },
+    );
   }
 
   private isGTagVersion(trackingId: string) {

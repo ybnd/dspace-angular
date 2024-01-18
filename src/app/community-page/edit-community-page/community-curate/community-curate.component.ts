@@ -1,14 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-  take,
-} from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -23,15 +16,13 @@ import { hasValue } from '../../../shared/empty.util';
   templateUrl: './community-curate.component.html',
 })
 export class CommunityCurateComponent implements OnInit {
-
   dsoRD$: Observable<RemoteData<Community>>;
   communityName$: Observable<string>;
 
   constructor(
     private route: ActivatedRoute,
     private dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.dsoRD$ = this.route.parent.data.pipe(
@@ -46,5 +37,4 @@ export class CommunityCurateComponent implements OnInit {
       }),
     );
   }
-
 }

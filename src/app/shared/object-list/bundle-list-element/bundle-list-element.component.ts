@@ -13,5 +13,4 @@ import { AbstractListableElementComponent } from '../../object-collection/shared
  * This component is automatically used to create a list view for Bundle objects
  */
 @listableObjectComponent(Bundle, ViewMode.ListElement)
-export class BundleListElementComponent extends AbstractListableElementComponent<Bundle> {
-}
+export class BundleListElementComponent extends AbstractListableElementComponent<Bundle> {}

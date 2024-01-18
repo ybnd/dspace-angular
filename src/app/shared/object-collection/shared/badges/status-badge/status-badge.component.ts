@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { DSpaceObject } from '../../../../../core/shared/dspace-object.model';
 import { hasValue } from '../../../../empty.util';
@@ -15,7 +11,6 @@ import { hasValue } from '../../../../empty.util';
  * Component rendering the status of an item as a badge
  */
 export class StatusBadgeComponent implements OnInit {
-
   /**
    * The component used to retrieve the status from
    */
@@ -40,7 +35,13 @@ export class StatusBadgeComponent implements OnInit {
       objectAsAny = objectAsAny.indexableObject;
     }
     const objectExists = hasValue(objectAsAny);
-    this.privateBadge = objectExists && hasValue(objectAsAny.isDiscoverable) && !objectAsAny.isDiscoverable;
-    this.withdrawnBadge = objectExists && hasValue(objectAsAny.isWithdrawn) && objectAsAny.isWithdrawn;
+    this.privateBadge =
+      objectExists &&
+      hasValue(objectAsAny.isDiscoverable) &&
+      !objectAsAny.isDiscoverable;
+    this.withdrawnBadge =
+      objectExists &&
+      hasValue(objectAsAny.isWithdrawn) &&
+      objectAsAny.isWithdrawn;
   }
 }

@@ -11,7 +11,9 @@ export function rendersWorkflowTaskOption(option: string) {
     if (hasNoValue(workflowOptions.get(option))) {
       workflowOptions.set(option, component);
     } else {
-      throw new Error(`There can't be more than one component to render ClaimedTaskActions for option "${option}"`);
+      throw new Error(
+        `There can't be more than one component to render ClaimedTaskActions for option "${option}"`,
+      );
     }
   };
 }
@@ -24,7 +26,9 @@ export function rendersAdvancedWorkflowTaskOption(option: string) {
     if (hasNoValue(advancedWorkflowOptions.get(option))) {
       advancedWorkflowOptions.set(option, component);
     } else {
-      throw new Error(`There can't be more than one component to render AdvancedClaimedTaskActions for option "${option}"`);
+      throw new Error(
+        `There can't be more than one component to render AdvancedClaimedTaskActions for option "${option}"`,
+      );
     }
   };
 }

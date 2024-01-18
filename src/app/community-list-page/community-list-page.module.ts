@@ -9,7 +9,6 @@ import { CommunityListPageComponent } from './community-list-page.component';
 import { CommunityListPageRoutingModule } from './community-list-page.routing.module';
 import { ThemedCommunityListPageComponent } from './themed-community-list-page.component';
 
-
 const DECLARATIONS = [
   CommunityListPageComponent,
   CommunityListComponent,
@@ -26,14 +25,7 @@ const DECLARATIONS = [
     CommunityListPageRoutingModule,
     CdkTreeModule,
   ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...DECLARATIONS,
-    CdkTreeModule,
-  ],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS, CdkTreeModule],
 })
-export class CommunityListPageModule {
-
-}
+export class CommunityListPageModule {}

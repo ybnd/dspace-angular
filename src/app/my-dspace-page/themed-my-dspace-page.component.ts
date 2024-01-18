@@ -12,13 +12,14 @@ import { MyDSpacePageComponent } from './my-dspace-page.component';
   templateUrl: './../shared/theme-support/themed.component.html',
 })
 export class ThemedMyDSpacePageComponent extends ThemedComponent<MyDSpacePageComponent> {
-
   protected getComponentName(): string {
     return 'MyDSpacePageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/my-dspace-page/my-dspace-page.component`);
+    return import(
+      `../../themes/${themeName}/app/my-dspace-page/my-dspace-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

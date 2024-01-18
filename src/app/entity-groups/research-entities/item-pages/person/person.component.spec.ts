@@ -9,7 +9,9 @@ import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-dat
 import { PersonComponent } from './person.component';
 
 const mockItem: Item = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'person.email': [
       {
@@ -44,14 +46,16 @@ const mockItem: Item = Object.assign(new Item(), {
   },
   relationships: createRelationshipsObservable(),
   _links: {
-    self : {
+    self: {
       href: 'item-href',
     },
   },
 });
 
 const mockItemWithTitle: Item = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'person.email': [
       {
@@ -80,12 +84,18 @@ const mockItemWithTitle: Item = Object.assign(new Item(), {
   },
   relationships: createRelationshipsObservable(),
   _links: {
-    self : {
+    self: {
       href: 'item-href',
     },
   },
 });
 
-describe('PersonComponent with family and given names', getItemPageFieldsTest(mockItem, PersonComponent));
+describe(
+  'PersonComponent with family and given names',
+  getItemPageFieldsTest(mockItem, PersonComponent),
+);
 
-describe('PersonComponent with dc.title', getItemPageFieldsTest(mockItemWithTitle, PersonComponent));
+describe(
+  'PersonComponent with dc.title',
+  getItemPageFieldsTest(mockItemWithTitle, PersonComponent),
+);

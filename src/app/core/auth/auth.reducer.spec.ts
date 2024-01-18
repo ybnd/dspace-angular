@@ -28,17 +28,13 @@ import {
   SetUserAsIdleAction,
   UnsetUserAsIdleAction,
 } from './auth.actions';
-import {
-  authReducer,
-  AuthState,
-} from './auth.reducer';
+import { authReducer, AuthState } from './auth.reducer';
 import { AuthMethod } from './models/auth.method';
 import { AuthMethodType } from './models/auth.method-type';
 import { AuthStatus } from './models/auth-status.model';
 import { AuthTokenInfo } from './models/auth-token-info.model';
 
 describe('authReducer', () => {
-
   let initialState: AuthState;
   let state: AuthState;
   const mockTokenInfo = new AuthTokenInfo('test_token');
@@ -143,7 +139,11 @@ describe('authReducer', () => {
       info: undefined,
       idle: false,
     };
-    const action = new AuthenticatedSuccessAction(true, mockTokenInfo, EPersonMock._links.self.href);
+    const action = new AuthenticatedSuccessAction(
+      true,
+      mockTokenInfo,
+      EPersonMock._links.self.href,
+    );
     const newState = authReducer(initialState, action);
     state = {
       authenticated: true,
@@ -334,7 +334,9 @@ describe('authReducer', () => {
       info: undefined,
       idle: false,
     };
-    const action = new RetrieveAuthenticatedEpersonSuccessAction(EPersonMock.id);
+    const action = new RetrieveAuthenticatedEpersonSuccessAction(
+      EPersonMock.id,
+    );
     const newState = authReducer(initialState, action);
     state = {
       authenticated: true,

@@ -6,14 +6,34 @@ import { ItemSearchResult } from '../../../../../../../app/shared/object-collect
 import { listableObjectComponent } from '../../../../../../../app/shared/object-collection/shared/listable-object/listable-object.decorator';
 import { PublicationSidebarSearchListElementComponent as BaseComponent } from '../../../../../../../app/shared/object-list/sidebar-search-list-element/item-types/publication/publication-sidebar-search-list-element.component';
 
-@listableObjectComponent('PublicationSearchResult', ViewMode.ListElement, Context.SideBarSearchModal, 'custom')
-@listableObjectComponent('PublicationSearchResult', ViewMode.ListElement, Context.SideBarSearchModalCurrent, 'custom')
-@listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.SideBarSearchModal, 'custom')
-@listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.SideBarSearchModalCurrent, 'custom')
+@listableObjectComponent(
+  'PublicationSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModal,
+  'custom',
+)
+@listableObjectComponent(
+  'PublicationSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModalCurrent,
+  'custom',
+)
+@listableObjectComponent(
+  ItemSearchResult,
+  ViewMode.ListElement,
+  Context.SideBarSearchModal,
+  'custom',
+)
+@listableObjectComponent(
+  ItemSearchResult,
+  ViewMode.ListElement,
+  Context.SideBarSearchModalCurrent,
+  'custom',
+)
 @Component({
   selector: 'ds-publication-sidebar-search-list-element',
   // templateUrl: './publication-sidebar-search-list-element.component.html',
-  templateUrl: '../../../../../../../app/shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
+  templateUrl:
+    '../../../../../../../app/shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
 })
-export class PublicationSidebarSearchListElementComponent extends BaseComponent {
-}
+export class PublicationSidebarSearchListElementComponent extends BaseComponent {}

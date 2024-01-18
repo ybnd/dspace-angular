@@ -1,12 +1,5 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import {
@@ -49,13 +42,26 @@ describe('DSOSelectorComponent', () => {
   ];
 
   const searchService = {
-    search: (options: PaginatedSearchOptions, responseMsToLive?: number, useCachedVersionIfAvailable = true) => {
-      if (hasValue(options.query) && options.query.startsWith('search.resourceid')) {
-        return createSuccessfulRemoteDataObject$(createPaginatedList([searchResult]));
+    search: (
+      options: PaginatedSearchOptions,
+      responseMsToLive?: number,
+      useCachedVersionIfAvailable = true,
+    ) => {
+      if (
+        hasValue(options.query) &&
+        options.query.startsWith('search.resourceid')
+      ) {
+        return createSuccessfulRemoteDataObject$(
+          createPaginatedList([searchResult]),
+        );
       } else if (options.pagination.currentPage === 1) {
-        return createSuccessfulRemoteDataObject$(createPaginatedList(firstPageResults));
+        return createSuccessfulRemoteDataObject$(
+          createPaginatedList(firstPageResults),
+        );
       } else {
-        return createSuccessfulRemoteDataObject$(createPaginatedList(nextPageResults));
+        return createSuccessfulRemoteDataObject$(
+          createPaginatedList(nextPageResults),
+        );
       }
     },
   };
@@ -78,7 +84,9 @@ describe('DSOSelectorComponent', () => {
   let notificationsService: NotificationsService;
 
   beforeEach(waitForAsync(() => {
-    notificationsService = jasmine.createSpyObj('notificationsService', ['error']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'error',
+    ]);
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
@@ -89,7 +97,6 @@ describe('DSOSelectorComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -128,7 +135,11 @@ describe('DSOSelectorComponent', () => {
 
       it('should contain a combination of the current DSO, as well as first and second page results', (done) => {
         component.listEntries$.subscribe((listEntries) => {
-          expect(listEntries).toEqual([searchResult, ...firstPageResults, ...nextPageResults]);
+          expect(listEntries).toEqual([
+            searchResult,
+            ...firstPageResults,
+            ...nextPageResults,
+          ]);
           done();
         });
       });
@@ -174,7 +185,9 @@ describe('DSOSelectorComponent', () => {
 
   describe('when search returns an error', () => {
     beforeEach(() => {
-      spyOn(searchService, 'search').and.returnValue(createFailedRemoteDataObject$());
+      spyOn(searchService, 'search').and.returnValue(
+        createFailedRemoteDataObject$(),
+      );
       component.ngOnInit();
     });
 

@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -44,16 +40,24 @@ describe('CollectionSelectComponent', () => {
       name: 'name2',
     }),
   ];
-  const mockCollections = createSuccessfulRemoteDataObject$(createPaginatedList(mockCollectionList));
-  const mockPaginationOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'search-page-configuration',
-    pageSize: 10,
-    currentPage: 1,
-  });
+  const mockCollections = createSuccessfulRemoteDataObject$(
+    createPaginatedList(mockCollectionList),
+  );
+  const mockPaginationOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'search-page-configuration',
+      pageSize: 10,
+      currentPage: 1,
+    },
+  );
 
-  const authorizationDataService = jasmine.createSpyObj('authorizationDataService', {
-    isAuthorized: observableOf(true),
-  });
+  const authorizationDataService = jasmine.createSpyObj(
+    'authorizationDataService',
+    {
+      isAuthorized: observableOf(true),
+    },
+  );
 
   const linkHeadService = jasmine.createSpyObj('linkHeadService', {
     addTag: '',
@@ -65,29 +69,48 @@ describe('CollectionSelectComponent', () => {
     getUUIDFromString: '',
   });
 
-  const configurationDataService = jasmine.createSpyObj('configurationDataService', {
-    findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-      name: 'test',
-      values: [
-        'org.dspace.ctask.general.ProfileFormats = test',
-      ],
-    })),
-  });
+  const configurationDataService = jasmine.createSpyObj(
+    'configurationDataService',
+    {
+      findByPropertyName: createSuccessfulRemoteDataObject$(
+        Object.assign(new ConfigurationProperty(), {
+          name: 'test',
+          values: ['org.dspace.ctask.general.ProfileFormats = test'],
+        }),
+      ),
+    },
+  );
 
   const paginationService = new PaginationServiceStub();
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, RouterTestingModule.withRoutes([])],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        RouterTestingModule.withRoutes([]),
+      ],
       declarations: [],
       providers: [
-        { provide: ObjectSelectService, useValue: new ObjectSelectServiceStub([mockCollectionList[1].id]) },
+        {
+          provide: ObjectSelectService,
+          useValue: new ObjectSelectServiceStub([mockCollectionList[1].id]),
+        },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
         { provide: PaginationService, useValue: paginationService },
-        { provide: AuthorizationDataService, useValue: authorizationDataService },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
         { provide: GroupDataService, useValue: groupDataService },
         { provide: LinkHeadService, useValue: linkHeadService },
-        { provide: ConfigurationDataService, useValue: configurationDataService },
-        { provide: SearchConfigurationService, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationDataService,
+        },
+        {
+          provide: SearchConfigurationService,
+          useValue: new SearchConfigurationServiceStub(),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -103,7 +126,9 @@ describe('CollectionSelectComponent', () => {
   });
 
   it(`should show a list of ${mockCollectionList.length} collections`, () => {
-    const tbody: HTMLElement = fixture.debugElement.query(By.css('table#collection-select tbody')).nativeElement;
+    const tbody: HTMLElement = fixture.debugElement.query(
+      By.css('table#collection-select tbody'),
+    ).nativeElement;
     expect(tbody.children.length).toBe(mockCollectionList.length);
   });
 
@@ -111,7 +136,9 @@ describe('CollectionSelectComponent', () => {
     let checkbox: HTMLInputElement;
 
     beforeEach(() => {
-      checkbox = fixture.debugElement.query(By.css('input.collection-checkbox')).nativeElement;
+      checkbox = fixture.debugElement.query(
+        By.css('input.collection-checkbox'),
+      ).nativeElement;
     });
 
     it('should initially be unchecked', () => {
@@ -135,7 +162,9 @@ describe('CollectionSelectComponent', () => {
     let confirmButton: HTMLButtonElement;
 
     beforeEach(() => {
-      confirmButton = fixture.debugElement.query(By.css('button.collection-confirm')).nativeElement;
+      confirmButton = fixture.debugElement.query(
+        By.css('button.collection-confirm'),
+      ).nativeElement;
       spyOn(comp.confirm, 'emit').and.callThrough();
     });
 
@@ -149,7 +178,9 @@ describe('CollectionSelectComponent', () => {
     let cancelButton: HTMLButtonElement;
 
     beforeEach(() => {
-      cancelButton = fixture.debugElement.query(By.css('button.collection-cancel')).nativeElement;
+      cancelButton = fixture.debugElement.query(
+        By.css('button.collection-cancel'),
+      ).nativeElement;
       spyOn(comp.cancel, 'emit').and.callThrough();
     });
 

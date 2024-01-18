@@ -1,8 +1,5 @@
 import { waitForAsync } from '@angular/core/testing';
-import {
-  EMPTY,
-  of as observableOf,
-} from 'rxjs';
+import { EMPTY, of as observableOf } from 'rxjs';
 
 import { buildPaginatedList } from '../../../core/data/paginated-list.model';
 import { Item } from '../../../core/shared/item.model';
@@ -24,7 +21,9 @@ describe('DsoVersioningModalService', () => {
   let itemService;
 
   const mockItem: Item = Object.assign(new Item(), {
-    bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+    bundles: createSuccessfulRemoteDataObject$(
+      buildPaginatedList(new PageInfo(), []),
+    ),
     metadata: new MetadataMap(),
     relationships: createRelationshipsObservable(),
     _links: {
@@ -39,7 +38,13 @@ describe('DsoVersioningModalService', () => {
 
   beforeEach(waitForAsync(() => {
     modalService = jasmine.createSpyObj('modalService', {
-      open: { componentInstance: { firstVersion: {}, versionNumber: {}, createVersionEvent: EMPTY } },
+      open: {
+        componentInstance: {
+          firstVersion: {},
+          versionNumber: {},
+          createVersionEvent: EMPTY,
+        },
+      },
     });
     versionService = jasmine.createSpyObj('versionService', {
       findByHref: createSuccessfulRemoteDataObject$<Version>(new Version()),
@@ -48,9 +53,14 @@ describe('DsoVersioningModalService', () => {
       createVersion: createSuccessfulRemoteDataObject$<Version>(new Version()),
       hasDraftVersion$: observableOf(false),
     });
-    itemVersionShared = jasmine.createSpyObj('itemVersionShared', ['notifyCreateNewVersion']);
+    itemVersionShared = jasmine.createSpyObj('itemVersionShared', [
+      'notifyCreateNewVersion',
+    ]);
     router = jasmine.createSpyObj('router', ['navigateByUrl']);
-    workspaceItemDataService = jasmine.createSpyObj('workspaceItemDataService', ['findByItem']);
+    workspaceItemDataService = jasmine.createSpyObj(
+      'workspaceItemDataService',
+      ['findByItem'],
+    );
     itemService = jasmine.createSpyObj('itemService', ['findByHref']);
 
     service = new DsoVersioningModalService(
@@ -73,24 +83,42 @@ describe('DsoVersioningModalService', () => {
   describe('isNewVersionButtonDisabled', () => {
     it('should call versionHistoryService.hasDraftVersion$', () => {
       service.isNewVersionButtonDisabled(mockItem);
-      expect(versionHistoryService.hasDraftVersion$).toHaveBeenCalledWith(mockItem._links.version.href);
+      expect(versionHistoryService.hasDraftVersion$).toHaveBeenCalledWith(
+        mockItem._links.version.href,
+      );
     });
   });
 
   describe('getVersioningTooltipMessage', () => {
     it('should return the create message when isNewVersionButtonDisabled returns false', (done) => {
-      spyOn(service, 'isNewVersionButtonDisabled').and.returnValue(observableOf(false));
-      service.getVersioningTooltipMessage(mockItem, 'draft-message', 'create-message').subscribe((message) => {
-        expect(message).toEqual('create-message');
-        done();
-      });
+      spyOn(service, 'isNewVersionButtonDisabled').and.returnValue(
+        observableOf(false),
+      );
+      service
+        .getVersioningTooltipMessage(
+          mockItem,
+          'draft-message',
+          'create-message',
+        )
+        .subscribe((message) => {
+          expect(message).toEqual('create-message');
+          done();
+        });
     });
     it('should return the draft message when isNewVersionButtonDisabled returns true', (done) => {
-      spyOn(service, 'isNewVersionButtonDisabled').and.returnValue(observableOf(true));
-      service.getVersioningTooltipMessage(mockItem, 'draft-message', 'create-message').subscribe((message) => {
-        expect(message).toEqual('draft-message');
-        done();
-      });
+      spyOn(service, 'isNewVersionButtonDisabled').and.returnValue(
+        observableOf(true),
+      );
+      service
+        .getVersioningTooltipMessage(
+          mockItem,
+          'draft-message',
+          'create-message',
+        )
+        .subscribe((message) => {
+          expect(message).toEqual('draft-message');
+          done();
+        });
     });
   });
 });

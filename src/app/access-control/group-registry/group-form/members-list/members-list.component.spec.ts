@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -12,14 +9,8 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -27,10 +18,7 @@ import {
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 import { RestResponse } from '../../../../core/cache/response.models';
@@ -85,15 +73,29 @@ describe('MembersListComponent', () => {
       epersonMembers: epersonMembers,
       epersonNonMembers: epersonNonMembers,
       // This method is used to get all the current members
-      findListByHref(_href: string): Observable<RemoteData<PaginatedList<EPerson>>> {
-        return createSuccessfulRemoteDataObject$(buildPaginatedList<EPerson>(new PageInfo(), groupsDataServiceStub.getEPersonMembers()));
+      findListByHref(
+        _href: string,
+      ): Observable<RemoteData<PaginatedList<EPerson>>> {
+        return createSuccessfulRemoteDataObject$(
+          buildPaginatedList<EPerson>(
+            new PageInfo(),
+            groupsDataServiceStub.getEPersonMembers(),
+          ),
+        );
       },
       // This method is used to search across *non-members*
-      searchNonMembers(query: string, group: string): Observable<RemoteData<PaginatedList<EPerson>>> {
+      searchNonMembers(
+        query: string,
+        group: string,
+      ): Observable<RemoteData<PaginatedList<EPerson>>> {
         if (query === '') {
-          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), epersonNonMembers));
+          return createSuccessfulRemoteDataObject$(
+            buildPaginatedList(new PageInfo(), epersonNonMembers),
+          );
         }
-        return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), []));
+        return createSuccessfulRemoteDataObject$(
+          buildPaginatedList(new PageInfo(), []),
+        );
       },
       clearEPersonRequests() {
         // empty
@@ -112,11 +114,14 @@ describe('MembersListComponent', () => {
       getEPersonMembers() {
         return this.epersonMembers;
       },
-      addMemberToGroup(parentGroup, epersonToAdd: EPerson): Observable<RestResponse> {
+      addMemberToGroup(
+        parentGroup,
+        epersonToAdd: EPerson,
+      ): Observable<RestResponse> {
         // Add eperson to list of members
         this.epersonMembers = [...this.epersonMembers, epersonToAdd];
         // Remove eperson from list of non-members
-        this.epersonNonMembers.forEach( (eperson: EPerson, index: number) => {
+        this.epersonNonMembers.forEach((eperson: EPerson, index: number) => {
           if (eperson.id === epersonToAdd.id) {
             this.epersonNonMembers.splice(index, 1);
           }
@@ -132,9 +137,12 @@ describe('MembersListComponent', () => {
       getGroupEditPageRouterLink(group: Group): string {
         return '/access-control/groups/' + group.id;
       },
-      deleteMemberFromGroup(parentGroup, epersonToDelete: EPerson): Observable<RestResponse> {
+      deleteMemberFromGroup(
+        parentGroup,
+        epersonToDelete: EPerson,
+      ): Observable<RestResponse> {
         // Remove eperson from list of members
-        this.epersonMembers.forEach( (eperson: EPerson, index: number) => {
+        this.epersonMembers.forEach((eperson: EPerson, index: number) => {
           if (eperson.id === epersonToDelete.id) {
             this.epersonMembers.splice(index, 1);
           }
@@ -149,7 +157,12 @@ describe('MembersListComponent', () => {
 
     paginationService = new PaginationServiceStub();
     return TestBed.configureTestingModule({
-      imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, BrowserModule,
+      imports: [
+        CommonModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -158,10 +171,14 @@ describe('MembersListComponent', () => {
         }),
       ],
       declarations: [MembersListComponent],
-      providers: [MembersListComponent,
+      providers: [
+        MembersListComponent,
         { provide: EPersonDataService, useValue: ePersonDataServiceStub },
         { provide: GroupDataService, useValue: groupsDataServiceStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: FormBuilderService, useValue: builderService },
         { provide: Router, useValue: new RouterMock() },
         { provide: PaginationService, useValue: paginationService },
@@ -184,26 +201,39 @@ describe('MembersListComponent', () => {
     fixture.debugElement.nativeElement.remove();
   }));
 
-  it('should create MembersListComponent', inject([MembersListComponent], (comp: MembersListComponent) => {
-    expect(comp).toBeDefined();
-  }));
+  it('should create MembersListComponent', inject(
+    [MembersListComponent],
+    (comp: MembersListComponent) => {
+      expect(comp).toBeDefined();
+    },
+  ));
 
   describe('current members list', () => {
     it('should show list of eperson members of current active group', () => {
-      const epersonIdsFound = fixture.debugElement.queryAll(By.css('#ePeopleMembersOfGroup tr td:first-child'));
+      const epersonIdsFound = fixture.debugElement.queryAll(
+        By.css('#ePeopleMembersOfGroup tr td:first-child'),
+      );
       expect(epersonIdsFound.length).toEqual(1);
       epersonMembers.map((eperson: EPerson) => {
-        expect(epersonIdsFound.find((foundEl) => {
-          return (foundEl.nativeElement.textContent.trim() === eperson.uuid);
-        })).toBeTruthy();
+        expect(
+          epersonIdsFound.find((foundEl) => {
+            return foundEl.nativeElement.textContent.trim() === eperson.uuid;
+          }),
+        ).toBeTruthy();
       });
     });
 
     it('should show a delete button next to each member', () => {
-      const epersonsFound = fixture.debugElement.queryAll(By.css('#ePeopleMembersOfGroup tbody tr'));
+      const epersonsFound = fixture.debugElement.queryAll(
+        By.css('#ePeopleMembersOfGroup tbody tr'),
+      );
       epersonsFound.map((foundEPersonRowElement: DebugElement) => {
-        const addButton: DebugElement = foundEPersonRowElement.query(By.css('td:last-child .fa-plus'));
-        const deleteButton: DebugElement = foundEPersonRowElement.query(By.css('td:last-child .fa-trash-alt'));
+        const addButton: DebugElement = foundEPersonRowElement.query(
+          By.css('td:last-child .fa-plus'),
+        );
+        const deleteButton: DebugElement = foundEPersonRowElement.query(
+          By.css('td:last-child .fa-trash-alt'),
+        );
         expect(addButton).toBeNull();
         expect(deleteButton).not.toBeNull();
       });
@@ -211,12 +241,16 @@ describe('MembersListComponent', () => {
 
     describe('if first delete button is pressed', () => {
       beforeEach(() => {
-        const deleteButton: DebugElement = fixture.debugElement.query(By.css('#ePeopleMembersOfGroup tbody .fa-trash-alt'));
+        const deleteButton: DebugElement = fixture.debugElement.query(
+          By.css('#ePeopleMembersOfGroup tbody .fa-trash-alt'),
+        );
         deleteButton.nativeElement.click();
         fixture.detectChanges();
       });
       it('then no ePerson remains as a member of the active group.', () => {
-        const epersonsFound = fixture.debugElement.queryAll(By.css('#ePeopleMembersOfGroup tbody tr'));
+        const epersonsFound = fixture.debugElement.queryAll(
+          By.css('#ePeopleMembersOfGroup tbody tr'),
+        );
         expect(epersonsFound.length).toEqual(0);
       });
     });
@@ -229,23 +263,33 @@ describe('MembersListComponent', () => {
         component.search({ scope: 'metadata', query: '' });
         tick();
         fixture.detectChanges();
-        epersonsFound = fixture.debugElement.queryAll(By.css('#epersonsSearch tbody tr'));
+        epersonsFound = fixture.debugElement.queryAll(
+          By.css('#epersonsSearch tbody tr'),
+        );
       }));
 
       it('should display only non-members of the group', () => {
-        const epersonIdsFound = fixture.debugElement.queryAll(By.css('#epersonsSearch tbody tr td:first-child'));
+        const epersonIdsFound = fixture.debugElement.queryAll(
+          By.css('#epersonsSearch tbody tr td:first-child'),
+        );
         expect(epersonIdsFound.length).toEqual(1);
         epersonNonMembers.map((eperson: EPerson) => {
-          expect(epersonIdsFound.find((foundEl) => {
-            return (foundEl.nativeElement.textContent.trim() === eperson.uuid);
-          })).toBeTruthy();
+          expect(
+            epersonIdsFound.find((foundEl) => {
+              return foundEl.nativeElement.textContent.trim() === eperson.uuid;
+            }),
+          ).toBeTruthy();
         });
       });
 
       it('should display an add button next to non-members, not a delete button', () => {
         epersonsFound.map((foundEPersonRowElement: DebugElement) => {
-          const addButton: DebugElement = foundEPersonRowElement.query(By.css('td:last-child .fa-plus'));
-          const deleteButton: DebugElement = foundEPersonRowElement.query(By.css('td:last-child .fa-trash-alt'));
+          const addButton: DebugElement = foundEPersonRowElement.query(
+            By.css('td:last-child .fa-plus'),
+          );
+          const deleteButton: DebugElement = foundEPersonRowElement.query(
+            By.css('td:last-child .fa-trash-alt'),
+          );
           expect(addButton).not.toBeNull();
           expect(deleteButton).toBeNull();
         });
@@ -253,16 +297,19 @@ describe('MembersListComponent', () => {
 
       describe('if first add button is pressed', () => {
         beforeEach(() => {
-          const addButton: DebugElement = fixture.debugElement.query(By.css('#epersonsSearch tbody .fa-plus'));
+          const addButton: DebugElement = fixture.debugElement.query(
+            By.css('#epersonsSearch tbody .fa-plus'),
+          );
           addButton.nativeElement.click();
           fixture.detectChanges();
         });
         it('then all (two) ePersons are member of the active group. No non-members left', () => {
-          epersonsFound = fixture.debugElement.queryAll(By.css('#epersonsSearch tbody tr'));
+          epersonsFound = fixture.debugElement.queryAll(
+            By.css('#epersonsSearch tbody tr'),
+          );
           expect(epersonsFound.length).toEqual(0);
         });
       });
     });
   });
-
 });

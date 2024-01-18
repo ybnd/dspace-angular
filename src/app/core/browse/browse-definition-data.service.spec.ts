@@ -17,10 +17,7 @@ describe(`BrowseDefinitionDataService`, () => {
   const halService: any = new HALEndpointServiceStub(browsesEndpointURL);
 
   const options = new FindListOptions();
-  const linksToFollow = [
-    followLink('entries'),
-    followLink('items'),
-  ];
+  const linksToFollow = [followLink('entries'), followLink('items')];
 
   function initTestService() {
     return new BrowseDefinitionDataService(
@@ -53,16 +50,24 @@ describe(`BrowseDefinitionDataService`, () => {
   describe('searchBy', () => {
     it(`should call searchBy on searchData`, () => {
       service.searchBy('test', options, true, false, ...linksToFollow);
-      expect(searchDataSpy.searchBy).toHaveBeenCalledWith('test', options, true, false, ...linksToFollow);
+      expect(searchDataSpy.searchBy).toHaveBeenCalledWith(
+        'test',
+        options,
+        true,
+        false,
+        ...linksToFollow,
+      );
     });
   });
   describe(`findAll`, () => {
     it(`should call findAll on findAllData`, () => {
       service.findAll(options, true, false, ...linksToFollow);
-      expect(findAllDataSpy.findAll).toHaveBeenCalledWith(options, true, false, ...linksToFollow);
+      expect(findAllDataSpy.findAll).toHaveBeenCalledWith(
+        options,
+        true,
+        false,
+        ...linksToFollow,
+      );
     });
   });
-
-
-
 });

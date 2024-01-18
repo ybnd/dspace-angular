@@ -11,10 +11,7 @@ import { Site } from '../shared/site.model';
 import { SITE } from '../shared/site.resource-type';
 import { BaseDataService } from './base/base-data.service';
 import { dataService } from './base/data-service.decorator';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from './base/find-all-data';
+import { FindAllData, FindAllDataImpl } from './base/find-all-data';
 import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
@@ -25,7 +22,10 @@ import { RequestService } from './request.service';
  */
 @Injectable()
 @dataService(SITE)
-export class SiteDataService extends BaseDataService<Site> implements FindAllData<Site> {
+export class SiteDataService
+  extends BaseDataService<Site>
+  implements FindAllData<Site>
+{
   private findAllData: FindAllData<Site>;
 
   constructor(
@@ -36,7 +36,14 @@ export class SiteDataService extends BaseDataService<Site> implements FindAllDat
   ) {
     super('sites', requestService, rdbService, objectCache, halService);
 
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -64,7 +71,17 @@ export class SiteDataService extends BaseDataService<Site> implements FindAllDat
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  public findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<Site>[]): Observable<RemoteData<PaginatedList<Site>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<Site>[]
+  ): Observable<RemoteData<PaginatedList<Site>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

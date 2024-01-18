@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -31,12 +28,11 @@ import {
  */
 @Injectable()
 export class NotificationsStateService {
-
   /**
    * Initialize the service variables.
    * @param {Store<SuggestionNotificationsState>} store
    */
-  constructor(private store: Store<SuggestionNotificationsState>) { }
+  constructor(private store: Store<SuggestionNotificationsState>) {}
 
   // Quality Assurance topics
   // --------------------------------------------------------------------------
@@ -47,7 +43,9 @@ export class NotificationsStateService {
    * @return Observable<QualityAssuranceTopicObject>
    *    The list of Quality Assurance topics.
    */
-  public getQualityAssuranceTopics(): Observable<QualityAssuranceTopicObject[]> {
+  public getQualityAssuranceTopics(): Observable<
+    QualityAssuranceTopicObject[]
+  > {
     return this.store.pipe(select(qualityAssuranceTopicsObjectSelector()));
   }
 
@@ -101,7 +99,9 @@ export class NotificationsStateService {
    *    The number of the current Quality Assurance topics page.
    */
   public getQualityAssuranceTopicsCurrentPage(): Observable<number> {
-    return this.store.pipe(select(getQualityAssuranceTopicsCurrentPageSelector));
+    return this.store.pipe(
+      select(getQualityAssuranceTopicsCurrentPageSelector),
+    );
   }
 
   /**
@@ -122,8 +122,13 @@ export class NotificationsStateService {
    * @param currentPage
    *    The number of the current page.
    */
-  public dispatchRetrieveQualityAssuranceTopics(elementsPerPage: number, currentPage: number): void {
-    this.store.dispatch(new RetrieveAllTopicsAction(elementsPerPage, currentPage));
+  public dispatchRetrieveQualityAssuranceTopics(
+    elementsPerPage: number,
+    currentPage: number,
+  ): void {
+    this.store.dispatch(
+      new RetrieveAllTopicsAction(elementsPerPage, currentPage),
+    );
   }
 
   // Quality Assurance source
@@ -135,7 +140,9 @@ export class NotificationsStateService {
    * @return Observable<QualityAssuranceSourceObject>
    *    The list of Quality Assurance source.
    */
-  public getQualityAssuranceSource(): Observable<QualityAssuranceSourceObject[]> {
+  public getQualityAssuranceSource(): Observable<
+    QualityAssuranceSourceObject[]
+  > {
     return this.store.pipe(select(qualityAssuranceSourceObjectSelector()));
   }
 
@@ -189,7 +196,9 @@ export class NotificationsStateService {
    *    The number of the current Quality Assurance source page.
    */
   public getQualityAssuranceSourceCurrentPage(): Observable<number> {
-    return this.store.pipe(select(getQualityAssuranceSourceCurrentPageSelector));
+    return this.store.pipe(
+      select(getQualityAssuranceSourceCurrentPageSelector),
+    );
   }
 
   /**
@@ -210,7 +219,12 @@ export class NotificationsStateService {
    * @param currentPage
    *    The number of the current page.
    */
-  public dispatchRetrieveQualityAssuranceSource(elementsPerPage: number, currentPage: number): void {
-    this.store.dispatch(new RetrieveAllSourceAction(elementsPerPage, currentPage));
+  public dispatchRetrieveQualityAssuranceSource(
+    elementsPerPage: number,
+    currentPage: number,
+  ): void {
+    this.store.dispatch(
+      new RetrieveAllSourceAction(elementsPerPage, currentPage),
+    );
   }
 }

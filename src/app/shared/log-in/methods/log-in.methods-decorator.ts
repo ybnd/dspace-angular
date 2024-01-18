@@ -1,7 +1,4 @@
-import {
-  Component,
-  Type,
-} from '@angular/core';
+import { Component, Type } from '@angular/core';
 
 import { AuthMethodType } from '../../../core/auth/models/auth.method-type';
 
@@ -16,6 +13,8 @@ export function renderAuthMethodFor(authMethodType: AuthMethodType) {
   };
 }
 
-export function rendersAuthMethodType(authMethodType: AuthMethodType): Type<Component> | undefined {
+export function rendersAuthMethodType(
+  authMethodType: AuthMethodType,
+): Type<Component> | undefined {
   return authMethodsMap.get(authMethodType);
 }

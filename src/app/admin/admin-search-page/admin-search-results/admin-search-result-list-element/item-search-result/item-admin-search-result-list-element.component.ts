@@ -7,7 +7,11 @@ import { ItemSearchResult } from '../../../../../shared/object-collection/shared
 import { listableObjectComponent } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
 import { SearchResultListElementComponent } from '../../../../../shared/object-list/search-result-list-element/search-result-list-element.component';
 
-@listableObjectComponent(ItemSearchResult, ViewMode.ListElement, Context.AdminSearch)
+@listableObjectComponent(
+  ItemSearchResult,
+  ViewMode.ListElement,
+  Context.AdminSearch,
+)
 @Component({
   selector: 'ds-item-admin-search-result-list-element',
   styleUrls: ['./item-admin-search-result-list-element.component.scss'],
@@ -16,6 +20,7 @@ import { SearchResultListElementComponent } from '../../../../../shared/object-l
 /**
  * The component for displaying a list element for an item search result on the admin search page
  */
-export class ItemAdminSearchResultListElementComponent extends SearchResultListElementComponent<ItemSearchResult, Item> {
-
-}
+export class ItemAdminSearchResultListElementComponent extends SearchResultListElementComponent<
+  ItemSearchResult,
+  Item
+> {}

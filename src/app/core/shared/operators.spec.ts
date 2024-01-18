@@ -1,8 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -36,10 +32,19 @@ describe('Core Module - RxJS Operators', () => {
   const testRequestUUID = 'https://rest.api/';
 
   const testRCEs = {
-    a: { response: { isSuccessful: true, resourceSelfLinks: ['a', 'b', 'c', 'd'] } },
+    a: {
+      response: { isSuccessful: true, resourceSelfLinks: ['a', 'b', 'c', 'd'] },
+    },
     b: { response: { isSuccessful: false, resourceSelfLinks: ['e', 'f'] } },
-    c: { response: { isSuccessful: undefined, resourceSelfLinks: ['g', 'h', 'i'] } },
-    d: { response: { isSuccessful: true, resourceSelfLinks: ['j', 'k', 'l', 'm', 'n'] } },
+    c: {
+      response: { isSuccessful: undefined, resourceSelfLinks: ['g', 'h', 'i'] },
+    },
+    d: {
+      response: {
+        isSuccessful: true,
+        resourceSelfLinks: ['j', 'k', 'l', 'm', 'n'],
+      },
+    },
     e: { response: { isSuccessful: 1, resourceSelfLinks: [] } },
     f: { response: undefined },
     g: undefined,
@@ -58,7 +63,6 @@ describe('Core Module - RxJS Operators', () => {
   });
 
   describe('getRequestFromRequestHref', () => {
-
     it('should return the RequestEntry corresponding to the self link in the source', () => {
       requestService = getMockRequestService();
 
@@ -73,13 +77,15 @@ describe('Core Module - RxJS Operators', () => {
       requestService = getMockRequestService();
 
       const source = hot('a', { a: testRequestHref });
-      scheduler.schedule(() => source.pipe(getRequestFromRequestHref(requestService)).subscribe());
+      scheduler.schedule(() =>
+        source.pipe(getRequestFromRequestHref(requestService)).subscribe(),
+      );
       scheduler.flush();
 
       expect(requestService.getByHref).toHaveBeenCalledWith(testRequestHref);
     });
 
-    it('shouldn\'t return anything if there is no request matching the self link', () => {
+    it("shouldn't return anything if there is no request matching the self link", () => {
       requestService = getMockRequestService(cold('a', { a: undefined }));
 
       const source = hot('a', { a: testRequestUUID });
@@ -91,7 +97,6 @@ describe('Core Module - RxJS Operators', () => {
   });
 
   describe('getRequestFromRequestUUID', () => {
-
     it('should return the RequestEntry corresponding to the request uuid in the source', () => {
       requestService = getMockRequestService();
 
@@ -106,13 +111,15 @@ describe('Core Module - RxJS Operators', () => {
       requestService = getMockRequestService();
 
       const source = hot('a', { a: testRequestUUID });
-      scheduler.schedule(() => source.pipe(getRequestFromRequestUUID(requestService)).subscribe());
+      scheduler.schedule(() =>
+        source.pipe(getRequestFromRequestUUID(requestService)).subscribe(),
+      );
       scheduler.flush();
 
       expect(requestService.getByUUID).toHaveBeenCalledWith(testRequestUUID);
     });
 
-    it('shouldn\'t return anything if there is no request matching the request uuid', () => {
+    it("shouldn't return anything if there is no request matching the request uuid", () => {
       requestService = getMockRequestService(cold('a', { a: undefined }));
 
       const source = hot('a', { a: testRequestUUID });
@@ -126,9 +133,14 @@ describe('Core Module - RxJS Operators', () => {
   describe('sendRequest', () => {
     it('should call requestService.send with the source request', () => {
       requestService = getMockRequestService();
-      const testRequest = new GetRequest('6b789e31-f026-4ff8-8993-4eb3b730c841', testRequestHref);
+      const testRequest = new GetRequest(
+        '6b789e31-f026-4ff8-8993-4eb3b730c841',
+        testRequestHref,
+      );
       const source = hot('a', { a: testRequest });
-      scheduler.schedule(() => source.pipe(sendRequest(requestService)).subscribe());
+      scheduler.schedule(() =>
+        source.pipe(sendRequest(requestService)).subscribe(),
+      );
       scheduler.flush();
 
       expect(requestService.send).toHaveBeenCalledWith(testRequest);
@@ -177,7 +189,6 @@ describe('Core Module - RxJS Operators', () => {
       const expected = cold('--(c|)', testRD);
 
       expect(result).toBeObservable(expected);
-
     });
   });
 
@@ -199,27 +210,43 @@ describe('Core Module - RxJS Operators', () => {
 
     it('should call navigateByUrl to a 404 page, when the remote data contains a 404 error, and not emit anything', () => {
       testScheduler.run(({ cold, expectObservable, flush }) => {
-        const testRD = createFailedRemoteDataObject('Object was not found', 404);
+        const testRD = createFailedRemoteDataObject(
+          'Object was not found',
+          404,
+        );
         const source = cold('a', { a: testRD });
         const expected = '-';
         const values = {};
 
-        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(expected, values);
+        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(
+          expected,
+          values,
+        );
         flush();
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/404', { skipLocationChange: true });
+        expect(router.navigateByUrl).toHaveBeenCalledWith('/404', {
+          skipLocationChange: true,
+        });
       });
     });
 
     it('should call navigateByUrl to a 404 page, when the remote data contains a 422 error, and not emit anything', () => {
       testScheduler.run(({ cold, expectObservable, flush }) => {
-        const testRD = createFailedRemoteDataObject('Unprocessable Entity', 422);
+        const testRD = createFailedRemoteDataObject(
+          'Unprocessable Entity',
+          422,
+        );
         const source = cold('a', { a: testRD });
         const expected = '-';
         const values = {};
 
-        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(expected, values);
+        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(
+          expected,
+          values,
+        );
         flush();
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/404', { skipLocationChange: true });
+        expect(router.navigateByUrl).toHaveBeenCalledWith('/404', {
+          skipLocationChange: true,
+        });
       });
     });
 
@@ -230,20 +257,31 @@ describe('Core Module - RxJS Operators', () => {
         const expected = '-';
         const values = {};
 
-        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(expected, values);
+        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(
+          expected,
+          values,
+        );
         flush();
-        expect(router.navigateByUrl).toHaveBeenCalledWith('/403', { skipLocationChange: true });
+        expect(router.navigateByUrl).toHaveBeenCalledWith('/403', {
+          skipLocationChange: true,
+        });
       });
     });
 
     it('should not call navigateByUrl to a 404, 403 or 401 page, when the remote data contains another error than a 404, 422, 403 or 401, and emit the source rd', () => {
       testScheduler.run(({ cold, expectObservable, flush }) => {
-        const testRD = createFailedRemoteDataObject('Something went wrong', 500);
+        const testRD = createFailedRemoteDataObject(
+          'Something went wrong',
+          500,
+        );
         const source = cold('a', { a: testRD });
         const expected = 'a';
         const values = { a: testRD };
 
-        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(expected, values);
+        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(
+          expected,
+          values,
+        );
         flush();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
       });
@@ -256,7 +294,10 @@ describe('Core Module - RxJS Operators', () => {
         const expected = 'a';
         const values = { a: testRD };
 
-        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(expected, values);
+        expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(
+          expected,
+          values,
+        );
         flush();
         expect(router.navigateByUrl).not.toHaveBeenCalled();
       });
@@ -264,17 +305,24 @@ describe('Core Module - RxJS Operators', () => {
 
     describe('when the user is not authenticated', () => {
       beforeEach(() => {
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(false));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(false),
+        );
       });
 
       it('should set the redirect url and navigate to login when the remote data contains a 401 error, and not emit anything', () => {
         testScheduler.run(({ cold, expectObservable, flush }) => {
-          const testRD = createFailedRemoteDataObject('The current user is unauthorized', 401);
+          const testRD = createFailedRemoteDataObject(
+            'The current user is unauthorized',
+            401,
+          );
           const source = cold('a', { a: testRD });
           const expected = '-';
           const values = {};
 
-          expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(expected, values);
+          expectObservable(
+            source.pipe(redirectOn4xx(router, authService)),
+          ).toBe(expected, values);
           flush();
           expect(authService.setRedirectUrl).toHaveBeenCalled();
           expect(router.navigateByUrl).toHaveBeenCalledWith('login');
@@ -288,7 +336,9 @@ describe('Core Module - RxJS Operators', () => {
           const expected = '-';
           const values = {};
 
-          expectObservable(source.pipe(redirectOn4xx(router, authService))).toBe(expected, values);
+          expectObservable(
+            source.pipe(redirectOn4xx(router, authService)),
+          ).toBe(expected, values);
           flush();
           expect(authService.setRedirectUrl).toHaveBeenCalled();
           expect(router.navigateByUrl).toHaveBeenCalledWith('login');
@@ -326,8 +376,6 @@ describe('Core Module - RxJS Operators', () => {
       const expected = cold('--cd', testRD);
 
       expect(result).toBeObservable(expected);
-
     });
-
   });
 });

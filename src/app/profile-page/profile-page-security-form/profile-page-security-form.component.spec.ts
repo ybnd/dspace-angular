@@ -69,7 +69,9 @@ describe('ProfilePageSecurityFormComponent', () => {
 
         tick(300);
 
-        expect(component.passwordValue.emit).toHaveBeenCalledWith('new-password');
+        expect(component.passwordValue.emit).toHaveBeenCalledWith(
+          'new-password',
+        );
         expect(component.isInvalid.emit).toHaveBeenCalledWith(true);
       }));
 
@@ -79,7 +81,9 @@ describe('ProfilePageSecurityFormComponent', () => {
 
         tick(300);
 
-        expect(component.passwordValue.emit).toHaveBeenCalledWith('new-password');
+        expect(component.passwordValue.emit).toHaveBeenCalledWith(
+          'new-password',
+        );
       }));
 
       it('should emit the value on password change with current password for profile-page', fakeAsync(() => {
@@ -88,11 +92,17 @@ describe('ProfilePageSecurityFormComponent', () => {
         component.FORM_PREFIX = 'profile.security.form.';
         component.ngOnInit();
         component.formGroup.patchValue({ password: 'new-password' });
-        component.formGroup.patchValue({ 'current-password': 'current-password' });
+        component.formGroup.patchValue({
+          'current-password': 'current-password',
+        });
         tick(300);
 
-        expect(component.passwordValue.emit).toHaveBeenCalledWith('new-password');
-        expect(component.currentPasswordValue.emit).toHaveBeenCalledWith('current-password');
+        expect(component.passwordValue.emit).toHaveBeenCalledWith(
+          'new-password',
+        );
+        expect(component.currentPasswordValue.emit).toHaveBeenCalledWith(
+          'current-password',
+        );
       }));
     });
   });

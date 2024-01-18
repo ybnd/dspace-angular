@@ -12,16 +12,8 @@ import {
   DynamicFormLayoutService,
   DynamicFormValidationService,
 } from '@ng-dynamic-forms/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  catchError,
-  distinctUntilChanged,
-  map,
-  tap,
-} from 'rxjs/operators';
+import { Observable, of as observableOf } from 'rxjs';
+import { catchError, distinctUntilChanged, map, tap } from 'rxjs/operators';
 
 import {
   buildPaginatedList,
@@ -44,7 +36,10 @@ import { DynamicScrollableDropdownModel } from './dynamic-scrollable-dropdown.mo
   styleUrls: ['./dynamic-scrollable-dropdown.component.scss'],
   templateUrl: './dynamic-scrollable-dropdown.component.html',
 })
-export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyComponent implements OnInit {
+export class DsDynamicScrollableDropdownComponent
+  extends DsDynamicVocabularyComponent
+  implements OnInit
+{
   @Input() bindId = true;
   @Input() group: UntypedFormGroup;
   @Input() model: DynamicScrollableDropdownModel;
@@ -58,10 +53,11 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
   public pageInfo: PageInfo;
   public optionsList: any;
 
-  constructor(protected vocabularyService: VocabularyService,
-              protected cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService,
+  constructor(
+    protected vocabularyService: VocabularyService,
+    protected cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
   ) {
     super(vocabularyService, layoutService, validationService);
   }
@@ -71,13 +67,12 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
    */
   ngOnInit() {
     this.updatePageInfo(this.model.maxOptions, 1);
-    this.vocabularyService.getVocabularyEntries(this.model.vocabularyOptions, this.pageInfo).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      catchError(() => observableOf(buildPaginatedList(
-        new PageInfo(),
-        [],
-      )),
-      ))
+    this.vocabularyService
+      .getVocabularyEntries(this.model.vocabularyOptions, this.pageInfo)
+      .pipe(
+        getFirstSucceededRemoteDataPayload(),
+        catchError(() => observableOf(buildPaginatedList(new PageInfo(), []))),
+      )
       .subscribe((list: PaginatedList<VocabularyEntry>) => {
         this.optionsList = list.page;
         if (this.model.value) {
@@ -93,7 +88,9 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
         this.cdr.detectChanges();
       });
 
-    this.group.get(this.model.id).valueChanges.pipe(distinctUntilChanged())
+    this.group
+      .get(this.model.id)
+      .valueChanges.pipe(distinctUntilChanged())
       .subscribe((value) => {
         this.setCurrentValue(value);
       });
@@ -136,7 +133,10 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
    * Loads any new entries
    */
   onScroll() {
-    if (!this.loading && this.pageInfo.currentPage <= this.pageInfo.totalPages) {
+    if (
+      !this.loading &&
+      this.pageInfo.currentPage <= this.pageInfo.totalPages
+    ) {
       this.loading = true;
       this.updatePageInfo(
         this.pageInfo.elementsPerPage,
@@ -144,14 +144,15 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
         this.pageInfo.totalElements,
         this.pageInfo.totalPages,
       );
-      this.vocabularyService.getVocabularyEntries(this.model.vocabularyOptions, this.pageInfo).pipe(
-        getFirstSucceededRemoteDataPayload(),
-        catchError(() => observableOf(buildPaginatedList(
-          new PageInfo(),
-          [],
-        )),
-        ),
-        tap(() => this.loading = false))
+      this.vocabularyService
+        .getVocabularyEntries(this.model.vocabularyOptions, this.pageInfo)
+        .pipe(
+          getFirstSucceededRemoteDataPayload(),
+          catchError(() =>
+            observableOf(buildPaginatedList(new PageInfo(), [])),
+          ),
+          tap(() => (this.loading = false)),
+        )
         .subscribe((list: PaginatedList<VocabularyEntry>) => {
           this.optionsList = this.optionsList.concat(list.page);
           this.updatePageInfo(
@@ -199,5 +200,4 @@ export class DsDynamicScrollableDropdownComponent extends DsDynamicVocabularyCom
 
     this.currentValue = result;
   }
-
 }

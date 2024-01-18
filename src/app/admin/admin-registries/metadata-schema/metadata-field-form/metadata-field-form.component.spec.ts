@@ -34,19 +34,18 @@ describe('MetadataFieldFormComponent', () => {
     getActiveMetadataField: () => observableOf(undefined),
     createMetadataField: (field: MetadataField) => observableOf(field),
     updateMetadataField: (field: MetadataField) => observableOf(field),
-    cancelEditMetadataField: () => {
-    },
-    cancelEditMetadataSchema: () => {
-    },
+    cancelEditMetadataField: () => {},
+    cancelEditMetadataSchema: () => {},
     clearMetadataFieldRequests: () => observableOf(undefined),
   };
   const formBuilderServiceStub = {
     createFormGroup: () => {
       return {
-        patchValue: () => {
-        },
-        reset(_value?: any, _options?: { onlySelf?: boolean; emitEvent?: boolean; }): void {
-        },
+        patchValue: () => {},
+        reset(
+          _value?: any,
+          _options?: { onlySelf?: boolean; emitEvent?: boolean },
+        ): void {},
       };
     },
   };
@@ -54,7 +53,12 @@ describe('MetadataFieldFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     return TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [MetadataFieldFormComponent, EnumKeysPipe],
       providers: [
         { provide: RegistryService, useValue: registryServiceStub },
@@ -100,7 +104,9 @@ describe('MetadataFieldFormComponent', () => {
 
     describe('without an active field', () => {
       beforeEach(() => {
-        spyOn(registryService, 'getActiveMetadataField').and.returnValue(observableOf(undefined));
+        spyOn(registryService, 'getActiveMetadataField').and.returnValue(
+          observableOf(undefined),
+        );
         component.onSubmit();
         fixture.detectChanges();
       });
@@ -121,7 +127,9 @@ describe('MetadataFieldFormComponent', () => {
       });
 
       beforeEach(() => {
-        spyOn(registryService, 'getActiveMetadataField').and.returnValue(observableOf(expectedWithId));
+        spyOn(registryService, 'getActiveMetadataField').and.returnValue(
+          observableOf(expectedWithId),
+        );
         component.onSubmit();
         fixture.detectChanges();
       });

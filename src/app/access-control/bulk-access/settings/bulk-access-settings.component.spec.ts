@@ -1,8 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -12,36 +9,39 @@ describe('BulkAccessSettingsComponent', () => {
   let component: BulkAccessSettingsComponent;
   let fixture: ComponentFixture<BulkAccessSettingsComponent>;
   const mockFormState = {
-    'bitstream': [],
-    'item': [
+    bitstream: [],
+    item: [
       {
-        'name': 'embargo',
-        'startDate': {
-          'year': 2026,
-          'month': 5,
-          'day': 31,
+        name: 'embargo',
+        startDate: {
+          year: 2026,
+          month: 5,
+          day: 31,
         },
-        'endDate': null,
+        endDate: null,
       },
     ],
-    'state': {
-      'item': {
-        'toggleStatus': true,
-        'accessMode': 'replace',
+    state: {
+      item: {
+        toggleStatus: true,
+        accessMode: 'replace',
       },
-      'bitstream': {
-        'toggleStatus': false,
-        'accessMode': '',
-        'changesLimit': '',
-        'selectedBitstreams': [],
+      bitstream: {
+        toggleStatus: false,
+        accessMode: '',
+        changesLimit: '',
+        selectedBitstreams: [],
       },
     },
   };
 
-  const mockControl: any = jasmine.createSpyObj('AccessControlFormContainerComponent',  {
-    getFormValue: jasmine.createSpy('getFormValue'),
-    reset: jasmine.createSpy('reset'),
-  });
+  const mockControl: any = jasmine.createSpyObj(
+    'AccessControlFormContainerComponent',
+    {
+      getFormValue: jasmine.createSpy('getFormValue'),
+      reset: jasmine.createSpy('reset'),
+    },
+  );
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

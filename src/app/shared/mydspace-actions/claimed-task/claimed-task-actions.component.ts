@@ -1,9 +1,4 @@
-import {
-  Component,
-  Injector,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -29,8 +24,10 @@ import { MyDSpaceActionsComponent } from '../mydspace-actions';
   styleUrls: ['./claimed-task-actions.component.scss'],
   templateUrl: './claimed-task-actions.component.html',
 })
-export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<ClaimedTask, ClaimedTaskDataService> implements OnInit {
-
+export class ClaimedTaskActionsComponent
+  extends MyDSpaceActionsComponent<ClaimedTask, ClaimedTaskDataService>
+  implements OnInit
+{
   /**
    * The ClaimedTask object
    */
@@ -62,7 +59,8 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
    * @param {RequestService} requestService
    * @param workflowActionService
    */
-  constructor(protected injector: Injector,
+  constructor(
+    protected injector: Injector,
     protected router: Router,
     protected notificationsService: NotificationsService,
     protected translate: TranslateService,
@@ -70,7 +68,15 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
     protected requestService: RequestService,
     protected workflowActionService: WorkflowActionDataService,
   ) {
-    super(ClaimedTask.type, injector, router, notificationsService, translate, searchService, requestService);
+    super(
+      ClaimedTask.type,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService,
+    );
   }
 
   /**
@@ -105,5 +111,4 @@ export class ClaimedTaskActionsComponent extends MyDSpaceActionsComponent<Claime
   getWorkflowItemViewRoute(workflowitem: WorkflowItem): string {
     return getWorkflowItemViewRoute(workflowitem?.id);
   }
-
 }

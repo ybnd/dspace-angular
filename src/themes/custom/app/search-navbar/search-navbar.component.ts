@@ -9,6 +9,4 @@ import { SearchNavbarComponent as BaseComponent } from '../../../../app/search-n
   // templateUrl: './search-navbar.component.html'
   templateUrl: '../../../../app/search-navbar/search-navbar.component.html',
 })
-export class SearchNavbarComponent extends BaseComponent {
-
-}
+export class SearchNavbarComponent extends BaseComponent {}

@@ -1,6 +1,6 @@
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { isValid } from 'date-fns';
-import { formatInTimeZone }  from 'date-fns-tz';
+import { formatInTimeZone } from 'date-fns-tz';
 import isObject from 'lodash/isObject';
 
 import { hasNoValue } from './empty.util';
@@ -14,8 +14,12 @@ import { hasNoValue } from './empty.util';
  *    true if the passed value is a NgbDateStruct, false otherwise
  */
 export function isNgbDateStruct(value: object): boolean {
-  return isObject(value) && value.hasOwnProperty('day')
-    && value.hasOwnProperty('month') && value.hasOwnProperty('year');
+  return (
+    isObject(value) &&
+    value.hasOwnProperty('day') &&
+    value.hasOwnProperty('month') &&
+    value.hasOwnProperty('year')
+  );
 }
 
 /**
@@ -28,8 +32,12 @@ export function isNgbDateStruct(value: object): boolean {
  *    the formatted date
  */
 export function dateToISOFormat(date: Date | NgbDateStruct | string): string {
-  const dateObj: Date = (date instanceof Date) ? date :
-    ((typeof date === 'string') ? ngbDateStructToDate(stringToNgbDateStruct(date)) : ngbDateStructToDate(date));
+  const dateObj: Date =
+    date instanceof Date
+      ? date
+      : typeof date === 'string'
+        ? ngbDateStructToDate(stringToNgbDateStruct(date))
+        : ngbDateStructToDate(date);
 
   return formatInTimeZone(dateObj, 'UTC', "yyyy-MM-dd'T'HH:mm:ss'Z'");
 }
@@ -43,7 +51,7 @@ export function dateToISOFormat(date: Date | NgbDateStruct | string): string {
  *    the Date object
  */
 export function ngbDateStructToDate(date: NgbDateStruct): Date {
-  return new Date(Date.UTC(date.year, (date.month - 1), date.day));
+  return new Date(Date.UTC(date.year, date.month - 1, date.day));
 }
 
 /**
@@ -87,7 +95,7 @@ export function dateToNgbDateStruct(date?: Date): NgbDateStruct {
  *    the formatted date
  */
 export function dateToString(date: Date | NgbDateStruct): string {
-  const dateObj: Date = (date instanceof Date) ? date : ngbDateStructToDate(date);
+  const dateObj: Date = date instanceof Date ? date : ngbDateStructToDate(date);
   return formatInTimeZone(dateObj, 'UTC', 'yyyy-MM-dd');
 }
 
@@ -96,7 +104,7 @@ export function dateToString(date: Date | NgbDateStruct): string {
  * @param date the string to be checked
  */
 export function isValidDate(date: string) {
-  return (hasNoValue(date)) ? false : isValid(new Date(date));
+  return hasNoValue(date) ? false : isValid(new Date(date));
 }
 
 /**
@@ -107,4 +115,3 @@ export function isValidDate(date: string) {
 export function yearFromString(date: string) {
   return isValidDate(date) ? new Date(date).getUTCFullYear() : null;
 }
-

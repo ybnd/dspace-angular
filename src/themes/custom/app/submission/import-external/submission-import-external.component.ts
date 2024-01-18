@@ -9,11 +9,12 @@ import { SubmissionImportExternalComponent as BaseComponent } from '../../../../
 @Component({
   selector: 'ds-submission-import-external',
   // styleUrls: ['./submission-import-external.component.scss'],
-  styleUrls: ['../../../../../app/submission/import-external/submission-import-external.component.scss'],
+  styleUrls: [
+    '../../../../../app/submission/import-external/submission-import-external.component.scss',
+  ],
   // templateUrl: './submission-import-external.component.html',
-  templateUrl: '../../../../../app/submission/import-external/submission-import-external.component.html',
+  templateUrl:
+    '../../../../../app/submission/import-external/submission-import-external.component.html',
   animations: [fadeIn],
 })
-export class SubmissionImportExternalComponent extends BaseComponent {
-
-}
+export class SubmissionImportExternalComponent extends BaseComponent {}

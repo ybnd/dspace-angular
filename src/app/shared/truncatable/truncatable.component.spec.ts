@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { mockTruncatableService } from '../mocks/mock-trucatable.service';
@@ -26,9 +19,11 @@ describe('TruncatableComponent', () => {
         { provide: TruncatableService, useValue: mockTruncatableService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(TruncatableComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(TruncatableComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(TruncatableComponent);
@@ -42,8 +37,7 @@ describe('TruncatableComponent', () => {
     beforeEach(() => {
       comp.onHover = true;
       fixture.detectChanges();
-    })
-    ;
+    });
 
     it('should call collapse on the TruncatableService', () => {
       spyOn(truncatableService, 'collapse');
@@ -62,8 +56,7 @@ describe('TruncatableComponent', () => {
     beforeEach(() => {
       comp.onHover = false;
       fixture.detectChanges();
-    })
-    ;
+    });
 
     it('should not call collapse on the TruncatableService', () => {
       spyOn(truncatableService, 'collapse');
@@ -77,5 +70,4 @@ describe('TruncatableComponent', () => {
       expect(truncatableService.expand).not.toHaveBeenCalled();
     });
   });
-
 });

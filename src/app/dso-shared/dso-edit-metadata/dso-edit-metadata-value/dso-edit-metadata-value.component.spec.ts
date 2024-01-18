@@ -1,12 +1,5 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -44,7 +37,9 @@ describe('DsoEditMetadataValueComponent', () => {
 
   function initServices(): void {
     relationshipService = jasmine.createSpyObj('relationshipService', {
-      resolveMetadataRepresentation: of(new ItemMetadataRepresentation(metadataValue)),
+      resolveMetadataRepresentation: of(
+        new ItemMetadataRepresentation(metadataValue),
+      ),
     });
     dsoNameService = jasmine.createSpyObj('dsoNameService', {
       getName: 'Related Name',
@@ -82,7 +77,9 @@ describe('DsoEditMetadataValueComponent', () => {
   });
 
   it('should not show a badge', () => {
-    expect(fixture.debugElement.query(By.css('ds-themed-type-badge'))).toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('ds-themed-type-badge')),
+    ).toBeNull();
   });
 
   describe('when no changes have been made', () => {
@@ -148,7 +145,9 @@ describe('DsoEditMetadataValueComponent', () => {
     });
 
     it('should show a badge', () => {
-      expect(fixture.debugElement.query(By.css('ds-themed-type-badge'))).toBeTruthy();
+      expect(
+        fixture.debugElement.query(By.css('ds-themed-type-badge')),
+      ).toBeTruthy();
     });
 
     assertButton(EDIT_BTN, true, true);
@@ -158,7 +157,11 @@ describe('DsoEditMetadataValueComponent', () => {
     assertButton(DRAG_BTN, true, false);
   });
 
-  function assertButton(name: string, exists: boolean, disabled: boolean = false): void {
+  function assertButton(
+    name: string,
+    exists: boolean,
+    disabled: boolean = false,
+  ): void {
     describe(`${name} button`, () => {
       let btn: DebugElement;
 

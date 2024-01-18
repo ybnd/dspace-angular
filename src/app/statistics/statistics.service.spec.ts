@@ -15,10 +15,7 @@ describe('StatisticsService', () => {
   const halService: any = new HALEndpointServiceStub(restURL);
 
   function initTestService() {
-    return new StatisticsService(
-      requestService,
-      halService,
-    );
+    return new StatisticsService(requestService, halService);
   }
 
   describe('trackViewEvent', () => {
@@ -28,7 +25,8 @@ describe('StatisticsService', () => {
     it('should send a request to track an item view ', () => {
       const mockItem: any = { uuid: 'mock-item-uuid', type: 'item' };
       service.trackViewEvent(mockItem, 'https://www.referrer.com');
-      const request: RestRequest = requestService.send.calls.mostRecent().args[0];
+      const request: RestRequest =
+        requestService.send.calls.mostRecent().args[0];
       expect(request.body).toBeDefined('request.body');
       const body = JSON.parse(request.body);
       expect(body.targetId).toBe('mock-item-uuid');
@@ -126,21 +124,22 @@ describe('StatisticsService', () => {
     });
 
     it('should specify the filters', () => {
-      expect(isEqual(body.appliedFilters, [
-        {
-          filter: 'title',
-          operator: 'notcontains',
-          value: 'dolor sit',
-          label: 'dolor sit',
-        },
-        {
-          filter: 'author',
-          operator: 'authority',
-          value: '9zvxzdm4qru17or5a83wfgac',
-          label: 'Amet, Consectetur',
-        },
-      ])).toBe(true);
+      expect(
+        isEqual(body.appliedFilters, [
+          {
+            filter: 'title',
+            operator: 'notcontains',
+            value: 'dolor sit',
+            label: 'dolor sit',
+          },
+          {
+            filter: 'author',
+            operator: 'authority',
+            value: '9zvxzdm4qru17or5a83wfgac',
+            label: 'Amet, Consectetur',
+          },
+        ]),
+      ).toBe(true);
     });
   });
-
 });

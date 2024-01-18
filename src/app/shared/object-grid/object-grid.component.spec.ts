@@ -1,7 +1,4 @@
-import {
-  cold,
-  hot,
-} from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import { map } from 'rxjs/operators';
 
 import { WidthCategory } from '../host-window.service';
@@ -27,7 +24,6 @@ describe('ObjectGridComponent', () => {
   } as any;
 
   describe('the number of columns', () => {
-
     it('should be 3 for xl screens', () => {
       const hostWindowService = {
         widthCategory: hot('a', { a: WidthCategory.XL }),
@@ -40,9 +36,7 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 3 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length),
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
@@ -59,9 +53,7 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 3 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length),
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
@@ -78,9 +70,7 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 2 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length),
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
@@ -97,9 +87,7 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 2 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length),
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
@@ -116,13 +104,10 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', { c: 1 });
 
-      const result = comp.columns$.pipe(
-        map((columns) => columns.length),
-      );
+      const result = comp.columns$.pipe(map((columns) => columns.length));
 
       expect(result).toBeObservable(expected);
     });
-
   });
 
   describe('The ordering of the content', () => {
@@ -184,8 +169,20 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', {
         c: [
-          [testObjects[0], testObjects[2], testObjects[4], testObjects[6], testObjects[8]],
-          [testObjects[1], testObjects[3], testObjects[5], testObjects[7], testObjects[9]],
+          [
+            testObjects[0],
+            testObjects[2],
+            testObjects[4],
+            testObjects[6],
+            testObjects[8],
+          ],
+          [
+            testObjects[1],
+            testObjects[3],
+            testObjects[5],
+            testObjects[7],
+            testObjects[9],
+          ],
         ],
       });
 
@@ -206,8 +203,20 @@ describe('ObjectGridComponent', () => {
 
       const expected = cold('c', {
         c: [
-          [testObjects[0], testObjects[2], testObjects[4], testObjects[6], testObjects[8]],
-          [testObjects[1], testObjects[3], testObjects[5], testObjects[7], testObjects[9]],
+          [
+            testObjects[0],
+            testObjects[2],
+            testObjects[4],
+            testObjects[6],
+            testObjects[8],
+          ],
+          [
+            testObjects[1],
+            testObjects[3],
+            testObjects[5],
+            testObjects[7],
+            testObjects[9],
+          ],
         ],
       });
 

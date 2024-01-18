@@ -4,11 +4,7 @@ import {
   NO_ERRORS_SCHEMA,
   OnInit,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
@@ -34,10 +30,12 @@ describe('DSOSelectorModalWrapperComponent', () => {
   const item = new Item();
   item.uuid = '1234-1234-1234-1234';
   item.metadata = {
-    'dc.title': [Object.assign(new MetadataValue(), {
-      value: 'Item title',
-      language: undefined,
-    })],
+    'dc.title': [
+      Object.assign(new MetadataValue(), {
+        value: 'Item title',
+        language: undefined,
+      }),
+    ],
   };
 
   const itemRD = createSuccessfulRemoteDataObject(item);
@@ -64,7 +62,6 @@ describe('DSOSelectorModalWrapperComponent', () => {
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -80,7 +77,7 @@ describe('DSOSelectorModalWrapperComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initially set the DSO to the activated route\'s item/collection/community', () => {
+  it("should initially set the DSO to the activated route's item/collection/community", () => {
     expect(component.dsoRD).toEqual(itemRD);
   });
 
@@ -108,7 +105,9 @@ describe('DSOSelectorModalWrapperComponent', () => {
   describe('when the onSelect method emits on the child component', () => {
     beforeEach(() => {
       spyOn(component, 'selectObject');
-      debugElement.query(By.css('ds-dso-selector')).componentInstance.onSelect.emit(item);
+      debugElement
+        .query(By.css('ds-dso-selector'))
+        .componentInstance.onSelect.emit(item);
       fixture.detectChanges();
     });
     it('should call the selectObject method on the component with the correct object', () => {
@@ -119,7 +118,9 @@ describe('DSOSelectorModalWrapperComponent', () => {
   describe('when the click method emits on close button', () => {
     beforeEach(() => {
       spyOn(component, 'close');
-      debugElement.query(By.css('button.close')).triggerEventHandler('click', {});
+      debugElement
+        .query(By.css('button.close'))
+        .triggerEventHandler('click', {});
       fixture.detectChanges();
     });
     it('should call the close method on the component', () => {
@@ -137,7 +138,10 @@ class TestComponent extends DSOSelectorModalWrapperComponent implements OnInit {
   selectorTypes = [DSpaceObjectType.ITEM];
   action = SelectorActionType.EDIT;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+  ) {
     super(activeModal, route);
   }
 

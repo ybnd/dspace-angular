@@ -1,19 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ReactiveFormsModule,
-  UntypedFormBuilder,
-} from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ReactiveFormsModule, UntypedFormBuilder } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -50,8 +40,11 @@ describe('ForgotPasswordFormComponent', () => {
   });
 
   beforeEach(waitForAsync(() => {
-
-    route = { data: observableOf({ registration: createSuccessfulRemoteDataObject(registration) }) };
+    route = {
+      data: observableOf({
+        registration: createSuccessfulRemoteDataObject(registration),
+      }),
+    };
     router = new RouterStub();
     notificationsService = new NotificationsServiceStub();
 
@@ -64,7 +57,12 @@ describe('ForgotPasswordFormComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), ReactiveFormsModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        ReactiveFormsModule,
+      ],
       declarations: [ForgotPasswordFormComponent],
       providers: [
         { provide: Router, useValue: router },
@@ -86,42 +84,52 @@ describe('ForgotPasswordFormComponent', () => {
 
   describe('init', () => {
     it('should initialise mail address', () => {
-      const elem = fixture.debugElement.queryAll(By.css('span#email'))[0].nativeElement;
+      const elem = fixture.debugElement.queryAll(By.css('span#email'))[0]
+        .nativeElement;
       expect(elem.innerHTML).toContain('test@email.org');
     });
   });
 
   describe('submit', () => {
-
     it('should submit a patch request for the user uuid and log in on success', () => {
       comp.password = 'password';
       comp.isInValid = false;
 
       comp.submit();
 
-      expect(ePersonDataService.patchPasswordWithToken).toHaveBeenCalledWith('test-uuid', 'test-token', 'password');
-      expect(store.dispatch).toHaveBeenCalledWith(new AuthenticateAction('test@email.org', 'password'));
+      expect(ePersonDataService.patchPasswordWithToken).toHaveBeenCalledWith(
+        'test-uuid',
+        'test-token',
+        'password',
+      );
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new AuthenticateAction('test@email.org', 'password'),
+      );
       expect(router.navigate).toHaveBeenCalledWith(['/home']);
       expect(notificationsService.success).toHaveBeenCalled();
     });
 
     it('should submit a patch request for the user uuid and stay on page on error', () => {
-
-      (ePersonDataService.patchPasswordWithToken as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      (
+        ePersonDataService.patchPasswordWithToken as jasmine.Spy
+      ).and.returnValue(createFailedRemoteDataObject$('Error', 500));
 
       comp.password = 'password';
       comp.isInValid = false;
 
       comp.submit();
 
-      expect(ePersonDataService.patchPasswordWithToken).toHaveBeenCalledWith('test-uuid', 'test-token', 'password');
+      expect(ePersonDataService.patchPasswordWithToken).toHaveBeenCalledWith(
+        'test-uuid',
+        'test-token',
+        'password',
+      );
       expect(store.dispatch).not.toHaveBeenCalled();
       expect(router.navigate).not.toHaveBeenCalled();
       expect(notificationsService.error).toHaveBeenCalled();
     });
 
     it('should submit a patch request for the user uuid when the form is invalid', () => {
-
       comp.password = 'password';
       comp.isInValid = true;
 

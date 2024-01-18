@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { Component, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -49,7 +45,9 @@ export function getMockEntityTypeService(): EntityTypeDataService {
     type: new ResourceType('entitytype'),
     _links: undefined,
   };
-  const rd$ = createSuccessfulRemoteDataObject$(createPaginatedList([type1, type2, type3]));
+  const rd$ = createSuccessfulRemoteDataObject$(
+    createPaginatedList([type1, type2, type3]),
+  );
   return jasmine.createSpyObj('entityTypeService', {
     getAllAuthorizedRelationshipType: rd$,
     hasMoreThanOneAuthorized: observableOf(true),
@@ -57,7 +55,12 @@ export function getMockEntityTypeService(): EntityTypeDataService {
 }
 
 export function getMockEmptyEntityTypeService(): EntityTypeDataService {
-  const pageInfo = { elementsPerPage: 20, totalElements: 1, totalPages: 1, currentPage: 0 } as PageInfo;
+  const pageInfo = {
+    elementsPerPage: 20,
+    totalElements: 1,
+    totalPages: 1,
+    currentPage: 0,
+  } as PageInfo;
   const type1: ItemType = {
     id: '1',
     label: 'Publication',
@@ -95,17 +98,17 @@ describe('MyDSpaceNewSubmissionDropdownComponent test', () => {
   describe('With only one Entity', () => {
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          CommonModule,
-          TranslateModule.forRoot(),
-        ],
+        imports: [CommonModule, TranslateModule.forRoot()],
         declarations: [
           MyDSpaceNewSubmissionDropdownComponent,
           TestComponent,
           BrowserOnlyMockPipe,
         ],
         providers: [
-          { provide: EntityTypeDataService, useValue: getMockEmptyEntityTypeService() },
+          {
+            provide: EntityTypeDataService,
+            useValue: getMockEmptyEntityTypeService(),
+          },
           { provide: NgbModal, useValue: modalStub },
           MyDSpaceNewSubmissionDropdownComponent,
         ],
@@ -114,10 +117,15 @@ describe('MyDSpaceNewSubmissionDropdownComponent test', () => {
 
       const html = `<ds-my-dspace-new-submission (uploadEnd)="reload($event)"></ds-my-dspace-new-submission>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
 
-      submissionComponentFixture = TestBed.createComponent(MyDSpaceNewSubmissionDropdownComponent);
+      submissionComponentFixture = TestBed.createComponent(
+        MyDSpaceNewSubmissionDropdownComponent,
+      );
       submissionComponent = submissionComponentFixture.componentInstance;
       submissionComponentFixture.detectChanges();
     }));
@@ -127,37 +135,47 @@ describe('MyDSpaceNewSubmissionDropdownComponent test', () => {
       submissionComponentFixture.destroy();
     });
 
-    it('should create MyDSpaceNewSubmissionDropdownComponent', inject([MyDSpaceNewSubmissionDropdownComponent], (app: MyDSpaceNewSubmissionDropdownComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create MyDSpaceNewSubmissionDropdownComponent', inject(
+      [MyDSpaceNewSubmissionDropdownComponent],
+      (app: MyDSpaceNewSubmissionDropdownComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
 
-    it('should be a single button', inject([MyDSpaceNewSubmissionDropdownComponent], (app: MyDSpaceNewSubmissionDropdownComponent) => {
-      submissionComponentFixture.detectChanges();
-      const addDivElement: DebugElement = submissionComponentFixture.debugElement.query(By.css('.add'));
-      const addDiv = addDivElement.nativeElement;
-      expect(addDiv.innerHTML).toBeDefined();
-      const buttonElement: DebugElement = addDivElement.query(By.css('.btn'));
-      const button = buttonElement.nativeElement;
-      expect(button.innerHTML).toBeDefined();
-      const dropdownElement: DebugElement = submissionComponentFixture.debugElement.query(By.css('.dropdown-menu'));
-      expect(dropdownElement).toBeNull();
-    }));
+    it('should be a single button', inject(
+      [MyDSpaceNewSubmissionDropdownComponent],
+      (app: MyDSpaceNewSubmissionDropdownComponent) => {
+        submissionComponentFixture.detectChanges();
+        const addDivElement: DebugElement =
+          submissionComponentFixture.debugElement.query(By.css('.add'));
+        const addDiv = addDivElement.nativeElement;
+        expect(addDiv.innerHTML).toBeDefined();
+        const buttonElement: DebugElement = addDivElement.query(By.css('.btn'));
+        const button = buttonElement.nativeElement;
+        expect(button.innerHTML).toBeDefined();
+        const dropdownElement: DebugElement =
+          submissionComponentFixture.debugElement.query(
+            By.css('.dropdown-menu'),
+          );
+        expect(dropdownElement).toBeNull();
+      },
+    ));
   });
 
   describe('With more than one Entity', () => {
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          CommonModule,
-          TranslateModule.forRoot(),
-        ],
+        imports: [CommonModule, TranslateModule.forRoot()],
         declarations: [
           MyDSpaceNewSubmissionDropdownComponent,
           TestComponent,
           BrowserOnlyMockPipe,
         ],
         providers: [
-          { provide: EntityTypeDataService, useValue: getMockEntityTypeService() },
+          {
+            provide: EntityTypeDataService,
+            useValue: getMockEntityTypeService(),
+          },
           { provide: NgbModal, useValue: modalStub },
           MyDSpaceNewSubmissionDropdownComponent,
         ],
@@ -166,10 +184,15 @@ describe('MyDSpaceNewSubmissionDropdownComponent test', () => {
 
       const html = `<ds-my-dspace-new-submission (uploadEnd)="reload($event)"></ds-my-dspace-new-submission>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
 
-      submissionComponentFixture = TestBed.createComponent(MyDSpaceNewSubmissionDropdownComponent);
+      submissionComponentFixture = TestBed.createComponent(
+        MyDSpaceNewSubmissionDropdownComponent,
+      );
       submissionComponent = submissionComponentFixture.componentInstance;
       submissionComponentFixture.detectChanges();
     }));
@@ -179,18 +202,29 @@ describe('MyDSpaceNewSubmissionDropdownComponent test', () => {
       submissionComponentFixture.destroy();
     });
 
-    it('should create MyDSpaceNewSubmissionDropdownComponent', inject([MyDSpaceNewSubmissionDropdownComponent], (app: MyDSpaceNewSubmissionDropdownComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create MyDSpaceNewSubmissionDropdownComponent', inject(
+      [MyDSpaceNewSubmissionDropdownComponent],
+      (app: MyDSpaceNewSubmissionDropdownComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
 
-    it('should be a dropdown button', inject([MyDSpaceNewSubmissionDropdownComponent], (app: MyDSpaceNewSubmissionDropdownComponent) => {
-      const dropdownElement: DebugElement = submissionComponentFixture.debugElement.query(By.css('.dropdown-menu'));
-      const dropdown = dropdownElement.nativeElement;
-      expect(dropdown.innerHTML).toBeDefined();
-    }));
+    it('should be a dropdown button', inject(
+      [MyDSpaceNewSubmissionDropdownComponent],
+      (app: MyDSpaceNewSubmissionDropdownComponent) => {
+        const dropdownElement: DebugElement =
+          submissionComponentFixture.debugElement.query(
+            By.css('.dropdown-menu'),
+          );
+        const dropdown = dropdownElement.nativeElement;
+        expect(dropdown.innerHTML).toBeDefined();
+      },
+    ));
 
     it('should invoke modalService.open', () => {
-      spyOn((submissionComponent as any).modalService, 'open').and.returnValue({ componentInstance: {  } });
+      spyOn((submissionComponent as any).modalService, 'open').and.returnValue({
+        componentInstance: {},
+      });
       submissionComponent.openDialog(entityType1);
 
       expect((submissionComponent as any).modalService.open).toHaveBeenCalled();

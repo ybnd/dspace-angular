@@ -1,15 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { ScriptDataService } from '../../core/data/processes/script-data.service';
@@ -39,17 +32,13 @@ describe('ProcessFormComponent', () => {
       Object.assign(new ProcessParameter(), { name: '-b', value: '123' }),
       Object.assign(new ProcessParameter(), { name: '-c', value: 'value' }),
     ];
-    scriptService = jasmine.createSpyObj(
-      'scriptService',
-      {
-        invoke: observableOf({
-          response:
-            {
-              isSuccessful: true,
-            },
-        }),
-      },
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: observableOf({
+        response: {
+          isSuccessful: true,
+        },
+      }),
+    });
     router = {
       navigateByUrl: () => undefined,
     };
@@ -65,17 +54,26 @@ describe('ProcessFormComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
+        }),
+      ],
       declarations: [ProcessFormComponent],
       providers: [
         { provide: ScriptDataService, useValue: scriptService },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
-        { provide: RequestService, useValue: jasmine.createSpyObj('requestService', ['removeBySubstring', 'removeByHrefSubstring']) },
-        { provide: Router, useValue: jasmine.createSpyObj('router', ['navigateByUrl']) },
+        {
+          provide: RequestService,
+          useValue: jasmine.createSpyObj('requestService', [
+            'removeBySubstring',
+            'removeByHrefSubstring',
+          ]),
+        },
+        {
+          provide: Router,
+          useValue: jasmine.createSpyObj('router', ['navigateByUrl']),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -102,7 +100,11 @@ describe('ProcessFormComponent', () => {
 
     it('should invoke the script with an empty array of parameters', () => {
       component.submitForm({ controls: {} } as any);
-      expect(scriptService.invoke).toHaveBeenCalledWith(script.id, [], jasmine.anything());
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        script.id,
+        [],
+        jasmine.anything(),
+      );
     });
   });
 });

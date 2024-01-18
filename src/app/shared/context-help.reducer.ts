@@ -15,7 +15,10 @@ export interface ContextHelpState {
 
 const initialState: ContextHelpState = { allIconsVisible: false, models: {} };
 
-export function contextHelpReducer(state: ContextHelpState = initialState, action: ContextHelpAction): ContextHelpState {
+export function contextHelpReducer(
+  state: ContextHelpState = initialState,
+  action: ContextHelpAction,
+): ContextHelpState {
   switch (action.type) {
     case ContextHelpActionTypes.CONTEXT_HELP_TOGGLE_ICONS: {
       return { ...state, allIconsVisible: !state.allIconsVisible };
@@ -29,13 +32,13 @@ export function contextHelpReducer(state: ContextHelpState = initialState, actio
       return { ...state, models: remainingModels };
     }
     case ContextHelpActionTypes.CONTEXT_HELP_TOGGLE_TOOLTIP: {
-      return modifyTooltipVisibility(state, action.id, v => !v);
+      return modifyTooltipVisibility(state, action.id, (v) => !v);
     }
     case ContextHelpActionTypes.CONTEXT_HELP_SHOW_TOOLTIP: {
-      return modifyTooltipVisibility(state, action.id, _ => true);
+      return modifyTooltipVisibility(state, action.id, (_) => true);
     }
     case ContextHelpActionTypes.CONTEXT_HELP_HIDE_TOOLTIP: {
-      return modifyTooltipVisibility(state, action.id, _ => false);
+      return modifyTooltipVisibility(state, action.id, (_) => false);
     }
     default: {
       return state;
@@ -43,9 +46,16 @@ export function contextHelpReducer(state: ContextHelpState = initialState, actio
   }
 }
 
-function modifyTooltipVisibility(state: ContextHelpState, id: string, modify: (vis: boolean) => boolean): ContextHelpState {
+function modifyTooltipVisibility(
+  state: ContextHelpState,
+  id: string,
+  modify: (vis: boolean) => boolean,
+): ContextHelpState {
   const { [id]: matchingModel, ...otherModels } = state.models;
-  const modifiedModel = { ...matchingModel, isTooltipVisible: modify(matchingModel.isTooltipVisible) };
+  const modifiedModel = {
+    ...matchingModel,
+    isTooltipVisible: modify(matchingModel.isTooltipVisible),
+  };
   const newModels = { ...otherModels, [id]: modifiedModel };
   return { ...state, models: newModels };
 }

@@ -1,19 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  createSelector,
-  select,
-  Store,
-} from '@ngrx/store';
+import { createSelector, select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  combineLatest as observableCombineLatest,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  mergeMap,
-  tap,
-} from 'rxjs/operators';
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
+import { map, mergeMap, tap } from 'rxjs/operators';
 
 import {
   MetadataRegistryCancelFieldAction,
@@ -47,25 +36,37 @@ import { MetadataSchema } from '../metadata/metadata-schema.model';
 import { NoContent } from '../shared/NoContent.model';
 import { getFirstSucceededRemoteDataPayload } from '../shared/operators';
 
-const metadataRegistryStateSelector = (state: AppState) => state.metadataRegistry;
-const editMetadataSchemaSelector = createSelector(metadataRegistryStateSelector, (metadataState: MetadataRegistryState) => metadataState.editSchema);
-const selectedMetadataSchemasSelector = createSelector(metadataRegistryStateSelector, (metadataState: MetadataRegistryState) => metadataState.selectedSchemas);
-const editMetadataFieldSelector = createSelector(metadataRegistryStateSelector, (metadataState: MetadataRegistryState) => metadataState.editField);
-const selectedMetadataFieldsSelector = createSelector(metadataRegistryStateSelector, (metadataState: MetadataRegistryState) => metadataState.selectedFields);
+const metadataRegistryStateSelector = (state: AppState) =>
+  state.metadataRegistry;
+const editMetadataSchemaSelector = createSelector(
+  metadataRegistryStateSelector,
+  (metadataState: MetadataRegistryState) => metadataState.editSchema,
+);
+const selectedMetadataSchemasSelector = createSelector(
+  metadataRegistryStateSelector,
+  (metadataState: MetadataRegistryState) => metadataState.selectedSchemas,
+);
+const editMetadataFieldSelector = createSelector(
+  metadataRegistryStateSelector,
+  (metadataState: MetadataRegistryState) => metadataState.editField,
+);
+const selectedMetadataFieldsSelector = createSelector(
+  metadataRegistryStateSelector,
+  (metadataState: MetadataRegistryState) => metadataState.selectedFields,
+);
 
 /**
  * Service for registry related CRUD actions such as metadata schema, metadata field and bitstream format
  */
 @Injectable()
 export class RegistryService {
-
-  constructor(private store: Store<AppState>,
-              private notificationsService: NotificationsService,
-              private translateService: TranslateService,
-              private metadataSchemaService: MetadataSchemaDataService,
-              private metadataFieldService: MetadataFieldDataService) {
-
-  }
+  constructor(
+    private store: Store<AppState>,
+    private notificationsService: NotificationsService,
+    private translateService: TranslateService,
+    private metadataSchemaService: MetadataSchemaDataService,
+    private metadataFieldService: MetadataFieldDataService,
+  ) {}
 
   /**
    * Retrieves all metadata schemas
@@ -77,8 +78,18 @@ export class RegistryService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public getMetadataSchemas(options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<MetadataSchema>[]): Observable<RemoteData<PaginatedList<MetadataSchema>>> {
-    return this.metadataSchemaService.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public getMetadataSchemas(
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<MetadataSchema>[]
+  ): Observable<RemoteData<PaginatedList<MetadataSchema>>> {
+    return this.metadataSchemaService.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -91,7 +102,12 @@ export class RegistryService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public getMetadataSchemaByPrefix(prefix: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<MetadataSchema>[]): Observable<RemoteData<MetadataSchema>> {
+  public getMetadataSchemaByPrefix(
+    prefix: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<MetadataSchema>[]
+  ): Observable<RemoteData<MetadataSchema>> {
     // Temporary options to get ALL metadataschemas until there's a rest api endpoint for fetching a specific schema
     const options: FindListOptions = Object.assign(new FindListOptions(), {
       elementsPerPage: 10000,
@@ -100,8 +116,18 @@ export class RegistryService {
       getFirstSucceededRemoteDataPayload(),
       map((schemas: PaginatedList<MetadataSchema>) => schemas.page),
       isNotEmptyOperator(),
-      map((schemas: MetadataSchema[]) => schemas.filter((schema) => schema.prefix === prefix)[0]),
-      mergeMap((schema: MetadataSchema) => this.metadataSchemaService.findById(`${schema.id}`, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow)),
+      map(
+        (schemas: MetadataSchema[]) =>
+          schemas.filter((schema) => schema.prefix === prefix)[0],
+      ),
+      mergeMap((schema: MetadataSchema) =>
+        this.metadataSchemaService.findById(
+          `${schema.id}`,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow,
+        ),
+      ),
     );
   }
 
@@ -116,8 +142,20 @@ export class RegistryService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public getMetadataFieldsBySchema(schema: MetadataSchema, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<MetadataField>[]): Observable<RemoteData<PaginatedList<MetadataField>>> {
-    return this.metadataFieldService.findBySchema(schema, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public getMetadataFieldsBySchema(
+    schema: MetadataSchema,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<MetadataField>[]
+  ): Observable<RemoteData<PaginatedList<MetadataField>>> {
+    return this.metadataFieldService.findBySchema(
+      schema,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   public editMetadataSchema(schema: MetadataSchema) {
@@ -228,13 +266,17 @@ export class RegistryService {
    *  - On update, a PutRequest is used
    * @param schema    The MetadataSchema to create or update
    */
-  public createOrUpdateMetadataSchema(schema: MetadataSchema): Observable<MetadataSchema> {
+  public createOrUpdateMetadataSchema(
+    schema: MetadataSchema,
+  ): Observable<MetadataSchema> {
     const isUpdate = hasValue(schema.id);
     return this.metadataSchemaService.createOrUpdateMetadataSchema(schema).pipe(
       getFirstSucceededRemoteDataPayload(),
       hasValueOperator(),
       tap(() => {
-        this.showNotifications(true, isUpdate, false, { prefix: schema.prefix });
+        this.showNotifications(true, isUpdate, false, {
+          prefix: schema.prefix,
+        });
       }),
     );
   }
@@ -260,17 +302,24 @@ export class RegistryService {
    * @param field    The MetadataField to create
    * @param schema   The MetadataSchema to create the field in
    */
-  public createMetadataField(field: MetadataField, schema: MetadataSchema): Observable<MetadataField> {
+  public createMetadataField(
+    field: MetadataField,
+    schema: MetadataSchema,
+  ): Observable<MetadataField> {
     if (!field.qualifier) {
       field.qualifier = null;
     }
-    return this.metadataFieldService.create(field, new RequestParam('schemaId', schema.id)).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      hasValueOperator(),
-      tap(() => {
-        this.showNotifications(true, false, true, { field: field.toString() });
-      }),
-    );
+    return this.metadataFieldService
+      .create(field, new RequestParam('schemaId', schema.id))
+      .pipe(
+        getFirstSucceededRemoteDataPayload(),
+        hasValueOperator(),
+        tap(() => {
+          this.showNotifications(true, false, true, {
+            field: field.toString(),
+          });
+        }),
+      );
   }
 
   /**
@@ -306,13 +355,23 @@ export class RegistryService {
     this.metadataFieldService.clearRequests();
   }
 
-  private showNotifications(success: boolean, edited: boolean, isField: boolean, options: any) {
+  private showNotifications(
+    success: boolean,
+    edited: boolean,
+    isField: boolean,
+    options: any,
+  ) {
     const prefix = 'admin.registries.schema.notification';
     const suffix = success ? 'success' : 'failure';
     const editedString = edited ? 'edited' : 'created';
     const messages = observableCombineLatest(
-      this.translateService.get(success ? `${prefix}.${suffix}` : `${prefix}.${suffix}`),
-      this.translateService.get(`${prefix}${isField ? '.field' : ''}.${editedString}`, options),
+      this.translateService.get(
+        success ? `${prefix}.${suffix}` : `${prefix}.${suffix}`,
+      ),
+      this.translateService.get(
+        `${prefix}${isField ? '.field' : ''}.${editedString}`,
+        options,
+      ),
     );
     messages.subscribe(([head, content]) => {
       if (success) {
@@ -337,7 +396,23 @@ export class RegistryService {
    *                                    {@link HALLink}s should be automatically resolved
    * @returns an observable that emits a remote data object with a page of metadata fields that match the query
    */
-  queryMetadataFields(query: string, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<MetadataField>[]): Observable<RemoteData<PaginatedList<MetadataField>>> {
-    return this.metadataFieldService.searchByFieldNameParams(null, null, null, query, null, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  queryMetadataFields(
+    query: string,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<MetadataField>[]
+  ): Observable<RemoteData<PaginatedList<MetadataField>>> {
+    return this.metadataFieldService.searchByFieldNameParams(
+      null,
+      null,
+      null,
+      query,
+      null,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

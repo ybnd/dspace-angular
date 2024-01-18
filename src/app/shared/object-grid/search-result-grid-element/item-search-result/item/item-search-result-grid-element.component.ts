@@ -22,7 +22,10 @@ import { SearchResultGridElementComponent } from '../../search-result-grid-eleme
 /**
  * The component for displaying a grid element for an item search result of the type Publication
  */
-export class ItemSearchResultGridElementComponent extends SearchResultGridElementComponent<ItemSearchResult, Item> {
+export class ItemSearchResultGridElementComponent extends SearchResultGridElementComponent<
+  ItemSearchResult,
+  Item
+> {
   /**
    * Route to the item's page
    */

@@ -1,11 +1,5 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -20,7 +14,9 @@ import { isNotEmpty } from '../../../empty.util';
   selector: 'ds-edit-comcol',
   template: '',
 })
-export class EditComColPageComponent<TDomain extends DSpaceObject> implements OnInit {
+export class EditComColPageComponent<TDomain extends DSpaceObject>
+  implements OnInit
+{
   /**
    * The type of DSpaceObject (used to create i18n messages)
    */
@@ -75,7 +71,8 @@ export class EditComColPageComponent<TDomain extends DSpaceObject> implements On
    */
   initPageParamsByRoute() {
     this.currentPage = this.route.snapshot.firstChild.routeConfig.path;
-    this.hideReturnButton = this.route.routeConfig.children
-      .find((child: any) => child.path === this.currentPage).data.hideReturnButton;
+    this.hideReturnButton = this.route.routeConfig.children.find(
+      (child: any) => child.path === this.currentPage,
+    ).data.hideReturnButton;
   }
 }

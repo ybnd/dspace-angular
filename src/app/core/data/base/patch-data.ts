@@ -7,17 +7,9 @@
  */
 import { Operation } from 'fast-json-patch';
 import { Observable } from 'rxjs';
-import {
-  find,
-  map,
-  mergeMap,
-} from 'rxjs/operators';
+import { find, map, mergeMap } from 'rxjs/operators';
 
-import {
-  hasNoValue,
-  hasValue,
-  isNotEmpty,
-} from '../../../shared/empty.util';
+import { hasNoValue, hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
 import { CacheableObject } from '../../cache/cacheable-object.model';
 import { ObjectCacheService } from '../../cache/object-cache.service';
@@ -35,7 +27,6 @@ import {
   ConstructIdEndpoint,
   IdentifiableDataService,
 } from './identifiable-data.service';
-
 
 /**
  * Interface for a data service that can patch and update objects.
@@ -77,7 +68,10 @@ export interface PatchData<T extends CacheableObject> {
  * Note that this feature requires the object in question to have an ID.
  * Make sure to use the same {@link ConstructIdEndpoint} as in the parent data service.
  */
-export class PatchDataImpl<T extends CacheableObject> extends IdentifiableDataService<T> implements PatchData<T> {
+export class PatchDataImpl<T extends CacheableObject>
+  extends IdentifiableDataService<T>
+  implements PatchData<T>
+{
   constructor(
     protected linkPath: string,
     protected requestService: RequestService,
@@ -88,9 +82,19 @@ export class PatchDataImpl<T extends CacheableObject> extends IdentifiableDataSe
     protected responseMsToLive: number,
     protected constructIdEndpoint: ConstructIdEndpoint,
   ) {
-    super(linkPath, requestService, rdbService, objectCache, halService, responseMsToLive, constructIdEndpoint);
+    super(
+      linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      responseMsToLive,
+      constructIdEndpoint,
+    );
     if (hasNoValue(constructIdEndpoint)) {
-      throw new Error(`PatchDataImpl initialized without a constructIdEndpoint method (linkPath: ${linkPath})`);
+      throw new Error(
+        `PatchDataImpl initialized without a constructIdEndpoint method (linkPath: ${linkPath})`,
+      );
     }
   }
 
@@ -102,21 +106,23 @@ export class PatchDataImpl<T extends CacheableObject> extends IdentifiableDataSe
   patch(object: T, operations: Operation[]): Observable<RemoteData<T>> {
     const requestId = this.requestService.generateRequestId();
 
-    const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, object.uuid)),
+    const hrefObs = this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(map((endpoint: string) => this.getIDHref(endpoint, object.uuid)));
+
+    hrefObs
+      .pipe(find((href: string) => hasValue(href)))
+      .subscribe((href: string) => {
+        const request = new PatchRequest(requestId, href, operations);
+        if (hasValue(this.responseMsToLive)) {
+          request.responseMsToLive = this.responseMsToLive;
+        }
+        this.requestService.send(request);
+      });
+
+    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () =>
+      this.invalidateByHref(object._links.self.href),
     );
-
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-    ).subscribe((href: string) => {
-      const request = new PatchRequest(requestId, href, operations);
-      if (hasValue(this.responseMsToLive)) {
-        request.responseMsToLive = this.responseMsToLive;
-      }
-      this.requestService.send(request);
-    });
-
-    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () => this.invalidateByHref(object._links.self.href));
   }
 
   /**

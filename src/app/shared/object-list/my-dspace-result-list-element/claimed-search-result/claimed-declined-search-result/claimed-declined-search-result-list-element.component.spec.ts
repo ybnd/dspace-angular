@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -30,7 +23,8 @@ import { ClaimedDeclinedSearchResultListElementComponent } from './claimed-decli
 let component: ClaimedDeclinedSearchResultListElementComponent;
 let fixture: ComponentFixture<ClaimedDeclinedSearchResultListElementComponent>;
 
-const mockResultObject: ClaimedDeclinedTaskSearchResult = new ClaimedDeclinedTaskSearchResult();
+const mockResultObject: ClaimedDeclinedTaskSearchResult =
+  new ClaimedDeclinedTaskSearchResult();
 mockResultObject.hitHighlights = {};
 
 const item = Object.assign(new Item(), {
@@ -63,19 +57,23 @@ const item = Object.assign(new Item(), {
   },
 });
 const rdItem = createSuccessfulRemoteDataObject(item);
-const workflowitem = Object.assign(new WorkflowItem(), { item: observableOf(rdItem) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  item: observableOf(rdItem),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject.indexableObject = Object.assign(new ClaimedTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject.indexableObject = Object.assign(new ClaimedTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 const linkService = getMockLinkService();
 
 describe('ClaimedDeclinedSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        NoopAnimationsModule,
+      imports: [TranslateModule.forRoot(), NoopAnimationsModule],
+      declarations: [
+        ClaimedDeclinedSearchResultListElementComponent,
+        VarDirective,
       ],
-      declarations: [ClaimedDeclinedSearchResultListElementComponent, VarDirective],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: LinkService, useValue: linkService },
@@ -83,13 +81,17 @@ describe('ClaimedDeclinedSearchResultListElementComponent', () => {
         { provide: APP_CONFIG, useValue: environment },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ClaimedDeclinedSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ClaimedDeclinedSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(ClaimedDeclinedSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      ClaimedDeclinedSearchResultListElementComponent,
+    );
     component = fixture.componentInstance;
   }));
 
@@ -113,5 +115,4 @@ describe('ClaimedDeclinedSearchResultListElementComponent', () => {
   it('should have the correct badge context', () => {
     expect(component.badgeContext).toEqual(Context.MyDSpaceDeclined);
   });
-
 });

@@ -25,57 +25,53 @@ class NullAction extends MetadataRegistryEditSchemaAction {
   }
 }
 
-const schema: MetadataSchema = Object.assign(new MetadataSchema(),
-  {
-    id: 'schema-id',
-    _links: {
-      self: {
-        href: 'http://rest.self/schema/dc',
-      },
+const schema: MetadataSchema = Object.assign(new MetadataSchema(), {
+  id: 'schema-id',
+  _links: {
+    self: {
+      href: 'http://rest.self/schema/dc',
     },
-    prefix: 'dc',
-    namespace: 'http://dublincore.org/documents/dcmi-terms/',
-  });
+  },
+  prefix: 'dc',
+  namespace: 'http://dublincore.org/documents/dcmi-terms/',
+});
 
-const schema2: MetadataSchema = Object.assign(new MetadataSchema(),
-  {
-    id: 'another-schema-id',
-    _links: {
-      self: {
-        href: 'http://rest.self/schema/dcterms',
-      },
+const schema2: MetadataSchema = Object.assign(new MetadataSchema(), {
+  id: 'another-schema-id',
+  _links: {
+    self: {
+      href: 'http://rest.self/schema/dcterms',
     },
-    prefix: 'dcterms',
-    namespace: 'http://purl.org/dc/terms/',
-  });
+  },
+  prefix: 'dcterms',
+  namespace: 'http://purl.org/dc/terms/',
+});
 
-const field: MetadataField = Object.assign(new MetadataField(),
-  {
-    id: 'author-field-id',
-    _links: {
-      self: {
-        href: 'http://rest.self/field/author',
-      },
+const field: MetadataField = Object.assign(new MetadataField(), {
+  id: 'author-field-id',
+  _links: {
+    self: {
+      href: 'http://rest.self/field/author',
     },
-    element: 'contributor',
-    qualifier: 'author',
-    scopeNote: 'Author of an item',
-    schema: schema,
-  });
+  },
+  element: 'contributor',
+  qualifier: 'author',
+  scopeNote: 'Author of an item',
+  schema: schema,
+});
 
-const field2: MetadataField = Object.assign(new MetadataField(),
-  {
-    id: 'title-field-id',
-    _links: {
-      self: {
-        href: 'http://rest.self/field/title',
-      },
+const field2: MetadataField = Object.assign(new MetadataField(), {
+  id: 'title-field-id',
+  _links: {
+    self: {
+      href: 'http://rest.self/field/title',
     },
-    element: 'title',
-    qualifier: null,
-    scopeNote: 'Title of an item',
-    schema: schema,
-  });
+  },
+  element: 'title',
+  qualifier: null,
+  scopeNote: 'Title of an item',
+  schema: schema,
+});
 
 const initialState: MetadataRegistryState = {
   editSchema: null,
@@ -106,7 +102,6 @@ const moreSelectState: MetadataRegistryState = {
 };
 
 describe('metadataRegistryReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = initialState;
     const action = new NullAction();

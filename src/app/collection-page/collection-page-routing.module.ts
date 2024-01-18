@@ -42,8 +42,10 @@ import { ThemedCollectionPageComponent } from './themed-collection-page.componen
         children: [
           {
             path: COLLECTION_EDIT_PATH,
-            loadChildren: () => import('./edit-collection-page/edit-collection-page.module')
-              .then((m) => m.EditCollectionPageModule),
+            loadChildren: () =>
+              import('./edit-collection-page/edit-collection-page.module').then(
+                (m) => m.EditCollectionPageModule,
+              ),
             canActivate: [CollectionPageAdministratorGuard],
           },
           {
@@ -60,7 +62,10 @@ import { ThemedCollectionPageComponent } from './themed-collection-page.componen
               item: ItemTemplatePageResolver,
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'collection.edit.template.title', breadcrumbKey: 'collection.edit.template' },
+            data: {
+              title: 'collection.edit.template.title',
+              breadcrumbKey: 'collection.edit.template',
+            },
           },
           {
             path: '',
@@ -70,17 +75,19 @@ import { ThemedCollectionPageComponent } from './themed-collection-page.componen
         ],
         data: {
           menu: {
-            public: [{
-              id: 'statistics_collection_:id',
-              active: true,
-              visible: true,
-              index: 2,
-              model: {
-                type: MenuItemType.LINK,
-                text: 'menu.section.statistics',
-                link: 'statistics/collections/:id/',
-              } as LinkMenuItemModel,
-            }],
+            public: [
+              {
+                id: 'statistics_collection_:id',
+                active: true,
+                visible: true,
+                index: 2,
+                model: {
+                  type: MenuItemType.LINK,
+                  text: 'menu.section.statistics',
+                  link: 'statistics/collections/:id/',
+                } as LinkMenuItemModel,
+              },
+            ],
           },
         },
       },
@@ -96,6 +103,4 @@ import { ThemedCollectionPageComponent } from './themed-collection-page.componen
     CollectionPageAdministratorGuard,
   ],
 })
-export class CollectionPageRoutingModule {
-
-}
+export class CollectionPageRoutingModule {}

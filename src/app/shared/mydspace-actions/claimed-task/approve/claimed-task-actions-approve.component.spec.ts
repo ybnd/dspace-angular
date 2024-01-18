@@ -3,21 +3,11 @@ import {
   Injector,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  of as observableOf,
-  of,
-} from 'rxjs';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { of as observableOf, of } from 'rxjs';
 
 import { RequestService } from '../../../../core/data/request.service';
 import { SearchService } from '../../../../core/shared/search/search.service';
@@ -62,7 +52,10 @@ describe('ClaimedTaskActionsApproveComponent', () => {
       providers: [
         { provide: ClaimedTaskDataService, useValue: claimedTaskService },
         { provide: Injector, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestService },
@@ -70,9 +63,11 @@ describe('ClaimedTaskActionsApproveComponent', () => {
       ],
       declarations: [ClaimedTaskActionsApproveComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ClaimedTaskActionsApproveComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ClaimedTaskActionsApproveComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -119,23 +114,22 @@ describe('ClaimedTaskActionsApproveComponent', () => {
   });
 
   describe('actionExecution', () => {
-
-    it('should call claimedTaskService\'s submitTask', (done) => {
-
+    it("should call claimedTaskService's submitTask", (done) => {
       const expectedBody = {
         [component.option]: 'true',
       };
 
       component.actionExecution().subscribe(() => {
-        expect(claimedTaskService.submitTask).toHaveBeenCalledWith(object.id, expectedBody);
+        expect(claimedTaskService.submitTask).toHaveBeenCalledWith(
+          object.id,
+          expectedBody,
+        );
         done();
       });
     });
-
   });
 
   describe('reloadObjectExecution', () => {
-
     it('should return the component object itself', (done) => {
       component.reloadObjectExecution().subscribe((val) => {
         expect(val).toEqual(component.object);
@@ -143,5 +137,4 @@ describe('ClaimedTaskActionsApproveComponent', () => {
       });
     });
   });
-
 });

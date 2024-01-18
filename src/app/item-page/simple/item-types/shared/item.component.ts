@@ -1,15 +1,7 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-  take,
-} from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 
 import { environment } from '../../../../../environments/environment';
 import { RouteService } from '../../../../core/services/route.service';
@@ -35,7 +27,8 @@ export class ItemComponent implements OnInit {
    * This regex matches previous routes. The button is shown
    * for matching paths and hidden in other cases.
    */
-  previousRoute = /^(\/search|\/browse|\/collections|\/admin\/search|\/mydspace)/;
+  previousRoute =
+    /^(\/search|\/browse|\/collections|\/admin\/search|\/mydspace)/;
 
   /**
    * Used to show or hide the back to results button in the view.
@@ -64,8 +57,10 @@ export class ItemComponent implements OnInit {
 
   mediaViewer;
 
-  constructor(protected routeService: RouteService,
-              protected router: Router) {
+  constructor(
+    protected routeService: RouteService,
+    protected router: Router,
+  ) {
     this.mediaViewer = environment.mediaViewer;
   }
 
@@ -73,21 +68,19 @@ export class ItemComponent implements OnInit {
    * The function used to return to list from the item.
    */
   back = () => {
-    this.routeService.getPreviousUrl().pipe(
-      take(1),
-    ).subscribe(
-      (url => {
+    this.routeService
+      .getPreviousUrl()
+      .pipe(take(1))
+      .subscribe((url) => {
         this.router.navigateByUrl(url);
-      }),
-    );
+      });
   };
 
   ngOnInit(): void {
-
     this.itemPageRoute = getItemPageRoute(this.object);
     // hide/show the back button
     this.showBackButton = this.routeService.getPreviousUrl().pipe(
-      filter(url => this.previousRoute.test(url)),
+      filter((url) => this.previousRoute.test(url)),
       take(1),
       map(() => true),
     );

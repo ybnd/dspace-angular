@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -43,19 +39,28 @@ describe('ItemStatusComponent', () => {
     },
   });
 
-  mockIdentifierDataService = jasmine.createSpyObj('mockIdentifierDataService', {
-    getIdentifierDataFor: createSuccessfulRemoteDataObject$({ 'identifiers': [] }),
-    getIdentifierRegistrationConfiguration: createSuccessfulRemoteDataObject$('true'),
-  });
+  mockIdentifierDataService = jasmine.createSpyObj(
+    'mockIdentifierDataService',
+    {
+      getIdentifierDataFor: createSuccessfulRemoteDataObject$({
+        identifiers: [],
+      }),
+      getIdentifierRegistrationConfiguration:
+        createSuccessfulRemoteDataObject$('true'),
+    },
+  );
 
-  mockConfigurationDataService = jasmine.createSpyObj('configurationDataService', {
-    findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-      name: 'identifiers.item-status.register-doi',
-      values: [
-        'true',
-      ],
-    })),
-  });
+  mockConfigurationDataService = jasmine.createSpyObj(
+    'configurationDataService',
+    {
+      findByPropertyName: createSuccessfulRemoteDataObject$(
+        Object.assign(new ConfigurationProperty(), {
+          name: 'identifiers.item-status.register-doi',
+          values: ['true'],
+        }),
+      ),
+    },
+  );
 
   const itemPageUrl = `/items/${mockItem.uuid}`;
 
@@ -74,21 +79,30 @@ describe('ItemStatusComponent', () => {
     });
 
     orcidAuthService = jasmine.createSpyObj('OrcidAuthService', {
-      onlyAdminCanDisconnectProfileFromOrcid: observableOf ( true ),
+      onlyAdminCanDisconnectProfileFromOrcid: observableOf(true),
       isLinkedToOrcid: true,
     });
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [ItemStatusComponent],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
         { provide: AuthorizationDataService, useValue: authorizationService },
         { provide: IdentifierDataService, useValue: mockIdentifierDataService },
-        { provide: ConfigurationDataService, useValue: mockConfigurationDataService },
+        {
+          provide: ConfigurationDataService,
+          useValue: mockConfigurationDataService,
+        },
         { provide: OrcidAuthService, useValue: orcidAuthService },
-      ], schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -98,25 +112,31 @@ describe('ItemStatusComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should display the item\'s internal id', () => {
-    const statusId: HTMLElement = fixture.debugElement.query(By.css('.status-data#status-id')).nativeElement;
+  it("should display the item's internal id", () => {
+    const statusId: HTMLElement = fixture.debugElement.query(
+      By.css('.status-data#status-id'),
+    ).nativeElement;
     expect(statusId.textContent).toContain(mockItem.id);
   });
 
-  it('should display the item\'s handle', () => {
-    const statusHandle: HTMLElement = fixture.debugElement.query(By.css('.status-data#status-handle')).nativeElement;
+  it("should display the item's handle", () => {
+    const statusHandle: HTMLElement = fixture.debugElement.query(
+      By.css('.status-data#status-handle'),
+    ).nativeElement;
     expect(statusHandle.textContent).toContain(mockItem.handle);
   });
 
-  it('should display the item\'s last modified date', () => {
-    const statusLastModified: HTMLElement = fixture.debugElement.query(By.css('.status-data#status-lastModified')).nativeElement;
+  it("should display the item's last modified date", () => {
+    const statusLastModified: HTMLElement = fixture.debugElement.query(
+      By.css('.status-data#status-lastModified'),
+    ).nativeElement;
     expect(statusLastModified.textContent).toContain(mockItem.lastModified);
   });
 
-  it('should display the item\'s page url', () => {
-    const statusItemPage: HTMLElement = fixture.debugElement.query(By.css('.status-data#status-itemPage')).nativeElement;
+  it("should display the item's page url", () => {
+    const statusItemPage: HTMLElement = fixture.debugElement.query(
+      By.css('.status-data#status-itemPage'),
+    ).nativeElement;
     expect(statusItemPage.textContent).toContain(itemPageUrl);
   });
-
-})
-;
+});

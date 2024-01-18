@@ -42,23 +42,14 @@ import { MetadataMap } from '../shared/metadata.models';
 import { NoContent } from '../shared/NoContent.model';
 import { sendRequest } from '../shared/request.operators';
 import { URLCombiner } from '../url-combiner/url-combiner';
-import {
-  CreateData,
-  CreateDataImpl,
-} from './base/create-data';
+import { CreateData, CreateDataImpl } from './base/create-data';
 import { dataService } from './base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from './base/delete-data';
+import { DeleteData, DeleteDataImpl } from './base/delete-data';
 import {
   ConstructIdEndpoint,
   IdentifiableDataService,
 } from './base/identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from './base/patch-data';
+import { PatchData, PatchDataImpl } from './base/patch-data';
 import { BundleDataService } from './bundle-data.service';
 import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
 import { FindListOptions } from './find-list-options.model';
@@ -81,7 +72,10 @@ import { StatusCodeOnlyResponseParsingService } from './status-code-only-respons
  * Doesn't specify an endpoint because multiple endpoints support Item-like functionality (e.g. items, itemtemplates)
  * Extend this class to implement data services for Items
  */
-export abstract class BaseItemDataService extends IdentifiableDataService<Item> implements CreateData<Item>, PatchData<Item>, DeleteData<Item> {
+export abstract class BaseItemDataService
+  extends IdentifiableDataService<Item>
+  implements CreateData<Item>, PatchData<Item>, DeleteData<Item>
+{
   private createData: CreateData<Item>;
   private patchData: PatchData<Item>;
   private deleteData: DeleteData<Item>;
@@ -96,13 +90,50 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
     protected comparator: DSOChangeAnalyzer<Item>,
     protected browseService: BrowseService,
     protected bundleService: BundleDataService,
-    protected constructIdEndpoint: ConstructIdEndpoint = (endpoint, resourceID) => `${endpoint}/${resourceID}`,
+    protected constructIdEndpoint: ConstructIdEndpoint = (
+      endpoint,
+      resourceID,
+    ) => `${endpoint}/${resourceID}`,
   ) {
-    super(linkPath, requestService, rdbService, objectCache, halService, undefined, constructIdEndpoint);
+    super(
+      linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      undefined,
+      constructIdEndpoint,
+    );
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.patchData = new PatchDataImpl<Item>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.patchData = new PatchDataImpl<Item>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -112,14 +143,19 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param linkPath
    * @returns {Observable<string>}
    */
-  public getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  public getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath,
+  ): Observable<string> {
     let field = 'dc.date.issued';
     if (options.sort && options.sort.field) {
       field = options.sort.field;
     }
     return this.browseService.getBrowseURLFor(field, linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => new URLCombiner(href, `?scope=${options.scopeID}`).toString()),
+      map((href: string) =>
+        new URLCombiner(href, `?scope=${options.scopeID}`).toString(),
+      ),
       distinctUntilChanged(),
     );
   }
@@ -130,10 +166,16 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param itemId        The item's id
    * @param collectionId  The collection's id (optional)
    */
-  public getMappedCollectionsEndpoint(itemId: string, collectionId?: string): Observable<string> {
+  public getMappedCollectionsEndpoint(
+    itemId: string,
+    collectionId?: string,
+  ): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       map((endpoint: string) => this.getIDHref(endpoint, itemId)),
-      map((endpoint: string) => `${endpoint}/mappedCollections${collectionId ? `/${collectionId}` : ''}`),
+      map(
+        (endpoint: string) =>
+          `${endpoint}/mappedCollections${collectionId ? `/${collectionId}` : ''}`,
+      ),
     );
   }
 
@@ -142,13 +184,24 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param itemId        The item's id
    * @param collectionId  The collection's id
    */
-  public removeMappingFromCollection(itemId: string, collectionId: string): Observable<RemoteData<NoContent>> {
+  public removeMappingFromCollection(
+    itemId: string,
+    collectionId: string,
+  ): Observable<RemoteData<NoContent>> {
     return this.getMappedCollectionsEndpoint(itemId, collectionId).pipe(
       isNotEmptyOperator(),
       distinctUntilChanged(),
-      map((endpointURL: string) => new DeleteRequest(this.requestService.generateRequestId(), endpointURL)),
+      map(
+        (endpointURL: string) =>
+          new DeleteRequest(
+            this.requestService.generateRequestId(),
+            endpointURL,
+          ),
+      ),
       sendRequest(this.requestService),
-      switchMap((request: RestRequest) => this.rdbService.buildFromRequestUUID(request.uuid)),
+      switchMap((request: RestRequest) =>
+        this.rdbService.buildFromRequestUUID(request.uuid),
+      ),
     );
   }
 
@@ -157,7 +210,10 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param itemId          The item's id
    * @param collectionHref  The collection's self link
    */
-  public mapToCollection(itemId: string, collectionHref: string): Observable<RemoteData<NoContent>> {
+  public mapToCollection(
+    itemId: string,
+    collectionHref: string,
+  ): Observable<RemoteData<NoContent>> {
     return this.getMappedCollectionsEndpoint(itemId).pipe(
       isNotEmptyOperator(),
       distinctUntilChanged(),
@@ -166,10 +222,17 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
         let headers = new HttpHeaders();
         headers = headers.append('Content-Type', 'text/uri-list');
         options.headers = headers;
-        return new PostRequest(this.requestService.generateRequestId(), endpointURL, collectionHref, options);
+        return new PostRequest(
+          this.requestService.generateRequestId(),
+          endpointURL,
+          collectionHref,
+          options,
+        );
       }),
       sendRequest(this.requestService),
-      switchMap((request: RestRequest) => this.rdbService.buildFromRequestUUID(request.uuid)),
+      switchMap((request: RestRequest) =>
+        this.rdbService.buildFromRequestUUID(request.uuid),
+      ),
     );
   }
 
@@ -178,10 +241,14 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param item
    * @param withdrawn
    */
-  public setWithDrawn(item: Item, withdrawn: boolean): Observable<RemoteData<Item>> {
-
+  public setWithDrawn(
+    item: Item,
+    withdrawn: boolean,
+  ): Observable<RemoteData<Item>> {
     const patchOperation = {
-      op: 'replace', path: '/withdrawn', value: withdrawn,
+      op: 'replace',
+      path: '/withdrawn',
+      value: withdrawn,
     } as Operation;
     this.requestService.removeByHrefSubstring('/discover');
 
@@ -193,14 +260,18 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param item
    * @param discoverable
    */
-  public setDiscoverable(item: Item, discoverable: boolean): Observable<RemoteData<Item>> {
+  public setDiscoverable(
+    item: Item,
+    discoverable: boolean,
+  ): Observable<RemoteData<Item>> {
     const patchOperation = {
-      op: 'replace', path: '/discoverable', value: discoverable,
+      op: 'replace',
+      path: '/discoverable',
+      value: discoverable,
     } as Operation;
     this.requestService.removeByHrefSubstring('/discover');
 
     return this.patch(item, [patchOperation]);
-
   }
 
   /**
@@ -208,9 +279,13 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param itemId
    */
   public getBundlesEndpoint(itemId: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((url: string) => this.halService.getEndpoint('bundles', `${url}/${itemId}`)),
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((url: string) =>
+          this.halService.getEndpoint('bundles', `${url}/${itemId}`),
+        ),
+      );
   }
 
   /**
@@ -218,14 +293,18 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param itemId          The item's ID
    * @param searchOptions   The search options to use
    */
-  public getBundles(itemId: string, searchOptions?: PaginatedSearchOptions): Observable<RemoteData<PaginatedList<Bundle>>> {
+  public getBundles(
+    itemId: string,
+    searchOptions?: PaginatedSearchOptions,
+  ): Observable<RemoteData<PaginatedList<Bundle>>> {
     const hrefObs = this.getBundlesEndpoint(itemId).pipe(
-      map((href) => searchOptions ? searchOptions.toRestUrl(href) : href),
+      map((href) => (searchOptions ? searchOptions.toRestUrl(href) : href)),
     );
-    hrefObs.pipe(
-      take(1),
-    ).subscribe((href) => {
-      const request = new GetRequest(this.requestService.generateRequestId(), href);
+    hrefObs.pipe(take(1)).subscribe((href) => {
+      const request = new GetRequest(
+        this.requestService.generateRequestId(),
+        href,
+      );
       this.requestService.send(request);
     });
 
@@ -238,7 +317,11 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param bundleName  The new bundle's name
    * @param metadata    Optional metadata for the bundle
    */
-  public createBundle(itemId: string, bundleName: string, metadata?: MetadataMap): Observable<RemoteData<Bundle>> {
+  public createBundle(
+    itemId: string,
+    bundleName: string,
+    metadata?: MetadataMap,
+  ): Observable<RemoteData<Bundle>> {
     const requestId = this.requestService.generateRequestId();
     const hrefObs = this.getBundlesEndpoint(itemId);
 
@@ -247,14 +330,17 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
       metadata: metadata ? metadata : {},
     };
 
-    hrefObs.pipe(
-      take(1),
-    ).subscribe((href) => {
+    hrefObs.pipe(take(1)).subscribe((href) => {
       const options: HttpOptions = Object.create({});
       let headers = new HttpHeaders();
       headers = headers.append('Content-Type', 'application/json');
       options.headers = headers;
-      const request = new PostRequest(requestId, href, JSON.stringify(bundleJson), options);
+      const request = new PostRequest(
+        requestId,
+        href,
+        JSON.stringify(bundleJson),
+        options,
+      );
       this.requestService.send(request);
     });
 
@@ -266,19 +352,29 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param itemId
    */
   public getIdentifiersEndpoint(itemId: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((url: string) => this.halService.getEndpoint('identifiers', `${url}/${itemId}`)),
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((url: string) =>
+          this.halService.getEndpoint('identifiers', `${url}/${itemId}`),
+        ),
+      );
   }
 
   /**
    * Get the endpoint to move the item
    * @param itemId
    */
-  public getMoveItemEndpoint(itemId: string, inheritPolicies: boolean): Observable<string> {
+  public getMoveItemEndpoint(
+    itemId: string,
+    inheritPolicies: boolean,
+  ): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       map((endpoint: string) => this.getIDHref(endpoint, itemId)),
-      map((endpoint: string) => `${endpoint}/owningCollection?inheritPolicies=${inheritPolicies}`),
+      map(
+        (endpoint: string) =>
+          `${endpoint}/owningCollection?inheritPolicies=${inheritPolicies}`,
+      ),
     );
   }
 
@@ -287,7 +383,11 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param itemId
    * @param collection
    */
-  public moveToCollection(itemId: string, collection: Collection, inheritPolicies: boolean): Observable<RemoteData<any>> {
+  public moveToCollection(
+    itemId: string,
+    collection: Collection,
+    inheritPolicies: boolean,
+  ): Observable<RemoteData<any>> {
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'text/uri-list');
@@ -296,21 +396,28 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
     const requestId = this.requestService.generateRequestId();
     const hrefObs = this.getMoveItemEndpoint(itemId, inheritPolicies);
 
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-      map((href: string) => {
-        const request = new PutRequest(requestId, href, collection._links.self.href, options);
-        Object.assign(request, {
-          // TODO: for now, the move Item endpoint returns a malformed collection -- only look at the status code
-          getResponseParser(): GenericConstructor<ResponseParsingService> {
-            return StatusCodeOnlyResponseParsingService;
-          },
-        });
-        return request;
-      }),
-    ).subscribe((request) => {
-      this.requestService.send(request);
-    });
+    hrefObs
+      .pipe(
+        find((href: string) => hasValue(href)),
+        map((href: string) => {
+          const request = new PutRequest(
+            requestId,
+            href,
+            collection._links.self.href,
+            options,
+          );
+          Object.assign(request, {
+            // TODO: for now, the move Item endpoint returns a malformed collection -- only look at the status code
+            getResponseParser(): GenericConstructor<ResponseParsingService> {
+              return StatusCodeOnlyResponseParsingService;
+            },
+          });
+          return request;
+        }),
+      )
+      .subscribe((request) => {
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -320,22 +427,34 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param externalSourceEntry
    * @param collectionId
    */
-  public importExternalSourceEntry(externalSourceEntry: ExternalSourceEntry, collectionId: string): Observable<RemoteData<Item>> {
+  public importExternalSourceEntry(
+    externalSourceEntry: ExternalSourceEntry,
+    collectionId: string,
+  ): Observable<RemoteData<Item>> {
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'text/uri-list');
     options.headers = headers;
 
     const requestId = this.requestService.generateRequestId();
-    const href$ = this.halService.getEndpoint(this.linkPath).pipe(map((href) => `${href}?owningCollection=${collectionId}`));
+    const href$ = this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(map((href) => `${href}?owningCollection=${collectionId}`));
 
-    href$.pipe(
-      find((href: string) => hasValue(href)),
-      map((href: string) => {
-        const request = new PostRequest(requestId, href, externalSourceEntry._links.self.href, options);
-        this.requestService.send(request);
-      }),
-    ).subscribe();
+    href$
+      .pipe(
+        find((href: string) => hasValue(href)),
+        map((href: string) => {
+          const request = new PostRequest(
+            requestId,
+            href,
+            externalSourceEntry._links.self.href,
+            options,
+          );
+          this.requestService.send(request);
+        }),
+      )
+      .subscribe();
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -345,9 +464,13 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param itemId
    */
   public getBitstreamsEndpoint(itemId: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((url: string) => this.halService.getEndpoint('bitstreams', `${url}/${itemId}`)),
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((url: string) =>
+          this.halService.getEndpoint('bitstreams', `${url}/${itemId}`),
+        ),
+      );
   }
 
   /**
@@ -371,7 +494,10 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param {T} object The object to send a patch request for
    * @param {Operation[]} operations The patch operations to be performed
    */
-  public patch(object: Item, operations: Operation[]): Observable<RemoteData<Item>> {
+  public patch(
+    object: Item,
+    operations: Operation[],
+  ): Observable<RemoteData<Item>> {
     return this.patchData.patch(object, operations);
   }
 
@@ -400,7 +526,10 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  public delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
@@ -413,7 +542,10 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
 
@@ -423,10 +555,12 @@ export abstract class BaseItemDataService extends IdentifiableDataService<Item> 
    * @param object    The object to create
    * @param params    Array with additional params to combine with query string
    */
-  public create(object: Item, ...params: RequestParam[]): Observable<RemoteData<Item>> {
+  public create(
+    object: Item,
+    ...params: RequestParam[]
+  ): Observable<RemoteData<Item>> {
     return this.createData.create(object, ...params);
   }
-
 }
 
 /**
@@ -445,6 +579,16 @@ export class ItemDataService extends BaseItemDataService {
     protected browseService: BrowseService,
     protected bundleService: BundleDataService,
   ) {
-    super('items', requestService, rdbService, objectCache, halService, notificationsService, comparator, browseService, bundleService);
+    super(
+      'items',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      comparator,
+      browseService,
+      bundleService,
+    );
   }
 }

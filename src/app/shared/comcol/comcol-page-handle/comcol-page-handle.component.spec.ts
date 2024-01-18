@@ -1,8 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -18,8 +14,7 @@ describe('ComcolPageHandleComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [ComcolPageHandleComponent],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -40,14 +35,11 @@ describe('ComcolPageHandleComponent', () => {
   });
 
   it('should create a link pointing the handle when present', () => {
-
     component.content = handle;
     fixture.detectChanges();
 
     const link = fixture.debugElement.query(By.css('a'));
     expect(link.nativeElement.getAttribute('href')).toBe(handle);
     expect(link.nativeElement.innerHTML).toBe(handle);
-
   });
-
 });

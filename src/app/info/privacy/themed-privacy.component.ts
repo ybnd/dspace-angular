@@ -17,11 +17,12 @@ export class ThemedPrivacyComponent extends ThemedComponent<PrivacyComponent> {
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/info/privacy/privacy.component`);
+    return import(
+      `../../../themes/${themeName}/app/info/privacy/privacy.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./privacy.component`);
   }
-
 }

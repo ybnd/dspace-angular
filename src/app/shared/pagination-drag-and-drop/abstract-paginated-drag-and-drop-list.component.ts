@@ -1,7 +1,4 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import {
   Component,
   ElementRef,
@@ -10,16 +7,8 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, map, switchMap } from 'rxjs/operators';
 
 import { FieldUpdate } from '../../core/data/object-updates/field-update.model';
 import { FieldUpdates } from '../../core/data/object-updates/field-updates.model';
@@ -43,7 +32,11 @@ import { ObjectValuesPipe } from '../utils/object-values-pipe';
  * Operator used for comparing {@link FieldUpdate}s by their field's UUID
  */
 export const compareArraysUsingFieldUuids = () =>
-  compareArraysUsing((fieldUpdate: FieldUpdate) => (hasValue(fieldUpdate) && hasValue(fieldUpdate.field)) ? fieldUpdate.field.uuid : undefined);
+  compareArraysUsing((fieldUpdate: FieldUpdate) =>
+    hasValue(fieldUpdate) && hasValue(fieldUpdate.field)
+      ? fieldUpdate.field.uuid
+      : undefined,
+  );
 
 /**
  * An abstract component containing general methods and logic to be able to drag and drop objects within a paginated
@@ -65,7 +58,10 @@ export const compareArraysUsingFieldUuids = () =>
   selector: 'ds-paginated-drag-drop-abstract',
   template: '',
 })
-export abstract class AbstractPaginatedDragAndDropListComponent<T extends DSpaceObject> implements OnDestroy {
+export abstract class AbstractPaginatedDragAndDropListComponent<
+  T extends DSpaceObject,
+> implements OnDestroy
+{
   /**
    * A view on the child pagination component
    */
@@ -108,7 +104,7 @@ export abstract class AbstractPaginatedDragAndDropListComponent<T extends DSpace
    * The page options to use for fetching the objects
    * Start at page 1 and always use the set page size
    */
-  options = Object.assign(new PaginationComponentOptions(),{
+  options = Object.assign(new PaginationComponentOptions(), {
     id: 'dad',
     currentPage: 1,
     pageSize: this.pageSize,
@@ -132,12 +128,12 @@ export abstract class AbstractPaginatedDragAndDropListComponent<T extends DSpace
    */
   subs: Subscription[] = [];
 
-  protected constructor(protected objectUpdatesService: ObjectUpdatesService,
-                        protected elRef: ElementRef,
-                        protected objectValuesPipe: ObjectValuesPipe,
-                        protected paginationService: PaginationService,
-  ) {
-  }
+  protected constructor(
+    protected objectUpdatesService: ObjectUpdatesService,
+    protected elRef: ElementRef,
+    protected objectValuesPipe: ObjectValuesPipe,
+    protected paginationService: PaginationService,
+  ) {}
 
   /**
    * Initialize the observables
@@ -163,37 +159,44 @@ export abstract class AbstractPaginatedDragAndDropListComponent<T extends DSpace
    * Initialize the current pagination retrieval from the paginationService and push to the currentPage$
    */
   initializePagination() {
-    this.paginationService.getCurrentPagination(this.options.id, this.options).subscribe((currentPagination) => {
-      this.currentPage$.next(currentPagination);
-    });
+    this.paginationService
+      .getCurrentPagination(this.options.id, this.options)
+      .subscribe((currentPagination) => {
+        this.currentPage$.next(currentPagination);
+      });
   }
 
   /**
    * Initialize the field-updates in the store
    */
   initializeUpdates(): void {
-    this.objectsRD$.pipe(
-      getFirstSucceededRemoteData(),
-      paginatedListToArray(),
-    ).subscribe((objects: T[]) => {
-      this.objectUpdatesService.initialize(this.url, objects, new Date());
-    });
+    this.objectsRD$
+      .pipe(getFirstSucceededRemoteData(), paginatedListToArray())
+      .subscribe((objects: T[]) => {
+        this.objectUpdatesService.initialize(this.url, objects, new Date());
+      });
     this.updates$ = this.objectsRD$.pipe(
       getAllSucceededRemoteData(),
       paginatedListToArray(),
-      switchMap((objects: T[]) => this.objectUpdatesService.getFieldUpdatesExclusive(this.url, objects)),
+      switchMap((objects: T[]) =>
+        this.objectUpdatesService.getFieldUpdatesExclusive(this.url, objects),
+      ),
     );
     this.subs.push(
-      this.updates$.pipe(
-        map((fieldUpdates) => this.objectValuesPipe.transform(fieldUpdates)),
-        distinctUntilChanged(compareArraysUsingFieldUuids()),
-      ).subscribe((updateValues) => {
-        this.customOrder = updateValues.map((fieldUpdate) => fieldUpdate.field.uuid);
-        // We received new values, stop displaying a loading indicator if it's present
-        this.loading$.next(false);
-      }),
+      this.updates$
+        .pipe(
+          map((fieldUpdates) => this.objectValuesPipe.transform(fieldUpdates)),
+          distinctUntilChanged(compareArraysUsingFieldUuids()),
+        )
+        .subscribe((updateValues) => {
+          this.customOrder = updateValues.map(
+            (fieldUpdate) => fieldUpdate.field.uuid,
+          );
+          // We received new values, stop displaying a loading indicator if it's present
+          this.loading$.next(false);
+        }),
       // Disable the pagination when objects are loading
-      this.loading$.subscribe((loading) => this.options.disabled = loading),
+      this.loading$.subscribe((loading) => (this.options.disabled = loading)),
     );
   }
 
@@ -211,7 +214,8 @@ export abstract class AbstractPaginatedDragAndDropListComponent<T extends DSpace
     let dropPage = this.currentPage$.value.currentPage - 1;
 
     // Check if the user is hovering over any of the pagination's pages at the time of dropping the object
-    const droppedOnElement = this.elRef.nativeElement.querySelector('.page-item:hover');
+    const droppedOnElement =
+      this.elRef.nativeElement.querySelector('.page-item:hover');
     if (hasValue(droppedOnElement) && hasValue(droppedOnElement.textContent)) {
       // The user is hovering over a page, fetch the page's number from the element
       const droppedPage = Number(droppedOnElement.textContent);
@@ -229,22 +233,24 @@ export abstract class AbstractPaginatedDragAndDropListComponent<T extends DSpace
     }
 
     const redirectPage = dropPage + 1;
-    const fromIndex = (dragPage * this.pageSize) + dragIndex;
-    const toIndex = (dropPage * this.pageSize) + dropIndex;
+    const fromIndex = dragPage * this.pageSize + dragIndex;
+    const toIndex = dropPage * this.pageSize + dropIndex;
     // Send out a drop event (and navigate to the new page) when the "from" and "to" indexes are different from each other
     if (fromIndex !== toIndex) {
       if (isNewPage) {
         this.loading$.next(true);
       }
-      this.dropObject.emit(Object.assign({
-        fromIndex,
-        toIndex,
-        finish: () => {
-          if (isNewPage) {
-            this.paginationComponent.doPageChange(redirectPage);
-          }
-        },
-      }));
+      this.dropObject.emit(
+        Object.assign({
+          fromIndex,
+          toIndex,
+          finish: () => {
+            if (isNewPage) {
+              this.paginationComponent.doPageChange(redirectPage);
+            }
+          },
+        }),
+      );
     }
   }
 
@@ -252,7 +258,9 @@ export abstract class AbstractPaginatedDragAndDropListComponent<T extends DSpace
    * unsub all subscriptions
    */
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
     this.paginationService.clearPagination(this.options.id);
   }
 }

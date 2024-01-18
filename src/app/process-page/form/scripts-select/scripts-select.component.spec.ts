@@ -8,14 +8,8 @@ import {
 } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { buildPaginatedList } from '../../../core/data/paginated-list.model';
 import { ScriptDataService } from '../../../core/data/processes/script-data.service';
@@ -36,11 +30,11 @@ describe('ScriptsSelectComponent', () => {
   function init() {
     script1 = new Script();
     script2 = new Script();
-    scriptService = jasmine.createSpyObj('scriptService',
-      {
-        findAll: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, [script1, script2])),
-      },
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      findAll: createSuccessfulRemoteDataObject$(
+        buildPaginatedList(undefined, [script1, script2]),
+      ),
+    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -53,7 +47,8 @@ describe('ScriptsSelectComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
+        }),
+      ],
       declarations: [ScriptsSelectComponent],
       providers: [
         { provide: ScriptDataService, useValue: scriptService },
@@ -61,8 +56,7 @@ describe('ScriptsSelectComponent', () => {
         { provide: ActivatedRoute, useValue: new ActivatedRouteStub() },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -77,7 +71,9 @@ describe('ScriptsSelectComponent', () => {
   });
 
   it('should not show a validation error if the input field was left untouched but left empty', () => {
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error'),
+    );
     expect(validationError).toBeFalsy();
   });
 
@@ -91,7 +87,9 @@ describe('ScriptsSelectComponent', () => {
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error'),
+    );
     expect(validationError).toBeTruthy();
   }));
 
@@ -105,7 +103,9 @@ describe('ScriptsSelectComponent', () => {
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error'),
+    );
     expect(validationError).toBeFalsy();
   }));
 });

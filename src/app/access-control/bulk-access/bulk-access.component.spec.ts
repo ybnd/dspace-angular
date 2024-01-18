@@ -1,8 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
@@ -22,68 +19,80 @@ describe('BulkAccessComponent', () => {
   let bulkAccessControlService: any;
   let selectableListService: any;
 
-  const selectableListServiceMock = jasmine.createSpyObj('SelectableListService', ['getSelectableList', 'deselectAll']);
-  const bulkAccessControlServiceMock = jasmine.createSpyObj('bulkAccessControlService', ['createPayloadFile', 'executeScript']);
+  const selectableListServiceMock = jasmine.createSpyObj(
+    'SelectableListService',
+    ['getSelectableList', 'deselectAll'],
+  );
+  const bulkAccessControlServiceMock = jasmine.createSpyObj(
+    'bulkAccessControlService',
+    ['createPayloadFile', 'executeScript'],
+  );
 
   const mockFormState = {
-    'bitstream': [],
-    'item': [
+    bitstream: [],
+    item: [
       {
-        'name': 'embargo',
-        'startDate': {
-          'year': 2026,
-          'month': 5,
-          'day': 31,
+        name: 'embargo',
+        startDate: {
+          year: 2026,
+          month: 5,
+          day: 31,
         },
-        'endDate': null,
+        endDate: null,
       },
     ],
-    'state': {
-      'item': {
-        'toggleStatus': true,
-        'accessMode': 'replace',
+    state: {
+      item: {
+        toggleStatus: true,
+        accessMode: 'replace',
       },
-      'bitstream': {
-        'toggleStatus': false,
-        'accessMode': '',
-        'changesLimit': '',
-        'selectedBitstreams': [],
+      bitstream: {
+        toggleStatus: false,
+        accessMode: '',
+        changesLimit: '',
+        selectedBitstreams: [],
       },
     },
   };
 
   const mockFile = {
-    'uuids': [
-      '1234', '5678',
-    ],
-    'file': {  },
+    uuids: ['1234', '5678'],
+    file: {},
   };
 
-  const mockSettings: any = jasmine.createSpyObj('AccessControlFormContainerComponent',  {
-    getValue: jasmine.createSpy('getValue'),
-    reset: jasmine.createSpy('reset'),
-  });
-  const selection: any[] = [{ indexableObject: { uuid: '1234' } }, { indexableObject: { uuid: '5678' } }];
+  const mockSettings: any = jasmine.createSpyObj(
+    'AccessControlFormContainerComponent',
+    {
+      getValue: jasmine.createSpy('getValue'),
+      reset: jasmine.createSpy('reset'),
+    },
+  );
+  const selection: any[] = [
+    { indexableObject: { uuid: '1234' } },
+    { indexableObject: { uuid: '5678' } },
+  ];
   const selectableListState: SelectableListState = { id: 'test', selection };
   const expectedIdList = ['1234', '5678'];
 
-  const selectableListStateEmpty: SelectableListState = { id: 'test', selection: [] };
+  const selectableListStateEmpty: SelectableListState = {
+    id: 'test',
+    selection: [],
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [ BulkAccessComponent ],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
+      declarations: [BulkAccessComponent],
       providers: [
-        { provide: BulkAccessControlService, useValue: bulkAccessControlServiceMock },
+        {
+          provide: BulkAccessControlService,
+          useValue: bulkAccessControlServiceMock,
+        },
         { provide: NotificationsService, useValue: NotificationsServiceStub },
         { provide: SelectableListService, useValue: selectableListServiceMock },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -91,7 +100,6 @@ describe('BulkAccessComponent', () => {
     component = fixture.componentInstance;
     bulkAccessControlService = TestBed.inject(BulkAccessControlService);
     selectableListService = TestBed.inject(SelectableListService);
-
   });
 
   afterEach(() => {
@@ -99,10 +107,12 @@ describe('BulkAccessComponent', () => {
   });
 
   describe('when there are no elements selected', () => {
-
     beforeEach(() => {
-
-      (component as any).selectableListService.getSelectableList.and.returnValue(of(selectableListStateEmpty));
+      (
+        component as any
+      ).selectableListService.getSelectableList.and.returnValue(
+        of(selectableListStateEmpty),
+      );
       fixture.detectChanges();
       component.settings = mockSettings;
     });
@@ -118,14 +128,15 @@ describe('BulkAccessComponent', () => {
     it('should disable the execute button when there are no objects selected', () => {
       expect(component.canExport()).toBe(false);
     });
-
   });
 
   describe('when there are elements selected', () => {
-
     beforeEach(() => {
-
-      (component as any).selectableListService.getSelectableList.and.returnValue(of(selectableListState));
+      (
+        component as any
+      ).selectableListService.getSelectableList.and.returnValue(
+        of(selectableListState),
+      );
       fixture.detectChanges();
       component.settings = mockSettings;
     });
@@ -151,7 +162,9 @@ describe('BulkAccessComponent', () => {
     it('should call the bulkAccessControlService executeScript method when submit is called', () => {
       (component.settings as any).getValue.and.returnValue(mockFormState);
       bulkAccessControlService.createPayloadFile.and.returnValue(mockFile);
-      bulkAccessControlService.executeScript.and.returnValue(createSuccessfulRemoteDataObject$(new Process()));
+      bulkAccessControlService.executeScript.and.returnValue(
+        createSuccessfulRemoteDataObject$(new Process()),
+      );
       component.objectsSelected$.next(['1234']);
       component.submit();
       expect(bulkAccessControlService.executeScript).toHaveBeenCalled();

@@ -15,12 +15,7 @@ import {
   Observable,
   Subscription,
 } from 'rxjs';
-import {
-  map,
-  skip,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { map, skip, switchMap, take } from 'rxjs/operators';
 
 import { AppState } from '../../../../../app.reducer';
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
@@ -35,10 +30,7 @@ import { RelationshipType } from '../../../../../core/shared/item-relationships/
 import { getAllSucceededRemoteDataPayload } from '../../../../../core/shared/operators';
 import { SearchConfigurationService } from '../../../../../core/shared/search/search-configuration.service';
 import { SEARCH_CONFIG_SERVICE } from '../../../../../my-dspace-page/my-dspace-page.component';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../../empty.util';
+import { hasValue, isNotEmpty } from '../../../../empty.util';
 import { ListableObject } from '../../../../object-collection/shared/listable-object.model';
 import { SelectableListState } from '../../../../object-list/selectable-list/selectable-list.reducer';
 import { SelectableListService } from '../../../../object-list/selectable-list/selectable-list.service';
@@ -66,8 +58,12 @@ import {
 /**
  * Represents a modal where the submitter can select items to be added as a certain relationship type to the object being submitted
  */
-export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy {
-  @Output() selectEvent: EventEmitter<ListableObject[]> = new EventEmitter<ListableObject[]>();
+export class DsDynamicLookupRelationModalComponent
+  implements OnInit, OnDestroy
+{
+  @Output() selectEvent: EventEmitter<ListableObject[]> = new EventEmitter<
+    ListableObject[]
+  >();
 
   /**
    * The label to use to display i18n messages (describing the type of relationship)
@@ -120,7 +116,7 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
    * A map of subscriptions within this component
    */
   subMap: {
-    [uuid: string]: Subscription
+    [uuid: string]: Subscription;
   } = {};
   submissionId: string;
 
@@ -186,9 +182,7 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
     private zone: NgZone,
     private store: Store<AppState>,
     private router: Router,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     if (this.currentItemIsLeftItem$) {
@@ -199,10 +193,20 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
 
     this.selection$ = this.selectableListService
       .getSelectableList(this.listId)
-      .pipe(map((listState: SelectableListState) => hasValue(listState) && hasValue(listState.selection) ? listState.selection : []));
-    this.selection$.pipe(take(1)).subscribe((selection) =>
-      selection.map((s: SearchResult<Item>) => this.addNameVariantSubscription(s)),
-    );
+      .pipe(
+        map((listState: SelectableListState) =>
+          hasValue(listState) && hasValue(listState.selection)
+            ? listState.selection
+            : [],
+        ),
+      );
+    this.selection$
+      .pipe(take(1))
+      .subscribe((selection) =>
+        selection.map((s: SearchResult<Item>) =>
+          this.addNameVariantSubscription(s),
+        ),
+      );
     if (this.relationshipOptions.nameVariants === 'true') {
       this.context = Context.EntitySearchModalWithNameVariants;
     } else {
@@ -210,18 +214,18 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
     }
 
     if (isNotEmpty(this.relationshipOptions.externalSources)) {
-      this.externalSourcesRD$ = this.rdbService.aggregate(
-        this.relationshipOptions.externalSources.map((source) => {
-          return this.externalSourceService.findById(
-            source,
-            true,
-            true,
-            followLink('entityTypes'),
-          );
-        }),
-      ).pipe(
-        getAllSucceededRemoteDataPayload(),
-      );
+      this.externalSourcesRD$ = this.rdbService
+        .aggregate(
+          this.relationshipOptions.externalSources.map((source) => {
+            return this.externalSourceService.findById(
+              source,
+              true,
+              true,
+              followLink('entityTypes'),
+            );
+          }),
+        )
+        .pipe(getAllSucceededRemoteDataPayload());
     }
 
     this.setTotals();
@@ -238,11 +242,12 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
    * @param selectableObjects
    */
   select(...selectableObjects: SearchResult<Item>[]) {
-    this.zone.runOutsideAngular(
-      () => {
-        const obs: Observable<any[]> = observableCombineLatest([...selectableObjects.map((sri: SearchResult<Item>) => {
+    this.zone.runOutsideAngular(() => {
+      const obs: Observable<any[]> = observableCombineLatest([
+        ...selectableObjects.map((sri: SearchResult<Item>) => {
           this.addNameVariantSubscription(sri);
-          return this.relationshipService.getNameVariant(this.listId, sri.indexableObject.uuid)
+          return this.relationshipService
+            .getNameVariant(this.listId, sri.indexableObject.uuid)
             .pipe(
               take(1),
               map((nameVariant: string) => {
@@ -253,16 +258,20 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
               }),
             );
         }),
-        ]);
-        obs
-          .subscribe((arr: any[]) => {
-            return arr.forEach((object: any) => {
-              const addRelationshipAction = new AddRelationshipAction(this.item, object.item, this.relationshipOptions.relationshipType, this.submissionId, object.nameVariant);
-              this.store.dispatch(addRelationshipAction);
-            },
-            );
-          });
+      ]);
+      obs.subscribe((arr: any[]) => {
+        return arr.forEach((object: any) => {
+          const addRelationshipAction = new AddRelationshipAction(
+            this.item,
+            object.item,
+            this.relationshipOptions.relationshipType,
+            this.submissionId,
+            object.nameVariant,
+          );
+          this.store.dispatch(addRelationshipAction);
+        });
       });
+    });
   }
 
   /**
@@ -270,10 +279,23 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
    * @param sri The search result to track name variants for
    */
   private addNameVariantSubscription(sri: SearchResult<Item>) {
-    const nameVariant$ = this.relationshipService.getNameVariant(this.listId, sri.indexableObject.uuid);
-    this.subMap[sri.indexableObject.uuid] = nameVariant$.pipe(
-      skip(1),
-    ).subscribe((nameVariant: string) => this.store.dispatch(new UpdateRelationshipNameVariantAction(this.item, sri.indexableObject, this.relationshipOptions.relationshipType, this.submissionId, nameVariant)));
+    const nameVariant$ = this.relationshipService.getNameVariant(
+      this.listId,
+      sri.indexableObject.uuid,
+    );
+    this.subMap[sri.indexableObject.uuid] = nameVariant$
+      .pipe(skip(1))
+      .subscribe((nameVariant: string) =>
+        this.store.dispatch(
+          new UpdateRelationshipNameVariantAction(
+            this.item,
+            sri.indexableObject,
+            this.relationshipOptions.relationshipType,
+            this.submissionId,
+            nameVariant,
+          ),
+        ),
+      );
   }
 
   /**
@@ -281,10 +303,17 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
    * @param selectableObjects
    */
   deselect(...selectableObjects: SearchResult<Item>[]) {
-    this.zone.runOutsideAngular(
-      () => selectableObjects.forEach((object) => {
+    this.zone.runOutsideAngular(() =>
+      selectableObjects.forEach((object) => {
         this.subMap[object.indexableObject.uuid].unsubscribe();
-        this.store.dispatch(new RemoveRelationshipAction(this.item, object.indexableObject, this.relationshipOptions.relationshipType, this.submissionId));
+        this.store.dispatch(
+          new RemoveRelationshipAction(
+            this.item,
+            object.indexableObject,
+            this.relationshipOptions.relationshipType,
+            this.submissionId,
+          ),
+        );
       }),
     );
   }
@@ -309,10 +338,14 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
 
     this.totalExternal$ = externalSourcesAndOptions$.pipe(
       switchMap(([sources, options]) =>
-        observableCombineLatest([...sources.map((source: ExternalSource) => this.lookupRelationService.getTotalExternalResults(source, options))])),
+        observableCombineLatest([
+          ...sources.map((source: ExternalSource) =>
+            this.lookupRelationService.getTotalExternalResults(source, options),
+          ),
+        ]),
+      ),
     );
   }
-
 
   setTotalInternals(totalPages: number) {
     this.totalInternal$.next(totalPages);
@@ -320,21 +353,20 @@ export class DsDynamicLookupRelationModalComponent implements OnInit, OnDestroy 
 
   ngOnDestroy() {
     this.router.navigate([], {});
-    Object.values(this.subMap).forEach((subscription) => subscription.unsubscribe());
+    Object.values(this.subMap).forEach((subscription) =>
+      subscription.unsubscribe(),
+    );
   }
 
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
   /**
    * Called when discard button is clicked, emit discard event to parent to conclude functionality
    */
-  discardEv(): void {
-  }
+  discardEv(): void {}
 
   /**
    * Called when submit button is clicked, emit submit event to parent to conclude functionality
    */
-  submitEv(): void {
-  }
+  submitEv(): void {}
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-
 }

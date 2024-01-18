@@ -22,12 +22,15 @@ describe('ObjectSelectService', () => {
   const mockKey = 'key';
   const mockObjectId = 'id1';
 
-  const selectionStore: Store<ObjectSelectionListState> = jasmine.createSpyObj('selectionStore', {
-    /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    dispatch: {},
-    /* eslint-enable no-empty,@typescript-eslint/no-empty-function */
-    select: of(true),
-  });
+  const selectionStore: Store<ObjectSelectionListState> = jasmine.createSpyObj(
+    'selectionStore',
+    {
+      /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
+      dispatch: {},
+      /* eslint-enable no-empty,@typescript-eslint/no-empty-function */
+      select: of(true),
+    },
+  );
 
   const store: Store<ObjectSelectionsState> = jasmine.createSpyObj('store', {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
@@ -53,7 +56,9 @@ describe('ObjectSelectService', () => {
     });
 
     it('ObjectSelectionInitialSelectAction should be dispatched to the store', () => {
-      expect(selectionStore.dispatch).toHaveBeenCalledWith(new ObjectSelectionInitialSelectAction(mockKey, mockObjectId));
+      expect(selectionStore.dispatch).toHaveBeenCalledWith(
+        new ObjectSelectionInitialSelectAction(mockKey, mockObjectId),
+      );
     });
   });
 
@@ -63,7 +68,9 @@ describe('ObjectSelectService', () => {
     });
 
     it('ObjectSelectionInitialDeselectAction should be dispatched to the store', () => {
-      expect(selectionStore.dispatch).toHaveBeenCalledWith(new ObjectSelectionInitialDeselectAction(mockKey, mockObjectId));
+      expect(selectionStore.dispatch).toHaveBeenCalledWith(
+        new ObjectSelectionInitialDeselectAction(mockKey, mockObjectId),
+      );
     });
   });
 
@@ -73,7 +80,9 @@ describe('ObjectSelectService', () => {
     });
 
     it('ObjectSelectionSelectAction should be dispatched to the store', () => {
-      expect(selectionStore.dispatch).toHaveBeenCalledWith(new ObjectSelectionSelectAction(mockKey, mockObjectId));
+      expect(selectionStore.dispatch).toHaveBeenCalledWith(
+        new ObjectSelectionSelectAction(mockKey, mockObjectId),
+      );
     });
   });
 
@@ -83,7 +92,9 @@ describe('ObjectSelectService', () => {
     });
 
     it('ObjectSelectionDeselectAction should be dispatched to the store', () => {
-      expect(selectionStore.dispatch).toHaveBeenCalledWith(new ObjectSelectionDeselectAction(mockKey, mockObjectId));
+      expect(selectionStore.dispatch).toHaveBeenCalledWith(
+        new ObjectSelectionDeselectAction(mockKey, mockObjectId),
+      );
     });
   });
 
@@ -93,7 +104,9 @@ describe('ObjectSelectService', () => {
     });
 
     it('ObjectSelectionSwitchAction should be dispatched to the store', () => {
-      expect(selectionStore.dispatch).toHaveBeenCalledWith(new ObjectSelectionSwitchAction(mockKey, mockObjectId));
+      expect(selectionStore.dispatch).toHaveBeenCalledWith(
+        new ObjectSelectionSwitchAction(mockKey, mockObjectId),
+      );
     });
   });
 
@@ -103,8 +116,9 @@ describe('ObjectSelectService', () => {
     });
 
     it('ObjectSelectionInitialSelectAction should be dispatched to the store', () => {
-      expect(selectionStore.dispatch).toHaveBeenCalledWith(new ObjectSelectionResetAction(mockKey, null));
+      expect(selectionStore.dispatch).toHaveBeenCalledWith(
+        new ObjectSelectionResetAction(mockKey, null),
+      );
     });
   });
-
 });

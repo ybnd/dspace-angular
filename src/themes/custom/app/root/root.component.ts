@@ -11,6 +11,4 @@ import { slideSidebarPadding } from '../../../../app/shared/animations/slide';
   templateUrl: '../../../../app/root/root.component.html',
   animations: [slideSidebarPadding],
 })
-export class RootComponent extends BaseComponent {
-
-}
+export class RootComponent extends BaseComponent {}

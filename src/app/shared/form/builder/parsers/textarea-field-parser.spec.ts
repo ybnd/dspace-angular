@@ -32,17 +32,26 @@ describe('TextareaFieldParser test suite', () => {
       ],
       languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new TextareaFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TextareaFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     expect(parser instanceof TextareaFieldParser).toBe(true);
   });
 
   it('should return a DsDynamicTextAreaModel object when repeatable option is false', () => {
-    const parser = new TextareaFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TextareaFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
@@ -51,17 +60,19 @@ describe('TextareaFieldParser test suite', () => {
 
   it('should set init value properly', () => {
     initFormValues = {
-      description: [
-        new FormFieldMetadataValueObject('test description'),
-      ],
+      description: [new FormFieldMetadataValueObject('test description')],
     };
     const expectedValue = 'test description';
 
-    const parser = new TextareaFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TextareaFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(expectedValue);
   });
-
 });

@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -61,15 +58,15 @@ export class ItemDetailPreviewComponent {
     protected halService: HALEndpointService,
     protected bitstreamDataService: BitstreamDataService,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   /**
    * Perform bitstream download
    */
   public downloadBitstreamFile(uuid: string) {
-    this.halService.getEndpoint('bitstreams').pipe(
-      first())
+    this.halService
+      .getEndpoint('bitstreams')
+      .pipe(first())
       .subscribe((url) => {
         const fileUrl = `${url}/${uuid}/content`;
         this.fileService.retrieveFileDownloadLink(fileUrl);
@@ -79,9 +76,9 @@ export class ItemDetailPreviewComponent {
   // TODO refactor this method to return RemoteData, and the template to deal with loading and errors
   public getFiles(): Observable<Bitstream[]> {
     return this.bitstreamDataService
-      .findAllByItemAndBundleName(this.item, 'ORIGINAL', { elementsPerPage: Number.MAX_SAFE_INTEGER })
-      .pipe(
-        getFirstSucceededRemoteListPayload(),
-      );
+      .findAllByItemAndBundleName(this.item, 'ORIGINAL', {
+        elementsPerPage: Number.MAX_SAFE_INTEGER,
+      })
+      .pipe(getFirstSucceededRemoteListPayload());
   }
 }

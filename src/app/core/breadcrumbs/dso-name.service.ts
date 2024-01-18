@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
-import {
-  hasValue,
-  isEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isEmpty } from '../../shared/empty.util';
 import { DSpaceObject } from '../shared/dspace-object.model';
 import { Metadata } from '../shared/metadata.utils';
 
@@ -16,10 +13,7 @@ import { Metadata } from '../shared/metadata.utils';
   providedIn: 'root',
 })
 export class DSONameService {
-
-  constructor(private translateService: TranslateService) {
-
-  }
+  constructor(private translateService: TranslateService) {}
 
   /**
    * Functions to generate the specific names.
@@ -46,7 +40,10 @@ export class DSONameService {
       const familyName = dso.firstMetadataValue('person.familyName');
       const givenName = dso.firstMetadataValue('person.givenName');
       if (isEmpty(familyName) && isEmpty(givenName)) {
-        return dso.firstMetadataValue('dc.title') || this.translateService.instant('dso.name.unnamed');
+        return (
+          dso.firstMetadataValue('dc.title') ||
+          this.translateService.instant('dso.name.unnamed')
+        );
       } else if (isEmpty(familyName) || isEmpty(givenName)) {
         return familyName || givenName;
       } else {
@@ -54,11 +51,18 @@ export class DSONameService {
       }
     },
     OrgUnit: (dso: DSpaceObject): string => {
-      return dso.firstMetadataValue('organization.legalName') || this.translateService.instant('dso.name.untitled');
+      return (
+        dso.firstMetadataValue('organization.legalName') ||
+        this.translateService.instant('dso.name.untitled')
+      );
     },
     Default: (dso: DSpaceObject): string => {
       // If object doesn't have dc.title metadata use name property
-      return dso.firstMetadataValue('dc.title') || dso.name || this.translateService.instant('dso.name.untitled');
+      return (
+        dso.firstMetadataValue('dc.title') ||
+        dso.name ||
+        this.translateService.instant('dso.name.untitled')
+      );
     },
   };
 
@@ -72,7 +76,9 @@ export class DSONameService {
       const types = dso.getRenderTypes();
       const match = types
         .filter((type) => typeof type === 'string')
-        .find((type: string) => Object.keys(this.factories).includes(type)) as string;
+        .find((type: string) =>
+          Object.keys(this.factories).includes(type),
+        ) as string;
 
       let name;
       if (hasValue(match)) {
@@ -99,10 +105,18 @@ export class DSONameService {
     const types = dso.getRenderTypes();
     const entityType = types
       .filter((type) => typeof type === 'string')
-      .find((type: string) => (['Person', 'OrgUnit']).includes(type)) as string;
+      .find((type: string) => ['Person', 'OrgUnit'].includes(type)) as string;
     if (entityType === 'Person') {
-      const familyName = this.firstMetadataValue(object, dso, 'person.familyName');
-      const givenName = this.firstMetadataValue(object, dso, 'person.givenName');
+      const familyName = this.firstMetadataValue(
+        object,
+        dso,
+        'person.familyName',
+      );
+      const givenName = this.firstMetadataValue(
+        object,
+        dso,
+        'person.givenName',
+      );
       if (isEmpty(familyName) && isEmpty(givenName)) {
         return this.firstMetadataValue(object, dso, 'dc.title') || dso.name;
       } else if (isEmpty(familyName) || isEmpty(givenName)) {
@@ -110,9 +124,16 @@ export class DSONameService {
       }
       return `${familyName}, ${givenName}`;
     } else if (entityType === 'OrgUnit') {
-      return this.firstMetadataValue(object, dso, 'organization.legalName') || this.translateService.instant('dso.name.untitled');
+      return (
+        this.firstMetadataValue(object, dso, 'organization.legalName') ||
+        this.translateService.instant('dso.name.untitled')
+      );
     }
-    return this.firstMetadataValue(object, dso, 'dc.title') || dso.name || this.translateService.instant('dso.name.untitled');
+    return (
+      this.firstMetadataValue(object, dso, 'dc.title') ||
+      dso.name ||
+      this.translateService.instant('dso.name.untitled')
+    );
   }
 
   /**
@@ -124,8 +145,11 @@ export class DSONameService {
    *
    * @returns {string} the first matching string value, or `undefined`.
    */
-  firstMetadataValue(object: any, dso: DSpaceObject, keyOrKeys: string | string[]): string {
+  firstMetadataValue(
+    object: any,
+    dso: DSpaceObject,
+    keyOrKeys: string | string[],
+  ): string {
     return Metadata.firstValue([object.hitHighlights, dso.metadata], keyOrKeys);
   }
-
 }

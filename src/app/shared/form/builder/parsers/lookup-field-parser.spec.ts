@@ -24,7 +24,8 @@ describe('LookupFieldParser test suite', () => {
       label: 'Journal',
       mandatory: 'false',
       repeatable: false,
-      hints: 'Enter the name of the journal where the item has been published, if any.',
+      hints:
+        'Enter the name of the journal where the item has been published, if any.',
       selectableMetadata: [
         {
           metadata: 'journal',
@@ -34,17 +35,26 @@ describe('LookupFieldParser test suite', () => {
       ],
       languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new LookupFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     expect(parser instanceof LookupFieldParser).toBe(true);
   });
 
   it('should return a DynamicLookupModel object when repeatable option is false', () => {
-    const parser = new LookupFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
@@ -57,11 +67,15 @@ describe('LookupFieldParser test suite', () => {
     };
     const expectedValue = new FormFieldMetadataValueObject('test journal');
 
-    const parser = new LookupFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(expectedValue);
   });
-
 });

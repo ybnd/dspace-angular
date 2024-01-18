@@ -1,7 +1,4 @@
-import {
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -22,21 +19,18 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionImportExternalCollectionComponent>;
 
-  beforeEach(waitForAsync (() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [
         SubmissionImportExternalCollectionComponent,
         TestComponent,
       ],
-      providers: [
-        NgbActiveModal,
-        SubmissionImportExternalCollectionComponent,
-      ],
+      providers: [NgbActiveModal, SubmissionImportExternalCollectionComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then();
+    })
+      .compileComponents()
+      .then();
   }));
 
   // First test to check the correct component creation
@@ -48,7 +42,10 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
     beforeEach(() => {
       const html = `
         <ds-submission-import-external-collection></ds-submission-import-external-collection>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -56,14 +53,19 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionImportExternalCollectionComponent', inject([SubmissionImportExternalCollectionComponent], (app: SubmissionImportExternalCollectionComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create SubmissionImportExternalCollectionComponent', inject(
+      [SubmissionImportExternalCollectionComponent],
+      (app: SubmissionImportExternalCollectionComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
     beforeEach(() => {
-      fixture = TestBed.createComponent(SubmissionImportExternalCollectionComponent);
+      fixture = TestBed.createComponent(
+        SubmissionImportExternalCollectionComponent,
+      );
       comp = fixture.componentInstance;
       compAsAny = comp;
     });
@@ -78,10 +80,7 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
       spyOn(comp.selectedEvent, 'emit').and.callThrough();
 
       const entry = {
-        communities: [
-          { id: 'community1' },
-          { id: 'community2' },
-        ],
+        communities: [{ id: 'community1' }, { id: 'community2' }],
         collection: {
           id: 'collection',
         },
@@ -115,7 +114,6 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
 
       comp.searchComplete();
       expect(comp.loading).toBe(false);
-
     });
 
     it('should emit theOnlySelectable', () => {
@@ -128,16 +126,16 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
     });
 
     it('dropdown should be invisible when the component is loading', fakeAsync(() => {
-
       spyOn(comp, 'isLoading').and.returnValue(true);
       fixture.detectChanges();
 
       fixture.whenStable().then(() => {
-        const dropdownMenu = fixture.debugElement.query(By.css('ds-themed-collection-dropdown')).nativeElement;
+        const dropdownMenu = fixture.debugElement.query(
+          By.css('ds-themed-collection-dropdown'),
+        ).nativeElement;
         expect(dropdownMenu.classList).toContain('d-none');
       });
     }));
-
   });
 });
 
@@ -146,6 +144,4 @@ describe('SubmissionImportExternalCollectionComponent test suite', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

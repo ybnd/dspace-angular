@@ -1,10 +1,5 @@
 import { Location } from '@angular/common';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { RequestCopyEmail } from './request-copy-email.model';
 
@@ -20,7 +15,8 @@ export class EmailRequestCopyComponent {
   /**
    * Event emitter for sending the email
    */
-  @Output() send: EventEmitter<RequestCopyEmail> = new EventEmitter<RequestCopyEmail>();
+  @Output() send: EventEmitter<RequestCopyEmail> =
+    new EventEmitter<RequestCopyEmail>();
 
   /**
    * The subject of the email
@@ -32,8 +28,7 @@ export class EmailRequestCopyComponent {
    */
   @Input() message: string;
 
-  constructor(protected location: Location) {
-  }
+  constructor(protected location: Location) {}
 
   /**
    * Submit the email

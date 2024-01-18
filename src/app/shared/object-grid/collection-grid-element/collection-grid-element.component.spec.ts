@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -28,16 +21,19 @@ const mockCollectionWithAbstract: Collection = Object.assign(new Collection(), {
   },
 });
 
-const mockCollectionWithoutAbstract: Collection = Object.assign(new Collection(), {
-  metadata: {
-    'dc.title': [
-      {
-        language: 'en_US',
-        value: 'Test title',
-      },
-    ],
+const mockCollectionWithoutAbstract: Collection = Object.assign(
+  new Collection(),
+  {
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'Test title',
+        },
+      ],
+    },
   },
-});
+);
 
 const linkService = jasmine.createSpyObj('linkService', {
   resolveLink: mockCollectionWithAbstract,
@@ -46,19 +42,22 @@ const linkService = jasmine.createSpyObj('linkService', {
 describe('CollectionGridElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [CollectionGridElementComponent],
       providers: [
-        { provide: 'objectElementProvider', useValue: (mockCollectionWithAbstract) },
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCollectionWithAbstract,
+        },
         { provide: LinkService, useValue: linkService },
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(CollectionGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(CollectionGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -73,7 +72,9 @@ describe('CollectionGridElementComponent', () => {
     });
 
     it('should show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('p.card-text'),
+      );
       expect(collectionAbstractField).not.toBeNull();
     });
   });
@@ -85,7 +86,9 @@ describe('CollectionGridElementComponent', () => {
     });
 
     it('should not show the description paragraph', () => {
-      const collectionAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const collectionAbstractField = fixture.debugElement.query(
+        By.css('p.card-text'),
+      );
       expect(collectionAbstractField).toBeNull();
     });
   });

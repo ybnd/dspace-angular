@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,32 +17,37 @@ describe('SearchFiltersComponent', () => {
 
   const searchServiceStub = {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    getClearFiltersQueryParams: () => {
-    },
-    getSearchLink: () => {
-    },
+    getClearFiltersQueryParams: () => {},
+    getSearchLink: () => {},
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
   };
 
   const searchFiltersStub = {
-    getSelectedValuesForFilter: (filter) =>
-      [],
+    getSelectedValuesForFilter: (filter) => [],
   };
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
+      ],
       declarations: [SearchFiltersComponent],
       providers: [
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: SearchFilterService, useValue: searchFiltersStub },
-
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(SearchFiltersComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(SearchFiltersComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -69,5 +67,4 @@ describe('SearchFiltersComponent', () => {
       expect(searchService.getSearchLink).toHaveBeenCalled();
     });
   });
-
 });

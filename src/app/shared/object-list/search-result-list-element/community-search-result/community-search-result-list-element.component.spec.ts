@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -26,7 +19,8 @@ const truncatableServiceStub: any = {
   isCollapsed: (id: number) => observableOf(true),
 };
 
-const mockCommunityWithAbstract: CommunitySearchResult = new CommunitySearchResult();
+const mockCommunityWithAbstract: CommunitySearchResult =
+  new CommunitySearchResult();
 mockCommunityWithAbstract.hitHighlights = {};
 mockCommunityWithAbstract.indexableObject = Object.assign(new Community(), {
   metadata: {
@@ -39,7 +33,8 @@ mockCommunityWithAbstract.indexableObject = Object.assign(new Community(), {
   },
 });
 
-const mockCommunityWithoutAbstract: CommunitySearchResult = new CommunitySearchResult();
+const mockCommunityWithoutAbstract: CommunitySearchResult =
+  new CommunitySearchResult();
 mockCommunityWithoutAbstract.hitHighlights = {};
 mockCommunityWithoutAbstract.indexableObject = Object.assign(new Community(), {
   metadata: {
@@ -69,38 +64,49 @@ describe('CommunitySearchResultListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(CommunitySearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(CommunitySearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(CommunitySearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      CommunitySearchResultListElementComponent,
+    );
     communitySearchResultListElementComponent = fixture.componentInstance;
-    communitySearchResultListElementComponent.object = mockCommunityWithAbstract;
+    communitySearchResultListElementComponent.object =
+      mockCommunityWithAbstract;
     fixture.detectChanges();
   }));
 
   describe('When the community has an abstract', () => {
     beforeEach(() => {
-      communitySearchResultListElementComponent.dso = mockCommunityWithAbstract.indexableObject;
+      communitySearchResultListElementComponent.dso =
+        mockCommunityWithAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text'),
+      );
       expect(communityAbstractField).not.toBeNull();
     });
   });
 
   describe('When the community has no abstract', () => {
     beforeEach(() => {
-      communitySearchResultListElementComponent.dso = mockCommunityWithoutAbstract.indexableObject;
+      communitySearchResultListElementComponent.dso =
+        mockCommunityWithoutAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should not show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text'),
+      );
       expect(communityAbstractField).toBeNull();
     });
   });

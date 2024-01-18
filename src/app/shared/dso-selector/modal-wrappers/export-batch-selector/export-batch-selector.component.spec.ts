@@ -1,27 +1,13 @@
-import {
-  DebugElement,
-  NgModule,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { DebugElement, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
   NgbActiveModal,
   NgbModal,
   NgbModalModule,
 } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { AuthorizationDataService } from '../../../../core/data/feature-authorization/authorization-data.service';
@@ -45,7 +31,8 @@ import { ExportBatchSelectorComponent } from './export-batch-selector.component'
 
 // No way to add entryComponents yet to testbed; alternative implemented; source: https://stackoverflow.com/questions/41689468/how-to-shallow-test-a-component-with-an-entrycomponents
 @NgModule({
-  imports: [NgbModalModule,
+  imports: [
+    NgbModalModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -57,8 +44,7 @@ import { ExportBatchSelectorComponent } from './export-batch-selector.component'
   declarations: [ConfirmationModalComponent],
   providers: [],
 })
-class ModelTestModule {
-}
+class ModelTestModule {}
 
 describe('ExportBatchSelectorComponent', () => {
   let component: ExportBatchSelectorComponent;
@@ -99,22 +85,30 @@ describe('ExportBatchSelectorComponent', () => {
     router = jasmine.createSpyObj('router', {
       navigateByUrl: jasmine.createSpy('navigateByUrl'),
     });
-    scriptService = jasmine.createSpyObj('scriptService',
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: createSuccessfulRemoteDataObject$({ processId: '45' }),
+    });
+    authorizationDataService = jasmine.createSpyObj(
+      'authorizationDataService',
       {
-        invoke: createSuccessfulRemoteDataObject$({ processId: '45' }),
+        isAuthorized: observableOf(true),
       },
     );
-    authorizationDataService = jasmine.createSpyObj('authorizationDataService', {
-      isAuthorized: observableOf(true),
-    });
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), ModelTestModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        ModelTestModule,
+      ],
       declarations: [ExportBatchSelectorComponent],
       providers: [
         { provide: NgbActiveModal, useValue: modalStub },
         { provide: NotificationsService, useValue: notificationService },
         { provide: ScriptDataService, useValue: scriptService },
-        { provide: AuthorizationDataService, useValue: authorizationDataService },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
         {
           provide: ActivatedRoute,
           useValue: {
@@ -128,12 +122,12 @@ describe('ExportBatchSelectorComponent', () => {
           },
         },
         {
-          provide: Router, useValue: router,
+          provide: Router,
+          useValue: router,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -174,10 +168,20 @@ describe('ExportBatchSelectorComponent', () => {
     });
     it('should invoke the batch-export script with option --id uuid option', () => {
       const parameterValues: ProcessParameter[] = [
-        Object.assign(new ProcessParameter(), { name: '--id', value: mockCollection.uuid }),
-        Object.assign(new ProcessParameter(), { name: '--type', value: 'COLLECTION' }),
+        Object.assign(new ProcessParameter(), {
+          name: '--id',
+          value: mockCollection.uuid,
+        }),
+        Object.assign(new ProcessParameter(), {
+          name: '--type',
+          value: 'COLLECTION',
+        }),
       ];
-      expect(scriptService.invoke).toHaveBeenCalledWith(BATCH_EXPORT_SCRIPT_NAME, parameterValues, []);
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        BATCH_EXPORT_SCRIPT_NAME,
+        parameterValues,
+        [],
+      );
     });
     it('success notification is shown', () => {
       expect(scriptRequestSucceeded).toBeTrue();
@@ -190,7 +194,9 @@ describe('ExportBatchSelectorComponent', () => {
   describe('if collection is selected and is not admin', () => {
     let scriptRequestSucceeded;
     beforeEach((done) => {
-      (authorizationDataService.isAuthorized as jasmine.Spy).and.returnValue(observableOf(false));
+      (authorizationDataService.isAuthorized as jasmine.Spy).and.returnValue(
+        observableOf(false),
+      );
       spyOn((component as any).modalService, 'open').and.returnValue(modalRef);
       component.navigate(mockCollection).subscribe((succeeded: boolean) => {
         scriptRequestSucceeded = succeeded;
@@ -199,10 +205,20 @@ describe('ExportBatchSelectorComponent', () => {
     });
     it('should invoke the Batch-export script with option --id uuid without option', () => {
       const parameterValues: ProcessParameter[] = [
-        Object.assign(new ProcessParameter(), { name: '--id', value: mockCollection.uuid }),
-        Object.assign(new ProcessParameter(), { name: '--type', value: 'COLLECTION' }),
+        Object.assign(new ProcessParameter(), {
+          name: '--id',
+          value: mockCollection.uuid,
+        }),
+        Object.assign(new ProcessParameter(), {
+          name: '--type',
+          value: 'COLLECTION',
+        }),
       ];
-      expect(scriptService.invoke).toHaveBeenCalledWith(BATCH_EXPORT_SCRIPT_NAME, parameterValues, []);
+      expect(scriptService.invoke).toHaveBeenCalledWith(
+        BATCH_EXPORT_SCRIPT_NAME,
+        parameterValues,
+        [],
+      );
     });
     it('success notification is shown', () => {
       expect(scriptRequestSucceeded).toBeTrue();
@@ -218,7 +234,9 @@ describe('ExportBatchSelectorComponent', () => {
     beforeEach((done) => {
       spyOn((component as any).modalService, 'open').and.returnValue(modalRef);
       jasmine.getEnv().allowRespy(true);
-      spyOn(scriptService, 'invoke').and.returnValue(createFailedRemoteDataObject$('Error', 500));
+      spyOn(scriptService, 'invoke').and.returnValue(
+        createFailedRemoteDataObject$('Error', 500),
+      );
       component.navigate(mockCollection).subscribe((succeeded: boolean) => {
         scriptRequestSucceeded = succeeded;
         done();

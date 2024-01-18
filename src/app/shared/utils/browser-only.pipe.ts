@@ -1,10 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import {
-  Inject,
-  Pipe,
-  PipeTransform,
-  PLATFORM_ID,
-} from '@angular/core';
+import { Inject, Pipe, PipeTransform, PLATFORM_ID } from '@angular/core';
 
 /**
  * A pipe that only returns its input when run in the browser.
@@ -25,13 +20,10 @@ import {
   name: 'dsBrowserOnly',
 })
 export class BrowserOnlyPipe implements PipeTransform {
-  constructor(
-    @Inject(PLATFORM_ID) private platformID: any,
-  ) {
-  }
+  constructor(@Inject(PLATFORM_ID) private platformID: any) {}
 
   transform(value: string): string | undefined {
-    if (isPlatformBrowser((this.platformID))) {
+    if (isPlatformBrowser(this.platformID)) {
       return value;
     } else {
       return undefined;

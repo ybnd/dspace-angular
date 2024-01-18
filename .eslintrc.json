@@ -13,19 +13,12 @@
     "eslint-plugin-simple-import-sort",
     "eslint-plugin-import-newlines"
   ],
-  "extends": [
-    "prettier"
-  ],
+  "extends": ["prettier"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "parserOptions": {
-        "project": [
-          "./tsconfig.json",
-          "./cypress/tsconfig.json"
-        ],
+        "project": ["./tsconfig.json", "./cypress/tsconfig.json"],
         "createDefaultProgram": true
       },
       "extends": [
@@ -37,22 +30,10 @@
         "plugin:rxjs/recommended"
       ],
       "rules": {
-        "max-classes-per-file": [
-          "error",
-          1
-        ],
-        "comma-dangle": [
-          "error",
-          "always-multiline"
-        ],
-        "object-curly-spacing": [
-          "error",
-          "always"
-        ],
-        "eol-last": [
-          "error",
-          "always"
-        ],
+        "max-classes-per-file": ["error", 1],
+        "comma-dangle": ["error", "always-multiline"],
+        "object-curly-spacing": ["error", "always"],
+        "eol-last": ["error", "always"],
         "no-console": [
           "error",
           {
@@ -133,9 +114,7 @@
         "@angular-eslint/pipe-prefix": [
           "error",
           {
-            "prefixes": [
-              "ds"
-            ]
+            "prefixes": ["ds"]
           }
         ],
         "@angular-eslint/no-attribute-decorator": "error",
@@ -144,7 +123,7 @@
         "@angular-eslint/no-output-on-prefix": "warn",
         "@angular-eslint/no-conflicting-lifecycle": "warn",
 
-        "@typescript-eslint/no-inferrable-types":[
+        "@typescript-eslint/no-inferrable-types": [
           "error",
           {
             "ignoreParameters": true
@@ -211,12 +190,9 @@
         "import/no-namespace": "error",
 
         "unused-imports/no-unused-imports": "error",
-        "lodash/import-scope": [
-          "error",
-          "method"
-        ],
+        "lodash/import-scope": ["error", "method"],
 
-        "rxjs/no-nested-subscribe": "off",     // todo: go over _all_ cases
+        "rxjs/no-nested-subscribe": "off", // todo: go over _all_ cases
 
         // Disable rules that may conflict with Prettier
         "no-mixed-spaces-and-tabs": "off",
@@ -231,14 +207,9 @@
       }
     },
     {
-      "files": [
-        "*.spec.ts"
-      ],
+      "files": ["*.spec.ts"],
       "parserOptions": {
-        "project": [
-          "./tsconfig.json",
-          "./cypress/tsconfig.json"
-        ],
+        "project": ["./tsconfig.json", "./cypress/tsconfig.json"],
         "createDefaultProgram": true
       },
       "rules": {
@@ -246,27 +217,16 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ]
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"]
     },
     {
-      "files": [
-        "*.json5"
-      ],
-      "extends": [
-        "plugin:jsonc/recommended-with-jsonc"
-      ],
+      "files": ["*.json5"],
+      "extends": ["plugin:jsonc/recommended-with-jsonc"],
       "rules": {
         "no-irregular-whitespace": "error",
         "no-trailing-spaces": "error",
-        "jsonc/comma-dangle": [
-          "error",
-          "always-multiline"
-        ],
+        "jsonc/comma-dangle": ["error", "always-multiline"],
         "jsonc/key-spacing": [
           "error",
           {

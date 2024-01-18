@@ -12,10 +12,7 @@ import { filter } from 'rxjs/operators';
 
 import { SearchService } from '../../core/shared/search/search.service';
 import { ViewMode } from '../../core/shared/view-mode.model';
-import {
-  isEmpty,
-  isNotEmpty,
-} from '../empty.util';
+import { isEmpty, isNotEmpty } from '../empty.util';
 import { currentPath } from '../utils/route.utils';
 
 /**
@@ -27,7 +24,6 @@ import { currentPath } from '../utils/route.utils';
   templateUrl: './view-mode-switch.component.html',
 })
 export class ViewModeSwitchComponent implements OnInit, OnDestroy {
-
   /**
    * True when the search component should show results on the current page
    */
@@ -57,10 +53,13 @@ export class ViewModeSwitchComponent implements OnInit, OnDestroy {
   /**
    * Emits event when the user select a new view mode
    */
-  @Output() changeViewMode: EventEmitter<ViewMode> = new EventEmitter<ViewMode>();
+  @Output() changeViewMode: EventEmitter<ViewMode> =
+    new EventEmitter<ViewMode>();
 
-  constructor(private searchService: SearchService, private router: Router) {
-  }
+  constructor(
+    private searchService: SearchService,
+    private router: Router,
+  ) {}
 
   /**
    * Initialize the instance variables
@@ -70,11 +69,12 @@ export class ViewModeSwitchComponent implements OnInit, OnDestroy {
       this.viewModeList = [ViewMode.ListElement, ViewMode.GridElement];
     }
 
-    this.sub = this.searchService.getViewMode().pipe(
-      filter((viewMode: ViewMode) => isNotEmpty(viewMode)),
-    ).subscribe((viewMode: ViewMode) => {
-      this.currentMode = viewMode;
-    });
+    this.sub = this.searchService
+      .getViewMode()
+      .pipe(filter((viewMode: ViewMode) => isNotEmpty(viewMode)))
+      .subscribe((viewMode: ViewMode) => {
+        this.currentMode = viewMode;
+      });
   }
 
   /**
@@ -121,5 +121,4 @@ export class ViewModeSwitchComponent implements OnInit, OnDestroy {
     }
     return this.getSearchLink().split('/');
   }
-
 }

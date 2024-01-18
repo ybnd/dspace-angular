@@ -9,10 +9,17 @@ import { BrowseEntryListElementComponent as BaseComponent } from '../../../../..
 @Component({
   selector: 'ds-browse-entry-list-element',
   // styleUrls: ['./browse-entry-list-element.component.scss'],
-  styleUrls: ['../../../../../../app/shared/object-list/browse-entry-list-element/browse-entry-list-element.component.scss'],
+  styleUrls: [
+    '../../../../../../app/shared/object-list/browse-entry-list-element/browse-entry-list-element.component.scss',
+  ],
   // templateUrl: './browse-entry-list-element.component.html',
-  templateUrl: '../../../../../../app/shared/object-list/browse-entry-list-element/browse-entry-list-element.component.html',
+  templateUrl:
+    '../../../../../../app/shared/object-list/browse-entry-list-element/browse-entry-list-element.component.html',
 })
-@listableObjectComponent(BrowseEntry, ViewMode.ListElement, Context.Any, 'custom')
-export class BrowseEntryListElementComponent extends BaseComponent {
-}
+@listableObjectComponent(
+  BrowseEntry,
+  ViewMode.ListElement,
+  Context.Any,
+  'custom',
+)
+export class BrowseEntryListElementComponent extends BaseComponent {}

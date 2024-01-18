@@ -16,8 +16,12 @@ describe('GoogleRecaptchaService', () => {
   const innerHTMLTestValue = 'mock-script-inner-html';
   const document = { documentElement: { lang: 'en' } } as Document;
   scriptElementMock = {
-    set innerHTML(newVal) { /* noop */ },
-    get innerHTML() { return innerHTMLTestValue; },
+    set innerHTML(newVal) {
+      /* noop */
+    },
+    get innerHTML() {
+      return innerHTMLTestValue;
+    },
   };
 
   function init() {
@@ -26,16 +30,27 @@ describe('GoogleRecaptchaService', () => {
       createRenderer: observableOf('googleRecaptchaToken'),
       createElement: scriptElementMock,
     });
-    configurationDataService = jasmine.createSpyObj('configurationDataService', {
-      findByPropertyName: createSuccessfulRemoteDataObject$({ values: ['googleRecaptchaToken'] }),
-    });
+    configurationDataService = jasmine.createSpyObj(
+      'configurationDataService',
+      {
+        findByPropertyName: createSuccessfulRemoteDataObject$({
+          values: ['googleRecaptchaToken'],
+        }),
+      },
+    );
     cookieService = jasmine.createSpyObj('cookieService', {
       get: '{%22token_item%22:true%2C%22impersonation%22:true%2C%22redirect%22:true%2C%22language%22:true%2C%22klaro%22:true%2C%22has_agreed_end_user%22:true%2C%22google-analytics%22:true}',
       set: () => {
         /* empty */
       },
     });
-    service = new GoogleRecaptchaService(cookieService, document, window, rendererFactory2, configurationDataService);
+    service = new GoogleRecaptchaService(
+      cookieService,
+      document,
+      window,
+      rendererFactory2,
+      configurationDataService,
+    );
   }
 
   beforeEach(() => {
@@ -53,6 +68,5 @@ describe('GoogleRecaptchaService', () => {
       service.getRecaptchaToken('test');
       expect(spy).toHaveBeenCalledWith('test');
     });
-
   });
 });

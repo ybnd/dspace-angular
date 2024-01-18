@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   NgbActiveModal,
@@ -36,7 +32,7 @@ export class SubmissionImportExternalPreviewComponent implements OnInit {
   /**
    * The entry metadata list
    */
-  public metadataList: { key: string, value: MetadataValue }[];
+  public metadataList: { key: string; value: MetadataValue }[];
   /**
    * The label prefix to use to generate the translation label
    */
@@ -60,7 +56,7 @@ export class SubmissionImportExternalPreviewComponent implements OnInit {
     private modalService: NgbModal,
     private router: Router,
     private notificationService: NotificationsService,
-  ) { }
+  ) {}
 
   /**
    * Metadata initialization for HTML display.
@@ -87,28 +83,41 @@ export class SubmissionImportExternalPreviewComponent implements OnInit {
    * Start the import of an entry by opening up a collection choice modal window.
    */
   public import(): void {
-    this.modalRef = this.modalService.open(SubmissionImportExternalCollectionComponent, {
-      size: 'lg',
-    });
+    this.modalRef = this.modalService.open(
+      SubmissionImportExternalCollectionComponent,
+      {
+        size: 'lg',
+      },
+    );
     this.modalRef.componentInstance.entityType = this.labelPrefix;
     this.closeMetadataModal();
 
-    this.modalRef.componentInstance.selectedEvent.pipe(
-      mergeMap((collectionListEntry: CollectionListEntry) => {
-        return this.submissionService.createSubmissionFromExternalSource(this.externalSourceEntry._links.self.href, collectionListEntry.collection.id);
-      }),
-    ).subscribe((submissionObjects: SubmissionObject[]) => {
-      let isValid = false;
-      if (submissionObjects.length === 1) {
-        if (submissionObjects[0] !== null) {
-          isValid = true;
-          this.router.navigateByUrl('/workspaceitems/' + submissionObjects[0].id + '/edit');
+    this.modalRef.componentInstance.selectedEvent
+      .pipe(
+        mergeMap((collectionListEntry: CollectionListEntry) => {
+          return this.submissionService.createSubmissionFromExternalSource(
+            this.externalSourceEntry._links.self.href,
+            collectionListEntry.collection.id,
+          );
+        }),
+      )
+      .subscribe((submissionObjects: SubmissionObject[]) => {
+        let isValid = false;
+        if (submissionObjects.length === 1) {
+          if (submissionObjects[0] !== null) {
+            isValid = true;
+            this.router.navigateByUrl(
+              '/workspaceitems/' + submissionObjects[0].id + '/edit',
+            );
+          }
         }
-      }
-      if (!isValid) {
-        this.notificationService.error('submission.import-external.preview.error.import.title', 'submission.import-external.preview.error.import.body');
-      }
-      this.modalRef.close();
-    });
+        if (!isValid) {
+          this.notificationService.error(
+            'submission.import-external.preview.error.import.title',
+            'submission.import-external.preview.error.import.body',
+          );
+        }
+        this.modalRef.close();
+      });
   }
 }

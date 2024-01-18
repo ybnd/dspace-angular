@@ -1,10 +1,7 @@
 import { DSpaceObjectType } from '../../../core/shared/dspace-object-type.model';
 import { ViewMode } from '../../../core/shared/view-mode.model';
 import { URLCombiner } from '../../../core/url-combiner/url-combiner';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../empty.util';
+import { hasValue, isNotEmpty } from '../../empty.util';
 import { SearchFilter } from './search-filter.model';
 
 /**
@@ -19,12 +16,14 @@ export class SearchOptions {
   filters?: SearchFilter[];
   fixedFilter?: string;
 
-  constructor(
-    options: {
-      configuration?: string, scope?: string, query?: string, dsoTypes?: DSpaceObjectType[], filters?: SearchFilter[],
-      fixedFilter?: string
-    },
-  ) {
+  constructor(options: {
+    configuration?: string;
+    scope?: string;
+    query?: string;
+    dsoTypes?: DSpaceObjectType[];
+    filters?: SearchFilter[];
+    fixedFilter?: string;
+  }) {
     this.configuration = options.configuration;
     this.scope = options.scope;
     this.query = options.query;
@@ -60,8 +59,12 @@ export class SearchOptions {
     if (isNotEmpty(this.filters)) {
       this.filters.forEach((filter: SearchFilter) => {
         filter.values.forEach((value) => {
-          const filterValue = value.includes(',') ? `${value}` : value + (filter.operator ? ',' + filter.operator : '');
-          args.push(`${filter.key}=${this.encodeFilterQueryValue(filterValue)}`);
+          const filterValue = value.includes(',')
+            ? `${value}`
+            : value + (filter.operator ? ',' + filter.operator : '');
+          args.push(
+            `${filter.key}=${this.encodeFilterQueryValue(filterValue)}`,
+          );
         });
       });
     }

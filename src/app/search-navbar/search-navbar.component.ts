@@ -1,8 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -19,7 +15,6 @@ import { expandSearchInput } from '../shared/animations/slide';
   animations: [expandSearchInput],
 })
 export class SearchNavbarComponent {
-
   // The search form
   searchForm;
   // Whether or not the search bar is expanded, boolean for html ngIf, string fo AngularAnimation state change
@@ -29,10 +24,14 @@ export class SearchNavbarComponent {
   // Search input field
   @ViewChild('searchInput') searchField: ElementRef;
 
-  constructor(private formBuilder: UntypedFormBuilder, private router: Router, private searchService: SearchService) {
-    this.searchForm = this.formBuilder.group(({
+  constructor(
+    private formBuilder: UntypedFormBuilder,
+    private router: Router,
+    private searchService: SearchService,
+  ) {
+    this.searchForm = this.formBuilder.group({
       query: '',
-    }));
+    });
   }
 
   /**
@@ -67,7 +66,9 @@ export class SearchNavbarComponent {
   onSubmit(data: any) {
     this.collapse();
     const queryParams = Object.assign({}, data);
-    const linkToNavigateTo = [this.searchService.getSearchLink().replace('/', '')];
+    const linkToNavigateTo = [
+      this.searchService.getSearchLink().replace('/', ''),
+    ];
     this.searchForm.reset();
 
     this.router.navigate(linkToNavigateTo, {

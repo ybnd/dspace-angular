@@ -27,10 +27,11 @@ export class ItemVersionHistoryComponent {
    */
   AlertTypeEnum = AlertType;
 
-  constructor(private route: ActivatedRoute) {
-  }
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.itemRD$ = this.route.parent.parent.data.pipe(map((data) => data.dso)).pipe(getFirstSucceededRemoteData()) as Observable<RemoteData<Item>>;
+    this.itemRD$ = this.route.parent.parent.data
+      .pipe(map((data) => data.dso))
+      .pipe(getFirstSucceededRemoteData()) as Observable<RemoteData<Item>>;
   }
 }

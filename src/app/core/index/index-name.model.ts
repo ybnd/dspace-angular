@@ -13,5 +13,5 @@ export enum IndexName {
    * Maps these link on to their matching self link in the object cache
    * Eg. /workspaceitems/12/item --> /items/12345
    */
-  ALTERNATIVE_OBJECT_LINK = 'object/alt-link-to-self-link'
+  ALTERNATIVE_OBJECT_LINK = 'object/alt-link-to-self-link',
 }

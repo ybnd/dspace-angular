@@ -25,35 +25,52 @@ import { MenusState } from './menus-state.model';
  * @param {MenuAction} action The Action to be performed on the state
  * @returns {MenusState} The new, reducer MenusState
  */
-export function menusReducer(state: MenusState = initialMenusState, action: MenuAction): MenusState {
+export function menusReducer(
+  state: MenusState = initialMenusState,
+  action: MenuAction,
+): MenusState {
   switch (action.type) {
     case MenuActionTypes.COLLAPSE_MENU: {
-      const newMenuState = Object.assign({}, state[action.menuID], { collapsed: true });
+      const newMenuState = Object.assign({}, state[action.menuID], {
+        collapsed: true,
+      });
       return Object.assign({}, state, { [action.menuID]: newMenuState });
     }
     case MenuActionTypes.EXPAND_MENU: {
-      const newMenuState = Object.assign({}, state[action.menuID], { collapsed: false });
+      const newMenuState = Object.assign({}, state[action.menuID], {
+        collapsed: false,
+      });
       return Object.assign({}, state, { [action.menuID]: newMenuState });
     }
     case MenuActionTypes.COLLAPSE_MENU_PREVIEW: {
-      const newMenuState = Object.assign({}, state[action.menuID], { previewCollapsed: true });
+      const newMenuState = Object.assign({}, state[action.menuID], {
+        previewCollapsed: true,
+      });
       return Object.assign({}, state, { [action.menuID]: newMenuState });
     }
     case MenuActionTypes.EXPAND_MENU_PREVIEW: {
-      const newMenuState = Object.assign({}, state[action.menuID], { previewCollapsed: false });
+      const newMenuState = Object.assign({}, state[action.menuID], {
+        previewCollapsed: false,
+      });
       return Object.assign({}, state, { [action.menuID]: newMenuState });
     }
     case MenuActionTypes.TOGGLE_MENU: {
       const menuState = state[action.menuID];
-      const newMenuState = Object.assign({}, menuState, { collapsed: !menuState.collapsed });
+      const newMenuState = Object.assign({}, menuState, {
+        collapsed: !menuState.collapsed,
+      });
       return Object.assign({}, state, { [action.menuID]: newMenuState });
     }
     case MenuActionTypes.SHOW_MENU: {
-      const newMenuState = Object.assign({}, state[action.menuID], { visible: true });
+      const newMenuState = Object.assign({}, state[action.menuID], {
+        visible: true,
+      });
       return Object.assign({}, state, { [action.menuID]: newMenuState });
     }
     case MenuActionTypes.HIDE_MENU: {
-      const newMenuState = Object.assign({}, state[action.menuID], { visible: false });
+      const newMenuState = Object.assign({}, state[action.menuID], {
+        visible: false,
+      });
       return Object.assign({}, state, { [action.menuID]: newMenuState });
     }
     case MenuActionTypes.REINIT_MENUS: {
@@ -72,7 +89,10 @@ export function menusReducer(state: MenusState = initialMenusState, action: Menu
       return deactivateSection(state, action as DeactivateMenuSectionAction);
     }
     case MenuActionTypes.TOGGLE_ACTIVE_SECTION: {
-      return toggleActiveSection(state, action as ToggleActiveMenuSectionAction);
+      return toggleActiveSection(
+        state,
+        action as ToggleActiveMenuSectionAction,
+      );
     }
     case MenuActionTypes.HIDE_SECTION: {
       return hideSection(state, action as HideMenuSectionAction);
@@ -110,17 +130,21 @@ function reorderSections(state: MenusState, action: MenuSectionAction) {
   const newSectionState: MenuSections = {};
   const newSectionIndexState: MenuSectionIndex = {};
 
-  Object.values(menuState.sections).sort((sectionA: MenuSection, sectionB: MenuSection) => {
-    const indexA = sectionA.index || 0;
-    const indexB = sectionB.index || 0;
-    return indexA - indexB;
-  }).forEach((section: MenuSection) => {
-    newSectionState[section.id] = section;
-    if (hasValue(section.parentID)) {
-      const parentIndex = hasValue(newSectionIndexState[section.parentID]) ? newSectionIndexState[section.parentID] : [];
-      newSectionIndexState[section.parentID] = [...parentIndex, section.id];
-    }
-  });
+  Object.values(menuState.sections)
+    .sort((sectionA: MenuSection, sectionB: MenuSection) => {
+      const indexA = sectionA.index || 0;
+      const indexB = sectionB.index || 0;
+      return indexA - indexB;
+    })
+    .forEach((section: MenuSection) => {
+      newSectionState[section.id] = section;
+      if (hasValue(section.parentID)) {
+        const parentIndex = hasValue(newSectionIndexState[section.parentID])
+          ? newSectionIndexState[section.parentID]
+          : [];
+        newSectionIndexState[section.parentID] = [...parentIndex, section.id];
+      }
+    });
   const newMenuState = Object.assign({}, menuState, {
     sections: newSectionState,
     sectionToSubsectionIndex: newSectionIndexState,
@@ -137,7 +161,11 @@ function reorderSections(state: MenusState, action: MenuSectionAction) {
 function removeSection(state: MenusState, action: RemoveMenuSectionAction) {
   const menuState: MenuState = state[action.menuID];
   const id = action.id;
-  const newState = removeFromIndex(state, menuState.sections[action.id], action.menuID);
+  const newState = removeFromIndex(
+    state,
+    menuState.sections[action.id],
+    action.menuID,
+  );
   const newMenuState = Object.assign({}, newState[action.menuID], {
     sections: Object.assign({}, newState[action.menuID].sections),
   });
@@ -152,15 +180,23 @@ function removeSection(state: MenusState, action: RemoveMenuSectionAction) {
  * @param {MenuID} action The Menu ID to which the section belonged
  * @returns {MenusState} The new reduced state
  */
-function removeFromIndex(state: MenusState, section: MenuSection, menuID: MenuID) {
+function removeFromIndex(
+  state: MenusState,
+  section: MenuSection,
+  menuID: MenuID,
+) {
   const sectionID = section.id;
   const parentID = section.parentID;
   if (hasValue(parentID)) {
     const menuState: MenuState = state[menuID];
     const index = menuState.sectionToSubsectionIndex;
     const parentIndex = hasValue(index[parentID]) ? index[parentID] : [];
-    const newIndex = Object.assign({}, index, { [parentID]: parentIndex.filter((id) => id !== sectionID) });
-    const newMenuState = Object.assign({}, menuState, { sectionToSubsectionIndex: newIndex });
+    const newIndex = Object.assign({}, index, {
+      [parentID]: parentIndex.filter((id) => id !== sectionID),
+    });
+    const newMenuState = Object.assign({}, menuState, {
+      sectionToSubsectionIndex: newIndex,
+    });
     return Object.assign({}, state, { [menuID]: newMenuState });
   }
   return state;
@@ -192,7 +228,10 @@ function showSection(state: MenusState, action: ShowMenuSectionAction) {
  * @param {DeactivateMenuSectionAction} action Action containing data to identify the section to be updated
  * @returns {MenusState} The new reduced state
  */
-function deactivateSection(state: MenusState, action: DeactivateMenuSectionAction) {
+function deactivateSection(
+  state: MenusState,
+  action: DeactivateMenuSectionAction,
+) {
   const sectionState: MenuSection = state[action.menuID].sections[action.id];
   if (hasValue(sectionState)) {
     return updateSectionState(state, action, { active: false });
@@ -218,7 +257,10 @@ function activateSection(state: MenusState, action: ActivateMenuSectionAction) {
  * @param {DeactivateMenuSectionAction} action Action containing data to identify the section to be updated
  * @returns {MenusState} The new reduced state
  */
-function toggleActiveSection(state: MenusState, action: ToggleActiveMenuSectionAction) {
+function toggleActiveSection(
+  state: MenusState,
+  action: ToggleActiveMenuSectionAction,
+) {
   const sectionState: MenuSection = state[action.menuID].sections[action.id];
   if (hasValue(sectionState)) {
     return updateSectionState(state, action, { active: !sectionState.active });
@@ -233,7 +275,11 @@ function toggleActiveSection(state: MenusState, action: ToggleActiveMenuSectionA
  * @param {MenuSection} section The section that will be added or replaced in the state
  * @returns {MenusState} The new reduced state
  */
-function putSectionState(state: MenusState, action: MenuSectionAction, section: MenuSection): MenusState {
+function putSectionState(
+  state: MenusState,
+  action: MenuSectionAction,
+  section: MenuSection,
+): MenusState {
   const menuState: MenuState = state[action.menuID];
   const newSections = Object.assign({}, menuState.sections, {
     [section.id]: section,
@@ -251,13 +297,16 @@ function putSectionState(state: MenusState, action: MenuSectionAction, section: 
  * @param {any} update A partial section that represents the part that should be updated in an existing section
  * @returns {MenusState} The new reduced state
  */
-function updateSectionState(state: MenusState, action: MenuSectionAction, update: any): MenusState {
+function updateSectionState(
+  state: MenusState,
+  action: MenuSectionAction,
+  update: any,
+): MenusState {
   const menuState: MenuState = state[action.menuID];
   const sectionState = menuState.sections[action.id];
   if (hasValue(sectionState)) {
     const newTopSection = Object.assign({}, sectionState, update);
     return putSectionState(state, action, newTopSection);
-
   }
   return state;
 }

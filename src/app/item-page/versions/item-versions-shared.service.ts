@@ -9,12 +9,10 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
   providedIn: 'root',
 })
 export class ItemVersionsSharedService {
-
   constructor(
     private notificationsService: NotificationsService,
     private translateService: TranslateService,
-  ) {
-  }
+  ) {}
 
   private static msg(key: string): string {
     const translationPrefix = 'item.version.create.notification';
@@ -28,9 +26,20 @@ export class ItemVersionsSharedService {
    */
   public notifyCreateNewVersion(newVersionRD: RemoteData<Version>): void {
     const newVersionNumber = newVersionRD?.payload?.version;
-    newVersionRD.hasSucceeded ?
-      this.notificationsService.success(null, this.translateService.get(ItemVersionsSharedService.msg('success'), { version: newVersionNumber })) :
-      this.notificationsService.error(null, this.translateService.get(ItemVersionsSharedService.msg(newVersionRD?.statusCode === 422 ? 'inProgress' : 'failure')));
+    newVersionRD.hasSucceeded
+      ? this.notificationsService.success(
+          null,
+          this.translateService.get(ItemVersionsSharedService.msg('success'), {
+            version: newVersionNumber,
+          }),
+        )
+      : this.notificationsService.error(
+          null,
+          this.translateService.get(
+            ItemVersionsSharedService.msg(
+              newVersionRD?.statusCode === 422 ? 'inProgress' : 'failure',
+            ),
+          ),
+        );
   }
-
 }

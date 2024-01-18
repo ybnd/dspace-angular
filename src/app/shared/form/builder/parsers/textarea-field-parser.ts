@@ -7,9 +7,14 @@ import { FormFieldMetadataValueObject } from '../models/form-field-metadata-valu
 import { FieldParser } from './field-parser';
 
 export class TextareaFieldParser extends FieldParser {
-
-  public modelFactory(fieldValue?: FormFieldMetadataValueObject | any, label?: boolean): any {
-    const textAreaModelConfig: DsDynamicTextAreaModelConfig = this.initModel(null, label);
+  public modelFactory(
+    fieldValue?: FormFieldMetadataValueObject | any,
+    label?: boolean,
+  ): any {
+    const textAreaModelConfig: DsDynamicTextAreaModelConfig = this.initModel(
+      null,
+      label,
+    );
 
     const layout = {
       element: {
@@ -20,7 +25,10 @@ export class TextareaFieldParser extends FieldParser {
     textAreaModelConfig.rows = 10;
     textAreaModelConfig.spellCheck = environment.form.spellCheck;
     this.setValues(textAreaModelConfig, fieldValue);
-    const textAreaModel = new DsDynamicTextAreaModel(textAreaModelConfig, layout);
+    const textAreaModel = new DsDynamicTextAreaModel(
+      textAreaModelConfig,
+      layout,
+    );
 
     return textAreaModel;
   }

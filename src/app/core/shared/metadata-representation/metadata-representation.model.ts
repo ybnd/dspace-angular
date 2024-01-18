@@ -8,7 +8,7 @@ export enum MetadataRepresentationType {
   Item = 'item',
   AuthorityControlled = 'authority_controlled',
   PlainText = 'plain_text',
-  BrowseLink = 'browse_link'
+  BrowseLink = 'browse_link',
 }
 
 /**
@@ -36,5 +36,4 @@ export interface MetadataRepresentation {
    * Fetches the value to be displayed
    */
   getValue(): string;
-
 }

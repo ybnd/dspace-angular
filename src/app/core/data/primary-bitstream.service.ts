@@ -1,9 +1,6 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  switchMap,
-} from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
@@ -17,18 +14,13 @@ import { NoContent } from '../shared/NoContent.model';
 import { getAllCompletedRemoteData } from '../shared/operators';
 import { BundleDataService } from './bundle-data.service';
 import { RemoteData } from './remote-data';
-import {
-  DeleteRequest,
-  PostRequest,
-  PutRequest,
-} from './request.models';
+import { DeleteRequest, PostRequest, PutRequest } from './request.models';
 import { RequestService } from './request.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PrimaryBitstreamService {
-
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
@@ -36,8 +28,7 @@ export class PrimaryBitstreamService {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
     protected bundleDataService: BundleDataService,
-  ) {
-  }
+  ) {}
 
   /**
    * Returns the type of HttpOptions object needed from primary bitstream requests.
@@ -85,7 +76,10 @@ export class PrimaryBitstreamService {
    * @param primaryBitstream  The object to create
    * @param bundle            The bundle to create it on
    */
-  create(primaryBitstream: Bitstream, bundle: Bundle): Observable<RemoteData<Bundle>> {
+  create(
+    primaryBitstream: Bitstream,
+    bundle: Bundle,
+  ): Observable<RemoteData<Bundle>> {
     return this.createAndSendRequest(
       PostRequest,
       bundle._links.primaryBitstream.href,
@@ -99,7 +93,10 @@ export class PrimaryBitstreamService {
    * @param primaryBitstream  The object to update
    * @param bundle            The bundle to update it on
    */
-  put(primaryBitstream: Bitstream, bundle: Bundle): Observable<RemoteData<Bundle>> {
+  put(
+    primaryBitstream: Bitstream,
+    bundle: Bundle,
+  ): Observable<RemoteData<Bundle>> {
     return this.createAndSendRequest(
       PutRequest,
       bundle._links.primaryBitstream.href,
@@ -123,5 +120,4 @@ export class PrimaryBitstreamService {
       }),
     );
   }
-
 }

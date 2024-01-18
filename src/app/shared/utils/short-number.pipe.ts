@@ -1,16 +1,11 @@
-import {
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 import { isEmpty } from '../empty.util';
-
 
 @Pipe({
   name: 'dsShortNumber',
 })
 export class ShortNumberPipe implements PipeTransform {
-
   transform(number: number, args?: any): any {
     // will only work value is a valid number
     if (isNaN(number) || isEmpty(number) || number === 0) {

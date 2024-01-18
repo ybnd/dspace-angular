@@ -1,14 +1,8 @@
 import { CommonModule } from '@angular/common';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 import { RawRestResponse } from '../core/dspace-rest/raw-rest-response.model';
@@ -53,12 +47,9 @@ describe('HealthPageComponent', () => {
           },
         }),
       ],
-      declarations: [ HealthPageComponent ],
-      providers: [
-        { provide: HealthService, useValue: healthService },
-      ],
-    })
-      .compileComponents();
+      declarations: [HealthPageComponent],
+      providers: [{ provide: HealthService, useValue: healthService }],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,8 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
@@ -25,8 +21,6 @@ import { PaginationServiceStub } from '../testing/pagination-service.stub';
 import { SearchConfigurationServiceStub } from '../testing/search-configuration-service.stub';
 import { createPaginatedList } from '../testing/utils.test';
 import { RSSComponent } from './rss.component';
-
-
 
 describe('RssComponent', () => {
   let comp: RSSComponent;
@@ -51,27 +45,35 @@ describe('RssComponent', () => {
         },
       },
     });
-    configurationDataService = jasmine.createSpyObj('configurationDataService', {
-      findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-        name: 'test',
-        values: [
-          'org.dspace.ctask.general.ProfileFormats = test',
-        ],
-      })),
-    });
+    configurationDataService = jasmine.createSpyObj(
+      'configurationDataService',
+      {
+        findByPropertyName: createSuccessfulRemoteDataObject$(
+          Object.assign(new ConfigurationProperty(), {
+            name: 'test',
+            values: ['org.dspace.ctask.general.ProfileFormats = test'],
+          }),
+        ),
+      },
+    );
     linkHeadService = jasmine.createSpyObj('linkHeadService', {
       addTag: '',
     });
-    const mockCollectionRD: RemoteData<Collection> = createSuccessfulRemoteDataObject(mockCollection);
-    const mockSearchOptions = observableOf(new PaginatedSearchOptions({
-      pagination: Object.assign(new PaginationComponentOptions(), {
-        id: 'search-page-configuration',
-        pageSize: 10,
-        currentPage: 1,
+    const mockCollectionRD: RemoteData<Collection> =
+      createSuccessfulRemoteDataObject(mockCollection);
+    const mockSearchOptions = observableOf(
+      new PaginatedSearchOptions({
+        pagination: Object.assign(new PaginationComponentOptions(), {
+          id: 'search-page-configuration',
+          pageSize: 10,
+          currentPage: 1,
+        }),
       }),
-    }));
+    );
     groupDataService = jasmine.createSpyObj('groupsDataService', {
-      findListByHref: createSuccessfulRemoteDataObject$(createPaginatedList([])),
+      findListByHref: createSuccessfulRemoteDataObject$(
+        createPaginatedList([]),
+      ),
       getGroupRegistryRouterLink: '',
       getUUIDFromString: '',
     });
@@ -83,8 +85,14 @@ describe('RssComponent', () => {
       providers: [
         { provide: GroupDataService, useValue: groupDataService },
         { provide: LinkHeadService, useValue: linkHeadService },
-        { provide: ConfigurationDataService, useValue: configurationDataService },
-        { provide: SearchConfigurationService, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationDataService,
+        },
+        {
+          provide: SearchConfigurationService,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: PaginationService, useValue: paginationService },
         { provide: Router, useValue: new RouterMock() },
       ],
@@ -101,7 +109,9 @@ describe('RssComponent', () => {
 
   it('should formulate the correct url given params in url', () => {
     const route = comp.formulateRoute(uuid, 'opensearch/search', query);
-    expect(route).toBe('/opensearch/search?format=atom&scope=2cfcf65e-0a51-4bcb-8592-b8db7b064790&query=test');
+    expect(route).toBe(
+      '/opensearch/search?format=atom&scope=2cfcf65e-0a51-4bcb-8592-b8db7b064790&query=test',
+    );
   });
 
   it('should skip uuid if its null', () => {
@@ -114,4 +124,3 @@ describe('RssComponent', () => {
     expect(route).toBe('/opensearch/search?format=atom&query=*');
   });
 });
-

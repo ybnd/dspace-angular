@@ -27,13 +27,19 @@ describe('MyDSpacePageComponent', () => {
   let comp: MyDSpacePageComponent;
   let fixture: ComponentFixture<MyDSpacePageComponent>;
 
-  const searchServiceStub: SpyObj<SearchService> = jasmine.createSpyObj('SearchService', {
-    setServiceOptions: jasmine.createSpy('setServiceOptions'),
-  });
+  const searchServiceStub: SpyObj<SearchService> = jasmine.createSpyObj(
+    'SearchService',
+    {
+      setServiceOptions: jasmine.createSpy('setServiceOptions'),
+    },
+  );
 
-  const myDSpaceConfigurationServiceStub: SpyObj<MyDSpaceConfigurationService> = jasmine.createSpyObj('MyDSpaceConfigurationService', {
-    getAvailableConfigurationOptions: jasmine.createSpy('getAvailableConfigurationOptions'),
-  });
+  const myDSpaceConfigurationServiceStub: SpyObj<MyDSpaceConfigurationService> =
+    jasmine.createSpyObj('MyDSpaceConfigurationService', {
+      getAvailableConfigurationOptions: jasmine.createSpy(
+        'getAvailableConfigurationOptions',
+      ),
+    });
 
   const configurationList = [
     {
@@ -50,32 +56,43 @@ describe('MyDSpacePageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule, NgbCollapseModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
+        NgbCollapseModule,
+      ],
       declarations: [MyDSpacePageComponent],
       providers: [
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: MyDSpaceConfigurationService, useValue: myDSpaceConfigurationServiceStub },
+        {
+          provide: MyDSpaceConfigurationService,
+          useValue: myDSpaceConfigurationServiceStub,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(MyDSpacePageComponent, {
-      set: {
-        providers: [
-          {
-            provide: SEARCH_CONFIG_SERVICE,
-            useValue: myDSpaceConfigurationServiceStub,
-          },
-        ],
-      },
-    }).compileComponents();
+    })
+      .overrideComponent(MyDSpacePageComponent, {
+        set: {
+          providers: [
+            {
+              provide: SEARCH_CONFIG_SERVICE,
+              useValue: myDSpaceConfigurationServiceStub,
+            },
+          ],
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MyDSpacePageComponent);
     comp = fixture.componentInstance; // SearchPageComponent test instance
-    myDSpaceConfigurationServiceStub.getAvailableConfigurationOptions.and.returnValue(observableOf(configurationList));
+    myDSpaceConfigurationServiceStub.getAvailableConfigurationOptions.and.returnValue(
+      observableOf(configurationList),
+    );
 
     fixture.detectChanges();
-
   });
 
   afterEach(() => {
@@ -83,14 +100,14 @@ describe('MyDSpacePageComponent', () => {
   });
 
   it('should init properly context and configuration', fakeAsync(() => {
-
-    expect(comp.configurationList$).toBeObservable(cold('(a|)', {
-      a: configurationList,
-    }));
+    expect(comp.configurationList$).toBeObservable(
+      cold('(a|)', {
+        a: configurationList,
+      }),
+    );
 
     flush();
     expect(comp.configuration).toBe(MyDSpaceConfigurationValueType.Workspace);
     expect(comp.context).toBe(Context.Workspace);
   }));
-
 });

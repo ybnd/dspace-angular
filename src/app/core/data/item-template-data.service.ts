@@ -33,10 +33,25 @@ class CollectionItemTemplateDataService extends IdentifiableDataService<Item> {
     protected notificationsService: NotificationsService,
     protected collectionService: CollectionDataService,
   ) {
-    super('itemtemplates', requestService, rdbService, objectCache, halService, undefined);
+    super(
+      'itemtemplates',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      undefined,
+    );
 
     // We only intend to use createOnEndpoint, so this inner data service feature doesn't need an endpoint at all
-    this.createData = new CreateDataImpl<Item>(undefined, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
+    this.createData = new CreateDataImpl<Item>(
+      undefined,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -46,9 +61,13 @@ class CollectionItemTemplateDataService extends IdentifiableDataService<Item> {
    * @param collectionID  the ID of a Collection
    */
   public getIDHrefObs(collectionID: string): Observable<string> {
-    return this.collectionService.getIDHrefObs(collectionID).pipe(
-      switchMap((href: string) => this.halService.getEndpoint('itemtemplate', href)),
-    );
+    return this.collectionService
+      .getIDHrefObs(collectionID)
+      .pipe(
+        switchMap((href: string) =>
+          this.halService.getEndpoint('itemtemplate', href),
+        ),
+      );
   }
 
   /**
@@ -56,8 +75,14 @@ class CollectionItemTemplateDataService extends IdentifiableDataService<Item> {
    * @param item
    * @param collectionID
    */
-  public createTemplate(item: Item, collectionID: string): Observable<RemoteData<Item>> {
-    return this.createData.createOnEndpoint(item, this.getIDHrefObs(collectionID));
+  public createTemplate(
+    item: Item,
+    collectionID: string,
+  ): Observable<RemoteData<Item>> {
+    return this.createData.createOnEndpoint(
+      item,
+      this.getIDHrefObs(collectionID),
+    );
   }
 }
 
@@ -79,9 +104,26 @@ export class ItemTemplateDataService extends BaseItemDataService {
     protected bundleService: BundleDataService,
     protected collectionService: CollectionDataService,
   ) {
-    super('itemtemplates', requestService, rdbService, objectCache, halService, notificationsService, comparator, browseService, bundleService);
+    super(
+      'itemtemplates',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      comparator,
+      browseService,
+      bundleService,
+    );
 
-    this.byCollection = new CollectionItemTemplateDataService(requestService, rdbService, objectCache, halService, notificationsService, collectionService);
+    this.byCollection = new CollectionItemTemplateDataService(
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      collectionService,
+    );
   }
 
   /**
@@ -94,8 +136,18 @@ export class ItemTemplateDataService extends BaseItemDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByCollectionID(collectionID: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Item>[]): Observable<RemoteData<Item>> {
-    return this.byCollection.findById(collectionID, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findByCollectionID(
+    collectionID: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Item>[]
+  ): Observable<RemoteData<Item>> {
+    return this.byCollection.findById(
+      collectionID,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -103,7 +155,10 @@ export class ItemTemplateDataService extends BaseItemDataService {
    * @param item
    * @param collectionID
    */
-  createByCollectionID(item: Item, collectionID: string): Observable<RemoteData<Item>> {
+  createByCollectionID(
+    item: Item,
+    collectionID: string,
+  ): Observable<RemoteData<Item>> {
     return this.byCollection.createTemplate(item, collectionID);
   }
 

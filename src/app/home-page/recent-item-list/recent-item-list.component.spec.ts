@@ -1,8 +1,5 @@
 import { PLATFORM_ID } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 import { SearchService } from 'src/app/core/shared/search/search.service';
 import { createSuccessfulRemoteDataObject } from 'src/app/shared/remote-data.utils';
@@ -34,29 +31,33 @@ describe('RecentItemListComponent', () => {
     /* eslint-enable no-empty,@typescript-eslint/no-empty-function */
   });
   paginationService = new PaginationServiceStub();
-  const mockSearchOptions = observableOf(new PaginatedSearchOptions({
-    pagination: Object.assign(new PaginationComponentOptions(), {
-      id: 'search-page-configuration',
-      pageSize: 10,
-      currentPage: 1,
+  const mockSearchOptions = observableOf(
+    new PaginatedSearchOptions({
+      pagination: Object.assign(new PaginationComponentOptions(), {
+        id: 'search-page-configuration',
+        pageSize: 10,
+        currentPage: 1,
+      }),
+      sort: new SortOptions('dc.date.accessioned', SortDirection.DESC),
     }),
-    sort: new SortOptions('dc.date.accessioned', SortDirection.DESC),
-  }));
+  );
   const searchConfigServiceStub = {
     paginatedSearchOptions: mockSearchOptions,
   };
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecentItemListComponent],
+      declarations: [RecentItemListComponent],
       providers: [
         { provide: SearchService, useValue: searchServiceStub },
         { provide: PaginationService, useValue: paginationService },
-        { provide: SearchConfigurationService, useValue: searchConfigServiceStub },
+        {
+          provide: SearchConfigurationService,
+          useValue: searchConfigServiceStub,
+        },
         { provide: APP_CONFIG, useValue: environment },
         { provide: PLATFORM_ID, useValue: 'browser' },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -71,8 +72,14 @@ describe('RecentItemListComponent', () => {
 
   it('should call the navigate method on the Router with view mode list parameter as a parameter when setViewMode is called', () => {
     component.onLoadMore();
-    expect(paginationService.updateRouteWithUrl).toHaveBeenCalledWith(undefined, ['search'], Object({ sortField: 'dc.date.accessioned', sortDirection: 'DESC', page: 1 }));
+    expect(paginationService.updateRouteWithUrl).toHaveBeenCalledWith(
+      undefined,
+      ['search'],
+      Object({
+        sortField: 'dc.date.accessioned',
+        sortDirection: 'DESC',
+        page: 1,
+      }),
+    );
   });
 });
-
-

@@ -1,7 +1,4 @@
-import {
-  Component,
-  Inject,
-} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Context } from 'src/app/core/shared/context.model';
 
@@ -27,12 +24,16 @@ import { SearchResultListElementComponent } from '../../../search-result-list-el
  */
 @Component({
   selector: 'ds-claimed-approved-search-result-list-element',
-  styleUrls: ['../../../search-result-list-element/search-result-list-element.component.scss'],
+  styleUrls: [
+    '../../../search-result-list-element/search-result-list-element.component.scss',
+  ],
   templateUrl: './claimed-approved-search-result-list-element.component.html',
 })
 @listableObjectComponent(ClaimedApprovedTaskSearchResult, ViewMode.ListElement)
-export class ClaimedApprovedSearchResultListElementComponent extends SearchResultListElementComponent<ClaimedTaskSearchResult, ClaimedTask> {
-
+export class ClaimedApprovedSearchResultListElementComponent extends SearchResultListElementComponent<
+  ClaimedTaskSearchResult,
+  ClaimedTask
+> {
   /**
    * A boolean representing if to show submitter information
    */
@@ -62,15 +63,18 @@ export class ClaimedApprovedSearchResultListElementComponent extends SearchResul
    */
   ngOnInit() {
     super.ngOnInit();
-    this.linkService.resolveLinks(this.dso,
-      followLink('workflowitem',
+    this.linkService.resolveLinks(
+      this.dso,
+      followLink(
+        'workflowitem',
         { useCachedVersionIfAvailable: false },
         followLink('item'),
         followLink('submitter'),
       ),
       followLink('action'),
     );
-    this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
+    this.workflowitemRD$ = this.dso.workflowitem as Observable<
+      RemoteData<WorkflowItem>
+    >;
   }
-
 }

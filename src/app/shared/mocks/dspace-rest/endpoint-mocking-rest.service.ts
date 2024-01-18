@@ -1,15 +1,6 @@
-import {
-  HttpClient,
-  HttpHeaders,
-} from '@angular/common/http';
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Inject, Injectable } from '@angular/core';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
 import { RestRequestMethod } from '../../../core/data/rest-request-method';
@@ -19,10 +10,7 @@ import {
 } from '../../../core/dspace-rest/dspace-rest.service';
 import { RawRestResponse } from '../../../core/dspace-rest/raw-rest-response.model';
 import { isEmpty } from '../../empty.util';
-import {
-  MOCK_RESPONSE_MAP,
-  ResponseMapMock,
-} from './mocks/response-map.mock';
+import { MOCK_RESPONSE_MAP, ResponseMapMock } from './mocks/response-map.mock';
 
 /**
  * Service to access DSpace's REST API.
@@ -33,7 +21,6 @@ import {
  */
 @Injectable()
 export class EndpointMockingRestService extends DspaceRestService {
-
   constructor(
     @Inject(MOCK_RESPONSE_MAP) protected mockResponseMap: ResponseMapMock,
     protected http: HttpClient,
@@ -76,7 +63,13 @@ export class EndpointMockingRestService extends DspaceRestService {
    * @return Observable<RawRestResponse>
    *      An Observable<RawRestResponse> containing the response from the server
    */
-  request(method: RestRequestMethod, url: string, body?: any, options?: HttpOptions, isMultipart?: boolean): Observable<RawRestResponse> {
+  request(
+    method: RestRequestMethod,
+    url: string,
+    body?: any,
+    options?: HttpOptions,
+    isMultipart?: boolean,
+  ): Observable<RawRestResponse> {
     const mockData = this.getMockData(url);
     if (isEmpty(mockData)) {
       return super.request(method, url, body, options, isMultipart);

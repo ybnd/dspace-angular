@@ -14,11 +14,12 @@ export class ThemedItemStatusComponent extends ThemedComponent<ItemStatusCompone
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../themes/${themeName}/app/item-page/edit-item-page/item-status/item-status.component`);
+    return import(
+      `../../../../themes/${themeName}/app/item-page/edit-item-page/item-status/item-status.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./item-status.component');
   }
-
 }

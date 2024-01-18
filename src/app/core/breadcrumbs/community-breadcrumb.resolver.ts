@@ -14,7 +14,10 @@ import { DSOBreadcrumbsService } from './dso-breadcrumbs.service';
   providedIn: 'root',
 })
 export class CommunityBreadcrumbResolver extends DSOBreadcrumbResolver<Community> {
-  constructor(protected breadcrumbService: DSOBreadcrumbsService, protected dataService: CommunityDataService) {
+  constructor(
+    protected breadcrumbService: DSOBreadcrumbsService,
+    protected dataService: CommunityDataService,
+  ) {
     super(breadcrumbService, dataService);
   }
 

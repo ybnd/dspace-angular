@@ -1,15 +1,9 @@
-import {
-  autoserialize,
-  deserialize,
-} from 'cerialize';
+import { autoserialize, deserialize } from 'cerialize';
 import { Observable } from 'rxjs';
 
 import { isNotEmpty } from '../../shared/empty.util';
 import { ListableObject } from '../../shared/object-collection/shared/listable-object.model';
-import {
-  link,
-  typedObject,
-} from '../cache/builders/build-decorators';
+import { link, typedObject } from '../cache/builders/build-decorators';
 import { RemoteData } from '../data/remote-data';
 import { GenericConstructor } from '../shared/generic-constructor';
 import { HALLink } from '../shared/hal-link.model';
@@ -32,39 +26,39 @@ export class MetadataField extends ListableObject implements HALResource {
    */
   @excludeFromEquals
   @autoserialize
-    type: ResourceType;
+  type: ResourceType;
 
   /**
    * The identifier of this metadata field
    */
   @autoserialize
-    id: number;
+  id: number;
 
   /**
    * The element of this metadata field
    */
   @autoserialize
-    element: string;
+  element: string;
 
   /**
    * The qualifier of this metadata field
    */
   @autoserialize
-    qualifier: string;
+  qualifier: string;
 
   /**
    * The scope note of this metadata field
    */
   @autoserialize
-    scopeNote: string;
+  scopeNote: string;
 
   /**
    * The {@link HALLink}s for this MetadataField
    */
   @deserialize
-    _links: {
-    self: HALLink,
-    schema: HALLink
+  _links: {
+    self: HALLink;
+    schema: HALLink;
   };
 
   /**
@@ -72,7 +66,7 @@ export class MetadataField extends ListableObject implements HALResource {
    * Will be undefined unless the schema {@link HALLink} has been resolved.
    */
   @link(METADATA_SCHEMA)
-    schema?: Observable<RemoteData<MetadataSchema>>;
+  schema?: Observable<RemoteData<MetadataSchema>>;
 
   /**
    * Method to print this metadata field as a string without the schema

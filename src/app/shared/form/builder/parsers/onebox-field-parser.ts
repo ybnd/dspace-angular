@@ -23,8 +23,10 @@ import { FormFieldMetadataValueObject } from '../models/form-field-metadata-valu
 import { FieldParser } from './field-parser';
 
 export class OneboxFieldParser extends FieldParser {
-
-  public modelFactory(fieldValue?: FormFieldMetadataValueObject | any, label?: boolean): any {
+  public modelFactory(
+    fieldValue?: FormFieldMetadataValueObject | any,
+    label?: boolean,
+  ): any {
     if (this.configData.selectableMetadata.length > 1) {
       // Case Qualdrop Model
       const clsGroup = {
@@ -54,10 +56,14 @@ export class OneboxFieldParser extends FieldParser {
 
       const newId = this.configData.selectableMetadata[0].metadata
         .split('.')
-        .slice(0, this.configData.selectableMetadata[0].metadata.split('.').length - 1)
+        .slice(
+          0,
+          this.configData.selectableMetadata[0].metadata.split('.').length - 1,
+        )
         .join('.');
 
-      const inputSelectGroup: DsDynamicQualdropModelConfig = Object.create(null);
+      const inputSelectGroup: DsDynamicQualdropModelConfig =
+        Object.create(null);
       inputSelectGroup.id = newId.replace(/\./g, '_') + QUALDROP_GROUP_SUFFIX;
       inputSelectGroup.group = [];
       inputSelectGroup.legend = this.configData.label;
@@ -65,31 +71,52 @@ export class OneboxFieldParser extends FieldParser {
       this.setLabel(inputSelectGroup, label);
       inputSelectGroup.required = isNotEmpty(this.configData.mandatory);
 
-      const inputModelConfig: DsDynamicInputModelConfig = this.initModel(newId + QUALDROP_VALUE_SUFFIX, label, false, false);
+      const inputModelConfig: DsDynamicInputModelConfig = this.initModel(
+        newId + QUALDROP_VALUE_SUFFIX,
+        label,
+        false,
+        false,
+      );
       inputModelConfig.hint = null;
       this.setValues(inputModelConfig, fieldValue);
 
-      const selectModelConfig: DynamicSelectModelConfig<any> = this.initModel(newId + QUALDROP_METADATA_SUFFIX, label, false, false);
+      const selectModelConfig: DynamicSelectModelConfig<any> = this.initModel(
+        newId + QUALDROP_METADATA_SUFFIX,
+        label,
+        false,
+        false,
+      );
       selectModelConfig.hint = null;
       this.setOptions(selectModelConfig);
       if (isNotEmpty(fieldValue)) {
         selectModelConfig.value = fieldValue.metadata;
       }
       selectModelConfig.disabled = inputModelConfig.readOnly;
-      inputSelectGroup.readOnly = selectModelConfig.disabled && inputModelConfig.readOnly;
+      inputSelectGroup.readOnly =
+        selectModelConfig.disabled && inputModelConfig.readOnly;
 
-      inputSelectGroup.group.push(new DynamicSelectModel(selectModelConfig, clsSelect));
-      inputSelectGroup.group.push(new DsDynamicInputModel(inputModelConfig, clsInput));
+      inputSelectGroup.group.push(
+        new DynamicSelectModel(selectModelConfig, clsSelect),
+      );
+      inputSelectGroup.group.push(
+        new DsDynamicInputModel(inputModelConfig, clsInput),
+      );
 
       return new DynamicQualdropModel(inputSelectGroup, clsGroup);
     } else if (this.configData.selectableMetadata[0].controlledVocabulary) {
-      const oneboxModelConfig: DsDynamicOneboxModelConfig = this.initModel(null, label);
+      const oneboxModelConfig: DsDynamicOneboxModelConfig = this.initModel(
+        null,
+        label,
+      );
       this.setVocabularyOptions(oneboxModelConfig);
       this.setValues(oneboxModelConfig, fieldValue, true);
 
       return new DynamicOneboxModel(oneboxModelConfig);
     } else {
-      const inputModelConfig: DsDynamicInputModelConfig = this.initModel(null, label);
+      const inputModelConfig: DsDynamicInputModelConfig = this.initModel(
+        null,
+        label,
+      );
       this.setValues(inputModelConfig, fieldValue);
 
       return new DsDynamicInputModel(inputModelConfig);

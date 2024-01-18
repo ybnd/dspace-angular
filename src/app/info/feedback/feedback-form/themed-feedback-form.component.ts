@@ -12,17 +12,17 @@ import { FeedbackFormComponent } from './feedback-form.component';
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })
 export class ThemedFeedbackFormComponent extends ThemedComponent<FeedbackFormComponent> {
-
   protected getComponentName(): string {
     return 'FeedbackFormComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../themes/${themeName}/app/info/feedback/feedback-form/feedback-form.component`);
+    return import(
+      `../../../../themes/${themeName}/app/info/feedback/feedback-form/feedback-form.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./feedback-form.component');
   }
-
 }

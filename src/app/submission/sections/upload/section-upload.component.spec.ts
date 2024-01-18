@@ -1,9 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -67,7 +63,6 @@ function getMockCollectionDataService(): CollectionDataService {
 function getMockGroupEpersonService(): GroupDataService {
   return jasmine.createSpyObj('GroupDataService', {
     findById: jasmine.createSpy('findById'),
-
   });
 }
 
@@ -80,7 +75,6 @@ function getMockResourcePolicyService(): ResourcePolicyDataService {
 let sectionObject: SectionDataObject;
 
 describe('SubmissionSectionUploadComponent test suite', () => {
-
   let comp: SubmissionSectionUploadComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionSectionUploadComponent>;
@@ -101,7 +95,8 @@ describe('SubmissionSectionUploadComponent test suite', () => {
 
   beforeEach(waitForAsync(() => {
     sectionObject = {
-      config: 'https://dspace7.4science.it/or2018/api/config/submissionforms/upload',
+      config:
+        'https://dspace7.4science.it/or2018/api/config/submissionforms/upload',
       mandatory: true,
       data: {
         files: [],
@@ -114,7 +109,10 @@ describe('SubmissionSectionUploadComponent test suite', () => {
     };
     submissionId = mockSubmissionId;
     collectionId = mockSubmissionCollectionId;
-    submissionState = Object.assign({}, mockSubmissionState[mockSubmissionId]) as any;
+    submissionState = Object.assign(
+      {},
+      mockSubmissionState[mockSubmissionId],
+    ) as any;
     mockCollection = Object.assign(new Collection(), {
       name: 'Community 1-Collection 1',
       id: collectionId,
@@ -123,7 +121,8 @@ describe('SubmissionSectionUploadComponent test suite', () => {
           key: 'dc.title',
           language: 'en_US',
           value: 'Community 1-Collection 1',
-        }],
+        },
+      ],
       _links: {
         defaultAccessConditions: collectionId + '/defaultAccessConditions',
       },
@@ -150,41 +149,53 @@ describe('SubmissionSectionUploadComponent test suite', () => {
     uploadsConfigService = getMockSubmissionUploadsConfigService();
 
     prepareComp = () => {
-      submissionServiceStub.getSubmissionObject.and.returnValue(observableOf(submissionState));
+      submissionServiceStub.getSubmissionObject.and.returnValue(
+        observableOf(submissionState),
+      );
 
-      collectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(Object.assign(new Collection(), mockCollection, {
-        defaultAccessConditions: createSuccessfulRemoteDataObject$(mockDefaultAccessCondition),
-      })));
+      collectionDataService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Collection(), mockCollection, {
+            defaultAccessConditions: createSuccessfulRemoteDataObject$(
+              mockDefaultAccessCondition,
+            ),
+          }),
+        ),
+      );
 
-      resourcePolicyService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(mockDefaultAccessCondition));
+      resourcePolicyService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockDefaultAccessCondition),
+      );
 
-      uploadsConfigService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(
-        buildPaginatedList(new PageInfo(), [mockUploadConfigResponse as any])),
+      uploadsConfigService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          buildPaginatedList(new PageInfo(), [mockUploadConfigResponse as any]),
+        ),
       );
 
       groupService.findById.and.returnValues(
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
       );
 
       bitstreamService.getUploadedFileList.and.returnValue(observableOf([]));
     };
 
     TestBed.configureTestingModule({
-      imports: [
-        BrowserModule,
-        CommonModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        SubmissionSectionUploadComponent,
-        TestComponent,
-      ],
+      imports: [BrowserModule, CommonModule, TranslateModule.forRoot()],
+      declarations: [SubmissionSectionUploadComponent, TestComponent],
       providers: [
         { provide: CollectionDataService, useValue: collectionDataService },
         { provide: GroupDataService, useValue: groupService },
         { provide: ResourcePolicyDataService, useValue: resourcePolicyService },
-        { provide: SubmissionUploadsConfigDataService, useValue: uploadsConfigService },
+        {
+          provide: SubmissionUploadsConfigDataService,
+          useValue: uploadsConfigService,
+        },
         { provide: SectionsService, useClass: SectionsServiceStub },
         { provide: SubmissionService, useValue: submissionServiceStub },
         { provide: SectionUploadService, useValue: bitstreamService },
@@ -194,7 +205,9 @@ describe('SubmissionSectionUploadComponent test suite', () => {
         SubmissionSectionUploadComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then();
+    })
+      .compileComponents()
+      .then();
   }));
 
   describe('', () => {
@@ -208,7 +221,10 @@ describe('SubmissionSectionUploadComponent test suite', () => {
       const html = `
         <ds-submission-section-upload></ds-submission-section-upload>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -216,11 +232,12 @@ describe('SubmissionSectionUploadComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionSectionUploadComponent', inject([SubmissionSectionUploadComponent], (app: SubmissionSectionUploadComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create SubmissionSectionUploadComponent', inject(
+      [SubmissionSectionUploadComponent],
+      (app: SubmissionSectionUploadComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -238,20 +255,37 @@ describe('SubmissionSectionUploadComponent test suite', () => {
     });
 
     it('should init component properly', () => {
+      submissionServiceStub.getSubmissionObject.and.returnValue(
+        observableOf(submissionState),
+      );
 
-      submissionServiceStub.getSubmissionObject.and.returnValue(observableOf(submissionState));
+      collectionDataService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Collection(), mockCollection, {
+            defaultAccessConditions: createSuccessfulRemoteDataObject$(
+              mockDefaultAccessCondition,
+            ),
+          }),
+        ),
+      );
 
-      collectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(Object.assign(new Collection(), mockCollection, {
-        defaultAccessConditions: createSuccessfulRemoteDataObject$(mockDefaultAccessCondition),
-      })));
+      resourcePolicyService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockDefaultAccessCondition),
+      );
 
-      resourcePolicyService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(mockDefaultAccessCondition));
-
-      uploadsConfigService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(Object.assign(new SubmissionUploadsModel(), mockUploadConfigResponse)));
+      uploadsConfigService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new SubmissionUploadsModel(), mockUploadConfigResponse),
+        ),
+      );
 
       groupService.findById.and.returnValues(
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
       );
 
       bitstreamService.getUploadedFileList.and.returnValue(observableOf([]));
@@ -259,114 +293,182 @@ describe('SubmissionSectionUploadComponent test suite', () => {
       comp.onSectionInit();
 
       const expectedGroupsMap = new Map([
-        [mockUploadConfigResponse.accessConditionOptions[1].name, [mockGroup as any]],
-        [mockUploadConfigResponse.accessConditionOptions[2].name, [mockGroup as any]],
+        [
+          mockUploadConfigResponse.accessConditionOptions[1].name,
+          [mockGroup as any],
+        ],
+        [
+          mockUploadConfigResponse.accessConditionOptions[2].name,
+          [mockGroup as any],
+        ],
       ]);
 
       expect(comp.collectionId).toBe(collectionId);
       expect(comp.collectionName).toBe(mockCollection.name);
       expect(comp.availableAccessConditionOptions.length).toBe(4);
-      expect(comp.availableAccessConditionOptions).toEqual(mockUploadConfigResponse.accessConditionOptions as any);
+      expect(comp.availableAccessConditionOptions).toEqual(
+        mockUploadConfigResponse.accessConditionOptions as any,
+      );
       expect(comp.required$.getValue()).toBe(true);
       expect(compAsAny.subs.length).toBe(2);
       expect(compAsAny.fileList).toEqual([]);
       expect(compAsAny.fileIndexes).toEqual([]);
       expect(compAsAny.fileNames).toEqual([]);
-
     });
 
     it('should init file list properly', () => {
-
-      submissionServiceStub.getSubmissionObject.and.returnValue(observableOf(submissionState));
-
-      collectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(mockCollection));
-
-      resourcePolicyService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(mockDefaultAccessCondition));
-
-      uploadsConfigService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(Object.assign(new SubmissionUploadsModel(), mockUploadConfigResponse)));
-
-      groupService.findById.and.returnValues(
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
+      submissionServiceStub.getSubmissionObject.and.returnValue(
+        observableOf(submissionState),
       );
 
-      bitstreamService.getUploadedFileList.and.returnValue(observableOf(mockUploadFiles));
+      collectionDataService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockCollection),
+      );
+
+      resourcePolicyService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockDefaultAccessCondition),
+      );
+
+      uploadsConfigService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new SubmissionUploadsModel(), mockUploadConfigResponse),
+        ),
+      );
+
+      groupService.findById.and.returnValues(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
+      );
+
+      bitstreamService.getUploadedFileList.and.returnValue(
+        observableOf(mockUploadFiles),
+      );
 
       comp.onSectionInit();
 
       const expectedGroupsMap = new Map([
-        [mockUploadConfigResponse.accessConditionOptions[1].name, [mockGroup as any]],
-        [mockUploadConfigResponse.accessConditionOptions[2].name, [mockGroup as any]],
+        [
+          mockUploadConfigResponse.accessConditionOptions[1].name,
+          [mockGroup as any],
+        ],
+        [
+          mockUploadConfigResponse.accessConditionOptions[2].name,
+          [mockGroup as any],
+        ],
       ]);
 
       expect(comp.collectionId).toBe(collectionId);
       expect(comp.collectionName).toBe(mockCollection.name);
       expect(comp.availableAccessConditionOptions.length).toBe(4);
-      expect(comp.availableAccessConditionOptions).toEqual(mockUploadConfigResponse.accessConditionOptions as any);
+      expect(comp.availableAccessConditionOptions).toEqual(
+        mockUploadConfigResponse.accessConditionOptions as any,
+      );
       expect(comp.required$.getValue()).toBe(true);
       expect(compAsAny.subs.length).toBe(2);
       expect(compAsAny.fileList).toEqual(mockUploadFiles);
       expect(compAsAny.fileIndexes).toEqual(['123456-test-upload']);
       expect(compAsAny.fileNames).toEqual(['123456-test-upload.jpg']);
-
     });
 
     it('should properly read the section status when required is true', () => {
-      submissionServiceStub.getSubmissionObject.and.returnValue(observableOf(submissionState));
-
-      collectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(mockCollection));
-
-      resourcePolicyService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(mockDefaultAccessCondition));
-
-      uploadsConfigService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(Object.assign(new SubmissionUploadsModel(), mockUploadConfigResponse)));
-
-      groupService.findById.and.returnValues(
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
+      submissionServiceStub.getSubmissionObject.and.returnValue(
+        observableOf(submissionState),
       );
 
-      bitstreamService.getUploadedFileList.and.returnValue(cold('-a-b', {
-        a: [],
-        b: mockUploadFiles,
-      }));
+      collectionDataService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockCollection),
+      );
+
+      resourcePolicyService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockDefaultAccessCondition),
+      );
+
+      uploadsConfigService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new SubmissionUploadsModel(), mockUploadConfigResponse),
+        ),
+      );
+
+      groupService.findById.and.returnValues(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
+      );
+
+      bitstreamService.getUploadedFileList.and.returnValue(
+        cold('-a-b', {
+          a: [],
+          b: mockUploadFiles,
+        }),
+      );
 
       comp.onSectionInit();
 
       expect(comp.required$.getValue()).toBe(true);
 
-      expect(compAsAny.getSectionStatus()).toBeObservable(cold('-c-d', {
-        c: false,
-        d: true,
-      }));
+      expect(compAsAny.getSectionStatus()).toBeObservable(
+        cold('-c-d', {
+          c: false,
+          d: true,
+        }),
+      );
     });
 
     it('should properly read the section status when required is false', () => {
-      submissionServiceStub.getSubmissionObject.and.returnValue(observableOf(submissionState));
-
-      collectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(mockCollection));
-
-      resourcePolicyService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(mockDefaultAccessCondition));
-
-      uploadsConfigService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(Object.assign(new SubmissionUploadsModel(), mockUploadConfigResponseNotRequired)));
-
-      groupService.findById.and.returnValues(
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
-        createSuccessfulRemoteDataObject$(Object.assign(new Group(), mockGroup)),
+      submissionServiceStub.getSubmissionObject.and.returnValue(
+        observableOf(submissionState),
       );
 
-      bitstreamService.getUploadedFileList.and.returnValue(cold('-a-b', {
-        a: [],
-        b: mockUploadFiles,
-      }));
+      collectionDataService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockCollection),
+      );
+
+      resourcePolicyService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockDefaultAccessCondition),
+      );
+
+      uploadsConfigService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(
+            new SubmissionUploadsModel(),
+            mockUploadConfigResponseNotRequired,
+          ),
+        ),
+      );
+
+      groupService.findById.and.returnValues(
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Group(), mockGroup),
+        ),
+      );
+
+      bitstreamService.getUploadedFileList.and.returnValue(
+        cold('-a-b', {
+          a: [],
+          b: mockUploadFiles,
+        }),
+      );
 
       comp.onSectionInit();
 
       expect(comp.required$.getValue()).toBe(false);
 
-      expect(compAsAny.getSectionStatus()).toBeObservable(cold('-c-d', {
-        c: true,
-        d: true,
-      }));
+      expect(compAsAny.getSectionStatus()).toBeObservable(
+        cold('-c-d', {
+          c: true,
+          d: true,
+        }),
+      );
     });
   });
 });
@@ -376,6 +478,4 @@ describe('SubmissionSectionUploadComponent test suite', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

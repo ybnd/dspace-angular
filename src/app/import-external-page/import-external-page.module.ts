@@ -19,14 +19,10 @@ import { ImportExternalRoutingModule } from './import-external-routing.module';
     JournalEntitiesModule.withEntryComponents(),
     ResearchEntitiesModule.withEntryComponents(),
   ],
-  declarations: [
-    ImportExternalPageComponent,
-  ],
+  declarations: [ImportExternalPageComponent],
 })
 
 /**
  * This module handles all components that are necessary for the submission external import page
  */
-export class ImportExternalPageModule {
-
-}
+export class ImportExternalPageModule {}

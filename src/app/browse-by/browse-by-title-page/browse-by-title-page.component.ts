@@ -1,19 +1,9 @@
-import {
-  Component,
-  Inject,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Params,
-  Router,
-} from '@angular/router';
+import { Component, Inject } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { combineLatest as observableCombineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../../../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../../../config/app-config.interface';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { BrowseService } from '../../core/browse/browse.service';
 import {
@@ -32,48 +22,101 @@ import {
 
 @Component({
   selector: 'ds-browse-by-title-page',
-  styleUrls: ['../browse-by-metadata-page/browse-by-metadata-page.component.scss'],
-  templateUrl: '../browse-by-metadata-page/browse-by-metadata-page.component.html',
+  styleUrls: [
+    '../browse-by-metadata-page/browse-by-metadata-page.component.scss',
+  ],
+  templateUrl:
+    '../browse-by-metadata-page/browse-by-metadata-page.component.html',
 })
 /**
  * Component for browsing items by title (dc.title)
  */
 export class BrowseByTitlePageComponent extends BrowseByMetadataPageComponent {
-
-  public constructor(protected route: ActivatedRoute,
-                     protected browseService: BrowseService,
-                     protected dsoService: DSpaceObjectDataService,
-                     protected paginationService: PaginationService,
-                     protected router: Router,
-                     @Inject(APP_CONFIG) public appConfig: AppConfig,
-                     public dsoNameService: DSONameService,
+  public constructor(
+    protected route: ActivatedRoute,
+    protected browseService: BrowseService,
+    protected dsoService: DSpaceObjectDataService,
+    protected paginationService: PaginationService,
+    protected router: Router,
+    @Inject(APP_CONFIG) public appConfig: AppConfig,
+    public dsoNameService: DSONameService,
   ) {
-    super(route, browseService, dsoService, paginationService, router, appConfig, dsoNameService);
+    super(
+      route,
+      browseService,
+      dsoService,
+      paginationService,
+      router,
+      appConfig,
+      dsoNameService,
+    );
   }
 
   ngOnInit(): void {
     const sortConfig = new SortOptions('dc.title', SortDirection.ASC);
     // include the thumbnail configuration in browse search options
-    this.updatePage(getBrowseSearchOptions(this.defaultBrowseId, this.paginationConfig, sortConfig, this.fetchThumbnails));
-    this.currentPagination$ = this.paginationService.getCurrentPagination(this.paginationConfig.id, this.paginationConfig);
-    this.currentSort$ = this.paginationService.getCurrentSort(this.paginationConfig.id, sortConfig);
+    this.updatePage(
+      getBrowseSearchOptions(
+        this.defaultBrowseId,
+        this.paginationConfig,
+        sortConfig,
+        this.fetchThumbnails,
+      ),
+    );
+    this.currentPagination$ = this.paginationService.getCurrentPagination(
+      this.paginationConfig.id,
+      this.paginationConfig,
+    );
+    this.currentSort$ = this.paginationService.getCurrentSort(
+      this.paginationConfig.id,
+      sortConfig,
+    );
     this.subs.push(
-      observableCombineLatest([this.route.params, this.route.queryParams, this.currentPagination$, this.currentSort$]).pipe(
-        map(([routeParams, queryParams, currentPage, currentSort]) => {
-          return [Object.assign({}, routeParams, queryParams),currentPage,currentSort];
-        }),
-      ).subscribe(([params, currentPage, currentSort]: [Params, PaginationComponentOptions, SortOptions]) => {
-        this.startsWith = +params.startsWith || params.startsWith;
-        this.browseId = params.id || this.defaultBrowseId;
-        this.updatePageWithItems(browseParamsToOptions(params, currentPage, currentSort, this.browseId, this.fetchThumbnails), undefined, undefined);
-        this.updateParent(params.scope);
-        this.updateLogo();
-      }));
+      observableCombineLatest([
+        this.route.params,
+        this.route.queryParams,
+        this.currentPagination$,
+        this.currentSort$,
+      ])
+        .pipe(
+          map(([routeParams, queryParams, currentPage, currentSort]) => {
+            return [
+              Object.assign({}, routeParams, queryParams),
+              currentPage,
+              currentSort,
+            ];
+          }),
+        )
+        .subscribe(
+          ([params, currentPage, currentSort]: [
+            Params,
+            PaginationComponentOptions,
+            SortOptions,
+          ]) => {
+            this.startsWith = +params.startsWith || params.startsWith;
+            this.browseId = params.id || this.defaultBrowseId;
+            this.updatePageWithItems(
+              browseParamsToOptions(
+                params,
+                currentPage,
+                currentSort,
+                this.browseId,
+                this.fetchThumbnails,
+              ),
+              undefined,
+              undefined,
+            );
+            this.updateParent(params.scope);
+            this.updateLogo();
+          },
+        ),
+    );
     this.updateStartsWithTextOptions();
   }
 
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
-
 }

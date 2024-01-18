@@ -1,21 +1,11 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { AccessControlRoutingModule } from '../../access-control/access-control-routing.module';
@@ -58,14 +48,18 @@ import { createPaginatedList } from '../testing/utils.test';
 import { ThemeService } from '../theme-support/theme.service';
 import { BrowseByComponent } from './browse-by.component';
 
-@listableObjectComponent(BrowseEntry, ViewMode.ListElement, DEFAULT_CONTEXT, 'custom')
+@listableObjectComponent(
+  BrowseEntry,
+  ViewMode.ListElement,
+  DEFAULT_CONTEXT,
+  'custom',
+)
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
   selector: '',
   template: '',
 })
-class MockThemedBrowseEntryListElementComponent {
-}
+class MockThemedBrowseEntryListElementComponent {}
 
 describe('BrowseByComponent', () => {
   let comp: BrowseByComponent;
@@ -91,7 +85,9 @@ describe('BrowseByComponent', () => {
       ],
     }),
   ];
-  const mockItemsRD$ = createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), mockItems));
+  const mockItemsRD$ = createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), mockItems),
+  );
 
   const groupDataService = jasmine.createSpyObj('groupsDataService', {
     findListByHref: createSuccessfulRemoteDataObject$(createPaginatedList([])),
@@ -103,14 +99,17 @@ describe('BrowseByComponent', () => {
     addTag: '',
   });
 
-  const configurationDataService = jasmine.createSpyObj('configurationDataService', {
-    findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-      name: 'test',
-      values: [
-        'org.dspace.ctask.general.ProfileFormats = test',
-      ],
-    })),
-  });
+  const configurationDataService = jasmine.createSpyObj(
+    'configurationDataService',
+    {
+      findByPropertyName: createSuccessfulRemoteDataObject$(
+        Object.assign(new ConfigurationProperty(), {
+          name: 'test',
+          values: ['org.dspace.ctask.general.ProfileFormats = test'],
+        }),
+      ),
+    },
+  );
 
   const paginationConfig = Object.assign(new PaginationComponentOptions(), {
     id: 'test-pagination',
@@ -142,8 +141,14 @@ describe('BrowseByComponent', () => {
       ],
       declarations: [BrowseByComponent],
       providers: [
-        { provide: SearchConfigurationService, useValue: new SearchConfigurationServiceStub() },
-        { provide: ConfigurationDataService, useValue: configurationDataService },
+        {
+          provide: SearchConfigurationService,
+          useValue: new SearchConfigurationServiceStub(),
+        },
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationDataService,
+        },
         { provide: LinkHeadService, useValue: linkHeadService },
         { provide: GroupDataService, useValue: groupDataService },
         { provide: PaginationService, useValue: paginationService },
@@ -151,7 +156,10 @@ describe('BrowseByComponent', () => {
         { provide: ThemeService, useValue: themeService },
         { provide: RouteService, useValue: routeServiceStub },
         { provide: SelectableListService, useValue: {} },
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -164,21 +172,27 @@ describe('BrowseByComponent', () => {
   it('should display a loading message when objects is empty', () => {
     (comp as any).objects = undefined;
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('ds-themed-loading'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('ds-themed-loading')),
+    ).not.toBeNull();
   });
 
   it('should display results when objects is not empty', () => {
-    comp.objects$ = createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [
-      Object.assign(new BrowseEntry(), {
-        type: ITEM,
-        authority: 'authority key 1',
-        value: 'browse entry 1',
-        language: null,
-        count: 1,
-      }),
-    ]));
+    comp.objects$ = createSuccessfulRemoteDataObject$(
+      buildPaginatedList(new PageInfo(), [
+        Object.assign(new BrowseEntry(), {
+          type: ITEM,
+          authority: 'authority key 1',
+          value: 'browse entry 1',
+          language: null,
+          count: 1,
+        }),
+      ]),
+    );
     fixture.detectChanges();
-    expect(fixture.debugElement.query(By.css('ds-viewable-collection'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('ds-viewable-collection')),
+    ).not.toBeNull();
   });
 
   describe('when showPaginator is true and browseEntries are provided', () => {
@@ -203,9 +217,13 @@ describe('BrowseByComponent', () => {
       ];
 
       comp.showPaginator = true;
-      comp.objects$ = createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), browseEntries));
+      comp.objects$ = createSuccessfulRemoteDataObject$(
+        buildPaginatedList(new PageInfo(), browseEntries),
+      );
       comp.paginationConfig = paginationConfig;
-      comp.sortConfig = Object.assign(new SortOptions('dc.title', SortDirection.ASC));
+      comp.sortConfig = Object.assign(
+        new SortOptions('dc.title', SortDirection.ASC),
+      );
       // NOTE: do NOT trigger change detection until the theme is set, such that the theme can be picked up as well
     });
 
@@ -218,11 +236,17 @@ describe('BrowseByComponent', () => {
 
       it('should use the base component to render browse entries', () => {
         waitForAsync(() => {
-          const componentLoaders = fixture.debugElement.queryAll(By.directive(ListableObjectComponentLoaderComponent));
+          const componentLoaders = fixture.debugElement.queryAll(
+            By.directive(ListableObjectComponentLoaderComponent),
+          );
           expect(componentLoaders.length).toEqual(browseEntries.length);
           componentLoaders.forEach((componentLoader) => {
-            const browseEntry = componentLoader.query(By.css('ds-browse-entry-list-element'));
-            expect(browseEntry.componentInstance).toBeInstanceOf(BrowseEntryListElementComponent);
+            const browseEntry = componentLoader.query(
+              By.css('ds-browse-entry-list-element'),
+            );
+            expect(browseEntry.componentInstance).toBeInstanceOf(
+              BrowseEntryListElementComponent,
+            );
           });
         });
       });
@@ -237,11 +261,17 @@ describe('BrowseByComponent', () => {
 
       it('should use the themed component to render browse entries', () => {
         waitForAsync(() => {
-          const componentLoaders = fixture.debugElement.queryAll(By.directive(ListableObjectComponentLoaderComponent));
+          const componentLoaders = fixture.debugElement.queryAll(
+            By.directive(ListableObjectComponentLoaderComponent),
+          );
           expect(componentLoaders.length).toEqual(browseEntries.length);
           componentLoaders.forEach((componentLoader) => {
-            const browseEntry = componentLoader.query(By.css('ds-browse-entry-list-element'));
-            expect(browseEntry.componentInstance).toBeInstanceOf(MockThemedBrowseEntryListElementComponent);
+            const browseEntry = componentLoader.query(
+              By.css('ds-browse-entry-list-element'),
+            );
+            expect(browseEntry.componentInstance).toBeInstanceOf(
+              MockThemedBrowseEntryListElementComponent,
+            );
           });
         });
       });
@@ -254,15 +284,17 @@ describe('BrowseByComponent', () => {
       expect(button).toBeNull();
     });
     it('should be present when a startsWith or value is present ', () => {
-      comp.objects$ = createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [
-        Object.assign(new BrowseEntry(), {
-          type: ITEM,
-          authority: 'authority key 1',
-          value: 'browse entry 1',
-          language: null,
-          count: 1,
-        }),
-      ]));
+      comp.objects$ = createSuccessfulRemoteDataObject$(
+        buildPaginatedList(new PageInfo(), [
+          Object.assign(new BrowseEntry(), {
+            type: ITEM,
+            authority: 'authority key 1',
+            value: 'browse entry 1',
+            language: null,
+            count: 1,
+          }),
+        ]),
+      );
       comp.shouldDisplayResetButton$ = observableOf(true);
       fixture.detectChanges();
 
@@ -270,5 +302,4 @@ describe('BrowseByComponent', () => {
       expect(button).not.toBeNull();
     });
   });
-
 });

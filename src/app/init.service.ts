@@ -5,32 +5,15 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  APP_INITIALIZER,
-  Inject,
-  Provider,
-  Type,
-} from '@angular/core';
-import {
-  makeStateKey,
-  TransferState,
-} from '@angular/platform-browser';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { APP_INITIALIZER, Inject, Provider, Type } from '@angular/core';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { select, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import isEqual from 'lodash/isEqual';
 import { Observable } from 'rxjs';
-import {
-  distinctUntilChanged,
-  find,
-} from 'rxjs/operators';
+import { distinctUntilChanged, find } from 'rxjs/operators';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../config/app-config.interface';
 import { environment } from '../environments/environment';
 import { AppState } from './app.reducer';
 import { BreadcrumbsService } from './breadcrumbs/breadcrumbs.service';
@@ -71,9 +54,7 @@ export abstract class InitService {
     protected breadcrumbsService: BreadcrumbsService,
     protected themeService: ThemeService,
     protected menuService: MenuService,
-
-  ) {
-  }
+  ) {}
 
   /**
    * The initialization providers to use in `*AppModule`
@@ -100,12 +81,12 @@ export abstract class InitService {
           this.resolveAppConfig(transferState);
           return environment;
         },
-        deps: [ TransferState ],
+        deps: [TransferState],
       },
       {
         provide: APP_INITIALIZER,
         useFactory: (initService: InitService) => initService.init(),
-        deps: [ InitService ],
+        deps: [InitService],
         multi: true,
       },
     ];
@@ -120,9 +101,7 @@ export abstract class InitService {
    * In this case that means that we must transfer the configuration from the SSR state during pre-initialization.
    * @protected
    */
-  protected static resolveAppConfig(
-    transferState: TransferState,
-  ): void {
+  protected static resolveAppConfig(transferState: TransferState): void {
     // overriden in subclasses if applicable
   }
 

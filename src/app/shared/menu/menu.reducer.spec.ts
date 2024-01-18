@@ -132,15 +132,8 @@ describe('menusReducer', () => {
           },
         },
         sectionToSubsectionIndex: {
-          access_control: [
-            'access_control_people',
-            'access_control_groups',
-          ],
-          new: [
-            'new_collection',
-            'new_item',
-            'new_community',
-          ],
+          access_control: ['access_control_people', 'access_control_groups'],
+          new: ['new_collection', 'new_item', 'new_community'],
         },
       },
     };
@@ -327,7 +320,6 @@ describe('menusReducer', () => {
     const action = new ReinitMenuAction();
     const menusState = menusReducer(state, action);
     expect(menusState).toEqual(initialMenusState);
-
   });
 
   it('should set add a new section for the correct menu in response to the ADD_SECTION action', () => {
@@ -341,14 +333,18 @@ describe('menusReducer', () => {
     const state = dummyState;
     const action = new AddMenuSectionAction(menuID, visibleSection1);
     const newState = menusReducer(state, action);
-    expect(Object.values(newState[menuID].sections)[0]).toEqual(visibleSection1);
+    expect(Object.values(newState[menuID].sections)[0]).toEqual(
+      visibleSection1,
+    );
   });
 
   it('should add the new section to the sectionToSubsectionIndex when it has a parentID in response to the ADD_SECTION action', () => {
     const state = dummyState;
     const action = new AddMenuSectionAction(menuID, visibleSection1);
     const newState = menusReducer(state, action);
-    expect(newState[menuID].sectionToSubsectionIndex[visibleSection1.parentID]).toContain(visibleSection1.id);
+    expect(
+      newState[menuID].sectionToSubsectionIndex[visibleSection1.parentID],
+    ).toContain(visibleSection1.id);
   });
 
   it('should perform the ADD_SECTION action without affecting the previous state', () => {
@@ -377,7 +373,9 @@ describe('menusReducer', () => {
     const state = dummyState;
     const action = new RemoveMenuSectionAction(menuID, childID);
     const newState = menusReducer(state, action);
-    expect(newState[menuID].sectionToSubsectionIndex[parentID]).not.toContain(childID);
+    expect(newState[menuID].sectionToSubsectionIndex[parentID]).not.toContain(
+      childID,
+    );
   });
 
   it('should set active to true for the correct menu section in response to the ACTIVATE_SECTION action', () => {

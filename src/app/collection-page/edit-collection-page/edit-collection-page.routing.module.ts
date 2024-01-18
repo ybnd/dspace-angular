@@ -48,22 +48,34 @@ import { EditCollectionPageComponent } from './edit-collection-page.component';
           {
             path: 'roles',
             component: CollectionRolesComponent,
-            data: { title: 'collection.edit.tabs.roles.title', showBreadcrumbs: true },
+            data: {
+              title: 'collection.edit.tabs.roles.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'source',
             component: CollectionSourceComponent,
-            data: { title: 'collection.edit.tabs.source.title', showBreadcrumbs: true },
+            data: {
+              title: 'collection.edit.tabs.source.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'curate',
             component: CollectionCurateComponent,
-            data: { title: 'collection.edit.tabs.curate.title', showBreadcrumbs: true },
+            data: {
+              title: 'collection.edit.tabs.curate.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'access-control',
             component: CollectionAccessControlComponent,
-            data: { title: 'collection.edit.tabs.access-control.title', showBreadcrumbs: true },
+            data: {
+              title: 'collection.edit.tabs.access-control.title',
+              showBreadcrumbs: true,
+            },
           },
           /*          {
             path: 'authorizations',
@@ -93,24 +105,26 @@ import { EditCollectionPageComponent } from './edit-collection-page.component';
               {
                 path: '',
                 component: CollectionAuthorizationsComponent,
-                data: { title: 'collection.edit.tabs.authorizations.title', showBreadcrumbs: true },
+                data: {
+                  title: 'collection.edit.tabs.authorizations.title',
+                  showBreadcrumbs: true,
+                },
               },
             ],
           },
           {
             path: 'mapper',
             component: CollectionItemMapperComponent,
-            data: { title: 'collection.edit.tabs.item-mapper.title', hideReturnButton: true, showBreadcrumbs: true },
+            data: {
+              title: 'collection.edit.tabs.item-mapper.title',
+              hideReturnButton: true,
+              showBreadcrumbs: true,
+            },
           },
         ],
       },
     ]),
   ],
-  providers: [
-    ResourcePolicyResolver,
-    ResourcePolicyTargetResolver,
-  ],
+  providers: [ResourcePolicyResolver, ResourcePolicyTargetResolver],
 })
-export class EditCollectionPageRoutingModule {
-
-}
+export class EditCollectionPageRoutingModule {}

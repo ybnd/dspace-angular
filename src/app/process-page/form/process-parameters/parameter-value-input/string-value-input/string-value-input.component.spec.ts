@@ -7,10 +7,7 @@ import {
 } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderMock } from '../../../../../shared/mocks/translate-loader.mock';
 import { StringValueInputComponent } from './string-value-input.component';
@@ -28,12 +25,11 @@ describe('StringValueInputComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
-      declarations: [StringValueInputComponent],
-      providers: [
+        }),
       ],
-    })
-      .compileComponents();
+      declarations: [StringValueInputComponent],
+      providers: [],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -47,7 +43,9 @@ describe('StringValueInputComponent', () => {
   });
 
   it('should not show a validation error if the input field was left untouched but left empty', () => {
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error'),
+    );
     expect(validationError).toBeFalsy();
   });
 
@@ -61,7 +59,9 @@ describe('StringValueInputComponent', () => {
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error'),
+    );
     expect(validationError).toBeTruthy();
   }));
 
@@ -75,7 +75,9 @@ describe('StringValueInputComponent', () => {
 
     fixture.detectChanges();
 
-    const validationError = fixture.debugElement.query(By.css('.validation-error'));
+    const validationError = fixture.debugElement.query(
+      By.css('.validation-error'),
+    );
     expect(validationError).toBeFalsy();
   }));
 });

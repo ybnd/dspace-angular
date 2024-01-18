@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Context } from 'src/app/core/shared/context.model';
 
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';

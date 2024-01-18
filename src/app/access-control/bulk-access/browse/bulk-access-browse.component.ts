@@ -1,17 +1,6 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  Subscription,
-} from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-} from 'rxjs/operators';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 
 import {
   buildPaginatedList,
@@ -40,7 +29,6 @@ import { createSuccessfulRemoteDataObject } from '../../../shared/remote-data.ut
   ],
 })
 export class BulkAccessBrowseComponent implements OnInit, OnDestroy {
-
   /**
    * The selection list id
    */
@@ -54,16 +42,20 @@ export class BulkAccessBrowseComponent implements OnInit, OnDestroy {
   /**
    * The list of the objects already selected
    */
-  objectsSelected$: BehaviorSubject<RemoteData<PaginatedList<ListableObject>>> = new BehaviorSubject<RemoteData<PaginatedList<ListableObject>>>(null);
+  objectsSelected$: BehaviorSubject<RemoteData<PaginatedList<ListableObject>>> =
+    new BehaviorSubject<RemoteData<PaginatedList<ListableObject>>>(null);
 
   /**
    * The pagination options object used for the list of selected elements
    */
-  paginationOptions$: BehaviorSubject<PaginationComponentOptions> = new BehaviorSubject<PaginationComponentOptions>(Object.assign(new PaginationComponentOptions(), {
-    id: 'bas',
-    pageSize: 5,
-    currentPage: 1,
-  }));
+  paginationOptions$: BehaviorSubject<PaginationComponentOptions> =
+    new BehaviorSubject<PaginationComponentOptions>(
+      Object.assign(new PaginationComponentOptions(), {
+        id: 'bas',
+        pageSize: 5,
+        currentPage: 1,
+      }),
+    );
 
   /**
    * Array to track all subscriptions and unsubscribe them onDestroy
@@ -76,25 +68,41 @@ export class BulkAccessBrowseComponent implements OnInit, OnDestroy {
    * Subscribe to selectable list updates
    */
   ngOnInit(): void {
-
     this.subs.push(
-      this.selectableListService.getSelectableList(this.listId).pipe(
-        distinctUntilChanged(),
-        map((list: SelectableListState) => this.generatePaginatedListBySelectedElements(list)),
-      ).subscribe(this.objectsSelected$),
+      this.selectableListService
+        .getSelectableList(this.listId)
+        .pipe(
+          distinctUntilChanged(),
+          map((list: SelectableListState) =>
+            this.generatePaginatedListBySelectedElements(list),
+          ),
+        )
+        .subscribe(this.objectsSelected$),
     );
   }
 
   pageNext() {
-    this.paginationOptions$.next(Object.assign(new PaginationComponentOptions(), this.paginationOptions$.value, {
-      currentPage: this.paginationOptions$.value.currentPage + 1,
-    }));
+    this.paginationOptions$.next(
+      Object.assign(
+        new PaginationComponentOptions(),
+        this.paginationOptions$.value,
+        {
+          currentPage: this.paginationOptions$.value.currentPage + 1,
+        },
+      ),
+    );
   }
 
   pagePrev() {
-    this.paginationOptions$.next(Object.assign(new PaginationComponentOptions(), this.paginationOptions$.value, {
-      currentPage: this.paginationOptions$.value.currentPage - 1,
-    }));
+    this.paginationOptions$.next(
+      Object.assign(
+        new PaginationComponentOptions(),
+        this.paginationOptions$.value,
+        {
+          currentPage: this.paginationOptions$.value.currentPage - 1,
+        },
+      ),
+    );
   }
 
   private calculatePageCount(pageSize, totalCount = 0) {
@@ -107,20 +115,33 @@ export class BulkAccessBrowseComponent implements OnInit, OnDestroy {
    * @param list
    * @private
    */
-  private generatePaginatedListBySelectedElements(list: SelectableListState): RemoteData<PaginatedList<ListableObject>> {
+  private generatePaginatedListBySelectedElements(
+    list: SelectableListState,
+  ): RemoteData<PaginatedList<ListableObject>> {
     const pageInfo = new PageInfo({
       elementsPerPage: this.paginationOptions$.value.pageSize,
       totalElements: list?.selection.length,
-      totalPages: this.calculatePageCount(this.paginationOptions$.value.pageSize, list?.selection.length),
+      totalPages: this.calculatePageCount(
+        this.paginationOptions$.value.pageSize,
+        list?.selection.length,
+      ),
       currentPage: this.paginationOptions$.value.currentPage,
     });
     if (pageInfo.currentPage > pageInfo.totalPages) {
       pageInfo.currentPage = pageInfo.totalPages;
-      this.paginationOptions$.next(Object.assign(new PaginationComponentOptions(), this.paginationOptions$.value, {
-        currentPage: pageInfo.currentPage,
-      }));
+      this.paginationOptions$.next(
+        Object.assign(
+          new PaginationComponentOptions(),
+          this.paginationOptions$.value,
+          {
+            currentPage: pageInfo.currentPage,
+          },
+        ),
+      );
     }
-    return createSuccessfulRemoteDataObject(buildPaginatedList(pageInfo, list?.selection || []));
+    return createSuccessfulRemoteDataObject(
+      buildPaginatedList(pageInfo, list?.selection || []),
+    );
   }
 
   ngOnDestroy(): void {

@@ -7,25 +7,13 @@ import {
   PLATFORM_ID,
 } from '@angular/core';
 import { zonedTimeToUtc } from 'date-fns-tz';
-import {
-  BehaviorSubject,
-  EMPTY,
-  interval,
-  Subscription,
-} from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { BehaviorSubject, EMPTY, interval, Subscription } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 import { PaginatedList } from '../../core/data/paginated-list.model';
 import { SystemWideAlertDataService } from '../../core/data/system-wide-alert-data.service';
 import { getAllSucceededRemoteDataPayload } from '../../core/shared/operators';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { SystemWideAlert } from '../system-wide-alert.model';
 
@@ -38,7 +26,6 @@ import { SystemWideAlert } from '../system-wide-alert.model';
   templateUrl: './system-wide-alert-banner.component.html',
 })
 export class SystemWideAlertBannerComponent implements OnInit, OnDestroy {
-
   /**
    * BehaviorSubject that keeps track of the currently configured system-wide alert
    */
@@ -68,43 +55,50 @@ export class SystemWideAlertBannerComponent implements OnInit, OnDestroy {
     @Inject(PLATFORM_ID) protected platformId: any,
     protected systemWideAlertDataService: SystemWideAlertDataService,
     protected notificationsService: NotificationsService,
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
-    this.subscriptions.push(this.systemWideAlertDataService.searchBy('active').pipe(
-      getAllSucceededRemoteDataPayload(),
-      map((payload: PaginatedList<SystemWideAlert>) => payload.page),
-      filter((page) => isNotEmpty(page)),
-      map((page) => page[0]),
-    ).subscribe((alert: SystemWideAlert) => {
-      this.systemWideAlert$.next(alert);
-    }));
+    this.subscriptions.push(
+      this.systemWideAlertDataService
+        .searchBy('active')
+        .pipe(
+          getAllSucceededRemoteDataPayload(),
+          map((payload: PaginatedList<SystemWideAlert>) => payload.page),
+          filter((page) => isNotEmpty(page)),
+          map((page) => page[0]),
+        )
+        .subscribe((alert: SystemWideAlert) => {
+          this.systemWideAlert$.next(alert);
+        }),
+    );
 
-    this.subscriptions.push(this.systemWideAlert$.pipe(
-      switchMap((alert: SystemWideAlert) => {
-        if (hasValue(alert) && hasValue(alert.countdownTo)) {
-          const date = zonedTimeToUtc(alert.countdownTo, 'UTC');
-          const timeDifference = date.getTime() - new Date().getTime();
-          if (timeDifference > 0) {
-            this.allocateTimeUnits(timeDifference);
-            if (isPlatformBrowser(this.platformId)) {
-              return interval(1000);
-            } else {
-              return EMPTY;
+    this.subscriptions.push(
+      this.systemWideAlert$
+        .pipe(
+          switchMap((alert: SystemWideAlert) => {
+            if (hasValue(alert) && hasValue(alert.countdownTo)) {
+              const date = zonedTimeToUtc(alert.countdownTo, 'UTC');
+              const timeDifference = date.getTime() - new Date().getTime();
+              if (timeDifference > 0) {
+                this.allocateTimeUnits(timeDifference);
+                if (isPlatformBrowser(this.platformId)) {
+                  return interval(1000);
+                } else {
+                  return EMPTY;
+                }
+              }
             }
-
-          }
-        }
-        // Reset the countDown times to 0 and return EMPTY to prevent unnecessary countdown calculations
-        this.countDownDays.next(0);
-        this.countDownHours.next(0);
-        this.countDownMinutes.next(0);
-        return EMPTY;
-      }),
-    ).subscribe(() => {
-      this.setTimeDifference(this.systemWideAlert$.getValue().countdownTo);
-    }));
+            // Reset the countDown times to 0 and return EMPTY to prevent unnecessary countdown calculations
+            this.countDownDays.next(0);
+            this.countDownHours.next(0);
+            this.countDownMinutes.next(0);
+            return EMPTY;
+          }),
+        )
+        .subscribe(() => {
+          this.setTimeDifference(this.systemWideAlert$.getValue().countdownTo);
+        }),
+    );
   }
 
   /**
@@ -123,9 +117,9 @@ export class SystemWideAlertBannerComponent implements OnInit, OnDestroy {
    * @param timeDifference  - The time difference to calculate and push the time units for
    */
   private allocateTimeUnits(timeDifference) {
-    const minutes = Math.floor((timeDifference) / (1000 * 60) % 60);
-    const hours = Math.floor((timeDifference) / (1000 * 60 * 60) % 24);
-    const days = Math.floor((timeDifference) / (1000 * 60 * 60 * 24));
+    const minutes = Math.floor((timeDifference / (1000 * 60)) % 60);
+    const hours = Math.floor((timeDifference / (1000 * 60 * 60)) % 24);
+    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
 
     this.countDownMinutes.next(minutes);
     this.countDownHours.next(hours);

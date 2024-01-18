@@ -38,8 +38,10 @@ import { ThemedCommunityPageComponent } from './themed-community-page.component'
         children: [
           {
             path: COMMUNITY_EDIT_PATH,
-            loadChildren: () => import('./edit-community-page/edit-community-page.module')
-              .then((m) => m.EditCommunityPageModule),
+            loadChildren: () =>
+              import('./edit-community-page/edit-community-page.module').then(
+                (m) => m.EditCommunityPageModule,
+              ),
             canActivate: [CommunityPageAdministratorGuard],
           },
           {
@@ -56,17 +58,19 @@ import { ThemedCommunityPageComponent } from './themed-community-page.component'
         ],
         data: {
           menu: {
-            public: [{
-              id: 'statistics_community_:id',
-              active: true,
-              visible: true,
-              index: 2,
-              model: {
-                type: MenuItemType.LINK,
-                text: 'menu.section.statistics',
-                link: 'statistics/communities/:id/',
-              } as LinkMenuItemModel,
-            }],
+            public: [
+              {
+                id: 'statistics_community_:id',
+                active: true,
+                visible: true,
+                index: 2,
+                model: {
+                  type: MenuItemType.LINK,
+                  text: 'menu.section.statistics',
+                  link: 'statistics/communities/:id/',
+                } as LinkMenuItemModel,
+              },
+            ],
           },
         },
       },
@@ -81,6 +85,4 @@ import { ThemedCommunityPageComponent } from './themed-community-page.component'
     CommunityPageAdministratorGuard,
   ],
 })
-export class CommunityPageRoutingModule {
-
-}
+export class CommunityPageRoutingModule {}

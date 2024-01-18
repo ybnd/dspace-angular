@@ -1,7 +1,4 @@
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import {
   buildPaginatedList,
@@ -15,10 +12,17 @@ import { VocabularyOptions } from '../../core/submission/vocabularies/models/voc
 import { createSuccessfulRemoteDataObject$ } from '../remote-data.utils';
 
 export class VocabularyServiceStub {
-
   private _payload = [
-    Object.assign(new VocabularyEntry(), { authority: 1, display: 'one', value: 1 }),
-    Object.assign(new VocabularyEntry(), { authority: 2, display: 'two', value: 2 }),
+    Object.assign(new VocabularyEntry(), {
+      authority: 1,
+      display: 'one',
+      value: 1,
+    }),
+    Object.assign(new VocabularyEntry(), {
+      authority: 2,
+      display: 'two',
+      value: 2,
+    }),
   ];
 
   setNewPayload(payload) {
@@ -29,20 +33,50 @@ export class VocabularyServiceStub {
     return this._payload;
   }
 
-  getVocabularyEntries(vocabularyOptions: VocabularyOptions, pageInfo: PageInfo): Observable<RemoteData<PaginatedList<VocabularyEntry>>> {
-    return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), this._payload));
+  getVocabularyEntries(
+    vocabularyOptions: VocabularyOptions,
+    pageInfo: PageInfo,
+  ): Observable<RemoteData<PaginatedList<VocabularyEntry>>> {
+    return createSuccessfulRemoteDataObject$(
+      buildPaginatedList(new PageInfo(), this._payload),
+    );
   }
 
-  getVocabularyEntriesByValue(value: string, exact: boolean, vocabularyOptions: VocabularyOptions, pageInfo: PageInfo): Observable<RemoteData<PaginatedList<VocabularyEntry>>> {
-    return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), this._payload));
+  getVocabularyEntriesByValue(
+    value: string,
+    exact: boolean,
+    vocabularyOptions: VocabularyOptions,
+    pageInfo: PageInfo,
+  ): Observable<RemoteData<PaginatedList<VocabularyEntry>>> {
+    return createSuccessfulRemoteDataObject$(
+      buildPaginatedList(new PageInfo(), this._payload),
+    );
   }
 
-  getVocabularyEntryByValue(value: string, vocabularyOptions: VocabularyOptions): Observable<VocabularyEntry> {
-    return observableOf(Object.assign(new VocabularyEntry(), { authority: 1, display: 'one', value: 1 }));
+  getVocabularyEntryByValue(
+    value: string,
+    vocabularyOptions: VocabularyOptions,
+  ): Observable<VocabularyEntry> {
+    return observableOf(
+      Object.assign(new VocabularyEntry(), {
+        authority: 1,
+        display: 'one',
+        value: 1,
+      }),
+    );
   }
 
-  getVocabularyEntryByID(id: string, vocabularyOptions: VocabularyOptions): Observable<VocabularyEntry> {
-    return observableOf(Object.assign(new VocabularyEntry(), { authority: 1, display: 'one', value: 1 }));
+  getVocabularyEntryByID(
+    id: string,
+    vocabularyOptions: VocabularyOptions,
+  ): Observable<VocabularyEntry> {
+    return observableOf(
+      Object.assign(new VocabularyEntry(), {
+        authority: 1,
+        display: 'one',
+        value: 1,
+      }),
+    );
   }
 
   findVocabularyById(id: string): Observable<RemoteData<Vocabulary>> {

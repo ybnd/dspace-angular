@@ -30,6 +30,4 @@ import { ForgotPasswordRoutingModule } from './forgot-password-routing.module';
 /**
  * Module related to the Forgot Password components
  */
-export class ForgotPasswordModule {
-
-}
+export class ForgotPasswordModule {}

@@ -46,7 +46,10 @@ import {
               dso: ItemFromWorkflowResolver,
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'workflow-item.view.title', breadcrumbKey: 'workflow-item.view' },
+            data: {
+              title: 'workflow-item.view.title',
+              breadcrumbKey: 'workflow-item.view',
+            },
           },
           {
             canActivate: [AuthenticatedGuard],
@@ -55,7 +58,10 @@ import {
             resolve: {
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'workflow-item.delete.title', breadcrumbKey: 'workflow-item.edit' },
+            data: {
+              title: 'workflow-item.delete.title',
+              breadcrumbKey: 'workflow-item.edit',
+            },
           },
           {
             canActivate: [AuthenticatedGuard],
@@ -64,7 +70,10 @@ import {
             resolve: {
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'workflow-item.send-back.title', breadcrumbKey: 'workflow-item.edit' },
+            data: {
+              title: 'workflow-item.send-back.title',
+              breadcrumbKey: 'workflow-item.edit',
+            },
           },
           {
             canActivate: [AuthenticatedGuard],
@@ -73,16 +82,18 @@ import {
             resolve: {
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'workflow-item.advanced.title', breadcrumbKey: 'workflow-item.edit' },
+            data: {
+              title: 'workflow-item.advanced.title',
+              breadcrumbKey: 'workflow-item.edit',
+            },
           },
         ],
-      }],
-    ),
+      },
+    ]),
   ],
   providers: [WorkflowItemPageResolver, ItemFromWorkflowResolver],
 })
 /**
  * This module defines the default component to load when navigating to the workflowitems edit page path.
  */
-export class WorkflowItemsEditPageRoutingModule {
-}
+export class WorkflowItemsEditPageRoutingModule {}

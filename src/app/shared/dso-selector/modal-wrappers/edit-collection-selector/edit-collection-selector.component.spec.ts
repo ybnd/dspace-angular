@@ -1,16 +1,6 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -28,10 +18,12 @@ describe('EditCollectionSelectorComponent', () => {
   const collection = new Collection();
   collection.uuid = '1234-1234-1234-1234';
   collection.metadata = {
-    'dc.title': [Object.assign(new MetadataValue(), {
-      value: 'Collection title',
-      language: undefined,
-    })],
+    'dc.title': [
+      Object.assign(new MetadataValue(), {
+        value: 'Collection title',
+        language: undefined,
+      }),
+    ],
   };
   const router = new RouterStub();
   const collectionRD = createSuccessfulRemoteDataObject(collection);
@@ -57,12 +49,12 @@ describe('EditCollectionSelectorComponent', () => {
           },
         },
         {
-          provide: Router, useValue: router,
+          provide: Router,
+          useValue: router,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -80,5 +72,4 @@ describe('EditCollectionSelectorComponent', () => {
     component.navigate(collection);
     expect(router.navigate).toHaveBeenCalledWith([editPath]);
   });
-
 });

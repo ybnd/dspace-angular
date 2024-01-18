@@ -1,7 +1,4 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -65,7 +62,7 @@ describe('IdleModalComponent', () => {
     it('should close the modal', () => {
       expect(modalStub.close).toHaveBeenCalled();
     });
-    it('response \'closed\' should emit true', () => {
+    it("response 'closed' should emit true", () => {
       expect(component.response.emit).toHaveBeenCalledWith(true);
     });
   });
@@ -93,7 +90,7 @@ describe('IdleModalComponent', () => {
     it('should close the modal', () => {
       expect(modalStub.close).toHaveBeenCalled();
     });
-    it('response \'closed\' should emit true', () => {
+    it("response 'closed' should emit true", () => {
       expect(component.response.emit).toHaveBeenCalledWith(true);
     });
   });
@@ -101,10 +98,13 @@ describe('IdleModalComponent', () => {
   describe('when the click method emits on extend session button', () => {
     beforeEach(fakeAsync(() => {
       spyOn(component, 'extendSessionPressed');
-      debugElement.query(By.css('button.confirm')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
-        },
-      });
+      debugElement
+        .query(By.css('button.confirm'))
+        .triggerEventHandler('click', {
+          preventDefault: () => {
+            /**/
+          },
+        });
       tick();
       fixture.detectChanges();
     }));
@@ -117,7 +117,8 @@ describe('IdleModalComponent', () => {
     beforeEach(fakeAsync(() => {
       spyOn(component, 'logOutPressed');
       debugElement.query(By.css('button.cancel')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
       tick();
@@ -132,7 +133,8 @@ describe('IdleModalComponent', () => {
     beforeEach(fakeAsync(() => {
       spyOn(component, 'closePressed');
       debugElement.query(By.css('.close')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
       tick();

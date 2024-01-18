@@ -11,7 +11,8 @@ import { UsageReportDataService } from './usage-report-data.service';
 
 describe('UsageReportDataService', () => {
   describe('composition', () => {
-    const initService = () => new UsageReportDataService(null, null, null, null);
+    const initService = () =>
+      new UsageReportDataService(null, null, null, null);
     testSearchDataImplementation(initService);
   });
 });

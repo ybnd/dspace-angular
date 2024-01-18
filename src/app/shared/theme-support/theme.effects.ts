@@ -31,8 +31,5 @@ export class ThemeEffects {
     ),
   );
 
-  constructor(
-    private actions$: Actions,
-  ) {
-  }
+  constructor(private actions$: Actions) {}
 }

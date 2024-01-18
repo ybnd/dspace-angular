@@ -50,10 +50,12 @@ describe('EndUserAgreementService', () => {
     });
 
     it('hasCurrentUserOrCookieAcceptedAgreement should return true', (done) => {
-      service.hasCurrentUserOrCookieAcceptedAgreement(false).subscribe((result) => {
-        expect(result).toEqual(true);
-        done();
-      });
+      service
+        .hasCurrentUserOrCookieAcceptedAgreement(false)
+        .subscribe((result) => {
+          expect(result).toEqual(true);
+          done();
+        });
     });
 
     it('isCookieAccepted should return true', () => {
@@ -66,35 +68,45 @@ describe('EndUserAgreementService', () => {
     });
   });
 
-  describe('when the cookie isn\'t set', () => {
+  describe("when the cookie isn't set", () => {
     describe('and the user is authenticated', () => {
       beforeEach(() => {
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(true));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(true),
+        );
       });
 
       describe('and the user contains agreement metadata', () => {
         beforeEach(() => {
-          (authService.getAuthenticatedUserFromStore as jasmine.Spy).and.returnValue(observableOf(userWithMetadata));
+          (
+            authService.getAuthenticatedUserFromStore as jasmine.Spy
+          ).and.returnValue(observableOf(userWithMetadata));
         });
 
         it('hasCurrentUserOrCookieAcceptedAgreement should return true', (done) => {
-          service.hasCurrentUserOrCookieAcceptedAgreement(false).subscribe((result) => {
-            expect(result).toEqual(true);
-            done();
-          });
+          service
+            .hasCurrentUserOrCookieAcceptedAgreement(false)
+            .subscribe((result) => {
+              expect(result).toEqual(true);
+              done();
+            });
         });
       });
 
-      describe('and the user doesn\'t contain agreement metadata', () => {
+      describe("and the user doesn't contain agreement metadata", () => {
         beforeEach(() => {
-          (authService.getAuthenticatedUserFromStore as jasmine.Spy).and.returnValue(observableOf(userWithoutMetadata));
+          (
+            authService.getAuthenticatedUserFromStore as jasmine.Spy
+          ).and.returnValue(observableOf(userWithoutMetadata));
         });
 
         it('hasCurrentUserOrCookieAcceptedAgreement should return false', (done) => {
-          service.hasCurrentUserOrCookieAcceptedAgreement(false).subscribe((result) => {
-            expect(result).toEqual(false);
-            done();
-          });
+          service
+            .hasCurrentUserOrCookieAcceptedAgreement(false)
+            .subscribe((result) => {
+              expect(result).toEqual(false);
+              done();
+            });
         });
       });
 
@@ -108,14 +120,18 @@ describe('EndUserAgreementService', () => {
 
     describe('and the user is not authenticated', () => {
       beforeEach(() => {
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(false));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(false),
+        );
       });
 
       it('hasCurrentUserOrCookieAcceptedAgreement should return false', (done) => {
-        service.hasCurrentUserOrCookieAcceptedAgreement(false).subscribe((result) => {
-          expect(result).toEqual(false);
-          done();
-        });
+        service
+          .hasCurrentUserOrCookieAcceptedAgreement(false)
+          .subscribe((result) => {
+            expect(result).toEqual(false);
+            done();
+          });
       });
 
       it('setUserAcceptedAgreement should set the cookie to true', (done) => {

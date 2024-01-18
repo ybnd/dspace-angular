@@ -17,7 +17,9 @@ export class ThemedDenyRequestCopyComponent extends ThemedComponent<DenyRequestC
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/request-copy/deny-request-copy/deny-request-copy.component`);
+    return import(
+      `../../../themes/${themeName}/app/request-copy/deny-request-copy/deny-request-copy.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

@@ -5,21 +5,12 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  NavigationExtras,
-  Router,
-} from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { SearchService } from '../core/shared/search/search.service';
 import { TranslateLoaderMock } from '../shared/mocks/translate-loader.mock';
@@ -50,16 +41,11 @@ describe('SearchNavbarComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
-      declarations: [
-        SearchNavbarComponent,
-        BrowserOnlyMockPipe,
+        }),
       ],
-      providers: [
-        { provide: SearchService, useValue: mockSearchService },
-      ],
-    })
-      .compileComponents();
+      declarations: [SearchNavbarComponent, BrowserOnlyMockPipe],
+      providers: [{ provide: SearchService, useValue: mockSearchService }],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -78,9 +64,12 @@ describe('SearchNavbarComponent', () => {
       spyOn(component, 'expand').and.callThrough();
       spyOn(component, 'onSubmit').and.callThrough();
       spyOn(router, 'navigate');
-      const searchIcon = fixture.debugElement.query(By.css('form .submit-icon'));
+      const searchIcon = fixture.debugElement.query(
+        By.css('form .submit-icon'),
+      );
       searchIcon.triggerEventHandler('click', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
       tick();
@@ -94,16 +83,22 @@ describe('SearchNavbarComponent', () => {
     describe('empty query', () => {
       describe('press submit button', () => {
         beforeEach(fakeAsync(() => {
-          const searchIcon = fixture.debugElement.query(By.css('form .submit-icon'));
+          const searchIcon = fixture.debugElement.query(
+            By.css('form .submit-icon'),
+          );
           searchIcon.triggerEventHandler('click', {
-            preventDefault: () => {/**/
+            preventDefault: () => {
+              /**/
             },
           });
           tick();
           fixture.detectChanges();
         }));
         it('to search page with empty query', () => {
-          const extras: NavigationExtras = { queryParams: { query: '' }, queryParamsHandling: 'merge' };
+          const extras: NavigationExtras = {
+            queryParams: { query: '' },
+            queryParamsHandling: 'merge',
+          };
           expect(component.onSubmit).toHaveBeenCalledWith({ query: '' });
           expect(router.navigate).toHaveBeenCalledWith(['search'], extras);
         });
@@ -122,19 +117,23 @@ describe('SearchNavbarComponent', () => {
       });
       describe('press submit button', () => {
         beforeEach(fakeAsync(() => {
-          const searchIcon = fixture.debugElement.query(By.css('form .submit-icon'));
+          const searchIcon = fixture.debugElement.query(
+            By.css('form .submit-icon'),
+          );
           searchIcon.triggerEventHandler('click', null);
           tick();
           fixture.detectChanges();
         }));
         it('to search page with query', async () => {
-          const extras: NavigationExtras = { queryParams: { query: 'test' }, queryParamsHandling: 'merge' };
+          const extras: NavigationExtras = {
+            queryParams: { query: 'test' },
+            queryParamsHandling: 'merge',
+          };
           expect(component.onSubmit).toHaveBeenCalledWith({ query: 'test' });
 
           expect(router.navigate).toHaveBeenCalledWith(['search'], extras);
         });
       });
     });
-
   });
 });

@@ -1,9 +1,4 @@
-import {
-  Component,
-  Inject,
-  Injector,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { isEmpty } from '../../../shared/empty.util';
@@ -21,11 +16,12 @@ import { MenuSectionComponent } from '../../../shared/menu/menu-section/menu-sec
   selector: 'ds-admin-sidebar-section',
   templateUrl: './admin-sidebar-section.component.html',
   styleUrls: ['./admin-sidebar-section.component.scss'],
-
 })
 @rendersSectionForMenu(MenuID.ADMIN, false)
-export class AdminSidebarSectionComponent extends MenuSectionComponent implements OnInit {
-
+export class AdminSidebarSectionComponent
+  extends MenuSectionComponent
+  implements OnInit
+{
   /**
    * This section resides in the Admin Sidebar
    */

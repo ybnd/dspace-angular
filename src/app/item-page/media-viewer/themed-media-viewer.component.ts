@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { MediaViewerConfig } from '../../../config/media-viewer-config.interface';
 import { Item } from '../../core/shared/item.model';
@@ -17,7 +14,6 @@ import { MediaViewerComponent } from './media-viewer.component';
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedMediaViewerComponent extends ThemedComponent<MediaViewerComponent> {
-
   @Input() item: Item;
   @Input() mediaOptions: MediaViewerConfig;
 
@@ -31,11 +27,12 @@ export class ThemedMediaViewerComponent extends ThemedComponent<MediaViewerCompo
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/item-page/media-viewer/media-viewer.component`);
+    return import(
+      `../../../themes/${themeName}/app/item-page/media-viewer/media-viewer.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./media-viewer.component');
   }
-
 }

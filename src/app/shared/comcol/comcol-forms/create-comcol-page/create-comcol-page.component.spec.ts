@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -47,40 +43,51 @@ describe('CreateComColPageComponent', () => {
   function initializeVars() {
     community = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66b9300d347',
-      metadata: [{
-        key: 'dc.title',
-        value: 'test community',
-      }],
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'test community',
+        },
+      ],
       _links: {},
     });
 
     parentCommunity = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66as300d399',
       id: 'a20da287-e174-466a-9926-f66as300d399',
-      metadata: [{
-        key: 'dc.title',
-        value: 'parent community',
-      }],
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'parent community',
+        },
+      ],
       _links: {},
     });
 
     newCommunity = Object.assign(new Community(), {
       uuid: '1ff59938-a69a-4e62-b9a4-718569c55d48',
-      metadata: [{
-        key: 'dc.title',
-        value: 'new community',
-      }],
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'new community',
+        },
+      ],
       _links: {},
     });
 
     communityDataServiceStub = {
-      findById: (uuid) => createSuccessfulRemoteDataObject$(Object.assign(new Community(), {
-        uuid: uuid,
-        metadata: [{
-          key: 'dc.title',
-          value: community.name,
-        }],
-      })),
+      findById: (uuid) =>
+        createSuccessfulRemoteDataObject$(
+          Object.assign(new Community(), {
+            uuid: uuid,
+            metadata: [
+              {
+                key: 'dc.title',
+                value: community.name,
+              },
+            ],
+          }),
+        ),
       create: (com, uuid?) => createSuccessfulRemoteDataObject$(newCommunity),
       getLogoEndpoint: () => observableOf(logoEndpoint),
       findByHref: () => null,
@@ -99,19 +106,26 @@ describe('CreateComColPageComponent', () => {
     requestServiceStub = jasmine.createSpyObj('RequestService', {
       removeByHrefSubstring: jasmine.createSpy('removeByHrefSubstring'),
     });
-
   }
 
   beforeEach(waitForAsync(() => {
     initializeVars();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       providers: [
         { provide: ComColDataService, useValue: communityDataServiceStub },
         { provide: CommunityDataService, useValue: communityDataServiceStub },
         { provide: RouteService, useValue: routeServiceStub },
         { provide: Router, useValue: routerStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: RequestService, useValue: requestServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -137,10 +151,12 @@ describe('CreateComColPageComponent', () => {
       beforeEach(() => {
         data = {
           dso: Object.assign(new Community(), {
-            metadata: [{
-              key: 'dc.title',
-              value: 'test',
-            }],
+            metadata: [
+              {
+                key: 'dc.title',
+                value: 'test',
+              },
+            ],
           }),
           _links: {},
           uploader: {
@@ -149,8 +165,7 @@ describe('CreateComColPageComponent', () => {
             },
             queue: [],
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            uploadAll: () => {
-            },
+            uploadAll: () => {},
             /* eslint-enable no-empty,@typescript-eslint/no-empty-function */
           },
         };
@@ -158,7 +173,7 @@ describe('CreateComColPageComponent', () => {
 
       it('should navigate and refresh cache when successful', () => {
         spyOn(router, 'navigate');
-        spyOn((dsoDataService as any), 'refreshCache');
+        spyOn(dsoDataService as any, 'refreshCache');
         scheduler.schedule(() => comp.onSubmit(data));
         scheduler.flush();
         expect(router.navigate).toHaveBeenCalled();
@@ -167,7 +182,9 @@ describe('CreateComColPageComponent', () => {
 
       it('should neither navigate nor refresh cache on failure', () => {
         spyOn(router, 'navigate');
-        spyOn(dsoDataService, 'create').and.returnValue(createFailedRemoteDataObject$('server error', 500));
+        spyOn(dsoDataService, 'create').and.returnValue(
+          createFailedRemoteDataObject$('server error', 500),
+        );
         spyOn(dsoDataService, 'refreshCache');
         scheduler.schedule(() => comp.onSubmit(data));
         scheduler.flush();
@@ -176,26 +193,25 @@ describe('CreateComColPageComponent', () => {
       });
     });
 
-    describe('with at least one item in the uploader\'s queue', () => {
+    describe("with at least one item in the uploader's queue", () => {
       beforeEach(() => {
         data = {
           dso: Object.assign(new Community(), {
-            metadata: [{
-              key: 'dc.title',
-              value: 'test',
-            }],
+            metadata: [
+              {
+                key: 'dc.title',
+                value: 'test',
+              },
+            ],
           }),
           _links: {},
           uploader: {
             options: {
               url: '',
             },
-            queue: [
-              {},
-            ],
+            queue: [{}],
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            uploadAll: () => {
-            },
+            uploadAll: () => {},
             /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
           },
         };
@@ -208,13 +224,13 @@ describe('CreateComColPageComponent', () => {
         expect(router.navigate).not.toHaveBeenCalled();
       });
 
-      it('should set the uploader\'s url to the logo\'s endpoint', () => {
+      it("should set the uploader's url to the logo's endpoint", () => {
         scheduler.schedule(() => comp.onSubmit(data));
         scheduler.flush();
         expect(data.uploader.options.url).toEqual(logoEndpoint);
       });
 
-      it('should call the uploader\'s uploadAll', () => {
+      it("should call the uploader's uploadAll", () => {
         spyOn(data.uploader, 'uploadAll');
         scheduler.schedule(() => comp.onSubmit(data));
         scheduler.flush();

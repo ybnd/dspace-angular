@@ -42,6 +42,4 @@ import { EditCollectionPageRoutingModule } from './edit-collection-page.routing.
     CollectionAuthorizationsComponent,
   ],
 })
-export class EditCollectionPageModule {
-
-}
+export class EditCollectionPageModule {}

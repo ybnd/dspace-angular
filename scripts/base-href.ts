@@ -6,9 +6,9 @@ import { buildAppConfig } from '../src/config/config.server';
 
 /**
  * Script to set baseHref as `ui.nameSpace` for development mode. Adds `baseHref` to angular.json build options.
- * 
+ *
  * Usage (see package.json):
- * 
+ *
  * yarn base-href
  */
 
@@ -28,7 +28,8 @@ try {
 
   console.log(`Setting baseHref to ${baseHref} in angular.json`);
 
-  angularJson.projects['dspace-angular'].architect.build.options.baseHref = baseHref;
+  angularJson.projects['dspace-angular'].architect.build.options.baseHref =
+    baseHref;
 
   writeFileSync(angularJsonPath, JSON.stringify(angularJson, null, 2) + '\n');
 } catch (e) {

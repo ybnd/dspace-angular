@@ -5,10 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { getMockRemoteDataBuildService } from '../../../shared/mocks/remote-data-build.service.mock';
@@ -37,7 +34,10 @@ class TestService extends IdentifiableDataService<any> {
     super(undefined, requestService, rdbService, objectCache, halService);
   }
 
-  public getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  public getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath,
+  ): Observable<string> {
     return observableOf(endpoint);
   }
 }
@@ -58,7 +58,6 @@ describe('IdentifiableDataService', () => {
     halService = new HALEndpointServiceStub('url') as any;
     rdbService = getMockRemoteDataBuildService();
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
@@ -70,10 +69,7 @@ describe('IdentifiableDataService', () => {
       },
     } as any;
     selfLink = 'https://rest.api/endpoint/1698f1d3-be98-4c51-9fd8-6bfedcbd59b7';
-    linksToFollow = [
-      followLink('a'),
-      followLink('b'),
-    ];
+    linksToFollow = [followLink('a'), followLink('b')];
 
     testScheduler = new TestScheduler((actual, expected) => {
       // asserting the two objects are equal
@@ -88,20 +84,63 @@ describe('IdentifiableDataService', () => {
     const statusCodeError = 404;
     const errorMessage = 'not found';
     remoteDataMocks = {
-      RequestPending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.RequestPending, undefined, undefined, undefined),
-      ResponsePending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.ResponsePending, undefined, undefined, undefined),
-      Success: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Success, undefined, payload, statusCodeSuccess),
-      SuccessStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.SuccessStale, undefined, payload, statusCodeSuccess),
-      Error: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Error, errorMessage, undefined, statusCodeError),
-      ErrorStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.ErrorStale, errorMessage, undefined, statusCodeError),
+      RequestPending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.RequestPending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      ResponsePending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ResponsePending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      Success: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Success,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      SuccessStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.SuccessStale,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      Error: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Error,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
+      ErrorStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ErrorStale,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
     };
 
-    return new TestService(
-      requestService,
-      rdbService,
-      objectCache,
-      halService,
-    );
+    return new TestService(requestService, rdbService, objectCache, halService);
   }
 
   beforeEach(() => {
@@ -109,7 +148,8 @@ describe('IdentifiableDataService', () => {
   });
 
   describe('getIDHref', () => {
-    const endpointMock = 'https://dspace7-internal.atmire.com/server/api/core/items';
+    const endpointMock =
+      'https://dspace7-internal.atmire.com/server/api/core/items';
     const resourceIdMock = '003c99b4-d4fe-44b0-a945-e12182a7ca89';
 
     it('should return endpoint', () => {
@@ -119,13 +159,23 @@ describe('IdentifiableDataService', () => {
 
     it('should include single linksToFollow as embed', () => {
       const expected = `${endpointMock}/${resourceIdMock}?embed=bundles`;
-      const result = (service as any).getIDHref(endpointMock, resourceIdMock, followLink('bundles'));
+      const result = (service as any).getIDHref(
+        endpointMock,
+        resourceIdMock,
+        followLink('bundles'),
+      );
       expect(result).toEqual(expected);
     });
 
     it('should include multiple linksToFollow as embed', () => {
       const expected = `${endpointMock}/${resourceIdMock}?embed=bundles&embed=owningCollection&embed=templateItemOf`;
-      const result = (service as any).getIDHref(endpointMock, resourceIdMock, followLink('bundles'), followLink('owningCollection'), followLink('templateItemOf'));
+      const result = (service as any).getIDHref(
+        endpointMock,
+        resourceIdMock,
+        followLink('bundles'),
+        followLink('owningCollection'),
+        followLink('templateItemOf'),
+      );
       expect(result).toEqual(expected);
     });
 
@@ -143,7 +193,15 @@ describe('IdentifiableDataService', () => {
 
     it('should include nested linksToFollow 3lvl', () => {
       const expected = `${endpointMock}/${resourceIdMock}?embed=owningCollection${EMBED_SEPARATOR}itemtemplate${EMBED_SEPARATOR}relationships`;
-      const result = (service as any).getIDHref(endpointMock, resourceIdMock, followLink('owningCollection', {}, followLink('itemtemplate', {}, followLink('relationships'))));
+      const result = (service as any).getIDHref(
+        endpointMock,
+        resourceIdMock,
+        followLink(
+          'owningCollection',
+          {},
+          followLink('itemtemplate', {}, followLink('relationships')),
+        ),
+      );
       expect(result).toEqual(expected);
     });
   });

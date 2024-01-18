@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  Injector,
-} from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
   Resolve,
@@ -22,14 +19,18 @@ import { isEmpty } from '../../empty.util';
  * This class represents a resolver that requests a specific item before the route is activated
  */
 @Injectable()
-export class ResourcePolicyTargetResolver implements Resolve<RemoteData<DSpaceObject>> {
+export class ResourcePolicyTargetResolver
+  implements Resolve<RemoteData<DSpaceObject>>
+{
   /**
    * The data service used to make request.
    */
   private dataService: IdentifiableDataService<DSpaceObject>;
 
-  constructor(private parentInjector: Injector, private router: Router) {
-  }
+  constructor(
+    private parentInjector: Injector,
+    private router: Router,
+  ) {}
 
   /**
    * Method for resolving an item based on the parameters in the current route
@@ -38,7 +39,10 @@ export class ResourcePolicyTargetResolver implements Resolve<RemoteData<DSpaceOb
    * @returns Observable<<RemoteData<Item>> Emits the found item based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<DSpaceObject>> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<DSpaceObject>> {
     const targetType = route.queryParamMap.get('targetType');
     const policyTargetId = route.queryParamMap.get('policyTargetId');
 
@@ -52,8 +56,8 @@ export class ResourcePolicyTargetResolver implements Resolve<RemoteData<DSpaceOb
       parent: this.parentInjector,
     }).get(provider);
 
-    return this.dataService.findById(policyTargetId).pipe(
-      getFirstCompletedRemoteData(),
-    );
+    return this.dataService
+      .findById(policyTargetId)
+      .pipe(getFirstCompletedRemoteData());
   }
 }

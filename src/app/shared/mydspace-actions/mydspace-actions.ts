@@ -7,14 +7,8 @@ import {
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  Subscription,
-} from 'rxjs';
-import {
-  take,
-  tap,
-} from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
 
 import { IdentifiableDataService } from '../../core/data/base/identifiable-data.service';
 import { RemoteData } from '../../core/data/remote-data';
@@ -39,8 +33,10 @@ export interface MyDSpaceActionsResult {
   selector: 'ds-mydspace-actions-abstract',
   template: '',
 })
-export abstract class MyDSpaceActionsComponent<T extends DSpaceObject, TService extends IdentifiableDataService<T>> {
-
+export abstract class MyDSpaceActionsComponent<
+  T extends DSpaceObject,
+  TService extends IdentifiableDataService<T>,
+> {
   /**
    * The target mydspace object
    */
@@ -99,7 +95,6 @@ export abstract class MyDSpaceActionsComponent<T extends DSpaceObject, TService 
    * Refresh current page
    */
   reload(): void {
-
     this.router.navigated = false;
     const url = decodeURIComponent(this.router.url);
     // override the route reuse strategy
@@ -108,23 +103,28 @@ export abstract class MyDSpaceActionsComponent<T extends DSpaceObject, TService 
     };
     // This assures that the search cache is empty before reloading mydspace.
     // See https://github.com/DSpace/dspace-angular/pull/468
-    this.searchService.getEndpoint().pipe(
-      take(1),
-      tap((cachedHref: string) => this.requestService.removeByHrefSubstring(cachedHref)),
-    ).subscribe(() => this.router.navigateByUrl(url));
+    this.searchService
+      .getEndpoint()
+      .pipe(
+        take(1),
+        tap((cachedHref: string) =>
+          this.requestService.removeByHrefSubstring(cachedHref),
+        ),
+      )
+      .subscribe(() => this.router.navigateByUrl(url));
   }
 
   /**
    * Override the target object with a refreshed one
    */
   refresh(): void {
-
     // find object by id
-    this.objectDataService.findById(this.object.id, false).pipe(
-      getFirstSucceededRemoteData(),
-    ).subscribe((rd: RemoteData<T>) => {
-      this.initObjects(rd.payload as T);
-    });
+    this.objectDataService
+      .findById(this.object.id, false)
+      .pipe(getFirstSucceededRemoteData())
+      .subscribe((rd: RemoteData<T>) => {
+        this.initObjects(rd.payload as T);
+      });
   }
 
   /**
@@ -136,13 +136,17 @@ export abstract class MyDSpaceActionsComponent<T extends DSpaceObject, TService 
   handleActionResponse(result: boolean): void {
     if (result) {
       this.reload();
-      this.notificationsService.success(null,
+      this.notificationsService.success(
+        null,
         this.translate.get('submission.workflow.tasks.generic.success'),
-        new NotificationOptions(5000, false));
+        new NotificationOptions(5000, false),
+      );
     } else {
-      this.notificationsService.error(null,
+      this.notificationsService.error(
+        null,
         this.translate.get('submission.workflow.tasks.generic.error'),
-        new NotificationOptions(20000, true));
+        new NotificationOptions(20000, true),
+      );
     }
   }
 }

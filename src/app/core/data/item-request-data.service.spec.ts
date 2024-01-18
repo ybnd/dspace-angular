@@ -36,13 +36,20 @@ describe('ItemRequestDataService', () => {
       getEndpoint: observableOf(restApiEndpoint),
     });
 
-    service = new ItemRequestDataService(requestService, rdbService, null, halService);
+    service = new ItemRequestDataService(
+      requestService,
+      rdbService,
+      null,
+      halService,
+    );
   });
 
   describe('requestACopy', () => {
     it('should send a POST request containing the provided item request', (done) => {
       service.requestACopy(itemRequest).subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(new PostRequest(requestId, restApiEndpoint, itemRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          new PostRequest(requestId, restApiEndpoint, itemRequest),
+        );
         done();
       });
     });
@@ -57,15 +64,17 @@ describe('ItemRequestDataService', () => {
 
     it('should send a PUT request containing the correct properties', (done) => {
       service.grant(itemRequest.token, email, true).subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.PUT,
-          body: JSON.stringify({
-            acceptRequest: true,
-            responseMessage: email.message,
-            subject: email.subject,
-            suggestOpenAccess: true,
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.objectContaining({
+            method: RestRequestMethod.PUT,
+            body: JSON.stringify({
+              acceptRequest: true,
+              responseMessage: email.message,
+              subject: email.subject,
+              suggestOpenAccess: true,
+            }),
           }),
-        }));
+        );
         done();
       });
     });
@@ -80,15 +89,17 @@ describe('ItemRequestDataService', () => {
 
     it('should send a PUT request containing the correct properties', (done) => {
       service.deny(itemRequest.token, email).subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.PUT,
-          body: JSON.stringify({
-            acceptRequest: false,
-            responseMessage: email.message,
-            subject: email.subject,
-            suggestOpenAccess: false,
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.objectContaining({
+            method: RestRequestMethod.PUT,
+            body: JSON.stringify({
+              acceptRequest: false,
+              responseMessage: email.message,
+              subject: email.subject,
+              suggestOpenAccess: false,
+            }),
           }),
-        }));
+        );
         done();
       });
     });

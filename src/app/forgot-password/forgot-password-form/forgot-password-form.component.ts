@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -29,7 +26,6 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
  * Component for a user to enter a new password for a forgot token.
  */
 export class ForgotPasswordFormComponent {
-
   registration$: Observable<Registration>;
 
   token: string;
@@ -44,14 +40,14 @@ export class ForgotPasswordFormComponent {
    */
   NOTIFICATIONS_PREFIX = 'forgot-password.form.notification';
 
-  constructor(private ePersonDataService: EPersonDataService,
-              private translateService: TranslateService,
-              private notificationsService: NotificationsService,
-              private store: Store<CoreState>,
-              private router: Router,
-              private route: ActivatedRoute,
-  ) {
-  }
+  constructor(
+    private ePersonDataService: EPersonDataService,
+    private translateService: TranslateService,
+    private notificationsService: NotificationsService,
+    private store: Store<CoreState>,
+    private router: Router,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
     this.registration$ = this.route.data.pipe(
@@ -79,22 +75,32 @@ export class ForgotPasswordFormComponent {
    */
   submit() {
     if (!this.isInValid) {
-      this.ePersonDataService.patchPasswordWithToken(this.user, this.token, this.password).pipe(
-        getFirstCompletedRemoteData(),
-      ).subscribe((response: RemoteData<EPerson>) => {
-        if (response.hasSucceeded) {
-          this.notificationsService.success(
-            this.translateService.instant(this.NOTIFICATIONS_PREFIX + '.success.title'),
-            this.translateService.instant(this.NOTIFICATIONS_PREFIX + '.success.content'),
-          );
-          this.store.dispatch(new AuthenticateAction(this.email, this.password));
-          this.router.navigate(['/home']);
-        } else {
-          this.notificationsService.error(
-            this.translateService.instant(this.NOTIFICATIONS_PREFIX + '.error.title'), response.errorMessage,
-          );
-        }
-      });
+      this.ePersonDataService
+        .patchPasswordWithToken(this.user, this.token, this.password)
+        .pipe(getFirstCompletedRemoteData())
+        .subscribe((response: RemoteData<EPerson>) => {
+          if (response.hasSucceeded) {
+            this.notificationsService.success(
+              this.translateService.instant(
+                this.NOTIFICATIONS_PREFIX + '.success.title',
+              ),
+              this.translateService.instant(
+                this.NOTIFICATIONS_PREFIX + '.success.content',
+              ),
+            );
+            this.store.dispatch(
+              new AuthenticateAction(this.email, this.password),
+            );
+            this.router.navigate(['/home']);
+          } else {
+            this.notificationsService.error(
+              this.translateService.instant(
+                this.NOTIFICATIONS_PREFIX + '.error.title',
+              ),
+              response.errorMessage,
+            );
+          }
+        });
     }
   }
 }

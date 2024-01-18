@@ -1,8 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -18,14 +15,8 @@ import {
   RouterStateSnapshot,
   UrlTree,
 } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { Item } from '../../core/shared/item.model';
 import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
@@ -37,13 +28,27 @@ describe('ItemPageComponent', () => {
   let fixture: ComponentFixture<EditItemPageComponent>;
 
   class AcceptAllGuard implements CanActivate {
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    canActivate(
+      route: ActivatedRouteSnapshot,
+      state: RouterStateSnapshot,
+    ):
+      | Observable<boolean | UrlTree>
+      | Promise<boolean | UrlTree>
+      | boolean
+      | UrlTree {
       return observableOf(true);
     }
   }
 
   class AcceptNoneGuard implements CanActivate {
-    canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    canActivate(
+      route: ActivatedRouteSnapshot,
+      state: RouterStateSnapshot,
+    ):
+      | Observable<boolean | UrlTree>
+      | Promise<boolean | UrlTree>
+      | boolean
+      | UrlTree {
       return observableOf(false);
     }
   }
@@ -66,10 +71,12 @@ describe('ItemPageComponent', () => {
         {
           path: accesiblePages[0],
           canActivate: [AcceptAllGuard],
-        }, {
+        },
+        {
           path: inaccesiblePages[0],
           canActivate: [AcceptNoneGuard],
-        }, {
+        },
+        {
           path: inaccesiblePages[1],
           canActivate: [AcceptAllGuard, AcceptNoneGuard],
         },
@@ -87,12 +94,14 @@ describe('ItemPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [EditItemPageComponent],
       providers: [
         { provide: ActivatedRoute, useValue: mockRoute },
@@ -102,9 +111,11 @@ describe('ItemPageComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(EditItemPageComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(EditItemPageComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -121,7 +132,9 @@ describe('ItemPageComponent', () => {
     }));
 
     it('should disable tabs that the user can not activate', () => {
-      const disabledItems = fixture.debugElement.queryAll(By.css('button.nav-link.disabled'));
+      const disabledItems = fixture.debugElement.queryAll(
+        By.css('button.nav-link.disabled'),
+      );
       expect(disabledItems.length).toBe(inaccesiblePages.length);
     });
   });

@@ -7,11 +7,7 @@
  */
 
 import { Observable } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-} from 'rxjs/operators';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 
 import { isNotEmpty } from '../../../shared/empty.util';
 import { FollowLinkConfig } from '../../../shared/utils/follow-link-config.model';
@@ -43,7 +39,12 @@ export interface FindAllData<T extends CacheableObject> {
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>>;
+  findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>>;
 }
 
 /**
@@ -52,7 +53,10 @@ export interface FindAllData<T extends CacheableObject> {
  * Concrete data services can use this feature by implementing {@link FindAllData}
  * and delegating its method to an inner instance of this class.
  */
-export class FindAllDataImpl<T extends CacheableObject> extends BaseDataService<T> implements FindAllData<T> {
+export class FindAllDataImpl<T extends CacheableObject>
+  extends BaseDataService<T>
+  implements FindAllData<T>
+{
   constructor(
     protected linkPath: string,
     protected requestService: RequestService,
@@ -61,7 +65,14 @@ export class FindAllDataImpl<T extends CacheableObject> extends BaseDataService<
     protected halService: HALEndpointService,
     protected responseMsToLive: number,
   ) {
-    super(linkPath, requestService, rdbService, objectCache, halService, responseMsToLive);
+    super(
+      linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      responseMsToLive,
+    );
   }
 
   /**
@@ -78,8 +89,19 @@ export class FindAllDataImpl<T extends CacheableObject> extends BaseDataService<
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  findAll(options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    return this.findListByHref(this.getFindAllHref(options), options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAll(
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    return this.findListByHref(
+      this.getFindAllHref(options),
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -91,15 +113,25 @@ export class FindAllDataImpl<T extends CacheableObject> extends BaseDataService<
    *    Return an observable that emits created HREF
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  getFindAllHref(options: FindListOptions = {}, linkPath?: string, ...linksToFollow: FollowLinkConfig<T>[]): Observable<string> {
+  getFindAllHref(
+    options: FindListOptions = {},
+    linkPath?: string,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<string> {
     const args = [];
 
     const endpoint$ = this.getBrowseEndpoint(options).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => isNotEmpty(linkPath) ? `${href}/${linkPath}` : href),
+      map((href: string) =>
+        isNotEmpty(linkPath) ? `${href}/${linkPath}` : href,
+      ),
       distinctUntilChanged(),
     );
 
-    return endpoint$.pipe(map((result: string) => this.buildHrefFromFindOptions(result, options, args, ...linksToFollow)));
+    return endpoint$.pipe(
+      map((result: string) =>
+        this.buildHrefFromFindOptions(result, options, args, ...linksToFollow),
+      ),
+    );
   }
 }

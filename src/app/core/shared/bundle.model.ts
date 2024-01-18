@@ -1,13 +1,7 @@
-import {
-  deserialize,
-  inheritSerialization,
-} from 'cerialize';
+import { deserialize, inheritSerialization } from 'cerialize';
 import { Observable } from 'rxjs';
 
-import {
-  link,
-  typedObject,
-} from '../cache/builders/build-decorators';
+import { link, typedObject } from '../cache/builders/build-decorators';
 import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
 import { Bitstream } from './bitstream.model';
@@ -27,7 +21,7 @@ export class Bundle extends DSpaceObject {
    * The {@link HALLink}s for this Bundle
    */
   @deserialize
-    _links: {
+  _links: {
     self: HALLink;
     primaryBitstream: HALLink;
     bitstreams: HALLink;
@@ -39,19 +33,19 @@ export class Bundle extends DSpaceObject {
    * Will be undefined unless the primaryBitstream {@link HALLink} has been resolved.
    */
   @link(BITSTREAM)
-    primaryBitstream?: Observable<RemoteData<Bitstream>>;
+  primaryBitstream?: Observable<RemoteData<Bitstream>>;
 
   /**
    * The list of Bitstreams that are direct children of this Bundle
    * Will be undefined unless the bitstreams {@link HALLink} has been resolved.
    */
   @link(BITSTREAM, true)
-    bitstreams?: Observable<RemoteData<PaginatedList<Bitstream>>>;
+  bitstreams?: Observable<RemoteData<PaginatedList<Bitstream>>>;
 
   /**
-     * The owning item for this Bundle
-     * Will be undefined unless the Item{@link HALLink} has been resolved.
-     */
+   * The owning item for this Bundle
+   * Will be undefined unless the Item{@link HALLink} has been resolved.
+   */
   @link(ITEM)
-    item?: Observable<RemoteData<Item>>;
+  item?: Observable<RemoteData<Item>>;
 }

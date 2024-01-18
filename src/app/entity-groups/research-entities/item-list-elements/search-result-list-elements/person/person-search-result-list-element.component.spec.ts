@@ -1,17 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { APP_CONFIG } from '../../../../../../config/app-config.interface';
@@ -47,7 +37,8 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         ],
       },
     }),
-  });
+  },
+);
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
   {
@@ -62,7 +53,8 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         ],
       },
     }),
-  });
+  },
+);
 
 const environmentUseThumbs = {
   browseBy: {
@@ -79,13 +71,14 @@ const enviromentNoThumbs = {
 describe('PersonSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      },
-      )],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [PersonSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: {} },
@@ -94,15 +87,16 @@ describe('PersonSearchResultListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(PersonSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(PersonSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(PersonSearchResultListElementComponent);
     personListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('with environment.browseBy.showThumbnails set to true', () => {
@@ -115,7 +109,9 @@ describe('PersonSearchResultListElementComponent', () => {
     });
 
     it('should add thumbnail element', () => {
-      const thumbnailElement = fixture.debugElement.query(By.css('ds-thumbnail'));
+      const thumbnailElement = fixture.debugElement.query(
+        By.css('ds-thumbnail'),
+      );
       expect(thumbnailElement).toBeTruthy();
     });
   });
@@ -127,7 +123,9 @@ describe('PersonSearchResultListElementComponent', () => {
     });
 
     it('should show the job title span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-job-title'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-job-title'),
+      );
       expect(jobTitleField).not.toBeNull();
     });
   });
@@ -139,23 +137,25 @@ describe('PersonSearchResultListElementComponent', () => {
     });
 
     it('should not show the job title span', () => {
-      const jobTitleField = fixture.debugElement.query(By.css('span.item-list-job-title'));
+      const jobTitleField = fixture.debugElement.query(
+        By.css('span.item-list-job-title'),
+      );
       expect(jobTitleField).toBeNull();
     });
   });
 });
 
 describe('PersonSearchResultListElementComponent', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      },
-      )],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [PersonSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: {} },
@@ -164,9 +164,11 @@ describe('PersonSearchResultListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(PersonSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(PersonSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -176,13 +178,14 @@ describe('PersonSearchResultListElementComponent', () => {
 
   describe('with environment.browseBy.showThumbnails set to false', () => {
     beforeEach(() => {
-
       personListElementComponent.object = mockItemWithMetadata;
       fixture.detectChanges();
     });
 
     it('should not add thumbnail element', () => {
-      const thumbnailElement = fixture.debugElement.query(By.css('ds-thumbnail'));
+      const thumbnailElement = fixture.debugElement.query(
+        By.css('ds-thumbnail'),
+      );
       expect(thumbnailElement).toBeFalsy();
     });
   });

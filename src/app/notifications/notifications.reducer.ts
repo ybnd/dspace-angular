@@ -1,7 +1,4 @@
-import {
-  ActionReducerMap,
-  createFeatureSelector,
-} from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
 import {
   qualityAssuranceSourceReducer,
@@ -16,13 +13,17 @@ import {
  * The OpenAIRE State
  */
 export interface SuggestionNotificationsState {
-  'qaTopic': QualityAssuranceTopicState;
-  'qaSource': QualityAssuranceSourceState;
+  qaTopic: QualityAssuranceTopicState;
+  qaSource: QualityAssuranceSourceState;
 }
 
-export const suggestionNotificationsReducers: ActionReducerMap<SuggestionNotificationsState> = {
-  qaTopic: qualityAssuranceTopicsReducer,
-  qaSource: qualityAssuranceSourceReducer,
-};
+export const suggestionNotificationsReducers: ActionReducerMap<SuggestionNotificationsState> =
+  {
+    qaTopic: qualityAssuranceTopicsReducer,
+    qaSource: qualityAssuranceSourceReducer,
+  };
 
-export const suggestionNotificationsSelector = createFeatureSelector<SuggestionNotificationsState>('suggestionNotifications');
+export const suggestionNotificationsSelector =
+  createFeatureSelector<SuggestionNotificationsState>(
+    'suggestionNotifications',
+  );

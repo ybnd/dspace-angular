@@ -25,7 +25,6 @@ class NullAction extends EPeopleRegistryEditEPersonAction {
 }
 
 describe('epeopleRegistryReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = initialState;
     const action = new NullAction();

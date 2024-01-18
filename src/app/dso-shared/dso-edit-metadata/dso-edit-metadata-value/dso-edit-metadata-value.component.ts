@@ -1,14 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  EMPTY,
-  Observable,
-} from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
@@ -27,7 +18,10 @@ import {
 
 @Component({
   selector: 'ds-dso-edit-metadata-value',
-  styleUrls: ['./dso-edit-metadata-value.component.scss', '../dso-edit-metadata-shared/dso-edit-metadata-cells.scss'],
+  styleUrls: [
+    './dso-edit-metadata-value.component.scss',
+    '../dso-edit-metadata-shared/dso-edit-metadata-cells.scss',
+  ],
   templateUrl: './dso-edit-metadata-value.component.html',
 })
 /**
@@ -109,9 +103,10 @@ export class DsoEditMetadataValueComponent implements OnInit {
    */
   mdRepresentationName$: Observable<string | null>;
 
-  constructor(protected relationshipService: RelationshipDataService,
-              protected dsoNameService: DSONameService) {
-  }
+  constructor(
+    protected relationshipService: RelationshipDataService,
+    protected dsoNameService: DSONameService,
+  ) {}
 
   ngOnInit(): void {
     this.initVirtualProperties();
@@ -121,18 +116,31 @@ export class DsoEditMetadataValueComponent implements OnInit {
    * Initialise potential properties of a virtual metadata value
    */
   initVirtualProperties(): void {
-    this.mdRepresentation$ = this.mdValue.newValue.isVirtual ?
-      this.relationshipService.resolveMetadataRepresentation(this.mdValue.newValue, this.dso, 'Item')
-        .pipe(
-          map((mdRepresentation: MetadataRepresentation) =>
-            mdRepresentation.representationType === MetadataRepresentationType.Item ? mdRepresentation as ItemMetadataRepresentation : null,
-          ),
-        ) : EMPTY;
+    this.mdRepresentation$ = this.mdValue.newValue.isVirtual
+      ? this.relationshipService
+          .resolveMetadataRepresentation(
+            this.mdValue.newValue,
+            this.dso,
+            'Item',
+          )
+          .pipe(
+            map((mdRepresentation: MetadataRepresentation) =>
+              mdRepresentation.representationType ===
+              MetadataRepresentationType.Item
+                ? (mdRepresentation as ItemMetadataRepresentation)
+                : null,
+            ),
+          )
+      : EMPTY;
     this.mdRepresentationItemRoute$ = this.mdRepresentation$.pipe(
-      map((mdRepresentation: ItemMetadataRepresentation) => mdRepresentation ? getItemPageRoute(mdRepresentation) : null),
+      map((mdRepresentation: ItemMetadataRepresentation) =>
+        mdRepresentation ? getItemPageRoute(mdRepresentation) : null,
+      ),
     );
     this.mdRepresentationName$ = this.mdRepresentation$.pipe(
-      map((mdRepresentation: ItemMetadataRepresentation) => mdRepresentation ? this.dsoNameService.getName(mdRepresentation) : null),
+      map((mdRepresentation: ItemMetadataRepresentation) =>
+        mdRepresentation ? this.dsoNameService.getName(mdRepresentation) : null,
+      ),
     );
   }
 }

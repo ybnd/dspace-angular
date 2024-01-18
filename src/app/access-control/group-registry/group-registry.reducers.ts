@@ -25,10 +25,11 @@ const initialState: GroupRegistryState = {
  * @param state   The current GroupRegistryState
  * @param action  The GroupRegistryAction to perform on the state
  */
-export function groupRegistryReducer(state = initialState, action: GroupRegistryAction): GroupRegistryState {
-
+export function groupRegistryReducer(
+  state = initialState,
+  action: GroupRegistryAction,
+): GroupRegistryState {
   switch (action.type) {
-
     case GroupRegistryActionTypes.EDIT_GROUP: {
       return Object.assign({}, state, {
         editGroup: (action as GroupRegistryEditGroupAction).group,

@@ -4,6 +4,6 @@
 import { Identifier } from '../../../shared/object-list/identifier-data/identifier.model';
 
 export interface WorkspaceitemSectionIdentifiersObject {
-  identifiers?: Identifier[]
-  displayTypes?: string[]
+  identifiers?: Identifier[];
+  displayTypes?: string[];
 }

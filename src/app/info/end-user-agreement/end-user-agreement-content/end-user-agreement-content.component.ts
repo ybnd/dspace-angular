@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
 /**
  * Component displaying the contents of the End User Agreement
  */
-export class EndUserAgreementContentComponent {
-}
+export class EndUserAgreementContentComponent {}

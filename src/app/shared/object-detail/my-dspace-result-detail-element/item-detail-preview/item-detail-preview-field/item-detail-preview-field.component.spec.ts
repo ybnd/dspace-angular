@@ -1,18 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { Item } from '../../../../../core/shared/item.model';
@@ -67,20 +57,23 @@ describe('ItemDetailPreviewFieldComponent', () => {
       ],
       declarations: [ItemDetailPreviewFieldComponent, TruncatePipe],
       providers: [
-        { provide: 'objectElementProvider', useValue: { mockItemWithAuthorAndDate } },
-
+        {
+          provide: 'objectElementProvider',
+          useValue: { mockItemWithAuthorAndDate },
+        },
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemDetailPreviewFieldComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemDetailPreviewFieldComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(ItemDetailPreviewFieldComponent);
     component = fixture.componentInstance;
-
   }));
 
   beforeEach(() => {
@@ -94,7 +87,9 @@ describe('ItemDetailPreviewFieldComponent', () => {
 
   it('should display dc.title value', () => {
     const span = fixture.debugElement.query(By.css('span'));
-    expect(span.nativeElement.innerHTML).toContain('This is just another title');
+    expect(span.nativeElement.innerHTML).toContain(
+      'This is just another title',
+    );
   });
 
   it('should display placeholder when metadata has no value', () => {

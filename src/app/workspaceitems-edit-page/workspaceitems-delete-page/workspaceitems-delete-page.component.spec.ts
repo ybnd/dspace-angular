@@ -1,22 +1,10 @@
 import { Location } from '@angular/common';
-import {
-  EventEmitter,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { RouteService } from '../../core/services/route.service';
@@ -36,9 +24,12 @@ describe('WorkspaceitemsDeletePageComponent', () => {
   let component: WorkspaceItemsDeletePageComponent;
   let fixture: ComponentFixture<WorkspaceItemsDeletePageComponent>;
 
-  const workspaceitemDataServiceSpy = jasmine.createSpyObj('WorkspaceitemDataService', {
-    delete: observableOf(createSuccessfulRemoteDataObject({})),
-  });
+  const workspaceitemDataServiceSpy = jasmine.createSpyObj(
+    'WorkspaceitemDataService',
+    {
+      delete: observableOf(createSuccessfulRemoteDataObject({})),
+    },
+  );
 
   const wsi = new WorkspaceItem();
   wsi.id = '1234';
@@ -54,10 +45,7 @@ describe('WorkspaceitemsDeletePageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        NgbModalModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [NgbModalModule, TranslateModule.forRoot()],
       declarations: [WorkspaceItemsDeletePageComponent],
       providers: [
         {
@@ -104,7 +92,9 @@ describe('WorkspaceitemsDeletePageComponent', () => {
   });
 
   it('should delete the target workspace item', () => {
-    spyOn((component as any).modalService, 'open').and.returnValue({ result: Promise.resolve('ok') });
+    spyOn((component as any).modalService, 'open').and.returnValue({
+      result: Promise.resolve('ok'),
+    });
     component.confirmDelete(By.css('#delete-modal'));
     fixture.detectChanges();
     expect((component as any).modalService.open).toHaveBeenCalled();
@@ -112,6 +102,8 @@ describe('WorkspaceitemsDeletePageComponent', () => {
 
   it('should call workspaceItemService.delete', () => {
     component.sendDeleteRequest();
-    expect((component as any).workspaceItemService.delete).toHaveBeenCalledWith('1234');
+    expect((component as any).workspaceItemService.delete).toHaveBeenCalledWith(
+      '1234',
+    );
   });
 });

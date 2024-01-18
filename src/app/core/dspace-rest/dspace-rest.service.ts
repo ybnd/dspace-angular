@@ -5,19 +5,10 @@ import {
   HttpParams,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  throwError as observableThrowError,
-} from 'rxjs';
-import {
-  catchError,
-  map,
-} from 'rxjs/operators';
+import { Observable, throwError as observableThrowError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-import {
-  hasNoValue,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { hasNoValue, isNotEmpty } from '../../shared/empty.util';
 import { RequestError } from '../data/request-error.model';
 import { RestRequestMethod } from '../data/rest-request-method';
 import { DSpaceObject } from '../shared/dspace-object.model';
@@ -39,10 +30,7 @@ export interface HttpOptions {
  */
 @Injectable()
 export class DspaceRestService {
-
-  constructor(protected http: HttpClient) {
-
-  }
+  constructor(protected http: HttpClient) {}
 
   /**
    * Performs a request to the REST API with the `get` http method.
@@ -72,10 +60,20 @@ export class DspaceRestService {
    * @return {Observable<string>}
    *      An Observable<string> containing the response from the server
    */
-  request(method: RestRequestMethod, url: string, body?: any, options?: HttpOptions, isMultipart?: boolean): Observable<RawRestResponse> {
+  request(
+    method: RestRequestMethod,
+    url: string,
+    body?: any,
+    options?: HttpOptions,
+    isMultipart?: boolean,
+  ): Observable<RawRestResponse> {
     const requestOptions: HttpOptions = {};
     requestOptions.body = body;
-    if (method === RestRequestMethod.POST && isNotEmpty(body) && isNotEmpty(body.name)) {
+    if (
+      method === RestRequestMethod.POST &&
+      isNotEmpty(body) &&
+      isNotEmpty(body.name)
+    ) {
       requestOptions.body = this.buildFormData(body);
     }
     requestOptions.observe = 'response';
@@ -100,7 +98,10 @@ export class DspaceRestService {
 
     if (!requestOptions.headers.has('Content-Type') && !isMultipart) {
       // Because HttpHeaders is immutable, the set method returns a new object instead of updating the existing headers
-      requestOptions.headers = requestOptions.headers.set('Content-Type', DEFAULT_CONTENT_TYPE);
+      requestOptions.headers = requestOptions.headers.set(
+        'Content-Type',
+        DEFAULT_CONTENT_TYPE,
+      );
     }
     return this.http.request(method, url, requestOptions).pipe(
       map((res) => ({
@@ -109,22 +110,24 @@ export class DspaceRestService {
         statusCode: res.status,
         statusText: res.statusText,
       })),
-      catchError((err: unknown) => observableThrowError(() => {
-        console.log('Error: ', err);
-        if (err instanceof HttpErrorResponse) {
-          const error = new RequestError(
-            (isNotEmpty(err?.error?.message)) ? err.error.message : err.message,
-          );
+      catchError((err: unknown) =>
+        observableThrowError(() => {
+          console.log('Error: ', err);
+          if (err instanceof HttpErrorResponse) {
+            const error = new RequestError(
+              isNotEmpty(err?.error?.message) ? err.error.message : err.message,
+            );
 
-          error.statusCode = err.status;
-          error.statusText = err.statusText;
+            error.statusCode = err.status;
+            error.statusText = err.statusText;
 
-          return error;
-        } else {
-          console.error('Cannot construct RequestError from', err);
-          return err;
-        }
-      })),
+            return error;
+          } else {
+            console.error('Cannot construct RequestError from', err);
+            return err;
+          }
+        }),
+      ),
     );
   }
 
@@ -148,5 +151,4 @@ export class DspaceRestService {
     }
     return form;
   }
-
 }

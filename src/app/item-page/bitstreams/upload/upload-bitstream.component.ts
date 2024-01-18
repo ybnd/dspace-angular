@@ -1,24 +1,8 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-  Subscription,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { Observable, of as observableOf, Subscription } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
 import { getBitstreamModuleRoute } from '../../../app-routing-paths';
@@ -35,11 +19,7 @@ import {
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
 } from '../../../core/shared/operators';
-import {
-  hasValue,
-  isEmpty,
-  isNotEmpty,
-} from '../../../shared/empty.util';
+import { hasValue, isEmpty, isNotEmpty } from '../../../shared/empty.util';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { UploaderComponent } from '../../../shared/upload/uploader/uploader.component';
 import { UploaderOptions } from '../../../shared/upload/uploader/uploader-options.model';
@@ -112,17 +92,17 @@ export class UploadBitstreamComponent implements OnInit, OnDestroy {
    */
   subs: Subscription[] = [];
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected itemService: ItemDataService,
-              protected bundleService: BundleDataService,
-              protected authService: AuthService,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected requestService: RequestService,
-              public dsoNameService: DSONameService,
-  ) {
-  }
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected itemService: ItemDataService,
+    protected bundleService: BundleDataService,
+    protected authService: AuthService,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected requestService: RequestService,
+    public dsoNameService: DSONameService,
+  ) {}
 
   /**
    * Initialize component properties:
@@ -150,29 +130,37 @@ export class UploadBitstreamComponent implements OnInit, OnDestroy {
                 }
               });
               if (check) {
-                this.bundles.push(Object.assign(new Bundle(), {
-                  _name: defaultBundle,
-                  type: 'bundle',
-                }));
+                this.bundles.push(
+                  Object.assign(new Bundle(), {
+                    _name: defaultBundle,
+                    type: 'bundle',
+                  }),
+                );
               }
             }
           } else {
-            this.bundles = environment.bundle.standardBundles.map((defaultBundle: string) => Object.assign(new Bundle(), {
-              _name: defaultBundle,
-              type: 'bundle',
-            }),
+            this.bundles = environment.bundle.standardBundles.map(
+              (defaultBundle: string) =>
+                Object.assign(new Bundle(), {
+                  _name: defaultBundle,
+                  type: 'bundle',
+                }),
             );
           }
           return observableOf(remoteData.payload.page);
         }
-      }));
+      }),
+    );
     this.selectedBundleId = this.route.snapshot.queryParams.bundle;
     if (isNotEmpty(this.selectedBundleId)) {
-      this.subs.push(this.bundleService.findById(this.selectedBundleId).pipe(
-        getFirstSucceededRemoteDataPayload(),
-      ).subscribe((bundle: Bundle) => {
-        this.selectedBundleName = bundle.name;
-      }));
+      this.subs.push(
+        this.bundleService
+          .findById(this.selectedBundleId)
+          .pipe(getFirstSucceededRemoteDataPayload())
+          .subscribe((bundle: Bundle) => {
+            this.selectedBundleName = bundle.name;
+          }),
+      );
       this.setUploadUrl();
     }
     this.subs.push(bundlesRD$.subscribe());
@@ -182,16 +170,21 @@ export class UploadBitstreamComponent implements OnInit, OnDestroy {
    * Create a new bundle with the filled in name on the current item
    */
   createBundle() {
-    this.itemService.createBundle(this.itemId, this.selectedBundleName).pipe(
-      getFirstSucceededRemoteDataPayload(),
-    ).subscribe((bundle: Bundle) => {
-      this.selectedBundleId = bundle.id;
-      this.notificationsService.success(
-        this.translate.instant(this.NOTIFICATIONS_PREFIX + 'bundle.created.title'),
-        this.translate.instant(this.NOTIFICATIONS_PREFIX + 'bundle.created.content'),
-      );
-      this.setUploadUrl();
-    });
+    this.itemService
+      .createBundle(this.itemId, this.selectedBundleName)
+      .pipe(getFirstSucceededRemoteDataPayload())
+      .subscribe((bundle: Bundle) => {
+        this.selectedBundleId = bundle.id;
+        this.notificationsService.success(
+          this.translate.instant(
+            this.NOTIFICATIONS_PREFIX + 'bundle.created.title',
+          ),
+          this.translate.instant(
+            this.NOTIFICATIONS_PREFIX + 'bundle.created.content',
+          ),
+        );
+        this.setUploadUrl();
+      });
   }
 
   /**
@@ -213,17 +206,21 @@ export class UploadBitstreamComponent implements OnInit, OnDestroy {
    * Set the upload url to match the selected bundle ID
    */
   setUploadUrl() {
-    this.bundleService.getBitstreamsEndpoint(this.selectedBundleId).pipe(take(1)).subscribe((href: string) => {
-      this.uploadFilesOptions.url = href;
-      if (isEmpty(this.uploadFilesOptions.authToken)) {
-        this.uploadFilesOptions.authToken = this.authService.buildAuthHeader();
-      }
-      // Re-initialize the uploader component to ensure the latest changes to the options are applied
-      if (this.uploaderComponent) {
-        this.uploaderComponent.ngOnInit();
-        this.uploaderComponent.ngAfterViewInit();
-      }
-    });
+    this.bundleService
+      .getBitstreamsEndpoint(this.selectedBundleId)
+      .pipe(take(1))
+      .subscribe((href: string) => {
+        this.uploadFilesOptions.url = href;
+        if (isEmpty(this.uploadFilesOptions.authToken)) {
+          this.uploadFilesOptions.authToken =
+            this.authService.buildAuthHeader();
+        }
+        // Re-initialize the uploader component to ensure the latest changes to the options are applied
+        if (this.uploaderComponent) {
+          this.uploaderComponent.ngOnInit();
+          this.uploaderComponent.ngAfterViewInit();
+        }
+      });
   }
 
   /**
@@ -232,20 +229,28 @@ export class UploadBitstreamComponent implements OnInit, OnDestroy {
    */
   public onCompleteItem(bitstream) {
     // Clear cached requests for this bundle's bitstreams to ensure lists on all pages are up-to-date
-    this.bundleService.getBitstreamsEndpoint(this.selectedBundleId).pipe(take(1)).subscribe((href: string) => {
-      this.requestService.removeByHrefSubstring(href);
-    });
+    this.bundleService
+      .getBitstreamsEndpoint(this.selectedBundleId)
+      .pipe(take(1))
+      .subscribe((href: string) => {
+        this.requestService.removeByHrefSubstring(href);
+      });
 
     // Bring over the item ID as a query parameter
     const queryParams = { itemId: this.itemId, entityType: this.entityType };
-    this.router.navigate([getBitstreamModuleRoute(), bitstream.id, 'edit'], { queryParams: queryParams });
+    this.router.navigate([getBitstreamModuleRoute(), bitstream.id, 'edit'], {
+      queryParams: queryParams,
+    });
   }
 
   /**
    * The request was unsuccessful, display an error notification
    */
   public onUploadError() {
-    this.notificationsService.error(null, this.translate.get(this.NOTIFICATIONS_PREFIX + 'upload.failed'));
+    this.notificationsService.error(
+      null,
+      this.translate.get(this.NOTIFICATIONS_PREFIX + 'upload.failed'),
+    );
   }
 
   /**
@@ -265,7 +270,10 @@ export class UploadBitstreamComponent implements OnInit, OnDestroy {
    * When cancel is clicked, navigate back to the item's edit bitstreams page
    */
   onCancel() {
-    this.router.navigate([getEntityEditRoute(this.entityType, this.itemId), 'bitstreams']);
+    this.router.navigate([
+      getEntityEditRoute(this.entityType, this.itemId),
+      'bitstreams',
+    ]);
   }
 
   /**
@@ -283,5 +291,4 @@ export class UploadBitstreamComponent implements OnInit, OnDestroy {
       .filter((subscription) => hasValue(subscription))
       .forEach((subscription) => subscription.unsubscribe());
   }
-
 }

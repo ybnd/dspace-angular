@@ -1,19 +1,7 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  Observable,
-  of as observableOf,
-  Subscription,
-} from 'rxjs';
-import {
-  map,
-  mergeMap,
-  take,
-} from 'rxjs/operators';
+import { Observable, of as observableOf, Subscription } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs/operators';
 
 import { EntityTypeDataService } from '../../../core/data/entity-type-data.service';
 import { FindListOptions } from '../../../core/data/find-list-options.model';
@@ -31,7 +19,6 @@ import { hasValue } from '../../../shared/empty.util';
   templateUrl: './my-dspace-new-external-dropdown.component.html',
 })
 export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
-
   /**
    * Used to verify if there are one or more entities available
    */
@@ -64,8 +51,10 @@ export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
    * @param {EntityTypeDataService} entityTypeService
    * @param {Router} router
    */
-  constructor(private entityTypeService: EntityTypeDataService,
-              private router: Router) { }
+  constructor(
+    private entityTypeService: EntityTypeDataService,
+    private router: Router,
+  ) {}
 
   /**
    * Initialize entity type list
@@ -80,13 +69,15 @@ export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
             elementsPerPage: 1,
             currentPage: 1,
           };
-          return this.entityTypeService.getAllAuthorizedRelationshipTypeImport(findListOptions).pipe(
-            map((entities: RemoteData<PaginatedList<ItemType>>) => {
-              this.initialized$ = observableOf(true);
-              return entities.payload.page[0];
-            }),
-            take(1),
-          );
+          return this.entityTypeService
+            .getAllAuthorizedRelationshipTypeImport(findListOptions)
+            .pipe(
+              map((entities: RemoteData<PaginatedList<ItemType>>) => {
+                this.initialized$ = observableOf(true);
+                return entities.payload.page[0];
+              }),
+              take(1),
+            );
         } else {
           this.initialized$ = observableOf(true);
           return observableOf(null);
@@ -95,7 +86,7 @@ export class MyDSpaceNewExternalDropdownComponent implements OnInit, OnDestroy {
       take(1),
     );
     this.subs.push(
-      this.singleEntity$.subscribe((result) => this.singleEntity = result ),
+      this.singleEntity$.subscribe((result) => (this.singleEntity = result)),
     );
   }
 

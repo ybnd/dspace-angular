@@ -1,7 +1,4 @@
-import {
-  autoserialize,
-  deserialize,
-} from 'cerialize';
+import { autoserialize, deserialize } from 'cerialize';
 
 import { typedObject } from '../cache/builders/build-decorators';
 import { CacheableObject } from '../cache/cacheable-object.model';
@@ -22,37 +19,37 @@ export class Root implements CacheableObject {
    */
   @excludeFromEquals
   @autoserialize
-    type: ResourceType;
+  type: ResourceType;
 
   /**
    * The url for the dspace UI
    */
   @autoserialize
-    dspaceUI: string;
+  dspaceUI: string;
 
   /**
    * The repository Name
    */
   @autoserialize
-    dspaceName: string;
+  dspaceName: string;
 
   /**
    * The url for the rest api
    */
   @autoserialize
-    dspaceServer: string;
+  dspaceServer: string;
 
   /**
    * The current DSpace version
    */
   @autoserialize
-    dspaceVersion: string;
+  dspaceVersion: string;
 
   /**
    * The {@link HALLink}s for the root object
    */
   @deserialize
-    _links: {
+  _links: {
     self: HALLink;
     [k: string]: HALLink | HALLink[];
   };

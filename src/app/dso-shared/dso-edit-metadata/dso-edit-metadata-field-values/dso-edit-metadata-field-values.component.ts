@@ -1,17 +1,6 @@
-import {
-  CdkDragDrop,
-  moveItemInArray,
-} from '@angular/cdk/drag-drop';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-} from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import {
@@ -85,10 +74,12 @@ export class DsoEditMetadataFieldValuesComponent {
     // Move the value within its field
     moveItemInArray(this.form.fields[this.mdField], dragIndex, dropIndex);
     // Update all the values in this field their place property
-    this.form.fields[this.mdField].forEach((value: DsoEditMetadataValue, index: number) => {
-      value.newValue.place = index;
-      value.confirmChanges();
-    });
+    this.form.fields[this.mdField].forEach(
+      (value: DsoEditMetadataValue, index: number) => {
+        value.newValue.place = index;
+        value.confirmChanges();
+      },
+    );
     // Update the form statuses
     this.form.resetReinstatable();
     this.valueSaved.emit();

@@ -1,28 +1,15 @@
-import {
-  Injector,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
-import {
-  AppState,
-  storeModuleConfig,
-} from '../app.reducer';
+import { AppState, storeModuleConfig } from '../app.reducer';
 import { BrowseByDataType } from '../browse-by/browse-by-switcher/browse-by-decorator';
 import { authReducer } from '../core/auth/auth.reducer';
 import { AuthTokenInfo } from '../core/auth/models/auth-token-info.model';
@@ -74,44 +61,32 @@ const routeStub = {
   children: [],
 };
 
-
-
 describe('NavbarComponent', () => {
   const menuService = new MenuServiceStub();
   let browseDefinitions;
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
     browseDefinitions = [
-      Object.assign(
-        new FlatBrowseDefinition(), {
-          id: 'title',
-          dataType: BrowseByDataType.Title,
-        },
-      ),
-      Object.assign(
-        new FlatBrowseDefinition(), {
-          id: 'dateissued',
-          dataType: BrowseByDataType.Date,
-          metadataKeys: ['dc.date.issued'],
-        },
-      ),
-      Object.assign(
-        new ValueListBrowseDefinition(), {
-          id: 'author',
-          dataType: BrowseByDataType.Metadata,
-        },
-      ),
-      Object.assign(
-        new ValueListBrowseDefinition(), {
-          id: 'subject',
-          dataType: BrowseByDataType.Metadata,
-        },
-      ),
-      Object.assign(
-        new HierarchicalBrowseDefinition(), {
-          id: 'srsc',
-        },
-      ),
+      Object.assign(new FlatBrowseDefinition(), {
+        id: 'title',
+        dataType: BrowseByDataType.Title,
+      }),
+      Object.assign(new FlatBrowseDefinition(), {
+        id: 'dateissued',
+        dataType: BrowseByDataType.Date,
+        metadataKeys: ['dc.date.issued'],
+      }),
+      Object.assign(new ValueListBrowseDefinition(), {
+        id: 'author',
+        dataType: BrowseByDataType.Metadata,
+      }),
+      Object.assign(new ValueListBrowseDefinition(), {
+        id: 'subject',
+        dataType: BrowseByDataType.Metadata,
+      }),
+      Object.assign(new HierarchicalBrowseDefinition(), {
+        id: 'srsc',
+      }),
     ];
     initialState = {
       core: {
@@ -133,21 +108,31 @@ describe('NavbarComponent', () => {
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
         NoopAnimationsModule,
         ReactiveFormsModule,
-        RouterTestingModule],
+        RouterTestingModule,
+      ],
       declarations: [NavbarComponent],
       providers: [
         Injector,
         { provide: ThemeService, useValue: getMockThemeService() },
         { provide: MenuService, useValue: menuService },
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
         { provide: ActivatedRoute, useValue: routeStub },
-        { provide: BrowseService, useValue: { getBrowseDefinitions: createSuccessfulRemoteDataObject$(buildPaginatedList(undefined, browseDefinitions)) } },
+        {
+          provide: BrowseService,
+          useValue: {
+            getBrowseDefinitions: createSuccessfulRemoteDataObject$(
+              buildPaginatedList(undefined, browseDefinitions),
+            ),
+          },
+        },
         { provide: AuthorizationDataService, useValue: authorizationService },
         provideMockStore({ initialState }),
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();  // compile template and css
+    }).compileComponents(); // compile template and css
   }));
 
   // synchronous beforeEach
@@ -156,12 +141,9 @@ describe('NavbarComponent', () => {
     fixture = TestBed.createComponent(NavbarComponent);
 
     comp = fixture.componentInstance;
-
   });
 
   it('should create', () => {
     expect(comp).toBeTruthy();
   });
-
-
 });

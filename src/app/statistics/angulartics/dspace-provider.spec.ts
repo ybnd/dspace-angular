@@ -12,19 +12,26 @@ describe('Angulartics2DSpace', () => {
 
   beforeEach(() => {
     angulartics2 = {
-      eventTrack: observableOf({ action: 'page_view', properties: {
-        object: 'mock-object',
-        referrer: 'https://www.referrer.com',
-      } }),
+      eventTrack: observableOf({
+        action: 'page_view',
+        properties: {
+          object: 'mock-object',
+          referrer: 'https://www.referrer.com',
+        },
+      }),
       filterDeveloperMode: () => filter(() => true),
     } as any;
-    statisticsService = jasmine.createSpyObj('statisticsService', { trackViewEvent: null });
+    statisticsService = jasmine.createSpyObj('statisticsService', {
+      trackViewEvent: null,
+    });
     provider = new Angulartics2DSpace(angulartics2, statisticsService);
   });
 
   it('should use the statisticsService', () => {
     provider.startTracking();
-    expect(statisticsService.trackViewEvent).toHaveBeenCalledWith('mock-object' as any, 'https://www.referrer.com');
+    expect(statisticsService.trackViewEvent).toHaveBeenCalledWith(
+      'mock-object' as any,
+      'https://www.referrer.com',
+    );
   });
-
 });

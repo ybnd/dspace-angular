@@ -1,15 +1,6 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  Observable,
-} from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { RemoteData } from '../../../core/data/remote-data';
@@ -25,7 +16,6 @@ import { SearchFilterConfig } from '../models/search-filter-config.model';
   selector: 'ds-search-filters',
   styleUrls: ['./search-filters.component.scss'],
   templateUrl: './search-filters.component.html',
-
 })
 
 /**
@@ -81,14 +71,19 @@ export class SearchFiltersComponent implements OnInit, OnDestroy {
     private searchService: SearchService,
     private filterService: SearchFilterService,
     private router: Router,
-    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService) {
-  }
+    @Inject(SEARCH_CONFIG_SERVICE)
+    private searchConfigService: SearchConfigurationService,
+  ) {}
 
   ngOnInit(): void {
-    this.clearParams = this.searchConfigService.getCurrentFrontendFilters().pipe(map((filters) => {
-      Object.keys(filters).forEach((f) => filters[f] = null);
-      return filters;
-    }));
+    this.clearParams = this.searchConfigService
+      .getCurrentFrontendFilters()
+      .pipe(
+        map((filters) => {
+          Object.keys(filters).forEach((f) => (filters[f] = null));
+          return filters;
+        }),
+      );
     this.searchLink = this.getSearchLink();
   }
 

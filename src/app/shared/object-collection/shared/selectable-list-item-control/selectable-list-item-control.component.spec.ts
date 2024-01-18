@@ -1,12 +1,5 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -46,18 +39,14 @@ describe('SelectableListItemControlComponent', () => {
       deselectSingle: jasmine.createSpy('deselectSingle'),
       isObjectSelected: observableOf(true),
       getSelectableList: observableOf({ selection }),
-    },
-    );
+    });
   }
 
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
       declarations: [SelectableListItemControlComponent, VarDirective],
-      imports: [
-        FormsModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [FormsModule, TranslateModule.forRoot()],
       providers: [
         {
           provide: SelectableListService,
@@ -81,7 +70,10 @@ describe('SelectableListItemControlComponent', () => {
 
   it('should call deselectSingle on the service when the object when selectCheckbox is called with value false', () => {
     comp.selectCheckbox(false);
-    expect(selectionService.deselectSingle).toHaveBeenCalledWith(listId, object);
+    expect(selectionService.deselectSingle).toHaveBeenCalledWith(
+      listId,
+      object,
+    );
   });
 
   it('should call selectSingle on the service when the object when selectCheckbox is called with value false', () => {
@@ -91,13 +83,22 @@ describe('SelectableListItemControlComponent', () => {
 
   it('should call selectSingle on the service when the object when selectRadio is called with value true and deselect all others in the selection', () => {
     comp.selectRadio(true);
-    expect(selectionService.deselectSingle).toHaveBeenCalledWith(listId, selection[0]);
+    expect(selectionService.deselectSingle).toHaveBeenCalledWith(
+      listId,
+      selection[0],
+    );
     expect(selectionService.selectSingle).toHaveBeenCalledWith(listId, object);
   });
 
   it('should not call selectSingle on the service when the object when selectRadio is called with value false and not deselect all others in the selection', () => {
     comp.selectRadio(false);
-    expect(selectionService.deselectSingle).not.toHaveBeenCalledWith(listId, selection[0]);
-    expect(selectionService.selectSingle).not.toHaveBeenCalledWith(listId, object);
+    expect(selectionService.deselectSingle).not.toHaveBeenCalledWith(
+      listId,
+      selection[0],
+    );
+    expect(selectionService.selectSingle).not.toHaveBeenCalledWith(
+      listId,
+      object,
+    );
   });
 });

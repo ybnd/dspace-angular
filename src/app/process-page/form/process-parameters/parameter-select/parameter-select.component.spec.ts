@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,33 +15,23 @@ describe('ParameterSelectComponent', () => {
 
   function init() {
     scriptParams = [
-      Object.assign(
-        new ScriptParameter(),
-        {
-          name: '-a',
-          type: ScriptParameterType.BOOLEAN,
-        },
-      ),
-      Object.assign(
-        new ScriptParameter(),
-        {
-          name: '-f',
-          type: ScriptParameterType.FILE,
-        },
-      ),
+      Object.assign(new ScriptParameter(), {
+        name: '-a',
+        type: ScriptParameterType.BOOLEAN,
+      }),
+      Object.assign(new ScriptParameter(), {
+        name: '-f',
+        type: ScriptParameterType.FILE,
+      }),
     ];
   }
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [FormsModule, TranslateModule.forRoot()],
       declarations: [ParameterSelectComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

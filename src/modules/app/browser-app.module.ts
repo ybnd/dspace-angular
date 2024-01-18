@@ -1,7 +1,4 @@
-import {
-  HttpClient,
-  HttpClientModule,
-} from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import {
   BrowserModule,
@@ -11,10 +8,7 @@ import {
 } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { IdlePreloadModule } from 'angular-idle-preload';
 import {
   Angulartics2GoogleTagManager,
@@ -47,8 +41,16 @@ import { BrowserInitService } from './browser-init.service';
 
 export const REQ_KEY = makeStateKey<string>('req');
 
-export function createTranslateLoader(transferState: TransferState, http: HttpClient) {
-  return new TranslateBrowserLoader(transferState, http, 'assets/i18n/', '.json');
+export function createTranslateLoader(
+  transferState: TransferState,
+  http: HttpClient,
+) {
+  return new TranslateBrowserLoader(
+    transferState,
+    http,
+    'assets/i18n/',
+    '.json',
+  );
 }
 
 export function getRequest(transferState: TransferState): any {
@@ -71,7 +73,7 @@ export function getRequest(transferState: TransferState): any {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
+        useFactory: createTranslateLoader,
         deps: [TransferState, HttpClient],
       },
     }),
@@ -130,5 +132,4 @@ export function getRequest(transferState: TransferState): any {
     },
   ],
 })
-export class BrowserAppModule {
-}
+export class BrowserAppModule {}

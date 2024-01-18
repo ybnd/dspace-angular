@@ -39,7 +39,6 @@ describe('AdminSidebarComponent', () => {
   let authorizationService: AuthorizationDataService;
   let scriptService;
 
-
   const mockItem = Object.assign(new Item(), {
     id: 'fake-id',
     uuid: 'fake-id',
@@ -52,7 +51,6 @@ describe('AdminSidebarComponent', () => {
     },
   });
 
-
   const routeStub = {
     data: observableOf({
       dso: createSuccessfulRemoteDataObject(mockItem),
@@ -60,14 +58,19 @@ describe('AdminSidebarComponent', () => {
     children: [],
   };
 
-
   beforeEach(waitForAsync(() => {
     authorizationService = jasmine.createSpyObj('authorizationService', {
       isAuthorized: observableOf(true),
     });
-    scriptService = jasmine.createSpyObj('scriptService', { scriptWithNameExistsAndCanExecute: observableOf(true) });
+    scriptService = jasmine.createSpyObj('scriptService', {
+      scriptWithNameExistsAndCanExecute: observableOf(true),
+    });
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), NoopAnimationsModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        NoopAnimationsModule,
+        RouterTestingModule,
+      ],
       declarations: [AdminSidebarComponent],
       providers: [
         Injector,
@@ -80,18 +83,22 @@ describe('AdminSidebarComponent', () => {
         { provide: ScriptDataService, useValue: scriptService },
         { provide: ActivatedRoute, useValue: routeStub },
         {
-          provide: NgbModal, useValue: {
-            open: () => {/*comment*/
+          provide: NgbModal,
+          useValue: {
+            open: () => {
+              /*comment*/
             },
           },
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(AdminSidebarComponent, {
-      set: {
-        changeDetection: ChangeDetectionStrategy.Default,
-      },
-    }).compileComponents();
+    })
+      .overrideComponent(AdminSidebarComponent, {
+        set: {
+          changeDetection: ChangeDetectionStrategy.Default,
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -153,9 +160,12 @@ describe('AdminSidebarComponent', () => {
   describe('when the collapse link is clicked', () => {
     beforeEach(() => {
       spyOn(menuService, 'toggleMenu');
-      const sidebarToggler = fixture.debugElement.query(By.css('#sidebar-collapse-toggle > button'));
+      const sidebarToggler = fixture.debugElement.query(
+        By.css('#sidebar-collapse-toggle > button'),
+      );
       sidebarToggler.triggerEventHandler('click', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
     });
@@ -170,7 +180,8 @@ describe('AdminSidebarComponent', () => {
       spyOn(menuService, 'expandMenuPreview');
       const sidebarToggler = fixture.debugElement.query(By.css('nav.navbar'));
       sidebarToggler.triggerEventHandler('mouseenter', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
       tick(99);
@@ -185,7 +196,8 @@ describe('AdminSidebarComponent', () => {
       spyOn(menuService, 'collapseMenuPreview');
       const sidebarToggler = fixture.debugElement.query(By.css('nav.navbar'));
       sidebarToggler.triggerEventHandler('mouseleave', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
       tick(399);

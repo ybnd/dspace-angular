@@ -1,7 +1,4 @@
-import {
-  autoserialize,
-  inheritSerialization,
-} from 'cerialize';
+import { autoserialize, inheritSerialization } from 'cerialize';
 
 import { typedObject } from '../../cache/builders/build-decorators';
 import { HALResource } from '../../shared/hal-resource.model';
@@ -12,7 +9,6 @@ import { SUBMISSION_CC_LICENSE } from './submission-cc-licence.resource-type';
 @typedObject
 @inheritSerialization(HALResource)
 export class SubmissionCcLicence extends HALResource {
-
   static type = SUBMISSION_CC_LICENSE;
 
   /**
@@ -20,16 +16,16 @@ export class SubmissionCcLicence extends HALResource {
    */
   @excludeFromEquals
   @autoserialize
-    type: ResourceType;
+  type: ResourceType;
 
   @autoserialize
-    id: string;
+  id: string;
 
   @autoserialize
-    name: string;
+  name: string;
 
   @autoserialize
-    fields: Field[];
+  fields: Field[];
 }
 
 export interface Field {

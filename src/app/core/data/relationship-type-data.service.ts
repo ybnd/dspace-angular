@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  combineLatest as observableCombineLatest,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  mergeMap,
-  switchMap,
-  toArray,
-} from 'rxjs/operators';
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
+import { map, mergeMap, switchMap, toArray } from 'rxjs/operators';
 
 import { hasValue } from '../../shared/empty.util';
 import {
@@ -58,10 +50,30 @@ export class RelationshipTypeDataService extends BaseDataService<RelationshipTyp
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('relationshiptypes', requestService, rdbService, objectCache, halService);
+    super(
+      'relationshiptypes',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -75,19 +87,41 @@ export class RelationshipTypeDataService extends BaseDataService<RelationshipTyp
    * @param firstItemType         The type of one of the sides of the relationship e.g. Publication
    * @param secondItemType        The type of the other side of the relationship e.g. Author
    */
-  getRelationshipTypeByLabelAndTypes(relationshipTypeLabel: string, firstItemType: string, secondItemType: string): Observable<RelationshipType> {
+  getRelationshipTypeByLabelAndTypes(
+    relationshipTypeLabel: string,
+    firstItemType: string,
+    secondItemType: string,
+  ): Observable<RelationshipType> {
     // Retrieve all relationship types from the server in a single page
-    return this.findAllData.findAll({ currentPage: 1, elementsPerPage: 9999 }, true, true, followLink('leftType'), followLink('rightType'))
+    return this.findAllData
+      .findAll(
+        { currentPage: 1, elementsPerPage: 9999 },
+        true,
+        true,
+        followLink('leftType'),
+        followLink('rightType'),
+      )
       .pipe(
         getFirstSucceededRemoteData(),
         // Emit each type in the page array separately
-        switchMap((typeListRD: RemoteData<PaginatedList<RelationshipType>>) => typeListRD.payload.page),
+        switchMap(
+          (typeListRD: RemoteData<PaginatedList<RelationshipType>>) =>
+            typeListRD.payload.page,
+        ),
         // Check each type individually, to see if it matches the provided types
         mergeMap((relationshipType: RelationshipType) => {
           if (relationshipType.leftwardType === relationshipTypeLabel) {
-            return this.checkType(relationshipType, firstItemType, secondItemType);
+            return this.checkType(
+              relationshipType,
+              firstItemType,
+              secondItemType,
+            );
           } else if (relationshipType.rightwardType === relationshipTypeLabel) {
-            return this.checkType(relationshipType, secondItemType, firstItemType);
+            return this.checkType(
+              relationshipType,
+              secondItemType,
+              firstItemType,
+            );
           } else {
             return [null];
           }
@@ -116,19 +150,30 @@ export class RelationshipTypeDataService extends BaseDataService<RelationshipTyp
    * @param rightItemType   The item type that should be on the right side
    * @private
    */
-  private checkType(type: RelationshipType, leftItemType: string, rightItemType: string): Observable<RelationshipType> {
+  private checkType(
+    type: RelationshipType,
+    leftItemType: string,
+    rightItemType: string,
+  ): Observable<RelationshipType> {
     return observableCombineLatest([
       type.leftType.pipe(getFirstCompletedRemoteData()),
       type.rightType.pipe(getFirstCompletedRemoteData()),
     ]).pipe(
-      map(([leftTypeRD, rightTypeRD]: [RemoteData<ItemType>, RemoteData<ItemType>]) => {
-        if (checkSide(leftTypeRD, leftItemType) && checkSide(rightTypeRD, rightItemType)
-        ) {
-          return type;
-        } else {
-          return null;
-        }
-      }),
+      map(
+        ([leftTypeRD, rightTypeRD]: [
+          RemoteData<ItemType>,
+          RemoteData<ItemType>,
+        ]) => {
+          if (
+            checkSide(leftTypeRD, leftItemType) &&
+            checkSide(rightTypeRD, rightItemType)
+          ) {
+            return type;
+          } else {
+            return null;
+          }
+        },
+      ),
     );
   }
 
@@ -141,25 +186,34 @@ export class RelationshipTypeDataService extends BaseDataService<RelationshipTyp
    * @param reRequestOnStale
    * @param linksToFollow
    */
-  searchByEntityType(type: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<RelationshipType>[]): Observable<PaginatedList<RelationshipType>> {
-    return this.searchData.searchBy(
-      'byEntityType',
-      {
-        searchParams: [
-          {
-            fieldName: 'type',
-            fieldValue: type,
-          },
-          {
-            fieldName: 'size',
-            fieldValue: 100,
-          },
-        ],
-      }, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow,
-    ).pipe(
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-    ) as Observable<PaginatedList<RelationshipType>>;
+  searchByEntityType(
+    type: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<RelationshipType>[]
+  ): Observable<PaginatedList<RelationshipType>> {
+    return this.searchData
+      .searchBy(
+        'byEntityType',
+        {
+          searchParams: [
+            {
+              fieldName: 'type',
+              fieldValue: type,
+            },
+            {
+              fieldName: 'size',
+              fieldValue: 100,
+            },
+          ],
+        },
+        useCachedVersionIfAvailable,
+        reRequestOnStale,
+        ...linksToFollow,
+      )
+      .pipe(
+        getFirstSucceededRemoteData(),
+        getRemoteDataPayload(),
+      ) as Observable<PaginatedList<RelationshipType>>;
   }
-
 }

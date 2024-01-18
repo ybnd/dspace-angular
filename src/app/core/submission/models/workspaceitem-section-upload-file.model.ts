@@ -5,7 +5,6 @@ import { WorkspaceitemSectionFormObject } from './workspaceitem-section-form.mod
  * An interface to represent submission's upload section file entry.
  */
 export class WorkspaceitemSectionUploadFileObject {
-
   /**
    * The file UUID
    */
@@ -33,12 +32,12 @@ export class WorkspaceitemSectionUploadFileObject {
    * The file format information
    */
   format: {
-    shortDescription: string,
-    description: string,
-    mimetype: string,
-    supportLevel: string,
-    internal: boolean,
-    type: string
+    shortDescription: string;
+    description: string;
+    mimetype: string;
+    supportLevel: string;
+    internal: boolean;
+    type: string;
   };
 
   /**

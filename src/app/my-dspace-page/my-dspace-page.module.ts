@@ -34,16 +34,11 @@ const DECLARATIONS = [
     UploadModule,
   ],
   declarations: DECLARATIONS,
-  providers: [
-    MyDSpaceGuard,
-    MyDSpaceConfigurationService,
-  ],
+  providers: [MyDSpaceGuard, MyDSpaceConfigurationService],
   exports: DECLARATIONS,
 })
 
 /**
  * This module handles all components that are necessary for the mydspace page
  */
-export class MyDSpacePageModule {
-
-}
+export class MyDSpacePageModule {}

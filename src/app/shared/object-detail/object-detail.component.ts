@@ -27,7 +27,7 @@ import { PaginationComponentOptions } from '../pagination/pagination-component-o
   changeDetection: ChangeDetectionStrategy.Default,
   encapsulation: ViewEncapsulation.Emulated,
   selector: 'ds-object-detail',
-  styleUrls: [ './object-detail.component.scss' ],
+  styleUrls: ['./object-detail.component.scss'],
   templateUrl: './object-detail.component.html',
   animations: [fadeIn],
 })
@@ -122,11 +122,11 @@ export class ObjectDetailComponent {
    * Event's payload equals to the newly selected page.
    */
   @Output() change: EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }> = new EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }>();
 
   /**
@@ -145,13 +145,15 @@ export class ObjectDetailComponent {
    * An event fired when the sort direction is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter<SortDirection>();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter<SortDirection>();
 
   /**
    * An event fired when the pagination is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() paginationChange: EventEmitter<SortDirection> = new EventEmitter<any>();
+  @Output() paginationChange: EventEmitter<SortDirection> =
+    new EventEmitter<any>();
 
   /**
    * An event fired when the sort field is changed.
@@ -202,10 +204,9 @@ export class ObjectDetailComponent {
   }
 
   /**
-  * Go to the next page
-  */
+   * Go to the next page
+   */
   goNext() {
     this.next.emit(true);
   }
-
 }

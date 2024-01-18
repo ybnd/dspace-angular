@@ -1,14 +1,7 @@
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { ActivatedRouteStub } from '../shared/testing/active-router.stub';
@@ -26,7 +19,7 @@ describe('PageErrorComponent', () => {
   });
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PageErrorComponent ],
+      declarations: [PageErrorComponent],
       imports: [
         TranslateModule.forRoot({
           loader: {
@@ -35,9 +28,7 @@ describe('PageErrorComponent', () => {
           },
         }),
       ],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRouteStub },
-      ],
+      providers: [{ provide: ActivatedRoute, useValue: activatedRouteStub }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PageErrorComponent);
@@ -50,7 +41,9 @@ describe('PageErrorComponent', () => {
   });
 
   it('should show error for 401 unauthorized', () => {
-    const statusElement = fixture.debugElement.query(By.css('[data-test="status"]')).nativeElement;
+    const statusElement = fixture.debugElement.query(
+      By.css('[data-test="status"]'),
+    ).nativeElement;
     expect(statusElement.innerHTML).toEqual('401');
   });
 });

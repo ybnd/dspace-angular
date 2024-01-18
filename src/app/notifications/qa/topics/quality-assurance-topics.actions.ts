@@ -14,8 +14,12 @@ import { type } from '../../../shared/ngrx/type';
  */
 export const QualityAssuranceTopicActionTypes = {
   ADD_TOPICS: type('dspace/integration/notifications/qa/topic/ADD_TOPICS'),
-  RETRIEVE_ALL_TOPICS: type('dspace/integration/notifications/qa/topic/RETRIEVE_ALL_TOPICS'),
-  RETRIEVE_ALL_TOPICS_ERROR: type('dspace/integration/notifications/qa/topic/RETRIEVE_ALL_TOPICS_ERROR'),
+  RETRIEVE_ALL_TOPICS: type(
+    'dspace/integration/notifications/qa/topic/RETRIEVE_ALL_TOPICS',
+  ),
+  RETRIEVE_ALL_TOPICS_ERROR: type(
+    'dspace/integration/notifications/qa/topic/RETRIEVE_ALL_TOPICS_ERROR',
+  ),
 };
 
 /**
@@ -76,7 +80,12 @@ export class AddTopicsAction implements Action {
    * @param totalElements
    *    the total available Quality Assurance topics
    */
-  constructor(topics: QualityAssuranceTopicObject[], totalPages: number, currentPage: number, totalElements: number) {
+  constructor(
+    topics: QualityAssuranceTopicObject[],
+    totalPages: number,
+    currentPage: number,
+    totalElements: number,
+  ) {
     this.payload = {
       topics,
       totalPages,
@@ -84,7 +93,6 @@ export class AddTopicsAction implements Action {
       totalElements,
     };
   }
-
 }
 
 /* tslint:enable:max-classes-per-file */
@@ -93,7 +101,7 @@ export class AddTopicsAction implements Action {
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types.
  */
-export type QualityAssuranceTopicsActions
-  = AddTopicsAction
-  |RetrieveAllTopicsAction
-  |RetrieveAllTopicsErrorAction;
+export type QualityAssuranceTopicsActions =
+  | AddTopicsAction
+  | RetrieveAllTopicsAction
+  | RetrieveAllTopicsErrorAction;

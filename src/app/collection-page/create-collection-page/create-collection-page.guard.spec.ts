@@ -32,39 +32,34 @@ describe('CreateCollectionPageGuard', () => {
     });
 
     it('should return true when the parent ID resolves to a community', () => {
-      guard.canActivate({ queryParams: { parent: 'valid-id' } } as any, undefined)
+      guard
+        .canActivate({ queryParams: { parent: 'valid-id' } } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (canActivate) =>
-            expect(canActivate).toEqual(true),
-        );
+        .subscribe((canActivate) => expect(canActivate).toEqual(true));
     });
 
     it('should return false when no parent ID has been provided', () => {
-      guard.canActivate({ queryParams: { } } as any, undefined)
+      guard
+        .canActivate({ queryParams: {} } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (canActivate) =>
-            expect(canActivate).toEqual(false),
-        );
+        .subscribe((canActivate) => expect(canActivate).toEqual(false));
     });
 
     it('should return false when the parent ID does not resolve to a community', () => {
-      guard.canActivate({ queryParams: { parent: 'invalid-id' } } as any, undefined)
+      guard
+        .canActivate(
+          { queryParams: { parent: 'invalid-id' } } as any,
+          undefined,
+        )
         .pipe(first())
-        .subscribe(
-          (canActivate) =>
-            expect(canActivate).toEqual(false),
-        );
+        .subscribe((canActivate) => expect(canActivate).toEqual(false));
     });
 
     it('should return false when the parent ID resolves to an error response', () => {
-      guard.canActivate({ queryParams: { parent: 'error-id' } } as any, undefined)
+      guard
+        .canActivate({ queryParams: { parent: 'error-id' } } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (canActivate) =>
-            expect(canActivate).toEqual(false),
-        );
+        .subscribe((canActivate) => expect(canActivate).toEqual(false));
     });
   });
 });

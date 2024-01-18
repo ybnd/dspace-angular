@@ -1,20 +1,8 @@
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  catchError,
-  map,
-} from 'rxjs/operators';
+import { Inject, Injectable } from '@angular/core';
+import { Observable, of as observableOf } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../../../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../../../config/app-config.interface';
 import { DspaceRestService } from '../dspace-rest/dspace-rest.service';
 import { RawRestResponse } from '../dspace-rest/raw-rest-response.model';
 import { SignpostingLink } from './signposting-links.model';
@@ -26,9 +14,10 @@ import { SignpostingLink } from './signposting-links.model';
   providedIn: 'root',
 })
 export class SignpostingDataService {
-
-  constructor(@Inject(APP_CONFIG) protected appConfig: AppConfig, private restService: DspaceRestService) {
-  }
+  constructor(
+    @Inject(APP_CONFIG) protected appConfig: AppConfig,
+    private restService: DspaceRestService,
+  ) {}
 
   /**
    * Retrieve the list of signposting links related to the given resource's id
@@ -42,8 +31,9 @@ export class SignpostingDataService {
       catchError((err: unknown) => {
         return observableOf([]);
       }),
-      map((res: RawRestResponse) => res.statusCode === 200 ? res.payload as SignpostingLink[] : []),
+      map((res: RawRestResponse) =>
+        res.statusCode === 200 ? (res.payload as SignpostingLink[]) : [],
+      ),
     );
   }
-
 }

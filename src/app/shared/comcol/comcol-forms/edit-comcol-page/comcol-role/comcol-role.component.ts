@@ -1,18 +1,7 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  Observable,
-} from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 
 import { getGroupEditRoute } from '../../../../../access-control/access-control-routing-paths';
 import { DSONameService } from '../../../../../core/breadcrumbs/dso-name.service';
@@ -28,10 +17,7 @@ import {
   getAllCompletedRemoteData,
   getFirstCompletedRemoteData,
 } from '../../../../../core/shared/operators';
-import {
-  hasNoValue,
-  hasValue,
-} from '../../../../empty.util';
+import { hasNoValue, hasValue } from '../../../../empty.util';
 import { NotificationsService } from '../../../../notifications/notifications.service';
 
 /**
@@ -43,12 +29,11 @@ import { NotificationsService } from '../../../../notifications/notifications.se
   templateUrl: './comcol-role.component.html',
 })
 export class ComcolRoleComponent implements OnInit {
-
   /**
    * The community or collection to manage.
    */
   @Input()
-    dso: Community | Collection;
+  dso: Community | Collection;
 
   /**
    * The role to manage
@@ -96,8 +81,7 @@ export class ComcolRoleComponent implements OnInit {
     protected notificationsService: NotificationsService,
     protected translateService: TranslateService,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   /**
    * The link to the related group.
@@ -122,43 +106,54 @@ export class ComcolRoleComponent implements OnInit {
    * Create a group for this community or collection role.
    */
   create() {
-    this.groupService.createComcolGroup(this.dso, this.comcolRole.name, this.groupLink).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((rd: RemoteData<Group>) => {
-
-      if (rd.hasSucceeded) {
-        this.groupService.clearGroupsRequests();
-        this.requestService.setStaleByHrefSubstring(this.comcolRole.href);
-      } else {
-        this.notificationsService.error(
-          this.roleName$.pipe(
-            switchMap(role => this.translateService.get('comcol-role.edit.create.error.title', { role })),
-          ),
-          `${rd.statusCode} ${rd.errorMessage}`,
-        );
-      }
-    });
+    this.groupService
+      .createComcolGroup(this.dso, this.comcolRole.name, this.groupLink)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((rd: RemoteData<Group>) => {
+        if (rd.hasSucceeded) {
+          this.groupService.clearGroupsRequests();
+          this.requestService.setStaleByHrefSubstring(this.comcolRole.href);
+        } else {
+          this.notificationsService.error(
+            this.roleName$.pipe(
+              switchMap((role) =>
+                this.translateService.get(
+                  'comcol-role.edit.create.error.title',
+                  { role },
+                ),
+              ),
+            ),
+            `${rd.statusCode} ${rd.errorMessage}`,
+          );
+        }
+      });
   }
 
   /**
    * Delete the group for this community or collection role.
    */
   delete() {
-    this.groupService.deleteComcolGroup(this.groupLink).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((rd: RemoteData<NoContent>) => {
-      if (rd.hasSucceeded) {
-        this.groupService.clearGroupsRequests();
-        this.requestService.setStaleByHrefSubstring(this.comcolRole.href);
-      } else {
-        this.notificationsService.error(
-          this.roleName$.pipe(
-            switchMap(role => this.translateService.get('comcol-role.edit.delete.error.title', { role })),
-          ),
-          rd.errorMessage,
-        );
-      }
-    });
+    this.groupService
+      .deleteComcolGroup(this.groupLink)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((rd: RemoteData<NoContent>) => {
+        if (rd.hasSucceeded) {
+          this.groupService.clearGroupsRequests();
+          this.requestService.setStaleByHrefSubstring(this.comcolRole.href);
+        } else {
+          this.notificationsService.error(
+            this.roleName$.pipe(
+              switchMap((role) =>
+                this.translateService.get(
+                  'comcol-role.edit.delete.error.title',
+                  { role },
+                ),
+              ),
+            ),
+            rd.errorMessage,
+          );
+        }
+      });
   }
 
   ngOnInit(): void {
@@ -179,7 +174,9 @@ export class ComcolRoleComponent implements OnInit {
     );
 
     this.editGroupLink$ = this.group$.pipe(
-      map((group: Group) => hasValue(group) ? getGroupEditRoute(group.id) : undefined),
+      map((group: Group) =>
+        hasValue(group) ? getGroupEditRoute(group.id) : undefined,
+      ),
     );
 
     this.hasNoGroup$ = this.group$.pipe(
@@ -194,6 +191,8 @@ export class ComcolRoleComponent implements OnInit {
       map((group: Group) => hasValue(group) && group.name !== 'Anonymous'),
     );
 
-    this.roleName$ = this.translateService.get(`comcol-role.edit.${this.comcolRole.name}.name`);
+    this.roleName$ = this.translateService.get(
+      `comcol-role.edit.${this.comcolRole.name}.name`,
+    );
   }
 }

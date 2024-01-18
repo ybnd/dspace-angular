@@ -1,8 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { RouteService } from '../core/services/route.service';
@@ -30,14 +26,23 @@ import { SidebarService } from '../shared/sidebar/sidebar.service';
     },
   ],
 })
-
 export class ConfigurationSearchPageComponent extends SearchComponent {
-  constructor(protected service: SearchService,
-              protected sidebarService: SidebarService,
-              protected windowService: HostWindowService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
-              protected routeService: RouteService,
-              protected router: Router) {
-    super(service, sidebarService, windowService, searchConfigService, routeService, router);
+  constructor(
+    protected service: SearchService,
+    protected sidebarService: SidebarService,
+    protected windowService: HostWindowService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService,
+    protected routeService: RouteService,
+    protected router: Router,
+  ) {
+    super(
+      service,
+      sidebarService,
+      windowService,
+      searchConfigService,
+      routeService,
+      router,
+    );
   }
 }

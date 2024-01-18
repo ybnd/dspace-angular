@@ -14,9 +14,7 @@ export class LinkHeadService {
   constructor(
     private rendererFactory: RendererFactory2,
     @Inject(DOCUMENT) private document,
-  ) {
-
-  }
+  ) {}
 
   /**
    * Method to create a Link tag in the HEAD of the html.
@@ -24,7 +22,6 @@ export class LinkHeadService {
    * @returns Link tag that was created
    */
   addTag(tag: LinkDefinition) {
-
     try {
       const renderer = this.rendererFactory.createRenderer(this.document, {
         id: '-1',
@@ -68,7 +65,9 @@ export class LinkHeadService {
         if (head === null) {
           throw new Error('<head> not found within DOCUMENT.');
         }
-        const linkTags = this.document.querySelectorAll('link[' + attrSelector + ']');
+        const linkTags = this.document.querySelectorAll(
+          'link[' + attrSelector + ']',
+        );
         for (const link of linkTags) {
           renderer.removeChild(head, link);
         }
@@ -93,5 +92,5 @@ export declare type LinkDefinition = {
   target?: string;
   type?: string;
 } & {
-    [prop: string]: string;
-  };
+  [prop: string]: string;
+};

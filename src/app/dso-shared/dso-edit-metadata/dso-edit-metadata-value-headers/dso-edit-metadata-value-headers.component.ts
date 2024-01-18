@@ -1,11 +1,11 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'ds-dso-edit-metadata-value-headers',
-  styleUrls: ['./dso-edit-metadata-value-headers.component.scss', '../dso-edit-metadata-shared/dso-edit-metadata-cells.scss'],
+  styleUrls: [
+    './dso-edit-metadata-value-headers.component.scss',
+    '../dso-edit-metadata-shared/dso-edit-metadata-cells.scss',
+  ],
   templateUrl: './dso-edit-metadata-value-headers.component.html',
 })
 /**

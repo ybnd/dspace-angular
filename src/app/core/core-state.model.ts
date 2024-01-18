@@ -14,15 +14,15 @@ import { RouteState } from './services/route.reducer';
  * The core sub-state in the NgRx store
  */
 export interface CoreState {
-    'bitstreamFormats': BitstreamFormatRegistryState;
-    'cache/object': ObjectCacheState;
-    'cache/syncbuffer': ServerSyncBufferState;
-    'cache/object-updates': ObjectUpdatesState;
-    'data/request': RequestState;
-    'history': HistoryState;
-    'index': MetaIndexState;
-    'auth': AuthState;
-    'json/patch': JsonPatchOperationsState;
-    'metaTag': MetaTagState;
-    'route': RouteState;
+  bitstreamFormats: BitstreamFormatRegistryState;
+  'cache/object': ObjectCacheState;
+  'cache/syncbuffer': ServerSyncBufferState;
+  'cache/object-updates': ObjectUpdatesState;
+  'data/request': RequestState;
+  history: HistoryState;
+  index: MetaIndexState;
+  auth: AuthState;
+  'json/patch': JsonPatchOperationsState;
+  metaTag: MetaTagState;
+  route: RouteState;
 }

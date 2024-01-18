@@ -1,8 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  MockStore,
-  provideMockStore,
-} from '@ngrx/store/testing';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { getTestScheduler } from 'jasmine-marbles';
 
 import { buildPaginatedList } from '../../core/data/paginated-list.model';
@@ -37,10 +34,7 @@ describe('CSSVariableService', () => {
   beforeEach(() => {
     init();
     TestBed.configureTestingModule({
-      providers: [
-        CSSVariableService,
-        provideMockStore({ initialState }),
-      ],
+      providers: [CSSVariableService, provideMockStore({ initialState })],
     });
     service = TestBed.inject(CSSVariableService as any);
     store = TestBed.inject(MockStore as any);
@@ -54,29 +48,64 @@ describe('CSSVariableService', () => {
     it('should return the right keys and variables in a paginated list for query that returns all 3 results', () => {
       const currentPage = 1;
       const pageSize = 5;
-      const pageInfo = new PageInfo({ currentPage, elementsPerPage: pageSize, totalPages: 1, totalElements: 3 });
-      const page: KeyValuePair<string, string>[] = [{ key: varKey1, value: varValue1 }, { key: varKey2, value: varValue2 }, { key: varKey3, value: varValue3 }];
+      const pageInfo = new PageInfo({
+        currentPage,
+        elementsPerPage: pageSize,
+        totalPages: 1,
+        totalElements: 3,
+      });
+      const page: KeyValuePair<string, string>[] = [
+        { key: varKey1, value: varValue1 },
+        { key: varKey2, value: varValue2 },
+        { key: varKey3, value: varValue3 },
+      ];
       const result = buildPaginatedList(pageInfo, page);
-      getTestScheduler().expectObservable(service.searchVariable(queryInAll, { currentPage, pageSize } as any)).toBe('a', { a: result });
+      getTestScheduler()
+        .expectObservable(
+          service.searchVariable(queryInAll, { currentPage, pageSize } as any),
+        )
+        .toBe('a', { a: result });
     });
 
     it('should return the right keys and variables in a paginated list for query that returns only the 3rd results', () => {
       const currentPage = 1;
       const pageSize = 5;
-      const pageInfo = new PageInfo({ currentPage, elementsPerPage: pageSize, totalPages: 1, totalElements: 1 });
-      const page: KeyValuePair<string, string>[] = [{ key: varKey3, value: varValue3 }];
+      const pageInfo = new PageInfo({
+        currentPage,
+        elementsPerPage: pageSize,
+        totalPages: 1,
+        totalElements: 1,
+      });
+      const page: KeyValuePair<string, string>[] = [
+        { key: varKey3, value: varValue3 },
+      ];
       const result = buildPaginatedList(pageInfo, page);
-      getTestScheduler().expectObservable(service.searchVariable(queryFor3, { currentPage, pageSize } as any)).toBe('a', { a: result });
+      getTestScheduler()
+        .expectObservable(
+          service.searchVariable(queryFor3, { currentPage, pageSize } as any),
+        )
+        .toBe('a', { a: result });
     });
 
-    it('should return the right keys and variables in a paginated list that\'s not longer than the page size', () => {
+    it("should return the right keys and variables in a paginated list that's not longer than the page size", () => {
       const currentPage = 1;
       const pageSize = 2;
-      const pageInfo = new PageInfo({ currentPage, elementsPerPage: pageSize, totalPages: 2, totalElements: 3 });
-      const page: KeyValuePair<string, string>[] = [{ key: varKey1, value: varValue1 }, { key: varKey2, value: varValue2 }];
+      const pageInfo = new PageInfo({
+        currentPage,
+        elementsPerPage: pageSize,
+        totalPages: 2,
+        totalElements: 3,
+      });
+      const page: KeyValuePair<string, string>[] = [
+        { key: varKey1, value: varValue1 },
+        { key: varKey2, value: varValue2 },
+      ];
       const result = buildPaginatedList(pageInfo, page);
-      getTestScheduler().expectObservable(service.searchVariable(queryInAll, { currentPage, pageSize } as any)).toBe('a', { a: result });
+      getTestScheduler()
+        .expectObservable(
+          service.searchVariable(queryInAll, { currentPage, pageSize } as any),
+        )
+        .toBe('a', { a: result });
     });
   });
-
 });

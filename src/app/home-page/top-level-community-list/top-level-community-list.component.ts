@@ -11,10 +11,7 @@ import {
   Subscription,
 } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import {
-  APP_CONFIG,
-  AppConfig,
-} from 'src/config/app-config.interface';
+import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
 
 import {
   SortDirection,
@@ -39,12 +36,12 @@ import { PaginationComponentOptions } from '../../shared/pagination/pagination-c
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInOut],
 })
-
 export class TopLevelCommunityListComponent implements OnInit, OnDestroy {
   /**
    * A list of remote data objects of all top communities
    */
-  communitiesRD$: BehaviorSubject<RemoteData<PaginatedList<Community>>> = new BehaviorSubject<RemoteData<PaginatedList<Community>>>({} as any);
+  communitiesRD$: BehaviorSubject<RemoteData<PaginatedList<Community>>> =
+    new BehaviorSubject<RemoteData<PaginatedList<Community>>>({} as any);
 
   /**
    * The pagination configuration
@@ -82,25 +79,35 @@ export class TopLevelCommunityListComponent implements OnInit, OnDestroy {
     this.initPage();
   }
 
-
   /**
    * Update the list of top communities
    */
   initPage() {
-    const pagination$ = this.paginationService.getCurrentPagination(this.config.id, this.config);
-    const sort$ = this.paginationService.getCurrentSort(this.config.id, this.sortConfig);
+    const pagination$ = this.paginationService.getCurrentPagination(
+      this.config.id,
+      this.config,
+    );
+    const sort$ = this.paginationService.getCurrentSort(
+      this.config.id,
+      this.sortConfig,
+    );
 
-    this.currentPageSubscription = observableCombineLatest([pagination$, sort$]).pipe(
-      switchMap(([currentPagination, currentSort]) => {
-        return this.cds.findTop({
-          currentPage: currentPagination.currentPage,
-          elementsPerPage: currentPagination.pageSize,
-          sort: { field: currentSort.field, direction: currentSort.direction },
-        });
-      }),
-    ).subscribe((results) => {
-      this.communitiesRD$.next(results);
-    });
+    this.currentPageSubscription = observableCombineLatest([pagination$, sort$])
+      .pipe(
+        switchMap(([currentPagination, currentSort]) => {
+          return this.cds.findTop({
+            currentPage: currentPagination.currentPage,
+            elementsPerPage: currentPagination.pageSize,
+            sort: {
+              field: currentSort.field,
+              direction: currentSort.direction,
+            },
+          });
+        }),
+      )
+      .subscribe((results) => {
+        this.communitiesRD$.next(results);
+      });
   }
 
   /**
@@ -119,5 +126,4 @@ export class TopLevelCommunityListComponent implements OnInit, OnDestroy {
     this.unsubscribe();
     this.paginationService.clearPagination(this.config.id);
   }
-
 }

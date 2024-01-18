@@ -6,14 +6,8 @@
  * http://www.dspace.org/license/
  */
 /* eslint-disable max-classes-per-file */
-import {
-  compare,
-  Operation,
-} from 'fast-json-patch';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { compare, Operation } from 'fast-json-patch';
+import { Observable, of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { getMockRemoteDataBuildService } from '../../../shared/mocks/remote-data-build.service.mock';
@@ -34,15 +28,14 @@ import { RequestService } from '../request.service';
 import { RequestEntryState } from '../request-entry-state.model';
 import { RestRequestMethod } from '../rest-request-method';
 import { constructIdEndpointDefault } from './identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from './patch-data';
+import { PatchData, PatchDataImpl } from './patch-data';
 
 /**
  * Tests whether calls to `PatchData` methods are correctly patched through in a concrete data service that implements it
  */
-export function testPatchDataImplementation(serviceFactory: () => PatchData<any>) {
+export function testPatchDataImplementation(
+  serviceFactory: () => PatchData<any>,
+) {
   let service;
 
   describe('PatchData implementation', () => {
@@ -68,7 +61,10 @@ export function testPatchDataImplementation(serviceFactory: () => PatchData<any>
     it('should handle calls to patch', () => {
       const out: any = service.patch(OBJ, OPERATIONS);
 
-      expect((service as any).patchData.patch).toHaveBeenCalledWith(OBJ, OPERATIONS);
+      expect((service as any).patchData.patch).toHaveBeenCalledWith(
+        OBJ,
+        OPERATIONS,
+      );
       expect(out).toBe('TEST patch');
     });
 
@@ -81,13 +77,17 @@ export function testPatchDataImplementation(serviceFactory: () => PatchData<any>
 
     it('should handle calls to commitUpdates', () => {
       service.commitUpdates(METHOD);
-      expect((service as any).patchData.commitUpdates).toHaveBeenCalledWith(METHOD);
+      expect((service as any).patchData.commitUpdates).toHaveBeenCalledWith(
+        METHOD,
+      );
     });
 
     it('should handle calls to createPatchFromCache', () => {
       const out: any = service.createPatchFromCache(OBJ);
 
-      expect((service as any).patchData.createPatchFromCache).toHaveBeenCalledWith(OBJ);
+      expect(
+        (service as any).patchData.createPatchFromCache,
+      ).toHaveBeenCalledWith(OBJ);
       expect(out).toBe('TEST createPatchFromCache');
     });
   });
@@ -103,10 +103,22 @@ class TestService extends PatchDataImpl<any> {
     protected halService: HALEndpointService,
     protected comparator: ChangeAnalyzer<Item>,
   ) {
-    super(undefined, requestService, rdbService, objectCache, halService, comparator, undefined, constructIdEndpointDefault);
+    super(
+      undefined,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      undefined,
+      constructIdEndpointDefault,
+    );
   }
 
-  public getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  public getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath,
+  ): Observable<string> {
     return observableOf(endpoint);
   }
 }
@@ -135,7 +147,6 @@ describe('PatchDataImpl', () => {
     rdbService = getMockRemoteDataBuildService();
     comparator = new DummyChangeAnalyzer() as any;
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
@@ -147,10 +158,7 @@ describe('PatchDataImpl', () => {
       },
     } as any;
     selfLink = 'https://rest.api/endpoint/1698f1d3-be98-4c51-9fd8-6bfedcbd59b7';
-    linksToFollow = [
-      followLink('a'),
-      followLink('b'),
-    ];
+    linksToFollow = [followLink('a'), followLink('b')];
 
     testScheduler = new TestScheduler((actual, expected) => {
       // asserting the two objects are equal
@@ -165,12 +173,60 @@ describe('PatchDataImpl', () => {
     const statusCodeError = 404;
     const errorMessage = 'not found';
     remoteDataMocks = {
-      RequestPending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.RequestPending, undefined, undefined, undefined),
-      ResponsePending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.ResponsePending, undefined, undefined, undefined),
-      Success: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Success, undefined, payload, statusCodeSuccess),
-      SuccessStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.SuccessStale, undefined, payload, statusCodeSuccess),
-      Error: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Error, errorMessage, undefined, statusCodeError),
-      ErrorStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.ErrorStale, errorMessage, undefined, statusCodeError),
+      RequestPending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.RequestPending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      ResponsePending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ResponsePending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      Success: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Success,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      SuccessStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.SuccessStale,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      Error: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Error,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
+      ErrorStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ErrorStale,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
     };
 
     return new TestService(
@@ -205,7 +261,9 @@ describe('PatchDataImpl', () => {
 
     it('should send a PatchRequest', () => {
       service.patch(dso, operations);
-      expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PatchRequest));
+      expect(requestService.send).toHaveBeenCalledWith(
+        jasmine.any(PatchRequest),
+      );
     });
 
     it('should invalidate the cached object if successfully patched', () => {
@@ -215,8 +273,14 @@ describe('PatchDataImpl', () => {
       service.patch(dso, operations);
 
       expect(rdbService.buildFromRequestUUIDAndAwait).toHaveBeenCalled();
-      expect((rdbService.buildFromRequestUUIDAndAwait as jasmine.Spy).calls.argsFor(0)[0]).toBe(requestService.generateRequestId());
-      const callback = (rdbService.buildFromRequestUUIDAndAwait as jasmine.Spy).calls.argsFor(0)[1];
+      expect(
+        (rdbService.buildFromRequestUUIDAndAwait as jasmine.Spy).calls.argsFor(
+          0,
+        )[0],
+      ).toBe(requestService.generateRequestId());
+      const callback = (
+        rdbService.buildFromRequestUUIDAndAwait as jasmine.Spy
+      ).calls.argsFor(0)[1];
       callback();
 
       expect(service.invalidateByHref).toHaveBeenCalledWith('dso-href');
@@ -230,7 +294,9 @@ describe('PatchDataImpl', () => {
     const name1 = 'random string';
     const name2 = 'another random string';
     beforeEach(() => {
-      operations = [{ op: 'replace', path: '/0/value', value: name2 } as Operation];
+      operations = [
+        { op: 'replace', path: '/0/value', value: name2 } as Operation,
+      ];
 
       dso = Object.assign(new DSpaceObject(), {
         _links: { self: { href: selfLink } },
@@ -242,7 +308,9 @@ describe('PatchDataImpl', () => {
         metadata: [{ key: 'dc.title', value: name2 }],
       });
 
-      spyOn(service, 'findByHref').and.returnValue(createSuccessfulRemoteDataObject$(dso));
+      spyOn(service, 'findByHref').and.returnValue(
+        createSuccessfulRemoteDataObject$(dso),
+      );
       spyOn(objectCache, 'addPatch');
     });
 

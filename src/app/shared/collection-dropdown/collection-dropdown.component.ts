@@ -65,7 +65,6 @@ export interface CollectionListEntry {
   styleUrls: ['./collection-dropdown.component.scss'],
 })
 export class CollectionDropdownComponent implements OnInit, OnDestroy {
-
   /**
    * The search form control
    * @type {FormControl}
@@ -142,7 +141,7 @@ export class CollectionDropdownComponent implements OnInit, OnDestroy {
     private collectionDataService: CollectionDataService,
     private el: ElementRef,
     public dsoNameService: DSONameService,
-  ) { }
+  ) {}
 
   /**
    * Method called on mousewheel event, it prevent the page scroll
@@ -165,19 +164,17 @@ export class CollectionDropdownComponent implements OnInit, OnDestroy {
    */
   ngOnInit() {
     this.isLoading.next(false);
-    this.subs.push(this.searchField.valueChanges.pipe(
-      debounceTime(500),
-      distinctUntilChanged(),
-      startWith(''),
-    ).subscribe(
-      (next) => {
-        if (hasValue(next) && next !== this.currentQuery) {
-          this.resetPagination();
-          this.currentQuery = next;
-          this.populateCollectionList(this.currentQuery, this.currentPage);
-        }
-      },
-    ));
+    this.subs.push(
+      this.searchField.valueChanges
+        .pipe(debounceTime(500), distinctUntilChanged(), startWith(''))
+        .subscribe((next) => {
+          if (hasValue(next) && next !== this.currentQuery) {
+            this.resetPagination();
+            this.currentQuery = next;
+            this.populateCollectionList(this.currentQuery, this.currentPage);
+          }
+        }),
+    );
     // Workaround for prevent the scroll of main page when this component is placed in a dialog
     setTimeout(() => this.el.nativeElement.querySelector('input').focus(), 0);
   }
@@ -188,15 +185,17 @@ export class CollectionDropdownComponent implements OnInit, OnDestroy {
    * @param event
    */
   onScroll(event) {
-    this.scrollableBottom = (event.target.scrollTop + event.target.clientHeight === event.target.scrollHeight);
-    this.scrollableTop = (event.target.scrollTop === 0);
+    this.scrollableBottom =
+      event.target.scrollTop + event.target.clientHeight ===
+      event.target.scrollHeight;
+    this.scrollableTop = event.target.scrollTop === 0;
   }
 
   /**
    * Method used from infinity scroll for retrieve more data on scroll down
    */
   onScrollDown() {
-    if ( this.hasNextPage ) {
+    if (this.hasNextPage) {
       this.populateCollectionList(this.currentQuery, ++this.currentPage);
     }
   }
@@ -226,34 +225,57 @@ export class CollectionDropdownComponent implements OnInit, OnDestroy {
     };
     let searchListService$: Observable<RemoteData<PaginatedList<Collection>>>;
     if (this.entityType) {
-      searchListService$ = this.collectionDataService
-        .getAuthorizedCollectionByEntityType(
+      searchListService$ =
+        this.collectionDataService.getAuthorizedCollectionByEntityType(
           query,
           this.entityType,
           findOptions,
           true,
-          followLink('parentCommunity'));
+          followLink('parentCommunity'),
+        );
     } else {
-      searchListService$ = this.collectionDataService
-        .getAuthorizedCollection(query, findOptions, true, true, followLink('parentCommunity'));
+      searchListService$ = this.collectionDataService.getAuthorizedCollection(
+        query,
+        findOptions,
+        true,
+        true,
+        followLink('parentCommunity'),
+      );
     }
     this.searchListCollection$ = searchListService$.pipe(
       getFirstCompletedRemoteData(),
       switchMap((collectionsRD: RemoteData<PaginatedList<Collection>>) => {
         this.searchComplete.emit();
-        if (collectionsRD.hasSucceeded && collectionsRD.payload.totalElements > 0) {
-          if (this.searchListCollection.length >= collectionsRD.payload.totalElements) {
+        if (
+          collectionsRD.hasSucceeded &&
+          collectionsRD.payload.totalElements > 0
+        ) {
+          if (
+            this.searchListCollection.length >=
+            collectionsRD.payload.totalElements
+          ) {
             this.hasNextPage = false;
           }
           this.emitSelectionEvents(collectionsRD);
           return observableFrom(collectionsRD.payload.page).pipe(
-            mergeMap((collection: Collection) => collection.parentCommunity.pipe(
-              getFirstSucceededRemoteDataPayload(),
-              map((community: Community) => ({
-                communities: [{ id: community.id, name: this.dsoNameService.getName(community) }],
-                collection: { id: collection.id, uuid: collection.id, name: this.dsoNameService.getName(collection) },
-              }),
-              ))),
+            mergeMap((collection: Collection) =>
+              collection.parentCommunity.pipe(
+                getFirstSucceededRemoteDataPayload(),
+                map((community: Community) => ({
+                  communities: [
+                    {
+                      id: community.id,
+                      name: this.dsoNameService.getName(community),
+                    },
+                  ],
+                  collection: {
+                    id: collection.id,
+                    uuid: collection.id,
+                    name: this.dsoNameService.getName(collection),
+                  },
+                })),
+              ),
+            ),
             reduce((acc: any, value: any) => [...acc, value], []),
           );
         } else {
@@ -275,7 +297,9 @@ export class CollectionDropdownComponent implements OnInit, OnDestroy {
    * Unsubscribe from all subscriptions
    */
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
 
   /**
@@ -310,19 +334,29 @@ export class CollectionDropdownComponent implements OnInit, OnDestroy {
    * @param collections
    * @private
    */
-  private emitSelectionEvents(collections: RemoteData<PaginatedList<Collection>>) {
+  private emitSelectionEvents(
+    collections: RemoteData<PaginatedList<Collection>>,
+  ) {
     if (collections.payload.totalElements === 1) {
       const collection = collections.payload.page[0];
-      collections.payload.page[0].parentCommunity.pipe(
-        getFirstSucceededRemoteDataPayload(),
-        take(1),
-      ).subscribe((community: Community) => {
-        this.theOnlySelectable.emit({
-          communities: [{ id: community.id, name: this.dsoNameService.getName(community), uuid: community.id }],
-          collection: { id: collection.id, uuid: collection.id, name: this.dsoNameService.getName(collection) },
+      collections.payload.page[0].parentCommunity
+        .pipe(getFirstSucceededRemoteDataPayload(), take(1))
+        .subscribe((community: Community) => {
+          this.theOnlySelectable.emit({
+            communities: [
+              {
+                id: community.id,
+                name: this.dsoNameService.getName(community),
+                uuid: community.id,
+              },
+            ],
+            collection: {
+              id: collection.id,
+              uuid: collection.id,
+              name: this.dsoNameService.getName(collection),
+            },
+          });
         });
-      });
     }
   }
-
 }

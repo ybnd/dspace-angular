@@ -1,7 +1,4 @@
-import {
-  autoserialize,
-  inheritSerialization,
-} from 'cerialize';
+import { autoserialize, inheritSerialization } from 'cerialize';
 
 import { typedObject } from '../cache/builders/build-decorators';
 import { DSpaceObject } from './dspace-object.model';
@@ -16,11 +13,11 @@ export class License extends DSpaceObject {
    * Is the license custom?
    */
   @autoserialize
-    custom: boolean;
+  custom: boolean;
 
   /**
    * The text of the license
    */
   @autoserialize
-    text: string;
+  text: string;
 }

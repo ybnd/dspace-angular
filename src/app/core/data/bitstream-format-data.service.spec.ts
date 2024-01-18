@@ -1,17 +1,7 @@
 import { waitForAsync } from '@angular/core/testing';
-import {
-  Action,
-  Store,
-} from '@ngrx/store';
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Action, Store } from '@ngrx/store';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
+import { Observable, of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import {
@@ -38,7 +28,8 @@ describe('BitstreamFormatDataService', () => {
   let scheduler: TestScheduler;
 
   const bitstreamFormatsEndpoint = 'https://rest.api/core/bitstream-formats';
-  const bitstreamFormatsIdEndpoint = 'https://rest.api/core/bitstream-formats/format-id';
+  const bitstreamFormatsIdEndpoint =
+    'https://rest.api/core/bitstream-formats/format-id';
 
   const responseCacheEntry = new RequestEntry();
   responseCacheEntry.response = new RestResponse(true, 200, 'Success');
@@ -84,7 +75,8 @@ describe('BitstreamFormatDataService', () => {
   }
 
   describe('composition', () => {
-    const initService = () => new BitstreamFormatDataService(null, null, null, null, null, null);
+    const initService = () =>
+      new BitstreamFormatDataService(null, null, null, null, null, null);
     testFindAllDataImplementation(initService);
     testDeleteDataImplementation(initService);
   });
@@ -147,7 +139,6 @@ describe('BitstreamFormatDataService', () => {
       service = initTestService(halEndpointService);
     }));
     it('should get the create endpoint ', () => {
-
       const result = service.getCreateEndpoint();
       const expected = cold('b', { b: bitstreamFormatsEndpoint });
 
@@ -176,7 +167,6 @@ describe('BitstreamFormatDataService', () => {
       const result = service.updateBitstreamFormat(updatedBistreamFormat);
 
       expect(result).toBeObservable(expected);
-
     });
   });
 
@@ -224,7 +214,9 @@ describe('BitstreamFormatDataService', () => {
       service.clearBitStreamFormatRequests().subscribe();
     }));
     it('should remove the bitstream format hrefs in the request service', () => {
-      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(bitstreamFormatsEndpoint);
+      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(
+        bitstreamFormatsEndpoint,
+      );
     });
   });
 
@@ -247,7 +239,9 @@ describe('BitstreamFormatDataService', () => {
       format.uuid = 'uuid';
 
       service.selectBitstreamFormat(format);
-      expect(store.dispatch).toHaveBeenCalledWith(new BitstreamFormatsRegistrySelectAction(format));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new BitstreamFormatsRegistrySelectAction(format),
+      );
     });
   });
 
@@ -270,7 +264,9 @@ describe('BitstreamFormatDataService', () => {
       format.uuid = 'uuid';
 
       service.deselectBitstreamFormat(format);
-      expect(store.dispatch).toHaveBeenCalledWith(new BitstreamFormatsRegistryDeselectAction(format));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new BitstreamFormatsRegistryDeselectAction(format),
+      );
     });
   });
 
@@ -287,11 +283,12 @@ describe('BitstreamFormatDataService', () => {
       });
       service = initTestService(halEndpointService);
       spyOn(store, 'dispatch');
-
     }));
     it('should remove all bitstreamFormats from the store', () => {
       service.deselectAllBitstreamFormats();
-      expect(store.dispatch).toHaveBeenCalledWith(new BitstreamFormatsRegistryDeselectAllAction());
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new BitstreamFormatsRegistryDeselectAllAction(),
+      );
     });
   });
 

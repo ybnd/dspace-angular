@@ -1,20 +1,12 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 import { ResultsBackButtonComponent } from './results-back-button.component';
 
 describe('ResultsBackButtonComponent', () => {
-
   let component: ResultsBackButtonComponent;
   let fixture: ComponentFixture<ResultsBackButtonComponent>;
 
@@ -23,23 +15,19 @@ describe('ResultsBackButtonComponent', () => {
   };
 
   describe('back to results', () => {
-
-
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
         declarations: [ResultsBackButtonComponent],
-        imports: [TranslateModule.forRoot(),
+        imports: [
+          TranslateModule.forRoot(),
           RouterTestingModule.withRoutes([]),
         ],
-        providers: [
-          { provide: TranslateService, useValue: translate },
-        ],
+        providers: [{ provide: TranslateService, useValue: translate }],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
     }));
 
     describe('from a metadata browse list', () => {
-
       beforeEach(waitForAsync(() => {
         translate.get.calls.reset();
         fixture = TestBed.createComponent(ResultsBackButtonComponent);
@@ -54,11 +42,9 @@ describe('ResultsBackButtonComponent', () => {
         const el = fixture.debugElement.nativeElement;
         expect(el.innerHTML).toContain('browse button');
       });
-
     });
 
     describe('from an item', () => {
-
       beforeEach(waitForAsync(() => {
         translate.get.calls.reset();
         fixture = TestBed.createComponent(ResultsBackButtonComponent);
@@ -72,10 +58,6 @@ describe('ResultsBackButtonComponent', () => {
         const el = fixture.debugElement.nativeElement;
         expect(el.innerHTML).toContain('item button');
       });
-
     });
-
   });
-
 });
-

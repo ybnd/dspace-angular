@@ -28,12 +28,10 @@ export const EPERSON_EDIT_FOLLOW_LINKS: FollowLinkConfig<EPerson>[] = [
   providedIn: 'root',
 })
 export class EPersonResolver implements Resolve<RemoteData<EPerson>> {
-
   constructor(
     protected ePersonService: EPersonDataService,
     protected store: Store<any>,
-  ) {
-  }
+  ) {}
 
   /**
    * Method for resolving a {@link EPerson} based on the parameters in the current route
@@ -42,14 +40,13 @@ export class EPersonResolver implements Resolve<RemoteData<EPerson>> {
    * @returns `Observable<<RemoteData<EPerson>>` Emits the found {@link EPerson} based on the parameters in the current
    * route, or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<EPerson>> {
-    const ePersonRD$: Observable<RemoteData<EPerson>> = this.ePersonService.findById(route.params.id,
-      true,
-      false,
-      ...EPERSON_EDIT_FOLLOW_LINKS,
-    ).pipe(
-      getFirstCompletedRemoteData(),
-    );
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<EPerson>> {
+    const ePersonRD$: Observable<RemoteData<EPerson>> = this.ePersonService
+      .findById(route.params.id, true, false, ...EPERSON_EDIT_FOLLOW_LINKS)
+      .pipe(getFirstCompletedRemoteData());
 
     ePersonRD$.subscribe((ePersonRD: RemoteData<EPerson>) => {
       this.store.dispatch(new ResolvedAction(state.url, ePersonRD.payload));
@@ -57,5 +54,4 @@ export class EPersonResolver implements Resolve<RemoteData<EPerson>> {
 
     return ePersonRD$;
   }
-
 }

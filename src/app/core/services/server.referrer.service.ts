@@ -1,12 +1,6 @@
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { REQUEST } from '@nguniversal/express-engine/tokens';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { ReferrerService } from './referrer.service';
 
@@ -18,10 +12,7 @@ import { ReferrerService } from './referrer.service';
  */
 @Injectable()
 export class ServerReferrerService extends ReferrerService {
-
-  constructor(
-    @Inject(REQUEST) protected request: any,
-  ) {
+  constructor(@Inject(REQUEST) protected request: any) {
     super();
   }
 

@@ -20,7 +20,6 @@ class NullAction extends TruncatableCollapseAction {
 }
 
 describe('truncatableReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = { 123: { collapsed: true, page: 1 } };
     const action = new NullAction();

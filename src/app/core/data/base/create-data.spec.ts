@@ -5,10 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { getMockRemoteDataBuildService } from '../../../shared/mocks/remote-data-build.service.mock';
 import { getMockRequestService } from '../../../shared/mocks/request.service.mock';
@@ -28,24 +25,21 @@ import { RemoteData } from '../remote-data';
 import { RequestService } from '../request.service';
 import { RequestEntryState } from '../request-entry-state.model';
 import { RestRequestMethod } from '../rest-request-method';
-import {
-  CreateData,
-  CreateDataImpl,
-} from './create-data';
+import { CreateData, CreateDataImpl } from './create-data';
 
 /**
  * Tests whether calls to `CreateData` methods are correctly patched through in a concrete data service that implements it
  */
-export function testCreateDataImplementation(serviceFactory: () => CreateData<any>) {
+export function testCreateDataImplementation(
+  serviceFactory: () => CreateData<any>,
+) {
   let service;
 
   describe('CreateData implementation', () => {
     const OBJ = Object.assign(new DSpaceObject(), {
       uuid: '08eec68f-45e4-47a3-80c5-f0beb5627079',
     });
-    const PARAMS = [
-      new RequestParam('abc', 123), new RequestParam('def', 456),
-    ];
+    const PARAMS = [new RequestParam('abc', 123), new RequestParam('def', 456)];
 
     beforeAll(() => {
       service = serviceFactory();
@@ -58,7 +52,10 @@ export function testCreateDataImplementation(serviceFactory: () => CreateData<an
     it('should handle calls to create', () => {
       const out: any = service.create(OBJ, ...PARAMS);
 
-      expect((service as any).createData.create).toHaveBeenCalledWith(OBJ, ...PARAMS);
+      expect((service as any).createData.create).toHaveBeenCalledWith(
+        OBJ,
+        ...PARAMS,
+      );
       expect(out).toBe('TEST create');
     });
   });
@@ -74,10 +71,21 @@ class TestService extends CreateDataImpl<any> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
   ) {
-    super('test', requestService, rdbService, objectCache, halService, notificationsService, undefined);
+    super(
+      'test',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      undefined,
+    );
   }
 
-  public getEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  public getEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath,
+  ): Observable<string> {
     return observableOf(endpoint);
   }
 }
@@ -103,7 +111,6 @@ describe('CreateDataImpl', () => {
     halService = new HALEndpointServiceStub('url') as any;
     rdbService = getMockRemoteDataBuildService();
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
@@ -129,12 +136,60 @@ describe('CreateDataImpl', () => {
     const statusCodeError = 404;
     const errorMessage = 'not found';
     remoteDataMocks = {
-      RequestPending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.RequestPending, undefined, undefined, undefined),
-      ResponsePending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.ResponsePending, undefined, undefined, undefined),
-      Success: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Success, undefined, payload, statusCodeSuccess),
-      SuccessStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.SuccessStale, undefined, payload, statusCodeSuccess),
-      Error: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Error, errorMessage, undefined, statusCodeError),
-      ErrorStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.ErrorStale, errorMessage, undefined, statusCodeError),
+      RequestPending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.RequestPending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      ResponsePending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ResponsePending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      Success: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Success,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      SuccessStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.SuccessStale,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      Error: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Error,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
+      ErrorStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ErrorStale,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
     };
 
     return new TestService(
@@ -149,7 +204,10 @@ describe('CreateDataImpl', () => {
   beforeEach(() => {
     service = initTestService();
 
-    buildFromRequestUUIDSpy = spyOn(rdbService, 'buildFromRequestUUID').and.callThrough();
+    buildFromRequestUUIDSpy = spyOn(
+      rdbService,
+      'buildFromRequestUUID',
+    ).and.callThrough();
     createOnEndpointSpy = spyOn(service, 'createOnEndpoint').and.callThrough();
 
     MOCK_SUCCEEDED_RD = createSuccessfulRemoteDataObject({});
@@ -159,19 +217,29 @@ describe('CreateDataImpl', () => {
   describe('create', () => {
     it('should POST the object to the root endpoint with the given parameters and return the remote data', (done) => {
       const params = [
-        new RequestParam('abc', 123), new RequestParam('def', 456),
+        new RequestParam('abc', 123),
+        new RequestParam('def', 456),
       ];
-      buildFromRequestUUIDSpy.and.returnValue(observableOf(remoteDataMocks.Success));
+      buildFromRequestUUIDSpy.and.returnValue(
+        observableOf(remoteDataMocks.Success),
+      );
 
-      service.create(obj, ...params).subscribe(out => {
-        expect(createOnEndpointSpy).toHaveBeenCalledWith(obj, jasmine.anything());
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.POST,
-          uuid: requestService.generateRequestId(),
-          href: 'https://rest.api/core?abc=123&def=456',
-          body: JSON.stringify(obj),
-        }));
-        expect(buildFromRequestUUIDSpy).toHaveBeenCalledWith(requestService.generateRequestId());
+      service.create(obj, ...params).subscribe((out) => {
+        expect(createOnEndpointSpy).toHaveBeenCalledWith(
+          obj,
+          jasmine.anything(),
+        );
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.objectContaining({
+            method: RestRequestMethod.POST,
+            uuid: requestService.generateRequestId(),
+            href: 'https://rest.api/core?abc=123&def=456',
+            body: JSON.stringify(obj),
+          }),
+        );
+        expect(buildFromRequestUUIDSpy).toHaveBeenCalledWith(
+          requestService.generateRequestId(),
+        );
         expect(out).toEqual(remoteDataMocks.Success);
         done();
       });
@@ -180,56 +248,91 @@ describe('CreateDataImpl', () => {
 
   describe('createOnEndpoint', () => {
     beforeEach(() => {
-      buildFromRequestUUIDSpy.and.returnValue(observableOf(remoteDataMocks.Success));
+      buildFromRequestUUIDSpy.and.returnValue(
+        observableOf(remoteDataMocks.Success),
+      );
     });
 
     it('should send a POST request with the object as JSON', (done) => {
-      service.createOnEndpoint(obj, observableOf('https://rest.api/core/custom?search')).subscribe(out => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.POST,
-          body: JSON.stringify(obj),
-        }));
-        done();
-      });
+      service
+        .createOnEndpoint(
+          obj,
+          observableOf('https://rest.api/core/custom?search'),
+        )
+        .subscribe((out) => {
+          expect(requestService.send).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+              method: RestRequestMethod.POST,
+              body: JSON.stringify(obj),
+            }),
+          );
+          done();
+        });
     });
 
     it('should send the POST request to the given endpoint', (done) => {
-
-      service.createOnEndpoint(obj, observableOf('https://rest.api/core/custom?search')).subscribe(out => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.POST,
-          href: 'https://rest.api/core/custom?search',
-        }));
-        done();
-      });
+      service
+        .createOnEndpoint(
+          obj,
+          observableOf('https://rest.api/core/custom?search'),
+        )
+        .subscribe((out) => {
+          expect(requestService.send).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+              method: RestRequestMethod.POST,
+              href: 'https://rest.api/core/custom?search',
+            }),
+          );
+          done();
+        });
     });
 
     it('should return the remote data for the sent request', (done) => {
-      service.createOnEndpoint(obj, observableOf('https://rest.api/core/custom?search')).subscribe(out => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.POST,
-          uuid: requestService.generateRequestId(),
-        }));
-        expect(buildFromRequestUUIDSpy).toHaveBeenCalledWith(requestService.generateRequestId());
-        expect(notificationsService.error).not.toHaveBeenCalled();
-        expect(out).toEqual(remoteDataMocks.Success);
-        done();
-      });
+      service
+        .createOnEndpoint(
+          obj,
+          observableOf('https://rest.api/core/custom?search'),
+        )
+        .subscribe((out) => {
+          expect(requestService.send).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+              method: RestRequestMethod.POST,
+              uuid: requestService.generateRequestId(),
+            }),
+          );
+          expect(buildFromRequestUUIDSpy).toHaveBeenCalledWith(
+            requestService.generateRequestId(),
+          );
+          expect(notificationsService.error).not.toHaveBeenCalled();
+          expect(out).toEqual(remoteDataMocks.Success);
+          done();
+        });
     });
 
     it('should show an error notification if the request fails', (done) => {
-      buildFromRequestUUIDSpy.and.returnValue(observableOf(remoteDataMocks.Error));
+      buildFromRequestUUIDSpy.and.returnValue(
+        observableOf(remoteDataMocks.Error),
+      );
 
-      service.createOnEndpoint(obj, observableOf('https://rest.api/core/custom?search')).subscribe(out => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.POST,
-          uuid: requestService.generateRequestId(),
-        }));
-        expect(buildFromRequestUUIDSpy).toHaveBeenCalledWith(requestService.generateRequestId());
-        expect(notificationsService.error).toHaveBeenCalled();
-        expect(out).toEqual(remoteDataMocks.Error);
-        done();
-      });
+      service
+        .createOnEndpoint(
+          obj,
+          observableOf('https://rest.api/core/custom?search'),
+        )
+        .subscribe((out) => {
+          expect(requestService.send).toHaveBeenCalledWith(
+            jasmine.objectContaining({
+              method: RestRequestMethod.POST,
+              uuid: requestService.generateRequestId(),
+            }),
+          );
+          expect(buildFromRequestUUIDSpy).toHaveBeenCalledWith(
+            requestService.generateRequestId(),
+          );
+          expect(notificationsService.error).toHaveBeenCalled();
+          expect(out).toEqual(remoteDataMocks.Error);
+          done();
+        });
     });
   });
 });

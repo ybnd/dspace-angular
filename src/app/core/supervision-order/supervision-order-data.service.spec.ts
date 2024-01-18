@@ -1,8 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -152,12 +148,21 @@ describe('SupervisionOrderService', () => {
     spyOn((service as any).deleteData, 'delete').and.callThrough();
     spyOn((service as any).patchData, 'update').and.callThrough();
     spyOn((service as any).searchData, 'searchBy').and.callThrough();
-    spyOn((service as any).searchData, 'getSearchByHref').and.returnValue(observableOf(requestURL));
+    spyOn((service as any).searchData, 'getSearchByHref').and.returnValue(
+      observableOf(requestURL),
+    );
   });
 
   describe('create', () => {
     it('should proxy the call to createData.create with group UUID', () => {
-      scheduler.schedule(() => service.create(supervisionOrder, itemUUID, groupUUID, supervisionOrderType));
+      scheduler.schedule(() =>
+        service.create(
+          supervisionOrder,
+          itemUUID,
+          groupUUID,
+          supervisionOrderType,
+        ),
+      );
       const params = [
         new RequestParam('uuid', itemUUID),
         new RequestParam('group', groupUUID),
@@ -165,11 +170,21 @@ describe('SupervisionOrderService', () => {
       ];
       scheduler.flush();
 
-      expect((service as any).createData.create).toHaveBeenCalledWith(supervisionOrder, ...params);
+      expect((service as any).createData.create).toHaveBeenCalledWith(
+        supervisionOrder,
+        ...params,
+      );
     });
 
     it('should proxy the call to createData.create with group UUID', () => {
-      scheduler.schedule(() => service.create(supervisionOrder, itemUUID, groupUUID, supervisionOrderType));
+      scheduler.schedule(() =>
+        service.create(
+          supervisionOrder,
+          itemUUID,
+          groupUUID,
+          supervisionOrderType,
+        ),
+      );
       const params = [
         new RequestParam('uuid', itemUUID),
         new RequestParam('group', groupUUID),
@@ -177,11 +192,19 @@ describe('SupervisionOrderService', () => {
       ];
       scheduler.flush();
 
-      expect((service as any).createData.create).toHaveBeenCalledWith(supervisionOrder, ...params);
+      expect((service as any).createData.create).toHaveBeenCalledWith(
+        supervisionOrder,
+        ...params,
+      );
     });
 
     it('should return a RemoteData<supervisionOrder> for the object with the given id', () => {
-      const result = service.create(supervisionOrder, itemUUID, groupUUID, supervisionOrderType);
+      const result = service.create(
+        supervisionOrder,
+        itemUUID,
+        groupUUID,
+        supervisionOrderType,
+      );
       const expected = cold('a|', {
         a: supervisionOrderRD,
       });
@@ -194,7 +217,9 @@ describe('SupervisionOrderService', () => {
       scheduler.schedule(() => service.delete(supervisionOrderId));
       scheduler.flush();
 
-      expect((service as any).deleteData.delete).toHaveBeenCalledWith(supervisionOrderId);
+      expect((service as any).deleteData.delete).toHaveBeenCalledWith(
+        supervisionOrderId,
+      );
     });
   });
 
@@ -203,7 +228,9 @@ describe('SupervisionOrderService', () => {
       scheduler.schedule(() => service.update(supervisionOrder));
       scheduler.flush();
 
-      expect((service as any).patchData.update).toHaveBeenCalledWith(supervisionOrder);
+      expect((service as any).patchData.update).toHaveBeenCalledWith(
+        supervisionOrder,
+      );
     });
   });
 
@@ -234,7 +261,12 @@ describe('SupervisionOrderService', () => {
       scheduler.schedule(() => service.searchByGroup(groupUUID));
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByGroupMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByGroupMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should proxy the call to searchData.searchBy with additional search param', () => {
@@ -246,7 +278,12 @@ describe('SupervisionOrderService', () => {
       scheduler.schedule(() => service.searchByGroup(groupUUID, itemUUID));
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByGroupMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByGroupMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should return a RemoteData<PaginatedList<supervisionOrder>) for the search', () => {
@@ -256,7 +293,6 @@ describe('SupervisionOrderService', () => {
       });
       expect(result).toBeObservable(expected);
     });
-
   });
 
   describe('searchByItem', () => {
@@ -266,7 +302,12 @@ describe('SupervisionOrderService', () => {
       scheduler.schedule(() => service.searchByItem(itemUUID));
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByItemMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByItemMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should return a RemoteData<PaginatedList<supervisionOrder>) for the search', () => {
@@ -277,5 +318,4 @@ describe('SupervisionOrderService', () => {
       expect(result).toBeObservable(expected);
     });
   });
-
 });

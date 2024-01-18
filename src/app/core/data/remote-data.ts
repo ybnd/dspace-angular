@@ -25,8 +25,7 @@ export class RemoteData<T> {
     public errorMessage?: string,
     public payload?: T,
     public statusCode?: number,
-  ) {
-  }
+  ) {}
 
   /**
    * Returns true if this.state is RequestPending, false otherwise
@@ -114,5 +113,4 @@ export class RemoteData<T> {
   get hasNoContent(): boolean {
     return this.statusCode === 204;
   }
-
 }

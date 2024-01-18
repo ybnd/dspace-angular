@@ -6,11 +6,7 @@ import {
   NgbModalModule,
 } from '@ng-bootstrap/ng-bootstrap';
 import { EffectsModule } from '@ngrx/effects';
-import {
-  Action,
-  StoreConfig,
-  StoreModule,
-} from '@ngrx/store';
+import { Action, StoreConfig, StoreModule } from '@ngrx/store';
 
 import { storeModuleConfig } from '../app.reducer';
 import { SubmissionAccessesConfigDataService } from '../core/config/submission-accesses-config-data.service';
@@ -56,10 +52,7 @@ import { SubmissionSectionUploadFileViewComponent } from './sections/upload/file
 import { SubmissionSectionUploadComponent } from './sections/upload/section-upload.component';
 import { SectionUploadService } from './sections/upload/section-upload.service';
 import { submissionEffects } from './submission.effects';
-import {
-  submissionReducers,
-  SubmissionState,
-} from './submission.reducers';
+import { submissionReducers, SubmissionState } from './submission.reducers';
 import { SubmissionSubmitComponent } from './submit/submission-submit.component';
 import { ThemedSubmissionSubmitComponent } from './submit/themed-submission-submit.component';
 
@@ -108,7 +101,11 @@ const DECLARATIONS = [
     CommonModule,
     CoreModule.forRoot(),
     SharedModule,
-    StoreModule.forFeature('submission', submissionReducers, storeModuleConfig as StoreConfig<SubmissionState, Action>),
+    StoreModule.forFeature(
+      'submission',
+      submissionReducers,
+      storeModuleConfig as StoreConfig<SubmissionState, Action>,
+    ),
     EffectsModule.forFeature(submissionEffects),
     JournalEntitiesModule.withEntryComponents(),
     ResearchEntitiesModule.withEntryComponents(),
@@ -119,10 +116,7 @@ const DECLARATIONS = [
     UploadModule,
   ],
   declarations: DECLARATIONS,
-  exports: [
-    ...DECLARATIONS,
-    FormModule,
-  ],
+  exports: [...DECLARATIONS, FormModule],
   providers: [
     SectionUploadService,
     SectionsService,

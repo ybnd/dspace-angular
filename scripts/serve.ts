@@ -11,5 +11,5 @@ const appConfig: AppConfig = buildAppConfig();
  */
 spawn(
   `ng serve --host ${appConfig.ui.host} --port ${appConfig.ui.port} --serve-path ${appConfig.ui.nameSpace} --ssl ${appConfig.ui.ssl} ${process.argv.slice(2).join(' ')} --configuration development`,
-  { stdio: 'inherit', shell: true }
+  { stdio: 'inherit', shell: true },
 );

@@ -6,10 +6,7 @@ import {
 } from 'cerialize';
 import { Observable } from 'rxjs';
 
-import {
-  link,
-  typedObject,
-} from '../../cache/builders/build-decorators';
+import { link, typedObject } from '../../cache/builders/build-decorators';
 import { PaginatedList } from '../../data/paginated-list.model';
 import { RemoteData } from '../../data/remote-data';
 import { DSpaceObject } from '../../shared/dspace-object.model';
@@ -48,7 +45,7 @@ export class Group extends DSpaceObject {
    * The {@link HALLink}s for this Group
    */
   @deserialize
-    _links: {
+  _links: {
     self: HALLink;
     subgroups: HALLink;
     epersons: HALLink;
@@ -75,5 +72,4 @@ export class Group extends DSpaceObject {
    */
   @link(DSPACE_OBJECT)
   public object?: Observable<RemoteData<DSpaceObject>>;
-
 }

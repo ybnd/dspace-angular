@@ -1,13 +1,5 @@
-import {
-  DebugElement,
-  Injectable,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, Injectable, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -77,14 +69,22 @@ describe('DsoEditMetadataComponent', () => {
       },
     });
 
-    notificationsService = jasmine.createSpyObj('notificationsService', ['error', 'success']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'error',
+      'success',
+    ]);
 
     TestBed.configureTestingModule({
       declarations: [DsoEditMetadataComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
         TestDataService,
-        { provide: DATA_SERVICE_FACTORY, useValue: jasmine.createSpy('getDataServiceFor').and.returnValue(TestDataService) },
+        {
+          provide: DATA_SERVICE_FACTORY,
+          useValue: jasmine
+            .createSpy('getDataServiceFor')
+            .and.returnValue(TestDataService),
+        },
         { provide: NotificationsService, useValue: notificationsService },
         ArrayMoveChangeAnalyzer,
       ],
@@ -108,7 +108,8 @@ describe('DsoEditMetadataComponent', () => {
 
   describe('when the form contains changes', () => {
     beforeEach(() => {
-      component.form.fields['dc.title'][0].newValue.value = 'Updated Title Once';
+      component.form.fields['dc.title'][0].newValue.value =
+        'Updated Title Once';
       component.form.fields['dc.title'][0].confirmChanges();
       component.form.resetReinstatable();
       component.onValueSaved();
@@ -130,7 +131,8 @@ describe('DsoEditMetadataComponent', () => {
 
       describe('and a new change is made', () => {
         beforeEach(() => {
-          component.form.fields['dc.title'][0].newValue.value = 'Updated Title Twice';
+          component.form.fields['dc.title'][0].newValue.value =
+            'Updated Title Twice';
           component.form.fields['dc.title'][0].confirmChanges();
           component.form.resetReinstatable();
           component.onValueSaved();
@@ -153,8 +155,12 @@ describe('DsoEditMetadataComponent', () => {
     assertButton(ADD_BTN, true, true);
 
     it('should display a row with a field selector and metadata value', () => {
-      expect(fixture.debugElement.query(By.css('ds-metadata-field-selector'))).toBeTruthy();
-      expect(fixture.debugElement.query(By.css('ds-dso-edit-metadata-value'))).toBeTruthy();
+      expect(
+        fixture.debugElement.query(By.css('ds-metadata-field-selector')),
+      ).toBeTruthy();
+      expect(
+        fixture.debugElement.query(By.css('ds-dso-edit-metadata-value')),
+      ).toBeTruthy();
     });
 
     describe('and gets assigned to a metadata field', () => {
@@ -169,13 +175,21 @@ describe('DsoEditMetadataComponent', () => {
       assertButton(ADD_BTN, true, false);
 
       it('should not display the separate row with field selector and metadata value anymore', () => {
-        expect(fixture.debugElement.query(By.css('ds-metadata-field-selector'))).toBeNull();
-        expect(fixture.debugElement.query(By.css('ds-dso-edit-metadata-value'))).toBeNull();
+        expect(
+          fixture.debugElement.query(By.css('ds-metadata-field-selector')),
+        ).toBeNull();
+        expect(
+          fixture.debugElement.query(By.css('ds-dso-edit-metadata-value')),
+        ).toBeNull();
       });
     });
   });
 
-  function assertButton(name: string, exists: boolean, disabled: boolean = false): void {
+  function assertButton(
+    name: string,
+    exists: boolean,
+    disabled: boolean = false,
+  ): void {
     describe(`${name} button`, () => {
       let btn: DebugElement;
 
@@ -198,5 +212,4 @@ describe('DsoEditMetadataComponent', () => {
       }
     });
   }
-
 });

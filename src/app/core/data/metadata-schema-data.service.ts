@@ -11,24 +11,12 @@ import { MetadataSchema } from '../metadata/metadata-schema.model';
 import { METADATA_SCHEMA } from '../metadata/metadata-schema.resource-type';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { NoContent } from '../shared/NoContent.model';
-import {
-  CreateData,
-  CreateDataImpl,
-} from './base/create-data';
+import { CreateData, CreateDataImpl } from './base/create-data';
 import { dataService } from './base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from './base/delete-data';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from './base/find-all-data';
+import { DeleteData, DeleteDataImpl } from './base/delete-data';
+import { FindAllData, FindAllDataImpl } from './base/find-all-data';
 import { IdentifiableDataService } from './base/identifiable-data.service';
-import {
-  PutData,
-  PutDataImpl,
-} from './base/put-data';
+import { PutData, PutDataImpl } from './base/put-data';
 import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
@@ -39,7 +27,10 @@ import { RequestService } from './request.service';
  */
 @Injectable()
 @dataService(METADATA_SCHEMA)
-export class MetadataSchemaDataService extends IdentifiableDataService<MetadataSchema> implements FindAllData<MetadataSchema>, DeleteData<MetadataSchema> {
+export class MetadataSchemaDataService
+  extends IdentifiableDataService<MetadataSchema>
+  implements FindAllData<MetadataSchema>, DeleteData<MetadataSchema>
+{
   private createData: CreateData<MetadataSchema>;
   private findAllData: FindAllData<MetadataSchema>;
   private putData: PutData<MetadataSchema>;
@@ -52,12 +43,49 @@ export class MetadataSchemaDataService extends IdentifiableDataService<MetadataS
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
   ) {
-    super('metadataschemas', requestService, rdbService, objectCache, halService);
+    super(
+      'metadataschemas',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.putData = new PutDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.putData = new PutDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -68,7 +96,9 @@ export class MetadataSchemaDataService extends IdentifiableDataService<MetadataS
    *  - On update, a PutRequest is used
    * @param schema    The MetadataSchema to create or update
    */
-  createOrUpdateMetadataSchema(schema: MetadataSchema): Observable<RemoteData<MetadataSchema>> {
+  createOrUpdateMetadataSchema(
+    schema: MetadataSchema,
+  ): Observable<RemoteData<MetadataSchema>> {
     const isUpdate = hasValue(schema.id);
 
     if (isUpdate) {
@@ -102,8 +132,18 @@ export class MetadataSchemaDataService extends IdentifiableDataService<MetadataS
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  public findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<MetadataSchema>[]): Observable<RemoteData<PaginatedList<MetadataSchema>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<MetadataSchema>[]
+  ): Observable<RemoteData<PaginatedList<MetadataSchema>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -114,7 +154,10 @@ export class MetadataSchemaDataService extends IdentifiableDataService<MetadataS
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  public delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
@@ -127,7 +170,10 @@ export class MetadataSchemaDataService extends IdentifiableDataService<MetadataS
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
 }

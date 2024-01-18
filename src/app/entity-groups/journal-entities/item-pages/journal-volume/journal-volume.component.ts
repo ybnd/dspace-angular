@@ -13,5 +13,4 @@ import { listableObjectComponent } from '../../../../shared/object-collection/sh
 /**
  * The component for displaying metadata and relations of an item of the type Journal Volume
  */
-export class JournalVolumeComponent extends ItemComponent {
-}
+export class JournalVolumeComponent extends ItemComponent {}

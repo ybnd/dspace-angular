@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -31,7 +28,8 @@ import { WorkspaceItemSearchResultListElementComponent } from './workspace-item-
 let component: WorkspaceItemSearchResultListElementComponent;
 let fixture: ComponentFixture<WorkspaceItemSearchResultListElementComponent>;
 
-const mockResultObject: WorkflowItemSearchResult = new WorkflowItemSearchResult();
+const mockResultObject: WorkflowItemSearchResult =
+  new WorkflowItemSearchResult();
 mockResultObject.hitHighlights = {};
 
 const item = Object.assign(new Item(), {
@@ -71,7 +69,9 @@ const environmentUseThumbs = {
 };
 
 const rd = createSuccessfulRemoteDataObject(item);
-mockResultObject.indexableObject = Object.assign(new WorkspaceItem(), { item: observableOf(rd) });
+mockResultObject.indexableObject = Object.assign(new WorkspaceItem(), {
+  item: observableOf(rd),
+});
 let linkService;
 
 describe('WorkspaceItemSearchResultListElementComponent', () => {
@@ -88,13 +88,17 @@ describe('WorkspaceItemSearchResultListElementComponent', () => {
         { provide: APP_CONFIG, useValue: environmentUseThumbs },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(WorkspaceItemSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(WorkspaceItemSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(WorkspaceItemSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      WorkspaceItemSearchResultListElementComponent,
+    );
     component = fixture.componentInstance;
   }));
 
@@ -117,18 +121,19 @@ describe('WorkspaceItemSearchResultListElementComponent', () => {
   });
 
   it('should forward workspaceitem-actions processCompleted event to the reloadedObject event emitter', fakeAsync(() => {
-
     spyOn(component.reloadedObject, 'emit').and.callThrough();
     const actionPayload: any = { reloadedObject: {} };
 
-    const actionsComponent = fixture.debugElement.query(By.css('ds-workspaceitem-actions'));
+    const actionsComponent = fixture.debugElement.query(
+      By.css('ds-workspaceitem-actions'),
+    );
     actionsComponent.triggerEventHandler('processCompleted', actionPayload);
     tick();
 
-    expect(component.reloadedObject.emit).toHaveBeenCalledWith(actionPayload.reloadedObject);
-
+    expect(component.reloadedObject.emit).toHaveBeenCalledWith(
+      actionPayload.reloadedObject,
+    );
   }));
-
 
   it('should add an offset to the actions element', () => {
     const thumbnail = fixture.debugElement.query(By.css('.offset-3'));

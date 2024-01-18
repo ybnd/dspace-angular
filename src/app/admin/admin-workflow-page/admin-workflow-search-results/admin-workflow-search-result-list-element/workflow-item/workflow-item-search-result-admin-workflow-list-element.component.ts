@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import {
@@ -26,26 +22,39 @@ import { SearchResultListElementComponent } from '../../../../../shared/object-l
 import { TruncatableService } from '../../../../../shared/truncatable/truncatable.service';
 import { followLink } from '../../../../../shared/utils/follow-link-config.model';
 
-@listableObjectComponent(WorkflowItemSearchResult, ViewMode.ListElement, Context.AdminWorkflowSearch)
+@listableObjectComponent(
+  WorkflowItemSearchResult,
+  ViewMode.ListElement,
+  Context.AdminWorkflowSearch,
+)
 @Component({
   selector: 'ds-workflow-item-search-result-admin-workflow-list-element',
-  styleUrls: ['./workflow-item-search-result-admin-workflow-list-element.component.scss'],
-  templateUrl: './workflow-item-search-result-admin-workflow-list-element.component.html',
+  styleUrls: [
+    './workflow-item-search-result-admin-workflow-list-element.component.scss',
+  ],
+  templateUrl:
+    './workflow-item-search-result-admin-workflow-list-element.component.html',
 })
 /**
  * The component for displaying a list element for a workflow item on the admin workflow search page
  */
-export class WorkflowItemSearchResultAdminWorkflowListElementComponent extends SearchResultListElementComponent<WorkflowItemSearchResult, WorkflowItem> implements OnInit {
-
+export class WorkflowItemSearchResultAdminWorkflowListElementComponent
+  extends SearchResultListElementComponent<
+    WorkflowItemSearchResult,
+    WorkflowItem
+  >
+  implements OnInit
+{
   /**
    * The item linked to the workflow item
    */
   public item$: Observable<Item>;
 
-  constructor(private linkService: LinkService,
-              protected truncatableService: TruncatableService,
-              public dsoNameService: DSONameService,
-              @Inject(APP_CONFIG) protected appConfig: AppConfig,
+  constructor(
+    private linkService: LinkService,
+    protected truncatableService: TruncatableService,
+    public dsoNameService: DSONameService,
+    @Inject(APP_CONFIG) protected appConfig: AppConfig,
   ) {
     super(truncatableService, dsoNameService, appConfig);
   }
@@ -56,6 +65,9 @@ export class WorkflowItemSearchResultAdminWorkflowListElementComponent extends S
   ngOnInit(): void {
     super.ngOnInit();
     this.dso = this.linkService.resolveLink(this.dso, followLink('item'));
-    this.item$ = (this.dso.item as Observable<RemoteData<Item>>).pipe(getAllSucceededRemoteData(), getRemoteDataPayload());
+    this.item$ = (this.dso.item as Observable<RemoteData<Item>>).pipe(
+      getAllSucceededRemoteData(),
+      getRemoteDataPayload(),
+    );
   }
 }

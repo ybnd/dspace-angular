@@ -1,18 +1,8 @@
-import {
-  Component,
-  OnInit,
-  Predicate,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit, Predicate } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {
-  first,
-  map,
-} from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { ItemDataService } from '../../../core/data/item-data.service';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -34,7 +24,6 @@ import { findSuccessfulAccordingTo } from '../edit-item-operators';
   templateUrl: './abstract-simple-item-action.component.html',
 })
 export class AbstractSimpleItemActionComponent implements OnInit {
-
   itemRD$: Observable<RemoteData<Item>>;
   item: Item;
 
@@ -51,24 +40,24 @@ export class AbstractSimpleItemActionComponent implements OnInit {
 
   protected predicate: Predicate<RemoteData<Item>>;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService) {
-  }
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.itemRD$ = this.route.data.pipe(
       map((data) => data.dso),
       getFirstSucceededRemoteData(),
-    )as Observable<RemoteData<Item>>;
+    ) as Observable<RemoteData<Item>>;
 
     this.itemRD$.pipe(first()).subscribe((rd) => {
       this.item = rd.payload;
       this.itemPageRoute = getItemPageRoute(this.item);
-    },
-    );
+    });
 
     this.confirmMessage = 'item.edit.' + this.messageKey + '.confirm';
     this.cancelMessage = 'item.edit.' + this.messageKey + '.cancel';
@@ -88,16 +77,26 @@ export class AbstractSimpleItemActionComponent implements OnInit {
    */
   processRestResponse(response: RemoteData<any>) {
     if (response.hasSucceeded) {
-      this.itemDataService.findById(this.item.id).pipe(
-        findSuccessfulAccordingTo((itemRd: RemoteData<Item>) => this.predicate(itemRd)),
-      ).subscribe(() => {
-        this.notificationsService.success(this.translateService.get('item.edit.' + this.messageKey + '.success'));
-        this.router.navigate([getItemEditRoute(this.item)]);
-      });
+      this.itemDataService
+        .findById(this.item.id)
+        .pipe(
+          findSuccessfulAccordingTo((itemRd: RemoteData<Item>) =>
+            this.predicate(itemRd),
+          ),
+        )
+        .subscribe(() => {
+          this.notificationsService.success(
+            this.translateService.get(
+              'item.edit.' + this.messageKey + '.success',
+            ),
+          );
+          this.router.navigate([getItemEditRoute(this.item)]);
+        });
     } else {
-      this.notificationsService.error(this.translateService.get('item.edit.' + this.messageKey + '.error'));
+      this.notificationsService.error(
+        this.translateService.get('item.edit.' + this.messageKey + '.error'),
+      );
       this.router.navigate([getItemEditRoute(this.item)]);
     }
   }
-
 }

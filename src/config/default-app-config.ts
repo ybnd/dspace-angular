@@ -204,7 +204,6 @@ export class DefaultAppConfig implements AppConfig {
             value: 'default',
             style: 'text-muted',
           },
-
         ],
       },
     },
@@ -354,34 +353,34 @@ export class DefaultAppConfig implements AppConfig {
           // Insert <link rel="icon" href="assets/dspace/images/favicons/favicon.ico" sizes="any"/> into the <head> of the page.
           tagName: 'link',
           attributes: {
-            'rel': 'icon',
-            'href': 'assets/dspace/images/favicons/favicon.ico',
-            'sizes': 'any',
+            rel: 'icon',
+            href: 'assets/dspace/images/favicons/favicon.ico',
+            sizes: 'any',
           },
         },
         {
           // Insert <link rel="icon" href="assets/dspace/images/favicons/favicon.svg" type="image/svg+xml"/> into the <head> of the page.
           tagName: 'link',
           attributes: {
-            'rel': 'icon',
-            'href': 'assets/dspace/images/favicons/favicon.svg',
-            'type': 'image/svg+xml',
+            rel: 'icon',
+            href: 'assets/dspace/images/favicons/favicon.svg',
+            type: 'image/svg+xml',
           },
         },
         {
           // Insert <link rel="apple-touch-icon" href="assets/dspace/images/favicons/apple-touch-icon.png"/> into the <head> of the page.
           tagName: 'link',
           attributes: {
-            'rel': 'apple-touch-icon',
-            'href': 'assets/dspace/images/favicons/apple-touch-icon.png',
+            rel: 'apple-touch-icon',
+            href: 'assets/dspace/images/favicons/apple-touch-icon.png',
           },
         },
         {
           // Insert <link rel="manifest" href="assets/dspace/images/favicons/manifest.webmanifest"/> into the <head> of the page.
           tagName: 'link',
           attributes: {
-            'rel': 'manifest',
-            'href': 'assets/dspace/images/favicons/manifest.webmanifest',
+            rel: 'manifest',
+            href: 'assets/dspace/images/favicons/manifest.webmanifest',
           },
         },
       ],
@@ -432,8 +431,8 @@ export class DefaultAppConfig implements AppConfig {
 
   // Configuration that determines the metadata sorting of community and collection edition and creation when there are not a search query.
   comcolSelectionSort: DiscoverySortConfig = {
-    sortField:'dc.title',
-    sortDirection:'ASC',
+    sortField: 'dc.title',
+    sortDirection: 'ASC',
   };
 
   qualityAssuranceConfig: QualityAssuranceConfig = {

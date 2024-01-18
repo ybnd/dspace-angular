@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ThemedComponent } from '../theme-support/themed.component';
 import { SearchFormComponent } from './search-form.component';
@@ -17,7 +12,6 @@ import { SearchFormComponent } from './search-form.component';
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedSearchFormComponent extends ThemedComponent<SearchFormComponent> {
-
   @Input() query: string;
 
   @Input() inPlaceSearch: boolean;
@@ -37,7 +31,14 @@ export class ThemedSearchFormComponent extends ThemedComponent<SearchFormCompone
   @Output() submitSearch: EventEmitter<any> = new EventEmitter();
 
   protected inAndOutputNames: (keyof SearchFormComponent & keyof this)[] = [
-    'query', 'inPlaceSearch', 'scope', 'currentUrl', 'large', 'brandColor', 'searchPlaceholder', 'showScopeSelector',
+    'query',
+    'inPlaceSearch',
+    'scope',
+    'currentUrl',
+    'large',
+    'brandColor',
+    'searchPlaceholder',
+    'showScopeSelector',
     'submitSearch',
   ];
 
@@ -46,11 +47,12 @@ export class ThemedSearchFormComponent extends ThemedComponent<SearchFormCompone
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/search-form/search-form.component`);
+    return import(
+      `../../../themes/${themeName}/app/shared/search-form/search-form.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./search-form.component');
   }
-
 }

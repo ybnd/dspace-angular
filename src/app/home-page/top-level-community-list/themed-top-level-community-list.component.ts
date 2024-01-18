@@ -9,18 +9,20 @@ import { TopLevelCommunityListComponent } from './top-level-community-list.compo
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedTopLevelCommunityListComponent extends ThemedComponent<TopLevelCommunityListComponent> {
-  protected inAndOutputNames: (keyof TopLevelCommunityListComponent & keyof this)[];
+  protected inAndOutputNames: (keyof TopLevelCommunityListComponent &
+    keyof this)[];
 
   protected getComponentName(): string {
     return 'TopLevelCommunityListComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/home-page/top-level-community-list/top-level-community-list.component`);
+    return import(
+      `../../../themes/${themeName}/app/home-page/top-level-community-list/top-level-community-list.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./top-level-community-list.component`);
   }
-
 }

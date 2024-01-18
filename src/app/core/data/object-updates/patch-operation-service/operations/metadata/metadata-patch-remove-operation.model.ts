@@ -23,6 +23,9 @@ export class MetadataPatchRemoveOperation extends MetadataPatchOperation {
    * using the information provided.
    */
   toOperation(): Operation {
-    return { op: this.op as any, path: `/metadata/${this.field}/${this.place}` };
+    return {
+      op: this.op as any,
+      path: `/metadata/${this.field}/${this.place}`,
+    };
   }
 }

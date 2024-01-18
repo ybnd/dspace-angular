@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { ThemedComponent } from '../../theme-support/themed.component';
 import { UserMenuComponent } from './user-menu.component';
@@ -14,21 +11,24 @@ import { UserMenuComponent } from './user-menu.component';
   templateUrl: './../../theme-support/themed.component.html',
   styleUrls: [],
 })
-export class ThemedUserMenuComponent extends ThemedComponent<UserMenuComponent>{
-
+export class ThemedUserMenuComponent extends ThemedComponent<UserMenuComponent> {
   /**
    * The input flag to show user details in navbar expandable menu
    */
   @Input() inExpandableNavbar: boolean;
 
-  protected inAndOutputNames: (keyof UserMenuComponent & keyof this)[] = ['inExpandableNavbar'];
+  protected inAndOutputNames: (keyof UserMenuComponent & keyof this)[] = [
+    'inExpandableNavbar',
+  ];
 
   protected getComponentName(): string {
     return 'UserMenuComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import((`../../../../themes/${themeName}/app/shared/auth-nav-menu/user-menu/user-menu.component`));
+    return import(
+      `../../../../themes/${themeName}/app/shared/auth-nav-menu/user-menu/user-menu.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

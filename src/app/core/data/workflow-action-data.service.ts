@@ -23,6 +23,12 @@ export class WorkflowActionDataService extends IdentifiableDataService<WorkflowA
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('workflowactions', requestService, rdbService, objectCache, halService);
+    super(
+      'workflowactions',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
   }
 }

@@ -10,11 +10,13 @@ import { LISTABLE_NOTIFICATION_OBJECT } from './listable-notification-object.res
  * The component for displaying a notifications inside an object list
  */
 @listableObjectComponent(ListableNotificationObject, ViewMode.ListElement)
-@listableObjectComponent(LISTABLE_NOTIFICATION_OBJECT.value, ViewMode.ListElement)
+@listableObjectComponent(
+  LISTABLE_NOTIFICATION_OBJECT.value,
+  ViewMode.ListElement,
+)
 @Component({
   selector: 'ds-listable-notification-object',
   templateUrl: './listable-notification-object.component.html',
   styleUrls: ['./listable-notification-object.component.scss'],
 })
-export class ListableNotificationObjectComponent extends AbstractListableElementComponent<ListableNotificationObject> {
-}
+export class ListableNotificationObjectComponent extends AbstractListableElementComponent<ListableNotificationObject> {}

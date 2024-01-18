@@ -51,7 +51,9 @@ describe('BitstreamFormatReducer', () => {
   describe('BitstreamFormatsRegistryActionTypes.DESELECT_FORMAT', () => {
     it('should deselect a format', () => {
       const state = bitstream1and2SelectedState;
-      const action = new BitstreamFormatsRegistryDeselectAction(bitstreamFormat2);
+      const action = new BitstreamFormatsRegistryDeselectAction(
+        bitstreamFormat2,
+      );
       const newState = bitstreamFormatReducer(state, action);
 
       expect(newState).toEqual(bitstream1SelectedState);

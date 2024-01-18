@@ -1,14 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
 import { ViewMode } from '../../core/shared/view-mode.model';
@@ -35,7 +28,7 @@ describe('ObjectCollectionComponent', () => {
         { provide: Router, useClass: RouterStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents();  // compile template and css
+    }).compileComponents(); // compile template and css
   }));
 
   beforeEach(() => {
@@ -49,14 +42,18 @@ describe('ObjectCollectionComponent', () => {
     fixture.detectChanges();
 
     expect(fixture.debugElement.query(By.css('ds-object-grid'))).not.toBeNull();
-    expect(fixture.debugElement.query(By.css('ds-themed-object-list'))).toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('ds-themed-object-list')),
+    ).toBeNull();
   });
 
   it('should only show the list component when the viewmode is set to list', () => {
     objectCollectionComponent.currentMode$ = observableOf(ViewMode.ListElement);
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.css('ds-themed-object-list'))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.css('ds-themed-object-list')),
+    ).not.toBeNull();
     expect(fixture.debugElement.query(By.css('ds-object-grid'))).toBeNull();
   });
 

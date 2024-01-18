@@ -18,7 +18,9 @@ export class ThemedWorkflowItemDeleteComponent extends ThemedComponent<WorkflowI
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/workflowitems-edit-page/workflow-item-delete/workflow-item-delete.component`);
+    return import(
+      `../../../themes/${themeName}/app/workflowitems-edit-page/workflow-item-delete/workflow-item-delete.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

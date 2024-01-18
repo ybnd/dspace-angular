@@ -61,32 +61,42 @@ export class BulkAccessControlService {
   executeScript(uuids: string[], file: File): Observable<boolean> {
     console.log('execute', { uuids, file });
 
-    const params: ProcessParameter[] = [
-      { name: '-f', value: file.name },
-    ];
+    const params: ProcessParameter[] = [{ name: '-f', value: file.name }];
     uuids.forEach((uuid) => {
       params.push({ name: '-u', value: uuid });
     });
 
-    return this.scriptService.invoke('bulk-access-control', params, [file]).pipe(
-      getFirstCompletedRemoteData(),
-      map((rd: RemoteData<Process>) => {
-        if (rd.hasSucceeded) {
-          const title = this.translationService.get('process.new.notification.success.title');
-          const content = this.translationService.get('process.new.notification.success.content');
-          this.notificationsService.success(title, content);
-          if (isNotEmpty(rd.payload)) {
-            this.router.navigateByUrl(getProcessDetailRoute(rd.payload.processId));
+    return this.scriptService
+      .invoke('bulk-access-control', params, [file])
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((rd: RemoteData<Process>) => {
+          if (rd.hasSucceeded) {
+            const title = this.translationService.get(
+              'process.new.notification.success.title',
+            );
+            const content = this.translationService.get(
+              'process.new.notification.success.content',
+            );
+            this.notificationsService.success(title, content);
+            if (isNotEmpty(rd.payload)) {
+              this.router.navigateByUrl(
+                getProcessDetailRoute(rd.payload.processId),
+              );
+            }
+            return true;
+          } else {
+            const title = this.translationService.get(
+              'process.new.notification.error.title',
+            );
+            const content = this.translationService.get(
+              'process.new.notification.error.content',
+            );
+            this.notificationsService.error(title, content);
+            return false;
           }
-          return true;
-        } else {
-          const title = this.translationService.get('process.new.notification.error.title');
-          const content = this.translationService.get('process.new.notification.error.content');
-          this.notificationsService.error(title, content);
-          return false;
-        }
-      }),
-    );
+        }),
+      );
   }
 }
 
@@ -94,7 +104,11 @@ export class BulkAccessControlService {
  * Convert the given payload to a BulkAccessControlFileModel
  * @param payload
  */
-export const convertToBulkAccessControlFileModel = (payload: { state: AccessControlFormState, bitstreamAccess: AccessCondition[], itemAccess: AccessCondition[] }): BulkAccessControlFileModel => {
+export const convertToBulkAccessControlFileModel = (payload: {
+  state: AccessControlFormState;
+  bitstreamAccess: AccessCondition[];
+  itemAccess: AccessCondition[];
+}): BulkAccessControlFileModel => {
   const finalPayload: BulkAccessControlFileModel = {};
 
   const itemEnabled = payload.state.item.toggleStatus;
@@ -110,9 +124,14 @@ export const convertToBulkAccessControlFileModel = (payload: { state: AccessCont
   if (bitstreamEnabled) {
     const constraints = { uuid: [] };
 
-    if (bitstreamEnabled && payload.state.bitstream.changesLimit === 'selected') {
+    if (
+      bitstreamEnabled &&
+      payload.state.bitstream.changesLimit === 'selected'
+    ) {
       // @ts-ignore
-      constraints.uuid = payload.state.bitstream.selectedBitstreams.map((x) => x.id);
+      constraints.uuid = payload.state.bitstream.selectedBitstreams.map(
+        (x) => x.id,
+      );
     }
 
     finalPayload.bitstream = {
@@ -125,17 +144,16 @@ export const convertToBulkAccessControlFileModel = (payload: { state: AccessCont
   return finalPayload;
 };
 
-
 export interface BulkAccessControlFileModel {
   item?: {
     mode: string;
     accessConditions: AccessCondition[];
-  },
+  };
   bitstream?: {
     constraints: { uuid: string[] };
     mode: string;
     accessConditions: AccessCondition[];
-  }
+  };
 }
 
 interface AccessCondition {

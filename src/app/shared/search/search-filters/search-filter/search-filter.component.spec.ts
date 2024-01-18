@@ -1,19 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { SearchService } from '../../../../core/shared/search/search.service';
 import { SearchFilterService } from '../../../../core/shared/search/search-filter.service';
@@ -33,33 +23,33 @@ describe('SearchFilterComponent', () => {
   const filterName3 = 'another name3';
   const nonExistingFilter1 = 'non existing 1';
   const nonExistingFilter2 = 'non existing 2';
-  const mockFilterConfig: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-    name: filterName1,
-    filterType: FilterType.text,
-    hasFacets: false,
-    isOpenByDefault: false,
-  });
+  const mockFilterConfig: SearchFilterConfig = Object.assign(
+    new SearchFilterConfig(),
+    {
+      name: filterName1,
+      filterType: FilterType.text,
+      hasFacets: false,
+      isOpenByDefault: false,
+    },
+  );
   const mockFilterService = {
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    toggle: (filter) => {
-    },
-    collapse: (filter) => {
-    },
-    expand: (filter) => {
-    },
-    initializeFilter: (filter) => {
-    },
+    toggle: (filter) => {},
+    collapse: (filter) => {},
+    expand: (filter) => {},
+    initializeFilter: (filter) => {},
     getSelectedValuesForFilter: (filter) => {
       return observableOf([filterName1, filterName2, filterName3]);
     },
     isFilterActive: (filter) => {
-      return observableOf([filterName1, filterName2, filterName3].indexOf(filter) >= 0);
+      return observableOf(
+        [filterName1, filterName2, filterName3].indexOf(filter) >= 0,
+      );
     },
     isCollapsed: (filter) => {
       return observableOf(true);
     },
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
-
   };
   let filterService;
   let sequenceService;
@@ -72,24 +62,30 @@ describe('SearchFilterComponent', () => {
     sequenceService = jasmine.createSpyObj('sequenceService', { next: 17 });
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule],
-      declarations: [
-        SearchFilterComponent,
-        BrowserOnlyMockPipe,
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
       ],
+      declarations: [SearchFilterComponent, BrowserOnlyMockPipe],
       providers: [
         { provide: SearchService, useValue: searchServiceStub },
         {
           provide: SearchFilterService,
           useValue: mockFilterService,
         },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
         { provide: SequenceService, useValue: sequenceService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(SearchFilterComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(SearchFilterComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -124,7 +120,9 @@ describe('SearchFilterComponent', () => {
     });
 
     it('should call initialCollapse with the correct filter configuration name', () => {
-      expect(filterService.initializeFilter).toHaveBeenCalledWith(mockFilterConfig);
+      expect(filterService.initializeFilter).toHaveBeenCalledWith(
+        mockFilterConfig,
+      );
     });
   });
 

@@ -7,15 +7,9 @@
  */
 
 import { CommonModule } from '@angular/common';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
@@ -120,15 +114,9 @@ describe('ResourcePolicyEntryComponent', () => {
       url: `url/edit`,
     });
 
-
     TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        ResourcePolicyEntryComponent,
-      ],
+      imports: [CommonModule, TranslateModule.forRoot()],
+      declarations: [ResourcePolicyEntryComponent],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
         { provide: Router, useValue: routerStub },
@@ -158,11 +146,15 @@ describe('ResourcePolicyEntryComponent', () => {
     });
 
     it('should have a valid epersonName$', () => {
-      expect(compAsAny.epersonName$).toBeObservable(cold('(n|)', { u: undefined, n: 'NAME' }));
+      expect(compAsAny.epersonName$).toBeObservable(
+        cold('(n|)', { u: undefined, n: 'NAME' }),
+      );
     });
 
     it('should have an undefined groupName$', () => {
-      expect(compAsAny.groupName$).toBeObservable(cold('(u|)', { u: undefined, n: 'NAME' }));
+      expect(compAsAny.groupName$).toBeObservable(
+        cold('(u|)', { u: undefined, n: 'NAME' }),
+      );
     });
   });
 
@@ -177,11 +169,15 @@ describe('ResourcePolicyEntryComponent', () => {
     });
 
     it('should have a valid groupName$', () => {
-      expect(compAsAny.groupName$).toBeObservable(cold('(n|)', { u: undefined, n: 'NAME' }));
+      expect(compAsAny.groupName$).toBeObservable(
+        cold('(n|)', { u: undefined, n: 'NAME' }),
+      );
     });
 
     it('should have an undefined epersonName$', () => {
-      expect(compAsAny.epersonName$).toBeObservable(cold('(u|)', { u: undefined, n: 'NAME' }));
+      expect(compAsAny.epersonName$).toBeObservable(
+        cold('(u|)', { u: undefined, n: 'NAME' }),
+      );
     });
   });
 
@@ -200,13 +196,14 @@ describe('ResourcePolicyEntryComponent', () => {
     });
 
     it('should redirect to ResourcePolicy edit page', () => {
-
       comp.redirectToResourcePolicyEditPage();
       expect(compAsAny.router.navigate).toHaveBeenCalled();
     });
 
     it('should redirect to Group edit page', () => {
-      compAsAny.groupService.findByHref.and.returnValue(observableOf(createSuccessfulRemoteDataObject(GroupMock)));
+      compAsAny.groupService.findByHref.and.returnValue(
+        observableOf(createSuccessfulRemoteDataObject(GroupMock)),
+      );
 
       comp.redirectToGroupEditPage();
       expect(compAsAny.router.navigate).toHaveBeenCalled();
@@ -215,7 +212,9 @@ describe('ResourcePolicyEntryComponent', () => {
     it('should emit new state when checkbox is toggled', () => {
       spyOn(comp.toggleCheckbox, 'emit');
 
-      const checkbox = fixture.debugElement.query(By.css('input[type="checkbox"]'));
+      const checkbox = fixture.debugElement.query(
+        By.css('input[type="checkbox"]'),
+      );
 
       comp.entry.checked = false;
       checkbox.triggerEventHandler('ngModelChange', true);

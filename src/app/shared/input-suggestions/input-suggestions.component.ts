@@ -13,10 +13,7 @@ import {
 import { ControlValueAccessor } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
-import {
-  hasValue,
-  isNotEmpty,
-} from '../empty.util';
+import { hasValue, isNotEmpty } from '../empty.util';
 
 @Component({
   selector: 'ds-input-suggestions',
@@ -26,7 +23,9 @@ import {
 /**
  * Component representing a form with a autocomplete functionality
  */
-export class InputSuggestionsComponent implements ControlValueAccessor, OnChanges {
+export class InputSuggestionsComponent
+  implements ControlValueAccessor, OnChanges
+{
   /**
    * The suggestions that should be shown
    */
@@ -125,7 +124,10 @@ export class InputSuggestionsComponent implements ControlValueAccessor, OnChange
    */
   ngOnChanges(changes: SimpleChanges) {
     if (hasValue(changes.suggestions)) {
-      this.show.next(isNotEmpty(changes.suggestions.currentValue) && !changes.suggestions.firstChange);
+      this.show.next(
+        isNotEmpty(changes.suggestions.currentValue) &&
+          !changes.suggestions.firstChange,
+      );
     }
   }
 
@@ -137,7 +139,9 @@ export class InputSuggestionsComponent implements ControlValueAccessor, OnChange
     event.preventDefault();
     if (this.selectedIndex > 0) {
       this.selectedIndex--;
-      this.selectedIndex = (this.selectedIndex + this.resultViews.length) % this.resultViews.length; // Prevent negative modulo outcome
+      this.selectedIndex =
+        (this.selectedIndex + this.resultViews.length) %
+        this.resultViews.length; // Prevent negative modulo outcome
     } else {
       this.selectedIndex = this.resultViews.length - 1;
     }

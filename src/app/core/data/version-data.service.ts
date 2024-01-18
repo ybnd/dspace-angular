@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Operation } from 'fast-json-patch';
-import {
-  EMPTY,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { EMPTY, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { isNotEmpty } from '../../shared/empty.util';
 import { followLink } from '../../shared/utils/follow-link-config.model';
@@ -20,10 +14,7 @@ import { VERSION } from '../shared/version.resource-type';
 import { VersionHistory } from '../shared/version-history.model';
 import { dataService } from './base/data-service.decorator';
 import { IdentifiableDataService } from './base/identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from './base/patch-data';
+import { PatchData, PatchDataImpl } from './base/patch-data';
 import { DefaultChangeAnalyzer } from './default-change-analyzer.service';
 import { RemoteData } from './remote-data';
 import { RequestService } from './request.service';
@@ -34,7 +25,10 @@ import { RestRequestMethod } from './rest-request-method';
  */
 @Injectable()
 @dataService(VERSION)
-export class VersionDataService extends IdentifiableDataService<Version> implements PatchData<Version> {
+export class VersionDataService
+  extends IdentifiableDataService<Version>
+  implements PatchData<Version>
+{
   private patchData: PatchData<Version>;
 
   constructor(
@@ -46,7 +40,16 @@ export class VersionDataService extends IdentifiableDataService<Version> impleme
   ) {
     super('versions', requestService, rdbService, objectCache, halService);
 
-    this.patchData = new PatchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
+    this.patchData = new PatchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -57,12 +60,23 @@ export class VersionDataService extends IdentifiableDataService<Version> impleme
    * @param reRequestOnStale            Whether or not the request should automatically be re-
    *                                    requested after the response becomes stale
    */
-  getHistoryFromVersion(version: Version, useCachedVersionIfAvailable = false, reRequestOnStale = true): Observable<VersionHistory> {
-    return isNotEmpty(version) ? this.findById(version.id, useCachedVersionIfAvailable, reRequestOnStale, followLink('versionhistory')).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((res: Version) => res.versionhistory),
-      getFirstSucceededRemoteDataPayload(),
-    ) : EMPTY;
+  getHistoryFromVersion(
+    version: Version,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true,
+  ): Observable<VersionHistory> {
+    return isNotEmpty(version)
+      ? this.findById(
+          version.id,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          followLink('versionhistory'),
+        ).pipe(
+          getFirstSucceededRemoteDataPayload(),
+          switchMap((res: Version) => res.versionhistory),
+          getFirstSucceededRemoteDataPayload(),
+        )
+      : EMPTY;
   }
 
   /**
@@ -80,7 +94,10 @@ export class VersionDataService extends IdentifiableDataService<Version> impleme
    * @param {T} object The object to send a patch request for
    * @param {Operation[]} operations The patch operations to be performed
    */
-  public patch(object: Version, operations: []): Observable<RemoteData<Version>> {
+  public patch(
+    object: Version,
+    operations: [],
+  ): Observable<RemoteData<Version>> {
     return this.patchData.patch(object, operations);
   }
 
@@ -108,5 +125,4 @@ export class VersionDataService extends IdentifiableDataService<Version> impleme
   public createPatchFromCache(object: Version): Observable<Operation[]> {
     return this.patchData.createPatchFromCache(object);
   }
-
 }

@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -41,7 +37,9 @@ describe('ItemVersionsNoticeComponent', () => {
     versionhistory: createSuccessfulRemoteDataObject$(versionHistory),
   });
   const versions = [latestVersion, firstVersion];
-  versionHistory.versions = createSuccessfulRemoteDataObject$(createPaginatedList(versions));
+  versionHistory.versions = createSuccessfulRemoteDataObject$(
+    createPaginatedList(versions),
+  );
   const firstItem = Object.assign(new Item(), {
     id: 'first_item_id',
     uuid: 'first_item_id',
@@ -57,27 +55,35 @@ describe('ItemVersionsNoticeComponent', () => {
   firstVersion.item = createSuccessfulRemoteDataObject$(firstItem);
   latestVersion.item = createSuccessfulRemoteDataObject$(latestItem);
 
-  const versionHistoryServiceSpy = jasmine.createSpyObj('versionHistoryService',
-    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$' ],
+  const versionHistoryServiceSpy = jasmine.createSpyObj(
+    'versionHistoryService',
+    ['getVersions', 'getLatestVersionFromHistory$', 'isLatest$'],
   );
 
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
       declarations: [ItemVersionsNoticeComponent],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
       providers: [
-        { provide: VersionHistoryDataService, useValue: versionHistoryServiceSpy },
+        {
+          provide: VersionHistoryDataService,
+          useValue: versionHistoryServiceSpy,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
 
     versionHistoryService = TestBed.inject(VersionHistoryDataService);
 
-    const isLatestFcn = (version: Version) => of((version.version === latestVersion.version));
+    const isLatestFcn = (version: Version) =>
+      of(version.version === latestVersion.version);
 
-    versionHistoryServiceSpy.getVersions.and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList(versions)));
-    versionHistoryServiceSpy.getLatestVersionFromHistory$.and.returnValue(of(latestVersion));
+    versionHistoryServiceSpy.getVersions.and.returnValue(
+      createSuccessfulRemoteDataObject$(createPaginatedList(versions)),
+    );
+    versionHistoryServiceSpy.getLatestVersionFromHistory$.and.returnValue(
+      of(latestVersion),
+    );
     versionHistoryServiceSpy.isLatest$.and.callFake(isLatestFcn);
   }));
 
@@ -105,14 +111,20 @@ describe('ItemVersionsNoticeComponent', () => {
 
   describe('isLatest', () => {
     it('firstVersion should not be the latest', () => {
-      versionHistoryService.isLatest$(firstVersion).pipe(take(1)).subscribe((res) => {
-        expect(res).toBeFalse();
-      });
+      versionHistoryService
+        .isLatest$(firstVersion)
+        .pipe(take(1))
+        .subscribe((res) => {
+          expect(res).toBeFalse();
+        });
     });
     it('latestVersion should be the latest', () => {
-      versionHistoryService.isLatest$(latestVersion).pipe(take(1)).subscribe((res) => {
-        expect(res).toBeTrue();
-      });
+      versionHistoryService
+        .isLatest$(latestVersion)
+        .pipe(take(1))
+        .subscribe((res) => {
+          expect(res).toBeTrue();
+        });
     });
   });
 

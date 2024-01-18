@@ -1,7 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -15,12 +12,8 @@ describe('ListableNotificationObjectComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        ListableNotificationObjectComponent,
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [ListableNotificationObjectComponent],
     }).compileComponents();
   });
 
@@ -32,11 +25,18 @@ describe('ListableNotificationObjectComponent', () => {
 
   describe('ui', () => {
     it('should display the given error message', () => {
-      component.object = new ListableNotificationObject(NotificationType.Error, 'test error message');
+      component.object = new ListableNotificationObject(
+        NotificationType.Error,
+        'test error message',
+      );
       fixture.detectChanges();
 
-      const listableNotificationObject: Element = fixture.debugElement.query(By.css('.alert')).nativeElement;
-      expect(listableNotificationObject.className).toContain(NotificationType.Error);
+      const listableNotificationObject: Element = fixture.debugElement.query(
+        By.css('.alert'),
+      ).nativeElement;
+      expect(listableNotificationObject.className).toContain(
+        NotificationType.Error,
+      );
       expect(listableNotificationObject.innerHTML).toBe('test error message');
     });
   });

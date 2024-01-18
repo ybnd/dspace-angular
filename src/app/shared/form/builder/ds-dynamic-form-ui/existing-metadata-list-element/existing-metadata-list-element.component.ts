@@ -11,14 +11,8 @@ import {
 import { UntypedFormControl } from '@angular/forms';
 import { DynamicFormArrayGroupModel } from '@ng-dynamic-forms/core';
 import { Store } from '@ngrx/store';
-import {
-  BehaviorSubject,
-  Subscription,
-} from 'rxjs';
-import {
-  filter,
-  take,
-} from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
 import { AppState } from '../../../../../app.reducer';
 import { Item } from '../../../../../core/shared/item.model';
@@ -32,10 +26,7 @@ import {
 } from '../../../../../core/shared/operators';
 import { SubmissionObjectEntry } from '../../../../../submission/objects/submission-objects.reducer';
 import { SubmissionService } from '../../../../../submission/submission.service';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../../empty.util';
+import { hasValue, isNotEmpty } from '../../../../empty.util';
 import { ItemSearchResult } from '../../../../object-collection/shared/item-search-result.model';
 import { SelectableListService } from '../../../../object-list/selectable-list/selectable-list.service';
 import { FormFieldMetadataValueObject } from '../../models/form-field-metadata-value.model';
@@ -47,9 +38,10 @@ import { RemoveRelationshipAction } from '../relation-lookup-modal/relationship.
  * Abstract class that defines objects that can be reordered
  */
 export abstract class Reorderable {
-
-  constructor(public oldIndex?: number, public newIndex?: number) {
-  }
+  constructor(
+    public oldIndex?: number,
+    public newIndex?: number,
+  ) {}
 
   /**
    * Return the id for this Reorderable
@@ -81,7 +73,6 @@ export abstract class Reorderable {
  * A Reorderable representation of a FormFieldMetadataValue
  */
 export class ReorderableFormFieldMetadataValue extends Reorderable {
-
   constructor(
     public metadataValue: FormFieldMetadataValueObject,
     public model: DynamicConcatModel,
@@ -112,21 +103,20 @@ export class ReorderableFormFieldMetadataValue extends Reorderable {
   getPlace(): number {
     return this.metadataValue.place;
   }
-
 }
 
 /**
  * Represents a single relationship that can be reordered in a list of multiple relationships
  */
 export class ReorderableRelationship extends Reorderable {
-
   constructor(
     public relationship: Relationship,
     public useLeftItem: boolean,
     protected store: Store<AppState>,
     protected submissionID: string,
     oldIndex?: number,
-    newIndex?: number) {
+    newIndex?: number,
+  ) {
     super(oldIndex, newIndex);
     this.relationship = relationship;
     this.useLeftItem = useLeftItem;
@@ -159,14 +149,17 @@ export class ReorderableRelationship extends Reorderable {
   templateUrl: './existing-metadata-list-element.component.html',
   styleUrls: ['./existing-metadata-list-element.component.scss'],
 })
-export class ExistingMetadataListElementComponent implements OnInit, OnChanges, OnDestroy   {
+export class ExistingMetadataListElementComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() listId: string;
   @Input() submissionItem: Item;
   @Input() reoRel: ReorderableRelationship;
   @Input() metadataFields: string[];
   @Input() relationshipOptions: RelationshipOptions;
   @Input() submissionId: string;
-  metadataRepresentation$: BehaviorSubject<MetadataRepresentation> = new BehaviorSubject<MetadataRepresentation>(undefined);
+  metadataRepresentation$: BehaviorSubject<MetadataRepresentation> =
+    new BehaviorSubject<MetadataRepresentation>(undefined);
   relatedItem: Item;
   @Output() remove: EventEmitter<any> = new EventEmitter();
   /**
@@ -178,8 +171,7 @@ export class ExistingMetadataListElementComponent implements OnInit, OnChanges, 
     private selectableListService: SelectableListService,
     private store: Store<AppState>,
     private submissionService: SubmissionService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.ngOnChanges();
@@ -190,25 +182,36 @@ export class ExistingMetadataListElementComponent implements OnInit, OnChanges, 
    */
   ngOnChanges() {
     if (hasValue(this.reoRel)) {
-      const item$ = this.reoRel.useLeftItem ?
-        this.reoRel.relationship.leftItem : this.reoRel.relationship.rightItem;
-      this.subs.push(item$.pipe(
-        getAllSucceededRemoteData(),
-        getRemoteDataPayload(),
-        filter((item: Item) => hasValue(item) && isNotEmpty(item.uuid)),
-      ).subscribe((item: Item) => {
-        this.relatedItem = item;
-        const relationMD: MetadataValue = this.submissionItem.firstMetadata(this.relationshipOptions.metadataField, { value: this.relatedItem.uuid });
-        if (hasValue(relationMD)) {
-          const metadataRepresentationMD: MetadataValue = this.submissionItem.firstMetadata(this.metadataFields, { authority: relationMD.authority });
+      const item$ = this.reoRel.useLeftItem
+        ? this.reoRel.relationship.leftItem
+        : this.reoRel.relationship.rightItem;
+      this.subs.push(
+        item$
+          .pipe(
+            getAllSucceededRemoteData(),
+            getRemoteDataPayload(),
+            filter((item: Item) => hasValue(item) && isNotEmpty(item.uuid)),
+          )
+          .subscribe((item: Item) => {
+            this.relatedItem = item;
+            const relationMD: MetadataValue = this.submissionItem.firstMetadata(
+              this.relationshipOptions.metadataField,
+              { value: this.relatedItem.uuid },
+            );
+            if (hasValue(relationMD)) {
+              const metadataRepresentationMD: MetadataValue =
+                this.submissionItem.firstMetadata(this.metadataFields, {
+                  authority: relationMD.authority,
+                });
 
-          const nextValue = Object.assign(
-            new ItemMetadataRepresentation(metadataRepresentationMD),
-            this.relatedItem,
-          );
-          this.metadataRepresentation$.next(nextValue);
-        }
-      }));
+              const nextValue = Object.assign(
+                new ItemMetadataRepresentation(metadataRepresentationMD),
+                this.relatedItem,
+              );
+              this.metadataRepresentation$.next(nextValue);
+            }
+          }),
+      );
     }
   }
 
@@ -217,13 +220,32 @@ export class ExistingMetadataListElementComponent implements OnInit, OnChanges, 
    */
   removeSelection() {
     this.submissionService.dispatchSave(this.submissionId);
-    this.submissionService.getSubmissionObject(this.submissionId).pipe(
-      filter((state: SubmissionObjectEntry) => !state.savePending && !state.isLoading),
-      take(1)).subscribe(() => {
-      this.selectableListService.deselectSingle(this.listId, Object.assign(new ItemSearchResult(), { indexableObject: this.relatedItem }));
-      this.store.dispatch(new RemoveRelationshipAction(this.submissionItem, this.relatedItem, this.relationshipOptions.relationshipType, this.submissionId));
-      this.remove.emit();
-    });
+    this.submissionService
+      .getSubmissionObject(this.submissionId)
+      .pipe(
+        filter(
+          (state: SubmissionObjectEntry) =>
+            !state.savePending && !state.isLoading,
+        ),
+        take(1),
+      )
+      .subscribe(() => {
+        this.selectableListService.deselectSingle(
+          this.listId,
+          Object.assign(new ItemSearchResult(), {
+            indexableObject: this.relatedItem,
+          }),
+        );
+        this.store.dispatch(
+          new RemoveRelationshipAction(
+            this.submissionItem,
+            this.relatedItem,
+            this.relationshipOptions.relationshipType,
+            this.submissionId,
+          ),
+        );
+        this.remove.emit();
+      });
   }
 
   /**
@@ -234,6 +256,4 @@ export class ExistingMetadataListElementComponent implements OnInit, OnChanges, 
       .filter((sub) => hasValue(sub))
       .forEach((sub) => sub.unsubscribe());
   }
-
 }
-

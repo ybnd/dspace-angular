@@ -6,17 +6,9 @@
  * http://www.dspace.org/license/
  */
 import { Observable } from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  take,
-  takeWhile,
-} from 'rxjs/operators';
+import { distinctUntilChanged, map, take, takeWhile } from 'rxjs/operators';
 
-import {
-  hasValue,
-  isNotEmptyOperator,
-} from '../../../shared/empty.util';
+import { hasValue, isNotEmptyOperator } from '../../../shared/empty.util';
 import { NotificationOptions } from '../../../shared/notifications/models/notification-options.model';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { getClassForType } from '../../cache/builders/build-decorators';
@@ -51,7 +43,10 @@ export interface CreateData<T extends CacheableObject> {
  * Concrete data services can use this feature by implementing {@link CreateData}
  * and delegating its method to an inner instance of this class.
  */
-export class CreateDataImpl<T extends CacheableObject> extends BaseDataService<T> implements CreateData<T> {
+export class CreateDataImpl<T extends CacheableObject>
+  extends BaseDataService<T>
+  implements CreateData<T>
+{
   constructor(
     protected linkPath: string,
     protected requestService: RequestService,
@@ -61,7 +56,14 @@ export class CreateDataImpl<T extends CacheableObject> extends BaseDataService<T
     protected notificationsService: NotificationsService,
     protected responseMsToLive: number,
   ) {
-    super(linkPath, requestService, rdbService, objectCache, halService, responseMsToLive);
+    super(
+      linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      responseMsToLive,
+    );
   }
 
   /**
@@ -85,14 +87,21 @@ export class CreateDataImpl<T extends CacheableObject> extends BaseDataService<T
    * @param object     the object to create
    * @param endpoint$  the endpoint to send the POST request to
    */
-  createOnEndpoint(object: T, endpoint$: Observable<string>): Observable<RemoteData<T>> {
+  createOnEndpoint(
+    object: T,
+    endpoint$: Observable<string>,
+  ): Observable<RemoteData<T>> {
     const requestId = this.requestService.generateRequestId();
-    const serializedObject = new DSpaceSerializer(getClassForType(object.type)).serialize(object);
+    const serializedObject = new DSpaceSerializer(
+      getClassForType(object.type),
+    ).serialize(object);
 
-    endpoint$.pipe(
-      take(1),
-    ).subscribe((endpoint: string) => {
-      const request = new CreateRequest(requestId, endpoint, JSON.stringify(serializedObject));
+    endpoint$.pipe(take(1)).subscribe((endpoint: string) => {
+      const request = new CreateRequest(
+        requestId,
+        endpoint,
+        JSON.stringify(serializedObject),
+      );
       if (hasValue(this.responseMsToLive)) {
         request.responseMsToLive = this.responseMsToLive;
       }
@@ -103,13 +112,17 @@ export class CreateDataImpl<T extends CacheableObject> extends BaseDataService<T
 
     // TODO a dataservice is not the best place to show a notification,
     // this should move up to the components that use this method
-    result$.pipe(
-      takeWhile((rd: RemoteData<T>) => rd.isLoading, true),
-    ).subscribe((rd: RemoteData<T>) => {
-      if (rd.hasFailed) {
-        this.notificationsService.error('Server Error:', rd.errorMessage, new NotificationOptions(-1));
-      }
-    });
+    result$
+      .pipe(takeWhile((rd: RemoteData<T>) => rd.isLoading, true))
+      .subscribe((rd: RemoteData<T>) => {
+        if (rd.hasFailed) {
+          this.notificationsService.error(
+            'Server Error:',
+            rd.errorMessage,
+            new NotificationOptions(-1),
+          );
+        }
+      });
 
     return result$;
   }

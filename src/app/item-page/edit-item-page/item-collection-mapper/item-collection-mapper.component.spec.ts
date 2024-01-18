@@ -1,22 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { EventEmitter } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import {
@@ -73,15 +63,18 @@ describe('ItemCollectionMapperComponent', () => {
     uuid: '932c7d50-d85a-44cb-b9dc-b427b12877bd',
     name: 'test-item',
   });
-  const mockItemRD: RemoteData<Item> = createSuccessfulRemoteDataObject(mockItem);
-  const mockSearchOptions = observableOf(new PaginatedSearchOptions({
-    pagination: Object.assign(new PaginationComponentOptions(), {
-      id: 'search-page-configuration',
-      pageSize: 10,
-      currentPage: 1,
+  const mockItemRD: RemoteData<Item> =
+    createSuccessfulRemoteDataObject(mockItem);
+  const mockSearchOptions = observableOf(
+    new PaginatedSearchOptions({
+      pagination: Object.assign(new PaginationComponentOptions(), {
+        id: 'search-page-configuration',
+        pageSize: 10,
+        currentPage: 1,
+      }),
+      sort: new SortOptions('dc.title', SortDirection.ASC),
     }),
-    sort: new SortOptions('dc.title', SortDirection.ASC),
-  }));
+  );
   const url = 'http://test.url';
   const urlWithParam = url + '?param=value';
   const routerStub = Object.assign(new RouterStub(), {
@@ -92,11 +85,14 @@ describe('ItemCollectionMapperComponent', () => {
   const searchConfigServiceStub = {
     paginatedSearchOptions: mockSearchOptions,
   };
-  const mockCollectionsRD = createSuccessfulRemoteDataObject(createPaginatedList([]));
+  const mockCollectionsRD = createSuccessfulRemoteDataObject(
+    createPaginatedList([]),
+  );
   const itemDataServiceStub = {
     mapToCollection: () => createSuccessfulRemoteDataObject$({}),
     removeMappingFromCollection: () => createSuccessfulRemoteDataObject$({}),
-    getMappedCollectionsEndpoint: () => observableOf('rest/api/mappedCollectionsEndpoint'),
+    getMappedCollectionsEndpoint: () =>
+      observableOf('rest/api/mappedCollectionsEndpoint'),
     getMappedCollections: () => observableOf(mockCollectionsRD),
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
     clearMappedCollectionsRequests: () => {},
@@ -125,26 +121,56 @@ describe('ItemCollectionMapperComponent', () => {
     onDefaultLangChange: new EventEmitter(),
   };
 
-  const authorizationDataService = jasmine.createSpyObj('authorizationDataService', {
-    isAuthorized: observableOf(true),
-  });
+  const authorizationDataService = jasmine.createSpyObj(
+    'authorizationDataService',
+    {
+      isAuthorized: observableOf(true),
+    },
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-      declarations: [ItemCollectionMapperComponent, CollectionSelectComponent, SearchFormComponent, PaginationComponent, EnumKeysPipe, VarDirective, ErrorComponent, LoadingComponent],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
+      declarations: [
+        ItemCollectionMapperComponent,
+        CollectionSelectComponent,
+        SearchFormComponent,
+        PaginationComponent,
+        EnumKeysPipe,
+        VarDirective,
+        ErrorComponent,
+        LoadingComponent,
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: routerStub },
-        { provide: SearchConfigurationService, useValue: searchConfigServiceStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: SearchConfigurationService,
+          useValue: searchConfigServiceStub,
+        },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: ItemDataService, useValue: itemDataServiceStub },
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: ObjectSelectService, useValue: new ObjectSelectServiceStub() },
+        {
+          provide: ObjectSelectService,
+          useValue: new ObjectSelectServiceStub(),
+        },
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
         { provide: CollectionDataService, useValue: collectionDataServiceStub },
-        { provide: AuthorizationDataService, useValue: authorizationDataService },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
       ],
     }).compileComponents();
   }));
@@ -162,7 +188,9 @@ describe('ItemCollectionMapperComponent', () => {
   });
 
   it('should display the correct collection name', () => {
-    const name: HTMLElement = fixture.debugElement.query(By.css('#item-name')).nativeElement;
+    const name: HTMLElement = fixture.debugElement.query(
+      By.css('#item-name'),
+    ).nativeElement;
     expect(name.innerHTML).toContain(mockItem.name);
   });
 
@@ -176,7 +204,9 @@ describe('ItemCollectionMapperComponent', () => {
     });
 
     it('should display an error message if at least one mapping was unsuccessful', () => {
-      spyOn(itemDataService, 'mapToCollection').and.returnValue(createFailedRemoteDataObject$('Not Found', 404));
+      spyOn(itemDataService, 'mapToCollection').and.returnValue(
+        createFailedRemoteDataObject$('Not Found', 404),
+      );
       comp.mapCollections(ids);
       expect(notificationsService.success).not.toHaveBeenCalled();
       expect(notificationsService.error).toHaveBeenCalled();
@@ -193,7 +223,9 @@ describe('ItemCollectionMapperComponent', () => {
     });
 
     it('should display an error message if the removal of at least one mapping was unsuccessful', () => {
-      spyOn(itemDataService, 'removeMappingFromCollection').and.returnValue(createFailedRemoteDataObject$('Not Found', 404));
+      spyOn(itemDataService, 'removeMappingFromCollection').and.returnValue(
+        createFailedRemoteDataObject$('Not Found', 404),
+      );
       comp.removeMappings(ids);
       expect(notificationsService.success).not.toHaveBeenCalled();
       expect(notificationsService.error).toHaveBeenCalled();
@@ -236,5 +268,4 @@ describe('ItemCollectionMapperComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith(['/items/' + mockItem.uuid]);
     });
   });
-
 });

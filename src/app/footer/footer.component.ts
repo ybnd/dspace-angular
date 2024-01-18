@@ -1,7 +1,4 @@
-import {
-  Component,
-  Optional,
-} from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { environment } from '../../environments/environment';
@@ -30,7 +27,9 @@ export class FooterComponent {
     @Optional() private cookies: KlaroService,
     private authorizationService: AuthorizationDataService,
   ) {
-    this.showSendFeedback$ = this.authorizationService.isAuthorized(FeatureID.CanSendFeedback);
+    this.showSendFeedback$ = this.authorizationService.isAuthorized(
+      FeatureID.CanSendFeedback,
+    );
   }
 
   showCookieSettings() {

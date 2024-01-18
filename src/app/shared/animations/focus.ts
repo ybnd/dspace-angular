@@ -7,7 +7,6 @@ import {
 } from '@angular/animations';
 
 export const focusShadow = trigger('focusShadow', [
-
   state('focus', style({ boxShadow: 'rgba(119, 119, 119, 0.6) 0px 0px 6px' })),
 
   state('blur', style({ boxShadow: 'none' })),
@@ -16,7 +15,6 @@ export const focusShadow = trigger('focusShadow', [
 ]);
 
 export const focusBackground = trigger('focusBackground', [
-
   state('focus', style({ backgroundColor: 'rgba(119, 119, 119, 0.1)' })),
 
   state('blur', style({ backgroundColor: 'transparent' })),

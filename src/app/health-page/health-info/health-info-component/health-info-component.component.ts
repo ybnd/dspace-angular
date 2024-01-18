@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { HealthComponentComponent } from '../../health-panel/health-component/health-component.component';
 import { HealthInfoComponent } from '../../models/health-component.model';
@@ -15,11 +12,10 @@ import { HealthInfoComponent } from '../../models/health-component.model';
   styleUrls: ['./health-info-component.component.scss'],
 })
 export class HealthInfoComponentComponent extends HealthComponentComponent {
-
   /**
    * The HealthInfoComponent object to display
    */
-  @Input() healthInfoComponent: HealthInfoComponent|string;
+  @Input() healthInfoComponent: HealthInfoComponent | string;
 
   /**
    * The HealthInfoComponent object name
@@ -45,5 +41,4 @@ export class HealthInfoComponentComponent extends HealthComponentComponent {
   isPlainProperty(entry: HealthInfoComponent | string): boolean {
     return typeof entry === 'string';
   }
-
 }

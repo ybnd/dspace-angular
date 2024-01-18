@@ -54,9 +54,7 @@ const ENTRY_COMPONENTS = [
     ResultsBackButtonModule,
     DsoPageModule,
   ],
-  declarations: [
-    ...ENTRY_COMPONENTS,
-  ],
+  declarations: [...ENTRY_COMPONENTS],
 })
 export class JournalEntitiesModule {
   /**
@@ -69,5 +67,4 @@ export class JournalEntitiesModule {
       providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
-
 }

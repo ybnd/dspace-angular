@@ -1,20 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { storeModuleConfig } from '../app.reducer';
 import { authReducer } from '../core/auth/auth.reducer';
@@ -62,13 +53,19 @@ describe('RootComponent', () => {
       providers: [
         { provide: NativeWindowService, useValue: new NativeWindowRef() },
         { provide: MetadataService, useValue: new MetadataServiceMock() },
-        { provide: Angulartics2DSpace, useValue: new AngularticsProviderMock() },
+        {
+          provide: Angulartics2DSpace,
+          useValue: new AngularticsProviderMock(),
+        },
         { provide: AuthService, useValue: new AuthServiceMock() },
         { provide: Router, useValue: new RouterMock() },
         { provide: ActivatedRoute, useValue: new MockActivatedRoute() },
         { provide: MenuService, useValue: new MenuServiceStub() },
         { provide: CSSVariableService, useClass: CSSVariableServiceStub },
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
         { provide: LocaleService, useValue: {} },
         provideMockStore({ core: { auth: { loading: false } } } as any),
         RootComponent,

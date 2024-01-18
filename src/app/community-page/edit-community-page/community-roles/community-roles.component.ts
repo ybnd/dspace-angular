@@ -1,13 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  first,
-  map,
-} from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { RemoteData } from '../../../core/data/remote-data';
 import { Community } from '../../../core/shared/community.model';
@@ -25,7 +19,6 @@ import {
   templateUrl: './community-roles.component.html',
 })
 export class CommunityRolesComponent implements OnInit {
-
   dsoRD$: Observable<RemoteData<Community>>;
 
   /**
@@ -38,10 +31,7 @@ export class CommunityRolesComponent implements OnInit {
    */
   community$: Observable<Community>;
 
-  constructor(
-    protected route: ActivatedRoute,
-  ) {
-  }
+  constructor(protected route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.dsoRD$ = this.route.parent.data.pipe(

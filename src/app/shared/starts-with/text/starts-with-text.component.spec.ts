@@ -1,15 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -31,7 +24,12 @@ describe('StartsWithTextComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [StartsWithTextComponent, EnumKeysPipe],
       providers: [
         { provide: 'startsWithOptions', useValue: options },
@@ -71,8 +69,11 @@ describe('StartsWithTextComponent', () => {
     });
 
     it('should add a startsWith query parameter', () => {
-      expect(paginationService.updateRoute).toHaveBeenCalledWith('page-id', { page: 1 }, { startsWith: expectedValue });
+      expect(paginationService.updateRoute).toHaveBeenCalledWith(
+        'page-id',
+        { page: 1 },
+        { startsWith: expectedValue },
+      );
     });
   });
-
 });

@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AbstractEndUserAgreementGuard } from './abstract-end-user-agreement.guard';
 import { EndUserAgreementService } from './end-user-agreement.service';
@@ -13,9 +10,10 @@ import { EndUserAgreementService } from './end-user-agreement.service';
  */
 @Injectable()
 export class EndUserAgreementCookieGuard extends AbstractEndUserAgreementGuard {
-
-  constructor(protected endUserAgreementService: EndUserAgreementService,
-              protected router: Router) {
+  constructor(
+    protected endUserAgreementService: EndUserAgreementService,
+    protected router: Router,
+  ) {
     super(router);
   }
 
@@ -25,5 +23,4 @@ export class EndUserAgreementCookieGuard extends AbstractEndUserAgreementGuard {
   hasAccepted(): Observable<boolean> {
     return observableOf(this.endUserAgreementService.isCookieAccepted());
   }
-
 }

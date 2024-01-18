@@ -17,7 +17,6 @@ import { RequestService } from './request.service';
  * Data Service responsible for retrieving Configuration properties
  */
 export class ConfigurationDataService extends IdentifiableDataService<ConfigurationProperty> {
-
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
@@ -31,7 +30,9 @@ export class ConfigurationDataService extends IdentifiableDataService<Configurat
    * Finds a configuration property by name
    * @param name
    */
-  findByPropertyName(name: string): Observable<RemoteData<ConfigurationProperty>> {
+  findByPropertyName(
+    name: string,
+  ): Observable<RemoteData<ConfigurationProperty>> {
     return this.findById(name);
   }
 }

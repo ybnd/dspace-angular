@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Angulartics2 } from 'angulartics2';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -35,11 +30,11 @@ export class ViewTrackerComponent implements OnInit, OnDestroy {
   constructor(
     public angulartics2: Angulartics2,
     public referrerService: ReferrerService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.sub = this.referrerService.getReferrer()
+    this.sub = this.referrerService
+      .getReferrer()
       .pipe(take(1))
       .subscribe((referrer: string) => {
         this.angulartics2.eventTrack.next({

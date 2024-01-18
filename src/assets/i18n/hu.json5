@@ -1,5 +1,4 @@
 {
-
   // "401.help": "You're not authorized to access this page. You can use the button below to get back to the home page.",
   "401.help": "Nincs jogosultsága az oldal eléréséhez. Az alábbi gombbal vissza tud lépni a főoldalra.",
 
@@ -8,8 +7,6 @@
 
   // "401.unauthorized": "unauthorized",
   "401.unauthorized": "jogosulatlan",
-
-
 
   // "403.help": "You don't have permission to access this page. You can use the button below to get back to the home page.",
   "403.help": "Nincs jogosultsága az oldal eléréséhez. Az alábbi gombbal vissza tud lépni a főoldalra.",
@@ -28,7 +25,6 @@
 
   // "500.link.home-page": "Take me to the home page",
   "404.help": "Vissza a főoldalra",
-
 
   // "404.help": "We can't find the page you're looking for. The page may have been moved or deleted. You can use the button below to get back to the home page. ",
   // TODO Source message changed - Revise the translation
@@ -216,8 +212,6 @@
   // "admin.registries.bitstream-formats.title": "Bitstream Format Registry",
   "admin.registries.bitstream-formats.title": "Bitfolyam formátum leíró adatbázis",
 
-
-
   // "admin.registries.metadata.breadcrumbs": "Metadata registry",
   "admin.registries.metadata.breadcrumbs": "Metaadat leíró adatbázis",
 
@@ -257,13 +251,11 @@
   // "admin.registries.metadata.title": "Metadata Registry",
   "admin.registries.metadata.title": "Metaadat leíró adatbázis",
 
-
-
   // "admin.registries.schema.breadcrumbs": "Metadata schema",
   "admin.registries.schema.breadcrumbs": "Metaadat séma",
 
   // "admin.registries.schema.description": "This is the metadata schema for \"{{namespace}}\".",
-  "admin.registries.schema.description": "Ez a metaadat séma a következőhöz \"{{namespace}}\".",
+  "admin.registries.schema.description": 'Ez a metaadat séma a következőhöz "{{namespace}}".',
 
   // "admin.registries.schema.fields.head": "Schema metadata fields",
   "admin.registries.schema.fields.head": "Séma metaadat mezők",
@@ -301,7 +293,7 @@
   "admin.registries.schema.head": "Metaadat Séma",
 
   // "admin.registries.schema.notification.created": "Successfully created metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.created": "Metaadat séma létrehozása sikerült \"{{prefix}}\"",
+  "admin.registries.schema.notification.created": 'Metaadat séma létrehozása sikerült "{{prefix}}"',
 
   // "admin.registries.schema.notification.deleted.failure": "Failed to delete {{amount}} metadata schemas",
   "admin.registries.schema.notification.deleted.failure": "A {{amount}} metaadat sémák törlése nem sikerült",
@@ -310,13 +302,13 @@
   "admin.registries.schema.notification.deleted.success": "A {{amount}} metaadat sémák törlése sikerült",
 
   // "admin.registries.schema.notification.edited": "Successfully edited metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.edited": "Metaadat séma szerkesztése sikerült \"{{prefix}}\"",
+  "admin.registries.schema.notification.edited": 'Metaadat séma szerkesztése sikerült "{{prefix}}"',
 
   // "admin.registries.schema.notification.failure": "Error",
   "admin.registries.schema.notification.failure": "Hiba",
 
   // "admin.registries.schema.notification.field.created": "Successfully created metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.created": "Metaadat mező létrehozva\"{{field}}\"",
+  "admin.registries.schema.notification.field.created": 'Metaadat mező létrehozva"{{field}}"',
 
   // "admin.registries.schema.notification.field.deleted.failure": "Failed to delete {{amount}} metadata fields",
   "admin.registries.schema.notification.field.deleted.failure": "A{{amount}} metaadat mezők törlése nem sikerült",
@@ -325,7 +317,7 @@
   "admin.registries.schema.notification.field.deleted.success": "A{{amount}} metaadat mezők törlése sikerült",
 
   // "admin.registries.schema.notification.field.edited": "Successfully edited metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.edited": "metaadat mező szerkesztése sikerült\"{{field}}\"",
+  "admin.registries.schema.notification.field.edited": 'metaadat mező szerkesztése sikerült"{{field}}"',
 
   // "admin.registries.schema.notification.success": "Success",
   "admin.registries.schema.notification.success": "Sikerült",
@@ -335,8 +327,6 @@
 
   // "admin.registries.schema.title": "Metadata Schema Registry",
   "admin.registries.schema.title": "Metaadat Séma leíró adatbázis",
-
-
 
   // "admin.access-control.epeople.actions.delete": "Delete EPerson",
   "admin.access-control.epeople.actions.delete": "EPerson törlése",
@@ -393,13 +383,13 @@
   "admin.access-control.epeople.table.edit": "Szerkesztés",
 
   // "admin.access-control.epeople.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.edit": "Szerkesztés \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.edit": 'Szerkesztés "{{name}}"',
 
   // "admin.access-control.epeople.table.edit.buttons.edit-disabled": "You are not authorized to edit this group",
   "admin.access-control.epeople.table.edit.buttons.edit-disabled": "Nincs jogosultsága a csoport szerkesztéséhez",
 
   // "admin.access-control.epeople.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.remove": "Törlés \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.remove": 'Törlés "{{name}}"',
 
   // "admin.access-control.epeople.no-items": "No EPeople to show.",
   "admin.access-control.epeople.no-items": "Nincs elérhető ESzemély.",
@@ -432,28 +422,28 @@
   "admin.access-control.epeople.form.return": "Vissza",
 
   // "admin.access-control.epeople.form.notification.created.success": "Successfully created EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.success": "EPerson \"{{name}} sikeresen létrehozva\"",
+  "admin.access-control.epeople.form.notification.created.success": 'EPerson "{{name}} sikeresen létrehozva"',
 
   // "admin.access-control.epeople.form.notification.created.failure": "Failed to create EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.failure": "EPerson \"{{name}}létrehozása nem sikerült\"",
+  "admin.access-control.epeople.form.notification.created.failure": 'EPerson "{{name}}létrehozása nem sikerült"',
 
   // "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Failed to create EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "EPerson \"{{name}}\" létrehozása nem sikerült, email \"{{email}}\" már használatban van.",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": 'EPerson "{{name}}" létrehozása nem sikerült, email "{{email}}" már használatban van.',
 
   // "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Failed to edit EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "EPerson \"{{name}}\" szerkesztése nem sikerült, email \"{{email}}\" már használatban van.",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'EPerson "{{name}}" szerkesztése nem sikerült, email "{{email}}" már használatban van.',
 
   // "admin.access-control.epeople.form.notification.edited.success": "Successfully edited EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.success": "EPerson \"{{name}}\" szerkesztése sikerült",
+  "admin.access-control.epeople.form.notification.edited.success": 'EPerson "{{name}}" szerkesztése sikerült',
 
   // "admin.access-control.epeople.form.notification.edited.failure": "Failed to edit EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.failure": "EPerson \"{{name}}\" szerkesztése nem sikerült",
+  "admin.access-control.epeople.form.notification.edited.failure": 'EPerson "{{name}}" szerkesztése nem sikerült',
 
   // "admin.access-control.epeople.form.notification.deleted.success": "Successfully deleted EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.success": "Sikeresen törölve: EPerson \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.deleted.success": 'Sikeresen törölve: EPerson "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.deleted.failure": "Failed to delete EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.failure": "Nem sikerült törülni: EPerson \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'Nem sikerült törülni: EPerson "{{name}}"',
 
   // "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Member of these groups:",
   "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Tagja a következő csoportoknak:",
@@ -474,12 +464,10 @@
   "admin.access-control.epeople.form.goToGroups": "Hozzáadás csoportokhoz",
 
   // "admin.access-control.epeople.notification.deleted.failure": "Failed to delete EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.failure": "ESzemély: \"{{name}}\" törlése nem sikerült",
+  "admin.access-control.epeople.notification.deleted.failure": 'ESzemély: "{{name}}" törlése nem sikerült',
 
   // "admin.access-control.epeople.notification.deleted.success": "Successfully deleted EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.success": "ESzemély: \"{{name}}\" törlése sikerült",
-
-
+  "admin.access-control.epeople.notification.deleted.success": 'ESzemély: "{{name}}" törlése sikerült',
 
   // "admin.access-control.groups.title": "Groups",
   "admin.access-control.groups.title": "Csoportok",
@@ -533,30 +521,28 @@
   "admin.access-control.groups.table.edit": "Szerkesztés",
 
   // "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.edit": "Szerkesztés \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.edit": 'Szerkesztés "{{name}}"',
 
   // "admin.access-control.groups.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.remove": "Törlés \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.remove": 'Törlés "{{name}}"',
 
   // "admin.access-control.groups.no-items": "No groups found with this in their name or this as UUID",
   "admin.access-control.groups.no-items": "Egyetlen csoport sem tartalmazza nevében, vagy UUID-ként ezt",
 
   // "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.success": "\"{{name}}\" csoport törlése sikerült",
+  "admin.access-control.groups.notification.deleted.success": '"{{name}}" csoport törlése sikerült',
 
   // "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.failure.title": "\"{{name}}\" csoport törlése nem sikerült",
+  "admin.access-control.groups.notification.deleted.failure.title": '"{{name}}" csoport törlése nem sikerült',
 
   // "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
-  "admin.access-control.groups.notification.deleted.failure.content": "Ok: \"{{cause}}\"",
-
-
+  "admin.access-control.groups.notification.deleted.failure.content": 'Ok: "{{cause}}"',
 
   // "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
   "admin.access-control.groups.form.alert.permanent": "Ez a csoport állandó, nem szerkeszthető vagy törölhető. Ugyanakor a csoporttagság szerkeszthető.",
 
   // "admin.access-control.groups.form.alert.workflowGroup": "This group can’t be modified or deleted because it corresponds to a role in the submission and workflow process in the \"{{name}}\" {{comcol}}. You can delete it from the <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> tab on the edit {{comcol}} page. You can still add and remove group members using this page.",
-  "admin.access-control.groups.form.alert.workflowGroup": "A csoport nem módosítható vagy törölhető, mert használva van egy szerepkörben vagy egy folyamatban a(z) \"{{name}}\" {{comcol}} helyen. Törölheti a <a href='{{comcolEditRolesRoute}}'>\"szerepkör hozzárendelése\"</a> fülön a szerkesztés oldalon: {{comcol}}. Ugyanakkor ezen az oldalon, szerkesztheti a csoporttagokat.",
+  "admin.access-control.groups.form.alert.workflowGroup": 'A csoport nem módosítható vagy törölhető, mert használva van egy szerepkörben vagy egy folyamatban a(z) "{{name}}" {{comcol}} helyen. Törölheti a <a href=\'{{comcolEditRolesRoute}}\'>"szerepkör hozzárendelése"</a> fülön a szerkesztés oldalon: {{comcol}}. Ugyanakkor ezen az oldalon, szerkesztheti a csoporttagokat.',
 
   // "admin.access-control.groups.form.head.create": "Create group",
   "admin.access-control.groups.form.head.create": "Csoport létrehozása",
@@ -574,31 +560,31 @@
   "admin.access-control.groups.form.groupDescription": "Leírás",
 
   // "admin.access-control.groups.form.notification.created.success": "Successfully created Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.success": "\"{{name}}\" csoport létrehozása sikerült",
+  "admin.access-control.groups.form.notification.created.success": '"{{name}}" csoport létrehozása sikerült',
 
   // "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.failure": "\"{{name}}\" csoport létrehozása nem sikerült",
+  "admin.access-control.groups.form.notification.created.failure": '"{{name}}" csoport létrehozása nem sikerült',
 
   // "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Nem sikerült csoport létrehozása a következő névvel: \"{{name}}\", győződjön meg róla, hogy a név nincs már használatban.",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": 'Nem sikerült csoport létrehozása a következő névvel: "{{name}}", győződjön meg róla, hogy a név nincs már használatban.',
 
   // "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.failure": "Nem sikerült szerkeszteni a csoportot \"{{name}}\"",
+  "admin.access-control.groups.form.notification.edited.failure": 'Nem sikerült szerkeszteni a csoportot "{{name}}"',
 
   // "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Name \"{{name}}\" already in use!",
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "A(z) \"{{name}}\" név már foglalt!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": 'A(z) "{{name}}" név már foglalt!',
 
   // "admin.access-control.groups.form.notification.edited.success": "Successfully edited Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.success": "Sikeresen szerkesztett csoport: \"{{name}}\"",
+  "admin.access-control.groups.form.notification.edited.success": 'Sikeresen szerkesztett csoport: "{{name}}"',
 
   // "admin.access-control.groups.form.actions.delete": "Delete Group",
   "admin.access-control.groups.form.actions.delete": "Csoport törlése",
 
   // "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.header": "Csoport törlése: \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.header": 'Csoport törlése: "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.info": "Biztos törli a csoportot: \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.info": 'Biztos törli a csoportot: "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
   "admin.access-control.groups.form.delete-group.modal.cancel": "Mégsem",
@@ -607,13 +593,13 @@
   "admin.access-control.groups.form.delete-group.modal.confirm": "Törlés",
 
   // "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.success": "Csoport sikeresen törölve: \"{{ name }}\"",
+  "admin.access-control.groups.form.notification.deleted.success": 'Csoport sikeresen törölve: "{{ name }}"',
 
   // "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.title": "Nem sikerült törölni a csoportot: \"{{ name }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.title": 'Nem sikerült törölni a csoportot: "{{ name }}"',
 
   // "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.content": "Ok: \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'Ok: "{{ cause }}"',
 
   // "admin.access-control.groups.form.members-list.head": "EPeople",
   "admin.access-control.groups.form.members-list.head": "EPeople",
@@ -655,22 +641,22 @@
   "admin.access-control.groups.form.members-list.table.edit": "Törlés / Hozzáadás",
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "A\"{{name}}\" nevű tag törlése",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": 'A"{{name}}" nevű tag törlése',
 
   // "admin.access-control.groups.form.members-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "A: \"{{name}}\" tag sikeresen hozzáadva",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": 'A: "{{name}}" tag sikeresen hozzáadva',
 
   // "admin.access-control.groups.form.members-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "A: \"{{name}}\" tag hozzáadása nem sikerült",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'A: "{{name}}" tag hozzáadása nem sikerült',
 
   // "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "A: \"{{name}}\" tag törlése sikerült",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": 'A: "{{name}}" tag törlése sikerült',
 
   // "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "A: \"{{name}}\" tag törlése nem sikerült",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'A: "{{name}}" tag törlése nem sikerült',
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Tag hozzáadása a következő névvel: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": 'Tag hozzáadása a következő névvel: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "Nincs jelenleg aktív csoport, előbb adjon meg egy nevet.",
@@ -682,7 +668,7 @@
   "admin.access-control.groups.form.members-list.no-items": "Ez a keresés nem talált EPeople-t",
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "Valami nem sikerült: \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'Valami nem sikerült: "{{cause}}"',
 
   // "admin.access-control.groups.form.subgroups-list.head": "Groups",
   "admin.access-control.groups.form.subgroups-list.head": "Csoportok",
@@ -712,25 +698,25 @@
   "admin.access-control.groups.form.subgroups-list.table.edit": "Törlés / Hozzáadás",
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remove subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "A következő nevű \"{{name}}\" alcsoport törlése",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": 'A következő nevű "{{name}}" alcsoport törlése',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Add subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "A következő nevű \"{{name}}\" alcsoport hozzáadása",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": 'A következő nevű "{{name}}" alcsoport hozzáadása',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Current group",
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Jelenlegi csoport",
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Successfully added subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "A: \"{{name}}\" alcsoport sikeresen hozzáadva",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'A: "{{name}}" alcsoport sikeresen hozzáadva',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Failed to add subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "A: \"{{name}}\" alcsoport hozzáadása nem sikerült",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'A: "{{name}}" alcsoport hozzáadása nem sikerült',
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Successfully deleted subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "A: \"{{name}}\" alcsoport sikeresen törölve",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": 'A: "{{name}}" alcsoport sikeresen törölve',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Failed to delete subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "A: \"{{name}}\" alcsoport törlése nem sikerült",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": 'A: "{{name}}" alcsoport törlése nem sikerült',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "jelenleg nincs aktív csoport, előbb adjon meg egy nevet.",
@@ -795,9 +781,6 @@
   // "administrativeView.search.results.head": "Administrative Search",
   "administrativeView.search.results.head": "Adminisztratív keresés",
 
-
-
-
   // "admin.workflow.breadcrumbs": "Administer Workflow",
   "admin.workflow.breadcrumbs": "Munkafolyamat irányítása",
 
@@ -824,8 +807,6 @@
   // "admin.workflow.item.supervision": "Supervision",
   // TODO New key - Add a translation
   "admin.workflow.item.supervision": "Supervision",
-
-
 
   // "admin.metadata-import.breadcrumbs": "Import Metadata",
   "admin.metadata-import.breadcrumbs": "Metaadat importálása",
@@ -917,7 +898,6 @@
   // TODO New key - Add a translation
   "advanced-workflow-action.rating.description-requiredDescription": "Please select a rating below and also add a review",
 
-
   // "advanced-workflow-action.select-reviewer.description-single": "Please select a single reviewer below before submitting",
   // TODO New key - Add a translation
   "advanced-workflow-action.select-reviewer.description-single": "Please select a single reviewer below before submitting",
@@ -925,7 +905,6 @@
   // "advanced-workflow-action.select-reviewer.description-multiple": "Please select one or more reviewers below before submitting",
   // TODO New key - Add a translation
   "advanced-workflow-action.select-reviewer.description-multiple": "Please select one or more reviewers below before submitting",
-
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.head": "EPeople",
   // TODO New key - Add a translation
@@ -981,27 +960,27 @@
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
   // TODO New key - Add a translation
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": 'Remove member with name "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
   // TODO New key - Add a translation
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": 'Successfully added member: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
   // TODO New key - Add a translation
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": 'Failed to add member: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
   // TODO New key - Add a translation
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": 'Successfully deleted member: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
   // TODO New key - Add a translation
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": 'Failed to delete member: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
   // TODO New key - Add a translation
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": 'Add member with name "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   // TODO New key - Add a translation
@@ -1037,16 +1016,13 @@
   // TODO New key - Add a translation
   "auth.messages.token-refresh-failed": "Refreshing your session token failed. Please log in again.",
 
-
-
   // "bitstream.download.page": "Now downloading {{bitstream}}..." ,
   // TODO New key - Add a translation
-  "bitstream.download.page": "Now downloading {{bitstream}}..." ,
+  "bitstream.download.page": "Now downloading {{bitstream}}...",
 
   // "bitstream.download.page.back": "Back" ,
   // TODO New key - Add a translation
-  "bitstream.download.page.back": "Back" ,
-
+  "bitstream.download.page.back": "Back",
 
   // "bitstream.edit.authorizations.link": "Edit bitstream's Policies",
   // TODO New key - Add a translation
@@ -1064,7 +1040,7 @@
   "bitstream.edit.bitstream": "Bitfolyam: ",
 
   // "bitstream.edit.form.description.hint": "Optionally, provide a brief description of the file, for example \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
-  "bitstream.edit.form.description.hint": "Választhatóan megadhatja az állomány rövid leírását, például \"<i>Fő cikk</i>\" vagy \"<i>Kísérleti adatok</i>\".",
+  "bitstream.edit.form.description.hint": 'Választhatóan megadhatja az állomány rövid leírását, például "<i>Fő cikk</i>" vagy "<i>Kísérleti adatok</i>".',
 
   // "bitstream.edit.form.description.label": "Description",
   "bitstream.edit.form.description.label": "Leírás",
@@ -1085,13 +1061,13 @@
   "bitstream.edit.form.newFormat.label": "Új formátum leírása",
 
   // "bitstream.edit.form.newFormat.hint": "The application you used to create the file, and the version number (for example, \"<i>ACMESoft SuperApp version 1.5</i>\").",
-  "bitstream.edit.form.newFormat.hint": "A program, amellyel az állományt létrehozta és a verzió száma (például, \"<i>ACMESoft SuperApp version 1.5</i>\").",
+  "bitstream.edit.form.newFormat.hint": 'A program, amellyel az állományt létrehozta és a verzió száma (például, "<i>ACMESoft SuperApp version 1.5</i>").',
 
   // "bitstream.edit.form.primaryBitstream.label": "Primary bitstream",
   "bitstream.edit.form.primaryBitstream.label": "Elsődleges bitfolyam",
 
   // "bitstream.edit.form.selectedFormat.hint": "If the format is not in the above list, <b>select \"format not in list\" above</b> and describe it under \"Describe new format\".",
-  "bitstream.edit.form.selectedFormat.hint": "Amennyiben a formátum nem található a fentebbi listán, <b>válassza \"formátum nincs a listán\" feljebb</b> majd írja le \"Új formátum leírása\".",
+  "bitstream.edit.form.selectedFormat.hint": 'Amennyiben a formátum nem található a fentebbi listán, <b>válassza "formátum nincs a listán" feljebb</b> majd írja le "Új formátum leírása".',
 
   // "bitstream.edit.form.selectedFormat.label": "Selected Format",
   "bitstream.edit.form.selectedFormat.label": "Kiválasztott formátum",
@@ -1133,7 +1109,6 @@
   // "bitstream.edit.form.iiifHeight.hint": "The canvas height should usually match the image height.",
   // TODO New key - Add a translation
   "bitstream.edit.form.iiifHeight.hint": "The canvas height should usually match the image height.",
-
 
   // "bitstream.edit.notifications.saved.content": "Your changes to this bitstream were saved.",
   "bitstream.edit.notifications.saved.content": "A bitfolyamban eszközölt változtatások elmentve.",
@@ -1218,8 +1193,6 @@
   // "bitstream-request-a-copy.submit.error": "Something went wrong with submitting the item request.",
   // TODO New key - Add a translation
   "bitstream-request-a-copy.submit.error": "Something went wrong with submitting the item request.",
-
-
 
   // "browse.back.all-results": "All browse results",
   // TODO New key - Add a translation
@@ -1356,15 +1329,12 @@
   // "browse.title.page": "Browsing {{ collection }} by {{ field }} {{ value }}",
   "browse.title.page": "{{ collection }} böngészése, {{ field }} {{ value }} szerint",
 
-
   // "search.browse.item-back": "Back to Results",
   // TODO New key - Add a translation
   "search.browse.item-back": "Back to Results",
 
-
   // "chips.remove": "Remove chip",
   "chips.remove": "Chip eltávolítása",
-
 
   // "claimed-approved-search-result-list-element.title": "Approved",
   // TODO New key - Add a translation
@@ -1377,7 +1347,6 @@
   // "claimed-declined-task-search-result-list-element.title": "Declined, sent back to Review Manager's workflow",
   // TODO New key - Add a translation
   "claimed-declined-task-search-result-list-element.title": "Declined, sent back to Review Manager's workflow",
-
 
   // "collection.create.head": "Create a Collection",
   "collection.create.head": "Hozzon létre egy gyűjteményt",
@@ -1411,9 +1380,7 @@
   "collection.delete.notification.success": "Gyűjtemény törölve",
 
   // "collection.delete.text": "Are you sure you want to delete collection \"{{ dso }}\"",
-  "collection.delete.text": "Biztos benne, hogy törölni szeretné a gyűjteményt \"{{ dso }}\"",
-
-
+  "collection.delete.text": 'Biztos benne, hogy törölni szeretné a gyűjteményt "{{ dso }}"',
 
   // "collection.edit.delete": "Delete this collection",
   "collection.edit.delete": "Törölje ezt a gyűjteményt",
@@ -1423,8 +1390,6 @@
 
   // "collection.edit.breadcrumbs": "Edit Collection",
   "collection.edit.breadcrumbs": "Gyűjtemény szerkesztése",
-
-
 
   // "collection.edit.tabs.mapper.head": "Item Mapper",
   // TODO New key - Add a translation
@@ -1438,7 +1403,7 @@
   "collection.edit.item-mapper.cancel": "Mégse",
 
   // "collection.edit.item-mapper.collection": "Collection: \"<b>{{name}}</b>\"",
-  "collection.edit.item-mapper.collection": "Gyűjtemény: \"<b>{{name}}</b>\"",
+  "collection.edit.item-mapper.collection": 'Gyűjtemény: "<b>{{name}}</b>"',
 
   // "collection.edit.item-mapper.confirm": "Map selected items",
   "collection.edit.item-mapper.confirm": "Térképezze a kiválasztott tárgyakat",
@@ -1489,7 +1454,6 @@
   // "collection.edit.item-mapper.tabs.map": "Map new items",
   "collection.edit.item-mapper.tabs.map": "Új tárgyak térképezése",
 
-
   // "collection.edit.logo.delete.title": "Delete logo",
   // TODO New key - Add a translation
   "collection.edit.logo.delete.title": "Delete logo",
@@ -1519,15 +1483,11 @@
   // "collection.edit.logo.upload": "Drop a Collection Logo to upload",
   "collection.edit.logo.upload": "Feltöltéshez húzza ide a gyűjtemény Logót",
 
-
-
   // "collection.edit.notifications.success": "Successfully edited the Collection",
   "collection.edit.notifications.success": "Gyűjtemény szerkesztése sikerült",
 
   // "collection.edit.return": "Back",
   "collection.edit.return": "Vissza",
-
-
 
   // "collection.edit.tabs.curate.head": "Curate",
   "collection.edit.tabs.curate.head": "Gondozás",
@@ -1619,8 +1579,6 @@
   // "collection.edit.tabs.source.title": "Collection Edit - Content Source",
   "collection.edit.tabs.source.title": "Gyűjtemény szerkesztés - tartalom forrása",
 
-
-
   // "collection.edit.template.add-button": "Add",
   "collection.edit.template.add-button": "Hozzáad",
 
@@ -1641,7 +1599,7 @@
   "collection.edit.template.error": "An error occurred retrieving the template item",
 
   // "collection.edit.template.head": "Edit Template Item for Collection \"{{ collection }}\"",
-  "collection.edit.template.head": "Gyűjtemény elemsablon szerkesztése: \"{{ collection }}\"",
+  "collection.edit.template.head": 'Gyűjtemény elemsablon szerkesztése: "{{ collection }}"',
 
   // "collection.edit.template.label": "Template item",
   "collection.edit.template.label": "Elemsablon",
@@ -1658,8 +1616,6 @@
 
   // "collection.edit.template.title": "Edit Template Item",
   "collection.edit.template.title": "Elemsablon szerkesztése",
-
-
 
   // "collection.form.abstract": "Short Description",
   "collection.form.abstract": "Rövid leírás",
@@ -1689,12 +1645,8 @@
   // TODO New key - Add a translation
   "collection.form.entityType": "Entity Type",
 
-
-
   // "collection.listelement.badge": "Collection",
   "collection.listelement.badge": "Gyűjtemény",
-
-
 
   // "collection.page.browse.recent.head": "Recent Submissions",
   "collection.page.browse.recent.head": "Friss feltöltések",
@@ -1714,8 +1666,6 @@
   // "collection.page.news": "News",
   "collection.page.news": "Hírek",
 
-
-
   // "collection.select.confirm": "Confirm selected",
   "collection.select.confirm": "Kiválasztás igazolása",
 
@@ -1724,7 +1674,6 @@
 
   // "collection.select.table.title": "Title",
   "collection.select.table.title": "Cím",
-
 
   // "collection.source.controls.head": "Harvest Controls",
   // TODO New key - Add a translation
@@ -1796,14 +1745,11 @@
   // TODO New key - Add a translation
   "collection.source.controls.harvest.no-information": "N/A",
 
-
   // "collection.source.update.notifications.error.content": "The provided settings have been tested and didn't work.",
   "collection.source.update.notifications.error.content": "A megadott beállításokat ellenőriztük és nem működnek.",
 
   // "collection.source.update.notifications.error.title": "Server Error",
   "collection.source.update.notifications.error.title": "Szerverhiba",
-
-
 
   // "communityList.breadcrumbs": "Community List",
   // TODO New key - Add a translation
@@ -1817,8 +1763,6 @@
 
   // "communityList.showMore": "Show More",
   "communityList.showMore": "Tovább",
-
-
 
   // "community.create.head": "Create a Community",
   "community.create.head": "Hozzon létre egy közösséget",
@@ -1852,7 +1796,7 @@
   "community.delete.notification.success": "SKözösség sikeresen törölve",
 
   // "community.delete.text": "Are you sure you want to delete community \"{{ dso }}\"",
-  "community.delete.text": "Biztos benne, hogy törölni szeretné a közösséget \"{{ dso }}\"",
+  "community.delete.text": 'Biztos benne, hogy törölni szeretné a közösséget "{{ dso }}"',
 
   // "community.edit.delete": "Delete this community",
   "community.edit.delete": "Törölje ezt a közösséget",
@@ -1862,7 +1806,6 @@
 
   // "community.edit.breadcrumbs": "Edit Community",
   "community.edit.breadcrumbs": "Közösség szerkesztése",
-
 
   // "community.edit.logo.delete.title": "Delete logo",
   // TODO New key - Add a translation
@@ -1893,8 +1836,6 @@
   // "community.edit.logo.upload": "Drop a Community Logo to upload",
   "community.edit.logo.upload": "Feltöltéshez húzza ide a közösségi logót",
 
-
-
   // "community.edit.notifications.success": "Successfully edited the Community",
   "community.edit.notifications.success": "Közösség szerkesztése sikerült",
 
@@ -1906,8 +1847,6 @@
 
   // "community.edit.return": "Back",
   "community.edit.return": "Vissza",
-
-
 
   // "community.edit.tabs.curate.head": "Curate",
   "community.edit.tabs.curate.head": "Gondozás",
@@ -1933,12 +1872,8 @@
   // "community.edit.tabs.authorizations.title": "Community Edit - Authorizations",
   "community.edit.tabs.authorizations.title": "Közösségi szerkesztés - Jogosultásgok",
 
-
-
   // "community.listelement.badge": "Community",
   "community.listelement.badge": "Közösség",
-
-
 
   // "comcol-role.edit.no-group": "None",
   "comcol-role.edit.no-group": "Semmi",
@@ -1960,13 +1895,11 @@
   // TODO New key - Add a translation
   "comcol-role.edit.delete.error.title": "Failed to delete the '{{ role }}' role's group",
 
-
   // "comcol-role.edit.community-admin.name": "Administrators",
   "comcol-role.edit.community-admin.name": "Adminisztrátorok",
 
   // "comcol-role.edit.collection-admin.name": "Administrators",
   "comcol-role.edit.collection-admin.name": "Adminisztrátorok",
-
 
   // "comcol-role.edit.community-admin.description": "Community administrators can create sub-communities or collections, and manage or assign management for those sub-communities or collections. In addition, they decide who can submit items to any sub-collections, edit item metadata (after submission), and add (map) existing items from other collections (subject to authorization).",
   "comcol-role.edit.community-admin.description": "A közösségek adminisztrátorai létrehozhatnak alkategóriákat vagy gyűjteményeket, irányíthatják azokat, vagy kijelölhetik azok irányítását. Továbbá ők döntik el ki tölthet fel tárgyakat bármely algyűjteménybe, ki szerkesztheti a tárgyak metaadatait (feltöltést követően) és ki adhat hozzá (térképezhet) létező tárgyakat más gyűjteményekből (felhatalmazás szükséges).",
@@ -1974,13 +1907,11 @@
   // "comcol-role.edit.collection-admin.description": "Collection administrators decide who can submit items to the collection, edit item metadata (after submission), and add (map) existing items from other collections to this collection (subject to authorization for that collection).",
   "comcol-role.edit.collection-admin.description": "A közösségek adminisztrátorai  öntik el ki tölthet fel tárgyakat bármely algyűjteménybe, ki szerkesztheti a tárgyak metaadatait (feltöltést követően) és ki adhat hozzá (térképezhet) létező tárgyakat más gyűjteményekből (felhatalmazás szükséges).",
 
-
   // "comcol-role.edit.submitters.name": "Submitters",
   "comcol-role.edit.submitters.name": "Feltöltők",
 
   // "comcol-role.edit.submitters.description": "The E-People and Groups that have permission to submit new items to this collection.",
   "comcol-role.edit.submitters.description": "E-People és csoportok akik feltölthetnek új tárgyakat ebbe a gyűjteménybe.",
-
 
   // "comcol-role.edit.item_read.name": "Default item read access",
   "comcol-role.edit.item_read.name": "Alapbeállított tárgy olvasási hozzáférés",
@@ -1991,7 +1922,6 @@
   // "comcol-role.edit.item_read.anonymous-group": "Default read for incoming items is currently set to Anonymous.",
   "comcol-role.edit.item_read.anonymous-group": "Beérkező tárgyak olvasási alapbeállítása jelenleg Névtelen.",
 
-
   // "comcol-role.edit.bitstream_read.name": "Default bitstream read access",
   "comcol-role.edit.bitstream_read.name": "Bitfolyam olvasási hozzáférés alapbeállítás",
 
@@ -2001,13 +1931,11 @@
   // "comcol-role.edit.bitstream_read.anonymous-group": "Default read for incoming bitstreams is currently set to Anonymous.",
   "comcol-role.edit.bitstream_read.anonymous-group": "Beérkező bitfolyamok olvasási alapbeállítása jelenleg Névtelen.",
 
-
   // "comcol-role.edit.editor.name": "Editors",
   "comcol-role.edit.editor.name": "Szerkesztők",
 
   // "comcol-role.edit.editor.description": "Editors are able to edit the metadata of incoming submissions, and then accept or reject them.",
   "comcol-role.edit.editor.description": "Szerkesztők szerkeszthetik a beérkező feltöltések metaadatait és elfogadhatják, vagy elutasíthatják azokat.",
-
 
   // "comcol-role.edit.finaleditor.name": "Final editors",
   "comcol-role.edit.finaleditor.name": "Végső szerkesztők",
@@ -2015,13 +1943,11 @@
   // "comcol-role.edit.finaleditor.description": "Final editors are able to edit the metadata of incoming submissions, but will not be able to reject them.",
   "comcol-role.edit.finaleditor.description": "Végső szerkesztők szerkeszthetik a beérkező feltöltések metaadatait de nem utasíthatják el azokat.",
 
-
   // "comcol-role.edit.reviewer.name": "Reviewers",
   "comcol-role.edit.reviewer.name": "Lektorálók",
 
   // "comcol-role.edit.reviewer.description": "Reviewers are able to accept or reject incoming submissions. However, they are not able to edit the submission's metadata.",
   "comcol-role.edit.reviewer.description": "A lektorálók elfogadhatják, vagy elutasíthatják a beérkező feltöltéseket, de nem szerkeszthetik azok metaadatait.",
-
 
   // "comcol-role.edit.scorereviewers.name": "Score Reviewers",
   // TODO New key - Add a translation
@@ -2030,8 +1956,6 @@
   // "comcol-role.edit.scorereviewers.description": "Reviewers are able to give a score to incoming submissions, this will define whether the submission will be rejected or not.",
   // TODO New key - Add a translation
   "comcol-role.edit.scorereviewers.description": "Reviewers are able to give a score to incoming submissions, this will define whether the submission will be rejected or not.",
-
-
 
   // "community.form.abstract": "Short Description",
   "community.form.abstract": "Rövid leírás",
@@ -2071,8 +1995,6 @@
 
   // "community.sub-community-list.head": "Communities of this Community",
   "community.sub-community-list.head": "Ennek a kategóriának az alkategóriái",
-
-
 
   // "cookies.consent.accept-all": "Accept all",
   "cookies.consent.accept-all": "Mind elfogad",
@@ -2158,14 +2080,11 @@
   // "cookies.consent.app.description.authentication": "Required for signing you in",
   "cookies.consent.app.description.authentication": "Szükséges a beléptetéséhez",
 
-
   // "cookies.consent.app.title.preferences": "Preferences",
   "cookies.consent.app.title.preferences": "Beállítások",
 
   // "cookies.consent.app.description.preferences": "Required for saving your preferences",
   "cookies.consent.app.description.preferences": "Szükséges a beállítások mentéséhez",
-
-
 
   // "cookies.consent.app.title.acknowledgement": "Acknowledgement",
   "cookies.consent.app.title.acknowledgement": "Elismerés",
@@ -2173,15 +2092,11 @@
   // "cookies.consent.app.description.acknowledgement": "Required for saving your acknowledgements and consents",
   "cookies.consent.app.description.acknowledgement": "Szükséges az elismerésének és beleegyezésének a mentéséhez",
 
-
-
   // "cookies.consent.app.title.google-analytics": "Google Analytics",
   "cookies.consent.app.title.google-analytics": "Google Analytics",
 
   // "cookies.consent.app.description.google-analytics": "Allows us to track statistical data",
   "cookies.consent.app.description.google-analytics": "Engedélyezi statisztikai adatok gyűjtését",
-
-
 
   // "cookies.consent.app.title.google-recaptcha": "Google reCaptcha",
   // TODO New key - Add a translation
@@ -2190,7 +2105,6 @@
   // "cookies.consent.app.description.google-recaptcha": "We use google reCAPTCHA service during registration and password recovery",
   // TODO New key - Add a translation
   "cookies.consent.app.description.google-recaptcha": "We use google reCAPTCHA service during registration and password recovery",
-
 
   // "cookies.consent.purpose.functional": "Functional",
   "cookies.consent.purpose.functional": "Funkcionális",
@@ -2232,8 +2146,6 @@
   // TODO New key - Add a translation
   "curation-task.task.registerdoi.label": "Register DOI",
 
-
-
   // "curation.form.task-select.label": "Task:",
   "curation.form.task-select.label": "Feladat:",
 
@@ -2262,11 +2174,9 @@
   // "curation.form.handle.hint": "Hint: Enter [your-handle-prefix]/0 to run a task across entire site (not all tasks may support this capability)",
   "curation.form.handle.hint": "Hint: Írja be a(z) [your-handle-prefix]/0 hogy futtasson egy feladatok az egész oldalon (nem minden feladat alakalmas a futtatásra)",
 
-
-
   // "deny-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I regret to inform you that it's not possible to send you a copy of the file(s) you have requested, concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
   // TODO New key - Add a translation
-  "deny-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I regret to inform you that it's not possible to send you a copy of the file(s) you have requested, concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
+  "deny-request-copy.email.message": 'Dear {{ recipientName }},\nIn response to your request I regret to inform you that it\'s not possible to send you a copy of the file(s) you have requested, concerning the document: "{{ itemUrl }}" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>',
 
   // "deny-request-copy.email.subject": "Request copy of document",
   // TODO New key - Add a translation
@@ -2288,13 +2198,9 @@
   // TODO New key - Add a translation
   "deny-request-copy.success": "Successfully denied item request",
 
-
-
   // "dso.name.untitled": "Untitled",
   // TODO New key - Add a translation
   "dso.name.untitled": "Untitled",
-
-
 
   // "dso-selector.create.collection.head": "New collection",
   "dso-selector.create.collection.head": "Új gyűjtemény",
@@ -2474,10 +2380,10 @@
   "confirmation-modal.export-batch.confirm": "Export",
 
   // "confirmation-modal.delete-eperson.header": "Delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.header": "EPerson törlése \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.header": 'EPerson törlése "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.info": "Are you sure you want to delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.info": "Biztos benne, hogy törli: EPerson \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.info": 'Biztos benne, hogy törli: EPerson "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.cancel": "Cancel",
   "confirmation-modal.delete-eperson.cancel": "Mégsem",
@@ -2507,7 +2413,7 @@
 
   // "confirmation-modal.delete-subscription.info": "Are you sure you want to delete subscription for \"{{ dsoName }}\"",
   // TODO New key - Add a translation
-  "confirmation-modal.delete-subscription.info": "Are you sure you want to delete subscription for \"{{ dsoName }}\"",
+  "confirmation-modal.delete-subscription.info": 'Are you sure you want to delete subscription for "{{ dsoName }}"',
 
   // "confirmation-modal.delete-subscription.cancel": "Cancel",
   // TODO New key - Add a translation
@@ -2555,7 +2461,7 @@
 
   // "error.invalid-search-query": "Search query is not valid. Please check <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> best practices for further information about this error.",
   // TODO New key - Add a translation
-  "error.invalid-search-query": "Search query is not valid. Please check <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> best practices for further information about this error.",
+  "error.invalid-search-query": 'Search query is not valid. Please check <a href="https://solr.apache.org/guide/query-syntax-and-parsing.html" target="_blank">Solr query syntax</a> best practices for further information about this error.',
 
   // "error.sub-collections": "Error fetching sub-collections",
   "error.sub-collections": "Algyűjtemények megjelenítésekor hiba történt",
@@ -2594,16 +2500,12 @@
   // TODO New key - Add a translation
   "error.validation.groupExists": "This group already exists",
 
-
   // "feed.description": "Syndication feed",
   // TODO New key - Add a translation
   "feed.description": "Syndication feed",
 
-
   // "file-section.error.header": "Error obtaining files for this item",
   "file-section.error.header": "Hiba történ az elemhez tartozó fájlok beszerzésekor",
-
-
 
   // "footer.copyright": "copyright © 2002-{{ year }}",
   "footer.copyright": "szerzői jog © 2002-{{ year }}",
@@ -2625,8 +2527,6 @@
 
   // "footer.link.feedback":"Send Feedback",
   "footer.link.feedback": "Visszajelzés küldése",
-
-
 
   // "forgot-email.form.header": "Forgot Password",
   "forgot-email.form.header": "Elfelejtettem a jelszót",
@@ -2662,8 +2562,6 @@
   // "forgot-email.form.error.content": "An error occured when attempting to reset the password for the account associated with the following email address: {{ email }}",
   // TODO New key - Add a translation
   "forgot-email.form.error.content": "An error occured when attempting to reset the password for the account associated with the following email address: {{ email }}",
-
-
 
   // "forgot-password.title": "Forgot Password",
   "forgot-password.title": "Elfelejtettem a jelszót",
@@ -2706,7 +2604,6 @@
 
   // "forgot-password.form.submit": "Submit password",
   "forgot-password.form.submit": "Jelszó beküldése",
-
 
   // "form.add": "Add more",
   "form.add": "Továbbiak hozzáadása",
@@ -2791,8 +2688,6 @@
   // TODO New key - Add a translation
   "form.repeatable.sort.tip": "Drop the item in the new position",
 
-
-
   // "grant-deny-request-copy.deny": "Don't send copy",
   // TODO New key - Add a translation
   "grant-deny-request-copy.deny": "Don't send copy",
@@ -2853,11 +2748,9 @@
   // TODO New key - Add a translation
   "grant-deny-request-copy.processed": "This request has already been processed. You can use the button below to get back to the home page.",
 
-
-
   // "grant-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I have the pleasure to send you in attachment a copy of the file(s) concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
   // TODO New key - Add a translation
-  "grant-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I have the pleasure to send you in attachment a copy of the file(s) concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
+  "grant-request-copy.email.message": 'Dear {{ recipientName }},\nIn response to your request I have the pleasure to send you in attachment a copy of the file(s) concerning the document: "{{ itemUrl }}" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>',
 
   // "grant-request-copy.email.subject": "Request copy of document",
   // TODO New key - Add a translation
@@ -2878,7 +2771,6 @@
   // "grant-request-copy.success": "Successfully granted item request",
   // TODO New key - Add a translation
   "grant-request-copy.success": "Successfully granted item request",
-
 
   // "health.breadcrumbs": "Health",
   // TODO New key - Add a translation
@@ -2960,7 +2852,6 @@
   // TODO New key - Add a translation
   "health-page.section.no-issues": "No issues detected",
 
-
   // "home.description": "",
   "home.description": "",
 
@@ -2978,8 +2869,6 @@
 
   // "home.top-level-communities.help": "Select a community to browse its collections.",
   "home.top-level-communities.help": "Válasszon ki egy kategóriát, hogy böngéssze a gyűjteményeit.",
-
-
 
   // "info.end-user-agreement.accept": "I have read and I agree to the End User Agreement",
   "info.end-user-agreement.accept": "Elolvastam és elfogadom a felhasználói feltételeket",
@@ -3061,15 +2950,11 @@
   // TODO New key - Add a translation
   "info.feedback.page_help": "Tha page related to your feedback",
 
-
-
   // "item.alerts.private": "This item is non-discoverable",
   "item.alerts.private": "Ez az elem privát",
 
   // "item.alerts.withdrawn": "This item has been withdrawn",
   "item.alerts.withdrawn": "Ez az elem vissza lett vonva",
-
-
 
   // "item.edit.authorizations.heading": "With this editor you can view and alter the policies of an item, plus alter policies of individual item components: bundles and bitstreams. Briefly, an item is a container of bundles, and bundles are containers of bitstreams. Containers usually have ADD/REMOVE/READ/WRITE policies, while bitstreams only have READ/WRITE policies.",
   "item.edit.authorizations.heading": "Evvel a szerkesztővel megnézheti vagy szerkesztheti egy elem jogosutságát, és szerkesztheti egy egyedi elem componenseinek jogosutságát: bundles és bitstreams. Röviden, egy elem a kötegek gyűjteménye, és a kötegek a bitsteramek gyűjteménye. A kötegeknek többnyire van ADD/REMOVE/READ/WRITE jogosultsága, miközben a bitstreameknek csak READ/WRITE jogosultsága.",
@@ -3077,15 +2962,11 @@
   // "item.edit.authorizations.title": "Edit item's Policies",
   "item.edit.authorizations.title": "Jogosultásgok elem szerkesztése",
 
-
-
   // "item.badge.private": "Non-discoverable",
   "item.badge.private": "Privát",
 
   // "item.badge.withdrawn": "Withdrawn",
   "item.badge.withdrawn": "Visszavont",
-
-
 
   // "item.bitstreams.upload.bundle": "Bundle",
   "item.bitstreams.upload.bundle": "Csomag",
@@ -3119,8 +3000,6 @@
 
   // "item.bitstreams.upload.title": "Upload bitstream",
   "item.bitstreams.upload.title": "Bitfolyam feltöltése",
-
-
 
   // "item.edit.bitstreams.bundle.edit.buttons.upload": "Upload",
   "item.edit.bitstreams.bundle.edit.buttons.upload": "Feltöltés",
@@ -3212,8 +3091,6 @@
   // "item.edit.bitstreams.upload-button": "Upload",
   "item.edit.bitstreams.upload-button": "Feltöltés",
 
-
-
   // "item.edit.delete.cancel": "Cancel",
   "item.edit.delete.cancel": "Mégse",
 
@@ -3241,7 +3118,6 @@
   // "item.edit.tabs.disabled.tooltip": "You're not authorized to access this tab",
   // TODO New key - Add a translation
   "item.edit.tabs.disabled.tooltip": "You're not authorized to access this tab",
-
 
   // "item.edit.tabs.mapper.head": "Collection Mapper",
   // TODO New key - Add a translation
@@ -3351,7 +3227,7 @@
   "item.edit.item-mapper.head": "Tárgytérképező - Térképezze a tárgyat gyűjteményekhez",
 
   // "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
-  "item.edit.item-mapper.item": "Tárgy: \"<b>{{name}}</b>\"",
+  "item.edit.item-mapper.item": 'Tárgy: "<b>{{name}}</b>"',
 
   // "item.edit.item-mapper.no-search": "Please enter a query to search",
   "item.edit.item-mapper.no-search": "Kérjük írja be a keresett szót",
@@ -3390,8 +3266,6 @@
   // "item.edit.item-mapper.tabs.map": "Map new collections",
   "item.edit.item-mapper.tabs.map": "Térképezzen új gyűjteményeket",
 
-
-
   // "item.edit.metadata.add-button": "Add",
   "item.edit.metadata.add-button": "Hozzáadás",
 
@@ -3420,7 +3294,7 @@
 
   // "item.edit.metadata.edit.buttons.virtual": "This is a virtual metadata value, i.e. a value inherited from a related entity. It can’t be modified directly. Add or remove the corresponding relationship in the \"Relationships\" tab",
   // TODO New key - Add a translation
-  "item.edit.metadata.edit.buttons.virtual": "This is a virtual metadata value, i.e. a value inherited from a related entity. It can’t be modified directly. Add or remove the corresponding relationship in the \"Relationships\" tab",
+  "item.edit.metadata.edit.buttons.virtual": 'This is a virtual metadata value, i.e. a value inherited from a related entity. It can’t be modified directly. Add or remove the corresponding relationship in the "Relationships" tab',
 
   // "item.edit.metadata.empty": "The item currently doesn't contain any metadata. Click Add to start adding a metadata value.",
   "item.edit.metadata.empty": "Az elem jelenleg nem tartalmaz metaadatot. Kattintson a Hozzáad-ra metaadatok hozzáadásához.",
@@ -3481,8 +3355,6 @@
   // "item.edit.metadata.save-button": "Save",
   "item.edit.metadata.save-button": "Mentés",
 
-
-
   // "item.edit.modify.overview.field": "Field",
   "item.edit.modify.overview.field": "Mező",
 
@@ -3491,8 +3363,6 @@
 
   // "item.edit.modify.overview.value": "Value",
   "item.edit.modify.overview.value": "Érték",
-
-
 
   // "item.edit.move.cancel": "Back",
   "item.edit.move.cancel": "Vissza",
@@ -3535,8 +3405,6 @@
   // "item.edit.move.title": "Move item",
   "item.edit.move.title": "Tárgy mozgatása",
 
-
-
   // "item.edit.private.cancel": "Cancel",
   "item.edit.private.cancel": "Mégse",
 
@@ -3559,8 +3427,6 @@
   // "item.edit.private.success": "The item is now non-discoverable",
   // TODO Source message changed - Revise the translation
   "item.edit.private.success": "Ezx a tárgy most privát",
-
-
 
   // "item.edit.public.cancel": "Cancel",
   "item.edit.public.cancel": "Mégse",
@@ -3585,8 +3451,6 @@
   // TODO Source message changed - Revise the translation
   "item.edit.public.success": "A tárgy most nyilvános",
 
-
-
   // "item.edit.reinstate.cancel": "Cancel",
   "item.edit.reinstate.cancel": "Mégse",
 
@@ -3604,8 +3468,6 @@
 
   // "item.edit.reinstate.success": "The item was reinstated successfully",
   "item.edit.reinstate.success": "Tárgy visszaállítása sikerült",
-
-
 
   // "item.edit.relationships.discard-button": "Discard",
   "item.edit.relationships.discard-button": "Elvetés",
@@ -3652,11 +3514,9 @@
   // "item.edit.relationships.no-entity-type": "Add 'dspace.entity.type' metadata to enable relationships for this item",
   "item.edit.relationships.no-entity-type": "Adja hozzá a 'dspace.entity.type' metaadatot ezen elem hivatkozásánek engedélyezéséhez",
 
-
   // "item.edit.return": "Back",
   // TODO New key - Add a translation
   "item.edit.return": "Back",
-
 
   // "item.edit.tabs.bitstreams.head": "Bitstreams",
   "item.edit.tabs.bitstreams.head": "Bitfolyamok",
@@ -3776,8 +3636,6 @@
   // "item.edit.tabs.view.title": "Item Edit -  View",
   "item.edit.tabs.view.title": "Tárgy szerkesztése -  Megtekintés",
 
-
-
   // "item.edit.withdraw.cancel": "Cancel",
   "item.edit.withdraw.cancel": "Mégse",
 
@@ -3799,7 +3657,6 @@
   // "item.orcid.return": "Back",
   // TODO New key - Add a translation
   "item.orcid.return": "Back",
-
 
   // "item.listelement.badge": "Item",
   "item.listelement.badge": "Tétel",
@@ -3855,11 +3712,11 @@
 
   // "workflow-item.search.result.notification.deleted.success": "Successfully deleted supervision order \"{{name}}\"",
   // TODO New key - Add a translation
-  "workflow-item.search.result.notification.deleted.success": "Successfully deleted supervision order \"{{name}}\"",
+  "workflow-item.search.result.notification.deleted.success": 'Successfully deleted supervision order "{{name}}"',
 
   // "workflow-item.search.result.notification.deleted.failure": "Failed to delete supervision order \"{{name}}\"",
   // TODO New key - Add a translation
-  "workflow-item.search.result.notification.deleted.failure": "Failed to delete supervision order \"{{name}}\"",
+  "workflow-item.search.result.notification.deleted.failure": 'Failed to delete supervision order "{{name}}"',
 
   // "workflow-item.search.result.list.element.supervised-by": "Supervised by:",
   // TODO New key - Add a translation
@@ -3868,8 +3725,6 @@
   // "workflow-item.search.result.list.element.supervised.remove-tooltip": "Remove supervision group",
   // TODO New key - Add a translation
   "workflow-item.search.result.list.element.supervised.remove-tooltip": "Remove supervision group",
-
-
 
   // "item.page.abstract": "Abstract",
   "item.page.abstract": "Kivonat",
@@ -4076,8 +3931,6 @@
   // TODO New key - Add a translation
   "item.preview.oaire.fundingStream": "Funding Stream:",
 
-
-
   // "item.select.confirm": "Confirm selected",
   "item.select.confirm": "Kiválasztás igazolása",
 
@@ -4092,7 +3945,6 @@
 
   // "item.select.table.title": "Title",
   "item.select.table.title": "Cím",
-
 
   // "item.version.history.empty": "There are no other versions for this item yet.",
   "item.version.history.empty": "Ennek a tárgynak még nincs más változata.",
@@ -4166,10 +4018,8 @@
   // TODO New key - Add a translation
   "item.version.history.table.action.hasDraft": "A new version cannot be created because there is an inprogress submission in the version history",
 
-
   // "item.version.notice": "This is not the latest version of this item. The latest version can be found <a href='{{destination}}'>here</a>.",
   "item.version.notice": "Ez nem ennek a tárgynak a legutóbbi változata. A legutóbbi változat megtalálható itt <a href='{{destination}}'>here</a>.",
-
 
   // "item.version.create.modal.header": "New version",
   // TODO New key - Add a translation
@@ -4227,7 +4077,6 @@
   // TODO New key - Add a translation
   "item.version.create.notification.inProgress": "A new version cannot be created because there is an inprogress submission in the version history",
 
-
   // "item.version.delete.modal.header": "Delete version",
   // TODO New key - Add a translation
   "item.version.delete.modal.header": "Delete version",
@@ -4260,7 +4109,6 @@
   // TODO New key - Add a translation
   "item.version.delete.notification.failure": "Version number {{version}} has not been deleted",
 
-
   // "item.version.edit.notification.success" : "The summary of version number {{version}} has been changed",
   // TODO New key - Add a translation
   "item.version.edit.notification.success": "The summary of version number {{version}} has been changed",
@@ -4268,8 +4116,6 @@
   // "item.version.edit.notification.failure" : "The summary of version number {{version}} has not been changed",
   // TODO New key - Add a translation
   "item.version.edit.notification.failure": "The summary of version number {{version}} has not been changed",
-
-
 
   // "itemtemplate.edit.metadata.add-button": "Add",
   // TODO New key - Add a translation
@@ -4379,8 +4225,6 @@
   // TODO New key - Add a translation
   "itemtemplate.edit.metadata.save-button": "Save",
 
-
-
   // "journal.listelement.badge": "Journal",
   "journal.listelement.badge": "Folyóirat",
 
@@ -4411,8 +4255,6 @@
   // "journal.search.title": "Journal Search",
   "journal.search.title": "Folyóirat keresés",
 
-
-
   // "journalissue.listelement.badge": "Journal Issue",
   "journalissue.listelement.badge": "Folyóirat szám",
 
@@ -4440,8 +4282,6 @@
   // "journalissue.page.titleprefix": "Journal Issue: ",
   "journalissue.page.titleprefix": "Folyóirat száma: ",
 
-
-
   // "journalvolume.listelement.badge": "Journal Volume",
   "journalvolume.listelement.badge": "Folyóirat kötet",
 
@@ -4459,7 +4299,6 @@
 
   // "journalvolume.page.volume": "Volume",
   "journalvolume.page.volume": "Kötet",
-
 
   // "iiifsearchable.listelement.badge": "Document Media",
   // TODO New key - Add a translation
@@ -4504,7 +4343,6 @@
   // "iiif.page.description": "Description: ",
   // TODO New key - Add a translation
   "iiif.page.description": "Description: ",
-
 
   // "loading.bitstream": "Loading bitstream...",
   "loading.bitstream": "Bitfolyam betöltése...",
@@ -4560,8 +4398,6 @@
   // "loading.top-level-communities": "Loading top-level communities...",
   "loading.top-level-communities": "Csúcsszintű kategóriák betöltése...",
 
-
-
   // "login.form.email": "Email address",
   "login.form.email": "E-mail cím",
 
@@ -4600,8 +4436,6 @@
   // "login.breadcrumbs": "Login",
   "login.breadcrumbs": "Bejelentkezés",
 
-
-
   // "logout.form.header": "Log out from DSpace",
   "logout.form.header": "Kilépés a DSpace-ből",
 
@@ -4610,8 +4444,6 @@
 
   // "logout.title": "Logout",
   "logout.title": "Kilépés",
-
-
 
   // "menu.header.admin": "Management",
   // TODO Source message changed - Revise the translation
@@ -4623,8 +4455,6 @@
   // "menu.header.admin.description": "Management menu",
   // TODO New key - Add a translation
   "menu.header.admin.description": "Management menu",
-
-
 
   // "menu.section.access_control": "Access Control",
   "menu.section.access_control": "Hozzáférési kontroll",
@@ -4638,12 +4468,8 @@
   // "menu.section.access_control_people": "People",
   "menu.section.access_control_people": "Emberek",
 
-
-
   // "menu.section.admin_search": "Admin Search",
   "menu.section.admin_search": "Admin keresés",
-
-
 
   // "menu.section.browse_community": "This Community",
   "menu.section.browse_community": "ez a közösség",
@@ -4675,15 +4501,11 @@
   // "menu.section.browse_global_communities_and_collections": "Communities & Collections",
   "menu.section.browse_global_communities_and_collections": "Kategóriák & Gyűjtemények",
 
-
-
   // "menu.section.control_panel": "Control Panel",
   "menu.section.control_panel": "Vezérlőpult",
 
   // "menu.section.curation_task": "Curation Task",
   "menu.section.curation_task": "Gondozási feladat",
-
-
 
   // "menu.section.edit": "Edit",
   "menu.section.edit": "Szerkesztés",
@@ -4696,8 +4518,6 @@
 
   // "menu.section.edit_item": "Item",
   "menu.section.edit_item": "Tárgy",
-
-
 
   // "menu.section.export": "Export",
   "menu.section.export": "Export",
@@ -4717,7 +4537,6 @@
   // "menu.section.export_batch": "Batch Export (ZIP)",
   // TODO New key - Add a translation
   "menu.section.export_batch": "Batch Export (ZIP)",
-
 
   // "menu.section.icon.access_control": "Access Control menu section",
   "menu.section.icon.access_control": "Hozzáférés kontroll menü felület",
@@ -4771,8 +4590,6 @@
   // "menu.section.icon.unpin": "Unpin sidebar",
   "menu.section.icon.unpin": "Oldalbár rögzítés megszüntetése",
 
-
-
   // "menu.section.import": "Import",
   "menu.section.import": "Import",
 
@@ -4781,8 +4598,6 @@
 
   // "menu.section.import_metadata": "Metadata",
   "menu.section.import_metadata": "Metaadat",
-
-
 
   // "menu.section.new": "New",
   "menu.section.new": "Új",
@@ -4802,15 +4617,11 @@
   // "menu.section.new_process": "Process",
   "menu.section.new_process": "Folyamat",
 
-
-
   // "menu.section.pin": "Pin sidebar",
   "menu.section.pin": "Oldalsáv rögzítése",
 
   // "menu.section.unpin": "Unpin sidebar",
   "menu.section.unpin": "Oldalsáv rögzítés megszüntetése",
-
-
 
   // "menu.section.processes": "Processes",
   "menu.section.processes": "Folyamatok",
@@ -4818,8 +4629,6 @@
   // "menu.section.health": "Health",
   // TODO New key - Add a translation
   "menu.section.health": "Health",
-
-
 
   // "menu.section.registries": "Registries",
   "menu.section.registries": "Leíró adatbázisok",
@@ -4830,15 +4639,11 @@
   // "menu.section.registries_metadata": "Metadata",
   "menu.section.registries_metadata": "Metaadat",
 
-
-
   // "menu.section.statistics": "Statistics",
   "menu.section.statistics": "Statisztikák",
 
   // "menu.section.statistics_task": "Statistics Task",
   "menu.section.statistics_task": "Statisztikai feladatok",
-
-
 
   // "menu.section.toggle.access_control": "Toggle Access Control section",
   "menu.section.toggle.access_control": "Váltás a Hozzáférés kontrol felületre",
@@ -4870,10 +4675,8 @@
   // "menu.section.toggle.statistics_task": "Toggle Statistics Task section",
   "menu.section.toggle.statistics_task": "Statisztikai feladatok felületre váltás",
 
-
   // "menu.section.workflow": "Administer Workflow",
   "menu.section.workflow": "Munkafolyamat irányítása",
-
 
   // "metadata-export-search.tooltip": "Export search results as CSV",
   // TODO New key - Add a translation
@@ -4884,7 +4687,6 @@
   // "metadata-export-search.submit.error": "Starting the export has failed",
   // TODO New key - Add a translation
   "metadata-export-search.submit.error": "Starting the export has failed",
-
 
   // "mydspace.breadcrumbs": "MyDSpace",
   // TODO New key - Add a translation
@@ -5016,8 +4818,6 @@
   // "mydspace.view-btn": "View",
   "mydspace.view-btn": "Megtekintés",
 
-
-
   // "nav.browse.header": "All of DSpace",
   "nav.browse.header": "Böngészés",
 
@@ -5076,7 +4876,6 @@
   // TODO New key - Add a translation
   "none.listelement.badge": "Item",
 
-
   // "orgunit.listelement.badge": "Organizational Unit",
   "orgunit.listelement.badge": "Szervezeti egység",
 
@@ -5105,8 +4904,6 @@
   // "orgunit.page.titleprefix": "Organizational Unit: ",
   "orgunit.page.titleprefix": "Szervezeti egység: ",
 
-
-
   // "pagination.options.description": "Pagination options",
   // TODO New key - Add a translation
   "pagination.options.description": "Pagination options",
@@ -5122,8 +4919,6 @@
 
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Rendszerezési lehetőségek",
-
-
 
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Személy",
@@ -5174,8 +4969,6 @@
   // "person.search.title": "Person Search",
   // TODO Source message changed - Revise the translation
   "person.search.title": "DSpace Angular :: Személy keresése",
-
-
 
   // "process.new.select-parameters": "Parameters",
   "process.new.select-parameters": "Paraméterek",
@@ -5234,8 +5027,6 @@
 
   // "process.new.breadcrumbs": "Create a new process",
   "process.new.breadcrumbs": "Új folyamat létrehozása",
-
-
 
   // "process.detail.arguments" : "Arguments",
   "process.detail.arguments": "Érvek",
@@ -5314,8 +5105,6 @@
   // TODO New key - Add a translation
   "process.detail.delete.error": "Something went wrong when deleting the process",
 
-
-
   // "process.overview.table.finish" : "Finish time (UTC)",
   // TODO Source message changed - Revise the translation
   "process.overview.table.finish": "Végzési idő",
@@ -5380,8 +5169,6 @@
   // "process.bulk.delete.success": "{{count}} process(es) have been succesfully deleted",
   // TODO New key - Add a translation
   "process.bulk.delete.success": "{{count}} process(es) have been succesfully deleted",
-
-
 
   // "profile.breadcrumbs": "Update Profile",
   "profile.breadcrumbs": "Profil frissítése",
@@ -5519,8 +5306,6 @@
   // "project-relationships.search.results.head": "Project Search Results",
   "project-relationships.search.results.head": "Projekt keresési eredménye",
 
-
-
   // "publication.listelement.badge": "Publication",
   "publication.listelement.badge": "Publikáció",
 
@@ -5555,7 +5340,6 @@
   // TODO Source message changed - Revise the translation
   "publication.search.title": "DSpace Angular :: Publikáció keresése",
 
-
   // "media-viewer.next": "Next",
   // TODO New key - Add a translation
   "media-viewer.next": "Next",
@@ -5567,7 +5351,6 @@
   // "media-viewer.playlist": "Playlist",
   // TODO New key - Add a translation
   "media-viewer.playlist": "Playlist",
-
 
   // "register-email.title": "New user registration",
   "register-email.title": "Új felhasználó regisztrálása",
@@ -5633,7 +5416,6 @@
   // "register-page.create-profile.submit.success.head": "Registration completed",
   "register-page.create-profile.submit.success.head": "Sikeres regisztráció",
 
-
   // "register-page.registration.header": "New user registration",
   "register-page.registration.header": "Új felhasználó regisztrálása",
 
@@ -5682,7 +5464,6 @@
   // "register-page.registration.error.maildomain": "This email address is not on the list of domains who can register. Allowed domains are {{ domains }}",
   // TODO New key - Add a translation
   "register-page.registration.error.maildomain": "This email address is not on the list of domains who can register. Allowed domains are {{ domains }}",
-
 
   // "register-page.registration.google-recaptcha.open-cookie-settings": "Open cookie settings",
   // TODO New key - Add a translation
@@ -5770,7 +5551,6 @@
   // TODO New key - Add a translation
   "relationships.isFundingAgencyOf.OrgUnit": "Funder",
 
-
   // "repository.image.logo": "Repository logo",
   "repository.image.logo": "Adattár logó",
 
@@ -5779,7 +5559,6 @@
 
   // "repository.title.prefixDSpace": "DSpace Angular ::",
   "repository.title.prefixDSpace": "EDA ",
-
 
   // "resource-policies.add.button": "Add",
   "resource-policies.add.button": "Hozzáad",
@@ -5960,8 +5739,6 @@
   // "resource-policies.table.headers.title.for.collection": "Policies for Collection",
   "resource-policies.table.headers.title.for.collection": "Gyűjtemény szabályok",
 
-
-
   // "search.description": "",
   "search.description": "",
 
@@ -5977,7 +5754,6 @@
 
   // "search.search-form.placeholder": "Search the repository ...",
   "search.search-form.placeholder": "Keresés az adattárban ...",
-
 
   // "search.filters.applied.f.author": "Author",
   "search.filters.applied.f.author": "Szerző",
@@ -6028,8 +5804,6 @@
 
   // "search.filters.applied.f.withdrawn": "Withdrawn",
   "search.filters.applied.f.withdrawn": "Visszavonva",
-
-
 
   // "search.filters.filter.author.head": "Author",
   "search.filters.filter.author.head": "Szerző",
@@ -6280,8 +6054,6 @@
   // TODO New key - Add a translation
   "search.filters.filter.supervisedBy.label": "Search Supervised By",
 
-
-
   // "search.filters.entityType.JournalIssue": "Journal Issue",
   "search.filters.entityType.JournalIssue": "Folyóirat száma",
 
@@ -6309,7 +6081,6 @@
   // "search.filters.withdrawn.false": "No",
   "search.filters.withdrawn.false": "Nem",
 
-
   // "search.filters.head": "Filters",
   "search.filters.head": "Szűrők",
 
@@ -6320,8 +6091,6 @@
   // TODO New key - Add a translation
   "search.filters.search.submit": "Submit",
 
-
-
   // "search.form.search": "Search",
   "search.form.search": "Keresés",
 
@@ -6330,8 +6099,6 @@
 
   // "search.form.scope.all": "All of DSpace",
   "search.form.scope.all": "A teljes EDA",
-
-
 
   // "search.results.head": "Search Results",
   "search.results.head": "Keresési eredmények",
@@ -6359,7 +6126,6 @@
   // "default-relationships.search.results.head": "Search Results",
   "default-relationships.search.results.head": "Keresés eredménye",
 
-
   // "search.sidebar.close": "Back to results",
   "search.sidebar.close": "Vissza a találatokhoz",
 
@@ -6381,8 +6147,6 @@
   // "search.sidebar.settings.title": "Settings",
   "search.sidebar.settings.title": "Beállítások",
 
-
-
   // "search.view-switch.show-detail": "Show detail",
   "search.view-switch.show-detail": "Részletek megjelenítése",
 
@@ -6391,8 +6155,6 @@
 
   // "search.view-switch.show-list": "Show as list",
   "search.view-switch.show-list": "Megjelenítés listaként",
-
-
 
   // "sorting.ASC": "Ascending",
   "sorting.ASC": "Növekvő",
@@ -6430,7 +6192,6 @@
   // "sorting.lastModified.DESC": "Last modified Descending",
   "sorting.lastModified.DESC": "Utoljára módosított növekvő csökkenő",
 
-
   // "statistics.title": "Statistics",
   "statistics.title": "Statisztikák",
 
@@ -6463,8 +6224,6 @@
 
   // "statistics.table.header.views": "Views",
   "statistics.table.header.views": "Látogatások",
-
-
 
   // "submission.edit.breadcrumbs": "Edit Submission",
   // TODO New key - Add a translation
@@ -6511,7 +6270,6 @@
 
   // "submission.general.save-later": "Save for later",
   "submission.general.save-later": "Mentés későbbre",
-
 
   // "submission.import-external.page.title": "Import metadata from an external source",
   "submission.import-external.page.title": "Metaadatok importálása külső forrásból",
@@ -6960,9 +6718,6 @@
   // TODO New key - Add a translation
   "submission.sections.describe.relationship-lookup.title.isFundingAgencyOfProject": "Funder of the Project",
 
-
-
-
   // "submission.sections.describe.relationship-lookup.selection-tab.search-form.placeholder": "Search...",
   // TODO New key - Add a translation
   "submission.sections.describe.relationship-lookup.selection-tab.search-form.placeholder": "Search...",
@@ -7113,7 +6868,7 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title": "Keresés eredménye",
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Would you like to save \"{{ value }}\" as a name variant for this person so you and others can reuse it for future submissions? If you don\'t you can still use it for this submission.",
-  "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Óhajtja-e elmenteni \"{{ value }}\" névváltozatként ennek a személynek, hogy később ön is és mások is újrahasználhassák feltöltéshez? Amennyiben nem, még mindig használhatja ehhez a feltöltéshez.",
+  "submission.sections.describe.relationship-lookup.name-variant.notification.content": 'Óhajtja-e elmenteni "{{ value }}" névváltozatként ennek a személynek, hogy később ön is és mások is újrahasználhassák feltöltéshez? Amennyiben nem, még mindig használhatja ehhez a feltöltéshez.',
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Save a new name variant",
   "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Mentsen el új névvariánst",
@@ -7252,7 +7007,6 @@
   // "submission.sections.submit.progressbar.sherpaPolicies": "Publisher open access policy information",
   // TODO New key - Add a translation
   "submission.sections.submit.progressbar.sherpaPolicies": "Publisher open access policy information",
-
 
   // "submission.sections.sherpa-policy.title-empty": "No publisher policy information available. If your work has an associated ISSN, please enter it above to see any related publisher open access policies.",
   // TODO New key - Add a translation
@@ -7475,7 +7229,6 @@
   // TODO New key - Add a translation
   "submission.sections.license.notgranted": "You must accept the license",
 
-
   // "submission.sections.sherpa.publication.information": "Publication information",
   // TODO New key - Add a translation
   "submission.sections.sherpa.publication.information": "Publication information",
@@ -7580,8 +7333,6 @@
   // TODO New key - Add a translation
   "submission.sections.sherpa.error.message": "There was an error retrieving sherpa informations",
 
-
-
   // "submission.submit.breadcrumbs": "New submission",
   // TODO New key - Add a translation
   "submission.submit.breadcrumbs": "New submission",
@@ -7590,13 +7341,11 @@
   // TODO Source message changed - Revise the translation
   "submission.submit.title": "Beküldés",
 
-
-
   // "submission.workflow.generic.delete": "Delete",
   "submission.workflow.generic.delete": "Töröl",
 
   // "submission.workflow.generic.delete-help": "If you would to discard this item, select \"Delete\".  You will then be asked to confirm it.",
-  "submission.workflow.generic.delete-help": "Ha el óhajtja vetni a tárgyat, válassz a  \"Töröl\" gombot.  Majd döntését igazolja.",
+  "submission.workflow.generic.delete-help": 'Ha el óhajtja vetni a tárgyat, válassz a  "Töröl" gombot.  Majd döntését igazolja.',
 
   // "submission.workflow.generic.edit": "Edit",
   "submission.workflow.generic.edit": "Szerkesztés",
@@ -7610,7 +7359,6 @@
   // "submission.workflow.generic.view-help": "Select this option to view the item's metadata.",
   "submission.workflow.generic.view-help": "Válassza ezt, hogy megtekintse a tárgy metaadatait.",
 
-
   // "submission.workflow.generic.submit_select_reviewer": "Select Reviewer",
   // TODO New key - Add a translation
   "submission.workflow.generic.submit_select_reviewer": "Select Reviewer",
@@ -7618,7 +7366,6 @@
   // "submission.workflow.generic.submit_select_reviewer-help": "",
   // TODO New key - Add a translation
   "submission.workflow.generic.submit_select_reviewer-help": "",
-
 
   // "submission.workflow.generic.submit_score": "Rate",
   // TODO New key - Add a translation
@@ -7628,12 +7375,11 @@
   // TODO New key - Add a translation
   "submission.workflow.generic.submit_score-help": "",
 
-
   // "submission.workflow.tasks.claimed.approve": "Approve",
   "submission.workflow.tasks.claimed.approve": "Jóváhagy",
 
   // "submission.workflow.tasks.claimed.approve_help": "If you have reviewed the item and it is suitable for inclusion in the collection, select \"Approve\".",
-  "submission.workflow.tasks.claimed.approve_help": "Ha ellenőrizte a tárgyat és gyűjteménybe foglalásra alkalmas, válassza a \"Jóváhagy\" gombot.",
+  "submission.workflow.tasks.claimed.approve_help": 'Ha ellenőrizte a tárgyat és gyűjteménybe foglalásra alkalmas, válassza a "Jóváhagy" gombot.',
 
   // "submission.workflow.tasks.claimed.edit": "Edit",
   "submission.workflow.tasks.claimed.edit": "Szerkeszt",
@@ -7665,15 +7411,13 @@
   "submission.workflow.tasks.claimed.reject.submit": "Elutasítás",
 
   // "submission.workflow.tasks.claimed.reject_help": "If you have reviewed the item and found it is <strong>not</strong> suitable for inclusion in the collection, select \"Reject\".  You will then be asked to enter a message indicating why the item is unsuitable, and whether the submitter should change something and resubmit.",
-  "submission.workflow.tasks.claimed.reject_help": "Amennyiben ellenőrizte a tárgyat és úgy találta, hogy az <strong>nem</strong> alkalmas arra, hogy a gyűjteménybe foglalják, válassza az \"Elutasítás\" gombot.  Utána szükséges lesz beírni egy üzenetet, amelyben megjelöli, miért nem alkalmas a tárgy és hogy a feltöltő változtathat-e valamit, hogy utána újra feltölthesse.",
+  "submission.workflow.tasks.claimed.reject_help": 'Amennyiben ellenőrizte a tárgyat és úgy találta, hogy az <strong>nem</strong> alkalmas arra, hogy a gyűjteménybe foglalják, válassza az "Elutasítás" gombot.  Utána szükséges lesz beírni egy üzenetet, amelyben megjelöli, miért nem alkalmas a tárgy és hogy a feltöltő változtathat-e valamit, hogy utána újra feltölthesse.',
 
   // "submission.workflow.tasks.claimed.return": "Return to pool",
   "submission.workflow.tasks.claimed.return": "Vissza a készlethez",
 
   // "submission.workflow.tasks.claimed.return_help": "Return the task to the pool so that another user may perform the task.",
   "submission.workflow.tasks.claimed.return_help": "Vigye a feladatot vissza a készletbe, hogy más felhasználó elvégezhesse azt.",
-
-
 
   // "submission.workflow.tasks.generic.error": "Error occurred during operation...",
   "submission.workflow.tasks.generic.error": "Művelet közben hiba keletkezett...",
@@ -7687,8 +7431,6 @@
   // "submission.workflow.tasks.generic.success": "Operation successful",
   "submission.workflow.tasks.generic.success": "Művelet sikeres",
 
-
-
   // "submission.workflow.tasks.pool.claim": "Claim",
   "submission.workflow.tasks.pool.claim": "Követelés",
 
@@ -7701,7 +7443,6 @@
   // "submission.workflow.tasks.pool.show-detail": "Show detail",
   "submission.workflow.tasks.pool.show-detail": "Részletek felfedése",
 
-
   // "submission.workspace.generic.view": "View",
   // TODO New key - Add a translation
   "submission.workspace.generic.view": "View",
@@ -7709,7 +7450,6 @@
   // "submission.workspace.generic.view-help": "Select this option to view the item's metadata.",
   // TODO New key - Add a translation
   "submission.workspace.generic.view-help": "Select this option to view the item's metadata.",
-
 
   // "subscriptions.title": "Subscriptions",
   // TODO New key - Add a translation
@@ -7765,7 +7505,7 @@
 
   // "subscriptions.modal.delete-info": "To remove this subscription, please visit the \"Subscriptions\" page under your user profile",
   // TODO New key - Add a translation
-  "subscriptions.modal.delete-info": "To remove this subscription, please visit the \"Subscriptions\" page under your user profile",
+  "subscriptions.modal.delete-info": 'To remove this subscription, please visit the "Subscriptions" page under your user profile',
 
   // "subscriptions.modal.new-subscription-form.type.content": "Content",
   // TODO New key - Add a translation
@@ -7851,7 +7591,6 @@
   // TODO New key - Add a translation
   "subscriptions.table.empty.message": "You do not have any subscriptions at this time. To subscribe to email updates for a Community or Collection, use the subscription button on the object's page.",
 
-
   // "thumbnail.default.alt": "Thumbnail Image",
   "thumbnail.default.alt": "Thumbnail kép",
 
@@ -7879,12 +7618,8 @@
   // TODO New key - Add a translation
   "thumbnail.person.placeholder": "No Profile Picture Available",
 
-
-
   // "title": "DSpace",
-  "title": "DSpace",
-
-
+  title: "DSpace",
 
   // "vocabulary-treeview.header": "Hierarchical tree view",
   "vocabulary-treeview.header": "Hierarchikus fa nézet",
@@ -7939,8 +7674,6 @@
   // "virtual-metadata.delete-relationship.modal-head": "Select the items for which you want to save the virtual metadata as real metadata",
   "virtual-metadata.delete-relationship.modal-head": "Válassza ki azokat a tárgyakat, amelyekhez óhajtja a virtuális metaadatok elmentését valódi metaadatokként",
 
-
-
   // "supervisedWorkspace.search.results.head": "Supervised Items",
   // TODO New key - Add a translation
   "supervisedWorkspace.search.results.head": "Supervised Items",
@@ -7959,8 +7692,6 @@
   // "supervision.search.results.head": "Workflow and Workspace tasks",
   // TODO New key - Add a translation
   "supervision.search.results.head": "Workflow and Workspace tasks",
-
-
 
   // "workflow-item.edit.breadcrumbs": "Edit workflowitem",
   // TODO New key - Add a translation
@@ -7993,7 +7724,6 @@
 
   // "workflow-item.delete.button.confirm": "Delete",
   "workflow-item.delete.button.confirm": "Töröl",
-
 
   // "workflow-item.send-back.notification.success.title": "Sent back to submitter",
   "workflow-item.send-back.notification.success.title": "Visszaküldve a feladónak",
@@ -8032,11 +7762,9 @@
   // TODO New key - Add a translation
   "workspace-item.view.title": "Workspace View",
 
-
   // "workflow-item.advanced.title": "Advanced workflow",
   // TODO New key - Add a translation
   "workflow-item.advanced.title": "Advanced workflow",
-
 
   // "workflow-item.selectrevieweraction.notification.success.title": "Selected reviewer",
   // TODO New key - Add a translation
@@ -8069,7 +7797,6 @@
   // "workflow-item.selectrevieweraction.button.confirm": "Confirm",
   // TODO New key - Add a translation
   "workflow-item.selectrevieweraction.button.confirm": "Confirm",
-
 
   // "workflow-item.scorereviewaction.notification.success.title": "Rating review",
   // TODO New key - Add a translation
@@ -8545,7 +8272,7 @@
 
   // "person.page.orcid.synchronization-mode-message": "Please select how you would like synchronization to ORCID to occur. The options include \"Manual\" (you must send your data to ORCID manually), or \"Batch\" (the system will send your data to ORCID via a scheduled script).",
   // TODO New key - Add a translation
-  "person.page.orcid.synchronization-mode-message": "Please select how you would like synchronization to ORCID to occur. The options include \"Manual\" (you must send your data to ORCID manually), or \"Batch\" (the system will send your data to ORCID via a scheduled script).",
+  "person.page.orcid.synchronization-mode-message": 'Please select how you would like synchronization to ORCID to occur. The options include "Manual" (you must send your data to ORCID manually), or "Batch" (the system will send your data to ORCID via a scheduled script).',
 
   // "person.page.orcid.synchronization-mode-funding-message": "Select whether to send your linked Project entities to your ORCID record's list of funding information.",
   // TODO New key - Add a translation
@@ -8614,7 +8341,6 @@
   // TODO New key - Add a translation
   "listable-notification-object.default-message": "This object couldn't be retrieved",
 
-
   // "system-wide-alert-banner.retrieval.error": "Something went wrong retrieving the system-wide alert banner",
   // TODO New key - Add a translation
   "system-wide-alert-banner.retrieval.error": "Something went wrong retrieving the system-wide alert banner",
@@ -8634,8 +8360,6 @@
   // "system-wide-alert-banner.countdown.minutes": "{{minutes}} minute(s):",
   // TODO New key - Add a translation
   "system-wide-alert-banner.countdown.minutes": "{{minutes}} minute(s):",
-
-
 
   // "menu.section.system-wide-alert": "System-wide Alert",
   // TODO New key - Add a translation
@@ -8708,6 +8432,4 @@
   // "admin.system-wide-alert.title": "System-wide Alerts",
   // TODO New key - Add a translation
   "admin.system-wide-alert.title": "System-wide Alerts",
-
-
 }

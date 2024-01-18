@@ -46,7 +46,6 @@ import {
 } from './submission-objects.reducer';
 
 describe('submissionReducer test suite', () => {
-
   const collectionId = mockSubmissionCollectionId;
   const submissionId = mockSubmissionId;
   const submissionDefinition = mockSubmissionDefinitionResponse;
@@ -72,7 +71,15 @@ describe('submissionReducer test suite', () => {
       },
     };
 
-    const action = new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, {}, new Item(), null);
+    const action = new InitSubmissionFormAction(
+      collectionId,
+      submissionId,
+      selfUrl,
+      submissionDefinition,
+      {},
+      new Item(),
+      null,
+    );
     const newState = submissionObjectReducer({}, action);
 
     expect(newState).toEqual(expectedState);
@@ -105,7 +112,14 @@ describe('submissionReducer test suite', () => {
       },
     };
 
-    const action = new ResetSubmissionFormAction(collectionId, submissionId, selfUrl, {}, submissionDefinition, new Item());
+    const action = new ResetSubmissionFormAction(
+      collectionId,
+      submissionId,
+      selfUrl,
+      {},
+      submissionDefinition,
+      new Item(),
+    );
     const newState = submissionObjectReducer(initState, action);
 
     expect(newState).toEqual(expectedState);
@@ -121,7 +135,9 @@ describe('submissionReducer test suite', () => {
   });
 
   it('should set to true savePendig flag on save', () => {
-    let action: SubmissionObjectAction = new SaveSubmissionFormAction(submissionId);
+    let action: SubmissionObjectAction = new SaveSubmissionFormAction(
+      submissionId,
+    );
     let newState = submissionObjectReducer(initState, action);
 
     expect(newState[826].savePending).toBeTruthy();
@@ -136,7 +152,10 @@ describe('submissionReducer test suite', () => {
 
     expect(newState[826].savePending).toBeTruthy();
 
-    action = new SaveSubmissionSectionFormAction(submissionId, 'traditionalpageone');
+    action = new SaveSubmissionSectionFormAction(
+      submissionId,
+      'traditionalpageone',
+    );
     newState = submissionObjectReducer(initState, action);
 
     expect(newState[826].savePending).toBeTruthy();
@@ -234,7 +253,8 @@ describe('submissionReducer test suite', () => {
   it('should init submission section state properly', () => {
     const expectedState = {
       header: 'submit.progressbar.describe.stepone',
-      config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/traditionalpageone',
+      config:
+        'https://rest.api/dspace-spring-rest/api/config/submissionforms/traditionalpageone',
       mandatory: true,
       sectionType: 'submission-form',
       visibility: undefined,
@@ -247,7 +267,15 @@ describe('submissionReducer test suite', () => {
       isValid: true,
     } as any;
 
-    let action: any = new InitSubmissionFormAction(collectionId, submissionId, selfUrl, submissionDefinition, {}, new Item(), null);
+    let action: any = new InitSubmissionFormAction(
+      collectionId,
+      submissionId,
+      selfUrl,
+      submissionDefinition,
+      {},
+      new Item(),
+      null,
+    );
     let newState = submissionObjectReducer({}, action);
 
     action = new InitSectionAction(
@@ -260,7 +288,8 @@ describe('submissionReducer test suite', () => {
       undefined,
       true,
       {},
-      null);
+      null,
+    );
 
     newState = submissionObjectReducer(newState, action);
 
@@ -268,7 +297,6 @@ describe('submissionReducer test suite', () => {
   });
 
   it('should enable submission section properly', () => {
-
     const action = new EnableSectionAction(submissionId, 'traditionalpagetwo');
 
     const newState = submissionObjectReducer(initState, action);
@@ -277,8 +305,10 @@ describe('submissionReducer test suite', () => {
   });
 
   it('should enable submission section properly', () => {
-
-    let action: SubmissionObjectAction = new EnableSectionAction(submissionId, 'traditionalpagetwo');
+    let action: SubmissionObjectAction = new EnableSectionAction(
+      submissionId,
+      'traditionalpagetwo',
+    );
     let newState = submissionObjectReducer(initState, action);
 
     action = new DisableSectionAction(submissionId, 'traditionalpagetwo');
@@ -288,13 +318,20 @@ describe('submissionReducer test suite', () => {
   });
 
   it('should set to true/false submission section status', () => {
-
-    let action = new SectionStatusChangeAction(submissionId, 'traditionalpageone', true);
+    let action = new SectionStatusChangeAction(
+      submissionId,
+      'traditionalpageone',
+      true,
+    );
     let newState = submissionObjectReducer(initState, action);
 
     expect(newState[826].sections.traditionalpageone.isValid).toBeTruthy();
 
-    action = new SectionStatusChangeAction(submissionId, 'traditionalpageone', false);
+    action = new SectionStatusChangeAction(
+      submissionId,
+      'traditionalpageone',
+      false,
+    );
     newState = submissionObjectReducer(newState, action);
 
     expect(newState[826].sections.traditionalpageone.isValid).toBeFalsy();
@@ -334,21 +371,35 @@ describe('submissionReducer test suite', () => {
       ],
     } as any;
 
-    const action = new UpdateSectionDataAction(submissionId, 'traditionalpageone', data, [], []);
+    const action = new UpdateSectionDataAction(
+      submissionId,
+      'traditionalpageone',
+      data,
+      [],
+      [],
+    );
     const newState = submissionObjectReducer(initState, action);
 
     expect(newState[826].sections.traditionalpageone.data).toEqual(data);
   });
 
   it('should update submission section metadata properly', () => {
-    const data = {
-    } as any;
+    const data = {} as any;
     const metadata = ['dc.title', 'dc.contributor.author'];
 
-    const action = new UpdateSectionDataAction(submissionId, 'traditionalpageone', data, [], [], metadata);
+    const action = new UpdateSectionDataAction(
+      submissionId,
+      'traditionalpageone',
+      data,
+      [],
+      [],
+      metadata,
+    );
     const newState = submissionObjectReducer(initState, action);
 
-    expect(newState[826].sections.traditionalpageone.metadata).toEqual(metadata);
+    expect(newState[826].sections.traditionalpageone.metadata).toEqual(
+      metadata,
+    );
   });
 
   it('should add submission section errors properly', () => {
@@ -359,14 +410,25 @@ describe('submissionReducer test suite', () => {
       },
     ];
 
-    const action = new UpdateSectionDataAction(submissionId, 'traditionalpageone', {}, errors, errors);
+    const action = new UpdateSectionDataAction(
+      submissionId,
+      'traditionalpageone',
+      {},
+      errors,
+      errors,
+    );
     const newState = submissionObjectReducer(initState, action);
 
-    expect(newState[826].sections.traditionalpageone.errorsToShow).toEqual(errors);
+    expect(newState[826].sections.traditionalpageone.errorsToShow).toEqual(
+      errors,
+    );
   });
 
   it('should remove all submission section errors properly', () => {
-    const action: any = new RemoveSectionErrorsAction(submissionId, 'traditionalpageone');
+    const action: any = new RemoveSectionErrorsAction(
+      submissionId,
+      'traditionalpageone',
+    );
     let newState;
 
     newState = submissionObjectReducer(initState, action);
@@ -380,10 +442,16 @@ describe('submissionReducer test suite', () => {
       message: 'error.validation.traditionalpageone.required',
     };
 
-    const action = new InertSectionErrorsAction(submissionId, 'traditionalpageone', error);
+    const action = new InertSectionErrorsAction(
+      submissionId,
+      'traditionalpageone',
+      error,
+    );
     const newState = submissionObjectReducer(initState, action);
 
-    expect(newState[826].sections.traditionalpageone.errorsToShow).toEqual([error]);
+    expect(newState[826].sections.traditionalpageone.errorsToShow).toEqual([
+      error,
+    ]);
   });
 
   it('should remove specified submission section error/s properly', () => {
@@ -402,23 +470,47 @@ describe('submissionReducer test suite', () => {
       message: 'error.validation.required',
     };
 
-    const expectedErrors = [{
-      path: '/sections/traditionalpageone/dc.date.issued',
-      message: 'error.validation.required',
-    }];
+    const expectedErrors = [
+      {
+        path: '/sections/traditionalpageone/dc.date.issued',
+        message: 'error.validation.required',
+      },
+    ];
 
-    let action: any = new UpdateSectionDataAction(submissionId, 'traditionalpageone', {}, errors, errors);
+    let action: any = new UpdateSectionDataAction(
+      submissionId,
+      'traditionalpageone',
+      {},
+      errors,
+      errors,
+    );
     let newState = submissionObjectReducer(initState, action);
 
-    action = new DeleteSectionErrorsAction(submissionId, 'traditionalpageone', error);
+    action = new DeleteSectionErrorsAction(
+      submissionId,
+      'traditionalpageone',
+      error,
+    );
     newState = submissionObjectReducer(newState, action);
 
-    expect(newState[826].sections.traditionalpageone.errorsToShow).toEqual(expectedErrors);
+    expect(newState[826].sections.traditionalpageone.errorsToShow).toEqual(
+      expectedErrors,
+    );
 
-    action = new UpdateSectionDataAction(submissionId, 'traditionalpageone', {}, errors, errors);
+    action = new UpdateSectionDataAction(
+      submissionId,
+      'traditionalpageone',
+      {},
+      errors,
+      errors,
+    );
     newState = submissionObjectReducer(initState, action);
 
-    action = new DeleteSectionErrorsAction(submissionId, 'traditionalpageone', errors);
+    action = new DeleteSectionErrorsAction(
+      submissionId,
+      'traditionalpageone',
+      errors,
+    );
     newState = submissionObjectReducer(newState, action);
 
     expect(newState[826].sections.traditionalpageone.errorsToShow).toEqual([]);
@@ -444,7 +536,8 @@ describe('submissionReducer test suite', () => {
       format: {
         id: 16,
         shortDescription: 'JPEG',
-        description: 'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
+        description:
+          'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
         mimetype: 'image/jpeg',
         supportLevel: 0,
         internal: false,
@@ -462,7 +555,12 @@ describe('submissionReducer test suite', () => {
       files: [fileData],
     };
 
-    const action = new NewUploadedFileAction(submissionId, 'upload', uuid, fileData);
+    const action = new NewUploadedFileAction(
+      submissionId,
+      'upload',
+      uuid,
+      fileData,
+    );
     const newState = submissionObjectReducer(initState, action);
 
     expect(newState[826].sections.upload.data).toEqual(expectedState);
@@ -489,7 +587,8 @@ describe('submissionReducer test suite', () => {
       format: {
         id: 16,
         shortDescription: 'JPEG',
-        description: 'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
+        description:
+          'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
         mimetype: 'image/jpeg',
         supportLevel: 0,
         internal: false,
@@ -521,7 +620,8 @@ describe('submissionReducer test suite', () => {
       format: {
         id: 16,
         shortDescription: 'JPEG',
-        description: 'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
+        description:
+          'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
         mimetype: 'image/jpeg',
         supportLevel: 0,
         internal: false,
@@ -578,7 +678,8 @@ describe('submissionReducer test suite', () => {
       format: {
         id: 16,
         shortDescription: 'JPEG',
-        description: 'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
+        description:
+          'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
         mimetype: 'image/jpeg',
         supportLevel: 0,
         internal: false,
@@ -610,7 +711,8 @@ describe('submissionReducer test suite', () => {
       format: {
         id: 16,
         shortDescription: 'JPEG',
-        description: 'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
+        description:
+          'Joint Photographic Experts Group/JPEG File Interchange Format (JFIF)',
         mimetype: 'image/jpeg',
         supportLevel: 0,
         internal: false,
@@ -641,10 +743,14 @@ describe('submissionReducer test suite', () => {
       files: [fileData2],
     };
 
-    const action = new EditFileDataAction(submissionId, 'upload', uuid, fileData2);
+    const action = new EditFileDataAction(
+      submissionId,
+      'upload',
+      uuid,
+      fileData2,
+    );
     const newState = submissionObjectReducer(state, action);
 
     expect(newState[826].sections.upload.data).toEqual(expectedState);
   });
-
 });

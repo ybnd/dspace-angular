@@ -32,6 +32,14 @@ const parent = Object.assign(new Community(), {
   },
 });
 
-describe('CollectionSidebarSearchListElementComponent',
-  createSidebarSearchListElementTests(CollectionSidebarSearchListElementComponent, object, parent, 'parent title', 'title', 'description'),
+describe(
+  'CollectionSidebarSearchListElementComponent',
+  createSidebarSearchListElementTests(
+    CollectionSidebarSearchListElementComponent,
+    object,
+    parent,
+    'parent title',
+    'title',
+    'description',
+  ),
 );

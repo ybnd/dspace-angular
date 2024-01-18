@@ -1,20 +1,10 @@
 import { DebugElement } from '@angular/core';
-import {
-  ComponentFixture,
-  inject,
-  TestBed,
-} from '@angular/core/testing';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
+import { ComponentFixture, inject, TestBed } from '@angular/core/testing';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { AppState } from '../../../app.reducer';
@@ -45,7 +35,8 @@ describe('SubmissionSectionSherpaPoliciesComponent', () => {
 
   const sectionData = {
     header: 'submit.progressbar.sherpaPolicies',
-    config: 'http://localhost:8080/server/api/config/submissionaccessoptions/SherpaPoliciesDefaultConfiguration',
+    config:
+      'http://localhost:8080/server/api/config/submissionaccessoptions/SherpaPoliciesDefaultConfiguration',
     mandatory: true,
     sectionType: 'sherpaPolicies',
     collapsed: false,
@@ -58,7 +49,6 @@ describe('SubmissionSectionSherpaPoliciesComponent', () => {
   };
 
   describe('SubmissionSectionSherpaPoliciesComponent', () => {
-
     beforeEach(async () => {
       await TestBed.configureTestingModule({
         imports: [
@@ -82,18 +72,20 @@ describe('SubmissionSectionSherpaPoliciesComponent', () => {
           { provide: 'sectionDataProvider', useValue: sectionData },
           { provide: 'submissionIdProvider', useValue: '1508' },
         ],
-      })
-        .compileComponents();
+      }).compileComponents();
     });
 
     beforeEach(inject([Store], (store: Store<AppState>) => {
-      fixture = TestBed.createComponent(SubmissionSectionSherpaPoliciesComponent);
+      fixture = TestBed.createComponent(
+        SubmissionSectionSherpaPoliciesComponent,
+      );
       component = fixture.componentInstance;
       de = fixture.debugElement;
-      sectionsServiceStub.getSectionData.and.returnValue(observableOf(SherpaDataResponse));
+      sectionsServiceStub.getSectionData.and.returnValue(
+        observableOf(SherpaDataResponse),
+      );
       fixture.detectChanges();
     }));
-
 
     it('should create', () => {
       expect(component).toBeTruthy();
@@ -119,8 +111,5 @@ describe('SubmissionSectionSherpaPoliciesComponent', () => {
       de.query(By.css('[data-test="refresh-btn"]')).nativeElement.click();
       expect(operationsBuilder.remove).toHaveBeenCalled();
     });
-
-
   });
-
 });

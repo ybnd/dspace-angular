@@ -4,18 +4,11 @@ import {
   DebugElement,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { BrowseDefinitionDataService } from '../../../../core/browse/browse-definition-data.service';
@@ -54,7 +47,9 @@ let comp: JournalComponent;
 let fixture: ComponentFixture<JournalComponent>;
 
 const mockItem: Item = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'creativeworkseries.issn': [
       {
@@ -94,7 +89,11 @@ describe('JournalComponent', () => {
         }),
         RouterTestingModule,
       ],
-      declarations: [JournalComponent, GenericItemPageFieldComponent, TruncatePipe],
+      declarations: [
+        JournalComponent,
+        GenericItemPageFieldComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: ItemDataService, useValue: {} },
         { provide: TruncatableService, useValue: {} },
@@ -115,13 +114,18 @@ describe('JournalComponent', () => {
         { provide: WorkspaceitemDataService, useValue: {} },
         { provide: SearchService, useValue: {} },
         { provide: RouteService, useValue: mockRouteService },
-        { provide: BrowseDefinitionDataService, useValue: BrowseDefinitionDataServiceStub },
+        {
+          provide: BrowseDefinitionDataService,
+          useValue: BrowseDefinitionDataServiceStub,
+        },
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(JournalComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(JournalComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -139,7 +143,10 @@ describe('JournalComponent', () => {
   }
 });
 
-function containsFieldInput(fields: DebugElement[], metadataKey: string): boolean {
+function containsFieldInput(
+  fields: DebugElement[],
+  metadataKey: string,
+): boolean {
   for (const field of fields) {
     const fieldComp = field.componentInstance;
     if (isNotEmpty(fieldComp.fields)) {

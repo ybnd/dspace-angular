@@ -10,7 +10,7 @@ describe('Object Utils', () => {
   let objectExpected: any = {};
 
   describe('deleteProperty', () => {
-    it('should return object without property \'a\'', () => {
+    it("should return object without property 'a'", () => {
       object = { a: 'a', b: 'b' };
       objectExpected = { b: 'b' };
       expect(deleteProperty(object, 'a')).toEqual(objectExpected);
@@ -20,11 +20,9 @@ describe('Object Utils', () => {
       object = { a: 'a', b: 'b' };
       expect(deleteProperty(object, 'c')).toEqual(object);
     });
-
   });
 
   describe('hasOnlyEmptyProperties', () => {
-
     it('should return true when object is empty', () => {
       object = {};
       expect(hasOnlyEmptyProperties(object)).toBe(true);
@@ -54,11 +52,9 @@ describe('Object Utils', () => {
       object = { a: [], b: 'b' };
       expect(hasOnlyEmptyProperties(object)).toBe(false);
     });
-
   });
 
   describe('difference', () => {
-
     it('should return an empty object', () => {
       object = {};
       anotherObject = {};
@@ -86,6 +82,5 @@ describe('Object Utils', () => {
       objectExpected = {};
       expect(difference(object, anotherObject)).toEqual(objectExpected);
     });
-
   });
 });

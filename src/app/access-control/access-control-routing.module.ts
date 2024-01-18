@@ -4,10 +4,7 @@ import { RouterModule } from '@angular/router';
 import { I18nBreadcrumbResolver } from '../core/breadcrumbs/i18n-breadcrumb.resolver';
 import { GroupAdministratorGuard } from '../core/data/feature-authorization/feature-authorization-guard/group-administrator.guard';
 import { SiteAdministratorGuard } from '../core/data/feature-authorization/feature-authorization-guard/site-administrator.guard';
-import {
-  EPERSON_PATH,
-  GROUP_PATH,
-} from './access-control-routing-paths';
+import { EPERSON_PATH, GROUP_PATH } from './access-control-routing-paths';
 import { BulkAccessComponent } from './bulk-access/bulk-access.component';
 import { EPeopleRegistryComponent } from './epeople-registry/epeople-registry.component';
 import { EPersonFormComponent } from './epeople-registry/eperson-form/eperson-form.component';
@@ -25,7 +22,10 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
         resolve: {
           breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.epeople.title', breadcrumbKey: 'admin.access-control.epeople' },
+        data: {
+          title: 'admin.access-control.epeople.title',
+          breadcrumbKey: 'admin.access-control.epeople',
+        },
         canActivate: [SiteAdministratorGuard],
       },
       {
@@ -34,7 +34,10 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
         resolve: {
           breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.epeople.add.title', breadcrumbKey: 'admin.access-control.epeople.add' },
+        data: {
+          title: 'admin.access-control.epeople.add.title',
+          breadcrumbKey: 'admin.access-control.epeople.add',
+        },
         canActivate: [SiteAdministratorGuard],
       },
       {
@@ -44,7 +47,10 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
           breadcrumb: I18nBreadcrumbResolver,
           ePerson: EPersonResolver,
         },
-        data: { title: 'admin.access-control.epeople.edit.title', breadcrumbKey: 'admin.access-control.epeople.edit' },
+        data: {
+          title: 'admin.access-control.epeople.edit.title',
+          breadcrumbKey: 'admin.access-control.epeople.edit',
+        },
         canActivate: [SiteAdministratorGuard],
       },
       {
@@ -53,7 +59,10 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
         resolve: {
           breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.groups.title', breadcrumbKey: 'admin.access-control.groups' },
+        data: {
+          title: 'admin.access-control.groups.title',
+          breadcrumbKey: 'admin.access-control.groups',
+        },
         canActivate: [GroupAdministratorGuard],
       },
       {
@@ -62,7 +71,10 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
         resolve: {
           breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.groups.title.addGroup', breadcrumbKey: 'admin.access-control.groups.addGroup' },
+        data: {
+          title: 'admin.access-control.groups.title.addGroup',
+          breadcrumbKey: 'admin.access-control.groups.addGroup',
+        },
         canActivate: [GroupAdministratorGuard],
       },
       {
@@ -71,7 +83,10 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
         resolve: {
           breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.groups.title.singleGroup', breadcrumbKey: 'admin.access-control.groups.singleGroup' },
+        data: {
+          title: 'admin.access-control.groups.title.singleGroup',
+          breadcrumbKey: 'admin.access-control.groups.singleGroup',
+        },
         canActivate: [GroupPageGuard],
       },
       {
@@ -80,7 +95,10 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
         resolve: {
           breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'admin.access-control.bulk-access.title', breadcrumbKey: 'admin.access-control.bulk-access' },
+        data: {
+          title: 'admin.access-control.bulk-access.title',
+          breadcrumbKey: 'admin.access-control.bulk-access',
+        },
         canActivate: [SiteAdministratorGuard],
       },
     ]),
@@ -89,6 +107,4 @@ import { GroupsRegistryComponent } from './group-registry/groups-registry.compon
 /**
  * Routing module for the AccessControl section of the admin sidebar
  */
-export class AccessControlRoutingModule {
-
-}
+export class AccessControlRoutingModule {}

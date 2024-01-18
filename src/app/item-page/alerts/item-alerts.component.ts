@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Item } from '../../core/shared/item.model';
 import { AlertType } from '../../shared/alert/alert-type';

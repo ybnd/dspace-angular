@@ -6,19 +6,10 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { APP_CONFIG } from '../config/app-config.interface';
 import { environment } from '../environments/environment';
@@ -67,7 +58,6 @@ export function getMockLocaleService(): LocaleService {
 }
 
 describe('App component', () => {
-
   let breadcrumbsServiceSpy;
 
   const getDefaultTestBedConf = () => {
@@ -88,13 +78,19 @@ describe('App component', () => {
       providers: [
         { provide: NativeWindowService, useValue: new NativeWindowRef() },
         { provide: MetadataService, useValue: new MetadataServiceMock() },
-        { provide: Angulartics2DSpace, useValue: new AngularticsProviderMock() },
+        {
+          provide: Angulartics2DSpace,
+          useValue: new AngularticsProviderMock(),
+        },
         { provide: AuthService, useValue: new AuthServiceMock() },
         { provide: Router, useValue: new RouterMock() },
         { provide: ActivatedRoute, useValue: new MockActivatedRoute() },
         { provide: MenuService, useValue: menuService },
         { provide: CSSVariableService, useClass: CSSVariableServiceStub },
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
         { provide: LocaleService, useValue: getMockLocaleService() },
         { provide: ThemeService, useValue: getMockThemeService() },
         { provide: BreadcrumbsService, useValue: breadcrumbsServiceSpy },
@@ -130,7 +126,9 @@ describe('App component', () => {
     let store: Store<HostWindowState>;
 
     beforeEach(() => {
-      store = fixture.debugElement.injector.get(Store) as Store<HostWindowState>;
+      store = fixture.debugElement.injector.get(
+        Store,
+      ) as Store<HostWindowState>;
       spyOn(store, 'dispatch');
 
       window.dispatchEvent(new Event('resize'));
@@ -139,8 +137,9 @@ describe('App component', () => {
     });
 
     it('should dispatch a HostWindowResizeAction with the width and height of the window as its payload', () => {
-      expect(store.dispatch).toHaveBeenCalledWith(new HostWindowResizeAction(width, height));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new HostWindowResizeAction(width, height),
+      );
     });
-
   });
 });

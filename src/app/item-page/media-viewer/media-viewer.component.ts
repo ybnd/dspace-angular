@@ -5,15 +5,8 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  filter,
-  take,
-} from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { filter, take } from 'rxjs/operators';
 
 import { MediaViewerConfig } from '../../../config/media-viewer-config.interface';
 import { environment } from '../../../environments/environment';
@@ -56,11 +49,12 @@ export class MediaViewerComponent implements OnDestroy, OnInit {
   constructor(
     protected bitstreamDataService: BitstreamDataService,
     protected changeDetectorRef: ChangeDetectorRef,
-  ) {
-  }
+  ) {}
 
   ngOnDestroy(): void {
-    this.subs.forEach((subscription: Subscription) => subscription.unsubscribe());
+    this.subs.forEach((subscription: Subscription) =>
+      subscription.unsubscribe(),
+    );
   }
 
   /**
@@ -72,37 +66,54 @@ export class MediaViewerComponent implements OnDestroy, OnInit {
       ...(this.mediaOptions.video ? ['audio', 'video'] : []),
     ];
     this.thumbnailsRD$ = this.loadRemoteData('THUMBNAIL');
-    this.subs.push(this.loadRemoteData('ORIGINAL').subscribe((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
-      if (bitstreamsRD.payload.page.length === 0) {
-        this.isLoading = false;
-        this.mediaList$.next([]);
-      } else {
-        this.subs.push(this.thumbnailsRD$.subscribe((thumbnailsRD: RemoteData<PaginatedList<Bitstream>>) => {
-          for (
-            let index = 0;
-            index < bitstreamsRD.payload.page.length;
-            index++
-          ) {
-            this.subs.push(bitstreamsRD.payload.page[index].format
-              .pipe(getFirstSucceededRemoteDataPayload())
-              .subscribe((format: BitstreamFormat) => {
-                const mediaItem = this.createMediaViewerItem(
-                  bitstreamsRD.payload.page[index],
-                  format,
-                  thumbnailsRD.payload && thumbnailsRD.payload.page[index],
-                );
-                if (types.includes(mediaItem.format)) {
-                  this.mediaList$.next([...this.mediaList$.getValue(), mediaItem]);
-                } else if (format.mimetype === 'text/vtt') {
-                  this.captions$.next([...this.captions$.getValue(), bitstreamsRD.payload.page[index]]);
-                }
-              }));
+    this.subs.push(
+      this.loadRemoteData('ORIGINAL').subscribe(
+        (bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
+          if (bitstreamsRD.payload.page.length === 0) {
+            this.isLoading = false;
+            this.mediaList$.next([]);
+          } else {
+            this.subs.push(
+              this.thumbnailsRD$.subscribe(
+                (thumbnailsRD: RemoteData<PaginatedList<Bitstream>>) => {
+                  for (
+                    let index = 0;
+                    index < bitstreamsRD.payload.page.length;
+                    index++
+                  ) {
+                    this.subs.push(
+                      bitstreamsRD.payload.page[index].format
+                        .pipe(getFirstSucceededRemoteDataPayload())
+                        .subscribe((format: BitstreamFormat) => {
+                          const mediaItem = this.createMediaViewerItem(
+                            bitstreamsRD.payload.page[index],
+                            format,
+                            thumbnailsRD.payload &&
+                              thumbnailsRD.payload.page[index],
+                          );
+                          if (types.includes(mediaItem.format)) {
+                            this.mediaList$.next([
+                              ...this.mediaList$.getValue(),
+                              mediaItem,
+                            ]);
+                          } else if (format.mimetype === 'text/vtt') {
+                            this.captions$.next([
+                              ...this.captions$.getValue(),
+                              bitstreamsRD.payload.page[index],
+                            ]);
+                          }
+                        }),
+                    );
+                  }
+                  this.isLoading = false;
+                  this.changeDetectorRef.detectChanges();
+                },
+              ),
+            );
           }
-          this.isLoading = false;
-          this.changeDetectorRef.detectChanges();
-        }));
-      }
-    }));
+        },
+      ),
+    );
   }
 
   /**
@@ -125,7 +136,8 @@ export class MediaViewerComponent implements OnDestroy, OnInit {
         filter(
           (bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) =>
             hasValue(bitstreamsRD) &&
-            (hasValue(bitstreamsRD.errorMessage) || hasValue(bitstreamsRD.payload)),
+            (hasValue(bitstreamsRD.errorMessage) ||
+              hasValue(bitstreamsRD.payload)),
         ),
         take(1),
       );
@@ -137,7 +149,11 @@ export class MediaViewerComponent implements OnDestroy, OnInit {
    * @param format original bitstream format
    * @param thumbnail thumbnail bitstream
    */
-  createMediaViewerItem(original: Bitstream, format: BitstreamFormat, thumbnail: Bitstream): MediaViewerItem {
+  createMediaViewerItem(
+    original: Bitstream,
+    format: BitstreamFormat,
+    thumbnail: Bitstream,
+  ): MediaViewerItem {
     const mediaItem = new MediaViewerItem();
     mediaItem.bitstream = original;
     mediaItem.format = format.mimetype.split('/')[0];

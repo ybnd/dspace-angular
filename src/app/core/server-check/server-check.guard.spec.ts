@@ -5,10 +5,7 @@ import {
   RouterEvent,
   UrlTree,
 } from '@angular/router';
-import {
-  of,
-  ReplaySubject,
-} from 'rxjs';
+import { of, ReplaySubject } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { RootDataService } from '../data/root-data.service';
@@ -77,21 +74,25 @@ describe('ServerCheckGuard', () => {
     it(`should invalidate the root cache, when the method is first called`, () => {
       testScheduler.run(() => {
         guard.listenForRouteChanges();
-        expect(rootDataServiceStub.invalidateRootCache).toHaveBeenCalledTimes(1);
+        expect(rootDataServiceStub.invalidateRootCache).toHaveBeenCalledTimes(
+          1,
+        );
       });
     });
 
     it(`should invalidate the root cache on every NavigationStart event`, () => {
       testScheduler.run(() => {
         guard.listenForRouteChanges();
-        eventSubject.next(new NavigationStart(1,''));
-        eventSubject.next(new NavigationEnd(1,'', ''));
-        eventSubject.next(new NavigationStart(2,''));
-        eventSubject.next(new NavigationEnd(2,'', ''));
-        eventSubject.next(new NavigationStart(3,''));
+        eventSubject.next(new NavigationStart(1, ''));
+        eventSubject.next(new NavigationEnd(1, '', ''));
+        eventSubject.next(new NavigationStart(2, ''));
+        eventSubject.next(new NavigationEnd(2, '', ''));
+        eventSubject.next(new NavigationStart(3, ''));
       });
       // once when the method is first called, and then 3 times for NavigationStart events
-      expect(rootDataServiceStub.invalidateRootCache).toHaveBeenCalledTimes(1 + 3);
+      expect(rootDataServiceStub.invalidateRootCache).toHaveBeenCalledTimes(
+        1 + 3,
+      );
     });
   });
 });

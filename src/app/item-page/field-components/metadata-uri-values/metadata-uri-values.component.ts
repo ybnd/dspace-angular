@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { MetadataValue } from '../../../core/shared/metadata.models';
 import { MetadataValuesComponent } from '../metadata-values/metadata-values.component';
@@ -19,7 +16,6 @@ import { MetadataValuesComponent } from '../metadata-values/metadata-values.comp
   templateUrl: './metadata-uri-values.component.html',
 })
 export class MetadataUriValuesComponent extends MetadataValuesComponent {
-
   /**
    * Optional text to replace the links with
    * If undefined, the metadata value (uri) is displayed

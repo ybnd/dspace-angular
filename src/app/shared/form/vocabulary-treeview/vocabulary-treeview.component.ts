@@ -11,10 +11,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { CoreState } from '../../../core/core-state.model';
 import { getFirstSucceededRemoteDataPayload } from '../../../core/shared/operators';
@@ -24,11 +21,7 @@ import { VocabularyEntryDetail } from '../../../core/submission/vocabularies/mod
 import { VocabularyOptions } from '../../../core/submission/vocabularies/models/vocabulary-options.model';
 import { VocabularyService } from '../../../core/submission/vocabularies/vocabulary.service';
 import { AlertType } from '../../alert/alert-type';
-import {
-  hasValue,
-  isEmpty,
-  isNotEmpty,
-} from '../../empty.util';
+import { hasValue, isEmpty, isNotEmpty } from '../../empty.util';
 import { VocabularyTreeFlatDataSource } from './vocabulary-tree-flat-data-source';
 import { VocabularyTreeFlattener } from './vocabulary-tree-flattener';
 import { VocabularyTreeviewService } from './vocabulary-treeview.service';
@@ -47,8 +40,9 @@ import {
   templateUrl: './vocabulary-treeview.component.html',
   styleUrls: ['./vocabulary-treeview.component.scss'],
 })
-export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges {
-
+export class VocabularyTreeviewComponent
+  implements OnDestroy, OnInit, OnChanges
+{
   /**
    * The {@link VocabularyOptions} object
    */
@@ -108,13 +102,15 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
    * An event fired when a vocabulary entry is selected.
    * Event's payload equals to {@link VocabularyEntryDetail} selected.
    */
-  @Output() select: EventEmitter<VocabularyEntryDetail> = new EventEmitter<VocabularyEntryDetail>(null);
+  @Output() select: EventEmitter<VocabularyEntryDetail> =
+    new EventEmitter<VocabularyEntryDetail>(null);
 
   /**
    * An event fired when a vocabulary entry is deselected.
    * Event's payload equals to {@link VocabularyEntryDetail} deselected.
    */
-  @Output() deselect: EventEmitter<VocabularyEntryDetail> = new EventEmitter<VocabularyEntryDetail>(null);
+  @Output() deselect: EventEmitter<VocabularyEntryDetail> =
+    new EventEmitter<VocabularyEntryDetail>(null);
 
   /**
    * A boolean representing if user is authenticated
@@ -142,19 +138,30 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
     private store: Store<CoreState>,
     private translate: TranslateService,
   ) {
-    this.treeFlattener = new VocabularyTreeFlattener(this.transformer, this.getLevel,
-      this.isExpandable, this.getChildren);
+    this.treeFlattener = new VocabularyTreeFlattener(
+      this.transformer,
+      this.getLevel,
+      this.isExpandable,
+      this.getChildren,
+    );
 
-    this.treeControl = new FlatTreeControl<TreeviewFlatNode>(this.getLevel, this.isExpandable);
+    this.treeControl = new FlatTreeControl<TreeviewFlatNode>(
+      this.getLevel,
+      this.isExpandable,
+    );
 
-    this.dataSource = new VocabularyTreeFlatDataSource(this.treeControl, this.treeFlattener);
+    this.dataSource = new VocabularyTreeFlatDataSource(
+      this.treeControl,
+      this.treeFlattener,
+    );
   }
 
   /**
    * Get children for a given node
    * @param node The node for which to retrieve the children
    */
-  getChildren = (node: TreeviewNode): Observable<TreeviewNode[]> => node.childrenChange;
+  getChildren = (node: TreeviewNode): Observable<TreeviewNode[]> =>
+    node.childrenChange;
 
   /**
    * Transform a {@link TreeviewNode} to {@link TreeviewFlatNode}
@@ -164,7 +171,11 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
   transformer = (node: TreeviewNode, level: number) => {
     const existingNode = this.nodeMap.get(node.item.id);
 
-    if (existingNode && existingNode.item.id !== LOAD_MORE && existingNode.item.id !== LOAD_MORE_ROOT) {
+    if (
+      existingNode &&
+      existingNode.item.id !== LOAD_MORE &&
+      existingNode.item.id !== LOAD_MORE_ROOT
+    ) {
       return existingNode;
     }
 
@@ -172,7 +183,7 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
       node.item,
       level,
       node.hasChildren,
-      (node.hasChildren && isNotEmpty(node.children)),
+      node.hasChildren && isNotEmpty(node.children),
       node.pageInfo,
       node.loadMoreParentItem,
       node.isSearchNode,
@@ -181,9 +192,11 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
     );
     this.nodeMap.set(node.item.id, newNode);
 
-    if ((((level + 1) < this.preloadLevel) && newNode.childrenLoaded)
-      || (newNode.isSearchNode && newNode.childrenLoaded)
-      || newNode.isInInitValueHierarchy) {
+    if (
+      (level + 1 < this.preloadLevel && newNode.childrenLoaded) ||
+      (newNode.isSearchNode && newNode.childrenLoaded) ||
+      newNode.isInInitValueHierarchy
+    ) {
       if (!newNode.isSearchNode) {
         this.loadChildren(newNode);
       }
@@ -208,19 +221,22 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
    * Check if a given node has children
    * @param _nodeData The node for which to retrieve the information
    */
-  hasChildren = (_: number, _nodeData: TreeviewFlatNode) => _nodeData.expandable;
+  hasChildren = (_: number, _nodeData: TreeviewFlatNode) =>
+    _nodeData.expandable;
 
   /**
    * Check if a given node has more children to load
    * @param _nodeData The node for which to retrieve the information
    */
-  isLoadMore = (_: number, _nodeData: TreeviewFlatNode) => _nodeData.item.id === LOAD_MORE;
+  isLoadMore = (_: number, _nodeData: TreeviewFlatNode) =>
+    _nodeData.item.id === LOAD_MORE;
 
   /**
    * Check if there are more node to load at root level
    * @param _nodeData The node for which to retrieve the information
    */
-  isLoadMoreRoot = (_: number, _nodeData: TreeviewFlatNode) => _nodeData.item.id === LOAD_MORE_ROOT;
+  isLoadMoreRoot = (_: number, _nodeData: TreeviewFlatNode) =>
+    _nodeData.item.id === LOAD_MORE_ROOT;
 
   /**
    * Initialize the component, setting up the data to build the tree
@@ -234,7 +250,12 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
 
     this.loading = this.vocabularyTreeviewService.isLoading();
 
-    this.vocabularyTreeviewService.initialize(this.vocabularyOptions, new PageInfo(), this.selectedItems, null);
+    this.vocabularyTreeviewService.initialize(
+      this.vocabularyOptions,
+      new PageInfo(),
+      this.selectedItems,
+      null,
+    );
   }
 
   /**
@@ -258,7 +279,11 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
    * @param node The TreeviewFlatNode for which to load children nodes
    */
   loadChildren(node: TreeviewFlatNode) {
-    this.vocabularyTreeviewService.loadMore(node.item, this.selectedItems, true);
+    this.vocabularyTreeviewService.loadMore(
+      node.item,
+      this.selectedItems,
+      true,
+    );
   }
 
   /**
@@ -269,7 +294,9 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
       this.selectedItems.push(item.id);
       this.select.emit(item);
     } else {
-      this.selectedItems = this.selectedItems.filter((detail: string) => { return detail !== item.id; });
+      this.selectedItems = this.selectedItems.filter((detail: string) => {
+        return detail !== item.id;
+      });
       this.deselect.emit(item);
     }
   }
@@ -283,7 +310,10 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
         this.storedNodeMap = this.nodeMap;
       }
       this.nodeMap = new Map<string, TreeviewFlatNode>();
-      this.vocabularyTreeviewService.searchByQuery(this.searchText, this.selectedItems);
+      this.vocabularyTreeviewService.searchByQuery(
+        this.searchText,
+        this.selectedItems,
+      );
     }
   }
 
@@ -300,11 +330,20 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
   reset() {
     this.searchText = '';
     for (const item of this.selectedItems) {
-      this.subs.push(this.vocabularyService.findEntryDetailById(item, this.vocabularyOptions.name, true, true, false).pipe(
-        getFirstSucceededRemoteDataPayload(),
-      ).subscribe((detail: VocabularyEntryDetail) => {
-        this.deselect.emit(detail);
-      }));
+      this.subs.push(
+        this.vocabularyService
+          .findEntryDetailById(
+            item,
+            this.vocabularyOptions.name,
+            true,
+            true,
+            false,
+          )
+          .pipe(getFirstSucceededRemoteDataPayload())
+          .subscribe((detail: VocabularyEntryDetail) => {
+            this.deselect.emit(detail);
+          }),
+      );
       this.nodeMap.get(item).isSelected = false;
     }
     this.selectedItems = [];
@@ -323,7 +362,6 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
     } as VocabularyEntryDetail;
     this.select.emit(userVocabularyEntry);
   }
-
 
   /**
    * Unsubscribe from all subscriptions
@@ -344,6 +382,11 @@ export class VocabularyTreeviewComponent implements OnDestroy, OnInit, OnChanges
 
   ngOnChanges(changes: SimpleChanges): void {
     this.reset();
-    this.vocabularyTreeviewService.initialize(this.vocabularyOptions, new PageInfo(), this.selectedItems, null);
+    this.vocabularyTreeviewService.initialize(
+      this.vocabularyOptions,
+      new PageInfo(),
+      this.selectedItems,
+      null,
+    );
   }
 }

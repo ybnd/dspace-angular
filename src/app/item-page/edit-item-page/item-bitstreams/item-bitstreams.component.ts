@@ -1,26 +1,9 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  NgZone,
-  OnDestroy,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ChangeDetectorRef, Component, NgZone, OnDestroy } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Operation } from 'fast-json-patch';
-import {
-  Observable,
-  Subscription,
-  zip as observableZip,
-} from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { Observable, Subscription, zip as observableZip } from 'rxjs';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 
 import { ObjectCacheService } from '../../../core/cache/object-cache.service';
 import { BitstreamDataService } from '../../../core/data/bitstream-data.service';
@@ -40,10 +23,7 @@ import {
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
 } from '../../../core/shared/operators';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { ResponsiveColumnSizes } from '../../../shared/responsive-table-sizes/responsive-column-sizes';
 import { ResponsiveTableSizes } from '../../../shared/responsive-table-sizes/responsive-table-sizes';
@@ -58,8 +38,10 @@ import { AbstractItemUpdateComponent } from '../abstract-item-update/abstract-it
 /**
  * Component for displaying an item's bitstreams edit page
  */
-export class ItemBitstreamsComponent extends AbstractItemUpdateComponent implements OnDestroy {
-
+export class ItemBitstreamsComponent
+  extends AbstractItemUpdateComponent
+  implements OnDestroy
+{
   /**
    * The currently listed bundles
    */
@@ -114,18 +96,30 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
     public bundleService: BundleDataService,
     public zone: NgZone,
   ) {
-    super(itemService, objectUpdatesService, router, notificationsService, translateService, route);
+    super(
+      itemService,
+      objectUpdatesService,
+      router,
+      notificationsService,
+      translateService,
+      route,
+    );
   }
 
   /**
    * Actions to perform after the item has been initialized
    */
   postItemInit(): void {
-    this.bundles$ = this.itemService.getBundles(this.item.id, new PaginatedSearchOptions({ pagination: this.bundlesOptions })).pipe(
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-      map((bundlePage: PaginatedList<Bundle>) => bundlePage.page),
-    );
+    this.bundles$ = this.itemService
+      .getBundles(
+        this.item.id,
+        new PaginatedSearchOptions({ pagination: this.bundlesOptions }),
+      )
+      .pipe(
+        getFirstSucceededRemoteData(),
+        getRemoteDataPayload(),
+        map((bundlePage: PaginatedList<Bundle>) => bundlePage.page),
+      );
   }
 
   /**
@@ -134,7 +128,6 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
   initializeNotificationsPrefix(): void {
     this.notificationsPrefix = 'item.edit.bitstreams.notifications.';
   }
-
 
   /**
    * Submit the current changes
@@ -147,26 +140,42 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
 
     // Fetch all removed bitstreams from the object update service
     const removedBitstreams$ = bundlesOnce$.pipe(
-      switchMap((bundles: Bundle[]) => observableZip(
-        ...bundles.map((bundle: Bundle) => this.objectUpdatesService.getFieldUpdates(bundle.self, [], true)),
-      )),
-      map((fieldUpdates: FieldUpdates[]) => ([] as FieldUpdate[]).concat(
-        ...fieldUpdates.map((updates: FieldUpdates) => Object.values(updates).filter((fieldUpdate: FieldUpdate) => fieldUpdate.changeType === FieldChangeType.REMOVE)),
-      )),
-      map((fieldUpdates: FieldUpdate[]) => fieldUpdates.map((fieldUpdate: FieldUpdate) => fieldUpdate.field)),
+      switchMap((bundles: Bundle[]) =>
+        observableZip(
+          ...bundles.map((bundle: Bundle) =>
+            this.objectUpdatesService.getFieldUpdates(bundle.self, [], true),
+          ),
+        ),
+      ),
+      map((fieldUpdates: FieldUpdates[]) =>
+        ([] as FieldUpdate[]).concat(
+          ...fieldUpdates.map((updates: FieldUpdates) =>
+            Object.values(updates).filter(
+              (fieldUpdate: FieldUpdate) =>
+                fieldUpdate.changeType === FieldChangeType.REMOVE,
+            ),
+          ),
+        ),
+      ),
+      map((fieldUpdates: FieldUpdate[]) =>
+        fieldUpdates.map((fieldUpdate: FieldUpdate) => fieldUpdate.field),
+      ),
     );
 
     // Send out delete requests for all deleted bitstreams
-    const removedResponses$: Observable<RemoteData<NoContent>> = removedBitstreams$.pipe(
-      take(1),
-      switchMap((removedBitstreams: Bitstream[]) => {
-        return this.bitstreamService.removeMultiple(removedBitstreams);
-      }),
-    );
+    const removedResponses$: Observable<RemoteData<NoContent>> =
+      removedBitstreams$.pipe(
+        take(1),
+        switchMap((removedBitstreams: Bitstream[]) => {
+          return this.bitstreamService.removeMultiple(removedBitstreams);
+        }),
+      );
 
     // Perform the setup actions from above in order and display notifications
     removedResponses$.subscribe((responses: RemoteData<NoContent>) => {
-      this.displayNotifications('item.edit.bitstreams.notifications.remove', [responses]);
+      this.displayNotifications('item.edit.bitstreams.notifications.remove', [
+        responses,
+      ]);
       this.submitting = false;
     });
   }
@@ -180,22 +189,36 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
    */
   dropBitstream(bundle: Bundle, event: any) {
     this.zone.runOutsideAngular(() => {
-      if (hasValue(event) && hasValue(event.fromIndex) && hasValue(event.toIndex) && hasValue(event.finish)) {
+      if (
+        hasValue(event) &&
+        hasValue(event.fromIndex) &&
+        hasValue(event.toIndex) &&
+        hasValue(event.finish)
+      ) {
         const moveOperation = {
           op: 'move',
           from: `/_links/bitstreams/${event.fromIndex}/href`,
           path: `/_links/bitstreams/${event.toIndex}/href`,
         } as Operation;
-        this.bundleService.patch(bundle, [moveOperation]).pipe(take(1)).subscribe((response: RemoteData<Bundle>) => {
-          this.zone.run(() => {
-            this.displayNotifications('item.edit.bitstreams.notifications.move', [response]);
-            // Remove all cached requests from this bundle and call the event's callback when the requests are cleared
-            this.requestService.removeByHrefSubstring(bundle.self).pipe(
-              filter((isCached) => isCached),
-              take(1),
-            ).subscribe(() => event.finish());
+        this.bundleService
+          .patch(bundle, [moveOperation])
+          .pipe(take(1))
+          .subscribe((response: RemoteData<Bundle>) => {
+            this.zone.run(() => {
+              this.displayNotifications(
+                'item.edit.bitstreams.notifications.move',
+                [response],
+              );
+              // Remove all cached requests from this bundle and call the event's callback when the requests are cleared
+              this.requestService
+                .removeByHrefSubstring(bundle.self)
+                .pipe(
+                  filter((isCached) => isCached),
+                  take(1),
+                )
+                .subscribe(() => event.finish());
+            });
           });
-        });
       }
     });
   }
@@ -209,14 +232,26 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
    */
   displayNotifications(key: string, responses: RemoteData<any>[]) {
     if (isNotEmpty(responses)) {
-      const failedResponses = responses.filter((response: RemoteData<Bundle>) => hasValue(response) && response.hasFailed);
-      const successfulResponses = responses.filter((response: RemoteData<Bundle>) => hasValue(response) && response.hasSucceeded);
+      const failedResponses = responses.filter(
+        (response: RemoteData<Bundle>) =>
+          hasValue(response) && response.hasFailed,
+      );
+      const successfulResponses = responses.filter(
+        (response: RemoteData<Bundle>) =>
+          hasValue(response) && response.hasSucceeded,
+      );
 
       failedResponses.forEach((response: RemoteData<Bundle>) => {
-        this.notificationsService.error(this.translateService.instant(`${key}.failed.title`), response.errorMessage);
+        this.notificationsService.error(
+          this.translateService.instant(`${key}.failed.title`),
+          response.errorMessage,
+        );
       });
       if (successfulResponses.length > 0) {
-        this.notificationsService.success(this.translateService.instant(`${key}.saved.title`), this.translateService.instant(`${key}.saved.content`));
+        this.notificationsService.success(
+          this.translateService.instant(`${key}.saved.title`),
+          this.translateService.instant(`${key}.saved.content`),
+        );
       }
     }
   }
@@ -226,8 +261,15 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
    * Shows a notification to remind the user that they can undo this
    */
   discard() {
-    const undoNotification = this.notificationsService.info(this.getNotificationTitle('discarded'), this.getNotificationContent('discarded'), { timeOut: this.discardTimeOut });
-    this.objectUpdatesService.discardAllFieldUpdates(this.url, undoNotification);
+    const undoNotification = this.notificationsService.info(
+      this.getNotificationTitle('discarded'),
+      this.getNotificationContent('discarded'),
+      { timeOut: this.discardTimeOut },
+    );
+    this.objectUpdatesService.discardAllFieldUpdates(
+      this.url,
+      undoNotification,
+    );
   }
 
   /**
@@ -246,7 +288,13 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
    */
   isReinstatable(): Observable<boolean> {
     return this.bundles$.pipe(
-      switchMap((bundles: Bundle[]) => observableZip(...bundles.map((bundle: Bundle) => this.objectUpdatesService.isReinstatable(bundle.self)))),
+      switchMap((bundles: Bundle[]) =>
+        observableZip(
+          ...bundles.map((bundle: Bundle) =>
+            this.objectUpdatesService.isReinstatable(bundle.self),
+          ),
+        ),
+      ),
       map((reinstatable: boolean[]) => reinstatable.includes(true)),
     );
   }
@@ -256,7 +304,13 @@ export class ItemBitstreamsComponent extends AbstractItemUpdateComponent impleme
    */
   hasChanges(): Observable<boolean> {
     return this.bundles$.pipe(
-      switchMap((bundles: Bundle[]) => observableZip(...bundles.map((bundle: Bundle) => this.objectUpdatesService.hasUpdates(bundle.self)))),
+      switchMap((bundles: Bundle[]) =>
+        observableZip(
+          ...bundles.map((bundle: Bundle) =>
+            this.objectUpdatesService.hasUpdates(bundle.self),
+          ),
+        ),
+      ),
       map((hasChanges: boolean[]) => hasChanges.includes(true)),
     );
   }

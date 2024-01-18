@@ -54,7 +54,9 @@ const identifiable3 = {
   language: null,
   value: 'Unchanged value',
 };
-const relationship: Relationship = Object.assign(new Relationship(), { uuid: 'test relationship uuid' });
+const relationship: Relationship = Object.assign(new Relationship(), {
+  uuid: 'test relationship uuid',
+});
 
 const modDate = new Date(2010, 2, 11);
 const uuid = identifiable1.uuid;
@@ -174,7 +176,11 @@ describe('objectUpdatesReducer', () => {
   });
 
   it('should perform the INITIALIZE_FIELDS action without affecting the previous state', () => {
-    const action = new InitializeFieldsAction(url, [identifiable1, identifiable2], modDate);
+    const action = new InitializeFieldsAction(
+      url,
+      [identifiable1, identifiable2],
+      modDate,
+    );
     // testState has already been frozen above
     objectUpdatesReducer(testState, action);
   });
@@ -186,7 +192,11 @@ describe('objectUpdatesReducer', () => {
   });
 
   it('should perform the ADD_FIELD action without affecting the previous state', () => {
-    const action = new AddFieldUpdateAction(url, identifiable1update, FieldChangeType.UPDATE);
+    const action = new AddFieldUpdateAction(
+      url,
+      identifiable1update,
+      FieldChangeType.UPDATE,
+    );
     // testState has already been frozen above
     objectUpdatesReducer(testState, action);
   });
@@ -216,13 +226,22 @@ describe('objectUpdatesReducer', () => {
   });
 
   it('should perform the SELECT_VIRTUAL_METADATA action without affecting the previous state', () => {
-    const action = new SelectVirtualMetadataAction(url, relationship.uuid, identifiable1.uuid, true);
+    const action = new SelectVirtualMetadataAction(
+      url,
+      relationship.uuid,
+      identifiable1.uuid,
+      true,
+    );
     // testState has already been frozen above
     objectUpdatesReducer(testState, action);
   });
 
   it('should initialize all fields when the INITIALIZE action is dispatched, based on the payload', () => {
-    const action = new InitializeFieldsAction(url, [identifiable1, identifiable3], modDate);
+    const action = new InitializeFieldsAction(
+      url,
+      [identifiable1, identifiable3],
+      modDate,
+    );
 
     const expectedState = {
       [url]: {
@@ -248,29 +267,45 @@ describe('objectUpdatesReducer', () => {
     expect(newState).toEqual(expectedState);
   });
 
-  it('should set the given field\'s fieldStates when the SET_EDITABLE_FIELD action is dispatched, based on the payload', () => {
-    const action = new SetEditableFieldUpdateAction(url, identifiable3.uuid, true);
+  it("should set the given field's fieldStates when the SET_EDITABLE_FIELD action is dispatched, based on the payload", () => {
+    const action = new SetEditableFieldUpdateAction(
+      url,
+      identifiable3.uuid,
+      true,
+    );
 
     const newState = objectUpdatesReducer(testState, action);
     expect(newState[url].fieldStates[identifiable3.uuid].editable).toBeTruthy();
   });
 
-  it('should set the given field\'s fieldStates when the SET_VALID_FIELD action is dispatched, based on the payload', () => {
-    const action = new SetValidFieldUpdateAction(url, identifiable3.uuid, false);
+  it("should set the given field's fieldStates when the SET_VALID_FIELD action is dispatched, based on the payload", () => {
+    const action = new SetValidFieldUpdateAction(
+      url,
+      identifiable3.uuid,
+      false,
+    );
 
     const newState = objectUpdatesReducer(testState, action);
     expect(newState[url].fieldStates[identifiable3.uuid].isValid).toBeFalsy();
   });
 
-  it('should add a given field\'s update to the state when the ADD_FIELD action is dispatched, based on the payload', () => {
-    const action = new AddFieldUpdateAction(url, identifiable1update, FieldChangeType.UPDATE);
+  it("should add a given field's update to the state when the ADD_FIELD action is dispatched, based on the payload", () => {
+    const action = new AddFieldUpdateAction(
+      url,
+      identifiable1update,
+      FieldChangeType.UPDATE,
+    );
 
     const newState = objectUpdatesReducer(testState, action);
-    expect(newState[url].fieldUpdates[identifiable1.uuid].field).toEqual(identifiable1update);
-    expect(newState[url].fieldUpdates[identifiable1.uuid].changeType).toEqual(FieldChangeType.UPDATE);
+    expect(newState[url].fieldUpdates[identifiable1.uuid].field).toEqual(
+      identifiable1update,
+    );
+    expect(newState[url].fieldUpdates[identifiable1.uuid].changeType).toEqual(
+      FieldChangeType.UPDATE,
+    );
   });
 
-  it('should discard a given url\'s updates from the state when the DISCARD action is dispatched, based on the payload', () => {
+  it("should discard a given url's updates from the state when the DISCARD action is dispatched, based on the payload", () => {
     const action = new DiscardObjectUpdatesAction(url, null);
 
     const newState = objectUpdatesReducer(testState, action);
@@ -278,14 +313,14 @@ describe('objectUpdatesReducer', () => {
     expect(newState[url + OBJECT_UPDATES_TRASH_PATH]).toEqual(testState[url]);
   });
 
-  it('should reinstate a given url\'s updates from the state when the REINSTATE action is dispatched, based on the payload', () => {
+  it("should reinstate a given url's updates from the state when the REINSTATE action is dispatched, based on the payload", () => {
     const action = new ReinstateObjectUpdatesAction(url);
 
     const newState = objectUpdatesReducer(discardedTestState, action);
     expect(newState).toEqual(testState);
   });
 
-  it('should remove a given url\'s updates from the state when the REMOVE action is dispatched, based on the payload', () => {
+  it("should remove a given url's updates from the state when the REMOVE action is dispatched, based on the payload", () => {
     const action = new RemoveObjectUpdatesAction(url);
 
     const newState = objectUpdatesReducer(discardedTestState, action);
@@ -301,7 +336,7 @@ describe('objectUpdatesReducer', () => {
     expect(newState[url + OBJECT_UPDATES_TRASH_PATH]).toBeUndefined();
   });
 
-  it('should remove a given field\'s update from the state when the REMOVE_FIELD action is dispatched, based on the payload', () => {
+  it("should remove a given field's update from the state when the REMOVE_FIELD action is dispatched, based on the payload", () => {
     const action = new RemoveFieldUpdateAction(url, uuid);
 
     const newState = objectUpdatesReducer(testState, action);

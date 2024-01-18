@@ -13,15 +13,7 @@ import { BrowseByRoutingModule } from './browse-by-routing.module';
     BrowseByRoutingModule,
     BrowseByModule.withEntryComponents(),
   ],
-  providers: [
-    ItemDataService,
-    BrowseService,
-    BrowseByGuard,
-  ],
-  declarations: [
-
-  ],
+  providers: [ItemDataService, BrowseService, BrowseByGuard],
+  declarations: [],
 })
-export class BrowseByPageModule {
-
-}
+export class BrowseByPageModule {}

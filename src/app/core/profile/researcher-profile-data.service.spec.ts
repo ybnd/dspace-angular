@@ -1,13 +1,6 @@
-import {
-  HttpClient,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ReplaceOperation } from 'fast-json-patch';
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -60,121 +53,151 @@ describe('ResearcherProfileService', () => {
       },
     },
   });
-  const researcherProfile: ResearcherProfile = Object.assign(new ResearcherProfile(), {
-    id: researcherProfileId,
-    visible: false,
-    type: 'profile',
-    _links: {
-      item: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId}/item`,
-      },
-      self: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId}`,
+  const researcherProfile: ResearcherProfile = Object.assign(
+    new ResearcherProfile(),
+    {
+      id: researcherProfileId,
+      visible: false,
+      type: 'profile',
+      _links: {
+        item: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId}/item`,
+        },
+        self: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId}`,
+        },
       },
     },
-  });
+  );
 
-  const researcherProfilePatched: ResearcherProfile = Object.assign(new ResearcherProfile(), {
-    id: researcherProfileId,
-    visible: true,
-    type: 'profile',
-    _links: {
-      item: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId}/item`,
-      },
-      self: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId}`,
+  const researcherProfilePatched: ResearcherProfile = Object.assign(
+    new ResearcherProfile(),
+    {
+      id: researcherProfileId,
+      visible: true,
+      type: 'profile',
+      _links: {
+        item: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId}/item`,
+        },
+        self: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId}`,
+        },
       },
     },
-  });
+  );
 
   const researcherProfileId2 = 'agbf9946-f4ce-479e-8f11-b90cbe9f7241';
-  const anotherResearcherProfile: ResearcherProfile = Object.assign(new ResearcherProfile(), {
-    id: researcherProfileId2,
-    visible: false,
-    type: 'profile',
-    _links: {
-      self: {
-        href: `https://rest.api/rest/api/profiles/${researcherProfileId2}`,
+  const anotherResearcherProfile: ResearcherProfile = Object.assign(
+    new ResearcherProfile(),
+    {
+      id: researcherProfileId2,
+      visible: false,
+      type: 'profile',
+      _links: {
+        self: {
+          href: `https://rest.api/rest/api/profiles/${researcherProfileId2}`,
+        },
       },
     },
-  });
+  );
 
   const mockItemUnlinkedToOrcid: Item = Object.assign(new Item(), {
     id: 'mockItemUnlinkedToOrcid',
     bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
     metadata: {
-      'dc.title': [{
-        value: 'test person',
-      }],
-      'dspace.entity.type': [{
-        'value': 'Person',
-      }],
-      'dspace.object.owner': [{
-        'value': 'test person',
-        'language': null,
-        'authority': 'researcher-profile-id',
-        'confidence': 600,
-        'place': 0,
-      }],
+      'dc.title': [
+        {
+          value: 'test person',
+        },
+      ],
+      'dspace.entity.type': [
+        {
+          value: 'Person',
+        },
+      ],
+      'dspace.object.owner': [
+        {
+          value: 'test person',
+          language: null,
+          authority: 'researcher-profile-id',
+          confidence: 600,
+          place: 0,
+        },
+      ],
     },
   });
 
   const mockItemLinkedToOrcid: Item = Object.assign(new Item(), {
     bundles: createSuccessfulRemoteDataObject$(createPaginatedList([])),
     metadata: {
-      'dc.title': [{
-        value: 'test person',
-      }],
-      'dspace.entity.type': [{
-        'value': 'Person',
-      }],
-      'dspace.object.owner': [{
-        'value': 'test person',
-        'language': null,
-        'authority': 'researcher-profile-id',
-        'confidence': 600,
-        'place': 0,
-      }],
-      'dspace.orcid.authenticated': [{
-        'value': '2022-06-10T15:15:12.952872',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 0,
-      }],
-      'dspace.orcid.scope': [{
-        'value': '/authenticate',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 0,
-      }, {
-        'value': '/read-limited',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 1,
-      }, {
-        'value': '/activities/update',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 2,
-      }, {
-        'value': '/person/update',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 3,
-      }],
-      'person.identifier.orcid': [{
-        'value': 'orcid-id',
-        'language': null,
-        'authority': null,
-        'confidence': -1,
-        'place': 0,
-      }],
+      'dc.title': [
+        {
+          value: 'test person',
+        },
+      ],
+      'dspace.entity.type': [
+        {
+          value: 'Person',
+        },
+      ],
+      'dspace.object.owner': [
+        {
+          value: 'test person',
+          language: null,
+          authority: 'researcher-profile-id',
+          confidence: 600,
+          place: 0,
+        },
+      ],
+      'dspace.orcid.authenticated': [
+        {
+          value: '2022-06-10T15:15:12.952872',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 0,
+        },
+      ],
+      'dspace.orcid.scope': [
+        {
+          value: '/authenticate',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 0,
+        },
+        {
+          value: '/read-limited',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 1,
+        },
+        {
+          value: '/activities/update',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 2,
+        },
+        {
+          value: '/person/update',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 3,
+        },
+      ],
+      'person.identifier.orcid': [
+        {
+          value: 'orcid-id',
+          language: null,
+          authority: null,
+          confidence: -1,
+          place: 0,
+        },
+      ],
     },
   });
 
@@ -215,7 +238,8 @@ describe('ResearcherProfileService', () => {
   const pageInfo = new PageInfo();
   const array = [researcherProfile, anotherResearcherProfile];
   const paginatedList = buildPaginatedList(pageInfo, array);
-  const researcherProfileRD = createSuccessfulRemoteDataObject(researcherProfile);
+  const researcherProfileRD =
+    createSuccessfulRemoteDataObject(researcherProfile);
   const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
 
   beforeEach(() => {
@@ -269,9 +293,11 @@ describe('ResearcherProfileService', () => {
     );
     serviceAsAny = service;
 
-    spyOn((service as any), 'findById').and.callThrough();
-    spyOn((service as any), 'findByHref').and.callThrough();
-    spyOn((service as any), 'getLinkPath').and.returnValue(observableOf(endpointURL));
+    spyOn(service as any, 'findById').and.callThrough();
+    spyOn(service as any, 'findByHref').and.callThrough();
+    spyOn(service as any, 'getLinkPath').and.returnValue(
+      observableOf(endpointURL),
+    );
     spyOn((service as any).createData, 'create').and.callThrough();
     spyOn((service as any).patchData, 'update').and.callThrough();
     spyOn((service as any).searchData, 'searchBy').and.callThrough();
@@ -279,7 +305,17 @@ describe('ResearcherProfileService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new ResearcherProfileDataService(null, null, null, null, null, null, null, null);
+    const initService = () =>
+      new ResearcherProfileDataService(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      );
     testCreateDataImplementation(initService);
     testSearchDataImplementation(initService);
     testPatchDataImplementation(initService);
@@ -308,22 +344,29 @@ describe('ResearcherProfileService', () => {
       scheduler.schedule(() => service.delete(researcherProfile.id));
       scheduler.flush();
 
-      expect((service as any).deleteData.delete).toHaveBeenCalledWith(researcherProfile.id, undefined);
+      expect((service as any).deleteData.delete).toHaveBeenCalledWith(
+        researcherProfile.id,
+        undefined,
+      );
     });
   });
 
   describe('findRelatedItemId', () => {
     describe('with a related item', () => {
-
       beforeEach(() => {
-        (service as any).itemService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$(researcherProfileItem));
+        (service as any).itemService.findByHref.and.returnValue(
+          createSuccessfulRemoteDataObject$(researcherProfileItem),
+        );
       });
 
       it('should proxy the call to dataservice.findById with eperson UUID', () => {
         scheduler.schedule(() => service.findRelatedItemId(researcherProfile));
         scheduler.flush();
 
-        expect((service as any).itemService.findByHref).toHaveBeenCalledWith(researcherProfile._links.item.href, false);
+        expect((service as any).itemService.findByHref).toHaveBeenCalledWith(
+          researcherProfile._links.item.href,
+          false,
+        );
       });
 
       it('should return a ResearcherProfile object with the given id', () => {
@@ -336,16 +379,20 @@ describe('ResearcherProfileService', () => {
     });
 
     describe('without a related item', () => {
-
       beforeEach(() => {
-        (service as any).itemService.findByHref.and.returnValue(createNoContentRemoteDataObject$());
+        (service as any).itemService.findByHref.and.returnValue(
+          createNoContentRemoteDataObject$(),
+        );
       });
 
       it('should proxy the call to dataservice.findById with eperson UUID', () => {
         scheduler.schedule(() => service.findRelatedItemId(researcherProfile));
         scheduler.flush();
 
-        expect((service as any).itemService.findByHref).toHaveBeenCalledWith(researcherProfile._links.item.href, false);
+        expect((service as any).itemService.findByHref).toHaveBeenCalledWith(
+          researcherProfile._links.item.href,
+          false,
+        );
       });
 
       it('should not return a ResearcherProfile object with the given id', () => {
@@ -360,8 +407,12 @@ describe('ResearcherProfileService', () => {
 
   describe('setVisibility', () => {
     beforeEach(() => {
-      spyOn((service as any).patchData, 'patch').and.returnValue(createSuccessfulRemoteDataObject$(researcherProfilePatched));
-      (service.findById as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$(researcherProfilePatched));
+      spyOn((service as any).patchData, 'patch').and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfilePatched),
+      );
+      (service.findById as jasmine.Spy).and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfilePatched),
+      );
     });
 
     it('should proxy the call to patchData.patch', () => {
@@ -374,15 +425,21 @@ describe('ResearcherProfileService', () => {
       scheduler.schedule(() => service.setVisibility(researcherProfile, true));
       scheduler.flush();
 
-      expect((service as any).patchData.patch).toHaveBeenCalledWith(researcherProfile, [replaceOperation]);
+      expect((service as any).patchData.patch).toHaveBeenCalledWith(
+        researcherProfile,
+        [replaceOperation],
+      );
     });
   });
 
   describe('createFromExternalSource', () => {
-
     beforeEach(() => {
-      spyOn((service as any).patchData, 'patch').and.returnValue(createSuccessfulRemoteDataObject$(researcherProfilePatched));
-      (service.findById as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$(researcherProfilePatched));
+      spyOn((service as any).patchData, 'patch').and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfilePatched),
+      );
+      (service.findById as jasmine.Spy).and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfilePatched),
+      );
     });
 
     it('should proxy the call to patchData.patch', () => {
@@ -390,28 +447,43 @@ describe('ResearcherProfileService', () => {
       let headers = new HttpHeaders();
       headers = headers.append('Content-Type', 'text/uri-list');
       options.headers = headers;
-      const request = new PostRequest(requestUUID, endpointURLWithEmbed, sourceUri, options);
+      const request = new PostRequest(
+        requestUUID,
+        endpointURLWithEmbed,
+        sourceUri,
+        options,
+      );
 
       scheduler.schedule(() => service.createFromExternalSource(sourceUri));
       scheduler.flush();
 
-      expect((service as any).requestService.send).toHaveBeenCalledWith(request);
-      expect((service as any).rdbService.buildFromRequestUUID).toHaveBeenCalledWith(requestUUID, followLink('item'));
-
+      expect((service as any).requestService.send).toHaveBeenCalledWith(
+        request,
+      );
+      expect(
+        (service as any).rdbService.buildFromRequestUUID,
+      ).toHaveBeenCalledWith(requestUUID, followLink('item'));
     });
   });
 
   describe('updateByOrcidOperations', () => {
     beforeEach(() => {
       scheduler = getTestScheduler();
-      spyOn((service as any).patchData, 'patch').and.returnValue(createSuccessfulRemoteDataObject$(researcherProfilePatched));
+      spyOn((service as any).patchData, 'patch').and.returnValue(
+        createSuccessfulRemoteDataObject$(researcherProfilePatched),
+      );
     });
 
     it('should call patch method properly', () => {
-      scheduler.schedule(() => service.patch(researcherProfile, []).subscribe());
+      scheduler.schedule(() =>
+        service.patch(researcherProfile, []).subscribe(),
+      );
       scheduler.flush();
 
-      expect((service as any).patchData.patch).toHaveBeenCalledWith(researcherProfile, []);
+      expect((service as any).patchData.patch).toHaveBeenCalledWith(
+        researcherProfile,
+        [],
+      );
     });
   });
 });

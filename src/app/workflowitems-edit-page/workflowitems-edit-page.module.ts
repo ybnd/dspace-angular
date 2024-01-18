@@ -48,6 +48,4 @@ import { WorkflowItemsEditPageRoutingModule } from './workflowitems-edit-page-ro
 /**
  * This module handles all modules that need to access the workflowitems edit page.
  */
-export class WorkflowItemsEditPageModule {
-
-}
+export class WorkflowItemsEditPageModule {}

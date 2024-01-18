@@ -18,7 +18,6 @@ import { RequestService } from './request.service';
 @Injectable()
 @dataService(ACCESS_STATUS)
 export class AccessStatusDataService extends BaseDataService<AccessStatusObject> {
-
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,

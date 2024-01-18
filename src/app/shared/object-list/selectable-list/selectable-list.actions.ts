@@ -29,8 +29,7 @@ export abstract class SelectableListAction implements Action {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     public type,
     public id: string,
-  ) {
-  }
+  ) {}
 }
 
 /**
@@ -49,7 +48,7 @@ export class SelectableListSelectAction extends SelectableListAction {
  */
 export class SelectableListSelectSingleAction extends SelectableListAction {
   payload: {
-    object: ListableObject,
+    object: ListableObject;
   };
 
   constructor(id: string, object: ListableObject) {

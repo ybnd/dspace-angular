@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { SearchConfigurationService } from '../../../../app/core/shared/search/search-configuration.service';
 import { SEARCH_CONFIG_SERVICE } from '../../../../app/my-dspace-page/my-dspace-page.component';
@@ -28,4 +25,3 @@ import { pushInOut } from '../../../../app/shared/animations/push';
  * This component renders a search page using a configuration as input.
  */
 export class ConfigurationSearchPageComponent extends BaseComponent {}
-

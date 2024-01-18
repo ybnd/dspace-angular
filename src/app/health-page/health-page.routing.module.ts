@@ -21,6 +21,4 @@ import { HealthPageComponent } from './health-page.component';
     ]),
   ],
 })
-export class HealthPageRoutingModule {
-
-}
+export class HealthPageRoutingModule {}

@@ -1,13 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  find,
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { Observable, of as observableOf } from 'rxjs';
+import { find, map, switchMap } from 'rxjs/operators';
 
 import { getDSORoute } from '../../app-routing-paths';
 import { Breadcrumb } from '../../breadcrumbs/breadcrumb/breadcrumb.model';
@@ -26,13 +19,13 @@ import { DSONameService } from './dso-name.service';
 @Injectable({
   providedIn: 'root',
 })
-export class DSOBreadcrumbsService implements BreadcrumbsProviderService<ChildHALResource & DSpaceObject> {
+export class DSOBreadcrumbsService
+  implements BreadcrumbsProviderService<ChildHALResource & DSpaceObject>
+{
   constructor(
     protected linkService: LinkService,
     protected dsoNameService: DSONameService,
-  ) {
-
-  }
+  ) {}
 
   /**
    * Method to recursively calculate the breadcrumbs
@@ -40,21 +33,28 @@ export class DSOBreadcrumbsService implements BreadcrumbsProviderService<ChildHA
    * @param key The key (a DSpaceObject) used to resolve the breadcrumb
    * @param url The url to use as a link for this breadcrumb
    */
-  getBreadcrumbs(key: ChildHALResource & DSpaceObject, url: string): Observable<Breadcrumb[]> {
+  getBreadcrumbs(
+    key: ChildHALResource & DSpaceObject,
+    url: string,
+  ): Observable<Breadcrumb[]> {
     const label = this.dsoNameService.getName(key);
     const crumb = new Breadcrumb(label, url);
     const propertyName = key.getParentLinkKey();
-    return this.linkService.resolveLink(key, followLink(propertyName))[propertyName].pipe(
-      find((parentRD: RemoteData<ChildHALResource & DSpaceObject>) => parentRD.hasSucceeded || parentRD.statusCode === 204),
-      switchMap((parentRD: RemoteData<ChildHALResource & DSpaceObject>) => {
-        if (hasValue(parentRD) && hasValue(parentRD.payload)) {
-          const parent = parentRD.payload;
-          return this.getBreadcrumbs(parent, getDSORoute(parent));
-        }
-        return observableOf([]);
-
-      }),
-      map((breadcrumbs: Breadcrumb[]) => [...breadcrumbs, crumb]),
-    );
+    return this.linkService
+      .resolveLink(key, followLink(propertyName))
+      [propertyName].pipe(
+        find(
+          (parentRD: RemoteData<ChildHALResource & DSpaceObject>) =>
+            parentRD.hasSucceeded || parentRD.statusCode === 204,
+        ),
+        switchMap((parentRD: RemoteData<ChildHALResource & DSpaceObject>) => {
+          if (hasValue(parentRD) && hasValue(parentRD.payload)) {
+            const parent = parentRD.payload;
+            return this.getBreadcrumbs(parent, getDSORoute(parent));
+          }
+          return observableOf([]);
+        }),
+        map((breadcrumbs: Breadcrumb[]) => [...breadcrumbs, crumb]),
+      );
   }
 }

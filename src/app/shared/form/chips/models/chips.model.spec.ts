@@ -105,11 +105,13 @@ describe('Chips model test suite', () => {
         otherProperty: 'a',
       },
     ];
-    const iconsConfig = [{
-      name: 'toDisplay',
-      visibleWhenAuthorityEmpty: false,
-      style: 'fa-user',
-    }];
+    const iconsConfig = [
+      {
+        name: 'toDisplay',
+        visibleWhenAuthorityEmpty: false,
+        style: 'fa-user',
+      },
+    ];
     chips = new Chips(items, 'value', 'toDisplay', iconsConfig);
 
     expect(chips.displayField).toBe('value');

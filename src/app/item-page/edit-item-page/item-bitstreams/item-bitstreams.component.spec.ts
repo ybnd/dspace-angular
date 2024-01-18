@@ -1,16 +1,6 @@
-import {
-  ChangeDetectorRef,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
@@ -47,9 +37,21 @@ import { ItemBitstreamsComponent } from './item-bitstreams.component';
 let comp: ItemBitstreamsComponent;
 let fixture: ComponentFixture<ItemBitstreamsComponent>;
 
-const infoNotification: INotification = new Notification('id', NotificationType.Info, 'info');
-const warningNotification: INotification = new Notification('id', NotificationType.Warning, 'warning');
-const successNotification: INotification = new Notification('id', NotificationType.Success, 'success');
+const infoNotification: INotification = new Notification(
+  'id',
+  NotificationType.Info,
+  'info',
+);
+const warningNotification: INotification = new Notification(
+  'id',
+  NotificationType.Warning,
+  'warning',
+);
+const successNotification: INotification = new Notification(
+  'id',
+  NotificationType.Success,
+  'success',
+);
 const bitstream1 = Object.assign(new Bitstream(), {
   id: 'bitstream1',
   uuid: 'bitstream1',
@@ -72,7 +74,9 @@ const bundle = Object.assign(new Bundle(), {
   _links: {
     self: { href: 'bundle1-selflink' },
   },
-  bitstreams: createSuccessfulRemoteDataObject$(createPaginatedList([bitstream1, bitstream2])),
+  bitstreams: createSuccessfulRemoteDataObject$(
+    createPaginatedList([bitstream1, bitstream2]),
+  ),
 });
 const moveOperations = [
   {
@@ -97,39 +101,35 @@ let bundleService: BundleDataService;
 
 describe('ItemBitstreamsComponent', () => {
   beforeEach(waitForAsync(() => {
-    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService',
-      {
-        getFieldUpdates: observableOf({
-          [bitstream1.uuid]: fieldUpdate1,
-          [bitstream2.uuid]: fieldUpdate2,
-        }),
-        getFieldUpdatesExclusive: observableOf({
-          [bitstream1.uuid]: fieldUpdate1,
-          [bitstream2.uuid]: fieldUpdate2,
-        }),
-        saveAddFieldUpdate: {},
-        discardFieldUpdates: {},
-        discardAllFieldUpdates: {},
-        reinstateFieldUpdates: observableOf(true),
-        initialize: {},
-        getUpdatedFields: observableOf([bitstream1, bitstream2]),
-        getLastModified: observableOf(date),
-        hasUpdates: observableOf(true),
-        isReinstatable: observableOf(false),
-        isValidPage: observableOf(true),
-        getMoveOperations: observableOf(moveOperations),
-      },
-    );
+    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService', {
+      getFieldUpdates: observableOf({
+        [bitstream1.uuid]: fieldUpdate1,
+        [bitstream2.uuid]: fieldUpdate2,
+      }),
+      getFieldUpdatesExclusive: observableOf({
+        [bitstream1.uuid]: fieldUpdate1,
+        [bitstream2.uuid]: fieldUpdate2,
+      }),
+      saveAddFieldUpdate: {},
+      discardFieldUpdates: {},
+      discardAllFieldUpdates: {},
+      reinstateFieldUpdates: observableOf(true),
+      initialize: {},
+      getUpdatedFields: observableOf([bitstream1, bitstream2]),
+      getLastModified: observableOf(date),
+      hasUpdates: observableOf(true),
+      isReinstatable: observableOf(false),
+      isValidPage: observableOf(true),
+      getMoveOperations: observableOf(moveOperations),
+    });
     router = Object.assign(new RouterStub(), {
       url: url,
     });
-    notificationsService = jasmine.createSpyObj('notificationsService',
-      {
-        info: infoNotification,
-        warning: warningNotification,
-        success: successNotification,
-      },
-    );
+    notificationsService = jasmine.createSpyObj('notificationsService', {
+      info: infoNotification,
+      warning: warningNotification,
+      success: successNotification,
+    });
     bitstreamService = new BitstreamDataServiceStub();
     objectCache = jasmine.createSpyObj('objectCache', {
       remove: jasmine.createSpy('remove'),
@@ -149,10 +149,14 @@ describe('ItemBitstreamsComponent', () => {
       lastModified: date,
     });
     itemService = Object.assign({
-      getBitstreams: () => createSuccessfulRemoteDataObject$(createPaginatedList([bitstream1, bitstream2])),
+      getBitstreams: () =>
+        createSuccessfulRemoteDataObject$(
+          createPaginatedList([bitstream1, bitstream2]),
+        ),
       findByHref: () => createSuccessfulRemoteDataObject$(item),
       findById: () => createSuccessfulRemoteDataObject$(item),
-      getBundles: () => createSuccessfulRemoteDataObject$(createPaginatedList([bundle])),
+      getBundles: () =>
+        createSuccessfulRemoteDataObject$(createPaginatedList([bundle])),
     });
     route = Object.assign({
       parent: {
@@ -180,9 +184,8 @@ describe('ItemBitstreamsComponent', () => {
         { provide: SearchConfigurationService, useValue: searchConfig },
         { provide: BundleDataService, useValue: bundleService },
         ChangeDetectorRef,
-      ], schemas: [
-        NO_ERRORS_SCHEMA,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -200,11 +203,15 @@ describe('ItemBitstreamsComponent', () => {
     });
 
     it('should call removeMultiple on the bitstreamService for the marked field', () => {
-      expect(bitstreamService.removeMultiple).toHaveBeenCalledWith([bitstream2]);
+      expect(bitstreamService.removeMultiple).toHaveBeenCalledWith([
+        bitstream2,
+      ]);
     });
 
     it('should not call removeMultiple on the bitstreamService for the unmarked field', () => {
-      expect(bitstreamService.removeMultiple).not.toHaveBeenCalledWith([bitstream1]);
+      expect(bitstreamService.removeMultiple).not.toHaveBeenCalledWith([
+        bitstream1,
+      ]);
     });
   });
 
@@ -213,8 +220,7 @@ describe('ItemBitstreamsComponent', () => {
       fromIndex: 0,
       toIndex: 50,
       // eslint-disable-next-line no-empty,@typescript-eslint/no-empty-function
-      finish: () => {
-      },
+      finish: () => {},
     };
 
     beforeEach(() => {
@@ -248,7 +254,9 @@ describe('ItemBitstreamsComponent', () => {
   describe('reinstate', () => {
     it('should reinstate field updates on the bundle', () => {
       comp.reinstate();
-      expect(objectUpdatesService.reinstateFieldUpdates).toHaveBeenCalledWith(bundle.self);
+      expect(objectUpdatesService.reinstateFieldUpdates).toHaveBeenCalledWith(
+        bundle.self,
+      );
     });
   });
 });

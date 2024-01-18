@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -10,14 +7,8 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -25,10 +16,7 @@ import {
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 import { FindListOptions } from '../../core/data/find-list-options.model';
@@ -48,10 +36,7 @@ import { getMockTranslateService } from '../../shared/mocks/translate.service.mo
 import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
-import {
-  EPersonMock,
-  EPersonMock2,
-} from '../../shared/testing/eperson.mock';
+import { EPersonMock, EPersonMock2 } from '../../shared/testing/eperson.mock';
 import { NotificationsServiceStub } from '../../shared/testing/notifications-service.stub';
 import { PaginationServiceStub } from '../../shared/testing/pagination-service.stub';
 import { RouterStub } from '../../shared/testing/router.stub';
@@ -77,57 +62,88 @@ describe('EPeopleRegistryComponent', () => {
       activeEPerson: null,
       allEpeople: mockEPeople,
       getEPeople(): Observable<RemoteData<PaginatedList<EPerson>>> {
-        return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-          elementsPerPage: this.allEpeople.length,
-          totalElements: this.allEpeople.length,
-          totalPages: 1,
-          currentPage: 1,
-        }), this.allEpeople));
-      },
-      getActiveEPerson(): Observable<EPerson> {
-        return observableOf(this.activeEPerson);
-      },
-      searchByScope(scope: string, query: string, options: FindListOptions = {}): Observable<RemoteData<PaginatedList<EPerson>>> {
-        if (scope === 'email') {
-          const result = this.allEpeople.find((ePerson: EPerson) => {
-            return ePerson.email === query;
-          });
-          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-            elementsPerPage: [result].length,
-            totalElements: [result].length,
-            totalPages: 1,
-            currentPage: 1,
-          }), [result]));
-        }
-        if (scope === 'metadata') {
-          if (query === '') {
-            return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
+        return createSuccessfulRemoteDataObject$(
+          buildPaginatedList(
+            new PageInfo({
               elementsPerPage: this.allEpeople.length,
               totalElements: this.allEpeople.length,
               totalPages: 1,
               currentPage: 1,
-            }), this.allEpeople));
+            }),
+            this.allEpeople,
+          ),
+        );
+      },
+      getActiveEPerson(): Observable<EPerson> {
+        return observableOf(this.activeEPerson);
+      },
+      searchByScope(
+        scope: string,
+        query: string,
+        options: FindListOptions = {},
+      ): Observable<RemoteData<PaginatedList<EPerson>>> {
+        if (scope === 'email') {
+          const result = this.allEpeople.find((ePerson: EPerson) => {
+            return ePerson.email === query;
+          });
+          return createSuccessfulRemoteDataObject$(
+            buildPaginatedList(
+              new PageInfo({
+                elementsPerPage: [result].length,
+                totalElements: [result].length,
+                totalPages: 1,
+                currentPage: 1,
+              }),
+              [result],
+            ),
+          );
+        }
+        if (scope === 'metadata') {
+          if (query === '') {
+            return createSuccessfulRemoteDataObject$(
+              buildPaginatedList(
+                new PageInfo({
+                  elementsPerPage: this.allEpeople.length,
+                  totalElements: this.allEpeople.length,
+                  totalPages: 1,
+                  currentPage: 1,
+                }),
+                this.allEpeople,
+              ),
+            );
           }
           const result = this.allEpeople.find((ePerson: EPerson) => {
-            return (ePerson.name.includes(query) || ePerson.email.includes(query));
+            return (
+              ePerson.name.includes(query) || ePerson.email.includes(query)
+            );
           });
-          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-            elementsPerPage: [result].length,
-            totalElements: [result].length,
-            totalPages: 1,
-            currentPage: 1,
-          }), [result]));
+          return createSuccessfulRemoteDataObject$(
+            buildPaginatedList(
+              new PageInfo({
+                elementsPerPage: [result].length,
+                totalElements: [result].length,
+                totalPages: 1,
+                currentPage: 1,
+              }),
+              [result],
+            ),
+          );
         }
-        return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo({
-          elementsPerPage: this.allEpeople.length,
-          totalElements: this.allEpeople.length,
-          totalPages: 1,
-          currentPage: 1,
-        }), this.allEpeople));
+        return createSuccessfulRemoteDataObject$(
+          buildPaginatedList(
+            new PageInfo({
+              elementsPerPage: this.allEpeople.length,
+              totalElements: this.allEpeople.length,
+              totalPages: 1,
+              currentPage: 1,
+            }),
+            this.allEpeople,
+          ),
+        );
       },
       deleteEPerson(ePerson: EPerson): Observable<boolean> {
         this.allEpeople = this.allEpeople.filter((ePerson2: EPerson) => {
-          return (ePerson2.uuid !== ePerson.uuid);
+          return ePerson2.uuid !== ePerson.uuid;
         });
         return observableOf(true);
       },
@@ -152,7 +168,12 @@ describe('EPeopleRegistryComponent', () => {
 
     paginationService = new PaginationServiceStub();
     TestBed.configureTestingModule({
-      imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, BrowserModule,
+      imports: [
+        CommonModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -163,11 +184,19 @@ describe('EPeopleRegistryComponent', () => {
       declarations: [EPeopleRegistryComponent],
       providers: [
         { provide: EPersonDataService, useValue: ePersonDataServiceStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: AuthorizationDataService, useValue: authorizationService },
         { provide: FormBuilderService, useValue: builderService },
         { provide: Router, useValue: new RouterStub() },
-        { provide: RequestService, useValue: jasmine.createSpyObj('requestService', ['removeByHrefSubstring']) },
+        {
+          provide: RequestService,
+          useValue: jasmine.createSpyObj('requestService', [
+            'removeByHrefSubstring',
+          ]),
+        },
         { provide: PaginationService, useValue: paginationService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
@@ -178,7 +207,11 @@ describe('EPeopleRegistryComponent', () => {
     fixture = TestBed.createComponent(EPeopleRegistryComponent);
     component = fixture.componentInstance;
     modalService = (component as any).modalService;
-    spyOn(modalService, 'open').and.returnValue(Object.assign({ componentInstance: Object.assign({ response: observableOf(true) }) }));
+    spyOn(modalService, 'open').and.returnValue(
+      Object.assign({
+        componentInstance: Object.assign({ response: observableOf(true) }),
+      }),
+    );
     fixture.detectChanges();
   });
 
@@ -187,12 +220,16 @@ describe('EPeopleRegistryComponent', () => {
   });
 
   it('should display list of ePeople', () => {
-    const ePeopleIdsFound = fixture.debugElement.queryAll(By.css('#epeople tr td:first-child'));
+    const ePeopleIdsFound = fixture.debugElement.queryAll(
+      By.css('#epeople tr td:first-child'),
+    );
     expect(ePeopleIdsFound.length).toEqual(2);
     mockEPeople.map((ePerson: EPerson) => {
-      expect(ePeopleIdsFound.find((foundEl) => {
-        return (foundEl.nativeElement.textContent.trim() === ePerson.uuid);
-      })).toBeTruthy();
+      expect(
+        ePeopleIdsFound.find((foundEl) => {
+          return foundEl.nativeElement.textContent.trim() === ePerson.uuid;
+        }),
+      ).toBeTruthy();
     });
   });
 
@@ -203,14 +240,20 @@ describe('EPeopleRegistryComponent', () => {
         component.search({ scope: 'metadata', query: EPersonMock2.name });
         tick();
         fixture.detectChanges();
-        ePeopleIdsFound = fixture.debugElement.queryAll(By.css('#epeople tr td:first-child'));
+        ePeopleIdsFound = fixture.debugElement.queryAll(
+          By.css('#epeople tr td:first-child'),
+        );
       }));
 
       it('should display search result', () => {
         expect(ePeopleIdsFound.length).toEqual(1);
-        expect(ePeopleIdsFound.find((foundEl) => {
-          return (foundEl.nativeElement.textContent.trim() === EPersonMock2.uuid);
-        })).toBeTruthy();
+        expect(
+          ePeopleIdsFound.find((foundEl) => {
+            return (
+              foundEl.nativeElement.textContent.trim() === EPersonMock2.uuid
+            );
+          }),
+        ).toBeTruthy();
       });
     });
 
@@ -220,14 +263,20 @@ describe('EPeopleRegistryComponent', () => {
         component.search({ scope: 'email', query: EPersonMock.email });
         tick();
         fixture.detectChanges();
-        ePeopleIdsFound = fixture.debugElement.queryAll(By.css('#epeople tr td:first-child'));
+        ePeopleIdsFound = fixture.debugElement.queryAll(
+          By.css('#epeople tr td:first-child'),
+        );
       }));
 
       it('should display search result', () => {
         expect(ePeopleIdsFound.length).toEqual(1);
-        expect(ePeopleIdsFound.find((foundEl) => {
-          return (foundEl.nativeElement.textContent.trim() === EPersonMock.uuid);
-        })).toBeTruthy();
+        expect(
+          ePeopleIdsFound.find((foundEl) => {
+            return (
+              foundEl.nativeElement.textContent.trim() === EPersonMock.uuid
+            );
+          }),
+        ).toBeTruthy();
       });
     });
   });
@@ -237,21 +286,33 @@ describe('EPeopleRegistryComponent', () => {
       let ePeopleIdsFoundBeforeDelete;
       let ePeopleIdsFoundAfterDelete;
       beforeEach(fakeAsync(() => {
-        ePeopleIdsFoundBeforeDelete = fixture.debugElement.queryAll(By.css('#epeople tr td:first-child'));
-        const deleteButtons = fixture.debugElement.queryAll(By.css('.access-control-deleteEPersonButton'));
+        ePeopleIdsFoundBeforeDelete = fixture.debugElement.queryAll(
+          By.css('#epeople tr td:first-child'),
+        );
+        const deleteButtons = fixture.debugElement.queryAll(
+          By.css('.access-control-deleteEPersonButton'),
+        );
         deleteButtons[0].triggerEventHandler('click', {
-          preventDefault: () => {/**/
+          preventDefault: () => {
+            /**/
           },
         });
         tick();
         fixture.detectChanges();
-        ePeopleIdsFoundAfterDelete = fixture.debugElement.queryAll(By.css('#epeople tr td:first-child'));
+        ePeopleIdsFoundAfterDelete = fixture.debugElement.queryAll(
+          By.css('#epeople tr td:first-child'),
+        );
       }));
 
       it('first ePerson is deleted', () => {
-        expect(ePeopleIdsFoundBeforeDelete.length === ePeopleIdsFoundAfterDelete + 1);
+        expect(
+          ePeopleIdsFoundBeforeDelete.length === ePeopleIdsFoundAfterDelete + 1,
+        );
         ePeopleIdsFoundAfterDelete.forEach((epersonElement) => {
-          expect(epersonElement !== ePeopleIdsFoundBeforeDelete[0].nativeElement.textContent).toBeTrue();
+          expect(
+            epersonElement !==
+              ePeopleIdsFoundBeforeDelete[0].nativeElement.textContent,
+          ).toBeTrue();
         });
       });
     });
@@ -260,13 +321,17 @@ describe('EPeopleRegistryComponent', () => {
   describe('delete EPerson button when the isAuthorized returns false', () => {
     let ePeopleDeleteButton;
     beforeEach(() => {
-      spyOn(authorizationService, 'isAuthorized').and.returnValue(observableOf(false));
+      spyOn(authorizationService, 'isAuthorized').and.returnValue(
+        observableOf(false),
+      );
       component.initialisePage();
       fixture.detectChanges();
     });
 
     it('should be disabled', () => {
-      ePeopleDeleteButton = fixture.debugElement.queryAll(By.css('#epeople tr td div button.delete-button'));
+      ePeopleDeleteButton = fixture.debugElement.queryAll(
+        By.css('#epeople tr td div button.delete-button'),
+      );
       ePeopleDeleteButton.forEach((deleteButton: DebugElement) => {
         expect(deleteButton.nativeElement.disabled).toBe(true);
       });

@@ -1,15 +1,6 @@
-import {
-  Component,
-  HostListener,
-  Injector,
-  OnInit,
-} from '@angular/core';
+import { Component, HostListener, Injector, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -85,38 +76,44 @@ export class AdminSidebarComponent extends MenuComponent implements OnInit {
    */
   ngOnInit(): void {
     super.ngOnInit();
-    this.sidebarWidth = this.variableService.getVariable('--ds-sidebar-items-width');
-    this.authService.isAuthenticated()
-      .subscribe((loggedIn: boolean) => {
-        if (loggedIn) {
-          this.menuService.showMenu(this.menuID);
-        }
-      });
-    this.menuCollapsed.pipe(first())
-      .subscribe((collapsed: boolean) => {
-        this.sidebarOpen = !collapsed;
-        this.sidebarClosed = collapsed;
-      });
-    this.sidebarExpanded = combineLatest([this.menuCollapsed, this.menuPreviewCollapsed])
-      .pipe(
-        map(([collapsed, previewCollapsed]) => (!collapsed || !previewCollapsed)),
-      );
-    this.inFocus$.pipe(
-      debounceTime(50),
-      distinctUntilChanged(),  // disregard focusout in situations like --(focusout)-(focusin)--
-      withLatestFrom(
-        combineLatest([this.menuCollapsed, this.menuPreviewCollapsed]),
-      ),
-    ).subscribe(([inFocus, [collapsed, previewCollapsed]]) => {
-      if (collapsed) {
-        if (inFocus && previewCollapsed) {
-          this.expandPreview(new Event('focusin → expand'));
-        } else if (!inFocus && !previewCollapsed) {
-          this.collapsePreview(new Event('focusout → collapse'));
-        }
+    this.sidebarWidth = this.variableService.getVariable(
+      '--ds-sidebar-items-width',
+    );
+    this.authService.isAuthenticated().subscribe((loggedIn: boolean) => {
+      if (loggedIn) {
+        this.menuService.showMenu(this.menuID);
       }
     });
-    this.menuVisible = this.menuService.isMenuVisibleWithVisibleSections(this.menuID);
+    this.menuCollapsed.pipe(first()).subscribe((collapsed: boolean) => {
+      this.sidebarOpen = !collapsed;
+      this.sidebarClosed = collapsed;
+    });
+    this.sidebarExpanded = combineLatest([
+      this.menuCollapsed,
+      this.menuPreviewCollapsed,
+    ]).pipe(
+      map(([collapsed, previewCollapsed]) => !collapsed || !previewCollapsed),
+    );
+    this.inFocus$
+      .pipe(
+        debounceTime(50),
+        distinctUntilChanged(), // disregard focusout in situations like --(focusout)-(focusin)--
+        withLatestFrom(
+          combineLatest([this.menuCollapsed, this.menuPreviewCollapsed]),
+        ),
+      )
+      .subscribe(([inFocus, [collapsed, previewCollapsed]]) => {
+        if (collapsed) {
+          if (inFocus && previewCollapsed) {
+            this.expandPreview(new Event('focusin → expand'));
+          } else if (!inFocus && !previewCollapsed) {
+            this.collapsePreview(new Event('focusout → collapse'));
+          }
+        }
+      });
+    this.menuVisible = this.menuService.isMenuVisibleWithVisibleSections(
+      this.menuID,
+    );
   }
 
   @HostListener('focusin')

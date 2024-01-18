@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -30,7 +23,8 @@ import { ClaimedApprovedSearchResultListElementComponent } from './claimed-appro
 let component: ClaimedApprovedSearchResultListElementComponent;
 let fixture: ComponentFixture<ClaimedApprovedSearchResultListElementComponent>;
 
-const mockResultObject: ClaimedApprovedTaskSearchResult = new ClaimedApprovedTaskSearchResult();
+const mockResultObject: ClaimedApprovedTaskSearchResult =
+  new ClaimedApprovedTaskSearchResult();
 mockResultObject.hitHighlights = {};
 
 const item = Object.assign(new Item(), {
@@ -63,19 +57,23 @@ const item = Object.assign(new Item(), {
   },
 });
 const rdItem = createSuccessfulRemoteDataObject(item);
-const workflowitem = Object.assign(new WorkflowItem(), { item: observableOf(rdItem) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  item: observableOf(rdItem),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject.indexableObject = Object.assign(new ClaimedTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject.indexableObject = Object.assign(new ClaimedTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 const linkService = getMockLinkService();
 
 describe('ClaimedApprovedSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        NoopAnimationsModule,
+      imports: [TranslateModule.forRoot(), NoopAnimationsModule],
+      declarations: [
+        ClaimedApprovedSearchResultListElementComponent,
+        VarDirective,
       ],
-      declarations: [ClaimedApprovedSearchResultListElementComponent, VarDirective],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: LinkService, useValue: linkService },
@@ -83,13 +81,17 @@ describe('ClaimedApprovedSearchResultListElementComponent', () => {
         { provide: APP_CONFIG, useValue: environment },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ClaimedApprovedSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ClaimedApprovedSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(ClaimedApprovedSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      ClaimedApprovedSearchResultListElementComponent,
+    );
     component = fixture.componentInstance;
   }));
 
@@ -113,5 +115,4 @@ describe('ClaimedApprovedSearchResultListElementComponent', () => {
   it('should have the correct badge context', () => {
     expect(component.badgeContext).toEqual(Context.MyDSpaceApproved);
   });
-
 });

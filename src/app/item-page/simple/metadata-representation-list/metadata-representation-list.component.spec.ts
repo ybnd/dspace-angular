@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -94,18 +87,38 @@ describe('MetadataRepresentationListComponent', () => {
 
   beforeEach(waitForAsync(() => {
     relationshipService = {
-      resolveMetadataRepresentation: (metadatum: MetadataValue, parent: DSpaceObject, type: string) => {
+      resolveMetadataRepresentation: (
+        metadatum: MetadataValue,
+        parent: DSpaceObject,
+        type: string,
+      ) => {
         if (metadatum.value === 'Related Author with authority') {
-          return observableOf(Object.assign(new ItemMetadataRepresentation(metadatum), relatedAuthor));
+          return observableOf(
+            Object.assign(
+              new ItemMetadataRepresentation(metadatum),
+              relatedAuthor,
+            ),
+          );
         }
         if (metadatum.value === 'Author without authority') {
-          return observableOf(Object.assign(new MetadatumRepresentation(type), metadatum));
+          return observableOf(
+            Object.assign(new MetadatumRepresentation(type), metadatum),
+          );
         }
         if (metadatum.value === 'Related Creator with authority') {
-          return observableOf(Object.assign(new ItemMetadataRepresentation(metadatum), relatedCreator));
+          return observableOf(
+            Object.assign(
+              new ItemMetadataRepresentation(metadatum),
+              relatedCreator,
+            ),
+          );
         }
-        if (metadatum.value === 'Related Creator with authority - unauthorized') {
-          return observableOf(Object.assign(new MetadatumRepresentation(type), metadatum));
+        if (
+          metadatum.value === 'Related Creator with authority - unauthorized'
+        ) {
+          return observableOf(
+            Object.assign(new MetadatumRepresentation(type), metadatum),
+          );
         }
       },
     };
@@ -115,12 +128,17 @@ describe('MetadataRepresentationListComponent', () => {
       declarations: [MetadataRepresentationListComponent, VarDirective],
       providers: [
         { provide: RelationshipDataService, useValue: relationshipService },
-        { provide: BrowseDefinitionDataService, useValue: BrowseDefinitionDataServiceStub },
+        {
+          provide: BrowseDefinitionDataService,
+          useValue: BrowseDefinitionDataServiceStub,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(MetadataRepresentationListComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(MetadataRepresentationListComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -133,7 +151,9 @@ describe('MetadataRepresentationListComponent', () => {
   }));
 
   it('should load 4 ds-metadata-representation-loader components', () => {
-    const fields = fixture.debugElement.queryAll(By.css('ds-metadata-representation-loader'));
+    const fields = fixture.debugElement.queryAll(
+      By.css('ds-metadata-representation-loader'),
+    );
     expect(fields.length).toBe(4);
   });
 
@@ -162,5 +182,4 @@ describe('MetadataRepresentationListComponent', () => {
       expect(comp.objects.length).toEqual(1);
     });
   });
-
 });

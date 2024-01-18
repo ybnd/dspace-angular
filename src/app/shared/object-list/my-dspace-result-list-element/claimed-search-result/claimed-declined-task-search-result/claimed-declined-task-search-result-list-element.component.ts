@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ClaimedDeclinedTaskTaskSearchResult } from 'src/app/shared/object-collection/shared/claimed-declined-task-task-search-result.model';
 
@@ -28,12 +24,20 @@ import { SearchResultListElementComponent } from '../../../search-result-list-el
  */
 @Component({
   selector: 'ds-claimed-declined-task-search-result-list-element',
-  styleUrls: ['../../../search-result-list-element/search-result-list-element.component.scss'],
-  templateUrl: './claimed-declined-task-search-result-list-element.component.html',
+  styleUrls: [
+    '../../../search-result-list-element/search-result-list-element.component.scss',
+  ],
+  templateUrl:
+    './claimed-declined-task-search-result-list-element.component.html',
 })
-@listableObjectComponent(ClaimedDeclinedTaskTaskSearchResult, ViewMode.ListElement)
-export class ClaimedDeclinedTaskSearchResultListElementComponent extends SearchResultListElementComponent<ClaimedTaskSearchResult, ClaimedTask> implements OnInit {
-
+@listableObjectComponent(
+  ClaimedDeclinedTaskTaskSearchResult,
+  ViewMode.ListElement,
+)
+export class ClaimedDeclinedTaskSearchResultListElementComponent
+  extends SearchResultListElementComponent<ClaimedTaskSearchResult, ClaimedTask>
+  implements OnInit
+{
   /**
    * A boolean representing if to show submitter information
    */
@@ -63,14 +67,18 @@ export class ClaimedDeclinedTaskSearchResultListElementComponent extends SearchR
    */
   ngOnInit() {
     super.ngOnInit();
-    this.linkService.resolveLinks(this.dso,
-      followLink('workflowitem',
+    this.linkService.resolveLinks(
+      this.dso,
+      followLink(
+        'workflowitem',
         { useCachedVersionIfAvailable: false },
         followLink('item'),
         followLink('submitter'),
       ),
-      followLink('action'));
-    this.workflowitemRD$ = this.dso.workflowitem as Observable<RemoteData<WorkflowItem>>;
+      followLink('action'),
+    );
+    this.workflowitemRD$ = this.dso.workflowitem as Observable<
+      RemoteData<WorkflowItem>
+    >;
   }
-
 }

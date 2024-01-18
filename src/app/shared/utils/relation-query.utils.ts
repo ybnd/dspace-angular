@@ -1,8 +1,5 @@
 import { Relationship } from '../../core/shared/item-relationships/relationship.model';
-import {
-  followLink,
-  FollowLinkConfig,
-} from './follow-link-config.model';
+import { followLink, FollowLinkConfig } from './follow-link-config.model';
 
 /**
  * Get the query for looking up items by relation type
@@ -10,7 +7,10 @@ import {
  * @param {string} itemUUID       Item UUID
  * @returns {string}              Query
  */
-export function getQueryByRelations(relationType: string, itemUUID: string): string {
+export function getQueryByRelations(
+  relationType: string,
+  itemUUID: string,
+): string {
   return `query=relation.${relationType}:"${itemUUID}"`;
 }
 
@@ -19,7 +19,10 @@ export function getQueryByRelations(relationType: string, itemUUID: string): str
  * @param relationType    The type of relation e.g. 'isAuthorOfPublication'
  * @param itemUUID        The item's UUID
  */
-export function getFilterByRelation(relationType: string, itemUUID: string): string {
+export function getFilterByRelation(
+  relationType: string,
+  itemUUID: string,
+): string {
   return `f.${relationType}=${itemUUID},equals`;
 }
 
@@ -28,12 +31,14 @@ export function getFilterByRelation(relationType: string, itemUUID: string): str
  * @param showThumbnail thumbnail image configuration
  * @returns followLink array
  */
-export function itemLinksToFollow(showThumbnail: boolean):  FollowLinkConfig<Relationship>[] {
+export function itemLinksToFollow(
+  showThumbnail: boolean,
+): FollowLinkConfig<Relationship>[] {
   let linksToFollow: FollowLinkConfig<Relationship>[];
   if (showThumbnail) {
     linksToFollow = [
-      followLink('leftItem',{}, followLink('thumbnail')),
-      followLink('rightItem',{}, followLink('thumbnail')),
+      followLink('leftItem', {}, followLink('thumbnail')),
+      followLink('rightItem', {}, followLink('thumbnail')),
     ];
   } else {
     linksToFollow = [followLink('leftItem'), followLink('rightItem')];

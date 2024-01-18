@@ -1,9 +1,6 @@
 import { Store } from '@ngrx/store';
 import { deepClone } from 'fast-json-patch';
-import {
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { TestScheduler } from 'rxjs/testing';
@@ -34,8 +31,10 @@ import {
 } from './json-patch-operations.reducer';
 import { JsonPatchOperationsService } from './json-patch-operations.service';
 
-
-class TestService extends JsonPatchOperationsService<SubmitDataResponseDefinitionObject, SubmissionPatchRequest> {
+class TestService extends JsonPatchOperationsService<
+  SubmitDataResponseDefinitionObject,
+  SubmissionPatchRequest
+> {
   protected linkPath = '';
   protected patchRequestConstructor = SubmissionPatchRequest;
 
@@ -43,8 +42,8 @@ class TestService extends JsonPatchOperationsService<SubmitDataResponseDefinitio
     protected requestService: RequestService,
     protected store: Store<CoreState>,
     protected halService: HALEndpointService,
-    protected rdbService: RemoteDataBuildService) {
-
+    protected rdbService: RemoteDataBuildService,
+  ) {
     super();
   }
 }
@@ -84,30 +83,30 @@ describe('JsonPatchOperationsService test suite', () => {
   const resourceEndpointURL = 'https://rest.api/endpoint';
   const resourceEndpoint = 'resource';
   const resourceScope = '260';
-  const resourceHref = resourceEndpointURL + '/' + resourceEndpoint + '/' + resourceScope;
+  const resourceHref =
+    resourceEndpointURL + '/' + resourceEndpoint + '/' + resourceScope;
 
   const testJsonPatchResourceType = 'testResourceType';
   const testJsonPatchResourceId = 'testResourceId';
-  const patchOpBody = [{
-    op: 'add',
-    path: '/testResourceType/testResourceId/testField',
-    value: ['test'],
-  }];
+  const patchOpBody = [
+    {
+      op: 'add',
+      path: '/testResourceType/testResourceId/testField',
+      value: ['test'],
+    },
+  ];
 
   const getRequestEntry$ = (successful: boolean) => {
     return observableOf({
-      response: { isSuccessful: successful, timeCompleted: timestampResponse } as any,
+      response: {
+        isSuccessful: successful,
+        timeCompleted: timestampResponse,
+      } as any,
     } as RequestEntry);
   };
 
   function initTestService(): TestService {
-    return new TestService(
-      requestService,
-      store,
-      halService,
-      rdbService,
-    );
-
+    return new TestService(requestService, store, halService, rdbService);
   }
 
   function getStore() {
@@ -120,13 +119,22 @@ describe('JsonPatchOperationsService test suite', () => {
 
   function spyOnRdbServiceAndReturnSuccessfulRemoteData() {
     spyOn(rdbService, 'buildFromRequestUUID').and.returnValue(
-      observableOf(Object.assign(createSuccessfulRemoteDataObject({ dataDefinition: 'test' }), { timeCompleted: new Date().getTime() + 10000 })),
+      observableOf(
+        Object.assign(
+          createSuccessfulRemoteDataObject({ dataDefinition: 'test' }),
+          { timeCompleted: new Date().getTime() + 10000 },
+        ),
+      ),
     );
   }
 
   function spyOnRdbServiceAndReturnFailedRemoteData() {
     spyOn(rdbService, 'buildFromRequestUUID').and.returnValue(
-      observableOf(Object.assign(createFailedRemoteDataObject('Error', 500), { timeCompleted: new Date().getTime() + 10000 })),
+      observableOf(
+        Object.assign(createFailedRemoteDataObject('Error', 500), {
+          timeCompleted: new Date().getTime() + 10000,
+        }),
+      ),
     );
   }
 
@@ -145,27 +153,58 @@ describe('JsonPatchOperationsService test suite', () => {
   });
 
   describe('jsonPatchByResourceType', () => {
-
     it('should call submitJsonPatchOperations method', () => {
-      spyOn((service as any), 'submitJsonPatchOperations').and.callThrough();
+      spyOn(service as any, 'submitJsonPatchOperations').and.callThrough();
 
-      scheduler.schedule(() => service.jsonPatchByResourceType(resourceEndpointURL, resourceScope, testJsonPatchResourceType).subscribe());
+      scheduler.schedule(() =>
+        service
+          .jsonPatchByResourceType(
+            resourceEndpointURL,
+            resourceScope,
+            testJsonPatchResourceType,
+          )
+          .subscribe(),
+      );
       scheduler.flush();
 
       expect((service as any).submitJsonPatchOperations).toHaveBeenCalled();
     });
 
     it('should send a new SubmissionPatchRequest', () => {
-      const expected = new SubmissionPatchRequest(requestService.generateRequestId(), resourceHref, patchOpBody);
-      scheduler.schedule(() => service.jsonPatchByResourceType(resourceEndpoint, resourceScope, testJsonPatchResourceType).subscribe());
+      const expected = new SubmissionPatchRequest(
+        requestService.generateRequestId(),
+        resourceHref,
+        patchOpBody,
+      );
+      scheduler.schedule(() =>
+        service
+          .jsonPatchByResourceType(
+            resourceEndpoint,
+            resourceScope,
+            testJsonPatchResourceType,
+          )
+          .subscribe(),
+      );
       scheduler.flush();
 
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
 
     it('should dispatch a new StartTransactionPatchOperationsAction', () => {
-      const expectedAction = new StartTransactionPatchOperationsAction(testJsonPatchResourceType, undefined, timestamp);
-      scheduler.schedule(() => service.jsonPatchByResourceType(resourceEndpoint, resourceScope, testJsonPatchResourceType).subscribe());
+      const expectedAction = new StartTransactionPatchOperationsAction(
+        testJsonPatchResourceType,
+        undefined,
+        timestamp,
+      );
+      scheduler.schedule(() =>
+        service
+          .jsonPatchByResourceType(
+            resourceEndpoint,
+            resourceScope,
+            testJsonPatchResourceType,
+          )
+          .subscribe(),
+      );
       scheduler.flush();
 
       expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
@@ -173,8 +212,19 @@ describe('JsonPatchOperationsService test suite', () => {
 
     describe('when request is successful', () => {
       it('should dispatch a new CommitPatchOperationsAction', () => {
-        const expectedAction = new CommitPatchOperationsAction(testJsonPatchResourceType, undefined);
-        scheduler.schedule(() => service.jsonPatchByResourceType(resourceEndpoint, resourceScope, testJsonPatchResourceType).subscribe());
+        const expectedAction = new CommitPatchOperationsAction(
+          testJsonPatchResourceType,
+          undefined,
+        );
+        scheduler.schedule(() =>
+          service
+            .jsonPatchByResourceType(
+              resourceEndpoint,
+              resourceScope,
+              testJsonPatchResourceType,
+            )
+            .subscribe(),
+        );
         scheduler.flush();
 
         expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
@@ -191,16 +241,27 @@ describe('JsonPatchOperationsService test suite', () => {
         service = initTestService();
         spyOnRdbServiceAndReturnFailedRemoteData();
 
-        store.select.and.returnValue(observableOf(mockState['json/patch'][testJsonPatchResourceType]));
+        store.select.and.returnValue(
+          observableOf(mockState['json/patch'][testJsonPatchResourceType]),
+        );
         store.dispatch.and.callThrough();
       });
 
       it('should dispatch a new RollbacktPatchOperationsAction', () => {
-
-        const expectedAction = new RollbacktPatchOperationsAction(testJsonPatchResourceType, undefined);
-        scheduler.schedule(() => service.jsonPatchByResourceType(resourceEndpoint, resourceScope, testJsonPatchResourceType)
-          .pipe(catchError(() => observableOf({})))
-          .subscribe());
+        const expectedAction = new RollbacktPatchOperationsAction(
+          testJsonPatchResourceType,
+          undefined,
+        );
+        scheduler.schedule(() =>
+          service
+            .jsonPatchByResourceType(
+              resourceEndpoint,
+              resourceScope,
+              testJsonPatchResourceType,
+            )
+            .pipe(catchError(() => observableOf({})))
+            .subscribe(),
+        );
         scheduler.flush();
 
         expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
@@ -209,53 +270,83 @@ describe('JsonPatchOperationsService test suite', () => {
   });
 
   describe('hasPendingOperations', () => {
-
     it('should return true when there are pending operations', () => {
-
       const expected = hot('(x|)', { x: true });
 
       const result = service.hasPendingOperations(testJsonPatchResourceType);
       expect(result).toBeObservable(expected);
-
     });
 
     it('should return false when there are not pending operations', () => {
-
       const mockStateNoOp = deepClone(mockState);
       mockStateNoOp['json/patch'][testJsonPatchResourceType].children = [];
-      store.select.and.returnValue(observableOf(mockStateNoOp['json/patch'][testJsonPatchResourceType]));
+      store.select.and.returnValue(
+        observableOf(mockStateNoOp['json/patch'][testJsonPatchResourceType]),
+      );
 
       const expected = hot('(x|)', { x: false });
 
       const result = service.hasPendingOperations(testJsonPatchResourceType);
       expect(result).toBeObservable(expected);
-
     });
-
   });
 
   describe('jsonPatchByResourceID', () => {
-
     it('should call submitJsonPatchOperations method', () => {
-      spyOn((service as any), 'submitJsonPatchOperations').and.callThrough();
+      spyOn(service as any, 'submitJsonPatchOperations').and.callThrough();
 
-      scheduler.schedule(() => service.jsonPatchByResourceID(resourceEndpointURL, resourceScope, testJsonPatchResourceType, testJsonPatchResourceId).subscribe());
+      scheduler.schedule(() =>
+        service
+          .jsonPatchByResourceID(
+            resourceEndpointURL,
+            resourceScope,
+            testJsonPatchResourceType,
+            testJsonPatchResourceId,
+          )
+          .subscribe(),
+      );
       scheduler.flush();
 
       expect((service as any).submitJsonPatchOperations).toHaveBeenCalled();
     });
 
     it('should send a new SubmissionPatchRequest', () => {
-      const expected = new SubmissionPatchRequest(requestService.generateRequestId(), resourceHref, patchOpBody);
-      scheduler.schedule(() => service.jsonPatchByResourceID(resourceEndpoint, resourceScope, testJsonPatchResourceType, testJsonPatchResourceId).subscribe());
+      const expected = new SubmissionPatchRequest(
+        requestService.generateRequestId(),
+        resourceHref,
+        patchOpBody,
+      );
+      scheduler.schedule(() =>
+        service
+          .jsonPatchByResourceID(
+            resourceEndpoint,
+            resourceScope,
+            testJsonPatchResourceType,
+            testJsonPatchResourceId,
+          )
+          .subscribe(),
+      );
       scheduler.flush();
 
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
 
     it('should dispatch a new StartTransactionPatchOperationsAction', () => {
-      const expectedAction = new StartTransactionPatchOperationsAction(testJsonPatchResourceType, testJsonPatchResourceId, timestamp);
-      scheduler.schedule(() => service.jsonPatchByResourceID(resourceEndpoint, resourceScope, testJsonPatchResourceType, testJsonPatchResourceId).subscribe());
+      const expectedAction = new StartTransactionPatchOperationsAction(
+        testJsonPatchResourceType,
+        testJsonPatchResourceId,
+        timestamp,
+      );
+      scheduler.schedule(() =>
+        service
+          .jsonPatchByResourceID(
+            resourceEndpoint,
+            resourceScope,
+            testJsonPatchResourceType,
+            testJsonPatchResourceId,
+          )
+          .subscribe(),
+      );
       scheduler.flush();
 
       expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
@@ -263,8 +354,20 @@ describe('JsonPatchOperationsService test suite', () => {
 
     describe('when request is successful', () => {
       it('should dispatch a new CommitPatchOperationsAction', () => {
-        const expectedAction = new CommitPatchOperationsAction(testJsonPatchResourceType, testJsonPatchResourceId);
-        scheduler.schedule(() => service.jsonPatchByResourceID(resourceEndpoint, resourceScope, testJsonPatchResourceType, testJsonPatchResourceId).subscribe());
+        const expectedAction = new CommitPatchOperationsAction(
+          testJsonPatchResourceType,
+          testJsonPatchResourceId,
+        );
+        scheduler.schedule(() =>
+          service
+            .jsonPatchByResourceID(
+              resourceEndpoint,
+              resourceScope,
+              testJsonPatchResourceType,
+              testJsonPatchResourceId,
+            )
+            .subscribe(),
+        );
         scheduler.flush();
 
         expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
@@ -281,16 +384,28 @@ describe('JsonPatchOperationsService test suite', () => {
         service = initTestService();
         spyOnRdbServiceAndReturnFailedRemoteData();
 
-        store.select.and.returnValue(observableOf(mockState['json/patch'][testJsonPatchResourceType]));
+        store.select.and.returnValue(
+          observableOf(mockState['json/patch'][testJsonPatchResourceType]),
+        );
         store.dispatch.and.callThrough();
       });
 
       it('should dispatch a new RollbacktPatchOperationsAction', () => {
-
-        const expectedAction = new RollbacktPatchOperationsAction(testJsonPatchResourceType, testJsonPatchResourceId);
-        scheduler.schedule(() => service.jsonPatchByResourceID(resourceEndpoint, resourceScope, testJsonPatchResourceType, testJsonPatchResourceId)
-          .pipe(catchError(() => observableOf({})))
-          .subscribe());
+        const expectedAction = new RollbacktPatchOperationsAction(
+          testJsonPatchResourceType,
+          testJsonPatchResourceId,
+        );
+        scheduler.schedule(() =>
+          service
+            .jsonPatchByResourceID(
+              resourceEndpoint,
+              resourceScope,
+              testJsonPatchResourceType,
+              testJsonPatchResourceId,
+            )
+            .pipe(catchError(() => observableOf({})))
+            .subscribe(),
+        );
         scheduler.flush();
 
         expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
@@ -300,11 +415,12 @@ describe('JsonPatchOperationsService test suite', () => {
 
   describe('deletePendingJsonPatchOperations', () => {
     beforeEach(() => {
-      store.dispatch.and.callFake(() => { /* */ });
+      store.dispatch.and.callFake(() => {
+        /* */
+      });
     });
 
     it('should dispatch a new DeletePendingJsonPatchOperationsAction', () => {
-
       const expectedAction = new DeletePendingJsonPatchOperationsAction();
       scheduler.schedule(() => service.deletePendingJsonPatchOperations());
       scheduler.flush();
@@ -312,5 +428,4 @@ describe('JsonPatchOperationsService test suite', () => {
       expect(store.dispatch).toHaveBeenCalledWith(expectedAction);
     });
   });
-
 });

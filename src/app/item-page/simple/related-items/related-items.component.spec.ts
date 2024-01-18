@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -56,11 +49,11 @@ describe('RelatedItemsComponent', () => {
   let fixture: ComponentFixture<RelatedItemsComponent>;
 
   beforeEach(waitForAsync(() => {
-    relationshipService = jasmine.createSpyObj('relationshipService',
-      {
-        getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(createPaginatedList(mockItems)),
-      },
-    );
+    relationshipService = jasmine.createSpyObj('relationshipService', {
+      getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(
+        createPaginatedList(mockItems),
+      ),
+    });
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
@@ -70,9 +63,11 @@ describe('RelatedItemsComponent', () => {
         { provide: APP_CONFIG, useValue: environmentUseThumbs },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(RelatedItemsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(RelatedItemsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -84,7 +79,9 @@ describe('RelatedItemsComponent', () => {
   }));
 
   it(`should load ${mockItems.length} item-type-switcher components`, () => {
-    const fields = fixture.debugElement.queryAll(By.css('ds-listable-object-component-loader'));
+    const fields = fixture.debugElement.queryAll(
+      By.css('ds-listable-object-component-loader'),
+    );
     expect(fields.length).toBe(mockItems.length);
   });
 
@@ -101,14 +98,17 @@ describe('RelatedItemsComponent', () => {
       expect(comp.objects.length).toEqual(2);
     });
 
-    it('should call relationship-service\'s getRelatedItemsByLabel with the correct arguments (second page)', () => {
-      expect(relationshipService.getRelatedItemsByLabel).toHaveBeenCalledWith(parentItem, relationType, Object.assign(comp.options, {
-        elementsPerPage: comp.incrementBy,
-        currentPage: 2,
-        fetchThumbnail: true,
-      }));
+    it("should call relationship-service's getRelatedItemsByLabel with the correct arguments (second page)", () => {
+      expect(relationshipService.getRelatedItemsByLabel).toHaveBeenCalledWith(
+        parentItem,
+        relationType,
+        Object.assign(comp.options, {
+          elementsPerPage: comp.incrementBy,
+          currentPage: 2,
+          fetchThumbnail: true,
+        }),
+      );
     });
-
   });
 
   describe('when decrease is called', () => {
@@ -122,18 +122,17 @@ describe('RelatedItemsComponent', () => {
       expect(comp.objects.length).toEqual(1);
     });
   });
-
 });
 describe('RelatedItemsComponent', () => {
   let comp: RelatedItemsComponent;
   let fixture: ComponentFixture<RelatedItemsComponent>;
 
   beforeEach(waitForAsync(() => {
-    relationshipService = jasmine.createSpyObj('relationshipService',
-      {
-        getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(createPaginatedList(mockItems)),
-      },
-    );
+    relationshipService = jasmine.createSpyObj('relationshipService', {
+      getRelatedItemsByLabel: createSuccessfulRemoteDataObject$(
+        createPaginatedList(mockItems),
+      ),
+    });
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
@@ -143,9 +142,11 @@ describe('RelatedItemsComponent', () => {
         { provide: APP_CONFIG, useValue: enviromentNoThumbs },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(RelatedItemsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(RelatedItemsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -155,11 +156,15 @@ describe('RelatedItemsComponent', () => {
     comp.relationType = relationType;
     fixture.detectChanges();
   }));
-  it('should call relationship-service\'s getRelatedItemsByLabel with the correct arguments (second page)', () => {
-    expect(relationshipService.getRelatedItemsByLabel).toHaveBeenCalledWith(parentItem, relationType, Object.assign(comp.options, {
-      elementsPerPage: comp.incrementBy,
-      currentPage: 2,
-      fetchThumbnail: false,
-    }));
+  it("should call relationship-service's getRelatedItemsByLabel with the correct arguments (second page)", () => {
+    expect(relationshipService.getRelatedItemsByLabel).toHaveBeenCalledWith(
+      parentItem,
+      relationType,
+      Object.assign(comp.options, {
+        elementsPerPage: comp.incrementBy,
+        currentPage: 2,
+        fetchThumbnail: false,
+      }),
+    );
   });
 });

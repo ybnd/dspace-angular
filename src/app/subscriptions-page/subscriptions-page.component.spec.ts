@@ -1,24 +1,11 @@
 import { CommonModule } from '@angular/common';
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { AuthService } from '../core/auth/auth.service';
@@ -48,9 +35,12 @@ describe('SubscriptionsPageComponent', () => {
     getAuthenticatedUserFromStore: observableOf(mockSubscriptionEperson),
   });
 
-  const subscriptionServiceStub = jasmine.createSpyObj('SubscriptionsDataService', {
-    findByEPerson: jasmine.createSpy('findByEPerson'),
-  });
+  const subscriptionServiceStub = jasmine.createSpyObj(
+    'SubscriptionsDataService',
+    {
+      findByEPerson: jasmine.createSpy('findByEPerson'),
+    },
+  );
 
   const paginationService = new PaginationServiceStub();
 
@@ -78,16 +68,22 @@ describe('SubscriptionsPageComponent', () => {
         }),
         NoopAnimationsModule,
       ],
-      declarations: [SubscriptionsPageComponent, SubscriptionViewComponent, VarDirective],
+      declarations: [
+        SubscriptionsPageComponent,
+        SubscriptionViewComponent,
+        VarDirective,
+      ],
       providers: [
-        { provide: SubscriptionsDataService, useValue: subscriptionServiceStub },
+        {
+          provide: SubscriptionsDataService,
+          useValue: subscriptionServiceStub,
+        },
         { provide: ActivatedRoute, useValue: new MockActivatedRoute() },
         { provide: AuthService, useValue: authServiceStub },
         { provide: PaginationService, useValue: paginationService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -97,9 +93,12 @@ describe('SubscriptionsPageComponent', () => {
   });
 
   describe('when there are subscriptions', () => {
-
     beforeEach(() => {
-      subscriptionServiceStub.findByEPerson.and.returnValue(createSuccessfulRemoteDataObject$(buildPaginatedList(pageInfo, mockSubscriptionList)));
+      subscriptionServiceStub.findByEPerson.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          buildPaginatedList(pageInfo, mockSubscriptionList),
+        ),
+      );
       fixture.detectChanges();
     });
 
@@ -112,7 +111,7 @@ describe('SubscriptionsPageComponent', () => {
       expect(de.query(By.css('[data-test="empty-alert"]'))).toBeNull();
     });
 
-    it('should show a row for each results entry',() => {
+    it('should show a row for each results entry', () => {
       expect(de.query(By.css('[data-test="subscription-table"]'))).toBeTruthy();
       expect(de.query(By.css('[data-test="empty-alert"]'))).toBeNull();
       expect(de.queryAll(By.css('tbody > tr')).length).toEqual(2);
@@ -120,9 +119,12 @@ describe('SubscriptionsPageComponent', () => {
   });
 
   describe('when there are no subscriptions', () => {
-
     beforeEach(() => {
-      subscriptionServiceStub.findByEPerson.and.returnValue(createSuccessfulRemoteDataObject$(buildPaginatedList(emptyPageInfo, [])));
+      subscriptionServiceStub.findByEPerson.and.returnValue(
+        createSuccessfulRemoteDataObject$(
+          buildPaginatedList(emptyPageInfo, []),
+        ),
+      );
       fixture.detectChanges();
     });
 
@@ -135,5 +137,4 @@ describe('SubscriptionsPageComponent', () => {
       expect(de.query(By.css('[data-test="empty-alert"]'))).toBeTruthy();
     });
   });
-
 });

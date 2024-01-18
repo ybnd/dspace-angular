@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  ComponentFixture,
-  fakeAsync,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import {
   NgbDatepickerModule,
@@ -25,41 +21,52 @@ import { createAccessControlInitialFormState } from './access-control-form-conta
 import { BulkAccessControlService } from './bulk-access-control.service';
 import { ITEM_ACCESS_CONTROL_SELECT_BITSTREAMS_LIST_ID } from './item-access-control-select-bitstreams-modal/item-access-control-select-bitstreams-modal.component';
 
-
 describe('AccessControlFormContainerComponent', () => {
   let component: AccessControlFormContainerComponent<any>;
   let fixture: ComponentFixture<AccessControlFormContainerComponent<any>>;
 
-
   // Mock NgbModal
   @Component({ selector: 'ds-ngb-modal', template: '' })
-  class MockNgbModalComponent {
-  }
+  class MockNgbModalComponent {}
 
   // Mock dependencies
   const mockBulkAccessControlService = {
-    createPayloadFile: jasmine.createSpy('createPayloadFile').and.returnValue({ file: 'mocked-file' }),
-    executeScript: jasmine.createSpy('executeScript').and.returnValue(of('success')),
+    createPayloadFile: jasmine
+      .createSpy('createPayloadFile')
+      .and.returnValue({ file: 'mocked-file' }),
+    executeScript: jasmine
+      .createSpy('executeScript')
+      .and.returnValue(of('success')),
   };
 
   const mockBulkAccessConfigDataService = {
-    findByName: jasmine.createSpy('findByName').and.returnValue(of({ payload: { options: [] } })),
+    findByName: jasmine
+      .createSpy('findByName')
+      .and.returnValue(of({ payload: { options: [] } })),
   };
 
   const mockSelectableListService = {
-    getSelectableList: jasmine.createSpy('getSelectableList').and.returnValue(of({ selection: [] })),
+    getSelectableList: jasmine
+      .createSpy('getSelectableList')
+      .and.returnValue(of({ selection: [] })),
     deselectAll: jasmine.createSpy('deselectAll'),
   };
 
   const mockNgbModal = {
-    open: jasmine.createSpy('open').and.returnValue(
-      { componentInstance: {}, closed: of({}) } as NgbModalRef,
-    ),
+    open: jasmine
+      .createSpy('open')
+      .and.returnValue({
+        componentInstance: {},
+        closed: of({}),
+      } as NgbModalRef),
   };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AccessControlFormContainerComponent, MockNgbModalComponent],
+      declarations: [
+        AccessControlFormContainerComponent,
+        MockNgbModalComponent,
+      ],
       imports: [
         CommonModule,
         FormsModule,
@@ -70,8 +77,14 @@ describe('AccessControlFormContainerComponent', () => {
         UiSwitchModule,
       ],
       providers: [
-        { provide: BulkAccessControlService, useValue: mockBulkAccessControlService },
-        { provide: BulkAccessConfigDataService, useValue: mockBulkAccessConfigDataService },
+        {
+          provide: BulkAccessControlService,
+          useValue: mockBulkAccessControlService,
+        },
+        {
+          provide: BulkAccessConfigDataService,
+          useValue: mockBulkAccessConfigDataService,
+        },
         { provide: SelectableListService, useValue: mockSelectableListService },
         { provide: NgbModal, useValue: mockNgbModal },
       ],
@@ -104,18 +117,27 @@ describe('AccessControlFormContainerComponent', () => {
   it('should submit the form', () => {
     const bitstreamAccess = 'bitstreamAccess';
     const itemAccess = 'itemAccess';
-    component.bitstreamAccessCmp.getValue = jasmine.createSpy('getValue').and.returnValue(bitstreamAccess);
-    component.itemAccessCmp.getValue = jasmine.createSpy('getValue').and.returnValue(itemAccess);
+    component.bitstreamAccessCmp.getValue = jasmine
+      .createSpy('getValue')
+      .and.returnValue(bitstreamAccess);
+    component.itemAccessCmp.getValue = jasmine
+      .createSpy('getValue')
+      .and.returnValue(itemAccess);
     component.itemRD = { payload: { uuid: 'item-uuid' } } as any;
 
     component.submit();
 
-    expect(mockBulkAccessControlService.createPayloadFile).toHaveBeenCalledWith({
-      bitstreamAccess,
-      itemAccess,
-      state: createAccessControlInitialFormState(),
-    });
-    expect(mockBulkAccessControlService.executeScript).toHaveBeenCalledWith(['item-uuid'], 'mocked-file');
+    expect(mockBulkAccessControlService.createPayloadFile).toHaveBeenCalledWith(
+      {
+        bitstreamAccess,
+        itemAccess,
+        state: createAccessControlInitialFormState(),
+      },
+    );
+    expect(mockBulkAccessControlService.executeScript).toHaveBeenCalledWith(
+      ['item-uuid'],
+      'mocked-file',
+    );
   });
 
   it('should handle the status change for bitstream access', () => {

@@ -25,7 +25,13 @@ export class SubmissionFormsConfigDataService extends ConfigDataService {
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('submissionforms', requestService, rdbService, objectCache, halService);
+    super(
+      'submissionforms',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
   }
 
   /**
@@ -42,7 +48,17 @@ export class SubmissionFormsConfigDataService extends ConfigDataService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<SubmissionFormsModel>[]): Observable<RemoteData<SubmissionFormsModel>> {
-    return super.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow as FollowLinkConfig<ConfigObject>[]) as Observable<RemoteData<SubmissionFormsModel>>;
+  public findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<SubmissionFormsModel>[]
+  ): Observable<RemoteData<SubmissionFormsModel>> {
+    return super.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...(linksToFollow as FollowLinkConfig<ConfigObject>[]),
+    ) as Observable<RemoteData<SubmissionFormsModel>>;
   }
 }

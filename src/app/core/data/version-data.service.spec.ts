@@ -1,8 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -97,13 +93,13 @@ describe('VersionDataService test', () => {
   }
 
   describe('composition', () => {
-    const initService = () => new VersionDataService(null, null, null, null, null);
+    const initService = () =>
+      new VersionDataService(null, null, null, null, null);
     testPatchDataImplementation(initService);
   });
 
   describe('', () => {
     beforeEach(() => {
-
       scheduler = getTestScheduler();
 
       halService = jasmine.createSpyObj('halService', {
@@ -128,7 +124,7 @@ describe('VersionDataService test', () => {
 
       service = initTestService();
 
-      spyOn((service as any), 'findById').and.callThrough();
+      spyOn(service as any, 'findById').and.callThrough();
     });
 
     afterEach(() => {
@@ -137,10 +133,17 @@ describe('VersionDataService test', () => {
 
     describe('getHistoryFromVersion', () => {
       it('should proxy the call to DataService.findByHref', () => {
-        scheduler.schedule(() => service.getHistoryFromVersion(mockVersion, true, true));
+        scheduler.schedule(() =>
+          service.getHistoryFromVersion(mockVersion, true, true),
+        );
         scheduler.flush();
 
-        expect((service as any).findById).toHaveBeenCalledWith(mockVersion.id, true, true, followLink('versionhistory'));
+        expect((service as any).findById).toHaveBeenCalledWith(
+          mockVersion.id,
+          true,
+          true,
+          followLink('versionhistory'),
+        );
       });
 
       it('should return a VersionHistory', () => {
@@ -160,7 +163,9 @@ describe('VersionDataService test', () => {
 
     describe('getHistoryIdFromVersion', () => {
       it('should return the version history id', () => {
-        spyOn((service as any), 'getHistoryFromVersion').and.returnValue(observableOf(versionHistory));
+        spyOn(service as any, 'getHistoryFromVersion').and.returnValue(
+          observableOf(versionHistory),
+        );
 
         const result = service.getHistoryIdFromVersion(mockVersion);
         const expected = cold('(a|)', {
@@ -170,5 +175,4 @@ describe('VersionDataService test', () => {
       });
     });
   });
-
 });

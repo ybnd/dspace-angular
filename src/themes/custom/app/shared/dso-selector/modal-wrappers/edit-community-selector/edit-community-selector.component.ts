@@ -6,7 +6,7 @@ import { EditCommunitySelectorComponent as BaseComponent } from '../../../../../
   selector: 'ds-edit-item-selector',
   // styleUrls: ['./edit-community-selector.component.scss'],
   // templateUrl: './edit-community-selector.component.html',
-  templateUrl: '../../../../../../../app/shared/dso-selector/modal-wrappers/dso-selector-modal-wrapper.component.html',
+  templateUrl:
+    '../../../../../../../app/shared/dso-selector/modal-wrappers/dso-selector-modal-wrapper.component.html',
 })
-export class EditCommunitySelectorComponent extends BaseComponent {
-}
+export class EditCommunitySelectorComponent extends BaseComponent {}

@@ -7,16 +7,15 @@
  */
 import { InjectionToken } from '@angular/core';
 
-import {
-  hasNoValue,
-  hasValue,
-} from '../../../shared/empty.util';
+import { hasNoValue, hasValue } from '../../../shared/empty.util';
 import { CacheableObject } from '../../cache/cacheable-object.model';
 import { GenericConstructor } from '../../shared/generic-constructor';
 import { ResourceType } from '../../shared/resource-type';
 import { HALDataService } from './hal-data-service.interface';
 
-export const DATA_SERVICE_FACTORY = new InjectionToken<(resourceType: ResourceType) => GenericConstructor<HALDataService<any>>>('getDataServiceFor', {
+export const DATA_SERVICE_FACTORY = new InjectionToken<
+  (resourceType: ResourceType) => GenericConstructor<HALDataService<any>>
+>('getDataServiceFor', {
   providedIn: 'root',
   factory: () => getDataServiceFor,
 });
@@ -33,12 +32,16 @@ const dataServiceMap = new Map();
 export function dataService(resourceType: ResourceType) {
   return (target: GenericConstructor<HALDataService<any>>): void => {
     if (hasNoValue(resourceType)) {
-      throw new Error(`Invalid @dataService annotation on ${target}, resourceType needs to be defined`);
+      throw new Error(
+        `Invalid @dataService annotation on ${target}, resourceType needs to be defined`,
+      );
     }
     const existingDataservice = dataServiceMap.get(resourceType.value);
 
     if (hasValue(existingDataservice)) {
-      throw new Error(`Multiple dataservices for ${resourceType.value}: ${existingDataservice} and ${target}`);
+      throw new Error(
+        `Multiple dataservices for ${resourceType.value}: ${existingDataservice} and ${target}`,
+      );
     }
 
     dataServiceMap.set(resourceType.value, target);
@@ -50,6 +53,8 @@ export function dataService(resourceType: ResourceType) {
  *
  * @param resourceType the resource type you want the matching dataservice for
  */
-export function getDataServiceFor<T extends CacheableObject>(resourceType: ResourceType): GenericConstructor<HALDataService<any>> {
+export function getDataServiceFor<T extends CacheableObject>(
+  resourceType: ResourceType,
+): GenericConstructor<HALDataService<any>> {
   return dataServiceMap.get(resourceType.value);
 }

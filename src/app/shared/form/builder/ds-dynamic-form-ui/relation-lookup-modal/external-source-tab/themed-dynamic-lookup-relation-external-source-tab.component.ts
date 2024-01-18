@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { Collection } from '../../../../../../core/shared/collection.model';
 import { Context } from '../../../../../../core/shared/context.model';
@@ -20,8 +15,19 @@ import { DsDynamicLookupRelationExternalSourceTabComponent } from './dynamic-loo
   templateUrl: '../../../../../theme-support/themed.component.html',
 })
 export class ThemedDynamicLookupRelationExternalSourceTabComponent extends ThemedComponent<DsDynamicLookupRelationExternalSourceTabComponent> {
-  protected inAndOutputNames: (keyof DsDynamicLookupRelationExternalSourceTabComponent & keyof this)[] = ['label', 'listId',
-    'item', 'collection', 'relationship', 'context', 'query', 'repeatable', 'importedObject', 'externalSource'];
+  protected inAndOutputNames: (keyof DsDynamicLookupRelationExternalSourceTabComponent &
+    keyof this)[] = [
+    'label',
+    'listId',
+    'item',
+    'collection',
+    'relationship',
+    'context',
+    'query',
+    'repeatable',
+    'importedObject',
+    'externalSource',
+  ];
 
   @Input() label: string;
 
@@ -48,7 +54,9 @@ export class ThemedDynamicLookupRelationExternalSourceTabComponent extends Theme
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../../../themes/${themeName}/app/shared/form/builder/ds-dynamic-form-ui/relation-lookup-modal/external-source-tab/dynamic-lookup-relation-external-source-tab.component`);
+    return import(
+      `../../../../../../../themes/${themeName}/app/shared/form/builder/ds-dynamic-form-ui/relation-lookup-modal/external-source-tab/dynamic-lookup-relation-external-source-tab.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

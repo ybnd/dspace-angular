@@ -29,48 +29,60 @@ import { DynamicRowArrayModel } from '../ds-dynamic-row-array-model';
   styleUrls: ['./dynamic-form-array.component.scss'],
 })
 export class DsDynamicFormArrayComponent extends DynamicFormArrayComponent {
-
   @Input() bindId = true;
   @Input() formModel: DynamicFormControlModel[];
   @Input() formLayout: DynamicFormLayout;
   @Input() group: UntypedFormGroup;
   @Input() layout: DynamicFormControlLayout;
-  @Input() model: DynamicRowArrayModel;// DynamicRow?
+  @Input() model: DynamicRowArrayModel; // DynamicRow?
   @Input() templates: QueryList<DynamicTemplateDirective> | undefined;
 
   /* eslint-disable @angular-eslint/no-output-rename */
-  @Output('dfBlur') blur: EventEmitter<DynamicFormControlEvent> = new EventEmitter<DynamicFormControlEvent>();
-  @Output('dfChange') change: EventEmitter<DynamicFormControlEvent> = new EventEmitter<DynamicFormControlEvent>();
-  @Output('dfFocus') focus: EventEmitter<DynamicFormControlEvent> = new EventEmitter<DynamicFormControlEvent>();
-  @Output('ngbEvent') customEvent: EventEmitter<DynamicFormControlCustomEvent> = new EventEmitter();
+  @Output('dfBlur') blur: EventEmitter<DynamicFormControlEvent> =
+    new EventEmitter<DynamicFormControlEvent>();
+  @Output('dfChange') change: EventEmitter<DynamicFormControlEvent> =
+    new EventEmitter<DynamicFormControlEvent>();
+  @Output('dfFocus') focus: EventEmitter<DynamicFormControlEvent> =
+    new EventEmitter<DynamicFormControlEvent>();
+  @Output('ngbEvent') customEvent: EventEmitter<DynamicFormControlCustomEvent> =
+    new EventEmitter();
 
   /* eslint-enable @angular-eslint/no-output-rename */
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService,
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
   ) {
     super(layoutService, validationService);
   }
 
   moveSelection(event: CdkDragDrop<Relationship>) {
-
     // prevent propagating events generated releasing on the same position
     if (event.previousIndex === event.currentIndex) {
       return;
     }
 
-    this.model.moveGroup(event.previousIndex, event.currentIndex - event.previousIndex);
+    this.model.moveGroup(
+      event.previousIndex,
+      event.currentIndex - event.previousIndex,
+    );
     const prevIndex = event.previousIndex;
     const index = event.currentIndex;
 
-    if (hasValue(this.model.groups[index]) && hasValue((this.control as any).controls[index])) {
-      this.onCustomEvent({
-        previousIndex: prevIndex,
-        index,
-        arrayModel: this.model,
-        model: this.model.groups[index].group[0],
-        control: (this.control as any).controls[index],
-      }, 'move');
+    if (
+      hasValue(this.model.groups[index]) &&
+      hasValue((this.control as any).controls[index])
+    ) {
+      this.onCustomEvent(
+        {
+          previousIndex: prevIndex,
+          index,
+          arrayModel: this.model,
+          model: this.model.groups[index].group[0],
+          control: (this.control as any).controls[index],
+        },
+        'move',
+      );
     }
   }
 

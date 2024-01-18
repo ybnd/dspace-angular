@@ -2,10 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { ROOT_EFFECTS_INIT } from '@ngrx/effects';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import {
-  cold,
-  hot,
-} from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 
 import { SetThemeAction } from './theme.actions';
 import { BASE_THEME_NAME } from './theme.constants';

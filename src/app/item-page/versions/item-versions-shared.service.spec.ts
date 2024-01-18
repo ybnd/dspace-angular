@@ -19,10 +19,15 @@ describe('ItemVersionsSharedService', () => {
   let service: ItemVersionsSharedService;
   let notificationService: NotificationsService;
 
-  const successfulVersionRD = createSuccessfulRemoteDataObject<Version>(new Version());
+  const successfulVersionRD = createSuccessfulRemoteDataObject<Version>(
+    new Version(),
+  );
   const failedVersionRD = createFailedRemoteDataObject<Version>();
 
-  const notificationsServiceSpy = jasmine.createSpyObj('notificationsServiceSpy', ['success', 'error']);
+  const notificationsServiceSpy = jasmine.createSpyObj(
+    'notificationsServiceSpy',
+    ['success', 'error'],
+  );
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,5 +60,4 @@ describe('ItemVersionsSharedService', () => {
       expect(notificationService.error).toHaveBeenCalled();
     });
   });
-
 });

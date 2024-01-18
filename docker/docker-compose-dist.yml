@@ -34,7 +34,7 @@ services:
     networks:
       dspacenet:
     ports:
-    - published: 4000
-      target: 4000
+      - published: 4000
+        target: 4000
     stdin_open: true
     tty: true

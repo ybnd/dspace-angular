@@ -31,10 +31,7 @@ const ENTRY_COMPONENTS = [
     JournalEntitiesModule.withEntryComponents(),
     ResearchEntitiesModule.withEntryComponents(),
   ],
-  declarations: [
-    AdminSearchPageComponent,
-    ...ENTRY_COMPONENTS,
-  ],
+  declarations: [AdminSearchPageComponent, ...ENTRY_COMPONENTS],
 })
 export class AdminSearchModule {
   /**

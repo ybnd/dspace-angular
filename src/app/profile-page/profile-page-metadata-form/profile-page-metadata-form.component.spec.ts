@@ -1,17 +1,7 @@
-import {
-  EventEmitter,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import cloneDeep from 'lodash/cloneDeep';
 
 import { EPersonDataService } from '../../core/eperson/eperson-data.service';
@@ -69,7 +59,6 @@ describe('ProfilePageMetadataFormComponent', () => {
       instant: () => 'translated',
       onLangChange: new EventEmitter(),
     };
-
   }
 
   beforeEach(waitForAsync(() => {
@@ -94,7 +83,7 @@ describe('ProfilePageMetadataFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should automatically fill in the user\'s email in the correct field', () => {
+  it("should automatically fill in the user's email in the correct field", () => {
     expect(component.formGroup.get('email').value).toEqual(user.email);
   });
 
@@ -144,6 +133,8 @@ describe('ProfilePageMetadataFormComponent', () => {
   });
 
   function setModelValue(id: string, value: string) {
-    component.formModel.filter((model) => model.id === id).forEach((model) => (model as any).value = value);
+    component.formModel
+      .filter((model) => model.id === id)
+      .forEach((model) => ((model as any).value = value));
   }
 });

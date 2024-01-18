@@ -1,9 +1,6 @@
 import { Store } from '@ngrx/store';
 import { cold } from 'jasmine-marbles';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { BrowseService } from '../browse/browse.service';
@@ -28,7 +25,8 @@ describe('ItemTemplateDataService', () => {
   let byCollection: any;
 
   const item = new Item();
-  const collectionEndpoint = 'https://rest.api/core/collections/4af28e99-6a9c-4036-a199-e1b587046d39';
+  const collectionEndpoint =
+    'https://rest.api/core/collections/4af28e99-6a9c-4036-a199-e1b587046d39';
   const itemEndpoint = `${collectionEndpoint}/itemtemplate`;
   const scopeID = '4af28e99-6a9c-4036-a199-e1b587046d39';
   const requestService = {
@@ -100,7 +98,18 @@ describe('ItemTemplateDataService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new ItemTemplateDataService(null, null, null, null, null, null, null, null, null);
+    const initService = () =>
+      new ItemTemplateDataService(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      );
     testCreateDataImplementation(initService);
     testPatchDataImplementation(initService);
     testDeleteDataImplementation(initService);
@@ -131,21 +140,29 @@ describe('ItemTemplateDataService', () => {
 
     describe('getIDHrefObs', () => {
       it('should point to the Item template of a given Collection', () => {
-        expect(byCollection.getIDHrefObs(scopeID)).toBeObservable(cold('a', { a: jasmine.stringMatching(`/collections/${scopeID}/itemtemplate`) }));
+        expect(byCollection.getIDHrefObs(scopeID)).toBeObservable(
+          cold('a', {
+            a: jasmine.stringMatching(`/collections/${scopeID}/itemtemplate`),
+          }),
+        );
       });
     });
 
     describe('createTemplate', () => {
       it('should forward to CreateDataImpl.createOnEndpoint', () => {
-        spyOn(byCollection, 'getIDHrefObs').and.returnValue('TEST getIDHrefObs');
+        spyOn(byCollection, 'getIDHrefObs').and.returnValue(
+          'TEST getIDHrefObs',
+        );
 
         const out = byCollection.createTemplate(item, scopeID);
 
         expect(byCollection.getIDHrefObs).toHaveBeenCalledWith(scopeID);
-        expect(byCollection.createData.createOnEndpoint).toHaveBeenCalledWith(item, 'TEST getIDHrefObs');
+        expect(byCollection.createData.createOnEndpoint).toHaveBeenCalledWith(
+          item,
+          'TEST getIDHrefObs',
+        );
         expect(out).toBe('TEST createOnEndpoint');
       });
     });
   });
 });
-

@@ -4,10 +4,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
@@ -24,17 +21,31 @@ import { ItemPageResolver } from '../item-page.resolver';
  * the status page
  */
 export class ItemPageStatusGuard extends DsoPageSomeFeatureGuard<Item> {
-  constructor(protected resolver: ItemPageResolver,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected resolver: ItemPageResolver,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 
   /**
    * Check authorization rights
    */
-  getFeatureIDs(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FeatureID[]> {
-    return observableOf([FeatureID.CanManageMappings, FeatureID.WithdrawItem, FeatureID.ReinstateItem, FeatureID.CanManagePolicies, FeatureID.CanMakePrivate, FeatureID.CanDelete, FeatureID.CanMove, FeatureID.CanRegisterDOI]);
+  getFeatureIDs(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<FeatureID[]> {
+    return observableOf([
+      FeatureID.CanManageMappings,
+      FeatureID.WithdrawItem,
+      FeatureID.ReinstateItem,
+      FeatureID.CanManagePolicies,
+      FeatureID.CanMakePrivate,
+      FeatureID.CanDelete,
+      FeatureID.CanMove,
+      FeatureID.CanRegisterDOI,
+    ]);
   }
 }

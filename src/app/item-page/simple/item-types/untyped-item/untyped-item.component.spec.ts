@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -13,14 +10,8 @@ import {
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  Observable,
-  of,
-} from 'rxjs';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable, of } from 'rxjs';
 
 import { BrowseDefinitionDataService } from '../../../../core/browse/browse-definition-data.service';
 import { RemoteDataBuildService } from '../../../../core/cache/builders/remote-data-build.service';
@@ -89,7 +80,11 @@ describe('UntypedItemComponent', () => {
         }),
         RouterTestingModule,
       ],
-      declarations: [UntypedItemComponent, GenericItemPageFieldComponent, TruncatePipe ],
+      declarations: [
+        UntypedItemComponent,
+        GenericItemPageFieldComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: ItemDataService, useValue: {} },
         { provide: TruncatableService, useValue: {} },
@@ -112,7 +107,10 @@ describe('UntypedItemComponent', () => {
         { provide: ItemDataService, useValue: {} },
         { provide: ItemVersionsSharedService, useValue: {} },
         { provide: RouteService, useValue: mockRouteService },
-        { provide: BrowseDefinitionDataService, useValue: BrowseDefinitionDataServiceStub },
+        {
+          provide: BrowseDefinitionDataService,
+          useValue: BrowseDefinitionDataServiceStub,
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).overrideComponent(UntypedItemComponent, {
@@ -130,32 +128,44 @@ describe('UntypedItemComponent', () => {
     }));
 
     it('should contain a component to display the date', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-date-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-date-field'),
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should not contain a metadata only author field', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-author-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-author-field'),
+      );
       expect(fields.length).toBe(0);
     });
 
     it('should contain a mixed metadata and relationship field for authors', () => {
-      const fields = fixture.debugElement.queryAll(By.css('.ds-item-page-mixed-author-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('.ds-item-page-mixed-author-field'),
+      );
       expect(fields.length).toBe(1);
     });
 
     it('should contain a component to display the abstract', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-abstract-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-abstract-field'),
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should contain a component to display the uri', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-uri-field'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-uri-field'),
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
     it('should contain a component to display the collections', () => {
-      const fields = fixture.debugElement.queryAll(By.css('ds-item-page-collections'));
+      const fields = fixture.debugElement.queryAll(
+        By.css('ds-item-page-collections'),
+      );
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
@@ -165,9 +175,7 @@ describe('UntypedItemComponent', () => {
     });
   });
 
-
   describe('with IIIF viewer', () => {
-
     beforeEach(waitForAsync(() => {
       const iiifEnabledMap: MetadataMap = {
         'dspace.iiif.enabled': [getIIIFEnabled(true)],
@@ -187,7 +195,6 @@ describe('UntypedItemComponent', () => {
     it('should not retrieve the query term for previous route', (): void => {
       expect(comp.iiifQuery$).toBeFalsy();
     });
-
   });
 
   describe('with IIIF viewer and search', () => {
@@ -201,7 +208,9 @@ describe('UntypedItemComponent', () => {
         'dspace.iiif.enabled': [getIIIFEnabled(true)],
         'iiif.search.enabled': [getIIIFSearchEnabled(true)],
       };
-      TestBed.overrideProvider(RouteService, { useValue: localMockRouteService });
+      TestBed.overrideProvider(RouteService, {
+        useValue: localMockRouteService,
+      });
       TestBed.compileComponents();
       fixture = TestBed.createComponent(UntypedItemComponent);
       spyOn(localMockRouteService, 'getPreviousUrl').and.callThrough();
@@ -216,12 +225,15 @@ describe('UntypedItemComponent', () => {
     });
 
     it('should retrieve the query term for previous route', (): void => {
-      expect(comp.iiifQuery$.subscribe(result => expect(result).toEqual('test query')));
+      expect(
+        comp.iiifQuery$.subscribe((result) =>
+          expect(result).toEqual('test query'),
+        ),
+      );
     });
   });
 
   describe('with IIIF viewer and search but no previous search query', () => {
-
     const localMockRouteService = {
       getPreviousUrl(): Observable<string> {
         return of('/item');
@@ -232,7 +244,9 @@ describe('UntypedItemComponent', () => {
         'dspace.iiif.enabled': [getIIIFEnabled(true)],
         'iiif.search.enabled': [getIIIFSearchEnabled(true)],
       };
-      TestBed.overrideProvider(RouteService, { useValue: localMockRouteService });
+      TestBed.overrideProvider(RouteService, {
+        useValue: localMockRouteService,
+      });
       TestBed.compileComponents();
       fixture = TestBed.createComponent(UntypedItemComponent);
 
@@ -246,13 +260,11 @@ describe('UntypedItemComponent', () => {
       expect(fields.length).toBeGreaterThanOrEqual(1);
     });
 
-    it('should not retrieve the query term for previous route', fakeAsync( () => {
+    it('should not retrieve the query term for previous route', fakeAsync(() => {
       let emitted;
-      comp.iiifQuery$.subscribe(result => emitted = result);
+      comp.iiifQuery$.subscribe((result) => (emitted = result));
       tick(10);
       expect(emitted).toBeUndefined();
     }));
-
   });
-
 });

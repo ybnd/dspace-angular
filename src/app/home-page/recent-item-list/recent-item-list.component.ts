@@ -9,10 +9,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../../../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../../../config/app-config.interface';
 import { environment } from '../../../environments/environment';
 import {
   SortDirection,
@@ -27,10 +24,7 @@ import { toDSpaceObjectListRD } from '../../core/shared/operators';
 import { SearchService } from '../../core/shared/search/search.service';
 import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
 import { ViewMode } from '../../core/shared/view-mode.model';
-import {
-  fadeIn,
-  fadeInOut,
-} from '../../shared/animations/fade';
+import { fadeIn, fadeInOut } from '../../shared/animations/fade';
 import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
 import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
 import {
@@ -44,10 +38,7 @@ import { setPlaceHolderAttributes } from '../../shared/utils/object-list-utils';
   templateUrl: './recent-item-list.component.html',
   styleUrls: ['./recent-item-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    fadeIn,
-    fadeInOut,
-  ],
+  animations: [fadeIn, fadeInOut],
 })
 export class RecentItemListComponent implements OnInit {
   itemRD$: Observable<RemoteData<PaginatedList<Item>>>;
@@ -55,9 +46,9 @@ export class RecentItemListComponent implements OnInit {
   sortConfig: SortOptions;
 
   /**
- * The view-mode we're currently on
- * @type {ViewMode}
- */
+   * The view-mode we're currently on
+   * @type {ViewMode}
+   */
   viewMode = ViewMode.ListElement;
 
   private _placeholderFontClass: string;
@@ -70,14 +61,16 @@ export class RecentItemListComponent implements OnInit {
     @Inject(APP_CONFIG) private appConfig: AppConfig,
     @Inject(PLATFORM_ID) private platformId: any,
   ) {
-
     this.paginationConfig = Object.assign(new PaginationComponentOptions(), {
       id: 'hp',
       pageSize: environment.homePage.recentSubmissions.pageSize,
       currentPage: 1,
       maxSize: 1,
     });
-    this.sortConfig = new SortOptions(environment.homePage.recentSubmissions.sortField, SortDirection.DESC);
+    this.sortConfig = new SortOptions(
+      environment.homePage.recentSubmissions.sortField,
+      SortDirection.DESC,
+    );
   }
   ngOnInit(): void {
     const linksToFollow: FollowLinkConfig<Item>[] = [];
@@ -85,19 +78,21 @@ export class RecentItemListComponent implements OnInit {
       linksToFollow.push(followLink('thumbnail'));
     }
 
-    this.itemRD$ = this.searchService.search(
-      new PaginatedSearchOptions({
-        pagination: this.paginationConfig,
-        dsoTypes: [DSpaceObjectType.ITEM],
-        sort: this.sortConfig,
-      }),
-      undefined,
-      undefined,
-      undefined,
-      ...linksToFollow,
-    ).pipe(
-      toDSpaceObjectListRD(),
-    ) as Observable<RemoteData<PaginatedList<Item>>>;
+    this.itemRD$ = this.searchService
+      .search(
+        new PaginatedSearchOptions({
+          pagination: this.paginationConfig,
+          dsoTypes: [DSpaceObjectType.ITEM],
+          sort: this.sortConfig,
+        }),
+        undefined,
+        undefined,
+        undefined,
+        ...linksToFollow,
+      )
+      .pipe(toDSpaceObjectListRD()) as Observable<
+      RemoteData<PaginatedList<Item>>
+    >;
   }
 
   ngOnDestroy(): void {
@@ -105,11 +100,15 @@ export class RecentItemListComponent implements OnInit {
   }
 
   onLoadMore(): void {
-    this.paginationService.updateRouteWithUrl(this.searchConfigurationService.paginationID, ['search'], {
-      sortField: environment.homePage.recentSubmissions.sortField,
-      sortDirection: 'DESC' as SortDirection,
-      page: 1,
-    });
+    this.paginationService.updateRouteWithUrl(
+      this.searchConfigurationService.paginationID,
+      ['search'],
+      {
+        sortField: environment.homePage.recentSubmissions.sortField,
+        sortDirection: 'DESC' as SortDirection,
+        page: 1,
+      },
+    );
   }
 
   get placeholderFontClass(): string {
@@ -123,6 +122,4 @@ export class RecentItemListComponent implements OnInit {
     }
     return this._placeholderFontClass;
   }
-
 }
-

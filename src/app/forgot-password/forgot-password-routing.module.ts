@@ -17,16 +17,13 @@ import { ThemedForgotPasswordFormComponent } from './forgot-password-form/themed
       {
         path: ':token',
         component: ThemedForgotPasswordFormComponent,
-        canActivate: [ RegistrationGuard ],
+        canActivate: [RegistrationGuard],
       },
     ]),
   ],
-  providers: [
-    ItemPageResolver,
-  ],
+  providers: [ItemPageResolver],
 })
 /**
  * This module defines the routing to the components related to the forgot password components.
  */
-export class ForgotPasswordRoutingModule {
-}
+export class ForgotPasswordRoutingModule {}

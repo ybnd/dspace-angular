@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { SortOptions } from '../../../core/cache/models/sort-options.model';
 import { ThemedComponent } from '../../theme-support/themed.component';
@@ -19,16 +16,19 @@ export class ThemedSearchSettingsComponent extends ThemedComponent<SearchSetting
   @Input() currentSortOption: SortOptions;
   @Input() sortOptionsList: SortOptions[];
 
-
   protected inAndOutputNames: (keyof SearchSettingsComponent & keyof this)[] = [
-    'currentSortOption', 'sortOptionsList'];
+    'currentSortOption',
+    'sortOptionsList',
+  ];
 
   protected getComponentName(): string {
     return 'SearchSettingsComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../themes/${themeName}/app/shared/search/search-settings/search-settings.component`);
+    return import(
+      `../../../../themes/${themeName}/app/shared/search/search-settings/search-settings.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

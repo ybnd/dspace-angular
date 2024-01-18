@@ -1,8 +1,4 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
@@ -65,27 +61,36 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
    * The pagination system configuration for HTML listing.
    * @type {PaginationComponentOptions}
    */
-  public paginationConfig: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'bep',
-    currentPage: 1,
-    pageSize: 10,
-    pageSizeOptions: [5, 10, 20, 40, 60],
-  });
+  public paginationConfig: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'bep',
+      currentPage: 1,
+      pageSize: 10,
+      pageSizeOptions: [5, 10, 20, 40, 60],
+    },
+  );
   /**
    * The Quality Assurance event list sort options.
    * @type {SortOptions}
    */
-  public paginationSortConfig: SortOptions = new SortOptions('trust', SortDirection.DESC);
+  public paginationSortConfig: SortOptions = new SortOptions(
+    'trust',
+    SortDirection.DESC,
+  );
   /**
    * Array to save the presence of a project inside an Quality Assurance event.
    * @type {QualityAssuranceEventData[]>}
    */
-  public eventsUpdated$: BehaviorSubject<QualityAssuranceEventData[]> = new BehaviorSubject([]);
+  public eventsUpdated$: BehaviorSubject<QualityAssuranceEventData[]> =
+    new BehaviorSubject([]);
   /**
    * The total number of Quality Assurance events.
    * @type {Observable<number>}
    */
-  public totalElements$: BehaviorSubject<number> = new BehaviorSubject<number>(null);
+  public totalElements$: BehaviorSubject<number> = new BehaviorSubject<number>(
+    null,
+  );
   /**
    * The topic of the Quality Assurance events; suitable for displaying.
    * @type {string}
@@ -105,7 +110,8 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
    * Contains the information about the loading status of the page.
    * @type {Observable<boolean>}
    */
-  public isEventPageLoading: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isEventPageLoading: BehaviorSubject<boolean> =
+    new BehaviorSubject<boolean>(false);
   /**
    * The modal reference.
    * @type {any}
@@ -123,7 +129,10 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
   /**
    * The FindListOptions object
    */
-  protected defaultConfig: FindListOptions = Object.assign(new FindListOptions(), { sort: this.paginationSortConfig });
+  protected defaultConfig: FindListOptions = Object.assign(
+    new FindListOptions(),
+    { sort: this.paginationSortConfig },
+  );
   /**
    * Array to track all the component subscriptions. Useful to unsubscribe them with 'onDestroy'.
    * @type {Array}
@@ -146,8 +155,7 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
     private qualityAssuranceEventRestService: QualityAssuranceEventDataService,
     private paginationService: PaginationService,
     private translateService: TranslateService,
-  ) {
-  }
+  ) {}
 
   /**
    * Component initialization.
@@ -155,29 +163,35 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isEventPageLoading.next(true);
 
-    this.activatedRoute.paramMap.pipe(
-      tap((params) => {
-        this.sourceUrlForProjectSearch = environment.qualityAssuranceConfig.sourceUrlMapForProjectSearch[params.get('sourceId')];
-      }),
-      map((params) => params.get('topicId')),
-      take(1),
-      switchMap((id: string) => {
-        const regEx = /!/g;
-        this.showTopic = id.replace(regEx, '/');
-        this.topic = id;
-        return this.getQualityAssuranceEvents();
-      }),
-    ).subscribe((events: QualityAssuranceEventData[]) => {
-      this.eventsUpdated$.next(events);
-      this.isEventPageLoading.next(false);
-    });
+    this.activatedRoute.paramMap
+      .pipe(
+        tap((params) => {
+          this.sourceUrlForProjectSearch =
+            environment.qualityAssuranceConfig.sourceUrlMapForProjectSearch[
+              params.get('sourceId')
+            ];
+        }),
+        map((params) => params.get('topicId')),
+        take(1),
+        switchMap((id: string) => {
+          const regEx = /!/g;
+          this.showTopic = id.replace(regEx, '/');
+          this.topic = id;
+          return this.getQualityAssuranceEvents();
+        }),
+      )
+      .subscribe((events: QualityAssuranceEventData[]) => {
+        this.eventsUpdated$.next(events);
+        this.isEventPageLoading.next(false);
+      });
   }
 
   /**
    * Check if table have a detail column
    */
   public hasDetailColumn(): boolean {
-    return (this.showTopic.indexOf('/PROJECT') !== -1 ||
+    return (
+      this.showTopic.indexOf('/PROJECT') !== -1 ||
       this.showTopic.indexOf('/PID') !== -1 ||
       this.showTopic.indexOf('/SUBJECT') !== -1 ||
       this.showTopic.indexOf('/ABSTRACT') !== -1
@@ -194,7 +208,11 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
    * @param {any} content
    *    Reference to the modal
    */
-  public modalChoice(action: string, eventData: QualityAssuranceEventData, content: any): void {
+  public modalChoice(
+    action: string,
+    eventData: QualityAssuranceEventData,
+    content: any,
+  ): void {
     if (eventData.hasProject) {
       this.executeAction(action, eventData);
     } else {
@@ -212,19 +230,25 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
    * @param {any} content
    *    Reference to the modal
    */
-  public openModal(action: string, eventData: QualityAssuranceEventData, content: any): void {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then(
-      (result) => {
-        if (result === 'do') {
-          eventData.reason = this.selectedReason;
-          this.executeAction(action, eventData);
-        }
-        this.selectedReason = null;
-      },
-      (_reason) => {
-        this.selectedReason = null;
-      },
-    );
+  public openModal(
+    action: string,
+    eventData: QualityAssuranceEventData,
+    content: any,
+  ): void {
+    this.modalService
+      .open(content, { ariaLabelledBy: 'modal-basic-title' })
+      .result.then(
+        (result) => {
+          if (result === 'do') {
+            eventData.reason = this.selectedReason;
+            this.executeAction(action, eventData);
+          }
+          this.selectedReason = null;
+        },
+        (_reason) => {
+          this.selectedReason = null;
+        },
+      );
   }
 
   /**
@@ -241,9 +265,13 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
     modalComp.externalSourceEntry = eventData;
     modalComp.label = 'project';
     this.subs.push(
-      modalComp.importedObject.pipe(take(1))
+      modalComp.importedObject
+        .pipe(take(1))
         .subscribe((object: ItemSearchResult) => {
-          const projectTitle = Metadata.first(object.indexableObject.metadata, 'dc.title');
+          const projectTitle = Metadata.first(
+            object.indexableObject.metadata,
+            'dc.title',
+          );
           this.boundProject(
             eventData,
             object.indexableObject.id,
@@ -262,28 +290,38 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
    * @param {QualityAssuranceEventData} eventData
    *    the Quality Assurance event data
    */
-  public executeAction(action: string, eventData: QualityAssuranceEventData): void {
+  public executeAction(
+    action: string,
+    eventData: QualityAssuranceEventData,
+  ): void {
     eventData.isRunning = true;
     this.subs.push(
-      this.qualityAssuranceEventRestService.patchEvent(action, eventData.event, eventData.reason).pipe(
-        getFirstCompletedRemoteData(),
-        switchMap((rd: RemoteData<QualityAssuranceEventObject>) => {
-          if (rd.hasSucceeded) {
-            this.notificationsService.success(
-              this.translateService.instant('quality-assurance.event.action.saved'),
-            );
-            return this.getQualityAssuranceEvents();
-          } else {
-            this.notificationsService.error(
-              this.translateService.instant('quality-assurance.event.action.error'),
-            );
-            return of(this.eventsUpdated$.value);
-          }
+      this.qualityAssuranceEventRestService
+        .patchEvent(action, eventData.event, eventData.reason)
+        .pipe(
+          getFirstCompletedRemoteData(),
+          switchMap((rd: RemoteData<QualityAssuranceEventObject>) => {
+            if (rd.hasSucceeded) {
+              this.notificationsService.success(
+                this.translateService.instant(
+                  'quality-assurance.event.action.saved',
+                ),
+              );
+              return this.getQualityAssuranceEvents();
+            } else {
+              this.notificationsService.error(
+                this.translateService.instant(
+                  'quality-assurance.event.action.error',
+                ),
+              );
+              return of(this.eventsUpdated$.value);
+            }
+          }),
+        )
+        .subscribe((events: QualityAssuranceEventData[]) => {
+          this.eventsUpdated$.next(events);
+          eventData.isRunning = false;
         }),
-      ).subscribe((events: QualityAssuranceEventData[]) => {
-        this.eventsUpdated$.next(events);
-        eventData.isRunning = false;
-      }),
     );
   }
 
@@ -299,14 +337,23 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
    * @param {string} projectHandle
    *    the project handle
    */
-  public boundProject(eventData: QualityAssuranceEventData, projectId: string, projectTitle: string, projectHandle: string): void {
+  public boundProject(
+    eventData: QualityAssuranceEventData,
+    projectId: string,
+    projectTitle: string,
+    projectHandle: string,
+  ): void {
     eventData.isRunning = true;
     this.subs.push(
-      this.qualityAssuranceEventRestService.boundProject(eventData.id, projectId).pipe(getFirstCompletedRemoteData())
+      this.qualityAssuranceEventRestService
+        .boundProject(eventData.id, projectId)
+        .pipe(getFirstCompletedRemoteData())
         .subscribe((rd: RemoteData<QualityAssuranceEventObject>) => {
           if (rd.hasSucceeded) {
             this.notificationsService.success(
-              this.translateService.instant('quality-assurance.event.project.bounded'),
+              this.translateService.instant(
+                'quality-assurance.event.project.bounded',
+              ),
             );
             eventData.hasProject = true;
             eventData.projectTitle = projectTitle;
@@ -314,7 +361,9 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
             eventData.projectId = projectId;
           } else {
             this.notificationsService.error(
-              this.translateService.instant('quality-assurance.event.project.error'),
+              this.translateService.instant(
+                'quality-assurance.event.project.error',
+              ),
             );
           }
           eventData.isRunning = false;
@@ -331,11 +380,15 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
   public removeProject(eventData: QualityAssuranceEventData): void {
     eventData.isRunning = true;
     this.subs.push(
-      this.qualityAssuranceEventRestService.removeProject(eventData.id).pipe(getFirstCompletedRemoteData())
+      this.qualityAssuranceEventRestService
+        .removeProject(eventData.id)
+        .pipe(getFirstCompletedRemoteData())
         .subscribe((rd: RemoteData<QualityAssuranceEventObject>) => {
           if (rd.hasSucceeded) {
             this.notificationsService.success(
-              this.translateService.instant('quality-assurance.event.project.removed'),
+              this.translateService.instant(
+                'quality-assurance.event.project.removed',
+              ),
             );
             eventData.hasProject = false;
             eventData.projectTitle = null;
@@ -343,7 +396,9 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
             eventData.projectId = null;
           } else {
             this.notificationsService.error(
-              this.translateService.instant('quality-assurance.event.project.error'),
+              this.translateService.instant(
+                'quality-assurance.event.project.error',
+              ),
             );
           }
           eventData.isRunning = false;
@@ -371,31 +426,40 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
    * Dispatch the Quality Assurance events retrival.
    */
   public getQualityAssuranceEvents(): Observable<QualityAssuranceEventData[]> {
-    return this.paginationService.getFindListOptions(this.paginationConfig.id, this.defaultConfig).pipe(
-      distinctUntilChanged(),
-      switchMap((options: FindListOptions) => this.qualityAssuranceEventRestService.getEventsByTopic(
-        this.topic,
-        options,
-        followLink('target'), followLink('related'),
-      )),
-      getFirstCompletedRemoteData(),
-      switchMap((rd: RemoteData<PaginatedList<QualityAssuranceEventObject>>) => {
-        if (rd.hasSucceeded) {
-          this.totalElements$.next(rd.payload.totalElements);
-          if (rd.payload.totalElements > 0) {
-            return this.fetchEvents(rd.payload.page);
-          } else {
-            return of([]);
-          }
-        } else {
-          throw new Error('Can\'t retrieve Quality Assurance events from the Broker events REST service');
-        }
-      }),
-      take(1),
-      tap(() => {
-        this.qualityAssuranceEventRestService.clearFindByTopicRequests();
-      }),
-    );
+    return this.paginationService
+      .getFindListOptions(this.paginationConfig.id, this.defaultConfig)
+      .pipe(
+        distinctUntilChanged(),
+        switchMap((options: FindListOptions) =>
+          this.qualityAssuranceEventRestService.getEventsByTopic(
+            this.topic,
+            options,
+            followLink('target'),
+            followLink('related'),
+          ),
+        ),
+        getFirstCompletedRemoteData(),
+        switchMap(
+          (rd: RemoteData<PaginatedList<QualityAssuranceEventObject>>) => {
+            if (rd.hasSucceeded) {
+              this.totalElements$.next(rd.payload.totalElements);
+              if (rd.payload.totalElements > 0) {
+                return this.fetchEvents(rd.payload.page);
+              } else {
+                return of([]);
+              }
+            } else {
+              throw new Error(
+                "Can't retrieve Quality Assurance events from the Broker events REST service",
+              );
+            }
+          },
+        ),
+        take(1),
+        tap(() => {
+          this.qualityAssuranceEventRestService.clearFindByTopicRequests();
+        }),
+      );
   }
 
   /**
@@ -414,37 +478,42 @@ export class QualityAssuranceEventsComponent implements OnInit, OnDestroy {
    *    the Quality Assurance event item
    * @return array of QualityAssuranceEventData
    */
-  protected fetchEvents(events: QualityAssuranceEventObject[]): Observable<QualityAssuranceEventData[]> {
+  protected fetchEvents(
+    events: QualityAssuranceEventObject[],
+  ): Observable<QualityAssuranceEventData[]> {
     return from(events).pipe(
       mergeMap((event: QualityAssuranceEventObject) => {
-        const related$ = event.related.pipe(
-          getFirstCompletedRemoteData(),
-        );
-        const target$ = event.target.pipe(
-          getFirstCompletedRemoteData(),
-        );
+        const related$ = event.related.pipe(getFirstCompletedRemoteData());
+        const target$ = event.target.pipe(getFirstCompletedRemoteData());
         return combineLatest([related$, target$]).pipe(
-          map(([relatedItemRD, targetItemRD]: [RemoteData<Item>, RemoteData<Item>]) => {
-            const data: QualityAssuranceEventData = {
-              event: event,
-              id: event.id,
-              title: event.title,
-              hasProject: false,
-              projectTitle: null,
-              projectId: null,
-              handle: null,
-              reason: null,
-              isRunning: false,
-              target: (targetItemRD?.hasSucceeded) ? targetItemRD.payload : null,
-            };
-            if (relatedItemRD?.hasSucceeded && relatedItemRD?.payload?.id) {
-              data.hasProject = true;
-              data.projectTitle = event.message.title;
-              data.projectId = relatedItemRD?.payload?.id;
-              data.handle = relatedItemRD?.payload?.handle;
-            }
-            return data;
-          }),
+          map(
+            ([relatedItemRD, targetItemRD]: [
+              RemoteData<Item>,
+              RemoteData<Item>,
+            ]) => {
+              const data: QualityAssuranceEventData = {
+                event: event,
+                id: event.id,
+                title: event.title,
+                hasProject: false,
+                projectTitle: null,
+                projectId: null,
+                handle: null,
+                reason: null,
+                isRunning: false,
+                target: targetItemRD?.hasSucceeded
+                  ? targetItemRD.payload
+                  : null,
+              };
+              if (relatedItemRD?.hasSucceeded && relatedItemRD?.payload?.id) {
+                data.hasProject = true;
+                data.projectTitle = event.message.title;
+                data.projectId = relatedItemRD?.payload?.id;
+                data.handle = relatedItemRD?.payload?.handle;
+              }
+              return data;
+            },
+          ),
         );
       }),
       scan((acc: any, value: any) => [...acc, value], []),

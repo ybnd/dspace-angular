@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -17,11 +14,7 @@ import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
-import {
-  BehaviorSubject,
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
 
 import { getCollectionPageRoute } from '../../collection-page/collection-page-routing-paths';
 import { getCommunityPageRoute } from '../../community-page/community-page-routing-paths';
@@ -116,11 +109,16 @@ const mockDso2 = Object.assign(new Item(), {
   },
 });
 const sort: SortOptions = new SortOptions('score', SortDirection.DESC);
-const mockSearchResults: SearchObjects<DSpaceObject> = Object.assign(new SearchObjects(), {
-  page: [mockDso, mockDso2],
-});
-const mockResultsRD: RemoteData<SearchObjects<DSpaceObject>> = createSuccessfulRemoteDataObject(mockSearchResults);
-const mockResultsRD$: Observable<RemoteData<SearchObjects<DSpaceObject>>> = observableOf(mockResultsRD);
+const mockSearchResults: SearchObjects<DSpaceObject> = Object.assign(
+  new SearchObjects(),
+  {
+    page: [mockDso, mockDso2],
+  },
+);
+const mockResultsRD: RemoteData<SearchObjects<DSpaceObject>> =
+  createSuccessfulRemoteDataObject(mockSearchResults);
+const mockResultsRD$: Observable<RemoteData<SearchObjects<DSpaceObject>>> =
+  observableOf(mockResultsRD);
 const searchServiceStub = jasmine.createSpyObj('SearchService', {
   search: mockResultsRD$,
   getSearchLink: '/search',
@@ -158,22 +156,31 @@ const activatedRouteStub = {
   }),
 };
 
-const mockFilterConfig: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-  name: 'test1',
-  filterType: FilterType.text,
-  hasFacets: false,
-  isOpenByDefault: false,
-  pageSize: 2,
-});
-const mockFilterConfig2: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-  name: 'test2',
-  filterType: FilterType.text,
-  hasFacets: false,
-  isOpenByDefault: false,
-  pageSize: 1,
-});
+const mockFilterConfig: SearchFilterConfig = Object.assign(
+  new SearchFilterConfig(),
+  {
+    name: 'test1',
+    filterType: FilterType.text,
+    hasFacets: false,
+    isOpenByDefault: false,
+    pageSize: 2,
+  },
+);
+const mockFilterConfig2: SearchFilterConfig = Object.assign(
+  new SearchFilterConfig(),
+  {
+    name: 'test2',
+    filterType: FilterType.text,
+    hasFacets: false,
+    isOpenByDefault: false,
+    pageSize: 1,
+  },
+);
 
-const filtersConfigRD = createSuccessfulRemoteDataObject([mockFilterConfig, mockFilterConfig2]);
+const filtersConfigRD = createSuccessfulRemoteDataObject([
+  mockFilterConfig,
+  mockFilterConfig2,
+]);
 const filtersConfigRD$ = observableOf(filtersConfigRD);
 
 const routeServiceStub = {
@@ -193,48 +200,67 @@ const routeServiceStub = {
 
 let searchConfigurationServiceStub;
 
-export function configureSearchComponentTestingModule(compType, additionalDeclarations: any[] = []) {
-  searchConfigurationServiceStub = jasmine.createSpyObj('SearchConfigurationService', {
-    getConfigurationSortOptions: sortOptionsList,
-    getConfig: filtersConfigRD$,
-    getConfigurationSearchConfig: observableOf(searchConfig),
-    getCurrentConfiguration: observableOf('default'),
-    getCurrentScope: observableOf('test-id'),
-    getCurrentSort: observableOf(sortOptionsList[0]),
-    updateFixedFilter: jasmine.createSpy('updateFixedFilter'),
-    setPaginationId: jasmine.createSpy('setPaginationId'),
-  });
+export function configureSearchComponentTestingModule(
+  compType,
+  additionalDeclarations: any[] = [],
+) {
+  searchConfigurationServiceStub = jasmine.createSpyObj(
+    'SearchConfigurationService',
+    {
+      getConfigurationSortOptions: sortOptionsList,
+      getConfig: filtersConfigRD$,
+      getConfigurationSearchConfig: observableOf(searchConfig),
+      getCurrentConfiguration: observableOf('default'),
+      getCurrentScope: observableOf('test-id'),
+      getCurrentSort: observableOf(sortOptionsList[0]),
+      updateFixedFilter: jasmine.createSpy('updateFixedFilter'),
+      setPaginationId: jasmine.createSpy('setPaginationId'),
+    },
+  );
 
   searchConfigurationServiceStub.setPaginationId.and.callFake((pageId) => {
-    paginatedSearchOptions$.next(Object.assign(paginatedSearchOptions$.value, {
-      pagination: Object.assign(new PaginationComponentOptions(), {
-        id: pageId,
+    paginatedSearchOptions$.next(
+      Object.assign(paginatedSearchOptions$.value, {
+        pagination: Object.assign(new PaginationComponentOptions(), {
+          id: pageId,
+        }),
       }),
-    }));
+    );
   });
-  searchConfigurationServiceStub.paginatedSearchOptions = new BehaviorSubject(new PaginatedSearchOptions({ pagination: { id: 'default' } as any }));
+  searchConfigurationServiceStub.paginatedSearchOptions = new BehaviorSubject(
+    new PaginatedSearchOptions({ pagination: { id: 'default' } as any }),
+  );
 
   TestBed.configureTestingModule({
-    imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule, NgbCollapseModule],
+    imports: [
+      TranslateModule.forRoot(),
+      RouterTestingModule.withRoutes([]),
+      NoopAnimationsModule,
+      NgbCollapseModule,
+    ],
     declarations: [compType, ...additionalDeclarations],
     providers: [
       { provide: SearchService, useValue: searchServiceStub },
       {
         provide: CommunityDataService,
-        useValue: jasmine.createSpyObj('communityService', ['findById', 'findAll']),
+        useValue: jasmine.createSpyObj('communityService', [
+          'findById',
+          'findAll',
+        ]),
       },
       { provide: ActivatedRoute, useValue: activatedRouteStub },
       { provide: RouteService, useValue: routeServiceStub },
       {
-        provide: Store, useValue: store,
+        provide: Store,
+        useValue: store,
       },
       {
-        provide: HostWindowService, useValue: jasmine.createSpyObj('hostWindowService',
-          {
-            isXs: observableOf(true),
-            isSm: observableOf(false),
-            isXsOrSm: observableOf(true),
-          }),
+        provide: HostWindowService,
+        useValue: jasmine.createSpyObj('hostWindowService', {
+          isXs: observableOf(true),
+          isSm: observableOf(false),
+          isXsOrSm: observableOf(true),
+        }),
       },
       {
         provide: SidebarService,
@@ -250,16 +276,19 @@ export function configureSearchComponentTestingModule(compType, additionalDeclar
       },
     ],
     schemas: [NO_ERRORS_SCHEMA],
-  }).overrideComponent(compType, {
-    set: {
-      changeDetection: ChangeDetectionStrategy.Default,
-      providers: [{
-        provide: SearchConfigurationService,
-        useValue: searchConfigurationServiceStub,
-      }],
-    },
-
-  }).compileComponents();
+  })
+    .overrideComponent(compType, {
+      set: {
+        changeDetection: ChangeDetectionStrategy.Default,
+        providers: [
+          {
+            provide: SearchConfigurationService,
+            useValue: searchConfigurationServiceStub,
+          },
+        ],
+      },
+    })
+    .compileComponents();
 }
 
 describe('SearchComponent', () => {
@@ -273,11 +302,12 @@ describe('SearchComponent', () => {
     comp.inPlaceSearch = false;
     comp.paginationId = paginationId;
 
-    spyOn((comp as any), 'getSearchOptions').and.returnValue(paginatedSearchOptions$.asObservable());
+    spyOn(comp as any, 'getSearchOptions').and.returnValue(
+      paginatedSearchOptions$.asObservable(),
+    );
 
     searchServiceObject = TestBed.inject(SearchService);
     searchConfigurationServiceObject = TestBed.inject(SEARCH_CONFIG_SERVICE);
-
   });
 
   afterEach(() => {
@@ -287,7 +317,7 @@ describe('SearchComponent', () => {
   });
 
   it('should init search parameters properly and call retrieveSearchResults', fakeAsync(() => {
-    spyOn((comp as any), 'retrieveSearchResults').and.callThrough();
+    spyOn(comp as any, 'retrieveSearchResults').and.callThrough();
     fixture.detectChanges();
     tick(100);
 
@@ -295,37 +325,51 @@ describe('SearchComponent', () => {
       configuration: 'default',
       sort: sortOptionsList[0],
     });
-    expect(comp.currentConfiguration$).toBeObservable(cold('b', {
-      b: 'default',
-    }));
-    expect(comp.currentSortOptions$).toBeObservable(cold('b', {
-      b: sortOptionsList[0],
-    }));
-    expect(comp.sortOptionsList$).toBeObservable(cold('b', {
-      b: sortOptionsList,
-    }));
-    expect(comp.searchOptions$).toBeObservable(cold('b', {
-      b: expectedSearchOptions,
-    }));
-    expect((comp as any).retrieveSearchResults).toHaveBeenCalledWith(expectedSearchOptions);
+    expect(comp.currentConfiguration$).toBeObservable(
+      cold('b', {
+        b: 'default',
+      }),
+    );
+    expect(comp.currentSortOptions$).toBeObservable(
+      cold('b', {
+        b: sortOptionsList[0],
+      }),
+    );
+    expect(comp.sortOptionsList$).toBeObservable(
+      cold('b', {
+        b: sortOptionsList,
+      }),
+    );
+    expect(comp.searchOptions$).toBeObservable(
+      cold('b', {
+        b: expectedSearchOptions,
+      }),
+    );
+    expect((comp as any).retrieveSearchResults).toHaveBeenCalledWith(
+      expectedSearchOptions,
+    );
   }));
 
   it('should retrieve SearchResults', fakeAsync(() => {
     fixture.detectChanges();
     tick(100);
     const expectedResults = mockResultsRD;
-    expect(comp.resultsRD$).toBeObservable(cold('b', {
-      b: expectedResults,
-    }));
+    expect(comp.resultsRD$).toBeObservable(
+      cold('b', {
+        b: expectedResults,
+      }),
+    );
   }));
 
   it('should retrieve Search Filters', fakeAsync(() => {
     fixture.detectChanges();
     tick(100);
     const expectedResults = filtersConfigRD;
-    expect(comp.filtersRD$).toBeObservable(cold('b', {
-      b: expectedResults,
-    }));
+    expect(comp.filtersRD$).toBeObservable(
+      cold('b', {
+        b: expectedResults,
+      }),
+    );
   }));
 
   it('should emit resultFound event', fakeAsync(() => {
@@ -337,7 +381,6 @@ describe('SearchComponent', () => {
   }));
 
   describe('when the open sidebar button is clicked in mobile view', () => {
-
     beforeEach(() => {
       spyOn(comp, 'openSidebar');
     });
@@ -346,11 +389,12 @@ describe('SearchComponent', () => {
       fixture.detectChanges();
       tick(100);
       fixture.detectChanges();
-      const openSidebarButton = fixture.debugElement.query(By.css('.open-sidebar'));
+      const openSidebarButton = fixture.debugElement.query(
+        By.css('.open-sidebar'),
+      );
       openSidebarButton.triggerEventHandler('click', null);
       expect(comp.openSidebar).toHaveBeenCalled();
     }));
-
   });
 
   describe('getDsoUUIDFromUrl', () => {

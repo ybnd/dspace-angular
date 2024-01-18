@@ -29,9 +29,7 @@ import { JsonPatchOperationPathObject } from './json-patch-operation-path-combin
  */
 @Injectable()
 export class JsonPatchOperationsBuilder {
-
-  constructor(private store: Store<CoreState>) {
-  }
+  constructor(private store: Store<CoreState>) {}
 
   /**
    * Dispatches a new NewPatchAddOperationAction
@@ -50,7 +48,10 @@ export class JsonPatchOperationsBuilder {
       new NewPatchAddOperationAction(
         path.rootElement,
         path.subRootElement,
-        path.path, this.prepareValue(value, plain, first)));
+        path.path,
+        this.prepareValue(value, plain, first),
+      ),
+    );
   }
 
   /**
@@ -64,7 +65,10 @@ export class JsonPatchOperationsBuilder {
    *    a boolean representing if the value to be added is a plain text value
    */
   replace(path: JsonPatchOperationPathObject, value, plain = false) {
-    if (hasNoValue(value) || (typeof value === 'object' && hasNoValue(value.value))) {
+    if (
+      hasNoValue(value) ||
+      (typeof value === 'object' && hasNoValue(value.value))
+    ) {
       this.remove(path);
     } else {
       this.store.dispatch(
@@ -72,7 +76,9 @@ export class JsonPatchOperationsBuilder {
           path.rootElement,
           path.subRootElement,
           path.path,
-          this.prepareValue(value, plain, false)));
+          this.prepareValue(value, plain, false),
+        ),
+      );
     }
   }
 
@@ -106,7 +112,9 @@ export class JsonPatchOperationsBuilder {
       new NewPatchRemoveOperationAction(
         path.rootElement,
         path.subRootElement,
-        path.path));
+        path.path,
+      ),
+    );
   }
 
   protected prepareValue(value: any, plain: boolean, first: boolean) {
@@ -118,7 +126,7 @@ export class JsonPatchOperationsBuilder {
         if (Array.isArray(value)) {
           operationValue = [];
           value.forEach((entry) => {
-            if ((typeof entry === 'object')) {
+            if (typeof entry === 'object') {
               operationValue.push(this.prepareObjectValue(entry));
             } else {
               operationValue.push(new FormFieldMetadataValueObject(entry));
@@ -131,7 +139,9 @@ export class JsonPatchOperationsBuilder {
         }
       }
     }
-    return (first && !Array.isArray(operationValue)) ? [operationValue] : operationValue;
+    return first && !Array.isArray(operationValue)
+      ? [operationValue]
+      : operationValue;
   }
 
   protected prepareObjectValue(value: any) {
@@ -143,22 +153,28 @@ export class JsonPatchOperationsBuilder {
     } else if (value instanceof VocabularyEntry) {
       operationValue = this.prepareAuthorityValue(value);
     } else if (value instanceof FormFieldLanguageValueObject) {
-      operationValue = new FormFieldMetadataValueObject(value.value, value.language);
+      operationValue = new FormFieldMetadataValueObject(
+        value.value,
+        value.language,
+      );
     } else if (value.hasOwnProperty('authority')) {
-      operationValue = new FormFieldMetadataValueObject(value.value, value.language, value.authority);
+      operationValue = new FormFieldMetadataValueObject(
+        value.value,
+        value.language,
+        value.authority,
+      );
     } else if (isNgbDateStruct(value)) {
       operationValue = new FormFieldMetadataValueObject(dateToString(value));
     } else if (value.hasOwnProperty('value')) {
       operationValue = new FormFieldMetadataValueObject(value.value);
     } else {
-      Object.keys(value)
-        .forEach((key) => {
-          if (typeof value[key] === 'object') {
-            operationValue[key] = this.prepareObjectValue(value[key]);
-          } else {
-            operationValue[key] = value[key];
-          }
-        });
+      Object.keys(value).forEach((key) => {
+        if (typeof value[key] === 'object') {
+          operationValue[key] = this.prepareObjectValue(value[key]);
+        } else {
+          operationValue[key] = value[key];
+        }
+      });
     }
     return operationValue;
   }
@@ -166,11 +182,17 @@ export class JsonPatchOperationsBuilder {
   protected prepareAuthorityValue(value: any): FormFieldMetadataValueObject {
     let operationValue: FormFieldMetadataValueObject;
     if (isNotEmpty(value.authority)) {
-      operationValue = new FormFieldMetadataValueObject(value.value, value.language, value.authority);
+      operationValue = new FormFieldMetadataValueObject(
+        value.value,
+        value.language,
+        value.authority,
+      );
     } else {
-      operationValue = new FormFieldMetadataValueObject(value.value, value.language);
+      operationValue = new FormFieldMetadataValueObject(
+        value.value,
+        value.language,
+      );
     }
     return operationValue;
   }
-
 }

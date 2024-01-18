@@ -30,7 +30,10 @@ export function calculateFileHash(filePath: string): string {
  * @param folderPath The path of the folder
  * @param regExp A regex of the files in the folder for which a hash needs to be generated
  */
-export function getFileHashes(folderPath: string, regExp: RegExp): { [fileName: string]: string } {
+export function getFileHashes(
+  folderPath: string,
+  regExp: RegExp,
+): { [fileName: string]: string } {
   const files: string[] = readdirSync(folderPath);
   let hashes: { [fileName: string]: string } = {};
 

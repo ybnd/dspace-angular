@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   combineLatest as observableCombineLatest,
@@ -66,22 +61,24 @@ export class SearchFacetSelectedOptionComponent implements OnInit, OnDestroy {
    */
   searchLink: string;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected searchConfigService: SearchConfigurationService,
-              protected router: Router,
-              protected paginationService: PaginationService,
-  ) {
-  }
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected searchConfigService: SearchConfigurationService,
+    protected router: Router,
+    protected paginationService: PaginationService,
+  ) {}
 
   /**
    * Initializes all observable instance variables and starts listening to them
    */
   ngOnInit(): void {
-    this.sub = observableCombineLatest(this.selectedValues$, this.searchConfigService.searchOptions)
-      .subscribe(([selectedValues, searchOptions]) => {
-        this.updateRemoveParams(selectedValues);
-      });
+    this.sub = observableCombineLatest(
+      this.selectedValues$,
+      this.searchConfigService.searchOptions,
+    ).subscribe(([selectedValues, searchOptions]) => {
+      this.updateRemoveParams(selectedValues);
+    });
     this.searchLink = this.getSearchLink();
   }
 
@@ -100,10 +97,15 @@ export class SearchFacetSelectedOptionComponent implements OnInit, OnDestroy {
    * @param {string[]} selectedValues The values that are currently selected for this filter
    */
   private updateRemoveParams(selectedValues: FacetValue[]): void {
-    const page = this.paginationService.getPageParam(this.searchConfigService.paginationID);
+    const page = this.paginationService.getPageParam(
+      this.searchConfigService.paginationID,
+    );
     this.removeQueryParams = {
       [this.filterConfig.paramName]: selectedValues
-        .filter((facetValue: FacetValue) => facetValue.label !== this.selectedValue.label)
+        .filter(
+          (facetValue: FacetValue) =>
+            facetValue.label !== this.selectedValue.label,
+        )
         .map((facetValue: FacetValue) => this.getFacetValue(facetValue)),
       [page]: 1,
     };

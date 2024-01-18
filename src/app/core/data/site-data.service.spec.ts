@@ -1,7 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
 
 import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
@@ -66,7 +63,6 @@ describe('SiteDataService', () => {
 
   describe('getBrowseEndpoint', () => {
     it('should return the Static Page endpoint', () => {
-
       const result = service.getBrowseEndpoint(options);
       const expected = cold('b', { b: siteLink });
 
@@ -76,10 +72,13 @@ describe('SiteDataService', () => {
 
   describe('find', () => {
     it('should return the Site object', () => {
-
-      spyOn(service, 'findAll').and.returnValue(cold('a', {
-        a: createSuccessfulRemoteDataObject(createPaginatedList([testObject])),
-      }));
+      spyOn(service, 'findAll').and.returnValue(
+        cold('a', {
+          a: createSuccessfulRemoteDataObject(
+            createPaginatedList([testObject]),
+          ),
+        }),
+      );
 
       const expected = cold('(b|)', { b: testObject });
       const result = service.find();

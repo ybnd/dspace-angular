@@ -8,14 +8,8 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
-import {
-  NgbModal,
-  NgbModalRef,
-} from '@ng-bootstrap/ng-bootstrap';
+import { ActivatedRoute, Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BehaviorSubject,
@@ -24,13 +18,7 @@ import {
   shareReplay,
   Subscription,
 } from 'rxjs';
-import {
-  finalize,
-  map,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { finalize, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -63,7 +51,6 @@ import { ProcessStatus } from '../processes/process-status.model';
  * A component displaying detailed information about a DSpace Process
  */
 export class ProcessDetailComponent implements OnInit, OnDestroy {
-
   /**
    * The AlertType enumeration
    * @type {AlertType}
@@ -149,48 +136,53 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
 
     this.filesRD$ = this.processRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((process: Process) => this.processService.getFiles(process.processId)),
+      switchMap((process: Process) =>
+        this.processService.getFiles(process.processId),
+      ),
     );
   }
 
   refresh() {
-    this.processRD$ = this.processService.findById(
-      this.route.snapshot.params.id,
-      false,
-      true,
-      followLink('script'),
-    ).pipe(
-      getFirstSucceededRemoteData(),
-      redirectOn4xx(this.router, this.authService),
-      tap((processRemoteData: RemoteData<Process>) => {
-        if (!this.isProcessFinished(processRemoteData.payload)) {
-          this.startRefreshTimer();
-        }
-      }),
-      shareReplay({ refCount: false, bufferSize: 1 }),
-    );
+    this.processRD$ = this.processService
+      .findById(
+        this.route.snapshot.params.id,
+        false,
+        true,
+        followLink('script'),
+      )
+      .pipe(
+        getFirstSucceededRemoteData(),
+        redirectOn4xx(this.router, this.authService),
+        tap((processRemoteData: RemoteData<Process>) => {
+          if (!this.isProcessFinished(processRemoteData.payload)) {
+            this.startRefreshTimer();
+          }
+        }),
+        shareReplay({ refCount: false, bufferSize: 1 }),
+      );
 
     this.filesRD$ = this.processRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((process: Process) => this.processService.getFiles(process.processId)),
+      switchMap((process: Process) =>
+        this.processService.getFiles(process.processId),
+      ),
     );
   }
 
   startRefreshTimer() {
     this.refreshCounter$.next(0);
 
-    this.refreshTimerSub = interval(1000).subscribe(
-      value => {
-        if (value > 5) {
-          setTimeout(() => {
-            this.refresh();
-            this.stopRefreshTimer();
-            this.refreshCounter$.next(0);
-          }, 1);
-        } else {
-          this.refreshCounter$.next(5 - value);
-        }
-      });
+    this.refreshTimerSub = interval(1000).subscribe((value) => {
+      if (value > 5) {
+        setTimeout(() => {
+          this.refresh();
+          this.stopRefreshTimer();
+          this.refreshCounter$.next(0);
+        }, 1);
+      } else {
+        this.refreshCounter$.next(5 - value);
+      }
+    });
   }
 
   stopRefreshTimer() {
@@ -205,7 +197,9 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
    * @param bitstream
    */
   getFileName(bitstream: Bitstream) {
-    return bitstream instanceof DSpaceObject ? this.nameService.getName(bitstream) : 'unknown';
+    return bitstream instanceof DSpaceObject
+      ? this.nameService.getName(bitstream)
+      : 'unknown';
   }
 
   /**
@@ -215,12 +209,16 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
   showProcessOutputLogs() {
     this.retrievingOutputLogs$.next(true);
     this.zone.runOutsideAngular(() => {
-      const processOutputRD$: Observable<RemoteData<Bitstream>> = this.processRD$.pipe(
-        getFirstSucceededRemoteDataPayload(),
-        switchMap((process: Process) => {
-          return this.bitstreamDataService.findByHref(process._links.output.href, false);
-        }),
-      );
+      const processOutputRD$: Observable<RemoteData<Bitstream>> =
+        this.processRD$.pipe(
+          getFirstSucceededRemoteDataPayload(),
+          switchMap((process: Process) => {
+            return this.bitstreamDataService.findByHref(
+              process._links.output.href,
+              false,
+            );
+          }),
+        );
       this.outputLogFileUrl$ = processOutputRD$.pipe(
         getFirstSucceededRemoteData(),
         tap((processOutputFileRD: RemoteData<Bitstream>) => {
@@ -231,33 +229,44 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
         }),
         switchMap((processOutput: RemoteData<Bitstream>) => {
           const url = processOutput.payload._links.content.href;
-          return this.authService.getShortlivedToken().pipe(take(1),
+          return this.authService.getShortlivedToken().pipe(
+            take(1),
             map((token: string) => {
-              return hasValue(token) ? new URLCombiner(url, `?authentication-token=${token}`).toString() : url;
-            }));
+              return hasValue(token)
+                ? new URLCombiner(
+                    url,
+                    `?authentication-token=${token}`,
+                  ).toString()
+                : url;
+            }),
+          );
         }),
       );
     });
-    this.outputLogFileUrl$.pipe(take(1),
-      switchMap((url: string) => {
-        return this.getTextFile(url);
-      }),
-      finalize(() => this.zone.run(() => this.retrievingOutputLogs$.next(false))),
-    ).subscribe((logs: string) => {
-      this.outputLogs$.next(logs);
-    });
+    this.outputLogFileUrl$
+      .pipe(
+        take(1),
+        switchMap((url: string) => {
+          return this.getTextFile(url);
+        }),
+        finalize(() =>
+          this.zone.run(() => this.retrievingOutputLogs$.next(false)),
+        ),
+      )
+      .subscribe((logs: string) => {
+        this.outputLogs$.next(logs);
+      });
   }
 
   getTextFile(filename: string): Observable<string> {
     // The Observable returned by get() is of type Observable<string>
     // because a text response was specified.
     // There's no need to pass a <string> type parameter to get().
-    return this.http.get(filename, { responseType: 'text' })
-      .pipe(
-        finalize(() => {
-          this.showOutputLogs = true;
-        }),
-      );
+    return this.http.get(filename, { responseType: 'text' }).pipe(
+      finalize(() => {
+        this.showOutputLogs = true;
+      }),
+    );
   }
 
   /**
@@ -265,9 +274,14 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
    * @param process Process to check if completed or failed
    */
   isProcessFinished(process: Process): boolean {
-    return (hasValue(process) && hasValue(process.processStatus) &&
-      (process.processStatus.toString() === ProcessStatus[ProcessStatus.COMPLETED].toString()
-        || process.processStatus.toString() === ProcessStatus[ProcessStatus.FAILED].toString()));
+    return (
+      hasValue(process) &&
+      hasValue(process.processStatus) &&
+      (process.processStatus.toString() ===
+        ProcessStatus[ProcessStatus.COMPLETED].toString() ||
+        process.processStatus.toString() ===
+          ProcessStatus[ProcessStatus.FAILED].toString())
+    );
   }
 
   /**
@@ -275,17 +289,22 @@ export class ProcessDetailComponent implements OnInit, OnDestroy {
    * @param process
    */
   deleteProcess(process: Process) {
-    this.processService.delete(process.processId).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((rd) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get('process.detail.delete.success'));
-        this.closeModal();
-        this.router.navigateByUrl(getProcessListRoute());
-      } else {
-        this.notificationsService.error(this.translateService.get('process.detail.delete.error'));
-      }
-    });
+    this.processService
+      .delete(process.processId)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((rd) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get('process.detail.delete.success'),
+          );
+          this.closeModal();
+          this.router.navigateByUrl(getProcessListRoute());
+        } else {
+          this.notificationsService.error(
+            this.translateService.get('process.detail.delete.error'),
+          );
+        }
+      });
   }
 
   /**

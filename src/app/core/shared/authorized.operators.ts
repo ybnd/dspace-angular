@@ -1,17 +1,7 @@
 import { InjectionToken } from '@angular/core';
-import {
-  Router,
-  UrlTree,
-} from '@angular/router';
-import {
-  combineLatest as observableCombineLatest,
-  Observable,
-} from 'rxjs';
-import {
-  filter,
-  map,
-  withLatestFrom,
-} from 'rxjs/operators';
+import { Router, UrlTree } from '@angular/router';
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
+import { filter, map, withLatestFrom } from 'rxjs/operators';
 
 import {
   getForbiddenRoute,
@@ -21,7 +11,12 @@ import { getEndUserAgreementPath } from '../../info/info-routing-paths';
 import { AuthService } from '../auth/auth.service';
 import { RemoteData } from '../data/remote-data';
 
-export const REDIRECT_ON_4XX = new InjectionToken<<T>(router: Router, authService: AuthService) => (source: Observable<RemoteData<T>>) => Observable<RemoteData<T>>>('redirectOn4xx', {
+export const REDIRECT_ON_4XX = new InjectionToken<
+  <T>(
+    router: Router,
+    authService: AuthService,
+  ) => (source: Observable<RemoteData<T>>) => Observable<RemoteData<T>>
+>('redirectOn4xx', {
   providedIn: 'root',
   factory: () => redirectOn4xx,
 });
@@ -33,18 +28,23 @@ export const REDIRECT_ON_4XX = new InjectionToken<<T>(router: Router, authServic
  * @param router The router used to navigate to a new page
  * @param authService Service to check if the user is authenticated
  */
-export const redirectOn4xx = <T>(router: Router, authService: AuthService) =>
+export const redirectOn4xx =
+  <T>(router: Router, authService: AuthService) =>
   (source: Observable<RemoteData<T>>): Observable<RemoteData<T>> =>
     source.pipe(
       withLatestFrom(authService.isAuthenticated()),
       filter(([rd, isAuthenticated]: [RemoteData<T>, boolean]) => {
         if (rd.hasFailed) {
           if (rd.statusCode === 404 || rd.statusCode === 422) {
-            router.navigateByUrl(getPageNotFoundRoute(), { skipLocationChange: true });
+            router.navigateByUrl(getPageNotFoundRoute(), {
+              skipLocationChange: true,
+            });
             return false;
           } else if (rd.statusCode === 403 || rd.statusCode === 401) {
             if (isAuthenticated) {
-              router.navigateByUrl(getForbiddenRoute(), { skipLocationChange: true });
+              router.navigateByUrl(getForbiddenRoute(), {
+                skipLocationChange: true,
+              });
               return false;
             } else {
               authService.setRedirectUrl(router.url);
@@ -63,7 +63,8 @@ export const redirectOn4xx = <T>(router: Router, authService: AuthService) =>
  * @param authService The AuthService used to determine whether or not the user is logged in
  * @param redirectUrl The URL to redirect back to after logging in
  */
-export const returnForbiddenUrlTreeOrLoginOnFalse = (router: Router, authService: AuthService, redirectUrl: string) =>
+export const returnForbiddenUrlTreeOrLoginOnFalse =
+  (router: Router, authService: AuthService, redirectUrl: string) =>
   (source: Observable<boolean>): Observable<boolean | UrlTree> =>
     source.pipe(
       map((authorized) => [authorized]),
@@ -75,7 +76,8 @@ export const returnForbiddenUrlTreeOrLoginOnFalse = (router: Router, authService
  * @param authService The AuthService used to determine whether or not the user is logged in
  * @param redirectUrl The URL to redirect back to after logging in
  */
-export const returnForbiddenUrlTreeOrLoginOnAllFalse = (router: Router, authService: AuthService, redirectUrl: string) =>
+export const returnForbiddenUrlTreeOrLoginOnAllFalse =
+  (router: Router, authService: AuthService, redirectUrl: string) =>
   (source: Observable<boolean[]>): Observable<boolean | UrlTree> =>
     observableCombineLatest(source, authService.isAuthenticated()).pipe(
       map(([authorizedList, authenticated]: [boolean[], boolean]) => {
@@ -89,17 +91,22 @@ export const returnForbiddenUrlTreeOrLoginOnAllFalse = (router: Router, authServ
             return router.parseUrl('login');
           }
         }
-      }));
+      }),
+    );
 /**
  * Operator that returns a UrlTree to the unauthorized page when the boolean received is false
  * @param router    Router
  * @param redirect  Redirect URL to add to the UrlTree. This is used to redirect back to the original route after the
  *                  user accepts the agreement.
  */
-export const returnEndUserAgreementUrlTreeOnFalse = (router: Router, redirect: string) =>
+export const returnEndUserAgreementUrlTreeOnFalse =
+  (router: Router, redirect: string) =>
   (source: Observable<boolean>): Observable<boolean | UrlTree> =>
     source.pipe(
       map((hasAgreed: boolean) => {
         const queryParams = { redirect: encodeURIComponent(redirect) };
-        return hasAgreed ? hasAgreed : router.createUrlTree([getEndUserAgreementPath()], { queryParams });
-      }));
+        return hasAgreed
+          ? hasAgreed
+          : router.createUrlTree([getEndUserAgreementPath()], { queryParams });
+      }),
+    );

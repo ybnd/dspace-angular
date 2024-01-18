@@ -1,20 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../../../../../core/cache/object-cache.service';
@@ -41,11 +32,15 @@ mockItemWithMetadata.hitHighlights = {};
 const dcTitle = 'This is just another <em>title</em>';
 mockItemWithMetadata.indexableObject = Object.assign(new Item(), {
   hitHighlights: {
-    'dc.title': [{
-      value: dcTitle,
-    }],
+    'dc.title': [
+      {
+        value: dcTitle,
+      },
+    ],
   },
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'dc.title': [
       {
@@ -75,117 +70,125 @@ mockItemWithMetadata.indexableObject = Object.assign(new Item(), {
 });
 const mockPerson: ItemSearchResult = Object.assign(new ItemSearchResult(), {
   hitHighlights: {
-    'person.familyName': [{
-      value: '<em>Michel</em>',
-    }],
-  },
-  indexableObject:
-    Object.assign(new Item(), {
-      bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
-      entityType: 'Person',
-      metadata: {
-        'dc.title': [
-          {
-            language: 'en_US',
-            value: 'This is just another title',
-          },
-        ],
-        'dc.contributor.author': [
-          {
-            language: 'en_US',
-            value: 'Smith, Donald',
-          },
-        ],
-        'dc.publisher': [
-          {
-            language: 'en_US',
-            value: 'a publisher',
-          },
-        ],
-        'dc.date.issued': [
-          {
-            language: 'en_US',
-            value: '2015-06-26',
-          },
-        ],
-        'dc.description.abstract': [
-          {
-            language: 'en_US',
-            value: 'This is the abstract',
-          },
-        ],
-        'dspace.entity.type': [
-          {
-            value: 'Person',
-          },
-        ],
-        'person.familyName': [
-          {
-            value: 'Michel',
-          },
-        ],
+    'person.familyName': [
+      {
+        value: '<em>Michel</em>',
       },
-    }),
+    ],
+  },
+  indexableObject: Object.assign(new Item(), {
+    bundles: createSuccessfulRemoteDataObject$(
+      buildPaginatedList(new PageInfo(), []),
+    ),
+    entityType: 'Person',
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'This is just another title',
+        },
+      ],
+      'dc.contributor.author': [
+        {
+          language: 'en_US',
+          value: 'Smith, Donald',
+        },
+      ],
+      'dc.publisher': [
+        {
+          language: 'en_US',
+          value: 'a publisher',
+        },
+      ],
+      'dc.date.issued': [
+        {
+          language: 'en_US',
+          value: '2015-06-26',
+        },
+      ],
+      'dc.description.abstract': [
+        {
+          language: 'en_US',
+          value: 'This is the abstract',
+        },
+      ],
+      'dspace.entity.type': [
+        {
+          value: 'Person',
+        },
+      ],
+      'person.familyName': [
+        {
+          value: 'Michel',
+        },
+      ],
+    },
+  }),
 });
 const mockOrgUnit: ItemSearchResult = Object.assign(new ItemSearchResult(), {
   hitHighlights: {
-    'organization.legalName': [{
-      value: '<em>Science</em>',
-    }],
-  },
-  indexableObject:
-    Object.assign(new Item(), {
-      bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
-      entityType: 'OrgUnit',
-      metadata: {
-        'dc.title': [
-          {
-            language: 'en_US',
-            value: 'This is just another title',
-          },
-        ],
-        'dc.contributor.author': [
-          {
-            language: 'en_US',
-            value: 'Smith, Donald',
-          },
-        ],
-        'dc.publisher': [
-          {
-            language: 'en_US',
-            value: 'a publisher',
-          },
-        ],
-        'dc.date.issued': [
-          {
-            language: 'en_US',
-            value: '2015-06-26',
-          },
-        ],
-        'dc.description.abstract': [
-          {
-            language: 'en_US',
-            value: 'This is the abstract',
-          },
-        ],
-        'organization.legalName': [
-          {
-            value: 'Science',
-          },
-        ],
-        'dspace.entity.type': [
-          {
-            value: 'OrgUnit',
-          },
-        ],
+    'organization.legalName': [
+      {
+        value: '<em>Science</em>',
       },
-    }),
+    ],
+  },
+  indexableObject: Object.assign(new Item(), {
+    bundles: createSuccessfulRemoteDataObject$(
+      buildPaginatedList(new PageInfo(), []),
+    ),
+    entityType: 'OrgUnit',
+    metadata: {
+      'dc.title': [
+        {
+          language: 'en_US',
+          value: 'This is just another title',
+        },
+      ],
+      'dc.contributor.author': [
+        {
+          language: 'en_US',
+          value: 'Smith, Donald',
+        },
+      ],
+      'dc.publisher': [
+        {
+          language: 'en_US',
+          value: 'a publisher',
+        },
+      ],
+      'dc.date.issued': [
+        {
+          language: 'en_US',
+          value: '2015-06-26',
+        },
+      ],
+      'dc.description.abstract': [
+        {
+          language: 'en_US',
+          value: 'This is the abstract',
+        },
+      ],
+      'organization.legalName': [
+        {
+          value: 'Science',
+        },
+      ],
+      'dspace.entity.type': [
+        {
+          value: 'OrgUnit',
+        },
+      ],
+    },
+  }),
 });
 
 const mockItemWithoutMetadata: ItemSearchResult = new ItemSearchResult();
 mockItemWithoutMetadata.hitHighlights = {};
 mockItemWithoutMetadata.indexableObject = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'dc.title': [
       {
@@ -196,7 +199,15 @@ mockItemWithoutMetadata.indexableObject = Object.assign(new Item(), {
   },
 });
 
-describe('ItemGridElementComponent', getEntityGridElementTestComponent(ItemSearchResultGridElementComponent, mockItemWithMetadata, mockItemWithoutMetadata, ['authors', 'date', 'abstract']));
+describe(
+  'ItemGridElementComponent',
+  getEntityGridElementTestComponent(
+    ItemSearchResultGridElementComponent,
+    mockItemWithMetadata,
+    mockItemWithoutMetadata,
+    ['authors', 'date', 'abstract'],
+  ),
+);
 
 /**
  * Create test cases for a grid component of an entity.
@@ -207,7 +218,12 @@ describe('ItemGridElementComponent', getEntityGridElementTestComponent(ItemSearc
  *                                      For example: If one of the fields to check is labeled "authors", the html template should contain at least one element with class ".item-authors" that's
  *                                      present when the author metadata is available.
  */
-export function getEntityGridElementTestComponent(component, searchResultWithMetadata: ItemSearchResult, searchResultWithoutMetadata: ItemSearchResult, fieldsToCheck: string[]) {
+export function getEntityGridElementTestComponent(
+  component,
+  searchResultWithMetadata: ItemSearchResult,
+  searchResultWithoutMetadata: ItemSearchResult,
+  fieldsToCheck: string[],
+) {
   return () => {
     let comp;
     let fixture;
@@ -224,10 +240,7 @@ export function getEntityGridElementTestComponent(component, searchResultWithMet
 
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-        ],
+        imports: [NoopAnimationsModule, TranslateModule.forRoot()],
         declarations: [component, TruncatePipe],
         providers: [
           { provide: TruncatableService, useValue: truncatableServiceStub },
@@ -244,9 +257,11 @@ export function getEntityGridElementTestComponent(component, searchResultWithMet
           { provide: BitstreamDataService, useValue: mockBitstreamDataService },
         ],
         schemas: [NO_ERRORS_SCHEMA],
-      }).overrideComponent(component, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      }).compileComponents();
+      })
+        .overrideComponent(component, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
     }));
 
     beforeEach(waitForAsync(() => {
@@ -262,7 +277,9 @@ export function getEntityGridElementTestComponent(component, searchResultWithMet
         });
 
         it(`should show the "${field}" field`, () => {
-          const itemAuthorField = fixture.debugElement.query(By.css(`.item-${field}`));
+          const itemAuthorField = fixture.debugElement.query(
+            By.css(`.item-${field}`),
+          );
           expect(itemAuthorField).not.toBeNull();
         });
       });
@@ -274,7 +291,9 @@ export function getEntityGridElementTestComponent(component, searchResultWithMet
         });
 
         it(`should not show the "${field}" field`, () => {
-          const itemAuthorField = fixture.debugElement.query(By.css(`.item-${field}`));
+          const itemAuthorField = fixture.debugElement.query(
+            By.css(`.item-${field}`),
+          );
           expect(itemAuthorField).toBeNull();
         });
       });

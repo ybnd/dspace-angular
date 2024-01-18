@@ -1,9 +1,4 @@
-import {
-  Component,
-  forwardRef,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import {
   NG_VALUE_ACCESSOR,
   UntypedFormControl,
@@ -35,8 +30,10 @@ import { InputSuggestion } from '../input-suggestions.model';
 /**
  * Component representing a form with a autocomplete functionality
  */
-export class ValidationSuggestionsComponent extends InputSuggestionsComponent implements OnInit {
-
+export class ValidationSuggestionsComponent
+  extends InputSuggestionsComponent
+  implements OnInit
+{
   form: UntypedFormGroup;
 
   /**
@@ -57,15 +54,21 @@ export class ValidationSuggestionsComponent extends InputSuggestionsComponent im
    * The possibility to edit metadata
    */
   @Input() disable;
-  constructor(private metadataFieldValidator: MetadataFieldValidator,
-              private objectUpdatesService: ObjectUpdatesService) {
+  constructor(
+    private metadataFieldValidator: MetadataFieldValidator,
+    private objectUpdatesService: ObjectUpdatesService,
+  ) {
     super();
   }
 
   ngOnInit() {
     this.form = new UntypedFormGroup({
       metadataNameField: new UntypedFormControl(this._value, {
-        asyncValidators: [this.metadataFieldValidator.validate.bind(this.metadataFieldValidator)],
+        asyncValidators: [
+          this.metadataFieldValidator.validate.bind(
+            this.metadataFieldValidator,
+          ),
+        ],
         validators: [Validators.required],
       }),
     });
@@ -90,9 +93,16 @@ export class ValidationSuggestionsComponent extends InputSuggestionsComponent im
    * @param form  Form with input
    */
   checkIfValidInput(form) {
-    this.valid = !(form.get('metadataNameField').status === 'INVALID' && (form.get('metadataNameField').dirty || form.get('metadataNameField').touched));
-    this.objectUpdatesService.setValidFieldUpdate(this.url, this.metadata.uuid, this.valid);
+    this.valid = !(
+      form.get('metadataNameField').status === 'INVALID' &&
+      (form.get('metadataNameField').dirty ||
+        form.get('metadataNameField').touched)
+    );
+    this.objectUpdatesService.setValidFieldUpdate(
+      this.url,
+      this.metadata.uuid,
+      this.valid,
+    );
     return this.valid;
   }
-
 }

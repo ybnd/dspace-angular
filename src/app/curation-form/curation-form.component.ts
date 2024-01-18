@@ -5,16 +5,10 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { ConfigurationDataService } from '../core/data/configuration-data.service';
@@ -27,11 +21,7 @@ import {
 } from '../core/shared/operators';
 import { getProcessDetailRoute } from '../process-page/process-page-routing.paths';
 import { Process } from '../process-page/processes/process.model';
-import {
-  hasValue,
-  isEmpty,
-  isNotEmpty,
-} from '../shared/empty.util';
+import { hasValue, isEmpty, isNotEmpty } from '../shared/empty.util';
 import { HandleService } from '../shared/handle.service';
 import { NotificationsService } from '../shared/notifications/notifications.service';
 
@@ -45,13 +35,12 @@ export const CURATION_CFG = 'plugin.named.org.dspace.curate.CurationTask';
   templateUrl: './curation-form.component.html',
 })
 export class CurationFormComponent implements OnDestroy, OnInit {
-
   config: Observable<RemoteData<ConfigurationProperty>>;
   tasks: string[];
   form: UntypedFormGroup;
 
   @Input()
-    dsoHandle: string;
+  dsoHandle: string;
 
   subs: Subscription[] = [];
 
@@ -63,8 +52,7 @@ export class CurationFormComponent implements OnDestroy, OnInit {
     private handleService: HandleService,
     private router: Router,
     private cdr: ChangeDetectorRef,
-  ) {
-  }
+  ) {}
 
   ngOnDestroy(): void {
     this.subs.forEach((sub: Subscription) => sub.unsubscribe());
@@ -76,16 +64,19 @@ export class CurationFormComponent implements OnDestroy, OnInit {
       handle: new UntypedFormControl(''),
     });
 
-    this.config = this.configurationDataService.findByPropertyName(CURATION_CFG);
-    this.subs.push(this.config.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    ).subscribe((configProperties: ConfigurationProperty) => {
-      this.tasks = configProperties.values
-        .filter((value) => isNotEmpty(value) && value.includes('='))
-        .map((value) => value.split('=')[1].trim());
-      this.form.get('task').patchValue(this.tasks[0]);
-      this.cdr.detectChanges();
-    }));
+    this.config =
+      this.configurationDataService.findByPropertyName(CURATION_CFG);
+    this.subs.push(
+      this.config
+        .pipe(getFirstSucceededRemoteDataPayload())
+        .subscribe((configProperties: ConfigurationProperty) => {
+          this.tasks = configProperties.values
+            .filter((value) => isNotEmpty(value) && value.includes('='))
+            .map((value) => value.split('=')[1].trim());
+          this.form.get('task').patchValue(this.tasks[0]);
+          this.cdr.detectChanges();
+        }),
+    );
   }
 
   /**
@@ -106,36 +97,65 @@ export class CurationFormComponent implements OnDestroy, OnInit {
       handle$ = this.handleService.normalizeHandle(this.dsoHandle).pipe(
         map((handle: string | null) => {
           if (isEmpty(handle)) {
-            this.notificationsService.error(this.translateService.get('curation.form.submit.error.head'),
-              this.translateService.get('curation.form.submit.error.invalid-handle'));
+            this.notificationsService.error(
+              this.translateService.get('curation.form.submit.error.head'),
+              this.translateService.get(
+                'curation.form.submit.error.invalid-handle',
+              ),
+            );
           }
           return handle;
         }),
       );
     } else {
-      handle$ = this.handleService.normalizeHandle(this.form.get('handle').value).pipe(
-        map((handle: string | null) => isEmpty(handle) ? 'all' : handle),
-      );
+      handle$ = this.handleService
+        .normalizeHandle(this.form.get('handle').value)
+        .pipe(
+          map((handle: string | null) => (isEmpty(handle) ? 'all' : handle)),
+        );
     }
 
-    this.subs.push(handle$.subscribe((handle: string) => {
-      if (hasValue(handle)) {
-        this.subs.push(this.scriptDataService.invoke('curate', [
-          { name: '-t', value: taskName },
-          { name: '-i', value: handle },
-        ], []).pipe(
-          getFirstCompletedRemoteData(),
-        ).subscribe((rd: RemoteData<Process>) => {
-          if (rd.hasSucceeded) {
-            this.notificationsService.success(this.translateService.get('curation.form.submit.success.head'),
-              this.translateService.get('curation.form.submit.success.content'));
-            void this.router.navigateByUrl(getProcessDetailRoute(rd.payload.processId));
-          } else {
-            this.notificationsService.error(this.translateService.get('curation.form.submit.error.head'),
-              this.translateService.get('curation.form.submit.error.content'));
-          }
-        }));
-      }
-    }));
+    this.subs.push(
+      handle$.subscribe((handle: string) => {
+        if (hasValue(handle)) {
+          this.subs.push(
+            this.scriptDataService
+              .invoke(
+                'curate',
+                [
+                  { name: '-t', value: taskName },
+                  { name: '-i', value: handle },
+                ],
+                [],
+              )
+              .pipe(getFirstCompletedRemoteData())
+              .subscribe((rd: RemoteData<Process>) => {
+                if (rd.hasSucceeded) {
+                  this.notificationsService.success(
+                    this.translateService.get(
+                      'curation.form.submit.success.head',
+                    ),
+                    this.translateService.get(
+                      'curation.form.submit.success.content',
+                    ),
+                  );
+                  void this.router.navigateByUrl(
+                    getProcessDetailRoute(rd.payload.processId),
+                  );
+                } else {
+                  this.notificationsService.error(
+                    this.translateService.get(
+                      'curation.form.submit.error.head',
+                    ),
+                    this.translateService.get(
+                      'curation.form.submit.error.content',
+                    ),
+                  );
+                }
+              }),
+          );
+        }
+      }),
+    );
   }
 }

@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
@@ -17,7 +14,13 @@ import { TruncatableService } from '../../truncatable/truncatable.service';
   selector: 'ds-search-result-grid-element',
   template: ``,
 })
-export class SearchResultGridElementComponent<T extends SearchResult<K>, K extends DSpaceObject> extends AbstractListableElementComponent<T> implements OnInit {
+export class SearchResultGridElementComponent<
+    T extends SearchResult<K>,
+    K extends DSpaceObject,
+  >
+  extends AbstractListableElementComponent<T>
+  implements OnInit
+{
   /**
    * The DSpaceObject of the search result
    */
@@ -53,7 +56,10 @@ export class SearchResultGridElementComponent<T extends SearchResult<K>, K exten
    * @returns {string[]} the matching string values or an empty array.
    */
   allMetadataValues(keyOrKeys: string | string[]): string[] {
-    return Metadata.allValues([this.object.hitHighlights, this.dso.metadata], keyOrKeys);
+    return Metadata.allValues(
+      [this.object.hitHighlights, this.dso.metadata],
+      keyOrKeys,
+    );
   }
 
   /**
@@ -63,7 +69,10 @@ export class SearchResultGridElementComponent<T extends SearchResult<K>, K exten
    * @returns {string} the first matching string value, or `undefined`.
    */
   firstMetadataValue(keyOrKeys: string | string[]): string {
-    return Metadata.firstValue([this.object.hitHighlights, this.dso.metadata], keyOrKeys);
+    return Metadata.firstValue(
+      [this.object.hitHighlights, this.dso.metadata],
+      keyOrKeys,
+    );
   }
 
   private isCollapsed(): Observable<boolean> {

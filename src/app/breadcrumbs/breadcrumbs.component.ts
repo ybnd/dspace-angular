@@ -13,7 +13,6 @@ import { BreadcrumbsService } from './breadcrumbs.service';
   styleUrls: ['./breadcrumbs.component.scss'],
 })
 export class BreadcrumbsComponent {
-
   /**
    * Observable of the list of breadcrumbs for this page
    */
@@ -24,11 +23,8 @@ export class BreadcrumbsComponent {
    */
   showBreadcrumbs$: Observable<boolean>;
 
-  constructor(
-    private breadcrumbsService: BreadcrumbsService,
-  ) {
+  constructor(private breadcrumbsService: BreadcrumbsService) {
     this.breadcrumbs$ = breadcrumbsService.breadcrumbs$;
     this.showBreadcrumbs$ = breadcrumbsService.showBreadcrumbs$;
   }
-
 }

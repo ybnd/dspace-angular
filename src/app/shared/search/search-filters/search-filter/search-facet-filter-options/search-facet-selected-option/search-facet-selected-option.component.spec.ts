@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
@@ -60,7 +53,9 @@ describe('SearchFacetSelectedOptionComponent', () => {
     count: 20,
     _links: {
       self: { href: 'selectedValue-self-link1' },
-      search: { href: `http://test.org/api/discover/search/objects?f.${filterName1}=${value1}` },
+      search: {
+        href: `http://test.org/api/discover/search/objects?f.${filterName1}=${value1}`,
+      },
     },
   };
   const selectedValue2: FacetValue = {
@@ -69,7 +64,9 @@ describe('SearchFacetSelectedOptionComponent', () => {
     count: 20,
     _links: {
       self: { href: 'selectedValue-self-link2' },
-      search: { href: `http://test.org/api/discover/search/objects?f.${filterName1}=${value2}` },
+      search: {
+        href: `http://test.org/api/discover/search/objects?f.${filterName1}=${value2}`,
+      },
     },
   };
   const selectedAuthorityValue: FacetValue = {
@@ -78,7 +75,9 @@ describe('SearchFacetSelectedOptionComponent', () => {
     count: 20,
     _links: {
       self: { href: 'selectedAuthorityValue-self-link1' },
-      search: { href: `http://test.org/api/discover/search/objects?f.${filterName2}=${value1},${operator}` },
+      search: {
+        href: `http://test.org/api/discover/search/objects?f.${filterName2}=${value1},${operator}`,
+      },
     },
   };
   const selectedAuthorityValue2: FacetValue = {
@@ -87,11 +86,16 @@ describe('SearchFacetSelectedOptionComponent', () => {
     count: 20,
     _links: {
       self: { href: 'selectedAuthorityValue-self-link2' },
-      search: { href: `http://test.org/api/discover/search/objects?f.${filterName2}=${value2},${operator}` },
+      search: {
+        href: `http://test.org/api/discover/search/objects?f.${filterName2}=${value2},${operator}`,
+      },
     },
   };
   const selectedValues = [selectedValue, selectedValue2];
-  const selectedAuthorityValues = [selectedAuthorityValue, selectedAuthorityValue2];
+  const selectedAuthorityValues = [
+    selectedAuthorityValue,
+    selectedAuthorityValue2,
+  ];
   const facetValue = {
     label: value2,
     value: value2,
@@ -107,7 +111,9 @@ describe('SearchFacetSelectedOptionComponent', () => {
     count: 20,
     _links: {
       self: { href: 'authorityValue-self-link2' },
-      search: { href: `http://test.org/api/discover/search/objects?f.${filterName2}=${value2},${operator}` },
+      search: {
+        href: `http://test.org/api/discover/search/objects?f.${filterName2}=${value2},${operator}`,
+      },
     },
   };
   const selectedValues$ = observableOf(selectedValues);
@@ -117,7 +123,11 @@ describe('SearchFacetSelectedOptionComponent', () => {
   let router;
   const page = observableOf(0);
 
-  const pagination = Object.assign(new PaginationComponentOptions(), { id: 'page-id', currentPage: 1, pageSize: 20 });
+  const pagination = Object.assign(new PaginationComponentOptions(), {
+    id: 'page-id',
+    currentPage: 1,
+    pageSize: 20,
+  });
   const paginationService = new PaginationServiceStub(pagination);
 
   beforeEach(waitForAsync(() => {
@@ -129,28 +139,31 @@ describe('SearchFacetSelectedOptionComponent', () => {
         { provide: Router, useValue: new RouterStub() },
         { provide: PaginationService, useValue: paginationService },
         {
-          provide: SearchConfigurationService, useValue: {
+          provide: SearchConfigurationService,
+          useValue: {
             searchOptions: observableOf({}),
           },
         },
         {
-          provide: SearchFilterService, useValue: {
+          provide: SearchFilterService,
+          useValue: {
             getSelectedValuesForFilter: () => selectedValues,
-            isFilterActiveWithValue: (paramName: string, filterValue: string) => observableOf(true),
+            isFilterActiveWithValue: (paramName: string, filterValue: string) =>
+              observableOf(true),
             getPage: (paramName: string) => page,
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            incrementPage: (filterName: string) => {
-            },
-            resetPage: (filterName: string) => {
-            },
+            incrementPage: (filterName: string) => {},
+            resetPage: (filterName: string) => {},
             /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
           },
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(SearchFacetSelectedOptionComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(SearchFacetSelectedOptionComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -178,7 +191,9 @@ describe('SearchFacetSelectedOptionComponent', () => {
 
   describe('when filter type is authority and the updateRemoveParams method is called with a value', () => {
     it('should update the removeQueryParams with the new parameter values', () => {
-      spyOn(filterService, 'getSelectedValuesForFilter').and.returnValue(selectedAuthorityValues);
+      spyOn(filterService, 'getSelectedValuesForFilter').and.returnValue(
+        selectedAuthorityValues,
+      );
       comp.selectedValue = authorityValue;
       comp.selectedValues$ = selectedAuthorityValues$;
       comp.filterConfig = mockAuthorityFilterConfig;

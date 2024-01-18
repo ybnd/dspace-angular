@@ -7,11 +7,7 @@ import {
   SkipSelf,
 } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
-import {
-  Action,
-  StoreConfig,
-  StoreModule,
-} from '@ngrx/store';
+import { Action, StoreConfig, StoreModule } from '@ngrx/store';
 
 import { environment } from '../../environments/environment';
 import { storeModuleConfig } from '../app.reducer';
@@ -197,7 +193,10 @@ import { TaskResponseParsingService } from './tasks/task-response-parsing.servic
  * When not in production, endpoint responses can be mocked for testing purposes
  * If there is no mock version available for the endpoint, the actual REST response will be used just like in production mode
  */
-export const restServiceFactory = (mocks: ResponseMapMock, http: HttpClient) => {
+export const restServiceFactory = (
+  mocks: ResponseMapMock,
+  http: HttpClient,
+) => {
   if (environment.production) {
     return new DspaceRestService(http);
   } else {
@@ -207,7 +206,11 @@ export const restServiceFactory = (mocks: ResponseMapMock, http: HttpClient) => 
 
 const IMPORTS = [
   CommonModule,
-  StoreModule.forFeature('core', coreReducers, storeModuleConfig as StoreConfig<CoreState, Action>),
+  StoreModule.forFeature(
+    'core',
+    coreReducers,
+    storeModuleConfig as StoreConfig<CoreState, Action>,
+  ),
   EffectsModule.forFeature(coreEffects),
 ];
 
@@ -222,7 +225,11 @@ const PROVIDERS = [
   SiteDataService,
   DSOResponseParsingService,
   { provide: MOCK_RESPONSE_MAP, useValue: mockResponseMap },
-  { provide: DspaceRestService, useFactory: restServiceFactory, deps: [MOCK_RESPONSE_MAP, HttpClient] },
+  {
+    provide: DspaceRestService,
+    useFactory: restServiceFactory,
+    deps: [MOCK_RESPONSE_MAP, HttpClient],
+  },
   EPersonDataService,
   LinkHeadService,
   HALEndpointService,
@@ -320,110 +327,100 @@ const PROVIDERS = [
 /**
  * Declaration needed to make sure all decorator functions are called in time
  */
-export const models =
-  [
-    Root,
-    DSpaceObject,
-    Bundle,
-    Bitstream,
-    BitstreamFormat,
-    Item,
-    Site,
-    Collection,
-    Community,
-    EPerson,
-    Group,
-    ResourcePolicy,
-    MetadataSchema,
-    MetadataField,
-    License,
-    WorkflowItem,
-    WorkspaceItem,
-    SubmissionCcLicence,
-    SubmissionCcLicenceUrl,
-    SubmissionDefinitionsModel,
-    SubmissionFormsModel,
-    SubmissionSectionModel,
-    SubmissionUploadsModel,
-    AuthStatus,
-    BrowseEntry,
-    BrowseDefinition,
-    NonHierarchicalBrowseDefinition,
-    FlatBrowseDefinition,
-    ValueListBrowseDefinition,
-    HierarchicalBrowseDefinition,
-    ClaimedTask,
-    TaskObject,
-    PoolTask,
-    Relationship,
-    RelationshipType,
-    ItemType,
-    ExternalSource,
-    ExternalSourceEntry,
-    Script,
-    Process,
-    Version,
-    VersionHistory,
-    WorkflowAction,
-    AdvancedWorkflowInfo,
-    RatingAdvancedWorkflowInfo,
-    SelectReviewerAdvancedWorkflowInfo,
-    TemplateItem,
-    Feature,
-    Authorization,
-    Registration,
-    Vocabulary,
-    VocabularyEntry,
-    VocabularyEntryDetail,
-    ConfigurationProperty,
-    ShortLivedToken,
-    Registration,
-    UsageReport,
-    QualityAssuranceTopicObject,
-    QualityAssuranceEventObject,
-    Root,
-    SearchConfig,
-    SubmissionAccessesModel,
-    QualityAssuranceSourceObject,
-    AccessStatusObject,
-    ResearcherProfile,
-    OrcidQueue,
-    OrcidHistory,
-    AccessStatusObject,
-    IdentifierData,
-    Subscription,
-    ItemRequest,
-    BulkAccessConditionOptions,
-  ];
+export const models = [
+  Root,
+  DSpaceObject,
+  Bundle,
+  Bitstream,
+  BitstreamFormat,
+  Item,
+  Site,
+  Collection,
+  Community,
+  EPerson,
+  Group,
+  ResourcePolicy,
+  MetadataSchema,
+  MetadataField,
+  License,
+  WorkflowItem,
+  WorkspaceItem,
+  SubmissionCcLicence,
+  SubmissionCcLicenceUrl,
+  SubmissionDefinitionsModel,
+  SubmissionFormsModel,
+  SubmissionSectionModel,
+  SubmissionUploadsModel,
+  AuthStatus,
+  BrowseEntry,
+  BrowseDefinition,
+  NonHierarchicalBrowseDefinition,
+  FlatBrowseDefinition,
+  ValueListBrowseDefinition,
+  HierarchicalBrowseDefinition,
+  ClaimedTask,
+  TaskObject,
+  PoolTask,
+  Relationship,
+  RelationshipType,
+  ItemType,
+  ExternalSource,
+  ExternalSourceEntry,
+  Script,
+  Process,
+  Version,
+  VersionHistory,
+  WorkflowAction,
+  AdvancedWorkflowInfo,
+  RatingAdvancedWorkflowInfo,
+  SelectReviewerAdvancedWorkflowInfo,
+  TemplateItem,
+  Feature,
+  Authorization,
+  Registration,
+  Vocabulary,
+  VocabularyEntry,
+  VocabularyEntryDetail,
+  ConfigurationProperty,
+  ShortLivedToken,
+  Registration,
+  UsageReport,
+  QualityAssuranceTopicObject,
+  QualityAssuranceEventObject,
+  Root,
+  SearchConfig,
+  SubmissionAccessesModel,
+  QualityAssuranceSourceObject,
+  AccessStatusObject,
+  ResearcherProfile,
+  OrcidQueue,
+  OrcidHistory,
+  AccessStatusObject,
+  IdentifierData,
+  Subscription,
+  ItemRequest,
+  BulkAccessConditionOptions,
+];
 
 @NgModule({
-  imports: [
-    ...IMPORTS,
-  ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...EXPORTS,
-  ],
-  providers: [
-    ...PROVIDERS,
-  ],
+  imports: [...IMPORTS],
+  declarations: [...DECLARATIONS],
+  exports: [...EXPORTS],
+  providers: [...PROVIDERS],
 })
-
 export class CoreModule {
   static forRoot(): ModuleWithProviders<CoreModule> {
     return {
       ngModule: CoreModule,
-      providers: [
-        ...PROVIDERS,
-      ],
+      providers: [...PROVIDERS],
     };
   }
 
   constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (isNotEmpty(parentModule)) {
-      throw new Error('CoreModule is already loaded. Import it in the AppModule only');
+      throw new Error(
+        'CoreModule is already loaded. Import it in the AppModule only',
+      );
     }
   }
 }

@@ -1,8 +1,4 @@
-import {
-  inject,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { inject, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   AbstractControl,
   UntypedFormControl,
@@ -14,10 +10,7 @@ import {
   DynamicFormGroupModel,
   DynamicInputModel,
 } from '@ng-dynamic-forms/core';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 
 import { AppState } from '../../app.reducer';
 import { getMockFormBuilderService } from '../mocks/form-builder-service.mock';
@@ -53,23 +46,19 @@ describe('FormService test suite', () => {
     new DynamicInputModel({ id: 'date' }),
     new DynamicInputModel({ id: 'description' }),
     new DynamicFormGroupModel({
-
       id: 'addressLocation',
       group: [
         new DynamicInputModel({
-
           id: 'zipCode',
           label: 'Zip Code',
           placeholder: 'ZIP',
         }),
         new DynamicInputModel({
-
           id: 'state',
           label: 'State',
           placeholder: 'State',
         }),
         new DynamicInputModel({
-
           id: 'city',
           label: 'City',
           placeholder: 'City',
@@ -103,24 +92,29 @@ describe('FormService test suite', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [
-        StoreModule.forRoot({ formReducer }, {
-          runtimeChecks: {
-            strictStateImmutability: false,
-            strictActionImmutability: false,
+        StoreModule.forRoot(
+          { formReducer },
+          {
+            runtimeChecks: {
+              strictStateImmutability: false,
+              strictActionImmutability: false,
+            },
           },
-        }),
+        ),
       ],
     }).compileComponents();
   }));
 
   beforeEach(inject([Store], (store: Store<AppState>) => {
     builderService = getMockFormBuilderService();
-    store
-      .subscribe((state) => {
-        state.forms = formState;
-      });
+    store.subscribe((state) => {
+      state.forms = formState;
+    });
     const author: AbstractControl = new UntypedFormControl('test');
-    const title: AbstractControl = new UntypedFormControl(undefined, Validators.required);
+    const title: AbstractControl = new UntypedFormControl(
+      undefined,
+      Validators.required,
+    );
     const date: AbstractControl = new UntypedFormControl(undefined);
     const description: AbstractControl = new UntypedFormControl(undefined);
 
@@ -130,12 +124,16 @@ describe('FormService test suite', () => {
       city: new UntypedFormControl(undefined),
     });
 
-    formGroup = new UntypedFormGroup({ author, title, date, description, addressLocation });
-    controls = { author, title, date, description , addressLocation };
+    formGroup = new UntypedFormGroup({
+      author,
+      title,
+      date,
+      description,
+      addressLocation,
+    });
+    controls = { author, title, date, description, addressLocation };
     service = new FormService(builderService, store);
-  }),
-  )
-  ;
+  }));
 
   it('should check whether form state is init', () => {
     service.isFormInitialized(formId).subscribe((init) => {
@@ -177,7 +175,9 @@ describe('FormService test suite', () => {
 
   it('should add error to field', () => {
     let control = controls.description;
-    let model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'description');
+    let model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'description',
+    );
     let errorKeys: string[];
 
     service.addErrorToField(control, model, 'Test error message');
@@ -190,7 +190,9 @@ describe('FormService test suite', () => {
     expect(formGroup.controls.description.touched).toBe(true);
 
     control = controls.title;
-    model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'title');
+    model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'title',
+    );
     service.addErrorToField(control, model, 'error.required');
     errorKeys = Object.keys(control.errors);
 
@@ -205,7 +207,9 @@ describe('FormService test suite', () => {
     (builderService as any).isConcatGroup.and.returnValue(true);
 
     let control = controls.addressLocation;
-    let model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'addressLocation');
+    let model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'addressLocation',
+    );
     let errorKeys: string[];
 
     service.addErrorToField(control, model, 'Test error message');
@@ -224,12 +228,13 @@ describe('FormService test suite', () => {
       expect(subControl.hasError(errorKeys[0])).toBe(true);
       expect(subControl.touched).toBe(true);
     });
-
   });
 
   it('should remove error from field', () => {
     let control = controls.description;
-    let model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'description');
+    let model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'description',
+    );
     let errorKeys: string[];
 
     service.addErrorToField(control, model, 'Test error message');
@@ -244,7 +249,9 @@ describe('FormService test suite', () => {
     expect(formGroup.controls.description.touched).toBe(false);
 
     control = controls.title;
-    model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'title');
+    model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'title',
+    );
 
     service.addErrorToField(control, model, 'error.required');
 
@@ -261,7 +268,9 @@ describe('FormService test suite', () => {
     (builderService as any).isConcatGroup.and.returnValue(true);
 
     let control = controls.addressLocation;
-    let model = formModel.find((mdl: DynamicFormControlModel) => mdl.id === 'addressLocation');
+    let model = formModel.find(
+      (mdl: DynamicFormControlModel) => mdl.id === 'addressLocation',
+    );
     let errorKeys: string[];
 
     service.addErrorToField(control, model, 'Test error message');
@@ -290,5 +299,4 @@ describe('FormService test suite', () => {
 
     expect(control.value).toBeNull();
   });
-})
-;
+});

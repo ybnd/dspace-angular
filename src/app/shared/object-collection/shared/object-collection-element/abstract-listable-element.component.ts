@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 import { Context } from '../../../../core/shared/context.model';
@@ -17,7 +12,6 @@ import { ListableObject } from '../listable-object.model';
   template: ``,
 })
 export class AbstractListableElementComponent<T extends ListableObject> {
-
   /**
    * The object to render in this list element
    */
@@ -83,9 +77,5 @@ export class AbstractListableElementComponent<T extends ListableObject> {
    */
   contexts = Context;
 
-  constructor(
-    public dsoNameService: DSONameService,
-  ) {
-  }
-
+  constructor(public dsoNameService: DSONameService) {}
 }

@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { ItemPageComponent as BaseComponent } from '../../../../../app/item-page/simple/item-page.component';
 import { fadeInOut } from '../../../../../app/shared/animations/fade';
@@ -20,6 +17,4 @@ import { fadeInOut } from '../../../../../app/shared/animations/fade';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [fadeInOut],
 })
-export class ItemPageComponent extends BaseComponent {
-
-}
+export class ItemPageComponent extends BaseComponent {}

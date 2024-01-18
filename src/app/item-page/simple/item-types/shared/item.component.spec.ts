@@ -4,23 +4,13 @@ import {
   DebugElement,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Store } from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { BrowseDefinitionDataService } from '../../../../core/browse/browse-definition-data.service';
 import { RemoteDataBuildService } from '../../../../core/cache/builders/remote-data-build.service';
@@ -65,21 +55,21 @@ import {
 
 export function getIIIFSearchEnabled(enabled: boolean): MetadataValue {
   return Object.assign(new MetadataValue(), {
-    'value': enabled,
-    'language': null,
-    'authority': null,
-    'confidence': -1,
-    'place': 0,
+    value: enabled,
+    language: null,
+    authority: null,
+    confidence: -1,
+    place: 0,
   });
 }
 
 export function getIIIFEnabled(enabled: boolean): MetadataValue {
   return Object.assign(new MetadataValue(), {
-    'value': enabled,
-    'language': null,
-    'authority': null,
-    'confidence': -1,
-    'place': 0,
+    value: enabled,
+    language: null,
+    authority: null,
+    confidence: -1,
+    place: 0,
   });
 }
 
@@ -108,9 +98,12 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
         },
       };
 
-      const authorizationService = jasmine.createSpyObj('authorizationService', {
-        isAuthorized: observableOf(true),
-      });
+      const authorizationService = jasmine.createSpyObj(
+        'authorizationService',
+        {
+          isAuthorized: observableOf(true),
+        },
+      );
 
       TestBed.configureTestingModule({
         imports: [
@@ -145,13 +138,18 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
           { provide: RouteService, useValue: mockRouteService },
           { provide: AuthorizationDataService, useValue: authorizationService },
           { provide: ResearcherProfileDataService, useValue: {} },
-          { provide: BrowseDefinitionDataService, useValue: BrowseDefinitionDataServiceStub },
+          {
+            provide: BrowseDefinitionDataService,
+            useValue: BrowseDefinitionDataServiceStub,
+          },
         ],
 
         schemas: [NO_ERRORS_SCHEMA],
-      }).overrideComponent(component, {
-        set: { changeDetection: ChangeDetectionStrategy.Default },
-      }).compileComponents();
+      })
+        .overrideComponent(component, {
+          set: { changeDetection: ChangeDetectionStrategy.Default },
+        })
+        .compileComponents();
     }));
 
     beforeEach(waitForAsync(() => {
@@ -163,7 +161,9 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
 
     for (const key of Object.keys(mockItem.metadata)) {
       it(`should be calling a component with metadata field ${key}`, () => {
-        const fields = fixture.debugElement.queryAll(By.css('ds-generic-item-page-field'));
+        const fields = fixture.debugElement.queryAll(
+          By.css('ds-generic-item-page-field'),
+        );
         expect(containsFieldInput(fields, key)).toBeTruthy();
       });
     }
@@ -177,7 +177,10 @@ export function getItemPageFieldsTest(mockItem: Item, component) {
  * @param {string} metadataKey      A metadata key to look for
  * @returns {boolean}
  */
-export function containsFieldInput(fields: DebugElement[], metadataKey: string): boolean {
+export function containsFieldInput(
+  fields: DebugElement[],
+  metadataKey: string,
+): boolean {
   for (const field of fields) {
     const fieldComp = field.componentInstance;
     if (isNotEmpty(fieldComp.fields)) {
@@ -190,13 +193,17 @@ export function containsFieldInput(fields: DebugElement[], metadataKey: string):
 }
 
 export function createRelationshipsObservable() {
-  return createSuccessfulRemoteDataObject$(createPaginatedList([
-    Object.assign(new Relationship(), {
-      relationshipType: createSuccessfulRemoteDataObject$(new RelationshipType()),
-      leftItem: createSuccessfulRemoteDataObject$(new Item()),
-      rightItem: createSuccessfulRemoteDataObject$(new Item()),
-    }),
-  ]));
+  return createSuccessfulRemoteDataObject$(
+    createPaginatedList([
+      Object.assign(new Relationship(), {
+        relationshipType: createSuccessfulRemoteDataObject$(
+          new RelationshipType(),
+        ),
+        leftItem: createSuccessfulRemoteDataObject$(new Item()),
+        rightItem: createSuccessfulRemoteDataObject$(new Item()),
+      }),
+    ]),
+  );
 }
 
 describe('ItemComponent', () => {
@@ -220,7 +227,7 @@ describe('ItemComponent', () => {
       name: 'test',
     },
     {
-      id: 5,  // Wrong id on purpose
+      id: 5, // Wrong id on purpose
       name: 'another test',
     },
     {
@@ -235,7 +242,7 @@ describe('ItemComponent', () => {
     },
     {
       id: 2,
-      name: 'wrong test',  // Wrong name on purpose
+      name: 'wrong test', // Wrong name on purpose
     },
     {
       id: 3,
@@ -243,10 +250,13 @@ describe('ItemComponent', () => {
     },
   ];
   const arrWithDifferentOrder = [arr1[0], arr1[2], arr1[1]];
-  const arrWithOneMore = [...arr1, {
-    id: 4,
-    name: 'fourth test',
-  }];
+  const arrWithOneMore = [
+    ...arr1,
+    {
+      id: 4,
+      name: 'fourth test',
+    },
+  ];
   const arrWithAddedProperties = [
     {
       id: 1,
@@ -270,7 +280,6 @@ describe('ItemComponent', () => {
   const arrOfPrimitiveTypesWithOneMore = [1, 2, 3, 4, 5];
 
   describe('when calling compareArraysUsing', () => {
-
     describe('and comparing by id', () => {
       const compare = compareArraysUsing<any>((o) => o.id);
 
@@ -290,11 +299,11 @@ describe('ItemComponent', () => {
         expect(compare(arr1, arrWithAddedProperties)).toBeTruthy();
       });
 
-      it('should return false when the ids don\'t match', () => {
+      it("should return false when the ids don't match", () => {
         expect(compare(arr1, arrWithWrongId)).toBeFalsy();
       });
 
-      it('should return false when the sizes don\'t match', () => {
+      it("should return false when the sizes don't match", () => {
         expect(compare(arr1, arrWithOneMore)).toBeFalsy();
       });
     });
@@ -318,11 +327,11 @@ describe('ItemComponent', () => {
         expect(compare(arr1, arrWithAddedProperties)).toBeTruthy();
       });
 
-      it('should return false when the names don\'t match', () => {
+      it("should return false when the names don't match", () => {
         expect(compare(arr1, arrWithWrongName)).toBeFalsy();
       });
 
-      it('should return false when the sizes don\'t match', () => {
+      it("should return false when the sizes don't match", () => {
         expect(compare(arr1, arrWithOneMore)).toBeFalsy();
       });
     });
@@ -342,15 +351,15 @@ describe('ItemComponent', () => {
         expect(compare(arr1, arrWithAddedProperties)).toBeFalsy();
       });
 
-      it('should return false when the ids don\'t match', () => {
+      it("should return false when the ids don't match", () => {
         expect(compare(arr1, arrWithWrongId)).toBeFalsy();
       });
 
-      it('should return false when the names don\'t match', () => {
+      it("should return false when the names don't match", () => {
         expect(compare(arr1, arrWithWrongName)).toBeFalsy();
       });
 
-      it('should return false when the sizes don\'t match', () => {
+      it("should return false when the sizes don't match", () => {
         expect(compare(arr1, arrWithOneMore)).toBeFalsy();
       });
     });
@@ -363,18 +372,23 @@ describe('ItemComponent', () => {
       });
 
       it('should return true regardless of the order', () => {
-        expect(compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithDifferentOrder)).toBeTruthy();
+        expect(
+          compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithDifferentOrder),
+        ).toBeTruthy();
       });
 
       it('should return false when at least one is wrong', () => {
-        expect(compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithOneWrong)).toBeFalsy();
+        expect(
+          compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithOneWrong),
+        ).toBeFalsy();
       });
 
-      it('should return false when the sizes don\'t match', () => {
-        expect(compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithOneMore)).toBeFalsy();
+      it("should return false when the sizes don't match", () => {
+        expect(
+          compare(arrOfPrimitiveTypes, arrOfPrimitiveTypesWithOneMore),
+        ).toBeFalsy();
       });
     });
-
   });
 
   describe('when calling compareArraysUsingIds', () => {
@@ -396,17 +410,19 @@ describe('ItemComponent', () => {
       expect(compare(arr1 as any, arrWithAddedProperties as any)).toBeTruthy();
     });
 
-    it('should return false when the ids don\'t match', () => {
+    it("should return false when the ids don't match", () => {
       expect(compare(arr1 as any, arrWithWrongId as any)).toBeFalsy();
     });
 
-    it('should return false when the sizes don\'t match', () => {
+    it("should return false when the sizes don't match", () => {
       expect(compare(arr1 as any, arrWithOneMore as any)).toBeFalsy();
     });
   });
 
   const mockItem: Item = Object.assign(new Item(), {
-    bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+    bundles: createSuccessfulRemoteDataObject$(
+      buildPaginatedList(new PageInfo(), []),
+    ),
     metadata: {
       'publicationissue.issueNumber': [
         {
@@ -429,7 +445,8 @@ describe('ItemComponent', () => {
 
     const searchUrl = '/search?query=test&spc.page=2';
     const browseUrl = '/browse/title?scope=0cc&bbm.page=3';
-    const recentSubmissionsUrl = '/collections/be7b8430-77a5-4016-91c9-90863e50583a?cp.page=3';
+    const recentSubmissionsUrl =
+      '/collections/be7b8430-77a5-4016-91c9-90863e50583a?cp.page=3';
 
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
@@ -442,7 +459,11 @@ describe('ItemComponent', () => {
           }),
           RouterTestingModule,
         ],
-        declarations: [ItemComponent, GenericItemPageFieldComponent, TruncatePipe ],
+        declarations: [
+          ItemComponent,
+          GenericItemPageFieldComponent,
+          TruncatePipe,
+        ],
         providers: [
           { provide: ItemDataService, useValue: {} },
           { provide: TruncatableService, useValue: {} },
@@ -482,33 +503,40 @@ describe('ItemComponent', () => {
       fixture.detectChanges();
     }));
 
-    it('should hide back button',() => {
-      spyOn(mockRouteService, 'getPreviousUrl').and.returnValue(observableOf('/item'));
+    it('should hide back button', () => {
+      spyOn(mockRouteService, 'getPreviousUrl').and.returnValue(
+        observableOf('/item'),
+      );
       comp.showBackButton.subscribe((val) => {
         expect(val).toBeFalse();
       });
     });
     it('should show back button for search', () => {
-      spyOn(mockRouteService, 'getPreviousUrl').and.returnValue(observableOf(searchUrl));
+      spyOn(mockRouteService, 'getPreviousUrl').and.returnValue(
+        observableOf(searchUrl),
+      );
       comp.ngOnInit();
       comp.showBackButton.subscribe((val) => {
         expect(val).toBeTrue();
       });
     });
     it('should show back button for browse', () => {
-      spyOn(mockRouteService, 'getPreviousUrl').and.returnValue(observableOf(browseUrl));
+      spyOn(mockRouteService, 'getPreviousUrl').and.returnValue(
+        observableOf(browseUrl),
+      );
       comp.ngOnInit();
       comp.showBackButton.subscribe((val) => {
         expect(val).toBeTrue();
       });
     });
     it('should show back button for recent submissions', () => {
-      spyOn(mockRouteService, 'getPreviousUrl').and.returnValue(observableOf(recentSubmissionsUrl));
+      spyOn(mockRouteService, 'getPreviousUrl').and.returnValue(
+        observableOf(recentSubmissionsUrl),
+      );
       comp.ngOnInit();
       comp.showBackButton.subscribe((val) => {
         expect(val).toBeTrue();
       });
     });
   });
-
 });

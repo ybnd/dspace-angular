@@ -11,7 +11,8 @@ import { VocabularyEntry } from '../../../../../../core/submission/vocabularies/
 import { VocabularyOptions } from '../../../../../../core/submission/vocabularies/models/vocabulary-options.model';
 import { hasValue } from '../../../../../empty.util';
 
-export interface DynamicListCheckboxGroupModelConfig extends DynamicFormGroupModelConfig {
+export interface DynamicListCheckboxGroupModelConfig
+  extends DynamicFormGroupModelConfig {
   vocabularyOptions: VocabularyOptions;
   groupLength?: number;
   repeatable: boolean;
@@ -22,7 +23,6 @@ export interface DynamicListCheckboxGroupModelConfig extends DynamicFormGroupMod
 }
 
 export class DynamicListCheckboxGroupModel extends DynamicCheckboxGroupModel {
-
   @serializable() vocabularyOptions: VocabularyOptions;
   @serializable() repeatable: boolean;
   @serializable() groupLength: number;
@@ -33,7 +33,10 @@ export class DynamicListCheckboxGroupModel extends DynamicCheckboxGroupModel {
   isListGroup = true;
   valueUpdates: Subject<any>;
 
-  constructor(config: DynamicListCheckboxGroupModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DynamicListCheckboxGroupModelConfig,
+    layout?: DynamicFormControlLayout,
+  ) {
     super(config, layout);
 
     this.vocabularyOptions = config.vocabularyOptions;
@@ -44,9 +47,13 @@ export class DynamicListCheckboxGroupModel extends DynamicCheckboxGroupModel {
     this.hint = config.hint;
 
     this.valueUpdates = new Subject<any>();
-    this.valueUpdates.subscribe((value: VocabularyEntry | VocabularyEntry[]) => this.value = value);
+    this.valueUpdates.subscribe(
+      (value: VocabularyEntry | VocabularyEntry[]) => (this.value = value),
+    );
     this.valueUpdates.next(config.value);
-    this.typeBindRelations = config.typeBindRelations ? config.typeBindRelations : [];
+    this.typeBindRelations = config.typeBindRelations
+      ? config.typeBindRelations
+      : [];
   }
 
   get hasAuthority(): boolean {

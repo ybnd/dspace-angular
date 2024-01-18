@@ -1,23 +1,8 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationEnd,
-  Router,
-  Scroll,
-} from '@angular/router';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  combineLatest as combineLatestObservable,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { combineLatest as combineLatestObservable, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { CollectionDataService } from '../../../core/data/collection-data.service';
 import { ItemTemplateDataService } from '../../../core/data/item-template-data.service';
@@ -42,7 +27,10 @@ import { getCollectionItemTemplateRoute } from '../../collection-page-routing-pa
   selector: 'ds-collection-metadata',
   templateUrl: './collection-metadata.component.html',
 })
-export class CollectionMetadataComponent extends ComcolMetadataComponent<Collection> implements OnInit {
+export class CollectionMetadataComponent
+  extends ComcolMetadataComponent<Collection>
+  implements OnInit
+{
   protected frontendURL = '/collections/';
   protected type = Collection.type;
 
@@ -61,7 +49,13 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
     protected requestService: RequestService,
     protected chd: ChangeDetectorRef,
   ) {
-    super(collectionDataService, router, route, notificationsService, translate);
+    super(
+      collectionDataService,
+      router,
+      route,
+      notificationsService,
+      translate,
+    );
   }
 
   /**
@@ -88,7 +82,9 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
   initTemplateItem() {
     this.itemTemplateRD$ = this.dsoRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((collection: Collection) => this.itemTemplateService.findByCollectionID(collection.uuid)),
+      switchMap((collection: Collection) =>
+        this.itemTemplateService.findByCollectionID(collection.uuid),
+      ),
     );
   }
 
@@ -96,44 +92,65 @@ export class CollectionMetadataComponent extends ComcolMetadataComponent<Collect
    * Add a new item template to the collection and redirect to the item template edit page
    */
   addItemTemplate() {
-    const collection$ = this.dsoRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    );
+    const collection$ = this.dsoRD$.pipe(getFirstSucceededRemoteDataPayload());
     const template$ = collection$.pipe(
-      switchMap((collection: Collection) => this.itemTemplateService.createByCollectionID(new Item(), collection.uuid).pipe(
-        getFirstSucceededRemoteDataPayload(),
-      )),
+      switchMap((collection: Collection) =>
+        this.itemTemplateService
+          .createByCollectionID(new Item(), collection.uuid)
+          .pipe(getFirstSucceededRemoteDataPayload()),
+      ),
     );
     const templateHref$ = collection$.pipe(
-      switchMap((collection) => this.itemTemplateService.getCollectionEndpoint(collection.id)),
+      switchMap((collection) =>
+        this.itemTemplateService.getCollectionEndpoint(collection.id),
+      ),
     );
 
-    combineLatestObservable(collection$, template$, templateHref$).subscribe(([collection, template, templateHref]) => {
-      this.requestService.setStaleByHrefSubstring(templateHref);
-      this.router.navigate([getCollectionItemTemplateRoute(collection.uuid)]);
-    });
+    combineLatestObservable(collection$, template$, templateHref$).subscribe(
+      ([collection, template, templateHref]) => {
+        this.requestService.setStaleByHrefSubstring(templateHref);
+        this.router.navigate([getCollectionItemTemplateRoute(collection.uuid)]);
+      },
+    );
   }
 
   /**
    * Delete the item template from the collection
    */
   deleteItemTemplate() {
-    this.dsoRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((collection: Collection) => this.itemTemplateService.findByCollectionID(collection.uuid)),
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((template) => {
-        return this.itemTemplateService.delete(template.uuid);
-      }),
-      getFirstCompletedRemoteData(),
-      map((response: RemoteData<NoContent>) => hasValue(response) && response.hasSucceeded),
-    ).subscribe((success: boolean) => {
-      if (success) {
-        this.notificationsService.success(null, this.translate.get('collection.edit.template.notifications.delete.success'));
-      } else {
-        this.notificationsService.error(null, this.translate.get('collection.edit.template.notifications.delete.error'));
-      }
-      this.initTemplateItem();
-    });
+    this.dsoRD$
+      .pipe(
+        getFirstSucceededRemoteDataPayload(),
+        switchMap((collection: Collection) =>
+          this.itemTemplateService.findByCollectionID(collection.uuid),
+        ),
+        getFirstSucceededRemoteDataPayload(),
+        switchMap((template) => {
+          return this.itemTemplateService.delete(template.uuid);
+        }),
+        getFirstCompletedRemoteData(),
+        map(
+          (response: RemoteData<NoContent>) =>
+            hasValue(response) && response.hasSucceeded,
+        ),
+      )
+      .subscribe((success: boolean) => {
+        if (success) {
+          this.notificationsService.success(
+            null,
+            this.translate.get(
+              'collection.edit.template.notifications.delete.success',
+            ),
+          );
+        } else {
+          this.notificationsService.error(
+            null,
+            this.translate.get(
+              'collection.edit.template.notifications.delete.error',
+            ),
+          );
+        }
+        this.initTemplateItem();
+      });
   }
 }

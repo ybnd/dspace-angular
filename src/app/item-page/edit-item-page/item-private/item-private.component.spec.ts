@@ -1,16 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -42,7 +35,6 @@ let failRestResponse;
 
 describe('ItemPrivateComponent', () => {
   beforeEach(waitForAsync(() => {
-
     mockItem = Object.assign(new Item(), {
       id: 'fake-id',
       handle: 'fake/handle',
@@ -68,16 +60,21 @@ describe('ItemPrivateComponent', () => {
     notificationsServiceStub = new NotificationsServiceStub();
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [ItemPrivateComponent],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
         { provide: Router, useValue: routerStub },
         { provide: ItemDataService, useValue: mockItemDataService },
         { provide: NotificationsService, useValue: notificationsServiceStub },
-      ], schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -90,14 +87,18 @@ describe('ItemPrivateComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should render a page with messages based on the \'private\' messageKey', () => {
+  it("should render a page with messages based on the 'private' messageKey", () => {
     const header = fixture.debugElement.query(By.css('h1')).nativeElement;
     expect(header.innerHTML).toContain('item.edit.private.header');
     const description = fixture.debugElement.query(By.css('p')).nativeElement;
     expect(description.innerHTML).toContain('item.edit.private.description');
-    const confirmButton = fixture.debugElement.query(By.css('button.perform-action')).nativeElement;
+    const confirmButton = fixture.debugElement.query(
+      By.css('button.perform-action'),
+    ).nativeElement;
     expect(confirmButton.innerHTML).toContain('item.edit.private.confirm');
-    const cancelButton = fixture.debugElement.query(By.css('button.cancel')).nativeElement;
+    const cancelButton = fixture.debugElement.query(
+      By.css('button.cancel'),
+    ).nativeElement;
     expect(cancelButton.innerHTML).toContain('item.edit.private.cancel');
   });
 
@@ -106,7 +107,10 @@ describe('ItemPrivateComponent', () => {
       spyOn(comp, 'processRestResponse');
       comp.performAction();
 
-      expect(mockItemDataService.setDiscoverable).toHaveBeenCalledWith(mockItem, false);
+      expect(mockItemDataService.setDiscoverable).toHaveBeenCalledWith(
+        mockItem,
+        false,
+      );
       expect(comp.processRestResponse).toHaveBeenCalled();
     });
   });

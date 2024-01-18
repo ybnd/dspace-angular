@@ -12,9 +12,15 @@ export const GroupMock2: Group = Object.assign(new Group(), {
     self: {
       href: 'https://rest.api/server/api/eperson/groups/testgroupid2',
     },
-    subgroups: { href: 'https://rest.api/server/api/eperson/groups/testgroupid2/subgroups' },
-    object: { href: 'https://rest.api/server/api/eperson/groups/testgroupid2/object' },
-    epersons: { href: 'https://rest.api/server/api/eperson/groups/testgroupid2/epersons' },
+    subgroups: {
+      href: 'https://rest.api/server/api/eperson/groups/testgroupid2/subgroups',
+    },
+    object: {
+      href: 'https://rest.api/server/api/eperson/groups/testgroupid2/object',
+    },
+    epersons: {
+      href: 'https://rest.api/server/api/eperson/groups/testgroupid2/epersons',
+    },
   },
   _name: 'testgroupname2',
   id: 'testgroupid2',
@@ -33,9 +39,15 @@ export const GroupMock: Group = Object.assign(new Group(), {
     self: {
       href: 'https://rest.api/server/api/eperson/groups/testgroupid',
     },
-    subgroups: { href: 'https://rest.api/server/api/eperson/groups/testgroupid/subgroups' },
-    object: { href: 'https://rest.api/server/api/eperson/groups/testgroupid2/object' },
-    epersons: { href: 'https://rest.api/server/api/eperson/groups/testgroupid/epersons' },
+    subgroups: {
+      href: 'https://rest.api/server/api/eperson/groups/testgroupid/subgroups',
+    },
+    object: {
+      href: 'https://rest.api/server/api/eperson/groups/testgroupid2/object',
+    },
+    epersons: {
+      href: 'https://rest.api/server/api/eperson/groups/testgroupid/epersons',
+    },
   },
   _name: 'testgroupname',
   id: 'testgroupid',

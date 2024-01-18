@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import {
   DynamicFormControlComponent,
@@ -24,7 +19,6 @@ import { DynamicDisabledModel } from './dynamic-disabled.model';
  * Component for displaying a form input with a disabled property
  */
 export class DsDynamicDisabledComponent extends DynamicFormControlComponent {
-
   @Input() formId: string;
   @Input() group: UntypedFormGroup;
   @Input() model: DynamicDisabledModel;
@@ -34,8 +28,9 @@ export class DsDynamicDisabledComponent extends DynamicFormControlComponent {
   @Output() change: EventEmitter<any> = new EventEmitter<any>();
   @Output() focus: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService,
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
   ) {
     super(layoutService, validationService);
   }

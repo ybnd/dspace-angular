@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   async,
   ComponentFixture,
@@ -46,28 +43,24 @@ const eventData = {
 };
 
 const searchString = 'Test project to search';
-const pagination = Object.assign(
-  new PaginationComponentOptions(), {
-    id: 'notifications-project-bound',
-    pageSize: 3,
-  },
-);
-const searchOptions = Object.assign(new PaginatedSearchOptions(
-  {
+const pagination = Object.assign(new PaginationComponentOptions(), {
+  id: 'notifications-project-bound',
+  pageSize: 3,
+});
+const searchOptions = Object.assign(
+  new PaginatedSearchOptions({
     configuration: 'funding',
     query: searchString,
     pagination: pagination,
-  },
-));
+  }),
+);
 const pageInfo = new PageInfo({
   elementsPerPage: 3,
   totalElements: 1,
   totalPages: 1,
   currentPage: 1,
 });
-const array = [
-  NotificationsMockDspaceObject,
-];
+const array = [NotificationsMockDspaceObject];
 const paginatedList = buildPaginatedList(pageInfo, array);
 const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
 
@@ -80,25 +73,27 @@ describe('ProjectEntryImportModalComponent test suite', () => {
   const uuid = '123e4567-e89b-12d3-a456-426614174003';
   const searchServiceStub: any = getMockSearchService();
 
-
-  beforeEach(async (() => {
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        ProjectEntryImportModalComponent,
-        TestComponent,
-      ],
+      imports: [CommonModule, TranslateModule.forRoot()],
+      declarations: [ProjectEntryImportModalComponent, TestComponent],
       providers: [
         { provide: NgbActiveModal, useValue: modalStub },
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: SelectableListService, useValue: jasmine.createSpyObj('selectableListService', ['deselect', 'select', 'deselectAll']) },
+        {
+          provide: SelectableListService,
+          useValue: jasmine.createSpyObj('selectableListService', [
+            'deselect',
+            'select',
+            'deselectAll',
+          ]),
+        },
         ProjectEntryImportModalComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then();
+    })
+      .compileComponents()
+      .then();
   }));
 
   // First test to check the correct component creation
@@ -111,7 +106,10 @@ describe('ProjectEntryImportModalComponent test suite', () => {
       searchServiceStub.search.and.returnValue(observableOf(paginatedListRD));
       const html = `
         <ds-project-entry-import-modal [externalSourceEntry]="eventData"></ds-project-entry-import-modal>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -119,9 +117,12 @@ describe('ProjectEntryImportModalComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create ProjectEntryImportModalComponent', inject([ProjectEntryImportModalComponent], (app: ProjectEntryImportModalComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create ProjectEntryImportModalComponent', inject(
+      [ProjectEntryImportModalComponent],
+      (app: ProjectEntryImportModalComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('Main tests', () => {
@@ -129,7 +130,6 @@ describe('ProjectEntryImportModalComponent test suite', () => {
       fixture = TestBed.createComponent(ProjectEntryImportModalComponent);
       comp = fixture.componentInstance;
       compAsAny = comp;
-
     });
 
     describe('close', () => {
@@ -141,8 +141,9 @@ describe('ProjectEntryImportModalComponent test suite', () => {
 
     describe('search', () => {
       it('should call SearchService.search', () => {
-
-        (searchServiceStub as any).search.and.returnValue(observableOf(paginatedListRD));
+        (searchServiceStub as any).search.and.returnValue(
+          observableOf(paginatedListRD),
+        );
         comp.pagination = pagination;
 
         comp.search(searchString);
@@ -199,8 +200,12 @@ describe('ProjectEntryImportModalComponent test suite', () => {
     describe('deselectAllLists', () => {
       it('should call SelectableListService.deselectAll', () => {
         comp.deselectAllLists();
-        expect(compAsAny.selectService.deselectAll).toHaveBeenCalledWith(comp.entityListId);
-        expect(compAsAny.selectService.deselectAll).toHaveBeenCalledWith(comp.authorityListId);
+        expect(compAsAny.selectService.deselectAll).toHaveBeenCalledWith(
+          comp.entityListId,
+        );
+        expect(compAsAny.selectService.deselectAll).toHaveBeenCalledWith(
+          comp.authorityListId,
+        );
       });
     });
 

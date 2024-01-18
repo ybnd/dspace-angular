@@ -1,17 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { APP_CONFIG } from '../../../../config/app-config.interface';
 import { environment } from '../../../../environments/environment';
@@ -34,27 +24,30 @@ const mockMetadata = [
   {
     language: 'en_US',
     value: 'desc',
-  }] as MetadataValue[];
+  },
+] as MetadataValue[];
 const mockSeperator = '<br/>';
 const mockLabel = 'fake.message';
 
 describe('MetadataValuesComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      })],
-      providers: [
-        { provide: APP_CONFIG, useValue: environment },
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
+      providers: [{ provide: APP_CONFIG, useValue: environment }],
       declarations: [MetadataValuesComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(MetadataValuesComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(MetadataValuesComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -83,5 +76,4 @@ describe('MetadataValuesComponent', () => {
     const mdValue = { value: 'This is a test value' } as MetadataValue;
     expect(comp.hasLink(mdValue)).toBe(true);
   });
-
 });

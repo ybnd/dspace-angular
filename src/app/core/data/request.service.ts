@@ -1,16 +1,8 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  createSelector,
-  MemoizedSelector,
-  select,
-  Store,
-} from '@ngrx/store';
+import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 import cloneDeep from 'lodash/cloneDeep';
-import {
-  from as observableFrom,
-  Observable,
-} from 'rxjs';
+import { from as observableFrom, Observable } from 'rxjs';
 import {
   filter,
   find,
@@ -33,10 +25,7 @@ import { ObjectCacheService } from '../cache/object-cache.service';
 import { CommitSSBAction } from '../cache/server-sync-buffer.actions';
 import { coreSelector } from '../core.selectors';
 import { CoreState } from '../core-state.model';
-import {
-  IndexState,
-  MetaIndexState,
-} from '../index/index.reducer';
+import { IndexState, MetaIndexState } from '../index/index.reducer';
 import {
   getUrlWithoutEmbedParams,
   requestIndexSelector,
@@ -49,10 +38,7 @@ import {
 } from './request.actions';
 import { GetRequest } from './request.models';
 import { RequestEntry } from './request-entry.model';
-import {
-  isLoading,
-  isStale,
-} from './request-entry-state.model';
+import { isLoading, isStale } from './request-entry-state.model';
 import { RequestState } from './request-state.model';
 import { RestRequest } from './rest-request.model';
 import { RestRequestMethod } from './rest-request-method';
@@ -69,35 +55,38 @@ const requestCacheSelector = createSelector(
  * Selector function to select a request entry by uuid from the store
  * @param uuid The uuid of the request
  */
-const entryFromUUIDSelector = (uuid: string): MemoizedSelector<CoreState, RequestEntry> => createSelector(
-  requestCacheSelector,
-  (state: RequestState) => {
+const entryFromUUIDSelector = (
+  uuid: string,
+): MemoizedSelector<CoreState, RequestEntry> =>
+  createSelector(requestCacheSelector, (state: RequestState) => {
     return hasValue(state) ? state[uuid] : undefined;
-  },
-);
+  });
 
 /**
  * Selector function to select a request entry by href from the store
  * @param href The href of the request
  */
-const entryFromHrefSelector = (href: string): MemoizedSelector<CoreState, RequestEntry> => createSelector(
-  requestIndexSelector,
-  requestCacheSelector,
-  (indexState: IndexState, requestState: RequestState) => {
-    let uuid: any;
-    if (hasValue(indexState)) {
-      uuid = indexState[getUrlWithoutEmbedParams(href)];
-    } else {
-      return undefined;
-    }
+const entryFromHrefSelector = (
+  href: string,
+): MemoizedSelector<CoreState, RequestEntry> =>
+  createSelector(
+    requestIndexSelector,
+    requestCacheSelector,
+    (indexState: IndexState, requestState: RequestState) => {
+      let uuid: any;
+      if (hasValue(indexState)) {
+        uuid = indexState[getUrlWithoutEmbedParams(href)];
+      } else {
+        return undefined;
+      }
 
-    if (hasValue(requestState)) {
-      return requestState[uuid];
-    } else {
-      return undefined;
-    }
-  },
-);
+      if (hasValue(requestState)) {
+        return requestState[uuid];
+      } else {
+        return undefined;
+      }
+    },
+  );
 
 /**
  * Create a selector that fetches a list of request UUIDs from a given index substate of which the request href
@@ -105,10 +94,12 @@ const entryFromHrefSelector = (href: string): MemoizedSelector<CoreState, Reques
  * @param selector    MemoizedSelector to start from
  * @param href        Substring that the request's href should contain
  */
-const uuidsFromHrefSubstringSelector =
-  (selector: MemoizedSelector<CoreState, IndexState>, href: string): MemoizedSelector<CoreState, string[]> => createSelector(
-    selector,
-    (state: IndexState) => getUuidsFromHrefSubstring(state, href),
+const uuidsFromHrefSubstringSelector = (
+  selector: MemoizedSelector<CoreState, IndexState>,
+  href: string,
+): MemoizedSelector<CoreState, string[]> =>
+  createSelector(selector, (state: IndexState) =>
+    getUuidsFromHrefSubstring(state, href),
   );
 
 /**
@@ -116,10 +107,15 @@ const uuidsFromHrefSubstringSelector =
  * @param state   The IndexState
  * @param href    Substring that the request's href should contain
  */
-const getUuidsFromHrefSubstring = (state: IndexState, href: string): string[] => {
+const getUuidsFromHrefSubstring = (
+  state: IndexState,
+  href: string,
+): string[] => {
   let result = [];
   if (isNotEmpty(state)) {
-    result = Object.keys(state).filter((key) => key.includes(href)).map((key) => state[key]);
+    result = Object.keys(state)
+      .filter((key) => key.includes(href))
+      .map((key) => state[key]);
   }
   return result;
 };
@@ -147,7 +143,8 @@ const isValid = (entry: RequestEntry): boolean => {
         return false;
       } else {
         // check whether it should be stale
-        const timeOutdated = entry.response.timeCompleted + entry.request.responseMsToLive;
+        const timeOutdated =
+          entry.response.timeCompleted + entry.request.responseMsToLive;
         const now = new Date().getTime();
         const isOutDated = now > timeOutdated;
         return !isOutDated;
@@ -165,11 +162,12 @@ const isValid = (entry: RequestEntry): boolean => {
 export class RequestService {
   private requestsOnTheirWayToTheStore: string[] = [];
 
-  constructor(private objectCache: ObjectCacheService,
-              private uuidService: UUIDService,
-              private store: Store<CoreState>,
-              private indexStore: Store<MetaIndexState>) {
-  }
+  constructor(
+    private objectCache: ObjectCacheService,
+    private uuidService: UUIDService,
+    private store: Store<CoreState>,
+    private indexStore: Store<MetaIndexState>,
+  ) {}
 
   generateRequestId(): string {
     return `client/${this.uuidService.generate()}`;
@@ -192,10 +190,10 @@ export class RequestService {
 
     // then check the store
     let isPending = false;
-    this.getByHref(request.href).pipe(
-      take(1))
+    this.getByHref(request.href)
+      .pipe(take(1))
       .subscribe((re: RequestEntry) => {
-        isPending = (hasValue(re) && isLoading(re.state) && !isStale(re.state));
+        isPending = hasValue(re) && isLoading(re.state) && !isStale(re.state);
       });
     return isPending;
   }
@@ -218,15 +216,24 @@ export class RequestService {
    */
   private fixRequestHeaders() {
     return (source: Observable<RequestEntry>): Observable<RequestEntry> => {
-      return source.pipe(map((entry: RequestEntry) => {
-        // Headers break after being retrieved from the store (because of lazy initialization)
-        // Combining them with a new object fixes this issue
-        if (hasValue(entry) && hasValue(entry.request) && hasValue(entry.request.options) && hasValue(entry.request.options.headers)) {
-          entry = cloneDeep(entry);
-          entry.request.options.headers = Object.assign(new HttpHeaders(), entry.request.options.headers);
-        }
-        return entry;
-      }),
+      return source.pipe(
+        map((entry: RequestEntry) => {
+          // Headers break after being retrieved from the store (because of lazy initialization)
+          // Combining them with a new object fixes this issue
+          if (
+            hasValue(entry) &&
+            hasValue(entry.request) &&
+            hasValue(entry.request.options) &&
+            hasValue(entry.request.options.headers)
+          ) {
+            entry = cloneDeep(entry);
+            entry.request.options.headers = Object.assign(
+              new HttpHeaders(),
+              entry.request.options.headers,
+            );
+          }
+          return entry;
+        }),
       );
     };
   }
@@ -240,7 +247,12 @@ export class RequestService {
     return (source: Observable<RequestEntry>): Observable<RequestEntry> => {
       return source.pipe(
         tap((entry: RequestEntry) => {
-          if (hasValue(entry) && hasValue(entry.request) && !isStale(entry.state) && !isValid(entry)) {
+          if (
+            hasValue(entry) &&
+            hasValue(entry.request) &&
+            !isStale(entry.state) &&
+            !isValid(entry)
+          ) {
             this.store.dispatch(new RequestStaleAction(entry.request.uuid));
           }
         }),
@@ -268,8 +280,13 @@ export class RequestService {
    * @returns true if the request was sent, false otherwise
    */
   send(request: RestRequest, useCachedVersionIfAvailable = false): boolean {
-    if (useCachedVersionIfAvailable && request.method !== RestRequestMethod.GET) {
-      console.warn(`${JSON.stringify(request, null, 2)} is not a GET request. In general only GET requests should reuse cached data.`);
+    if (
+      useCachedVersionIfAvailable &&
+      request.method !== RestRequestMethod.GET
+    ) {
+      console.warn(
+        `${JSON.stringify(request, null, 2)} is not a GET request. In general only GET requests should reuse cached data.`,
+      );
     }
 
     if (this.shouldDispatchRequest(request, useCachedVersionIfAvailable)) {
@@ -297,21 +314,24 @@ export class RequestService {
   public uriEncodeBody(body: any) {
     let queryParams = '';
     if (isNotEmpty(body) && typeof body === 'object') {
-      Object.keys(body)
-        .forEach((param: string) => {
-          const encodedParam = encodeURIComponent(param);
-          if (Array.isArray(body[param])) {
-            for (const element of body[param]) {
-              const encodedBody = encodeURIComponent(element);
-              const paramValue = `${encodedParam}=${encodedBody}`;
-              queryParams = isEmpty(queryParams) ? queryParams.concat(paramValue) : queryParams.concat('&', paramValue);
-            }
-          } else {
-            const encodedBody = encodeURIComponent(body[param]);
+      Object.keys(body).forEach((param: string) => {
+        const encodedParam = encodeURIComponent(param);
+        if (Array.isArray(body[param])) {
+          for (const element of body[param]) {
+            const encodedBody = encodeURIComponent(element);
             const paramValue = `${encodedParam}=${encodedBody}`;
-            queryParams = isEmpty(queryParams) ? queryParams.concat(paramValue) : queryParams.concat('&', paramValue);
+            queryParams = isEmpty(queryParams)
+              ? queryParams.concat(paramValue)
+              : queryParams.concat('&', paramValue);
           }
-        });
+        } else {
+          const encodedBody = encodeURIComponent(body[param]);
+          const paramValue = `${encodedParam}=${encodedBody}`;
+          queryParams = isEmpty(queryParams)
+            ? queryParams.concat(paramValue)
+            : queryParams.concat('&', paramValue);
+        }
+      });
     }
     return queryParams;
   }
@@ -343,7 +363,10 @@ export class RequestService {
         this.store.dispatch(new RequestStaleAction(uuid));
       }
     });
-    this.requestsOnTheirWayToTheStore = this.requestsOnTheirWayToTheStore.filter((reqHref: string) => reqHref.indexOf(href) < 0);
+    this.requestsOnTheirWayToTheStore =
+      this.requestsOnTheirWayToTheStore.filter(
+        (reqHref: string) => reqHref.indexOf(href) < 0,
+      );
 
     // emit true after all requests are stale
     return requestUUIDs$.pipe(
@@ -357,7 +380,10 @@ export class RequestService {
             // retrieve the RequestEntry for each uuid
             mergeMap((uuid: string) => this.getByUUID(uuid)),
             // check whether it is undefined or stale
-            map((request: RequestEntry) => hasNoValue(request) || isStale(request.state)),
+            map(
+              (request: RequestEntry) =>
+                hasNoValue(request) || isStale(request.state),
+            ),
             // if it is, complete
             find((stale: boolean) => stale === true),
             // after all observables above are completed, emit them as a single array
@@ -393,12 +419,14 @@ export class RequestService {
   setStaleByHref(href: string): Observable<boolean> {
     const requestEntry$ = this.getByHref(href);
 
-    requestEntry$.pipe(
-      map((re: RequestEntry) => re.request.uuid),
-      take(1),
-    ).subscribe((uuid: string) => {
-      this.store.dispatch(new RequestStaleAction(uuid));
-    });
+    requestEntry$
+      .pipe(
+        map((re: RequestEntry) => re.request.uuid),
+        take(1),
+      )
+      .subscribe((uuid: string) => {
+        this.store.dispatch(new RequestStaleAction(uuid));
+      });
 
     return requestEntry$.pipe(
       map((request: RequestEntry) => isStale(request.state)),
@@ -413,7 +441,10 @@ export class RequestService {
    * @param {boolean} useCachedVersionIfAvailable Whether or not to allow the use of a cached version
    * @returns {boolean} True if the request is cached or still pending
    */
-  public shouldDispatchRequest(request: RestRequest, useCachedVersionIfAvailable: boolean): boolean {
+  public shouldDispatchRequest(
+    request: RestRequest,
+    useCachedVersionIfAvailable: boolean,
+  ): boolean {
     // if it's not a GET request
     if (request.method !== RestRequestMethod.GET) {
       return true;
@@ -431,12 +462,14 @@ export class RequestService {
       } else {
         // if it isn't in the request cache, check the object cache
         let inObjCache = false;
-        this.objectCache.getByHref(urlWithoutEmbedParams)
+        this.objectCache
+          .getByHref(urlWithoutEmbedParams)
           .subscribe((entry: ObjectCacheEntry) => {
             // if the object cache has a match, check if the request that the object came with is
             // still valid
             inObjCache = this.hasByUUID(entry.requestUUIDs[0]);
-          }).unsubscribe();
+          })
+          .unsubscribe();
 
         // we should send the request if it isn't cached
         return !inObjCache;
@@ -461,13 +494,26 @@ export class RequestService {
    * remove it as soon as it can be found in the store.
    */
   private trackRequestsOnTheirWayToTheStore(request: GetRequest) {
-    this.requestsOnTheirWayToTheStore = [...this.requestsOnTheirWayToTheStore, request.href];
-    this.getByHref(request.href).pipe(
-      filter((re: RequestEntry) => hasValue(re) && hasValue(re.request) && re.request.uuid === request.uuid),
-      take(1),
-    ).subscribe((re: RequestEntry) => {
-      this.requestsOnTheirWayToTheStore = this.requestsOnTheirWayToTheStore.filter((pendingHref: string) => pendingHref !== request.href);
-    });
+    this.requestsOnTheirWayToTheStore = [
+      ...this.requestsOnTheirWayToTheStore,
+      request.href,
+    ];
+    this.getByHref(request.href)
+      .pipe(
+        filter(
+          (re: RequestEntry) =>
+            hasValue(re) &&
+            hasValue(re.request) &&
+            re.request.uuid === request.uuid,
+        ),
+        take(1),
+      )
+      .subscribe((re: RequestEntry) => {
+        this.requestsOnTheirWayToTheStore =
+          this.requestsOnTheirWayToTheStore.filter(
+            (pendingHref: string) => pendingHref !== request.href,
+          );
+      });
   }
 
   /**
@@ -493,7 +539,7 @@ export class RequestService {
     let result = false;
     /* NB: that this is only a solution because the select method is synchronous, see: https://github.com/ngrx/store/issues/296#issuecomment-269032571*/
     this.hasByHref$(href, checkValidity)
-      .subscribe((hasByHref: boolean) => result = hasByHref)
+      .subscribe((hasByHref: boolean) => (result = hasByHref))
       .unsubscribe();
     return result;
   }
@@ -511,7 +557,9 @@ export class RequestService {
    */
   hasByHref$(href: string, checkValidity = true): Observable<boolean> {
     return this.getByHref(href).pipe(
-      map((requestEntry: RequestEntry) => checkValidity ? isValid(requestEntry) : hasValue(requestEntry)),
+      map((requestEntry: RequestEntry) =>
+        checkValidity ? isValid(requestEntry) : hasValue(requestEntry),
+      ),
     );
   }
 
@@ -530,7 +578,7 @@ export class RequestService {
     let result = false;
     /* NB: that this is only a solution because the select method is synchronous, see: https://github.com/ngrx/store/issues/296#issuecomment-269032571*/
     this.hasByUUID$(uuid, checkValidity)
-      .subscribe((hasByUUID: boolean) => result = hasByUUID)
+      .subscribe((hasByUUID: boolean) => (result = hasByUUID))
       .unsubscribe();
     return result;
   }
@@ -548,8 +596,9 @@ export class RequestService {
    */
   hasByUUID$(uuid: string, checkValidity = true): Observable<boolean> {
     return this.getByUUID(uuid).pipe(
-      map((requestEntry: RequestEntry) => checkValidity ? isValid(requestEntry) : hasValue(requestEntry)),
+      map((requestEntry: RequestEntry) =>
+        checkValidity ? isValid(requestEntry) : hasValue(requestEntry),
+      ),
     );
   }
-
 }

@@ -11,7 +11,6 @@ import {
 import { formReducer } from './form.reducer';
 
 describe('formReducer', () => {
-
   it('should set init state of the form', () => {
     const state = {
       testForm: {
@@ -40,7 +39,7 @@ describe('formReducer', () => {
     expect(newState).toEqual(state);
   });
 
-  it('should update state of the form when it\'s already present', () => {
+  it("should update state of the form when it's already present", () => {
     const initState = {
       testForm: {
         data: {
@@ -366,5 +365,4 @@ describe('formReducer', () => {
 
     expect(newState).toEqual(state);
   });
-
 });

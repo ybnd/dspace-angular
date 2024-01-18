@@ -12,17 +12,17 @@ import { LangSwitchComponent } from './lang-switch.component';
   templateUrl: '../theme-support/themed.component.html',
 })
 export class ThemedLangSwitchComponent extends ThemedComponent<LangSwitchComponent> {
-
   protected getComponentName(): string {
     return 'LangSwitchComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/lang-switch/lang-switch.component`);
+    return import(
+      `../../../themes/${themeName}/app/shared/lang-switch/lang-switch.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./lang-switch.component`);
   }
-
 }

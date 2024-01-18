@@ -1,14 +1,7 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -68,11 +61,15 @@ describe('GrantDenyRequestCopyComponent', () => {
     });
     itemUrl = getItemPageRoute(item);
 
-    route = jasmine.createSpyObj('route', {}, {
-      data: observableOf({
-        request: createSuccessfulRemoteDataObject(itemRequest),
-      }),
-    });
+    route = jasmine.createSpyObj(
+      'route',
+      {},
+      {
+        data: observableOf({
+          request: createSuccessfulRemoteDataObject(itemRequest),
+        }),
+      },
+    );
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
     });
@@ -140,9 +137,11 @@ describe('GrantDenyRequestCopyComponent', () => {
     });
 
     it('should be displayed when decisionDate is defined', () => {
-      component.itemRequestRD$ = createSuccessfulRemoteDataObject$(Object.assign(new ItemRequest(), itemRequest, {
-        decisionDate: 'defined-date',
-      }));
+      component.itemRequestRD$ = createSuccessfulRemoteDataObject$(
+        Object.assign(new ItemRequest(), itemRequest, {
+          decisionDate: 'defined-date',
+        }),
+      );
       fixture.detectChanges();
 
       const message = fixture.debugElement.query(By.css('.processed-message'));

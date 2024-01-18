@@ -1,7 +1,4 @@
-import {
-  deserialize,
-  inheritSerialization,
-} from 'cerialize';
+import { deserialize, inheritSerialization } from 'cerialize';
 
 import { typedObject } from '../cache/builders/build-decorators';
 import { excludeFromEquals } from '../utilities/equals.decorators';
@@ -22,14 +19,14 @@ export class FlatBrowseDefinition extends NonHierarchicalBrowseDefinition {
    * The object type
    */
   @excludeFromEquals
-    type: ResourceType = FLAT_BROWSE_DEFINITION;
+  type: ResourceType = FLAT_BROWSE_DEFINITION;
 
   get self(): string {
     return this._links.self.href;
   }
 
   @deserialize
-    _links: {
+  _links: {
     self: HALLink;
     items: HALLink;
   };

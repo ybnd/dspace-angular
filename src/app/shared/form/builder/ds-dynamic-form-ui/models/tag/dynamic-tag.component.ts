@@ -17,10 +17,7 @@ import {
   DynamicFormValidationService,
 } from '@ng-dynamic-forms/core';
 import isEqual from 'lodash/isEqual';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import {
   catchError,
   debounceTime,
@@ -40,10 +37,7 @@ import { getFirstSucceededRemoteDataPayload } from '../../../../../../core/share
 import { PageInfo } from '../../../../../../core/shared/page-info.model';
 import { VocabularyEntry } from '../../../../../../core/submission/vocabularies/models/vocabulary-entry.model';
 import { VocabularyService } from '../../../../../../core/submission/vocabularies/vocabulary.service';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../../../empty.util';
+import { hasValue, isNotEmpty } from '../../../../../empty.util';
 import { Chips } from '../../../../chips/models/chips.model';
 import { DsDynamicVocabularyComponent } from '../dynamic-vocabulary.component';
 import { DynamicTagModel } from './dynamic-tag.model';
@@ -56,8 +50,10 @@ import { DynamicTagModel } from './dynamic-tag.model';
   styleUrls: ['./dynamic-tag.component.scss'],
   templateUrl: './dynamic-tag.component.html',
 })
-export class DsDynamicTagComponent extends DsDynamicVocabularyComponent implements OnInit {
-
+export class DsDynamicTagComponent
+  extends DsDynamicVocabularyComponent
+  implements OnInit
+{
   @Input() bindId = true;
   @Input() group: UntypedFormGroup;
   @Input() model: DynamicTagModel;
@@ -73,14 +69,17 @@ export class DsDynamicTagComponent extends DsDynamicVocabularyComponent implemen
 
   searching = false;
   searchFailed = false;
-  hideSearchingWhenUnsubscribed = new Observable(() => () => this.changeSearchingStatus(false));
+  hideSearchingWhenUnsubscribed = new Observable(
+    () => () => this.changeSearchingStatus(false),
+  );
   currentValue: any;
   public pageInfo: PageInfo;
 
-  constructor(protected vocabularyService: VocabularyService,
-              private cdr: ChangeDetectorRef,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService,
+  constructor(
+    protected vocabularyService: VocabularyService,
+    private cdr: ChangeDetectorRef,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
   ) {
     super(vocabularyService, layoutService, validationService);
   }
@@ -103,16 +102,21 @@ export class DsDynamicTagComponent extends DsDynamicVocabularyComponent implemen
         if (term === '' || term.length < this.model.minChars) {
           return observableOf({ list: [] });
         } else {
-          return this.vocabularyService.getVocabularyEntriesByValue(term, false, this.model.vocabularyOptions, new PageInfo()).pipe(
-            getFirstSucceededRemoteDataPayload(),
-            tap(() => this.searchFailed = false),
-            catchError(() => {
-              this.searchFailed = true;
-              return observableOf(buildPaginatedList(
-                new PageInfo(),
-                [],
-              ));
-            }));
+          return this.vocabularyService
+            .getVocabularyEntriesByValue(
+              term,
+              false,
+              this.model.vocabularyOptions,
+              new PageInfo(),
+            )
+            .pipe(
+              getFirstSucceededRemoteDataPayload(),
+              tap(() => (this.searchFailed = false)),
+              catchError(() => {
+                this.searchFailed = true;
+                return observableOf(buildPaginatedList(new PageInfo(), []));
+              }),
+            );
         }
       }),
       map((list: PaginatedList<VocabularyEntry>) => list.page),
@@ -129,28 +133,31 @@ export class DsDynamicTagComponent extends DsDynamicVocabularyComponent implemen
         return list;
       }),
       tap(() => this.changeSearchingStatus(false)),
-      merge(this.hideSearchingWhenUnsubscribed));
+      merge(this.hideSearchingWhenUnsubscribed),
+    );
 
   /**
    * Initialize the component, setting up the init form value
    */
   ngOnInit() {
-    this.hasAuthority = this.model.vocabularyOptions && hasValue(this.model.vocabularyOptions.name);
+    this.hasAuthority =
+      this.model.vocabularyOptions &&
+      hasValue(this.model.vocabularyOptions.name);
 
     this.chips = new Chips(
       this.model.value as any[],
       'display',
       null,
-      environment.submission.icons.metadata);
+      environment.submission.icons.metadata,
+    );
 
-    this.chips.chipsItems
-      .subscribe((subItems: any[]) => {
-        const items = this.chips.getChipsItems();
-        // Does not emit change if model value is equal to the current value
-        if (!isEqual(items, this.model.value)) {
-          this.dispatchUpdate(items);
-        }
-      });
+    this.chips.chipsItems.subscribe((subItems: any[]) => {
+      const items = this.chips.getChipsItems();
+      // Does not emit change if model value is equal to the current value
+      if (!isEqual(items, this.model.value)) {
+        this.dispatchUpdate(items);
+      }
+    });
   }
 
   /**
@@ -240,7 +247,10 @@ export class DsDynamicTagComponent extends DsDynamicVocabularyComponent implemen
   }
 
   private addTagsToChips() {
-    if (hasValue(this.currentValue) && (!this.hasAuthority || !this.model.vocabularyOptions.closed)) {
+    if (
+      hasValue(this.currentValue) &&
+      (!this.hasAuthority || !this.model.vocabularyOptions.closed)
+    ) {
       let res: string[] = [];
       res = this.currentValue.split(',');
 

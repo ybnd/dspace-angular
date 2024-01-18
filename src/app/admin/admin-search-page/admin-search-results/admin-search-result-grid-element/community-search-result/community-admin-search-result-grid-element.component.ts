@@ -8,7 +8,11 @@ import { CommunitySearchResult } from '../../../../../shared/object-collection/s
 import { listableObjectComponent } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
 import { SearchResultGridElementComponent } from '../../../../../shared/object-grid/search-result-grid-element/search-result-grid-element.component';
 
-@listableObjectComponent(CommunitySearchResult, ViewMode.GridElement, Context.AdminSearch)
+@listableObjectComponent(
+  CommunitySearchResult,
+  ViewMode.GridElement,
+  Context.AdminSearch,
+)
 @Component({
   selector: 'ds-community-admin-search-result-grid-element',
   styleUrls: ['./community-admin-search-result-grid-element.component.scss'],
@@ -17,7 +21,10 @@ import { SearchResultGridElementComponent } from '../../../../../shared/object-g
 /**
  * The component for displaying a list element for a community search result on the admin search page
  */
-export class CommunityAdminSearchResultGridElementComponent extends SearchResultGridElementComponent<CommunitySearchResult, Community> {
+export class CommunityAdminSearchResultGridElementComponent extends SearchResultGridElementComponent<
+  CommunitySearchResult,
+  Community
+> {
   editPath: string;
 
   ngOnInit() {

@@ -9,7 +9,6 @@ import { hasValue } from '../../shared/empty.util';
  */
 @Injectable()
 export class ArrayMoveChangeAnalyzer<T> {
-
   /**
    * Compare two arrays detecting and returning move operations
    *
@@ -17,11 +16,14 @@ export class ArrayMoveChangeAnalyzer<T> {
    * @param array2  The custom array to compare with the original
    */
   diff(array1: T[], array2: T[]): MoveOperation[] {
-    return this.getMoves(array1, array2).map((move) => Object.assign({
-      op: 'move',
-      from: '/' + move[0],
-      path: '/' + move[1],
-    }) as MoveOperation);
+    return this.getMoves(array1, array2).map(
+      (move) =>
+        Object.assign({
+          op: 'move',
+          from: '/' + move[0],
+          path: '/' + move[1],
+        }) as MoveOperation,
+    );
   }
 
   /**

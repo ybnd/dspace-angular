@@ -6,23 +6,27 @@ const fs = require('fs');
 module.exports = {
   mode: 'production',
   entry: {
-    mirador: fs.existsSync('./src/mirador-viewer/config.local.js')? './src/mirador-viewer/config.local.js' :
-      './src/mirador-viewer/config.default.js'
+    mirador: fs.existsSync('./src/mirador-viewer/config.local.js')
+      ? './src/mirador-viewer/config.local.js'
+      : './src/mirador-viewer/config.default.js',
   },
   output: {
-    path: path.resolve(__dirname, '..' , 'dist/iiif/mirador'),
-    filename: '[name].js'
+    path: path.resolve(__dirname, '..', 'dist/iiif/mirador'),
+    filename: '[name].js',
   },
   devServer: {
     contentBase: '../dist/iiif/mirador',
   },
   resolve: {
     fallback: {
-      url: false
-    }},
-  plugins: [new CopyWebpackPlugin({
-    patterns: [
-      {from: './src/mirador-viewer/mirador.html', to: './index.html'}
-    ]
-  })]
+      url: false,
+    },
+  },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: './src/mirador-viewer/mirador.html', to: './index.html' },
+      ],
+    }),
+  ],
 };

@@ -8,11 +8,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-  take,
-} from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 
 import { getPageInternalServerErrorRoute } from '../../app-routing-paths';
 import { RootDataService } from '../data/root-data.service';
@@ -25,8 +21,10 @@ import { RootDataService } from '../data/root-data.service';
  * If not redirect to 500 error page
  */
 export class ServerCheckGuard implements CanActivateChild {
-  constructor(private router: Router, private rootDataService: RootDataService) {
-  }
+  constructor(
+    private router: Router,
+    private rootDataService: RootDataService,
+  ) {}
 
   /**
    * True when root api endpoint is reachable.
@@ -35,7 +33,6 @@ export class ServerCheckGuard implements CanActivateChild {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> {
-
     return this.rootDataService.checkServerAvailability().pipe(
       take(1),
       map((isAvailable: boolean) => {
@@ -59,10 +56,10 @@ export class ServerCheckGuard implements CanActivateChild {
     // so this statement is for the very first route operation.
     this.rootDataService.invalidateRootCache();
 
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationStart),
-    ).subscribe(() => {
-      this.rootDataService.invalidateRootCache();
-    });
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationStart))
+      .subscribe(() => {
+        this.rootDataService.invalidateRootCache();
+      });
   }
 }

@@ -1,11 +1,5 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
@@ -26,12 +20,19 @@ import {
   selector: 'ds-edit-item-selector',
   templateUrl: 'edit-item-selector.component.html',
 })
-export class EditItemSelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class EditItemSelectorComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.ITEM;
   selectorTypes = [DSpaceObjectType.ITEM];
   action = SelectorActionType.EDIT;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router,
+  ) {
     super(activeModal, route);
   }
 

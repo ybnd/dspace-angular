@@ -11,11 +11,13 @@ import { rendersSectionForMenu } from '../../../../../app/shared/menu/menu-secti
 @Component({
   selector: 'ds-expandable-navbar-section',
   // templateUrl: './expandable-navbar-section.component.html',
-  templateUrl: '../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.html',
+  templateUrl:
+    '../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.html',
   // styleUrls: ['./expandable-navbar-section.component.scss'],
-  styleUrls: ['../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.scss'],
+  styleUrls: [
+    '../../../../../app/navbar/expandable-navbar-section/expandable-navbar-section.component.scss',
+  ],
   animations: [slide],
 })
 @rendersSectionForMenu(MenuID.PUBLIC, true)
-export class ExpandableNavbarSectionComponent extends BaseComponent {
-}
+export class ExpandableNavbarSectionComponent extends BaseComponent {}

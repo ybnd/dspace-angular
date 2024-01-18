@@ -12,5 +12,4 @@ import { LoginPageComponent as BaseComponent } from '../../../../app/login-page/
   // templateUrl: './login-page.component.html'
   templateUrl: '../../../../app/login-page/login-page.component.html',
 })
-export class LoginPageComponent extends BaseComponent {
-}
+export class LoginPageComponent extends BaseComponent {}

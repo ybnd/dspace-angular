@@ -11,7 +11,6 @@ import {
 import { ParserOptions } from './parser-options';
 
 export class SeriesFieldParser extends ConcatFieldParser {
-
   constructor(
     @Inject(SUBMISSION_ID) submissionId: string,
     @Inject(CONFIG_DATA) configData: FormFieldModel,

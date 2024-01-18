@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
 /**
  * Component displaying the Feedback Statement
  */
-export class FeedbackComponent {
-}
+export class FeedbackComponent {}

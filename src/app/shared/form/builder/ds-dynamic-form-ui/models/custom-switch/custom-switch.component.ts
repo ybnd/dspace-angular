@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import {
   DynamicFormLayoutService,
@@ -63,7 +58,10 @@ export class CustomSwitchComponent extends DynamicNGBootstrapCheckboxComponent {
    */
   @Output() focus = new EventEmitter<any>();
 
-  constructor(layoutService: DynamicFormLayoutService, validationService: DynamicFormValidationService) {
+  constructor(
+    layoutService: DynamicFormLayoutService,
+    validationService: DynamicFormValidationService,
+  ) {
     super(layoutService, validationService);
   }
 }

@@ -18,7 +18,9 @@ export class ThemedWorkflowItemSendBackComponent extends ThemedComponent<Workflo
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/workflowitems-edit-page/workflow-item-send-back/workflow-item-send-back.component`);
+    return import(
+      `../../../themes/${themeName}/app/workflowitems-edit-page/workflow-item-send-back/workflow-item-send-back.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

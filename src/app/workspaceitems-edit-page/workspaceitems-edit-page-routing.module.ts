@@ -25,7 +25,10 @@ import { WorkspaceItemsDeletePageComponent } from './workspaceitems-delete-page/
             resolve: {
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'submission.edit.title', breadcrumbKey: 'submission.edit' },
+            data: {
+              title: 'submission.edit.title',
+              breadcrumbKey: 'submission.edit',
+            },
           },
           {
             canActivate: [AuthenticatedGuard],
@@ -35,7 +38,10 @@ import { WorkspaceItemsDeletePageComponent } from './workspaceitems-delete-page/
               dso: ItemFromWorkspaceResolver,
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'workspace-item.view.title', breadcrumbKey: 'workspace-item.view' },
+            data: {
+              title: 'workspace-item.view.title',
+              breadcrumbKey: 'workspace-item.view',
+            },
           },
           {
             canActivate: [AuthenticatedGuard],
@@ -45,7 +51,10 @@ import { WorkspaceItemsDeletePageComponent } from './workspaceitems-delete-page/
               dso: ItemFromWorkspaceResolver,
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'workspace-item.delete', breadcrumbKey: 'workspace-item.delete' },
+            data: {
+              title: 'workspace-item.delete',
+              breadcrumbKey: 'workspace-item.delete',
+            },
           },
           {
             canActivate: [AuthenticatedGuard],
@@ -55,7 +64,10 @@ import { WorkspaceItemsDeletePageComponent } from './workspaceitems-delete-page/
               dso: ItemFromWorkspaceResolver,
               breadcrumb: I18nBreadcrumbResolver,
             },
-            data: { title: 'workspace-item.delete', breadcrumbKey: 'workspace-item.delete' },
+            data: {
+              title: 'workspace-item.delete',
+              breadcrumbKey: 'workspace-item.delete',
+            },
           },
         ],
       },
@@ -66,4 +78,4 @@ import { WorkspaceItemsDeletePageComponent } from './workspaceitems-delete-page/
 /**
  * This module defines the default component to load when navigating to the workspaceitems edit page path
  */
-export class WorkspaceitemsEditPageRoutingModule { }
+export class WorkspaceitemsEditPageRoutingModule {}

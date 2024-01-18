@@ -1,14 +1,6 @@
-import {
-  Component,
-  HostBinding,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 import { AppState } from '../app.reducer';
 import { hasValue } from '../shared/empty.util';
@@ -32,12 +24,13 @@ export class HeaderNavbarWrapperComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private menuService: MenuService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isNavBarCollapsed = this.menuService.isMenuCollapsed(this.menuID);
-    this.sub = this.isNavBarCollapsed.subscribe((isCollapsed) => this.isOpen = !isCollapsed);
+    this.sub = this.isNavBarCollapsed.subscribe(
+      (isCollapsed) => (this.isOpen = !isCollapsed),
+    );
   }
 
   ngOnDestroy() {

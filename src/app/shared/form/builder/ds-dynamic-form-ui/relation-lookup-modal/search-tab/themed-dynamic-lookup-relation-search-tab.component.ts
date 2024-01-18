@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { Context } from '../../../../../../core/shared/context.model';
@@ -23,9 +18,23 @@ import { DsDynamicLookupRelationSearchTabComponent } from './dynamic-lookup-rela
   templateUrl: '../../../../../theme-support/themed.component.html',
 })
 export class ThemedDynamicLookupRelationSearchTabComponent extends ThemedComponent<DsDynamicLookupRelationSearchTabComponent> {
-  protected inAndOutputNames: (keyof DsDynamicLookupRelationSearchTabComponent & keyof this)[] = ['relationship', 'listId',
-    'query', 'repeatable', 'selection$', 'context', 'relationshipType', 'item', 'isLeft', 'toRemove', 'isEditRelationship',
-    'deselectObject', 'selectObject', 'resultFound'];
+  protected inAndOutputNames: (keyof DsDynamicLookupRelationSearchTabComponent &
+    keyof this)[] = [
+    'relationship',
+    'listId',
+    'query',
+    'repeatable',
+    'selection$',
+    'context',
+    'relationshipType',
+    'item',
+    'isLeft',
+    'toRemove',
+    'isEditRelationship',
+    'deselectObject',
+    'selectObject',
+    'resultFound',
+  ];
 
   @Input() relationship: RelationshipOptions;
 
@@ -53,14 +62,17 @@ export class ThemedDynamicLookupRelationSearchTabComponent extends ThemedCompone
 
   @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter();
 
-  @Output() resultFound: EventEmitter<SearchObjects<DSpaceObject>> = new EventEmitter();
+  @Output() resultFound: EventEmitter<SearchObjects<DSpaceObject>> =
+    new EventEmitter();
 
   protected getComponentName(): string {
     return 'DsDynamicLookupRelationSearchTabComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../../../themes/${themeName}/app/shared/form/builder/ds-dynamic-form-ui/relation-lookup-modal/search-tab/dynamic-lookup-relation-search-tab.component`);
+    return import(
+      `../../../../../../../themes/${themeName}/app/shared/form/builder/ds-dynamic-form-ui/relation-lookup-modal/search-tab/dynamic-lookup-relation-search-tab.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

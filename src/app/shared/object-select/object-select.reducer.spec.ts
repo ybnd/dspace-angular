@@ -21,7 +21,6 @@ class NullAction extends ObjectSelectionSelectAction {
 }
 
 describe('objectSelectionReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = {};
     state[key] = {};
@@ -104,5 +103,4 @@ describe('objectSelectionReducer', () => {
 
     expect(newState[key]).toEqual({});
   });
-
 });

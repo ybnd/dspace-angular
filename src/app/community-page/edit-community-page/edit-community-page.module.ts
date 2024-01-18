@@ -36,6 +36,4 @@ import { EditCommunityPageRoutingModule } from './edit-community-page.routing.mo
     CommunityAccessControlComponent,
   ],
 })
-export class EditCommunityPageModule {
-
-}
+export class EditCommunityPageModule {}

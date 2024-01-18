@@ -20,19 +20,10 @@ import {
   of as observableOf,
   Subscription,
 } from 'rxjs';
-import {
-  catchError,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 
 import { GenericConstructor } from '../../core/shared/generic-constructor';
-import {
-  hasNoValue,
-  hasValue,
-  isNotEmpty,
-} from '../empty.util';
+import { hasNoValue, hasValue, isNotEmpty } from '../empty.util';
 import { BASE_THEME_NAME } from './theme.constants';
 import { ThemeService } from './theme.service';
 
@@ -41,7 +32,9 @@ import { ThemeService } from './theme.service';
   styleUrls: ['./themed.component.scss'],
   templateUrl: './themed.component.html',
 })
-export abstract class ThemedComponent<T> implements AfterViewInit, OnDestroy, OnChanges {
+export abstract class ThemedComponent<T>
+  implements AfterViewInit, OnDestroy, OnChanges
+{
   @ViewChild('vcr', { read: ViewContainerRef }) vcr: ViewContainerRef;
   @ViewChild('content') themedElementContent: ElementRef;
   protected compRef: ComponentRef<T>;
@@ -50,7 +43,9 @@ export abstract class ThemedComponent<T> implements AfterViewInit, OnDestroy, On
    * A reference to the themed component. Will start as undefined and emit every time the themed
    * component is rendered
    */
-  public compRef$: BehaviorSubject<ComponentRef<T>> = new BehaviorSubject(undefined);
+  public compRef$: BehaviorSubject<ComponentRef<T>> = new BehaviorSubject(
+    undefined,
+  );
 
   protected lazyLoadObs: Observable<any>;
   protected lazyLoadSub: Subscription;
@@ -67,8 +62,7 @@ export abstract class ThemedComponent<T> implements AfterViewInit, OnDestroy, On
     protected resolver: ComponentFactoryResolver,
     protected cdr: ChangeDetectorRef,
     protected themeService: ThemeService,
-  ) {
-  }
+  ) {}
 
   protected abstract getComponentName(): string;
 
@@ -96,7 +90,9 @@ export abstract class ThemedComponent<T> implements AfterViewInit, OnDestroy, On
   }
 
   ngOnDestroy(): void {
-    [this.themeSub, this.lazyLoadSub].filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    [this.themeSub, this.lazyLoadSub]
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
     this.destroyComponentInstance();
   }
 
@@ -116,36 +112,47 @@ export abstract class ThemedComponent<T> implements AfterViewInit, OnDestroy, On
         observableOf(changes),
         this.resolveThemedComponent(this.themeService.getThemeName()).pipe(
           switchMap((themedFile: any) => {
-            if (hasValue(themedFile) && hasValue(themedFile[this.getComponentName()])) {
+            if (
+              hasValue(themedFile) &&
+              hasValue(themedFile[this.getComponentName()])
+            ) {
               // if the file is not null, and exports a component with the specified name,
               // return that component
               return [themedFile[this.getComponentName()]];
             } else {
               // otherwise import and return the default component
               return fromPromise(this.importUnthemedComponent()).pipe(
-                tap(() => this.usedTheme = BASE_THEME_NAME),
+                tap(() => (this.usedTheme = BASE_THEME_NAME)),
                 map((unthemedFile: any) => {
                   return unthemedFile[this.getComponentName()];
                 }),
               );
             }
-          })),
+          }),
+        ),
       ]);
     }
 
-    this.lazyLoadSub = this.lazyLoadObs.subscribe(([simpleChanges, constructor]: [SimpleChanges, GenericConstructor<T>]) => {
-      this.destroyComponentInstance();
-      const factory = this.resolver.resolveComponentFactory(constructor);
-      this.compRef = this.vcr.createComponent(factory, undefined, undefined, [this.themedElementContent.nativeElement.childNodes]);
-      if (hasValue(simpleChanges)) {
-        this.ngOnChanges(simpleChanges);
-      } else {
-        this.connectInputsAndOutputs();
-      }
-      this.compRef$.next(this.compRef);
-      this.cdr.markForCheck();
-      this.themedElementContent.nativeElement.remove();
-    });
+    this.lazyLoadSub = this.lazyLoadObs.subscribe(
+      ([simpleChanges, constructor]: [
+        SimpleChanges,
+        GenericConstructor<T>,
+      ]) => {
+        this.destroyComponentInstance();
+        const factory = this.resolver.resolveComponentFactory(constructor);
+        this.compRef = this.vcr.createComponent(factory, undefined, undefined, [
+          this.themedElementContent.nativeElement.childNodes,
+        ]);
+        if (hasValue(simpleChanges)) {
+          this.ngOnChanges(simpleChanges);
+        } else {
+          this.connectInputsAndOutputs();
+        }
+        this.compRef$.next(this.compRef);
+        this.cdr.markForCheck();
+        this.themedElementContent.nativeElement.remove();
+      },
+    );
   }
 
   protected destroyComponentInstance(): void {
@@ -159,10 +166,16 @@ export abstract class ThemedComponent<T> implements AfterViewInit, OnDestroy, On
   }
 
   protected connectInputsAndOutputs(): void {
-    if (isNotEmpty(this.inAndOutputNames) && hasValue(this.compRef) && hasValue(this.compRef.instance)) {
-      this.inAndOutputNames.filter((name: any) => this[name] !== undefined).forEach((name: any) => {
-        this.compRef.instance[name] = this[name];
-      });
+    if (
+      isNotEmpty(this.inAndOutputNames) &&
+      hasValue(this.compRef) &&
+      hasValue(this.compRef.instance)
+    ) {
+      this.inAndOutputNames
+        .filter((name: any) => this[name] !== undefined)
+        .forEach((name: any) => {
+          this.compRef.instance[name] = this[name];
+        });
     }
   }
 
@@ -174,18 +187,28 @@ export abstract class ThemedComponent<T> implements AfterViewInit, OnDestroy, On
    * @param checkedThemeNames The list of theme names that are already checked
    * @private
    */
-  private resolveThemedComponent(themeName?: string, checkedThemeNames: string[] = []): Observable<any> {
+  private resolveThemedComponent(
+    themeName?: string,
+    checkedThemeNames: string[] = [],
+  ): Observable<any> {
     if (isNotEmpty(themeName)) {
       return fromPromise(this.importThemedComponent(themeName)).pipe(
-        tap(() => this.usedTheme = themeName),
+        tap(() => (this.usedTheme = themeName)),
         catchError(() => {
           // Try the next ancestor theme instead
-          const nextTheme = this.themeService.getThemeConfigFor(themeName)?.extends;
+          const nextTheme =
+            this.themeService.getThemeConfigFor(themeName)?.extends;
           const nextCheckedThemeNames = [...checkedThemeNames, themeName];
           if (checkedThemeNames.includes(nextTheme)) {
-            throw new Error('Theme extension cycle detected: ' + [...nextCheckedThemeNames, nextTheme].join(' -> '));
+            throw new Error(
+              'Theme extension cycle detected: ' +
+                [...nextCheckedThemeNames, nextTheme].join(' -> '),
+            );
           } else {
-            return this.resolveThemedComponent(nextTheme, nextCheckedThemeNames);
+            return this.resolveThemedComponent(
+              nextTheme,
+              nextCheckedThemeNames,
+            );
           }
         }),
       );

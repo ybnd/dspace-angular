@@ -27,10 +27,16 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
  */
 @Component({
   selector: 'ds-community-form',
-  styleUrls: ['../../shared/comcol/comcol-forms/comcol-form/comcol-form.component.scss'],
-  templateUrl: '../../shared/comcol/comcol-forms/comcol-form/comcol-form.component.html',
+  styleUrls: [
+    '../../shared/comcol/comcol-forms/comcol-form/comcol-form.component.scss',
+  ],
+  templateUrl:
+    '../../shared/comcol/comcol-forms/comcol-form/comcol-form.component.html',
 })
-export class CommunityFormComponent extends ComColFormComponent<Community> implements OnChanges {
+export class CommunityFormComponent
+  extends ComColFormComponent<Community>
+  implements OnChanges
+{
   /**
    * @type {Community} A new community when a community is being created, an existing Input community when a community is being edited
    */
@@ -79,14 +85,23 @@ export class CommunityFormComponent extends ComColFormComponent<Community> imple
     }),
   ];
 
-  public constructor(protected formService: DynamicFormService,
-                     protected translate: TranslateService,
-                     protected notificationsService: NotificationsService,
-                     protected authService: AuthService,
-                     protected dsoService: CommunityDataService,
-                     protected requestService: RequestService,
-                     protected objectCache: ObjectCacheService) {
-    super(formService, translate, notificationsService, authService, requestService, objectCache);
+  public constructor(
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected notificationsService: NotificationsService,
+    protected authService: AuthService,
+    protected dsoService: CommunityDataService,
+    protected requestService: RequestService,
+    protected objectCache: ObjectCacheService,
+  ) {
+    super(
+      formService,
+      translate,
+      notificationsService,
+      authService,
+      requestService,
+      objectCache,
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {

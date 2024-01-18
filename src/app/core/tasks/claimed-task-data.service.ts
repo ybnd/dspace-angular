@@ -23,7 +23,6 @@ import { TasksService } from './tasks.service';
 @Injectable()
 @dataService(CLAIMED_TASK)
 export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
-
   /**
    * Initialize instance variables
    *
@@ -38,7 +37,14 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('claimedtasks', requestService, rdbService, objectCache, halService, 1000);
+    super(
+      'claimedtasks',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      1000,
+    );
   }
 
   /**
@@ -51,7 +57,10 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
    * @return {Observable<ProcessTaskResponse>}
    *    Emit the server response
    */
-  public claimTask(scopeId: string, poolTaskHref: string): Observable<ProcessTaskResponse> {
+  public claimTask(
+    scopeId: string,
+    poolTaskHref: string,
+  ): Observable<ProcessTaskResponse> {
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'text/uri-list');
@@ -69,8 +78,16 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
    * @return {Observable<ProcessTaskResponse>}
    *    Emit the server response
    */
-  public submitTask(scopeId: string, body: any): Observable<ProcessTaskResponse> {
-    return this.postToEndpoint(this.linkPath, this.requestService.uriEncodeBody(body), scopeId, this.makeHttpOptions());
+  public submitTask(
+    scopeId: string,
+    body: any,
+  ): Observable<ProcessTaskResponse> {
+    return this.postToEndpoint(
+      this.linkPath,
+      this.requestService.uriEncodeBody(body),
+      scopeId,
+      this.makeHttpOptions(),
+    );
   }
 
   /**
@@ -94,10 +111,9 @@ export class ClaimedTaskDataService extends TasksService<ClaimedTask> {
    */
   public findByItem(uuid: string): Observable<RemoteData<ClaimedTask>> {
     const options = new FindListOptions();
-    options.searchParams = [
-      new RequestParam('uuid', uuid),
-    ];
-    return this.searchTask('findByItem', options).pipe(getFirstSucceededRemoteData());
+    options.searchParams = [new RequestParam('uuid', uuid)];
+    return this.searchTask('findByItem', options).pipe(
+      getFirstSucceededRemoteData(),
+    );
   }
-
 }

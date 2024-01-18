@@ -1,9 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  createSelector,
-  MemoizedSelector,
-  Store,
-} from '@ngrx/store';
+import { createSelector, MemoizedSelector, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -23,20 +19,20 @@ import {
   ObjectSelectionState,
 } from './object-select.reducer';
 
-const objectSelectionsStateSelector = (state: ObjectSelectionListState) => state.objectSelection;
-const objectSelectionListStateSelector = (state: AppState) => state.objectSelection;
+const objectSelectionsStateSelector = (state: ObjectSelectionListState) =>
+  state.objectSelection;
+const objectSelectionListStateSelector = (state: AppState) =>
+  state.objectSelection;
 
 /**
  * Service that takes care of selecting and deselecting objects
  */
 @Injectable()
 export class ObjectSelectService {
-
   constructor(
     private store: Store<ObjectSelectionListState>,
     private appStore: Store<AppState>,
-  ) {
-  }
+  ) {}
 
   /**
    * Request the current selection of a given object in a given list
@@ -124,19 +120,27 @@ export class ObjectSelectService {
   public reset(key?: string): void {
     this.store.dispatch(new ObjectSelectionResetAction(key, null));
   }
-
 }
 
-function selectionByKeyAndIdSelector(key: string, id: string): MemoizedSelector<ObjectSelectionListState, ObjectSelectionState> {
+function selectionByKeyAndIdSelector(
+  key: string,
+  id: string,
+): MemoizedSelector<ObjectSelectionListState, ObjectSelectionState> {
   return keyAndIdSelector<ObjectSelectionState>(key, id);
 }
 
-export function keyAndIdSelector<T>(key: string, id: string): MemoizedSelector<ObjectSelectionListState, T> {
-  return createSelector(objectSelectionsStateSelector, (state: ObjectSelectionsState) => {
-    if (hasValue(state) && hasValue(state[key])) {
-      return state[key][id];
-    } else {
-      return undefined;
-    }
-  });
+export function keyAndIdSelector<T>(
+  key: string,
+  id: string,
+): MemoizedSelector<ObjectSelectionListState, T> {
+  return createSelector(
+    objectSelectionsStateSelector,
+    (state: ObjectSelectionsState) => {
+      if (hasValue(state) && hasValue(state[key])) {
+        return state[key][id];
+      } else {
+        return undefined;
+      }
+    },
+  );
 }

@@ -1,5 +1,4 @@
 {
-
   // "401.help": "You're not authorized to access this page. You can use the button below to get back to the home page.",
   "401.help": "Sinulla ei ole valtuuksia nähdä sivua. Voit palata etusivulle alla olevalla painikkeella.",
 
@@ -256,7 +255,7 @@
   "admin.registries.schema.breadcrumbs": "Metadataskeema",
 
   // "admin.registries.schema.description": "This is the metadata schema for \"{{namespace}}\".",
-  "admin.registries.schema.description": "Tämä on metadataskeema \"{{namespace}}\"-nimiavaruudelle.",
+  "admin.registries.schema.description": 'Tämä on metadataskeema "{{namespace}}"-nimiavaruudelle.',
 
   // "admin.registries.schema.fields.head": "Schema metadata fields",
   "admin.registries.schema.fields.head": "Skeeman metadatakentät",
@@ -295,7 +294,7 @@
   "admin.registries.schema.head": "Metadataskeema",
 
   // "admin.registries.schema.notification.created": "Successfully created metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.created": "\"{{prefix}}\"-metadataskeema luotu",
+  "admin.registries.schema.notification.created": '"{{prefix}}"-metadataskeema luotu',
 
   // "admin.registries.schema.notification.deleted.failure": "Failed to delete {{amount}} metadata schemas",
   "admin.registries.schema.notification.deleted.failure": "{{amount}} metadataskeeman poisto epäonnistui ",
@@ -304,13 +303,13 @@
   "admin.registries.schema.notification.deleted.success": "{{amount}} metadataskeemaa poistettu",
 
   // "admin.registries.schema.notification.edited": "Successfully edited metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.edited": "\"{{prefix}}\"-metadaskeemaa muokattu",
+  "admin.registries.schema.notification.edited": '"{{prefix}}"-metadaskeemaa muokattu',
 
   // "admin.registries.schema.notification.failure": "Error",
   "admin.registries.schema.notification.failure": "Virhe",
 
   // "admin.registries.schema.notification.field.created": "Successfully created metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.created": "\"{{field}}\"-metadatakenttä luotu",
+  "admin.registries.schema.notification.field.created": '"{{field}}"-metadatakenttä luotu',
 
   // "admin.registries.schema.notification.field.deleted.failure": "Failed to delete {{amount}} metadata fields",
   "admin.registries.schema.notification.field.deleted.failure": "{{amount}} metadatakentän poisto epäonnistui",
@@ -319,7 +318,7 @@
   "admin.registries.schema.notification.field.deleted.success": "{{amount}} metadatakenttää poistettu",
 
   // "admin.registries.schema.notification.field.edited": "Successfully edited metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.edited": "\"{{field}}\"-metadatakentää muokattu",
+  "admin.registries.schema.notification.field.edited": '"{{field}}"-metadatakentää muokattu',
 
   // "admin.registries.schema.notification.success": "Success",
   "admin.registries.schema.notification.success": "Valmis",
@@ -385,13 +384,13 @@
   "admin.access-control.epeople.table.edit": "Muokkaa",
 
   // "admin.access-control.epeople.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.edit": "Muokkaa \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.edit": 'Muokkaa "{{name}}"',
 
   // "admin.access-control.epeople.table.edit.buttons.edit-disabled": "You are not authorized to edit this group",
   "admin.access-control.epeople.table.edit.buttons.edit-disabled": "Sinulla ei ole valtuuksia muokata tätä ryhmää",
 
   // "admin.access-control.epeople.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.remove": "Poista \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.remove": 'Poista "{{name}}"',
 
   // "admin.access-control.epeople.no-items": "No EPeople to show.",
   "admin.access-control.epeople.no-items": "Ei näytettäviä käyttäjiä.",
@@ -424,28 +423,28 @@
   "admin.access-control.epeople.form.return": "Paluu",
 
   // "admin.access-control.epeople.form.notification.created.success": "Successfully created EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.success": "Käyttäjä \"{{name}}\" luotu",
+  "admin.access-control.epeople.form.notification.created.success": 'Käyttäjä "{{name}}" luotu',
 
   // "admin.access-control.epeople.form.notification.created.failure": "Failed to create EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.failure": "Käyttäjän \"{{name}}\" luonti epäonnistui",
+  "admin.access-control.epeople.form.notification.created.failure": 'Käyttäjän "{{name}}" luonti epäonnistui',
 
   // "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Failed to create EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Käyttäjän \"{{name}}\" luonti epäonnistui, sähköpostiosoite \"{{email}}\" on jo käytössä.",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": 'Käyttäjän "{{name}}" luonti epäonnistui, sähköpostiosoite "{{email}}" on jo käytössä.',
 
   // "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Failed to edit EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Käyttäjän \"{{name}}\" muokkaus epäonnistui, sähköpostiosoite \"{{email}}\" on jo käytössä.",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'Käyttäjän "{{name}}" muokkaus epäonnistui, sähköpostiosoite "{{email}}" on jo käytössä.',
 
   // "admin.access-control.epeople.form.notification.edited.success": "Successfully edited EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.success": "Käyttäjä \"{{name}}\" muokattu",
+  "admin.access-control.epeople.form.notification.edited.success": 'Käyttäjä "{{name}}" muokattu',
 
   // "admin.access-control.epeople.form.notification.edited.failure": "Failed to edit EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.failure": "Käyttäjän \"{{name}}\" muokkaus epäonnistui",
+  "admin.access-control.epeople.form.notification.edited.failure": 'Käyttäjän "{{name}}" muokkaus epäonnistui',
 
   // "admin.access-control.epeople.form.notification.deleted.success": "Successfully deleted EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.success": "Käyttäjä \"{{name}}\" poistettu",
+  "admin.access-control.epeople.form.notification.deleted.success": 'Käyttäjä "{{name}}" poistettu',
 
   // "admin.access-control.epeople.form.notification.deleted.failure": "Failed to delete EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.failure": "Käyttäjän \"{{name}}\" poisto epäonnistui",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'Käyttäjän "{{name}}" poisto epäonnistui',
 
   // "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Member of these groups:",
   "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Jäsenenä näissä ryhmissä:",
@@ -466,10 +465,10 @@
   "admin.access-control.epeople.form.goToGroups": "Lisää ryhmiin",
 
   // "admin.access-control.epeople.notification.deleted.failure": "Failed to delete EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.failure": "Käyttäjän poisto epäonnistui: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.failure": 'Käyttäjän poisto epäonnistui: "{{name}}"',
 
   // "admin.access-control.epeople.notification.deleted.success": "Successfully deleted EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.success": "Käyttäjä poistettu: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.success": 'Käyttäjä poistettu: "{{name}}"',
 
   // "admin.access-control.groups.title": "Groups",
   "admin.access-control.groups.title": "Ryhmät",
@@ -523,28 +522,28 @@
   "admin.access-control.groups.table.edit": "Muokkaa",
 
   // "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.edit": "Muokkaa ryhmää \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.edit": 'Muokkaa ryhmää "{{name}}"',
 
   // "admin.access-control.groups.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.remove": "Poista \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.remove": 'Poista "{{name}}"',
 
   // "admin.access-control.groups.no-items": "No groups found with this in their name or this as UUID",
   "admin.access-control.groups.no-items": "Ei ryhmiä, joiden nimi tai UUID täsmää",
 
   // "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.success": "Ryhmä \"{{name}}\" poistettu",
+  "admin.access-control.groups.notification.deleted.success": 'Ryhmä "{{name}}" poistettu',
 
   // "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.failure.title": "Ryhmän \"{{name}}\" poisto epäonnistui",
+  "admin.access-control.groups.notification.deleted.failure.title": 'Ryhmän "{{name}}" poisto epäonnistui',
 
   // "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
-  "admin.access-control.groups.notification.deleted.failure.content": "Syy: \"{{cause}}\"",
+  "admin.access-control.groups.notification.deleted.failure.content": 'Syy: "{{cause}}"',
 
   // "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
   "admin.access-control.groups.form.alert.permanent": "Tämä ryhmä on pysyvä, eikä sitä voi muokata tai poistaa. Ryhmään voi kuitenkin lisätä ja poistaa jäseniä tällä sivulla.",
 
   // "admin.access-control.groups.form.alert.workflowGroup": "This group can’t be modified or deleted because it corresponds to a role in the submission and workflow process in the \"{{name}}\" {{comcol}}. You can delete it from the <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> tab on the edit {{comcol}} page. You can still add and remove group members using this page.",
-  "admin.access-control.groups.form.alert.workflowGroup": "Tätä ryhmää ei voi muokata eikä poistaa, koska siihen liittyy rooli tallennus- ja työnkulkuprosessissa \"{{name}}\" {{comcol}}. Voit poistaa sen <a href='{{comcolEditRolesRoute}}'>\"Määritä rooleja\"</a> -välilehdellä {{comcol}}-muokkaussivulla. Ryhmään voi kuitenkin lisätä ja poistaa jäseniä tällä sivulla.",
+  "admin.access-control.groups.form.alert.workflowGroup": 'Tätä ryhmää ei voi muokata eikä poistaa, koska siihen liittyy rooli tallennus- ja työnkulkuprosessissa "{{name}}" {{comcol}}. Voit poistaa sen <a href=\'{{comcolEditRolesRoute}}\'>"Määritä rooleja"</a> -välilehdellä {{comcol}}-muokkaussivulla. Ryhmään voi kuitenkin lisätä ja poistaa jäseniä tällä sivulla.',
 
   // "admin.access-control.groups.form.head.create": "Create group",
   "admin.access-control.groups.form.head.create": "Luo ryhmä",
@@ -562,31 +561,31 @@
   "admin.access-control.groups.form.groupDescription": "Kuvaus",
 
   // "admin.access-control.groups.form.notification.created.success": "Successfully created Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.success": "Ryhmä \"{{name}}\" luotu",
+  "admin.access-control.groups.form.notification.created.success": 'Ryhmä "{{name}}" luotu',
 
   // "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.failure": "Ryhmän \"{{name}}\" luonti epäonnistui",
+  "admin.access-control.groups.form.notification.created.failure": 'Ryhmän "{{name}}" luonti epäonnistui',
 
   // "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Ryhmän \"{{name}}\" luonti epäonnistui. Tarkista, että nimi ei ole käytössä.",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": 'Ryhmän "{{name}}" luonti epäonnistui. Tarkista, että nimi ei ole käytössä.',
 
   // "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.failure": "Ryhmän \"{{name}}\" muokkaus epäonnistui",
+  "admin.access-control.groups.form.notification.edited.failure": 'Ryhmän "{{name}}" muokkaus epäonnistui',
 
   // "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Name \"{{name}}\" already in use!",
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Nimi \"{{name}}\" on jo käytössä!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": 'Nimi "{{name}}" on jo käytössä!',
 
   // "admin.access-control.groups.form.notification.edited.success": "Successfully edited Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.success": "Ryhmää \"{{name}}\" muokattu",
+  "admin.access-control.groups.form.notification.edited.success": 'Ryhmää "{{name}}" muokattu',
 
   // "admin.access-control.groups.form.actions.delete": "Delete Group",
   "admin.access-control.groups.form.actions.delete": "Poista ryhmä",
 
   // "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.header": "Poista ryhmä \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.header": 'Poista ryhmä "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.info": "Haluatko varmasti poistaa ryhmän \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.info": 'Haluatko varmasti poistaa ryhmän "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
   "admin.access-control.groups.form.delete-group.modal.cancel": "Peruuta",
@@ -595,13 +594,13 @@
   "admin.access-control.groups.form.delete-group.modal.confirm": "Poista",
 
   // "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.success": "Ryhmä \"{{ name }}\" poistettu",
+  "admin.access-control.groups.form.notification.deleted.success": 'Ryhmä "{{ name }}" poistettu',
 
   // "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.title": "Ryhmän \"{{ name }}\" poisto epäonnistui",
+  "admin.access-control.groups.form.notification.deleted.failure.title": 'Ryhmän "{{ name }}" poisto epäonnistui',
 
   // "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.content": "Syy: \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'Syy: "{{ cause }}"',
 
   // "admin.access-control.groups.form.members-list.head": "EPeople",
   "admin.access-control.groups.form.members-list.head": "Käyttäjät",
@@ -643,22 +642,22 @@
   "admin.access-control.groups.form.members-list.table.edit": "Poista / Lisää",
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Poista jäsen \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": 'Poista jäsen "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "Jäsen lisätty: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": 'Jäsen lisätty: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "Jäsenen lisäys epäonnistui: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'Jäsenen lisäys epäonnistui: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Jäsen poistettu: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": 'Jäsen poistettu: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Jäsenen poisto epäonnistui: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'Jäsenen poisto epäonnistui: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Lisää jäsen \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": 'Lisää jäsen "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "Ei aktiivista ryhmää, syötä ensin nimi.",
@@ -670,7 +669,7 @@
   "admin.access-control.groups.form.members-list.no-items": "Haku ei palauttanut käyttäjiä",
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "Tapahtui  virhe: \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'Tapahtui  virhe: "{{cause}}"',
 
   // "admin.access-control.groups.form.subgroups-list.head": "Groups",
   "admin.access-control.groups.form.subgroups-list.head": "Ryhmät",
@@ -700,25 +699,25 @@
   "admin.access-control.groups.form.subgroups-list.table.edit": "Poista / Lisää",
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remove subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Poista alaryhmä nimeltään \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": 'Poista alaryhmä nimeltään "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Add subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Lisää alarymä nimellä \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": 'Lisää alarymä nimellä "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Current group",
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Nykyinen ryhmä",
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Successfully added subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Lisätty alaryhmä: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'Lisätty alaryhmä: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Failed to add subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Alaryhmän lisäys epäonnistui: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'Alaryhmän lisäys epäonnistui: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Successfully deleted subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Alaryhmä poistettu: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": 'Alaryhmä poistettu: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Failed to delete subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Alaryhmän poisto epäonnistui: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": 'Alaryhmän poisto epäonnistui: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "Ei nykyistä aktiivista ryhmää, tallenna ensin nimi.",
@@ -940,22 +939,22 @@
   "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit": "Poista / Lisää",
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": "Poista jäsen nimellä \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.remove": 'Poista jäsen nimellä "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": "Jäsen lisätty: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.addMember": 'Jäsen lisätty: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": "Jäsenen lisäys epäonnistui: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.addMember": 'Jäsenen lisäys epäonnistui: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": "Jäsen poistettu: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.success.deleteMember": 'Jäsen poistettu: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": "Jäsenen poisto epäonnistui: \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.deleteMember": 'Jäsenen poisto epäonnistui: "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": "Lisää jäsen nimellä \"{{name}}\"",
+  "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.table.edit.buttons.add": 'Lisää jäsen nimellä "{{name}}"',
 
   // "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "advanced-workflow-action-select-reviewer.groups.form.reviewers-list.notification.failure.noActiveGroup": "Ei aktiivista ryhmää, syötä ensin nimi",
@@ -1003,7 +1002,7 @@
   "bitstream.edit.bitstream": "Tiedosto: ",
 
   // "bitstream.edit.form.description.hint": "Optionally, provide a brief description of the file, for example \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
-  "bitstream.edit.form.description.hint": "Voit lisätä lyhyen kuvauksen tiedostosta, esimerkiksi \"<i>Pääartikkeli</i>\" tai \"<i>Testidatan tulkinta</i>\".",
+  "bitstream.edit.form.description.hint": 'Voit lisätä lyhyen kuvauksen tiedostosta, esimerkiksi "<i>Pääartikkeli</i>" tai "<i>Testidatan tulkinta</i>".',
 
   // "bitstream.edit.form.description.label": "Description",
   "bitstream.edit.form.description.label": "Kuvaus",
@@ -1024,13 +1023,13 @@
   "bitstream.edit.form.newFormat.label": "Kuvaile uusi formaatti",
 
   // "bitstream.edit.form.newFormat.hint": "The application you used to create the file, and the version number (for example, \"<i>ACMESoft SuperApp version 1.5</i>\").",
-  "bitstream.edit.form.newFormat.hint": "Tiedoston luonnissa käytetty sovellus ja versionumero (esim. \"<i>ACMESoft SuperApp version 1.5</i>\").",
+  "bitstream.edit.form.newFormat.hint": 'Tiedoston luonnissa käytetty sovellus ja versionumero (esim. "<i>ACMESoft SuperApp version 1.5</i>").',
 
   // "bitstream.edit.form.primaryBitstream.label": "Primary bitstream",
   "bitstream.edit.form.primaryBitstream.label": "Ensisijainen tiedosto",
 
   // "bitstream.edit.form.selectedFormat.hint": "If the format is not in the above list, <b>select \"format not in list\" above</b> and describe it under \"Describe new format\".",
-  "bitstream.edit.form.selectedFormat.hint": "Jos formaatti ei ole yllä olevassa luettelossa,  <b>valitse yltä \"Formaatti ei ole luettelossa\"</b> ja kuvaile se kohdassa \"Kuvaile uusi formaatti\".",
+  "bitstream.edit.form.selectedFormat.hint": 'Jos formaatti ei ole yllä olevassa luettelossa,  <b>valitse yltä "Formaatti ei ole luettelossa"</b> ja kuvaile se kohdassa "Kuvaile uusi formaatti".',
 
   // "bitstream.edit.form.selectedFormat.label": "Selected Format",
   "bitstream.edit.form.selectedFormat.label": "Valittu formaatti",
@@ -1321,7 +1320,7 @@
   "collection.delete.notification.success": "Kokoelma poistettu",
 
   // "collection.delete.text": "Are you sure you want to delete collection \"{{ dso }}\"",
-  "collection.delete.text": "Haluatko varmasti poistaa kokoelman \"{{ dso }}\"",
+  "collection.delete.text": 'Haluatko varmasti poistaa kokoelman "{{ dso }}"',
 
   // "collection.edit.delete": "Delete this collection",
   "collection.edit.delete": "Poista kokoelma",
@@ -1342,7 +1341,7 @@
   "collection.edit.item-mapper.cancel": "Peruuta",
 
   // "collection.edit.item-mapper.collection": "Collection: \"<b>{{name}}</b>\"",
-  "collection.edit.item-mapper.collection": "Kokoelma: \"<b>{{name}}</b>\"",
+  "collection.edit.item-mapper.collection": 'Kokoelma: "<b>{{name}}</b>"',
 
   // "collection.edit.item-mapper.confirm": "Map selected items",
   "collection.edit.item-mapper.confirm": "Liitä valitut tietueet",
@@ -1531,7 +1530,7 @@
   "collection.edit.template.error": "Virhe noudettaessa mallitietuetta",
 
   // "collection.edit.template.head": "Edit Template Item for Collection \"{{ collection }}\"",
-  "collection.edit.template.head": "Muokkaa kokoelman \"{{ collection }}\" mallitietuetta",
+  "collection.edit.template.head": 'Muokkaa kokoelman "{{ collection }}" mallitietuetta',
 
   // "collection.edit.template.label": "Template item",
   "collection.edit.template.label": "Mallitietue",
@@ -1723,7 +1722,7 @@
   "community.delete.notification.success": "Yhteisö poistettu",
 
   // "community.delete.text": "Are you sure you want to delete community \"{{ dso }}\"",
-  "community.delete.text": "Haluatko varmasti poistaa yhteisön \"{{ dso }}\"",
+  "community.delete.text": 'Haluatko varmasti poistaa yhteisön "{{ dso }}"',
 
   // "community.edit.delete": "Delete this community",
   "community.edit.delete": "Poista tämä yhteisö",
@@ -2083,7 +2082,7 @@
   "curation.form.handle.hint": "Vinkki: Syötä [oma-handle-prefix]/0 suorittaaksesi tehtävän koko sivustolla (kaikki tehtävät eivät tue tätä toimintoa)",
 
   // "deny-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I regret to inform you that it's not possible to send you a copy of the file(s) you have requested, concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
-  "deny-request-copy.email.message": "Hyvä {{ recipientName }},\nValitettavasti emme voi lähettää kopiota pyytämistänne tiedostoista (dokumentti \"{{ itemUrl }}\" ({{ itemName }})), joiden tekijä olen. Ystävällisin terveisin \n{{ authorName }} <{{ authorEmail }}>",
+  "deny-request-copy.email.message": 'Hyvä {{ recipientName }},\nValitettavasti emme voi lähettää kopiota pyytämistänne tiedostoista (dokumentti "{{ itemUrl }}" ({{ itemName }})), joiden tekijä olen. Ystävällisin terveisin \n{{ authorName }} <{{ authorEmail }}>',
 
   // "deny-request-copy.email.subject": "Request copy of document",
   "deny-request-copy.email.subject": "Dokumenttikopion pyyntö",
@@ -2254,10 +2253,10 @@
   "confirmation-modal.export-batch.confirm": "Eksportoi",
 
   // "confirmation-modal.delete-eperson.header": "Delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.header": "Poista käyttäjä \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.header": 'Poista käyttäjä "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.info": "Are you sure you want to delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.info": "Haluatko varmasti poistaa käyttäjän \"{{ dsoName }}\"?",
+  "confirmation-modal.delete-eperson.info": 'Haluatko varmasti poistaa käyttäjän "{{ dsoName }}"?',
 
   // "confirmation-modal.delete-eperson.cancel": "Cancel",
   "confirmation-modal.delete-eperson.cancel": "Peruuta",
@@ -2281,7 +2280,7 @@
   "confirmation-modal.delete-subscription.header": "Poista tilaus",
 
   // "confirmation-modal.delete-subscription.info": "Are you sure you want to delete subscription for \"{{ dsoName }}\"",
-  "confirmation-modal.delete-subscription.info": "Haluatko varmasti poistaa tilauksen: \"{{ dsoName }}\"",
+  "confirmation-modal.delete-subscription.info": 'Haluatko varmasti poistaa tilauksen: "{{ dsoName }}"',
 
   // "confirmation-modal.delete-subscription.cancel": "Cancel",
   "confirmation-modal.delete-subscription.cancel": "Peruuta",
@@ -2326,7 +2325,7 @@
   "error.search-results": "Virhe hakutuloksia noudettaessa",
 
   // "error.invalid-search-query": "Search query is not valid. Please check <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> best practices for further information about this error.",
-  "error.invalid-search-query": "Hakulauseke on virheellinen. Tarkista <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr-kyselysyntaksi</a> ja sieltä parhaat käytännöt saadaksesi lisätietoja.",
+  "error.invalid-search-query": 'Hakulauseke on virheellinen. Tarkista <a href="https://solr.apache.org/guide/query-syntax-and-parsing.html" target="_blank">Solr-kyselysyntaksi</a> ja sieltä parhaat käytännöt saadaksesi lisätietoja.',
 
   // "error.sub-collections": "Error fetching sub-collections",
   "error.sub-collections": "Virhe alakokoelmia noudettaessa",
@@ -3052,7 +3051,7 @@
   "item.edit.item-mapper.head": "Tietueliitosväline - Liitä tietue kokoelmiin",
 
   // "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
-  "item.edit.item-mapper.item": "Tietue: \"<b>{{name}}</b>\"",
+  "item.edit.item-mapper.item": 'Tietue: "<b>{{name}}</b>"',
 
   // "item.edit.item-mapper.no-search": "Please enter a query to search",
   "item.edit.item-mapper.no-search": "Anna hakulauseke",
@@ -3115,7 +3114,7 @@
   "item.edit.metadata.edit.buttons.unedit": "Lopeta muokkaus",
 
   // "item.edit.metadata.edit.buttons.virtual": "This is a virtual metadata value, i.e. a value inherited from a related entity. It can’t be modified directly. Add or remove the corresponding relationship in the \"Relationships\" tab",
-  "item.edit.metadata.edit.buttons.virtual": "Tämä on virtuaalinen metadata-arvo eli arvo, joka on peritty liittyvältä entiteetiltä. Sitä ei voi muokata suoraan. Lisää tai poista yhteys \"Suhteet\"-välilehdellä,",
+  "item.edit.metadata.edit.buttons.virtual": 'Tämä on virtuaalinen metadata-arvo eli arvo, joka on peritty liittyvältä entiteetiltä. Sitä ei voi muokata suoraan. Lisää tai poista yhteys "Suhteet"-välilehdellä,',
 
   // "item.edit.metadata.empty": "The item currently doesn't contain any metadata. Click Add to start adding a metadata value.",
   "item.edit.metadata.empty": "Tietueessa ei ole metadataa. Valitse Lisää lisätäksesi metadataa.",
@@ -3505,10 +3504,10 @@
   "workflow-item.search.result.delete-supervision.modal.confirm": "Poista",
 
   // "workflow-item.search.result.notification.deleted.success": "Successfully deleted supervision order \"{{name}}\"",
-  "workflow-item.search.result.notification.deleted.success": "Ohjausmääräys poistettu \"{{name}}\"",
+  "workflow-item.search.result.notification.deleted.success": 'Ohjausmääräys poistettu "{{name}}"',
 
   // "workflow-item.search.result.notification.deleted.failure": "Failed to delete supervision order \"{{name}}\"",
-  "workflow-item.search.result.notification.deleted.failure": "Ohjausmääräyksen poisto epäonnistui \"{{name}}\"",
+  "workflow-item.search.result.notification.deleted.failure": 'Ohjausmääräyksen poisto epäonnistui "{{name}}"',
 
   // "workflow-item.search.result.list.element.supervised-by": "Supervised by:",
   "workflow-item.search.result.list.element.supervised-by": "Ohjaajana:",
@@ -6415,7 +6414,7 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title": "Hakutulokset",
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Would you like to save \"{{ value }}\" as a name variant for this person so you and others can reuse it for future submissions? If you don't you can still use it for this submission.",
-  "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Haluatko tallentaa nimen \"{{ value }}\" käyttäjän vaihtoehtoiseksi nimeksi, jota muutkin voivat käyttää uudelleen myös tulevissa tallennuksissa? Ellet tallenna nimeä, voit silti käyttää sitä tässä tallennuksessa.",
+  "submission.sections.describe.relationship-lookup.name-variant.notification.content": 'Haluatko tallentaa nimen "{{ value }}" käyttäjän vaihtoehtoiseksi nimeksi, jota muutkin voivat käyttää uudelleen myös tulevissa tallennuksissa? Ellet tallenna nimeä, voit silti käyttää sitä tässä tallennuksessa.',
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Save a new name variant",
   "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Tallenna uusi vaihtoehtoinen nimi",
@@ -6844,7 +6843,7 @@
   "submission.workflow.tasks.claimed.approve": "Hyväksy",
 
   // "submission.workflow.tasks.claimed.approve_help": "If you have reviewed the item and it is suitable for inclusion in the collection, select \"Approve\".",
-  "submission.workflow.tasks.claimed.approve_help": "Jos olet tarkistanut tietueen, ja se on kelvollinen kokoelmaan lisättäväksi, valitse \"Hyväksy\".",
+  "submission.workflow.tasks.claimed.approve_help": 'Jos olet tarkistanut tietueen, ja se on kelvollinen kokoelmaan lisättäväksi, valitse "Hyväksy".',
 
   // "submission.workflow.tasks.claimed.edit": "Edit",
   "submission.workflow.tasks.claimed.edit": "Muokkaa",
@@ -6874,7 +6873,7 @@
   "submission.workflow.tasks.claimed.reject.submit": "Hylkää",
 
   // "submission.workflow.tasks.claimed.reject_help": "If you have reviewed the item and found it is <strong>not</strong> suitable for inclusion in the collection, select \"Reject\".  You will then be asked to enter a message indicating why the item is unsuitable, and whether the submitter should change something and resubmit.",
-  "submission.workflow.tasks.claimed.reject_help": "Jos olet tarkistanut tietueen, ja se <strong>ei</strong> on kelvollinen kokoelmaan lisättäväksi, valitse \"Hylkää\". Tämän jälkeen sinua pyydetään kertomaan, miksi tietue ei ole kelvollinen sekä voiko tallentaja tehdä muutoksia ja lähettää aineiston uudelleen.",
+  "submission.workflow.tasks.claimed.reject_help": 'Jos olet tarkistanut tietueen, ja se <strong>ei</strong> on kelvollinen kokoelmaan lisättäväksi, valitse "Hylkää". Tämän jälkeen sinua pyydetään kertomaan, miksi tietue ei ole kelvollinen sekä voiko tallentaja tehdä muutoksia ja lähettää aineiston uudelleen.',
 
   // "submission.workflow.tasks.claimed.return": "Return to pool",
   "submission.workflow.tasks.claimed.return": "Palauta tehtäväjonoon",
@@ -6955,7 +6954,7 @@
   "subscriptions.modal.close": "Sulje",
 
   // "subscriptions.modal.delete-info": "To remove this subscription, please visit the \"Subscriptions\" page under your user profile",
-  "subscriptions.modal.delete-info": "Voit poistaa tilauksen käyttäjäprofiilisi \"Tilaukset\"-sivulla ",
+  "subscriptions.modal.delete-info": 'Voit poistaa tilauksen käyttäjäprofiilisi "Tilaukset"-sivulla ',
 
   // "subscriptions.modal.new-subscription-form.type.content": "Content",
   "subscriptions.modal.new-subscription-form.type.content": "Sisältö",
@@ -7045,7 +7044,7 @@
   "thumbnail.person.placeholder": "Ei profiilikuva saatavilla",
 
   // "title": "DSpace",
-  "title": "Julkaisuarkisto",
+  title: "Julkaisuarkisto",
 
   // "vocabulary-treeview.header": "Hierarchical tree view",
   "vocabulary-treeview.header": "Hierarkkinen puunäkymä",
@@ -7582,7 +7581,7 @@
   "person.page.orcid.synchronization-mode.label": "Synkronointimoodi",
 
   // "person.page.orcid.synchronization-mode-message": "Please select how you would like synchronization to ORCID to occur. The options include \"Manual\" (you must send your data to ORCID manually), or \"Batch\" (the system will send your data to ORCID via a scheduled script).",
-  "person.page.orcid.synchronization-mode-message": "Valitse, miten haluat synkronoinnin ORCIDiin tapahtuvan. Vaihtoehdot ovat \"Manuaalinen\" (sinun on lähetettävä tietosi ORCIDiin manuaalisesti) tai \"Erä\" (järjestelmä lähettää tietosi ORCIDiin ajastetun skriptin avulla).",
+  "person.page.orcid.synchronization-mode-message": 'Valitse, miten haluat synkronoinnin ORCIDiin tapahtuvan. Vaihtoehdot ovat "Manuaalinen" (sinun on lähetettävä tietosi ORCIDiin manuaalisesti) tai "Erä" (järjestelmä lähettää tietosi ORCIDiin ajastetun skriptin avulla).',
 
   // "person.page.orcid.synchronization-mode-funding-message": "Select whether to send your linked Project entities to your ORCID record's list of funding information.",
   "person.page.orcid.synchronization-mode-funding-message": "Valitse, lähetetäänkö linkitetyt projektisi ORCID-rekisterin rahoitustietoluetteloon.",
@@ -7703,5 +7702,4 @@
 
   // "admin.system-wide-alert.title": "System-wide Alerts",
   "admin.system-wide-alert.title": "Järjestelmänlaajuiset hälytykset",
-
 }

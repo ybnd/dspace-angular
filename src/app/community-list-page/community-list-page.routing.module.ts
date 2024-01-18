@@ -19,12 +19,14 @@ import { ThemedCommunityListPageComponent } from './themed-community-list-page.c
         resolve: {
           breadcrumb: I18nBreadcrumbResolver,
         },
-        data: { title: 'communityList.tabTitle', breadcrumbKey: 'communityList' },
+        data: {
+          title: 'communityList.tabTitle',
+          breadcrumbKey: 'communityList',
+        },
       },
     ]),
     CdkTreeModule,
   ],
   providers: [CommunityListService],
 })
-export class CommunityListPageRoutingModule {
-}
+export class CommunityListPageRoutingModule {}

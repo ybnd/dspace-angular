@@ -1,9 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
@@ -21,16 +18,26 @@ import { WorkflowItemActionPageComponent } from '../workflow-item-action-page.co
  * Component representing a page to send back a workflow item to the submitter
  */
 export class WorkflowItemSendBackComponent extends WorkflowItemActionPageComponent {
-  constructor(protected route: ActivatedRoute,
-              protected workflowItemService: WorkflowItemDataService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected notificationsService: NotificationsService,
-              protected translationService: TranslateService,
-              protected requestService: RequestService,
-              protected location: Location,
+  constructor(
+    protected route: ActivatedRoute,
+    protected workflowItemService: WorkflowItemDataService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService,
+    protected requestService: RequestService,
+    protected location: Location,
   ) {
-    super(route, workflowItemService, router, routeService, notificationsService, translationService, requestService, location);
+    super(
+      route,
+      workflowItemService,
+      router,
+      routeService,
+      notificationsService,
+      translationService,
+      requestService,
+      location,
+    );
   }
 
   /**

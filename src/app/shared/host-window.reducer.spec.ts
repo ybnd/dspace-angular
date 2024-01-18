@@ -13,7 +13,6 @@ class NullAction extends HostWindowResizeAction {
 }
 
 describe('hostWindowReducer', () => {
-
   it('should return the current state when no valid actions have been made', () => {
     const state = { width: 800, height: 600 };
     const action = new NullAction();
@@ -46,5 +45,4 @@ describe('hostWindowReducer', () => {
     const action = new HostWindowResizeAction(1024, 768);
     hostWindowReducer(state, action);
   });
-
 });

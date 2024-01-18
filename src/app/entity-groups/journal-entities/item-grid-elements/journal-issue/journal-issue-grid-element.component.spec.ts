@@ -1,11 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of as observableOf } from 'rxjs';
@@ -21,7 +15,9 @@ import { TruncatePipe } from '../../../../shared/utils/truncate.pipe';
 import { JournalIssueGridElementComponent } from './journal-issue-grid-element.component';
 
 const mockItem = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'dc.title': [
       {
@@ -61,9 +57,11 @@ describe('JournalIssueGridElementComponent', () => {
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(JournalIssueGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(JournalIssueGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -78,7 +76,9 @@ describe('JournalIssueGridElementComponent', () => {
     });
 
     it(`should contain a JournalIssueSearchResultGridElementComponent`, () => {
-      const journalIssueGridElement = fixture.debugElement.query(By.css(`ds-journal-issue-search-result-grid-element`));
+      const journalIssueGridElement = fixture.debugElement.query(
+        By.css(`ds-journal-issue-search-result-grid-element`),
+      );
       expect(journalIssueGridElement).not.toBeNull();
     });
   });

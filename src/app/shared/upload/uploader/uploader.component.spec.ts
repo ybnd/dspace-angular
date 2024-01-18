@@ -24,34 +24,28 @@ import { UploaderComponent } from './uploader.component';
 import { UploaderOptions } from './uploader-options.model';
 
 describe('Chips component', () => {
-
   let testComp: TestComponent;
   let testFixture: ComponentFixture<TestComponent>;
   let html;
 
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-      imports: [
-        FileUploadModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        UploaderComponent,
-        TestComponent,
-      ], // declare the test component
+      imports: [FileUploadModule, TranslateModule.forRoot()],
+      declarations: [UploaderComponent, TestComponent], // declare the test component
       providers: [
         ChangeDetectorRef,
         ScrollToService,
         UploaderComponent,
         DragService,
-        { provide: HttpXsrfTokenExtractor, useValue: new HttpXsrfTokenExtractorMock('mock-token') },
+        {
+          provide: HttpXsrfTokenExtractor,
+          useValue: new HttpXsrfTokenExtractorMock('mock-token'),
+        },
         { provide: CookieService, useValue: new CookieServiceMock() },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   // synchronous beforeEach
@@ -61,15 +55,19 @@ describe('Chips component', () => {
                    [uploadFilesOptions]="uploadFilesOptions"
                    (onCompleteItem)="onCompleteItem($event)"></ds-uploader>`;
 
-    testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+    testFixture = createTestComponent(
+      html,
+      TestComponent,
+    ) as ComponentFixture<TestComponent>;
     testComp = testFixture.componentInstance;
   });
 
-  it('should create Uploader Component', inject([UploaderComponent], (app: UploaderComponent) => {
-
-    expect(app).toBeDefined();
-  }));
-
+  it('should create Uploader Component', inject(
+    [UploaderComponent],
+    (app: UploaderComponent) => {
+      expect(app).toBeDefined();
+    },
+  ));
 });
 
 // declare a test component
@@ -78,19 +76,20 @@ describe('Chips component', () => {
   template: ``,
 })
 class TestComponent {
-  public uploadFilesOptions: UploaderOptions = Object.assign(new UploaderOptions(), {
-    url: 'http://test',
-    authToken: null,
-    disableMultipart: false,
-    itemAlias: null,
-  });
+  public uploadFilesOptions: UploaderOptions = Object.assign(
+    new UploaderOptions(),
+    {
+      url: 'http://test',
+      authToken: null,
+      disableMultipart: false,
+      itemAlias: null,
+    },
+  );
 
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-  public onBeforeUpload = () => {
-  };
+  public onBeforeUpload = () => {};
 
-  onCompleteItem(event) {
-  }
+  onCompleteItem(event) {}
 
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 }

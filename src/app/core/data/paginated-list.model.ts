@@ -1,7 +1,4 @@
-import {
-  autoserialize,
-  deserialize,
-} from 'cerialize';
+import { autoserialize, deserialize } from 'cerialize';
 
 import {
   hasNoValue,
@@ -27,7 +24,12 @@ import { PAGINATED_LIST } from './paginated-list.resource-type';
  *                    not the objects themselves
  * @param _links      Optional HALLinks to attach to the new PaginatedList
  */
-export const buildPaginatedList = <T>(pageInfo: PageInfo, page: T[], normalized = false, _links?: { [k: string]: HALLink | HALLink[] }): PaginatedList<T> => {
+export const buildPaginatedList = <T>(
+  pageInfo: PageInfo,
+  page: T[],
+  normalized = false,
+  _links?: { [k: string]: HALLink | HALLink[] },
+): PaginatedList<T> => {
   const result = new PaginatedList<T>();
 
   if (hasNoValue(pageInfo)) {
@@ -41,7 +43,11 @@ export const buildPaginatedList = <T>(pageInfo: PageInfo, page: T[], normalized 
     pageLinks = [];
   } else {
     pageLinks = page.map((element: any) => {
-      if (hasValue(element) && hasValue(element._links) && hasValue(element._links.self)) {
+      if (
+        hasValue(element) &&
+        hasValue(element._links) &&
+        hasValue(element._links.self)
+      ) {
         return (element as HALResource)._links.self;
       } else {
         return null;
@@ -66,20 +72,19 @@ export const buildPaginatedList = <T>(pageInfo: PageInfo, page: T[], normalized 
 
 @typedObject
 export class PaginatedList<T> extends CacheableObject {
-
   static type = PAGINATED_LIST;
 
   /**
    * The type of the list
    */
   @excludeFromEquals
-    type = PAGINATED_LIST;
+  type = PAGINATED_LIST;
 
   /**
    * The type of objects in the list
    */
   @autoserialize
-    objectType?: ResourceType;
+  objectType?: ResourceType;
 
   /**
    * The list of objects that represents the current page
@@ -90,13 +95,13 @@ export class PaginatedList<T> extends CacheableObject {
    * the {@link PageInfo} object
    */
   @autoserialize
-    pageInfo?: PageInfo;
+  pageInfo?: PageInfo;
 
   /**
    * The {@link HALLink}s for this PaginatedList
    */
   @deserialize
-    _links: {
+  _links: {
     self: HALLink;
     page: HALLink[];
     first?: HALLink;
@@ -203,6 +208,6 @@ export class PaginatedList<T> extends CacheableObject {
   }
 
   protected getPageLength() {
-    return (Array.isArray(this.page)) ? this.page.length : 0;
+    return Array.isArray(this.page) ? this.page.length : 0;
   }
 }

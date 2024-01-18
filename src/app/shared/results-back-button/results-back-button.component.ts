@@ -17,7 +17,6 @@ import { Observable } from 'rxjs';
  * Component for creating a back to result list button.
  */
 export class ResultsBackButtonComponent implements OnInit {
-
   /**
    * The function used for back navigation.
    */
@@ -28,9 +27,7 @@ export class ResultsBackButtonComponent implements OnInit {
    */
   @Input() buttonLabel?: Observable<any>;
 
-  constructor(private translateService: TranslateService) {
-
-  }
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {
     if (!this.buttonLabel) {
@@ -38,5 +35,4 @@ export class ResultsBackButtonComponent implements OnInit {
       this.buttonLabel = this.translateService.get('search.browse.item-back');
     }
   }
-
 }

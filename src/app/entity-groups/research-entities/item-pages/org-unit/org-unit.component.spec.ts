@@ -9,7 +9,9 @@ import { createSuccessfulRemoteDataObject$ } from '../../../../shared/remote-dat
 import { OrgUnitComponent } from './org-unit.component';
 
 const mockItem: Item = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'organization.foundingDate': [
       {

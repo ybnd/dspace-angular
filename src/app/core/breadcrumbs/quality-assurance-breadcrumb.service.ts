@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Breadcrumb } from '../../breadcrumbs/breadcrumb/breadcrumb.model';
@@ -11,24 +8,21 @@ import { QualityAssuranceTopicDataService } from '../notifications/qa/topics/qua
 import { getFirstCompletedRemoteData } from '../shared/operators';
 import { BreadcrumbsProviderService } from './breadcrumbsProviderService';
 
-
-
 /**
  * Service to calculate QA breadcrumbs for a single part of the route
  */
 @Injectable({
   providedIn: 'root',
 })
-export class QualityAssuranceBreadcrumbService implements BreadcrumbsProviderService<string> {
-
-  private QUALITY_ASSURANCE_BREADCRUMB_KEY = 'admin.quality-assurance.breadcrumbs';
+export class QualityAssuranceBreadcrumbService
+  implements BreadcrumbsProviderService<string>
+{
+  private QUALITY_ASSURANCE_BREADCRUMB_KEY =
+    'admin.quality-assurance.breadcrumbs';
   constructor(
     protected qualityAssuranceService: QualityAssuranceTopicDataService,
     private translationService: TranslateService,
-  ) {
-
-  }
-
+  ) {}
 
   /**
    * Method to calculate the breadcrumbs
@@ -43,15 +37,28 @@ export class QualityAssuranceBreadcrumbService implements BreadcrumbsProviderSer
       return this.qualityAssuranceService.getTopic(topicId).pipe(
         getFirstCompletedRemoteData(),
         map((topic) => {
-          return [new Breadcrumb(this.translationService.instant(this.QUALITY_ASSURANCE_BREADCRUMB_KEY), url),
+          return [
+            new Breadcrumb(
+              this.translationService.instant(
+                this.QUALITY_ASSURANCE_BREADCRUMB_KEY,
+              ),
+              url,
+            ),
             new Breadcrumb(sourceId, `${url}${sourceId}`),
-            new Breadcrumb(topicId, undefined)];
+            new Breadcrumb(topicId, undefined),
+          ];
         }),
       );
     } else {
-      return observableOf([new Breadcrumb(this.translationService.instant(this.QUALITY_ASSURANCE_BREADCRUMB_KEY), url),
-        new Breadcrumb(sourceId, `${url}${sourceId}`)]);
+      return observableOf([
+        new Breadcrumb(
+          this.translationService.instant(
+            this.QUALITY_ASSURANCE_BREADCRUMB_KEY,
+          ),
+          url,
+        ),
+        new Breadcrumb(sourceId, `${url}${sourceId}`),
+      ]);
     }
-
   }
 }

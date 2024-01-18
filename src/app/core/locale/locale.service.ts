@@ -1,26 +1,12 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  combineLatest,
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  map,
-  mergeMap,
-  take,
-} from 'rxjs/operators';
+import { combineLatest, Observable, of as observableOf } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs/operators';
 
 import { LangConfig } from '../../../config/lang-config.interface';
 import { environment } from '../../../environments/environment';
-import {
-  isEmpty,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { isEmpty, isNotEmpty } from '../../shared/empty.util';
 import { AuthService } from '../auth/auth.service';
 import { CookieService } from '../services/cookie.service';
 import { RouteService } from '../services/route.service';
@@ -37,7 +23,7 @@ export const LANG_COOKIE = 'dsLanguage';
 export enum LANG_ORIGIN {
   UI,
   EPERSON,
-  BROWSER
+  BROWSER,
 }
 
 /**
@@ -45,7 +31,6 @@ export enum LANG_ORIGIN {
  */
 @Injectable()
 export class LocaleService {
-
   /**
    * Eperson language metadata
    */
@@ -58,8 +43,7 @@ export class LocaleService {
     protected authService: AuthService,
     protected routeService: RouteService,
     @Inject(DOCUMENT) protected document: any,
-  ) {
-  }
+  ) {}
 
   /**
    * Get the language currently used
@@ -69,7 +53,13 @@ export class LocaleService {
   getCurrentLanguageCode(): string {
     // Attempt to get the language from a cookie
     let lang = this.getLanguageCodeFromCookie();
-    if (isEmpty(lang) || environment.languages.find((langConfig: LangConfig) => langConfig.code === lang && langConfig.active) === undefined) {
+    if (
+      isEmpty(lang) ||
+      environment.languages.find(
+        (langConfig: LangConfig) =>
+          langConfig.code === lang && langConfig.active,
+      ) === undefined
+    ) {
       // Attempt to get the browser language from the user
       if (this.translate.getLangs().includes(this.translate.getBrowserLang())) {
         lang = this.translate.getBrowserLang();
@@ -116,19 +106,24 @@ export class LocaleService {
           map((epersonLang: string[]) => {
             const languages: string[] = [];
             if (this.translate.currentLang) {
-              languages.push(...this.setQuality(
-                [this.translate.currentLang],
-                LANG_ORIGIN.UI,
-                false));
+              languages.push(
+                ...this.setQuality(
+                  [this.translate.currentLang],
+                  LANG_ORIGIN.UI,
+                  false,
+                ),
+              );
             }
             if (isNotEmpty(epersonLang)) {
               languages.push(...epersonLang);
             }
             if (navigator.languages) {
-              languages.push(...this.setQuality(
-                Object.assign([], navigator.languages),
-                LANG_ORIGIN.BROWSER,
-                !isEmpty(this.translate.currentLang)),
+              languages.push(
+                ...this.setQuality(
+                  Object.assign([], navigator.languages),
+                  LANG_ORIGIN.BROWSER,
+                  !isEmpty(this.translate.currentLang),
+                ),
               );
             }
             return languages;
@@ -178,23 +173,31 @@ export class LocaleService {
    * @param origin origin of language list (UI, EPERSON, BROWSER)
    * @param hasOther true if contains other language, false otherwise
    */
-  setQuality(languages: string[], origin: LANG_ORIGIN, hasOther: boolean): string[] {
+  setQuality(
+    languages: string[],
+    origin: LANG_ORIGIN,
+    hasOther: boolean,
+  ): string[] {
     const langWithPrior = [];
     let idx = 0;
     const v = languages.length > 10 ? languages.length : 10;
     let divisor: number;
     switch (origin) {
       case LANG_ORIGIN.EPERSON:
-        divisor = 2; break;
+        divisor = 2;
+        break;
       case LANG_ORIGIN.BROWSER:
-        divisor = (hasOther ? 10 : 1); break;
+        divisor = hasOther ? 10 : 1;
+        break;
       default:
         divisor = 1;
     }
-    languages.forEach( (lang) => {
+    languages.forEach((lang) => {
       let value = lang + ';q=';
       let quality = (v - idx++) / v;
-      quality = ((languages.length > 10) ? quality.toFixed(2) : quality) as number;
+      quality = (
+        languages.length > 10 ? quality.toFixed(2) : quality
+      ) as number;
       value += quality / divisor;
       langWithPrior.push(value);
     });
@@ -205,12 +208,15 @@ export class LocaleService {
    * Refresh route navigated
    */
   public refreshAfterChangeLanguage() {
-    this.routeService.getCurrentUrl().pipe(take(1)).subscribe((currentURL) => {
-      // Hard redirect to the reload page with a unique number behind it
-      // so that all state is definitely lost
-      this._window.nativeWindow.location.href = `reload/${new Date().getTime()}?redirect=` + encodeURIComponent(currentURL);
-    });
-
+    this.routeService
+      .getCurrentUrl()
+      .pipe(take(1))
+      .subscribe((currentURL) => {
+        // Hard redirect to the reload page with a unique number behind it
+        // so that all state is definitely lost
+        this._window.nativeWindow.location.href =
+          `reload/${new Date().getTime()}?redirect=` +
+          encodeURIComponent(currentURL);
+      });
   }
-
 }

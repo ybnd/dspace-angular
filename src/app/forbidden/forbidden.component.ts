@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { AuthService } from '../core/auth/auth.service';
 import { ServerResponseService } from '../core/services/server-response.service';
@@ -15,14 +12,16 @@ import { ServerResponseService } from '../core/services/server-response.service'
   styleUrls: ['./forbidden.component.scss'],
 })
 export class ForbiddenComponent implements OnInit {
-
   /**
    * Initialize instance variables
    *
    * @param {AuthService} authService
    * @param {ServerResponseService} responseService
    */
-  constructor(private authService: AuthService, private responseService: ServerResponseService) {
+  constructor(
+    private authService: AuthService,
+    private responseService: ServerResponseService,
+  ) {
     this.responseService.setForbidden();
   }
 
@@ -32,5 +31,4 @@ export class ForbiddenComponent implements OnInit {
   ngOnInit(): void {
     this.authService.clearRedirectUrl();
   }
-
 }

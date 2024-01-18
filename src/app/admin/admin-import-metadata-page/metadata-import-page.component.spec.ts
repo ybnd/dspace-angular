@@ -38,11 +38,9 @@ describe('MetadataImportPageComponent', () => {
 
   function init() {
     notificationService = new NotificationsServiceStub();
-    scriptService = jasmine.createSpyObj('scriptService',
-      {
-        invoke: createSuccessfulRemoteDataObject$({ processId: '45' }),
-      },
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: createSuccessfulRemoteDataObject$({ processId: '45' }),
+    });
     router = jasmine.createSpyObj('router', {
       navigateByUrl: jasmine.createSpy('navigateByUrl'),
     });
@@ -59,7 +57,11 @@ describe('MetadataImportPageComponent', () => {
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([]),
       ],
-      declarations: [MetadataImportPageComponent, FileValueAccessorDirective, FileValidator],
+      declarations: [
+        MetadataImportPageComponent,
+        FileValueAccessorDirective,
+        FileValidator,
+      ],
       providers: [
         { provide: NotificationsService, useValue: notificationService },
         { provide: ScriptDataService, useValue: scriptService },
@@ -82,7 +84,9 @@ describe('MetadataImportPageComponent', () => {
 
   describe('if back button is pressed', () => {
     beforeEach(fakeAsync(() => {
-      const proceed = fixture.debugElement.query(By.css('#backButton')).nativeElement;
+      const proceed = fixture.debugElement.query(
+        By.css('#backButton'),
+      ).nativeElement;
       proceed.click();
       fixture.detectChanges();
     }));
@@ -102,15 +106,24 @@ describe('MetadataImportPageComponent', () => {
     describe('if proceed button is pressed without validate only', () => {
       beforeEach(fakeAsync(() => {
         comp.validateOnly = false;
-        const proceed = fixture.debugElement.query(By.css('#proceedButton')).nativeElement;
+        const proceed = fixture.debugElement.query(
+          By.css('#proceedButton'),
+        ).nativeElement;
         proceed.click();
         fixture.detectChanges();
       }));
       it('metadata-import script is invoked with -f fileName and the mockFile', () => {
         const parameterValues: ProcessParameter[] = [
-          Object.assign(new ProcessParameter(), { name: '-f', value: 'filename.txt' }),
+          Object.assign(new ProcessParameter(), {
+            name: '-f',
+            value: 'filename.txt',
+          }),
         ];
-        expect(scriptService.invoke).toHaveBeenCalledWith(METADATA_IMPORT_SCRIPT_NAME, parameterValues, [fileMock]);
+        expect(scriptService.invoke).toHaveBeenCalledWith(
+          METADATA_IMPORT_SCRIPT_NAME,
+          parameterValues,
+          [fileMock],
+        );
       });
       it('success notification is shown', () => {
         expect(notificationService.success).toHaveBeenCalled();
@@ -123,16 +136,25 @@ describe('MetadataImportPageComponent', () => {
     describe('if proceed button is pressed with validate only', () => {
       beforeEach(fakeAsync(() => {
         comp.validateOnly = true;
-        const proceed = fixture.debugElement.query(By.css('#proceedButton')).nativeElement;
+        const proceed = fixture.debugElement.query(
+          By.css('#proceedButton'),
+        ).nativeElement;
         proceed.click();
         fixture.detectChanges();
       }));
       it('metadata-import script is invoked with -f fileName and the mockFile and -v validate-only', () => {
         const parameterValues: ProcessParameter[] = [
-          Object.assign(new ProcessParameter(), { name: '-f', value: 'filename.txt' }),
+          Object.assign(new ProcessParameter(), {
+            name: '-f',
+            value: 'filename.txt',
+          }),
           Object.assign(new ProcessParameter(), { name: '-v', value: true }),
         ];
-        expect(scriptService.invoke).toHaveBeenCalledWith(METADATA_IMPORT_SCRIPT_NAME, parameterValues, [fileMock]);
+        expect(scriptService.invoke).toHaveBeenCalledWith(
+          METADATA_IMPORT_SCRIPT_NAME,
+          parameterValues,
+          [fileMock],
+        );
       });
       it('success notification is shown', () => {
         expect(notificationService.success).toHaveBeenCalled();
@@ -145,8 +167,12 @@ describe('MetadataImportPageComponent', () => {
     describe('if proceed is pressed; but script invoke fails', () => {
       beforeEach(fakeAsync(() => {
         jasmine.getEnv().allowRespy(true);
-        spyOn(scriptService, 'invoke').and.returnValue(createFailedRemoteDataObject$('Error', 500));
-        const proceed = fixture.debugElement.query(By.css('#proceedButton')).nativeElement;
+        spyOn(scriptService, 'invoke').and.returnValue(
+          createFailedRemoteDataObject$('Error', 500),
+        );
+        const proceed = fixture.debugElement.query(
+          By.css('#proceedButton'),
+        ).nativeElement;
         proceed.click();
         fixture.detectChanges();
       }));

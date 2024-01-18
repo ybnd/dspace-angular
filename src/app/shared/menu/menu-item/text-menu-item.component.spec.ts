@@ -1,12 +1,5 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -21,12 +14,9 @@ describe('TextMenuItemComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [TextMenuItemComponent],
-      providers: [
-        { provide: 'itemModelProvider', useValue: { text: text } },
-      ],
+      providers: [{ provide: 'itemModelProvider', useValue: { text: text } }],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -41,7 +31,8 @@ describe('TextMenuItemComponent', () => {
   });
 
   it('should contain the text element', () => {
-    const textContent = debugElement.query(By.css('span')).nativeElement.textContent;
+    const textContent = debugElement.query(By.css('span')).nativeElement
+      .textContent;
     expect(textContent).toEqual(text);
   });
 });

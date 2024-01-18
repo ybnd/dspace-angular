@@ -46,8 +46,20 @@ export class AddToObjectCacheAction implements Action {
    *    link, it could have been part of a list for example
    *  @param alternativeLink An optional alternative link to this object
    */
-  constructor(objectToCache: CacheableObject, timeCompleted: number, msToLive: number, requestUUID: string, alternativeLink?: string) {
-    this.payload = { objectToCache, timeCompleted, msToLive, requestUUID, alternativeLink };
+  constructor(
+    objectToCache: CacheableObject,
+    timeCompleted: number,
+    msToLive: number,
+    requestUUID: string,
+    alternativeLink?: string,
+  ) {
+    this.payload = {
+      objectToCache,
+      timeCompleted,
+      msToLive,
+      requestUUID,
+      alternativeLink,
+    };
   }
 }
 
@@ -93,8 +105,8 @@ export class ResetObjectCacheTimestampsAction implements Action {
 export class AddPatchObjectCacheAction implements Action {
   type = ObjectCacheActionTypes.ADD_PATCH;
   payload: {
-    href: string,
-    operations: Operation[]
+    href: string;
+    operations: Operation[];
   };
 
   /**
@@ -172,11 +184,11 @@ export class RemoveDependentsObjectCacheAction implements Action {
 /**
  * A type to encompass all ObjectCacheActions
  */
-export type ObjectCacheAction
-  = AddToObjectCacheAction
-    | RemoveFromObjectCacheAction
-    | ResetObjectCacheTimestampsAction
-    | AddPatchObjectCacheAction
-    | ApplyPatchObjectCacheAction
-    | AddDependentsObjectCacheAction
-    | RemoveDependentsObjectCacheAction;
+export type ObjectCacheAction =
+  | AddToObjectCacheAction
+  | RemoveFromObjectCacheAction
+  | ResetObjectCacheTimestampsAction
+  | AddPatchObjectCacheAction
+  | ApplyPatchObjectCacheAction
+  | AddDependentsObjectCacheAction
+  | RemoveDependentsObjectCacheAction;

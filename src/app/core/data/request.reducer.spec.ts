@@ -27,8 +27,10 @@ class NullAction extends RequestSuccessAction {
 describe('requestReducer', () => {
   const id1 = 'clients/eca2ea1d-6a6a-4f62-8907-176d5fec5014';
   const id2 = 'clients/eb7cde2e-a03f-4f0b-ac5d-888a4ef2b4eb';
-  const link1 = 'https://dspace7.4science.it/dspace-spring-rest/api/core/items/567a639f-f5ff-4126-807c-b7d0910808c8';
-  const link2 = 'https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb';
+  const link1 =
+    'https://dspace7.4science.it/dspace-spring-rest/api/core/items/567a639f-f5ff-4126-807c-b7d0910808c8';
+  const link2 =
+    'https://dspace7.4science.it/dspace-spring-rest/api/core/items/1911e8a4-6939-490c-b58b-a5d70f8d91fb';
   const testInitState: RequestState = {
     [id1]: {
       request: new GetRequest(id1, link1),
@@ -140,7 +142,6 @@ describe('requestReducer', () => {
         expect(newState[id1].response.statusCode).toEqual(200);
       });
     });
-
   });
 
   describe(`in response to an ERROR action`, () => {
@@ -185,11 +186,10 @@ describe('requestReducer', () => {
         expect(newState[id1].response.statusCode).toEqual(404);
         expect(newState[id1].response.errorMessage).toEqual('Not Found');
       });
-
     });
   });
 
-  it('should update the response\'s timeCompleted for the given RestRequest in the state, in response to a RESET_TIMESTAMPS action', () => {
+  it("should update the response's timeCompleted for the given RestRequest in the state, in response to a RESET_TIMESTAMPS action", () => {
     const update = Object.assign({}, testInitState[id1], {
       response: {
         timeCompleted: 10,
@@ -204,7 +204,9 @@ describe('requestReducer', () => {
     expect(newState[id1].request.uuid).toEqual(state[id1].request.uuid);
     expect(newState[id1].request.href).toEqual(state[id1].request.href);
     expect(newState[id1].state).toEqual(state[id1].state);
-    expect(newState[id1].response.statusCode).toEqual(update.response.statusCode);
+    expect(newState[id1].response.statusCode).toEqual(
+      update.response.statusCode,
+    );
     expect(newState[id1].response.timeCompleted).toBe(timeStamp);
     expect(newState[id1].lastUpdated).toBe(timeStamp);
   });
@@ -269,7 +271,6 @@ describe('requestReducer', () => {
 
         expect(newState[id1].state).toEqual(esStartState[id1].state);
         expect(newState[id1].lastUpdated).toBe(esStartState[id1].lastUpdated);
-
       });
     });
 
@@ -286,7 +287,6 @@ describe('requestReducer', () => {
 
         expect(newState[id1].state).toEqual(startState[id1].state);
         expect(newState[id1].lastUpdated).toBe(startState[id1].lastUpdated);
-
       });
     });
 
@@ -297,7 +297,9 @@ describe('requestReducer', () => {
         const action = new RequestStaleAction(id1);
         const newState = requestReducer(state, action);
 
-        expect(newState[id1].state).toEqual(RequestEntryState.ResponsePendingStale);
+        expect(newState[id1].state).toEqual(
+          RequestEntryState.ResponsePendingStale,
+        );
         expect(newState[id1].lastUpdated).toBe(action.lastUpdated);
       });
     });

@@ -7,15 +7,9 @@ import { RemoteDataBuildService } from '../cache/builders/remote-data-build.serv
 import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { dataService } from '../data/base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from '../data/base/delete-data';
+import { DeleteData, DeleteDataImpl } from '../data/base/delete-data';
 import { IdentifiableDataService } from '../data/base/identifiable-data.service';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../data/base/search-data';
+import { SearchData, SearchDataImpl } from '../data/base/search-data';
 import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
 import { RequestService } from '../data/request.service';
@@ -40,10 +34,33 @@ export class OrcidQueueDataService extends IdentifiableDataService<OrcidQueue> {
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
   ) {
-    super('orcidqueues', requestService, rdbService, objectCache, halService, 10 * 1000);
+    super(
+      'orcidqueues',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      10 * 1000,
+    );
 
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -55,14 +72,21 @@ export class OrcidQueueDataService extends IdentifiableDataService<OrcidQueue> {
    *                                    requested after the response becomes stale
    * @returns { OrcidQueue }
    */
-  searchByProfileItemId(itemId: string, paginationOptions: PaginationComponentOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true): Observable<RemoteData<PaginatedList<OrcidQueue>>> {
-    return this.searchData.searchBy('findByProfileItem', {
-      searchParams: [new RequestParam('profileItemId', itemId)],
-      elementsPerPage: paginationOptions.pageSize,
-      currentPage: paginationOptions.currentPage,
-    },
-    useCachedVersionIfAvailable,
-    reRequestOnStale,
+  searchByProfileItemId(
+    itemId: string,
+    paginationOptions: PaginationComponentOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+  ): Observable<RemoteData<PaginatedList<OrcidQueue>>> {
+    return this.searchData.searchBy(
+      'findByProfileItem',
+      {
+        searchParams: [new RequestParam('profileItemId', itemId)],
+        elementsPerPage: paginationOptions.pageSize,
+        currentPage: paginationOptions.currentPage,
+      },
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
     );
   }
 
@@ -78,7 +102,8 @@ export class OrcidQueueDataService extends IdentifiableDataService<OrcidQueue> {
    * This method will set linkPath to stale
    */
   clearFindByProfileItemRequests() {
-    this.requestService.setStaleByHrefSubstring(this.linkPath + '/search/findByProfileItem');
+    this.requestService.setStaleByHrefSubstring(
+      this.linkPath + '/search/findByProfileItem',
+    );
   }
-
 }

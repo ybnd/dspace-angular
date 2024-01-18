@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { HealthStatus } from '../../models/health-component.model';
 
@@ -23,5 +20,4 @@ export class HealthStatusComponent {
    * Health Status
    */
   HealthStatus = HealthStatus;
-
 }

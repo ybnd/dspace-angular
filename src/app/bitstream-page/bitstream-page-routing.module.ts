@@ -67,7 +67,10 @@ const EDIT_BITSTREAM_AUTHORIZATIONS_PATH = ':id/authorizations';
               resourcePolicyTarget: ResourcePolicyTargetResolver,
             },
             component: ResourcePolicyCreateComponent,
-            data: { title: 'resource-policies.create.page.title', showBreadcrumbs: true },
+            data: {
+              title: 'resource-policies.create.page.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'edit',
@@ -76,7 +79,11 @@ const EDIT_BITSTREAM_AUTHORIZATIONS_PATH = ':id/authorizations';
               resourcePolicy: ResourcePolicyResolver,
             },
             component: ResourcePolicyEditComponent,
-            data: { breadcrumbKey: 'item.edit', title: 'resource-policies.edit.page.title', showBreadcrumbs: true },
+            data: {
+              breadcrumbKey: 'item.edit',
+              title: 'resource-policies.edit.page.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: '',
@@ -85,7 +92,10 @@ const EDIT_BITSTREAM_AUTHORIZATIONS_PATH = ':id/authorizations';
               breadcrumb: BitstreamBreadcrumbResolver,
             },
             component: BitstreamAuthorizationsComponent,
-            data: { title: 'bitstream.edit.authorizations.title', showBreadcrumbs: true },
+            data: {
+              title: 'bitstream.edit.authorizations.title',
+              showBreadcrumbs: true,
+            },
           },
         ],
       },
@@ -97,5 +107,4 @@ const EDIT_BITSTREAM_AUTHORIZATIONS_PATH = ':id/authorizations';
     BitstreamBreadcrumbsService,
   ],
 })
-export class BitstreamPageRoutingModule {
-}
+export class BitstreamPageRoutingModule {}

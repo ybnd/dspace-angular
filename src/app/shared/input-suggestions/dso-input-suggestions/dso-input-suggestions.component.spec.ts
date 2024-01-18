@@ -3,11 +3,7 @@ import {
   DebugElement,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
@@ -18,7 +14,6 @@ import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { DsoInputSuggestionsComponent } from './dso-input-suggestions.component';
 
 describe('DsoInputSuggestionsComponent', () => {
-
   let comp: DsoInputSuggestionsComponent;
   let fixture: ComponentFixture<DsoInputSuggestionsComponent>;
   let de: DebugElement;
@@ -43,13 +38,20 @@ describe('DsoInputSuggestionsComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule, FormsModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
+        FormsModule,
+      ],
       declarations: [DsoInputSuggestionsComponent],
       providers: [],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(DsoInputSuggestionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(DsoInputSuggestionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -68,12 +70,18 @@ describe('DsoInputSuggestionsComponent', () => {
     const clickedIndex = 0;
     beforeEach(() => {
       spyOn(comp, 'onClickSuggestion');
-      const clickedLink = de.query(By.css('.dropdown-list > div:nth-child(' + (clickedIndex + 1) + ') button'));
+      const clickedLink = de.query(
+        By.css(
+          '.dropdown-list > div:nth-child(' + (clickedIndex + 1) + ') button',
+        ),
+      );
       clickedLink.triggerEventHandler('click', {});
       fixture.detectChanges();
     });
     it('should call onClickSuggestion() with the suggestion as a parameter', () => {
-      expect(comp.onClickSuggestion).toHaveBeenCalledWith(suggestions[clickedIndex]);
+      expect(comp.onClickSuggestion).toHaveBeenCalledWith(
+        suggestions[clickedIndex],
+      );
     });
   });
 });

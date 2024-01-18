@@ -49,7 +49,13 @@ describe('AuthorizationDataService', () => {
       find: observableOf(site),
     });
     objectCache = getMockObjectCacheService();
-    service = new AuthorizationDataService(requestService, undefined, objectCache, undefined, siteService);
+    service = new AuthorizationDataService(
+      requestService,
+      undefined,
+      objectCache,
+      undefined,
+      siteService,
+    );
   }
 
   beforeEach(() => {
@@ -58,20 +64,27 @@ describe('AuthorizationDataService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new AuthorizationDataService(null, null, null, null, null);
+    const initService = () =>
+      new AuthorizationDataService(null, null, null, null, null);
     testSearchDataImplementation(initService);
   });
 
   it('should call setStaleByHrefSubstring method', () => {
     service.invalidateAuthorizationsRequestCache();
-    expect((service as any).requestService.setStaleByHrefSubstring).toHaveBeenCalledWith((service as any).linkPath);
+    expect(
+      (service as any).requestService.setStaleByHrefSubstring,
+    ).toHaveBeenCalledWith((service as any).linkPath);
   });
 
   describe('searchByObject', () => {
     const objectUrl = 'fake-object-url';
     const ePersonUuid = 'fake-eperson-uuid';
 
-    function createExpected(providedObjectUrl: string, providedEPersonUuid?: string, providedFeatureId?: FeatureID): FindListOptions {
+    function createExpected(
+      providedObjectUrl: string,
+      providedEPersonUuid?: string,
+      providedFeatureId?: FeatureID,
+    ): FindListOptions {
       const searchParams = [new RequestParam('uri', providedObjectUrl)];
       if (hasValue(providedFeatureId)) {
         searchParams.push(new RequestParam('feature', providedFeatureId));
@@ -87,8 +100,13 @@ describe('AuthorizationDataService', () => {
         service.searchByObject().subscribe();
       });
 
-      it('should call searchBy with the site\'s url', () => {
-        expect(service.searchBy).toHaveBeenCalledWith('object', createExpected(site.self), true, true);
+      it("should call searchBy with the site's url", () => {
+        expect(service.searchBy).toHaveBeenCalledWith(
+          'object',
+          createExpected(site.self),
+          true,
+          true,
+        );
       });
     });
 
@@ -97,28 +115,47 @@ describe('AuthorizationDataService', () => {
         service.searchByObject(FeatureID.LoginOnBehalfOf).subscribe();
       });
 
-      it('should call searchBy with the site\'s url and the feature', () => {
-        expect(service.searchBy).toHaveBeenCalledWith('object', createExpected(site.self, null, FeatureID.LoginOnBehalfOf), true, true);
+      it("should call searchBy with the site's url and the feature", () => {
+        expect(service.searchBy).toHaveBeenCalledWith(
+          'object',
+          createExpected(site.self, null, FeatureID.LoginOnBehalfOf),
+          true,
+          true,
+        );
       });
     });
 
     describe('when a feature and object url are provided', () => {
       beforeEach(() => {
-        service.searchByObject(FeatureID.LoginOnBehalfOf, objectUrl).subscribe();
+        service
+          .searchByObject(FeatureID.LoginOnBehalfOf, objectUrl)
+          .subscribe();
       });
 
-      it('should call searchBy with the object\'s url and the feature', () => {
-        expect(service.searchBy).toHaveBeenCalledWith('object', createExpected(objectUrl, null, FeatureID.LoginOnBehalfOf), true, true);
+      it("should call searchBy with the object's url and the feature", () => {
+        expect(service.searchBy).toHaveBeenCalledWith(
+          'object',
+          createExpected(objectUrl, null, FeatureID.LoginOnBehalfOf),
+          true,
+          true,
+        );
       });
     });
 
     describe('when all arguments are provided', () => {
       beforeEach(() => {
-        service.searchByObject(FeatureID.LoginOnBehalfOf, objectUrl, ePersonUuid).subscribe();
+        service
+          .searchByObject(FeatureID.LoginOnBehalfOf, objectUrl, ePersonUuid)
+          .subscribe();
       });
 
-      it('should call searchBy with the object\'s url, user\'s uuid and the feature', () => {
-        expect(service.searchBy).toHaveBeenCalledWith('object', createExpected(objectUrl, ePersonUuid, FeatureID.LoginOnBehalfOf), true, true);
+      it("should call searchBy with the object's url, user's uuid and the feature", () => {
+        expect(service.searchBy).toHaveBeenCalledWith(
+          'object',
+          createExpected(objectUrl, ePersonUuid, FeatureID.LoginOnBehalfOf),
+          true,
+          true,
+        );
       });
     });
 
@@ -131,26 +168,36 @@ describe('AuthorizationDataService', () => {
       });
 
       it('should add a dependency on the objectUrl', (done) => {
-        addDependencySpy.and.callFake((href$: Observable<string>, dependsOn$: Observable<string>) => {
-          observableCombineLatest([href$, dependsOn$]).subscribe(([href, dependsOn]) => {
-            expect(href).toBe('searchBy RD$');
-            expect(dependsOn).toBe('object-href');
-          });
-        });
+        addDependencySpy.and.callFake(
+          (href$: Observable<string>, dependsOn$: Observable<string>) => {
+            observableCombineLatest([href$, dependsOn$]).subscribe(
+              ([href, dependsOn]) => {
+                expect(href).toBe('searchBy RD$');
+                expect(dependsOn).toBe('object-href');
+              },
+            );
+          },
+        );
 
-        service.searchByObject(FeatureID.AdministratorOf, 'object-href').subscribe(() => {
-          expect(addDependencySpy).toHaveBeenCalled();
-          done();
-        });
+        service
+          .searchByObject(FeatureID.AdministratorOf, 'object-href')
+          .subscribe(() => {
+            expect(addDependencySpy).toHaveBeenCalled();
+            done();
+          });
       });
 
       it('should add a dependency on the Site object if no objectUrl is given', (done) => {
-        addDependencySpy.and.callFake((object$: Observable<any>, dependsOn$: Observable<string>) => {
-          observableCombineLatest([object$, dependsOn$]).subscribe(([object, dependsOn]) => {
-            expect(object).toBe('searchBy RD$');
-            expect(dependsOn).toBe('test-site-href');
-          });
-        });
+        addDependencySpy.and.callFake(
+          (object$: Observable<any>, dependsOn$: Observable<string>) => {
+            observableCombineLatest([object$, dependsOn$]).subscribe(
+              ([object, dependsOn]) => {
+                expect(object).toBe('searchBy RD$');
+                expect(dependsOn).toBe('test-site-href');
+              },
+            );
+          },
+        );
 
         service.searchByObject(FeatureID.AdministratorOf).subscribe(() => {
           expect(addDependencySpy).toHaveBeenCalled();
@@ -164,33 +211,43 @@ describe('AuthorizationDataService', () => {
     const featureID = FeatureID.AdministratorOf;
     const validPayload = [
       Object.assign(new Authorization(), {
-        feature: createSuccessfulRemoteDataObject$(Object.assign(new Feature(), {
-          id: 'invalid-feature',
-        })),
+        feature: createSuccessfulRemoteDataObject$(
+          Object.assign(new Feature(), {
+            id: 'invalid-feature',
+          }),
+        ),
       }),
       Object.assign(new Authorization(), {
-        feature: createSuccessfulRemoteDataObject$(Object.assign(new Feature(), {
-          id: featureID,
-        })),
+        feature: createSuccessfulRemoteDataObject$(
+          Object.assign(new Feature(), {
+            id: featureID,
+          }),
+        ),
       }),
     ];
     const invalidPayload = [
       Object.assign(new Authorization(), {
-        feature: createSuccessfulRemoteDataObject$(Object.assign(new Feature(), {
-          id: 'invalid-feature',
-        })),
+        feature: createSuccessfulRemoteDataObject$(
+          Object.assign(new Feature(), {
+            id: 'invalid-feature',
+          }),
+        ),
       }),
       Object.assign(new Authorization(), {
-        feature: createSuccessfulRemoteDataObject$(Object.assign(new Feature(), {
-          id: 'another-invalid-feature',
-        })),
+        feature: createSuccessfulRemoteDataObject$(
+          Object.assign(new Feature(), {
+            id: 'another-invalid-feature',
+          }),
+        ),
       }),
     ];
     const emptyPayload = [];
 
     describe('when searchByObject returns a 401', () => {
       beforeEach(() => {
-        spyOn(service, 'searchByObject').and.returnValue(createFailedRemoteDataObject$('Unauthorized', 401));
+        spyOn(service, 'searchByObject').and.returnValue(
+          createFailedRemoteDataObject$('Unauthorized', 401),
+        );
       });
 
       it('should return false', (done) => {
@@ -203,7 +260,9 @@ describe('AuthorizationDataService', () => {
 
     describe('when searchByObject returns an empty list', () => {
       beforeEach(() => {
-        spyOn(service, 'searchByObject').and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList(emptyPayload)));
+        spyOn(service, 'searchByObject').and.returnValue(
+          createSuccessfulRemoteDataObject$(createPaginatedList(emptyPayload)),
+        );
       });
 
       it('should return false', (done) => {
@@ -216,7 +275,11 @@ describe('AuthorizationDataService', () => {
 
     describe('when searchByObject returns an invalid list', () => {
       beforeEach(() => {
-        spyOn(service, 'searchByObject').and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList(invalidPayload)));
+        spyOn(service, 'searchByObject').and.returnValue(
+          createSuccessfulRemoteDataObject$(
+            createPaginatedList(invalidPayload),
+          ),
+        );
       });
 
       it('should return true', (done) => {
@@ -229,7 +292,9 @@ describe('AuthorizationDataService', () => {
 
     describe('when searchByObject returns a valid list', () => {
       beforeEach(() => {
-        spyOn(service, 'searchByObject').and.returnValue(createSuccessfulRemoteDataObject$(createPaginatedList(validPayload)));
+        spyOn(service, 'searchByObject').and.returnValue(
+          createSuccessfulRemoteDataObject$(createPaginatedList(validPayload)),
+        );
       });
 
       it('should return true', (done) => {

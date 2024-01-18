@@ -1,9 +1,5 @@
 import { CdkTreeModule } from '@angular/cdk/tree';
-import {
-  ChangeDetectorRef,
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -35,7 +31,6 @@ import {
 } from './vocabulary-treeview-node.model';
 
 describe('VocabularyTreeviewComponent test suite', () => {
-
   let comp: VocabularyTreeviewComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<VocabularyTreeviewComponent>;
@@ -47,22 +42,33 @@ describe('VocabularyTreeviewComponent test suite', () => {
   const item2 = new VocabularyEntryDetail();
   item2.id = 'node2';
   const emptyNodeMap = new Map<string, TreeviewFlatNode>();
-  const storedNodeMap = new Map<string, TreeviewFlatNode>().set('test', new TreeviewFlatNode(item2));
-  const nodeMap = new Map<string, TreeviewFlatNode>().set('test', new TreeviewFlatNode(item));
+  const storedNodeMap = new Map<string, TreeviewFlatNode>().set(
+    'test',
+    new TreeviewFlatNode(item2),
+  );
+  const nodeMap = new Map<string, TreeviewFlatNode>().set(
+    'test',
+    new TreeviewFlatNode(item),
+  );
   const vocabularyOptions = new VocabularyOptions('vocabularyTest', false);
   const modalStub = jasmine.createSpyObj('modalStub', ['close']);
-  const vocabularyTreeviewServiceStub = jasmine.createSpyObj('VocabularyTreeviewService', {
-    initialize: jasmine.createSpy('initialize'),
-    getData: jasmine.createSpy('getData'),
-    loadMore: jasmine.createSpy('loadMore'),
-    loadMoreRoot: jasmine.createSpy('loadMoreRoot'),
-    isLoading: jasmine.createSpy('isLoading'),
-    searchByQuery: jasmine.createSpy('searchByQuery'),
-    restoreNodes: jasmine.createSpy('restoreNodes'),
-    cleanTree: jasmine.createSpy('cleanTree'),
-  });
+  const vocabularyTreeviewServiceStub = jasmine.createSpyObj(
+    'VocabularyTreeviewService',
+    {
+      initialize: jasmine.createSpy('initialize'),
+      getData: jasmine.createSpy('getData'),
+      loadMore: jasmine.createSpy('loadMore'),
+      loadMoreRoot: jasmine.createSpy('loadMoreRoot'),
+      isLoading: jasmine.createSpy('isLoading'),
+      searchByQuery: jasmine.createSpy('searchByQuery'),
+      restoreNodes: jasmine.createSpy('restoreNodes'),
+      cleanTree: jasmine.createSpy('cleanTree'),
+    },
+  );
   const vocabularyServiceStub = jasmine.createSpyObj('VocabularyService', {
-    getVocabularyEntriesByValue: jasmine.createSpy('getVocabularyEntriesByValue'),
+    getVocabularyEntriesByValue: jasmine.createSpy(
+      'getVocabularyEntriesByValue',
+    ),
     getEntryDetailParent: jasmine.createSpy('getEntryDetailParent'),
     findEntryDetailById: jasmine.createSpy('findEntryDetailById'),
     searchTopEntries: jasmine.createSpy('searchTopEntries'),
@@ -91,12 +97,12 @@ describe('VocabularyTreeviewComponent test suite', () => {
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
         TranslateModule.forRoot(),
       ],
-      declarations: [
-        VocabularyTreeviewComponent,
-        TestComponent,
-      ],
+      declarations: [VocabularyTreeviewComponent, TestComponent],
       providers: [
-        { provide: VocabularyTreeviewService, useValue: vocabularyTreeviewServiceStub },
+        {
+          provide: VocabularyTreeviewService,
+          useValue: vocabularyTreeviewServiceStub,
+        },
         { provide: VocabularyService, useValue: vocabularyServiceStub },
         { provide: NgbActiveModal, useValue: modalStub },
         provideMockStore({ initialState }),
@@ -104,10 +110,14 @@ describe('VocabularyTreeviewComponent test suite', () => {
         VocabularyTreeviewComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then(() => {
-      vocabularyTreeviewServiceStub.getData.and.returnValue(observableOf([]));
-      vocabularyTreeviewServiceStub.isLoading.and.returnValue(observableOf(false));
-    });
+    })
+      .compileComponents()
+      .then(() => {
+        vocabularyTreeviewServiceStub.getData.and.returnValue(observableOf([]));
+        vocabularyTreeviewServiceStub.isLoading.and.returnValue(
+          observableOf(false),
+        );
+      });
   }));
 
   describe('', () => {
@@ -116,11 +126,13 @@ describe('VocabularyTreeviewComponent test suite', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-
       const html = `
         <ds-vocabulary-treeview [vocabularyOptions]="vocabularyOptions" [preloadLevel]="preloadLevel"></ds-vocabulary-treeview>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
       vocabularyTreeviewServiceStub.getData.and.returnValue(observableOf([]));
     });
@@ -129,9 +141,12 @@ describe('VocabularyTreeviewComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create VocabularyTreeviewComponent', inject([VocabularyTreeviewComponent], (app: VocabularyTreeviewComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create VocabularyTreeviewComponent', inject(
+      [VocabularyTreeviewComponent],
+      (app: VocabularyTreeviewComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -158,7 +173,12 @@ describe('VocabularyTreeviewComponent test suite', () => {
       comp.selectedItems = [currentValue.value];
       fixture.detectChanges();
       expect(comp.dataSource.data).toEqual([]);
-      expect(vocabularyTreeviewServiceStub.initialize).toHaveBeenCalledWith(comp.vocabularyOptions, new PageInfo(), ['testValue'], null);
+      expect(vocabularyTreeviewServiceStub.initialize).toHaveBeenCalledWith(
+        comp.vocabularyOptions,
+        new PageInfo(),
+        ['testValue'],
+        null,
+      );
     });
 
     it('should should init component properly with init value as VocabularyEntry', () => {
@@ -170,27 +190,42 @@ describe('VocabularyTreeviewComponent test suite', () => {
       comp.selectedItems = [currentValue.value];
       fixture.detectChanges();
       expect(comp.dataSource.data).toEqual([]);
-      expect(vocabularyTreeviewServiceStub.initialize).toHaveBeenCalledWith(comp.vocabularyOptions, new PageInfo(), ['testValue'], null);
+      expect(vocabularyTreeviewServiceStub.initialize).toHaveBeenCalledWith(
+        comp.vocabularyOptions,
+        new PageInfo(),
+        ['testValue'],
+        null,
+      );
     });
 
     it('should call loadMore function', () => {
       comp.loadMore(item);
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.loadMore).toHaveBeenCalledWith(item, []);
+      expect(vocabularyTreeviewServiceStub.loadMore).toHaveBeenCalledWith(
+        item,
+        [],
+      );
     });
 
     it('should call loadMoreRoot function', () => {
       const node = new TreeviewFlatNode(item);
       comp.loadMoreRoot(node);
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.loadMoreRoot).toHaveBeenCalledWith(node, []);
+      expect(vocabularyTreeviewServiceStub.loadMoreRoot).toHaveBeenCalledWith(
+        node,
+        [],
+      );
     });
 
     it('should call loadChildren function', () => {
       const node = new TreeviewFlatNode(item);
       comp.loadChildren(node);
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.loadMore).toHaveBeenCalledWith(node.item, [], true);
+      expect(vocabularyTreeviewServiceStub.loadMore).toHaveBeenCalledWith(
+        node.item,
+        [],
+        true,
+      );
     });
 
     it('should emit select event', () => {
@@ -205,7 +240,10 @@ describe('VocabularyTreeviewComponent test suite', () => {
       comp.nodeMap.set('test', new TreeviewFlatNode(item));
       comp.search();
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.searchByQuery).toHaveBeenCalledWith('test search', []);
+      expect(vocabularyTreeviewServiceStub.searchByQuery).toHaveBeenCalledWith(
+        'test search',
+        [],
+      );
       expect(comp.storedNodeMap).toEqual(nodeMap);
       expect(comp.nodeMap).toEqual(emptyNodeMap);
     });
@@ -216,7 +254,10 @@ describe('VocabularyTreeviewComponent test suite', () => {
       comp.storedNodeMap.set('test', new TreeviewFlatNode(item2));
       comp.search();
       fixture.detectChanges();
-      expect(vocabularyTreeviewServiceStub.searchByQuery).toHaveBeenCalledWith('test search', []);
+      expect(vocabularyTreeviewServiceStub.searchByQuery).toHaveBeenCalledWith(
+        'test search',
+        [],
+      );
       expect(comp.storedNodeMap).toEqual(storedNodeMap);
       expect(comp.nodeMap).toEqual(emptyNodeMap);
     });
@@ -249,26 +290,28 @@ describe('VocabularyTreeviewComponent test suite', () => {
 
   describe('', () => {
     beforeEach(() => {
-      vocabularyTreeviewServiceStub.getData.and.returnValue(observableOf([
-        {
-          'item': {
-            'id': 'srsc:SCB11',
-            'display': 'HUMANITIES and RELIGION',
-          },
-        } as TreeviewNode,
-        {
-          'item': {
-            'id': 'srsc:SCB12',
-            'display': 'LAW/JURISPRUDENCE',
-          },
-        } as TreeviewNode,
-        {
-          'item': {
-            'id': 'srsc:SCB13',
-            'display': 'SOCIAL SCIENCES',
-          },
-        } as TreeviewNode,
-      ]));
+      vocabularyTreeviewServiceStub.getData.and.returnValue(
+        observableOf([
+          {
+            item: {
+              id: 'srsc:SCB11',
+              display: 'HUMANITIES and RELIGION',
+            },
+          } as TreeviewNode,
+          {
+            item: {
+              id: 'srsc:SCB12',
+              display: 'LAW/JURISPRUDENCE',
+            },
+          } as TreeviewNode,
+          {
+            item: {
+              id: 'srsc:SCB13',
+              display: 'SOCIAL SCIENCES',
+            },
+          } as TreeviewNode,
+        ]),
+      );
       fixture = TestBed.createComponent(VocabularyTreeviewComponent);
       comp = fixture.componentInstance;
       compAsAny = comp;
@@ -298,8 +341,9 @@ describe('VocabularyTreeviewComponent test suite', () => {
   template: ``,
 })
 class TestComponent {
-
-  vocabularyOptions: VocabularyOptions = new VocabularyOptions('vocabularyTest', false);
+  vocabularyOptions: VocabularyOptions = new VocabularyOptions(
+    'vocabularyTest',
+    false,
+  );
   preloadLevel = 2;
-
 }

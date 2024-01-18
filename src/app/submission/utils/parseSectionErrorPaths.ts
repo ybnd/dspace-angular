@@ -4,7 +4,6 @@ import { hasValue } from '../../shared/empty.util';
  * An interface to represent the path of a section error
  */
 export interface SectionErrorPath {
-
   /**
    * The section id
    */
@@ -35,7 +34,9 @@ const regexShort = /\/sections\/(.*)/;
  * @param {string | string[]} path
  * @returns {SectionErrorPath[]}
  */
-const parseSectionErrorPaths = (path: string | string[]): SectionErrorPath[] => {
+const parseSectionErrorPaths = (
+  path: string | string[],
+): SectionErrorPath[] => {
   const paths = typeof path === 'string' ? [path] : path;
 
   return paths.map((item) => {
@@ -52,9 +53,7 @@ const parseSectionErrorPaths = (path: string | string[]): SectionErrorPath[] => 
         originalPath: item,
       };
     }
-
-  },
-  );
+  });
 };
 
 export default parseSectionErrorPaths;

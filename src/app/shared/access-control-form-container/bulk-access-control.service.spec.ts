@@ -15,28 +15,28 @@ describe('BulkAccessControlService', () => {
   let scriptServiceSpy: jasmine.SpyObj<ScriptDataService>;
 
   const mockPayload: any = {
-    'bitstream': [],
-    'item': [
+    bitstream: [],
+    item: [
       {
-        'name': 'embargo',
-        'startDate': {
-          'year': 2026,
-          'month': 5,
-          'day': 31,
+        name: 'embargo',
+        startDate: {
+          year: 2026,
+          month: 5,
+          day: 31,
         },
-        'endDate': null,
+        endDate: null,
       },
     ],
-    'state': {
-      'item': {
-        'toggleStatus': true,
-        'accessMode': 'replace',
+    state: {
+      item: {
+        toggleStatus: true,
+        accessMode: 'replace',
       },
-      'bitstream': {
-        'toggleStatus': false,
-        'accessMode': '',
-        'changesLimit': '',
-        'selectedBitstreams': [],
+      bitstream: {
+        toggleStatus: false,
+        accessMode: '',
+        changesLimit: '',
+        selectedBitstreams: [],
       },
     },
   };
@@ -44,10 +44,7 @@ describe('BulkAccessControlService', () => {
   beforeEach(() => {
     const spy = jasmine.createSpyObj('ScriptDataService', ['invoke']);
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [RouterTestingModule, TranslateModule.forRoot()],
       providers: [
         BulkAccessControlService,
         { provide: ScriptDataService, useValue: spy },
@@ -55,7 +52,9 @@ describe('BulkAccessControlService', () => {
       ],
     });
     service = TestBed.inject(BulkAccessControlService);
-    scriptServiceSpy = TestBed.inject(ScriptDataService) as jasmine.SpyObj<ScriptDataService>;
+    scriptServiceSpy = TestBed.inject(
+      ScriptDataService,
+    ) as jasmine.SpyObj<ScriptDataService>;
   });
 
   it('should be created', () => {
@@ -75,7 +74,9 @@ describe('BulkAccessControlService', () => {
   describe('executeScript', () => {
     it('should invoke the script service with the correct parameters', () => {
       const uuids = ['123', '456'];
-      const file = new File(['test'], 'data.json', { type: 'application/json' });
+      const file = new File(['test'], 'data.json', {
+        type: 'application/json',
+      });
       const expectedParams: ProcessParameter[] = [
         { name: '-f', value: 'data.json' },
         { name: '-u', value: '123' },
@@ -83,11 +84,17 @@ describe('BulkAccessControlService', () => {
       ];
 
       // @ts-ignore
-      scriptServiceSpy.invoke.and.returnValue(createSuccessfulRemoteDataObject$(new Process()));
+      scriptServiceSpy.invoke.and.returnValue(
+        createSuccessfulRemoteDataObject$(new Process()),
+      );
 
       const result = service.executeScript(uuids, file);
 
-      expect(scriptServiceSpy.invoke).toHaveBeenCalledWith('bulk-access-control', expectedParams, [file]);
+      expect(scriptServiceSpy.invoke).toHaveBeenCalledWith(
+        'bulk-access-control',
+        expectedParams,
+        [file],
+      );
       expect(result).toBeTruthy();
     });
   });

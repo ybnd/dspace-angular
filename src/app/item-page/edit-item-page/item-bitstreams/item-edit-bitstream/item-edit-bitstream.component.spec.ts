@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -55,33 +51,28 @@ let objectUpdatesService: ObjectUpdatesService;
 
 describe('ItemEditBitstreamComponent', () => {
   beforeEach(waitForAsync(() => {
-    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService',
-      {
-        getFieldUpdates: observableOf({
-          [bitstream.uuid]: fieldUpdate,
-        }),
-        getFieldUpdatesExclusive: observableOf({
-          [bitstream.uuid]: fieldUpdate,
-        }),
-        saveRemoveFieldUpdate: {},
-        removeSingleFieldUpdate: {},
-        saveAddFieldUpdate: {},
-        discardFieldUpdates: {},
-        reinstateFieldUpdates: observableOf(true),
-        initialize: {},
-        getUpdatedFields: observableOf([bitstream]),
-        getLastModified: observableOf(date),
-        hasUpdates: observableOf(true),
-        isReinstatable: observableOf(false),
-        isValidPage: observableOf(true),
-      },
-    );
+    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService', {
+      getFieldUpdates: observableOf({
+        [bitstream.uuid]: fieldUpdate,
+      }),
+      getFieldUpdatesExclusive: observableOf({
+        [bitstream.uuid]: fieldUpdate,
+      }),
+      saveRemoveFieldUpdate: {},
+      removeSingleFieldUpdate: {},
+      saveAddFieldUpdate: {},
+      discardFieldUpdates: {},
+      reinstateFieldUpdates: observableOf(true),
+      initialize: {},
+      getUpdatedFields: observableOf([bitstream]),
+      getLastModified: observableOf(date),
+      hasUpdates: observableOf(true),
+      isReinstatable: observableOf(false),
+      isValidPage: observableOf(true),
+    });
 
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        TranslateModule.forRoot(),
-      ],
+      imports: [RouterTestingModule.withRoutes([]), TranslateModule.forRoot()],
       declarations: [
         ItemEditBitstreamComponent,
         VarDirective,
@@ -89,9 +80,8 @@ describe('ItemEditBitstreamComponent', () => {
       ],
       providers: [
         { provide: ObjectUpdatesService, useValue: objectUpdatesService },
-      ], schemas: [
-        NO_ERRORS_SCHEMA,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -111,7 +101,10 @@ describe('ItemEditBitstreamComponent', () => {
     });
 
     it('should call saveRemoveFieldUpdate on objectUpdatesService', () => {
-      expect(objectUpdatesService.saveRemoveFieldUpdate).toHaveBeenCalledWith(url, bitstream);
+      expect(objectUpdatesService.saveRemoveFieldUpdate).toHaveBeenCalledWith(
+        url,
+        bitstream,
+      );
     });
   });
 
@@ -121,7 +114,10 @@ describe('ItemEditBitstreamComponent', () => {
     });
 
     it('should call removeSingleFieldUpdate on objectUpdatesService', () => {
-      expect(objectUpdatesService.removeSingleFieldUpdate).toHaveBeenCalledWith(url, bitstream.uuid);
+      expect(objectUpdatesService.removeSingleFieldUpdate).toHaveBeenCalledWith(
+        url,
+        bitstream.uuid,
+      );
     });
   });
 
@@ -140,15 +136,21 @@ describe('ItemEditBitstreamComponent', () => {
   describe('when the component loads', () => {
     it('should contain download button with a valid link to the bitstreams download page', () => {
       fixture.detectChanges();
-      const downloadBtnHref = fixture.debugElement.query(By.css('[data-test="download-button"]')).nativeElement.getAttribute('href');
+      const downloadBtnHref = fixture.debugElement
+        .query(By.css('[data-test="download-button"]'))
+        .nativeElement.getAttribute('href');
       expect(downloadBtnHref).toEqual(comp.bitstreamDownloadUrl);
     });
   });
 
   describe('when the bitstreamDownloadUrl property gets populated', () => {
     it('should contain the bitstream download page route', () => {
-      expect(comp.bitstreamDownloadUrl).not.toEqual(bitstream._links.content.href);
-      expect(comp.bitstreamDownloadUrl).toEqual(getBitstreamDownloadRoute(bitstream));
+      expect(comp.bitstreamDownloadUrl).not.toEqual(
+        bitstream._links.content.href,
+      );
+      expect(comp.bitstreamDownloadUrl).toEqual(
+        getBitstreamDownloadRoute(bitstream),
+      );
     });
   });
 });

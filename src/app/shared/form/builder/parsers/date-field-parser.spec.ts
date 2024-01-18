@@ -24,7 +24,8 @@ describe('DateFieldParser test suite', () => {
       label: 'Date of Issue.',
       mandatory: 'true',
       repeatable: false,
-      hints: 'Please give the date of previous publication or public distribution. You can leave out the day and/or month if they aren\'t applicable.',
+      hints:
+        "Please give the date of previous publication or public distribution. You can leave out the day and/or month if they aren't applicable.",
       mandatoryMessage: 'You must enter at least the year.',
       selectableMetadata: [
         {
@@ -33,17 +34,26 @@ describe('DateFieldParser test suite', () => {
       ],
       languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new DateFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DateFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     expect(parser instanceof DateFieldParser).toBe(true);
   });
 
   it('should return a DynamicDsDatePickerModel object when repeatable option is false', () => {
-    const parser = new DateFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DateFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
@@ -56,7 +66,12 @@ describe('DateFieldParser test suite', () => {
     };
     const expectedValue = '1983-11-18';
 
-    const parser = new DateFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new DateFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 

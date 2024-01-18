@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Context } from 'src/app/core/shared/context.model';
 import { WorkflowItem } from 'src/app/core/submission/models/workflowitem.model';
 
@@ -19,7 +16,8 @@ import { ItemListPreviewComponent } from './item-list-preview.component';
   templateUrl: '../../../theme-support/themed.component.html',
 })
 export class ThemedItemListPreviewComponent extends ThemedComponent<ItemListPreviewComponent> {
-  protected inAndOutputNames: (keyof ItemListPreviewComponent & keyof this)[] = ['item', 'object', 'badgeContext', 'showSubmitter', 'workflowItem'];
+  protected inAndOutputNames: (keyof ItemListPreviewComponent & keyof this)[] =
+    ['item', 'object', 'badgeContext', 'showSubmitter', 'workflowItem'];
 
   @Input() item: Item;
 
@@ -36,7 +34,9 @@ export class ThemedItemListPreviewComponent extends ThemedComponent<ItemListPrev
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../themes/${themeName}/app/shared/object-list/my-dspace-result-list-element/item-list-preview/item-list-preview.component`);
+    return import(
+      `../../../../../themes/${themeName}/app/shared/object-list/my-dspace-result-list-element/item-list-preview/item-list-preview.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ModuleWithProviders,
-  NgModule,
-} from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { CoreModule } from '../core/core.module';
 import { SharedModule } from '../shared/shared.module';
@@ -12,22 +9,12 @@ import { StatisticsEndpoint } from './statistics-endpoint.model';
 /**
  * Declaration needed to make sure all decorator functions are called in time
  */
-export const models = [
-  StatisticsEndpoint,
-];
+export const models = [StatisticsEndpoint];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    CoreModule.forRoot(),
-    SharedModule,
-  ],
-  declarations: [
-    ViewTrackerComponent,
-  ],
-  exports: [
-    ViewTrackerComponent,
-  ],
+  imports: [CommonModule, CoreModule.forRoot(), SharedModule],
+  declarations: [ViewTrackerComponent],
+  exports: [ViewTrackerComponent],
 })
 /**
  * This module handles the statistics

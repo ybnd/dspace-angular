@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { PostRequest } from '../data/request.models';
@@ -15,7 +12,6 @@ import { AuthRequestService } from './auth-request.service';
  */
 @Injectable()
 export class BrowserAuthRequestService extends AuthRequestService {
-
   constructor(
     halService: HALEndpointService,
     requestService: RequestService,
@@ -30,8 +26,11 @@ export class BrowserAuthRequestService extends AuthRequestService {
    * @param href The href to send the request to
    * @protected
    */
-  protected createShortLivedTokenRequest(href: string): Observable<PostRequest> {
-    return observableOf(new PostRequest(this.requestService.generateRequestId(), href));
+  protected createShortLivedTokenRequest(
+    href: string,
+  ): Observable<PostRequest> {
+    return observableOf(
+      new PostRequest(this.requestService.generateRequestId(), href),
+    );
   }
-
 }
