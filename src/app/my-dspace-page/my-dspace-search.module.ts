@@ -61,9 +61,7 @@ const DECLARATIONS = [
     ResearchEntitiesModule.withEntryComponents(),
     JournalEntitiesModule.withEntryComponents(),
   ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
+  declarations: [...DECLARATIONS],
 })
 
 /**

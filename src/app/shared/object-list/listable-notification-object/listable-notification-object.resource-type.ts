@@ -6,4 +6,6 @@ import { ResourceType } from '../../../core/shared/resource-type';
  * Needs to be in a separate file to prevent circular
  * dependencies in webpack.
  */
-export const LISTABLE_NOTIFICATION_OBJECT = new ResourceType('listable-notification-object');
+export const LISTABLE_NOTIFICATION_OBJECT = new ResourceType(
+  'listable-notification-object',
+);

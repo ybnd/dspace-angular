@@ -1,23 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
-import {
-  Component,
-  Inject,
-  OnInit,
-  PLATFORM_ID,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  ParamMap,
-  Router,
-} from '@angular/router';
-import {
-  BehaviorSubject,
-  combineLatest,
-} from 'rxjs';
-import {
-  map,
-  take,
-} from 'rxjs/operators';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { ItemDataService } from '../../core/data/item-data.service';
@@ -42,11 +27,12 @@ import { getItemPageRoute } from '../item-page-routing-paths';
   styleUrls: ['./orcid-page.component.scss'],
 })
 export class OrcidPageComponent implements OnInit {
-
   /**
    * A boolean representing if the connection operation with orcid profile is in progress
    */
-  connectionStatus: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  connectionStatus: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
 
   /**
    * The item for which showing the orcid settings
@@ -61,7 +47,9 @@ export class OrcidPageComponent implements OnInit {
   /**
    * A boolean representing if the connection operation with orcid profile is in progress
    */
-  processingConnection: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  processingConnection: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    true,
+  );
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
@@ -70,8 +58,7 @@ export class OrcidPageComponent implements OnInit {
     private orcidAuthService: OrcidAuthService,
     private route: ActivatedRoute,
     private router: Router,
-  ) {
-  }
+  ) {}
 
   /**
    * Retrieve the item for which showing the orcid settings
@@ -127,13 +114,14 @@ export class OrcidPageComponent implements OnInit {
    */
   updateItem(): void {
     this.clearRouteParams();
-    this.itemService.findById(this.itemId, false).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((itemRD: RemoteData<Item>) => {
-      if (itemRD.hasSucceeded) {
-        this.item.next(itemRD.payload);
-      }
-    });
+    this.itemService
+      .findById(this.itemId, false)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((itemRD: RemoteData<Item>) => {
+        if (itemRD.hasSucceeded) {
+          this.item.next(itemRD.payload);
+        }
+      });
   }
 
   /**
@@ -143,19 +131,20 @@ export class OrcidPageComponent implements OnInit {
    * @param code The auth-code received from ORCID
    */
   private linkProfileToOrcid(person: Item, code: string) {
-    this.orcidAuthService.linkOrcidByItem(person, code).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((profileRD: RemoteData<ResearcherProfile>) => {
-      this.processingConnection.next(false);
-      if (profileRD.hasSucceeded) {
-        this.connectionStatus.next(true);
-        this.updateItem();
-      } else {
-        this.item.next(person);
-        this.connectionStatus.next(false);
-        this.clearRouteParams();
-      }
-    });
+    this.orcidAuthService
+      .linkOrcidByItem(person, code)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((profileRD: RemoteData<ResearcherProfile>) => {
+        this.processingConnection.next(false);
+        if (profileRD.hasSucceeded) {
+          this.connectionStatus.next(true);
+          this.updateItem();
+        } else {
+          this.item.next(person);
+          this.connectionStatus.next(false);
+          this.clearRouteParams();
+        }
+      });
   }
 
   /**

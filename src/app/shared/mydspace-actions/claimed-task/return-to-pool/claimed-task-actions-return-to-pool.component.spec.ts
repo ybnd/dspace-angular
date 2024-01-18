@@ -11,10 +11,7 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 import { RequestService } from '../../../../core/data/request.service';
@@ -60,7 +57,10 @@ describe('ClaimedTaskActionsReturnToPoolComponent', () => {
       providers: [
         { provide: ClaimedTaskDataService, useValue: claimedTaskService },
         { provide: Injector, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestService },
@@ -68,9 +68,11 @@ describe('ClaimedTaskActionsReturnToPoolComponent', () => {
       ],
       declarations: [ClaimedTaskActionsReturnToPoolComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ClaimedTaskActionsReturnToPoolComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ClaimedTaskActionsReturnToPoolComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(fakeAsync(() => {
@@ -102,10 +104,11 @@ describe('ClaimedTaskActionsReturnToPoolComponent', () => {
       fixture.detectChanges();
     });
 
-    it('should call claimedTaskService\'s returnToPoolTask', () => {
-      expect(claimedTaskService.returnToPoolTask).toHaveBeenCalledWith(object.id);
+    it("should call claimedTaskService's returnToPoolTask", () => {
+      expect(claimedTaskService.returnToPoolTask).toHaveBeenCalledWith(
+        object.id,
+      );
     });
-
   });
 
   describe('reloadObjectExecution', () => {
@@ -121,5 +124,4 @@ describe('ClaimedTaskActionsReturnToPoolComponent', () => {
       expect(mockPoolTaskDataService.findByItem).toHaveBeenCalledWith('uuid');
     });
   });
-
 });

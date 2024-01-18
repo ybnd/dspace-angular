@@ -35,8 +35,7 @@ export class VersionResolver implements Resolve<RemoteData<Version>> {
     protected versionService: VersionDataService,
     protected store: Store<any>,
     protected router: Router,
-  ) {
-  }
+  ) {}
 
   /**
    * Method for resolving a version based on the parameters in the current route
@@ -45,14 +44,13 @@ export class VersionResolver implements Resolve<RemoteData<Version>> {
    * @returns Observable<<RemoteData<Item>> Emits the found item based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Version>> {
-    const versionRD$ = this.versionService.findById(route.params.id,
-      true,
-      false,
-      ...VERSION_PAGE_LINKS_TO_FOLLOW,
-    ).pipe(
-      getFirstCompletedRemoteData(),
-    );
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<Version>> {
+    const versionRD$ = this.versionService
+      .findById(route.params.id, true, false, ...VERSION_PAGE_LINKS_TO_FOLLOW)
+      .pipe(getFirstCompletedRemoteData());
 
     versionRD$.subscribe((versionRD: RemoteData<Version>) => {
       this.store.dispatch(new ResolvedAction(state.url, versionRD.payload));

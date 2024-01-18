@@ -1,11 +1,5 @@
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { Store, StoreModule } from '@ngrx/store';
 import {
   TranslateLoader,
   TranslateModule,
@@ -59,36 +53,52 @@ describe('NotificationsService test', () => {
   it('Success method should dispatch NewNotificationAction with proper parameter', () => {
     const notification = service.success('Title', observableOf('Content'));
     expect(notification.type).toBe(NotificationType.Success);
-    expect(store.dispatch).toHaveBeenCalledWith(new NewNotificationAction(notification));
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new NewNotificationAction(notification),
+    );
   });
 
   it('Warning method should dispatch NewNotificationAction with proper parameter', () => {
     const notification = service.warning('Title', observableOf('Content'));
     expect(notification.type).toBe(NotificationType.Warning);
-    expect(store.dispatch).toHaveBeenCalledWith(new NewNotificationAction(notification));
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new NewNotificationAction(notification),
+    );
   });
 
   it('Info method should dispatch NewNotificationAction with proper parameter', () => {
     const notification = service.info('Title', observableOf('Content'));
     expect(notification.type).toBe(NotificationType.Info);
-    expect(store.dispatch).toHaveBeenCalledWith(new NewNotificationAction(notification));
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new NewNotificationAction(notification),
+    );
   });
 
   it('Error method should dispatch NewNotificationAction with proper parameter', () => {
     const notification = service.error('Title', observableOf('Content'));
     expect(notification.type).toBe(NotificationType.Error);
-    expect(store.dispatch).toHaveBeenCalledWith(new NewNotificationAction(notification));
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new NewNotificationAction(notification),
+    );
   });
 
   it('Remove method should dispatch RemoveNotificationAction with proper id', () => {
-    const notification = new Notification('1234', NotificationType.Info, 'title...', 'description');
+    const notification = new Notification(
+      '1234',
+      NotificationType.Info,
+      'title...',
+      'description',
+    );
     service.remove(notification);
-    expect(store.dispatch).toHaveBeenCalledWith(new RemoveNotificationAction(notification.id));
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new RemoveNotificationAction(notification.id),
+    );
   });
 
   it('RemoveAll method should dispatch RemoveAllNotificationsAction', () => {
     service.removeAll();
-    expect(store.dispatch).toHaveBeenCalledWith(new RemoveAllNotificationsAction());
+    expect(store.dispatch).toHaveBeenCalledWith(
+      new RemoveAllNotificationsAction(),
+    );
   });
-
 });

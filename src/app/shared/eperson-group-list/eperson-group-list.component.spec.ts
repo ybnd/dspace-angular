@@ -43,11 +43,13 @@ describe('EpersonGroupListComponent test suite', () => {
   let epersonService: any;
   let paginationService;
 
-  const paginationOptions: PaginationComponentOptions = new PaginationComponentOptions();
+  const paginationOptions: PaginationComponentOptions =
+    new PaginationComponentOptions();
   paginationOptions.id = uniqueId('eperson-group-list-pagination-test');
   paginationOptions.pageSize = 5;
 
-  const mockEpersonService = jasmine.createSpyObj('epersonService',
+  const mockEpersonService = jasmine.createSpyObj(
+    'epersonService',
     {
       findByHref: jasmine.createSpy('findByHref'),
       findAll: jasmine.createSpy('findAll'),
@@ -58,7 +60,8 @@ describe('EpersonGroupListComponent test suite', () => {
     },
   );
 
-  const mockGroupService = jasmine.createSpyObj('groupService',
+  const mockGroupService = jasmine.createSpyObj(
+    'groupService',
     {
       findByHref: jasmine.createSpy('findByHref'),
       findAll: jasmine.createSpy('findAll'),
@@ -69,24 +72,26 @@ describe('EpersonGroupListComponent test suite', () => {
     },
   );
 
-  const epersonPaginatedList = buildPaginatedList(new PageInfo(), [EPersonMock, EPersonMock]);
-  const epersonPaginatedListRD = createSuccessfulRemoteDataObject(epersonPaginatedList);
+  const epersonPaginatedList = buildPaginatedList(new PageInfo(), [
+    EPersonMock,
+    EPersonMock,
+  ]);
+  const epersonPaginatedListRD =
+    createSuccessfulRemoteDataObject(epersonPaginatedList);
 
-  const groupPaginatedList = buildPaginatedList(new PageInfo(), [GroupMock, GroupMock]);
-  const groupPaginatedListRD = createSuccessfulRemoteDataObject(groupPaginatedList);
+  const groupPaginatedList = buildPaginatedList(new PageInfo(), [
+    GroupMock,
+    GroupMock,
+  ]);
+  const groupPaginatedListRD =
+    createSuccessfulRemoteDataObject(groupPaginatedList);
 
   paginationService = new PaginationServiceStub();
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NoopAnimationsModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        EpersonGroupListComponent,
-        TestComponent,
-      ],
+      imports: [NoopAnimationsModule, TranslateModule.forRoot()],
+      declarations: [EpersonGroupListComponent, TestComponent],
       providers: [
         { provide: EPersonDataService, useValue: mockEpersonService },
         { provide: GroupDataService, useValue: mockGroupService },
@@ -96,9 +101,7 @@ describe('EpersonGroupListComponent test suite', () => {
         ChangeDetectorRef,
         Injector,
       ],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -108,11 +111,16 @@ describe('EpersonGroupListComponent test suite', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-      mockEpersonService.searchByScope.and.returnValue(observableOf(epersonPaginatedListRD));
+      mockEpersonService.searchByScope.and.returnValue(
+        observableOf(epersonPaginatedListRD),
+      );
       const html = `
         <ds-eperson-group-list [isListOfEPerson]="isListOfEPerson" [initSelected]="initSelected"></ds-eperson-group-list>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -120,15 +128,15 @@ describe('EpersonGroupListComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create EpersonGroupListComponent', inject([EpersonGroupListComponent], (app: EpersonGroupListComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create EpersonGroupListComponent', inject(
+      [EpersonGroupListComponent],
+      (app: EpersonGroupListComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('when is list of eperson', () => {
-
     beforeEach(() => {
       // initTestScheduler();
       fixture = TestBed.createComponent(EpersonGroupListComponent);
@@ -163,13 +171,17 @@ describe('EpersonGroupListComponent test suite', () => {
     });
 
     it('should init the list of eperson', () => {
-      epersonService.searchByScope.and.returnValue(observableOf(epersonPaginatedListRD));
+      epersonService.searchByScope.and.returnValue(
+        observableOf(epersonPaginatedListRD),
+      );
       fixture.detectChanges();
 
       expect(compAsAny.list$.value).toEqual(epersonPaginatedListRD);
-      expect(comp.getList()).toBeObservable(cold('a', {
-        a: epersonPaginatedListRD,
-      }));
+      expect(comp.getList()).toBeObservable(
+        cold('a', {
+          a: epersonPaginatedListRD,
+        }),
+      );
     });
 
     it('should emit select event', () => {
@@ -183,22 +195,25 @@ describe('EpersonGroupListComponent test suite', () => {
     it('should return true when entry is selected', () => {
       compAsAny.entrySelectedId.next(EPersonMock.id);
 
-      expect(comp.isSelected(EPersonMock)).toBeObservable(cold('a', {
-        a: true,
-      }));
+      expect(comp.isSelected(EPersonMock)).toBeObservable(
+        cold('a', {
+          a: true,
+        }),
+      );
     });
 
     it('should return false when entry is not selected', () => {
       compAsAny.entrySelectedId.next('');
 
-      expect(comp.isSelected(EPersonMock)).toBeObservable(cold('a', {
-        a: false,
-      }));
+      expect(comp.isSelected(EPersonMock)).toBeObservable(
+        cold('a', {
+          a: false,
+        }),
+      );
     });
   });
 
   describe('when is list of group', () => {
-
     beforeEach(() => {
       // initTestScheduler();
       fixture = TestBed.createComponent(EpersonGroupListComponent);
@@ -233,13 +248,17 @@ describe('EpersonGroupListComponent test suite', () => {
     });
 
     it('should init the list of group', () => {
-      groupService.searchGroups.and.returnValue(observableOf(groupPaginatedListRD));
+      groupService.searchGroups.and.returnValue(
+        observableOf(groupPaginatedListRD),
+      );
       fixture.detectChanges();
 
       expect(compAsAny.list$.value).toEqual(groupPaginatedListRD);
-      expect(comp.getList()).toBeObservable(cold('a', {
-        a: groupPaginatedListRD,
-      }));
+      expect(comp.getList()).toBeObservable(
+        cold('a', {
+          a: groupPaginatedListRD,
+        }),
+      );
     });
 
     it('should emit select event', () => {
@@ -253,17 +272,21 @@ describe('EpersonGroupListComponent test suite', () => {
     it('should return true when entry is selected', () => {
       compAsAny.entrySelectedId.next(EPersonMock.id);
 
-      expect(comp.isSelected(EPersonMock)).toBeObservable(cold('a', {
-        a: true,
-      }));
+      expect(comp.isSelected(EPersonMock)).toBeObservable(
+        cold('a', {
+          a: true,
+        }),
+      );
     });
 
     it('should return false when entry is not selected', () => {
       compAsAny.entrySelectedId.next('');
 
-      expect(comp.isSelected(EPersonMock)).toBeObservable(cold('a', {
-        a: false,
-      }));
+      expect(comp.isSelected(EPersonMock)).toBeObservable(
+        cold('a', {
+          a: false,
+        }),
+      );
     });
 
     it('should update list on search triggered', () => {
@@ -286,7 +309,6 @@ describe('EpersonGroupListComponent test suite', () => {
   template: ``,
 })
 class TestComponent {
-
   isListOfEPerson = true;
   initSelected = '';
 }

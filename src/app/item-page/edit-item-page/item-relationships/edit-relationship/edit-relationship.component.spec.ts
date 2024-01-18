@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -35,9 +31,7 @@ let de;
 let el;
 
 describe('EditRelationshipComponent', () => {
-
   beforeEach(waitForAsync(() => {
-
     relationshipType = Object.assign(new RelationshipType(), {
       id: '1',
       uuid: '1',
@@ -53,7 +47,9 @@ describe('EditRelationshipComponent', () => {
       },
       id: 'publication',
       uuid: 'publication',
-      relationships: createSuccessfulRemoteDataObject$(createPaginatedList(relationships)),
+      relationships: createSuccessfulRemoteDataObject$(
+        createPaginatedList(relationships),
+      ),
     });
 
     relatedItem = Object.assign(new Item(), {
@@ -119,7 +115,9 @@ describe('EditRelationshipComponent', () => {
       saveRemoveFieldUpdate: jasmine.createSpy('saveRemoveFieldUpdate'),
     };
 
-    spyOn(objectUpdatesService, 'isSelectedVirtualMetadata').and.callFake((a, b, uuid) => observableOf(itemSelection[uuid]));
+    spyOn(objectUpdatesService, 'isSelectedVirtualMetadata').and.callFake(
+      (a, b, uuid) => observableOf(itemSelection[uuid]),
+    );
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
@@ -127,19 +125,19 @@ describe('EditRelationshipComponent', () => {
       providers: [
         { provide: ObjectUpdatesService, useValue: objectUpdatesService },
         {
-          provide: NgbModal, useValue: {
-            open: () => {/*comment*/
+          provide: NgbModal,
+          useValue: {
+            open: () => {
+              /*comment*/
             },
           },
         },
-      ], schemas: [
-        NO_ERRORS_SCHEMA,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-
     fixture = TestBed.createComponent(EditRelationshipComponent);
     comp = fixture.componentInstance;
     de = fixture.debugElement;
@@ -192,7 +190,6 @@ describe('EditRelationshipComponent', () => {
   });
 
   describe('remove', () => {
-
     beforeEach(() => {
       spyOn(comp, 'closeVirtualMetadataModal');
       comp.ngOnChanges();
@@ -212,10 +209,12 @@ describe('EditRelationshipComponent', () => {
   });
 
   describe('undo', () => {
-
     it('should call removeSingleFieldUpdate with the correct arguments', () => {
       comp.undo();
-      expect(objectUpdatesService.removeSingleFieldUpdate).toHaveBeenCalledWith(url, relationships[0].uuid);
+      expect(objectUpdatesService.removeSingleFieldUpdate).toHaveBeenCalledWith(
+        url,
+        relationships[0].uuid,
+      );
     });
   });
 });

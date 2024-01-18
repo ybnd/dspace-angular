@@ -1,18 +1,7 @@
-import {
-  ChangeDetectorRef,
-  ElementRef,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectorRef, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { getTestScheduler } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -41,7 +30,8 @@ const collections: Collection[] = [
         key: 'dc.title',
         language: 'en_US',
         value: 'Community 1-Collection 1',
-      }],
+      },
+    ],
     parentCommunity: createSuccessfulRemoteDataObject$(community),
   }),
   Object.assign(new Collection(), {
@@ -52,7 +42,8 @@ const collections: Collection[] = [
         key: 'dc.title',
         language: 'en_US',
         value: 'Community 1-Collection 2',
-      }],
+      },
+    ],
     parentCommunity: createSuccessfulRemoteDataObject$(community),
   }),
   Object.assign(new Collection(), {
@@ -63,7 +54,8 @@ const collections: Collection[] = [
         key: 'dc.title',
         language: 'en_US',
         value: 'Community 1-Collection 3',
-      }],
+      },
+    ],
     parentCommunity: createSuccessfulRemoteDataObject$(community),
   }),
   Object.assign(new Collection(), {
@@ -74,7 +66,8 @@ const collections: Collection[] = [
         key: 'dc.title',
         language: 'en_US',
         value: 'Community 1-Collection 4',
-      }],
+      },
+    ],
     parentCommunity: createSuccessfulRemoteDataObject$(community),
   }),
   Object.assign(new Collection(), {
@@ -85,7 +78,8 @@ const collections: Collection[] = [
         key: 'dc.title',
         language: 'en_US',
         value: 'Community 1-Collection 5',
-      }],
+      },
+    ],
     parentCommunity: createSuccessfulRemoteDataObject$(community),
   }),
 ];
@@ -110,16 +104,26 @@ describe('CollectionDropdownComponent', () => {
   let fixture: ComponentFixture<CollectionDropdownComponent>;
   let scheduler: TestScheduler;
 
-  const collectionDataServiceMock: any = jasmine.createSpyObj('CollectionDataService', {
-    getAuthorizedCollection: jasmine.createSpy('getAuthorizedCollection'),
-    getAuthorizedCollectionByEntityType: jasmine.createSpy('getAuthorizedCollectionByEntityType'),
-  });
+  const collectionDataServiceMock: any = jasmine.createSpyObj(
+    'CollectionDataService',
+    {
+      getAuthorizedCollection: jasmine.createSpy('getAuthorizedCollection'),
+      getAuthorizedCollectionByEntityType: jasmine.createSpy(
+        'getAuthorizedCollectionByEntityType',
+      ),
+    },
+  );
 
   const paginatedCollection = buildPaginatedList(new PageInfo(), collections);
-  const paginatedCollectionRD$ = createSuccessfulRemoteDataObject$(paginatedCollection);
+  const paginatedCollectionRD$ =
+    createSuccessfulRemoteDataObject$(paginatedCollection);
 
-  const paginatedOneElementCollection = buildPaginatedList(new PageInfo(), [collections[0]]);
-  const paginatedOneElementCollectionRD$ = createSuccessfulRemoteDataObject$(paginatedOneElementCollection);
+  const paginatedOneElementCollection = buildPaginatedList(new PageInfo(), [
+    collections[0],
+  ]);
+  const paginatedOneElementCollectionRD$ = createSuccessfulRemoteDataObject$(
+    paginatedOneElementCollection,
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -138,8 +142,7 @@ describe('CollectionDropdownComponent', () => {
         ChangeDetectorRef,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -147,8 +150,12 @@ describe('CollectionDropdownComponent', () => {
     fixture = TestBed.createComponent(CollectionDropdownComponent);
     component = fixture.componentInstance;
     componentAsAny = component;
-    componentAsAny.collectionDataService.getAuthorizedCollection.and.returnValue(paginatedCollectionRD$);
-    componentAsAny.collectionDataService.getAuthorizedCollectionByEntityType.and.returnValue(paginatedCollectionRD$);
+    componentAsAny.collectionDataService.getAuthorizedCollection.and.returnValue(
+      paginatedCollectionRD$,
+    );
+    componentAsAny.collectionDataService.getAuthorizedCollectionByEntityType.and.returnValue(
+      paginatedCollectionRD$,
+    );
   });
 
   it('should init component with collection list', () => {
@@ -164,7 +171,9 @@ describe('CollectionDropdownComponent', () => {
     expect(component.subs.push).toHaveBeenCalled();
     expect(component.resetPagination).toHaveBeenCalled();
     expect(component.populateCollectionList).toHaveBeenCalled();
-    expect((component as any).collectionDataService.getAuthorizedCollection).toHaveBeenCalled();
+    expect(
+      (component as any).collectionDataService.getAuthorizedCollection,
+    ).toHaveBeenCalled();
   });
 
   it('should trigger onSelect method when select a new collection from list', () => {
@@ -172,7 +181,9 @@ describe('CollectionDropdownComponent', () => {
     scheduler.flush();
 
     spyOn(component, 'onSelect').and.callThrough();
-    const collectionItem = fixture.debugElement.query(By.css('.collection-item:nth-child(2)'));
+    const collectionItem = fixture.debugElement.query(
+      By.css('.collection-item:nth-child(2)'),
+    );
     collectionItem.triggerEventHandler('click', null);
 
     scheduler.schedule(() => fixture.detectChanges());
@@ -187,7 +198,9 @@ describe('CollectionDropdownComponent', () => {
     component.onSelect(listElementMock as any);
     fixture.detectChanges();
 
-    expect(component.selectionChange.emit).toHaveBeenCalledWith(listElementMock as any);
+    expect(component.selectionChange.emit).toHaveBeenCalledWith(
+      listElementMock as any,
+    );
   });
 
   it('should reset collections list after reset of searchField', () => {
@@ -204,7 +217,10 @@ describe('CollectionDropdownComponent', () => {
     expect(component.searchField.setValue).toHaveBeenCalledWith('');
     expect(component.resetPagination).toHaveBeenCalled();
     expect(component.currentQuery).toEqual('');
-    expect(component.populateCollectionList).toHaveBeenCalledWith(component.currentQuery, component.currentPage);
+    expect(component.populateCollectionList).toHaveBeenCalledWith(
+      component.currentQuery,
+      component.currentPage,
+    );
     expect(component.searchListCollection.length).toEqual(5);
     expect(component.subs.push).toHaveBeenCalled();
   });
@@ -225,11 +241,14 @@ describe('CollectionDropdownComponent', () => {
     expect(component.searchListCollection).toEqual([]);
   });
 
-  it('should invoke the method getAuthorizedCollectionByEntityType of CollectionDataService when entityType is set',() => {
+  it('should invoke the method getAuthorizedCollectionByEntityType of CollectionDataService when entityType is set', () => {
     component.entityType = 'rel';
     scheduler.schedule(() => fixture.detectChanges());
     scheduler.flush();
-    expect((component as any).collectionDataService.getAuthorizedCollectionByEntityType).toHaveBeenCalled();
+    expect(
+      (component as any).collectionDataService
+        .getAuthorizedCollectionByEntityType,
+    ).toHaveBeenCalled();
   });
 
   it('should emit hasChoice true when totalElements is greater then one', () => {
@@ -241,19 +260,34 @@ describe('CollectionDropdownComponent', () => {
   });
 
   it('should emit theOnlySelectable when totalElements is equal to one', () => {
-
-    componentAsAny.collectionDataService.getAuthorizedCollection.and.returnValue(paginatedOneElementCollectionRD$);
-    componentAsAny.collectionDataService.getAuthorizedCollectionByEntityType.and.returnValue(paginatedOneElementCollectionRD$);
+    componentAsAny.collectionDataService.getAuthorizedCollection.and.returnValue(
+      paginatedOneElementCollectionRD$,
+    );
+    componentAsAny.collectionDataService.getAuthorizedCollectionByEntityType.and.returnValue(
+      paginatedOneElementCollectionRD$,
+    );
 
     spyOn(component.theOnlySelectable, 'emit').and.callThrough();
     component.ngOnInit();
     fixture.detectChanges();
 
     const expectedTheOnlySelectable = {
-      communities: [ { id: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88', name: 'Community 1', uuid: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88' } ],
-      collection: { id: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88', uuid: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88', name: 'Collection 1' },
+      communities: [
+        {
+          id: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
+          name: 'Community 1',
+          uuid: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
+        },
+      ],
+      collection: {
+        id: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
+        uuid: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
+        name: 'Collection 1',
+      },
     };
 
-    expect(component.theOnlySelectable.emit).toHaveBeenCalledWith(expectedTheOnlySelectable);
+    expect(component.theOnlySelectable.emit).toHaveBeenCalledWith(
+      expectedTheOnlySelectable,
+    );
   });
 });

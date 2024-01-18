@@ -1,23 +1,13 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
-import {
-  AppState,
-  storeModuleConfig,
-} from '../../app.reducer';
+import { AppState, storeModuleConfig } from '../../app.reducer';
 import { authReducer } from '../../core/auth/auth.reducer';
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthTokenInfo } from '../../core/auth/models/auth-token-info.model';
@@ -84,7 +74,7 @@ describe('ImpersonateNavbarComponent', () => {
       expect(button).not.toBeNull();
     });
 
-    it('should call authService\'s stopImpersonatingAndRefresh upon clicking the button', () => {
+    it("should call authService's stopImpersonatingAndRefresh upon clicking the button", () => {
       const button = fixture.debugElement.query(By.css('button')).nativeElement;
       button.click();
       expect(authService.stopImpersonatingAndRefresh).toHaveBeenCalled();

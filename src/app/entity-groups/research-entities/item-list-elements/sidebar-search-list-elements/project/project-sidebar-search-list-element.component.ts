@@ -7,17 +7,29 @@ import { ItemSearchResult } from '../../../../../shared/object-collection/shared
 import { listableObjectComponent } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
 import { SidebarSearchListElementComponent } from '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component';
 
-@listableObjectComponent('ProjectSearchResult', ViewMode.ListElement, Context.SideBarSearchModal)
-@listableObjectComponent('ProjectSearchResult', ViewMode.ListElement, Context.SideBarSearchModalCurrent)
+@listableObjectComponent(
+  'ProjectSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModal,
+)
+@listableObjectComponent(
+  'ProjectSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModalCurrent,
+)
 @Component({
   selector: 'ds-project-sidebar-search-list-element',
-  templateUrl: '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
+  templateUrl:
+    '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
 })
 /**
  * Component displaying a list element for a {@link ItemSearchResult} of type "Project" within the context of
  * a sidebar search modal
  */
-export class ProjectSidebarSearchListElementComponent extends SidebarSearchListElementComponent<ItemSearchResult, Item> {
+export class ProjectSidebarSearchListElementComponent extends SidebarSearchListElementComponent<
+  ItemSearchResult,
+  Item
+> {
   /**
    * Projects currently don't support a description
    */

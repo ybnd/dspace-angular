@@ -13,5 +13,4 @@ import { listableObjectComponent } from '../../../../shared/object-collection/sh
 /**
  * The component for displaying metadata and relations of an item of the type Organisation Unit
  */
-export class OrgUnitComponent extends ItemComponent {
-}
+export class OrgUnitComponent extends ItemComponent {}

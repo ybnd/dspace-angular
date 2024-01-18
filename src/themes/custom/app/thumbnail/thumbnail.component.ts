@@ -9,5 +9,4 @@ import { ThumbnailComponent as BaseComponent } from '../../../../app/thumbnail/t
   // templateUrl: './thumbnail.component.html',
   templateUrl: '../../../../app/thumbnail/thumbnail.component.html',
 })
-export class ThumbnailComponent extends BaseComponent {
-}
+export class ThumbnailComponent extends BaseComponent {}

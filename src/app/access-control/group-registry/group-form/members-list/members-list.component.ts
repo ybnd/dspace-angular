@@ -1,22 +1,9 @@
-import {
-  Component,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 import { PaginatedList } from '../../../../core/data/paginated-list.model';
@@ -83,49 +70,57 @@ export interface EPersonListActionConfig {
  * The list of members in the edit group page
  */
 export class MembersListComponent implements OnInit, OnDestroy {
+  @Input()
+  messagePrefix: string;
 
   @Input()
-    messagePrefix: string;
-
-  @Input()
-    actionConfig: EPersonListActionConfig = {
-      add: {
-        css: 'btn-outline-primary',
-        disabled: false,
-        icon: 'fas fa-plus fa-fw',
-      },
-      remove: {
-        css: 'btn-outline-danger',
-        disabled: false,
-        icon: 'fas fa-trash-alt fa-fw',
-      },
-    };
+  actionConfig: EPersonListActionConfig = {
+    add: {
+      css: 'btn-outline-primary',
+      disabled: false,
+      icon: 'fas fa-plus fa-fw',
+    },
+    remove: {
+      css: 'btn-outline-danger',
+      disabled: false,
+      icon: 'fas fa-trash-alt fa-fw',
+    },
+  };
 
   /**
    * EPeople being displayed in search result, initially all members, after search result of search
    */
-  ePeopleSearch: BehaviorSubject<PaginatedList<EPerson>> = new BehaviorSubject<PaginatedList<EPerson>>(undefined);
+  ePeopleSearch: BehaviorSubject<PaginatedList<EPerson>> = new BehaviorSubject<
+    PaginatedList<EPerson>
+  >(undefined);
   /**
    * List of EPeople members of currently active group being edited
    */
-  ePeopleMembersOfGroup: BehaviorSubject<PaginatedList<EPerson>> = new BehaviorSubject<PaginatedList<EPerson>>(undefined);
+  ePeopleMembersOfGroup: BehaviorSubject<PaginatedList<EPerson>> =
+    new BehaviorSubject<PaginatedList<EPerson>>(undefined);
 
   /**
    * Pagination config used to display the list of EPeople that are result of EPeople search
    */
-  configSearch: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'sml',
-    pageSize: 5,
-    currentPage: 1,
-  });
+  configSearch: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'sml',
+      pageSize: 5,
+      currentPage: 1,
+    },
+  );
   /**
    * Pagination config used to display the list of EPerson Membes of active group being edited
    */
-  config: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'ml',
-    pageSize: 5,
-    currentPage: 1,
-  });
+  config: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'ml',
+      pageSize: 5,
+      currentPage: 1,
+    },
+  );
 
   /**
    * Map of active subscriptions
@@ -160,16 +155,19 @@ export class MembersListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       query: '',
-    }));
-    this.subs.set(SubKey.ActiveGroup, this.groupDataService.getActiveGroup().subscribe((activeGroup: Group) => {
-      if (activeGroup != null) {
-        this.groupBeingEdited = activeGroup;
-        this.retrieveMembers(this.config.currentPage);
-        this.search({ query: '' });
-      }
-    }));
+    });
+    this.subs.set(
+      SubKey.ActiveGroup,
+      this.groupDataService.getActiveGroup().subscribe((activeGroup: Group) => {
+        if (activeGroup != null) {
+          this.groupBeingEdited = activeGroup;
+          this.retrieveMembers(this.config.currentPage);
+          this.search({ query: '' });
+        }
+      }),
+    );
   }
 
   /**
@@ -180,27 +178,39 @@ export class MembersListComponent implements OnInit, OnDestroy {
    */
   retrieveMembers(page: number): void {
     this.unsubFrom(SubKey.Members);
-    this.subs.set(SubKey.Members,
-      this.paginationService.getCurrentPagination(this.config.id, this.config).pipe(
-        switchMap((currentPagination) => {
-          return this.ePersonDataService.findListByHref(this.groupBeingEdited._links.epersons.href, {
-            currentPage: currentPagination.currentPage,
-            elementsPerPage: currentPagination.pageSize,
-          },
-          );
-        }),
-        getAllCompletedRemoteData(),
-        map((rd: RemoteData<any>) => {
-          if (rd.hasFailed) {
-            this.notificationsService.error(this.translateService.get(this.messagePrefix + '.notification.failure', { cause: rd.errorMessage }));
-          } else {
-            return rd;
-          }
-        }),
-        getRemoteDataPayload())
+    this.subs.set(
+      SubKey.Members,
+      this.paginationService
+        .getCurrentPagination(this.config.id, this.config)
+        .pipe(
+          switchMap((currentPagination) => {
+            return this.ePersonDataService.findListByHref(
+              this.groupBeingEdited._links.epersons.href,
+              {
+                currentPage: currentPagination.currentPage,
+                elementsPerPage: currentPagination.pageSize,
+              },
+            );
+          }),
+          getAllCompletedRemoteData(),
+          map((rd: RemoteData<any>) => {
+            if (rd.hasFailed) {
+              this.notificationsService.error(
+                this.translateService.get(
+                  this.messagePrefix + '.notification.failure',
+                  { cause: rd.errorMessage },
+                ),
+              );
+            } else {
+              return rd;
+            }
+          }),
+          getRemoteDataPayload(),
+        )
         .subscribe((paginatedListOfEPersons: PaginatedList<EPerson>) => {
           this.ePeopleMembersOfGroup.next(paginatedListOfEPersons);
-        }));
+        }),
+    );
   }
 
   /**
@@ -222,19 +232,34 @@ export class MembersListComponent implements OnInit, OnDestroy {
    * @param eperson   EPerson we want to delete as member from group that is currently being edited
    */
   deleteMemberFromGroup(eperson: EPerson) {
-    this.groupDataService.getActiveGroup().pipe(take(1)).subscribe((activeGroup: Group) => {
-      if (activeGroup != null) {
-        const response = this.groupDataService.deleteMemberFromGroup(activeGroup, eperson);
-        this.showNotifications('deleteMember', response, this.dsoNameService.getName(eperson), activeGroup);
-        // Reload search results (if there is an active query).
-        // This will potentially add this deleted subgroup into the list of search results.
-        if (this.currentSearchQuery != null) {
-          this.search({ query: this.currentSearchQuery });
+    this.groupDataService
+      .getActiveGroup()
+      .pipe(take(1))
+      .subscribe((activeGroup: Group) => {
+        if (activeGroup != null) {
+          const response = this.groupDataService.deleteMemberFromGroup(
+            activeGroup,
+            eperson,
+          );
+          this.showNotifications(
+            'deleteMember',
+            response,
+            this.dsoNameService.getName(eperson),
+            activeGroup,
+          );
+          // Reload search results (if there is an active query).
+          // This will potentially add this deleted subgroup into the list of search results.
+          if (this.currentSearchQuery != null) {
+            this.search({ query: this.currentSearchQuery });
+          }
+        } else {
+          this.notificationsService.error(
+            this.translateService.get(
+              this.messagePrefix + '.notification.failure.noActiveGroup',
+            ),
+          );
         }
-      } else {
-        this.notificationsService.error(this.translateService.get(this.messagePrefix + '.notification.failure.noActiveGroup'));
-      }
-    });
+      });
   }
 
   /**
@@ -242,19 +267,34 @@ export class MembersListComponent implements OnInit, OnDestroy {
    * @param eperson   EPerson we want to add as member to group that is currently being edited
    */
   addMemberToGroup(eperson: EPerson) {
-    this.groupDataService.getActiveGroup().pipe(take(1)).subscribe((activeGroup: Group) => {
-      if (activeGroup != null) {
-        const response = this.groupDataService.addMemberToGroup(activeGroup, eperson);
-        this.showNotifications('addMember', response, this.dsoNameService.getName(eperson), activeGroup);
-        // Reload search results (if there is an active query).
-        // This will potentially add this deleted subgroup into the list of search results.
-        if (this.currentSearchQuery != null) {
-          this.search({ query: this.currentSearchQuery });
+    this.groupDataService
+      .getActiveGroup()
+      .pipe(take(1))
+      .subscribe((activeGroup: Group) => {
+        if (activeGroup != null) {
+          const response = this.groupDataService.addMemberToGroup(
+            activeGroup,
+            eperson,
+          );
+          this.showNotifications(
+            'addMember',
+            response,
+            this.dsoNameService.getName(eperson),
+            activeGroup,
+          );
+          // Reload search results (if there is an active query).
+          // This will potentially add this deleted subgroup into the list of search results.
+          if (this.currentSearchQuery != null) {
+            this.search({ query: this.currentSearchQuery });
+          }
+        } else {
+          this.notificationsService.error(
+            this.translateService.get(
+              this.messagePrefix + '.notification.failure.noActiveGroup',
+            ),
+          );
         }
-      } else {
-        this.notificationsService.error(this.translateService.get(this.messagePrefix + '.notification.failure.noActiveGroup'));
-      }
-    });
+      });
   }
 
   /**
@@ -263,33 +303,53 @@ export class MembersListComponent implements OnInit, OnDestroy {
    */
   search(data: any) {
     this.unsubFrom(SubKey.SearchResults);
-    this.subs.set(SubKey.SearchResults,
-      this.paginationService.getCurrentPagination(this.configSearch.id, this.configSearch).pipe(
-        switchMap((paginationOptions) => {
-          const query: string = data.query;
-          if (query != null && this.currentSearchQuery !== query && this.groupBeingEdited) {
-            this.currentSearchQuery = query;
-            this.paginationService.resetPage(this.configSearch.id);
-          }
-          this.searchDone = true;
+    this.subs.set(
+      SubKey.SearchResults,
+      this.paginationService
+        .getCurrentPagination(this.configSearch.id, this.configSearch)
+        .pipe(
+          switchMap((paginationOptions) => {
+            const query: string = data.query;
+            if (
+              query != null &&
+              this.currentSearchQuery !== query &&
+              this.groupBeingEdited
+            ) {
+              this.currentSearchQuery = query;
+              this.paginationService.resetPage(this.configSearch.id);
+            }
+            this.searchDone = true;
 
-          return this.ePersonDataService.searchNonMembers(this.currentSearchQuery, this.groupBeingEdited.id, {
-            currentPage: paginationOptions.currentPage,
-            elementsPerPage: paginationOptions.pageSize,
-          }, false, true);
-        }),
-        getAllCompletedRemoteData(),
-        map((rd: RemoteData<any>) => {
-          if (rd.hasFailed) {
-            this.notificationsService.error(this.translateService.get(this.messagePrefix + '.notification.failure', { cause: rd.errorMessage }));
-          } else {
-            return rd;
-          }
-        }),
-        getRemoteDataPayload())
+            return this.ePersonDataService.searchNonMembers(
+              this.currentSearchQuery,
+              this.groupBeingEdited.id,
+              {
+                currentPage: paginationOptions.currentPage,
+                elementsPerPage: paginationOptions.pageSize,
+              },
+              false,
+              true,
+            );
+          }),
+          getAllCompletedRemoteData(),
+          map((rd: RemoteData<any>) => {
+            if (rd.hasFailed) {
+              this.notificationsService.error(
+                this.translateService.get(
+                  this.messagePrefix + '.notification.failure',
+                  { cause: rd.errorMessage },
+                ),
+              );
+            } else {
+              return rd;
+            }
+          }),
+          getRemoteDataPayload(),
+        )
         .subscribe((paginatedListOfEPersons: PaginatedList<EPerson>) => {
           this.ePeopleSearch.next(paginatedListOfEPersons);
-        }));
+        }),
+    );
   }
 
   /**
@@ -310,14 +370,31 @@ export class MembersListComponent implements OnInit, OnDestroy {
    * @param nameObject      Object request was about
    * @param activeGroup     Group currently being edited
    */
-  showNotifications(messageSuffix: string, response: Observable<RemoteData<any>>, nameObject: string, activeGroup: Group) {
-    response.pipe(getFirstCompletedRemoteData()).subscribe((rd: RemoteData<any>) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get(this.messagePrefix + '.notification.success.' + messageSuffix, { name: nameObject }));
-      } else {
-        this.notificationsService.error(this.translateService.get(this.messagePrefix + '.notification.failure.' + messageSuffix, { name: nameObject }));
-      }
-    });
+  showNotifications(
+    messageSuffix: string,
+    response: Observable<RemoteData<any>>,
+    nameObject: string,
+    activeGroup: Group,
+  ) {
+    response
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((rd: RemoteData<any>) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get(
+              this.messagePrefix + '.notification.success.' + messageSuffix,
+              { name: nameObject },
+            ),
+          );
+        } else {
+          this.notificationsService.error(
+            this.translateService.get(
+              this.messagePrefix + '.notification.failure.' + messageSuffix,
+              { name: nameObject },
+            ),
+          );
+        }
+      });
   }
 
   /**

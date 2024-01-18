@@ -12,10 +12,7 @@ import { SystemWideAlertFormComponent } from './alert-form/system-wide-alert-for
         canActivate: [SiteAdministratorGuard],
         component: SystemWideAlertFormComponent,
       },
-
     ]),
   ],
 })
-export class SystemWideAlertRoutingModule {
-
-}
+export class SystemWideAlertRoutingModule {}

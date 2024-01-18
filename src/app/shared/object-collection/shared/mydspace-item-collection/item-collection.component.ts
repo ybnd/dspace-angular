@@ -1,16 +1,6 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {
-  EMPTY,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  mergeMap,
-} from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 import { LinkService } from '../../../../core/cache/builders/link.service';
@@ -30,7 +20,6 @@ import { followLink } from '../../../utils/follow-link-config.model';
   templateUrl: './item-collection.component.html',
 })
 export class ItemCollectionComponent implements OnInit {
-
   /**
    * The target object
    */
@@ -44,24 +33,31 @@ export class ItemCollectionComponent implements OnInit {
   public constructor(
     protected linkService: LinkService,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   /**
    * Initialize collection object
    */
   ngOnInit() {
-
-    this.linkService.resolveLinks(this.object, followLink('workflowitem', {
-      isOptional: true,
-    },
-    followLink('collection',{}),
-    ));
-    this.collection$ = (this.object.workflowitem as Observable<RemoteData<WorkflowItem>>).pipe(
+    this.linkService.resolveLinks(
+      this.object,
+      followLink(
+        'workflowitem',
+        {
+          isOptional: true,
+        },
+        followLink('collection', {}),
+      ),
+    );
+    this.collection$ = (
+      this.object.workflowitem as Observable<RemoteData<WorkflowItem>>
+    ).pipe(
       getFirstCompletedRemoteData(),
       mergeMap((rd: RemoteData<WorkflowItem>) => {
         if (rd.hasSucceeded && isNotEmpty(rd.payload)) {
-          return (rd.payload.collection as Observable<RemoteData<Collection>>).pipe(
+          return (
+            rd.payload.collection as Observable<RemoteData<Collection>>
+          ).pipe(
             getFirstCompletedRemoteData(),
             map((rds: RemoteData<Collection>) => {
               if (rds.hasSucceeded && isNotEmpty(rds.payload)) {
@@ -74,6 +70,7 @@ export class ItemCollectionComponent implements OnInit {
         } else {
           return EMPTY;
         }
-      }));
+      }),
+    );
   }
 }

@@ -6,17 +6,11 @@
  * http://www.dspace.org/license/
  */
 /* eslint-disable max-classes-per-file */
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../../../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../../../config/app-config.interface';
 import { getDSORoute } from '../../app-routing-paths';
 import { hasValue } from '../../shared/empty.util';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
@@ -46,10 +40,16 @@ class DsoByIdOrUUIDDataService extends IdentifiableDataService<DSpaceObject> {
     protected halService: HALEndpointService,
   ) {
     super(
-      undefined, requestService, rdbService, objectCache, halService, undefined,
+      undefined,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      undefined,
       // interpolate id/uuid as query parameter
       (endpoint: string, resourceID: string): string => {
-        return endpoint.replace(/{\?id}/, `?id=${resourceID}`)
+        return endpoint
+          .replace(/{\?id}/, `?id=${resourceID}`)
           .replace(/{\?uuid}/, `?uuid=${resourceID}`);
       },
     );
@@ -85,7 +85,12 @@ export class DsoRedirectService {
     protected halService: HALEndpointService,
     private hardRedirectService: HardRedirectService,
   ) {
-    this.dataService = new DsoByIdOrUUIDDataService(requestService, rdbService, objectCache, halService);
+    this.dataService = new DsoByIdOrUUIDDataService(
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
   }
 
   /**
@@ -96,7 +101,10 @@ export class DsoRedirectService {
    * @param id              the identifier of the object to retrieve
    * @param identifierType  the type of the given identifier (defaults to UUID)
    */
-  findByIdAndIDType(id: string, identifierType = IdentifierType.UUID): Observable<RemoteData<DSpaceObject>> {
+  findByIdAndIDType(
+    id: string,
+    identifierType = IdentifierType.UUID,
+  ): Observable<RemoteData<DSpaceObject>> {
     this.dataService.setLinkPath(identifierType);
     return this.dataService.findById(id).pipe(
       getFirstCompletedRemoteData(),
@@ -107,7 +115,10 @@ export class DsoRedirectService {
             const newRoute = getDSORoute(dso);
             if (hasValue(newRoute)) {
               // Use a "301 Moved Permanently" redirect for SEO purposes
-              this.hardRedirectService.redirect(this.appConfig.ui.nameSpace.replace(/\/$/, '') + newRoute, 301);
+              this.hardRedirectService.redirect(
+                this.appConfig.ui.nameSpace.replace(/\/$/, '') + newRoute,
+                301,
+              );
             }
           }
         }

@@ -17,7 +17,10 @@ import { SearchResultListElementComponent } from '../../../search-result-list-el
 /**
  * The component for displaying a list element for an item search result of the type Publication
  */
-export class ItemSearchResultListElementComponent extends SearchResultListElementComponent<ItemSearchResult, Item> {
+export class ItemSearchResultListElementComponent extends SearchResultListElementComponent<
+  ItemSearchResult,
+  Item
+> {
   /**
    * Route to the item's page
    */
@@ -25,7 +28,8 @@ export class ItemSearchResultListElementComponent extends SearchResultListElemen
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.showThumbnails = this.showThumbnails ?? this.appConfig.browseBy.showThumbnails;
+    this.showThumbnails =
+      this.showThumbnails ?? this.appConfig.browseBy.showThumbnails;
     this.itemPageRoute = getItemPageRoute(this.dso);
   }
 }

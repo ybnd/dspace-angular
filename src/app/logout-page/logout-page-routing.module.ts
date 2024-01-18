@@ -16,4 +16,4 @@ import { ThemedLogoutPageComponent } from './themed-logout-page.component';
     ]),
   ],
 })
-export class LogoutPageRoutingModule { }
+export class LogoutPageRoutingModule {}

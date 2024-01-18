@@ -1,7 +1,4 @@
-import {
-  Component,
-  ViewChild,
-} from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 import { AccessControlFormContainerComponent } from '../../../shared/access-control-form-container/access-control-form-container.component';
 
@@ -12,11 +9,11 @@ import { AccessControlFormContainerComponent } from '../../../shared/access-cont
   exportAs: 'dsBulkSettings',
 })
 export class BulkAccessSettingsComponent {
-
   /**
    * The SectionsDirective reference
    */
-  @ViewChild('dsAccessControlForm') controlForm: AccessControlFormContainerComponent<any>;
+  @ViewChild('dsAccessControlForm')
+  controlForm: AccessControlFormContainerComponent<any>;
 
   /**
    * Will be used from a parent component to read the value of the form
@@ -32,5 +29,4 @@ export class BulkAccessSettingsComponent {
   reset() {
     this.controlForm.reset();
   }
-
 }

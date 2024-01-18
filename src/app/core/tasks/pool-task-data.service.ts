@@ -34,7 +34,14 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('pooltasks', requestService, rdbService, objectCache, halService, 1000);
+    super(
+      'pooltasks',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      1000,
+    );
   }
 
   /**
@@ -46,10 +53,10 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
    */
   public findByItem(uuid: string): Observable<RemoteData<PoolTask>> {
     const options = new FindListOptions();
-    options.searchParams = [
-      new RequestParam('uuid', uuid),
-    ];
-    return this.searchTask('findByItem', options).pipe(getFirstCompletedRemoteData());
+    options.searchParams = [new RequestParam('uuid', uuid)];
+    return this.searchTask('findByItem', options).pipe(
+      getFirstCompletedRemoteData(),
+    );
   }
 
   /**
@@ -63,5 +70,4 @@ export class PoolTaskDataService extends TasksService<PoolTask> {
   public getPoolTaskEndpointById(poolTaskId): Observable<string> {
     return this.getEndpointById(poolTaskId);
   }
-
 }

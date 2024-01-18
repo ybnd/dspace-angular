@@ -1,5 +1,4 @@
 {
-
   // "401.help": "You're not authorized to access this page. You can use the button below to get back to the home page.",
 
   "401.help": "Ви не авторизовані для доступу до цієї сторінки. Ви можете скористатися кнопкою нижче, щоб повернутися на головну сторінку.",
@@ -12,8 +11,6 @@
 
   "401.unauthorized": "Ви не авторизовані",
 
-
-
   // "403.help": "You don't have permission to access this page. You can use the button below to get back to the home page.",
 
   "403.help": "Ви не маєте дозволу на доступ до цієї сторінки. Ви можете скористатися кнопкою нижче, щоб повернутися на головну сторінку.",
@@ -25,8 +22,6 @@
   // "403.forbidden": "forbidden",
 
   "403.forbidden": "заборонено",
-
-
 
   // "404.help": "We can't find the page you're looking for. The page may have been moved or deleted. You can use the button below to get back to the home page. ",
   "404.help": "Ми не можемо знайти сторінку, яку ви шукаєте. Можливо, сторінку було переміщено або видалено. Ви можете скористатися кнопкою нижче, щоб повернутися на головну сторінку. ",
@@ -187,8 +182,6 @@
   // "admin.registries.bitstream-formats.title": "DSpace Angular :: Bitstream Format Registry",
   "admin.registries.bitstream-formats.title": "Репозитарій :: реєстр формату файлу",
 
-
-
   // "admin.registries.metadata.breadcrumbs": "Metadata registry",
   // TODO New key - Add a translation
   "admin.registries.metadata.breadcrumbs": "Реєстр метаданих",
@@ -229,14 +222,12 @@
   // "admin.registries.metadata.title": "DSpace Angular :: Metadata Registry",
   "admin.registries.metadata.title": "Репозитарій :: Реєстр метаданих",
 
-
-
   // "admin.registries.schema.breadcrumbs": "Metadata schema",
 
   "admin.registries.schema.breadcrumbs": "Схема метаданих",
 
   // "admin.registries.schema.description": "This is the metadata schema for \"{{namespace}}\".",
-  "admin.registries.schema.description": "Це схема метаданих для \"{{namespace}}\".",
+  "admin.registries.schema.description": 'Це схема метаданих для "{{namespace}}".',
 
   // "admin.registries.schema.fields.head": "Schema metadata fields",
   "admin.registries.schema.fields.head": "Поля схеми метаданих",
@@ -272,7 +263,7 @@
   "admin.registries.schema.head": "Схема метаданих",
 
   // "admin.registries.schema.notification.created": "Successfully created metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.created": "Схема метаданих \"{{prefix}}\" успішно створена",
+  "admin.registries.schema.notification.created": 'Схема метаданих "{{prefix}}" успішно створена',
 
   // "admin.registries.schema.notification.deleted.failure": "Failed to delete {{amount}} metadata schemas",
   "admin.registries.schema.notification.deleted.failure": "Неможливо видалити {{amount}} схему метаданих",
@@ -281,13 +272,13 @@
   "admin.registries.schema.notification.deleted.success": "{{amount}} схема метаданих успішно видалена",
 
   // "admin.registries.schema.notification.edited": "Successfully edited metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.edited": "Схема метаданих \"{{prefix}}\" успішно відредагована",
+  "admin.registries.schema.notification.edited": 'Схема метаданих "{{prefix}}" успішно відредагована',
 
   // "admin.registries.schema.notification.failure": "Error",
   "admin.registries.schema.notification.failure": "Помилка",
 
   // "admin.registries.schema.notification.field.created": "Successfully created metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.created": "Поле метаданих \"{{field}}\" успішно створено",
+  "admin.registries.schema.notification.field.created": 'Поле метаданих "{{field}}" успішно створено',
 
   // "admin.registries.schema.notification.field.deleted.failure": "Failed to delete {{amount}} metadata fields",
   "admin.registries.schema.notification.field.deleted.failure": "Неможливо видалити  {{amount}} поле(я) метаданих",
@@ -296,7 +287,7 @@
   "admin.registries.schema.notification.field.deleted.success": "{{amount}} поля метаданих успішно видалено",
 
   // "admin.registries.schema.notification.field.edited": "Successfully edited metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.edited": "\"{{field}}\" поле метаданих успішно відредаговано",
+  "admin.registries.schema.notification.field.edited": '"{{field}}" поле метаданих успішно відредаговано',
 
   // "admin.registries.schema.notification.success": "Success",
   "admin.registries.schema.notification.success": "Успіх",
@@ -306,8 +297,6 @@
 
   // "admin.registries.schema.title": "DSpace Angular :: Metadata Schema Registry",
   "admin.registries.schema.title": "Репозитарій :: реєстр схеми метаданих",
-
-
 
   // "admin.access-control.epeople.actions.delete": "Delete EPerson",
 
@@ -362,10 +351,10 @@
   "admin.access-control.epeople.table.edit": "Редагувати",
 
   // "admin.access-control.epeople.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.edit": "Редагувати \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.edit": 'Редагувати "{{name}}"',
 
   // "admin.access-control.epeople.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.remove": "Видалити \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.remove": 'Видалити "{{name}}"',
 
   // "admin.access-control.epeople.no-items": "No EPeople to show.",
   "admin.access-control.epeople.no-items": "Користувачі відсутні.",
@@ -395,30 +384,30 @@
   "admin.access-control.epeople.form.requireCertificate": "Вимагати сертифікат",
 
   // "admin.access-control.epeople.form.notification.created.success": "Successfully created EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.success": "Користувач \"{{name}}\" успішно створений",
+  "admin.access-control.epeople.form.notification.created.success": 'Користувач "{{name}}" успішно створений',
 
   // "admin.access-control.epeople.form.notification.created.failure": "Failed to create EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.failure": "Неможливо створити користувача \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.created.failure": 'Неможливо створити користувача "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Failed to create EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Неможливо створити користувача \"{{name}}\", e-pasts \"{{email}}\" вже використовується.",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": 'Неможливо створити користувача "{{name}}", e-pasts "{{email}}" вже використовується.',
 
   // "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Failed to edit EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Неможливо редагувати користувача \"{{name}}\", e-pasts \"{{email}}\" вже використовується.",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'Неможливо редагувати користувача "{{name}}", e-pasts "{{email}}" вже використовується.',
 
   // "admin.access-control.epeople.form.notification.edited.success": "Successfully edited EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.success": "Користувач \"{{name}}\" успішно відредагований",
+  "admin.access-control.epeople.form.notification.edited.success": 'Користувач "{{name}}" успішно відредагований',
 
   // "admin.access-control.epeople.form.notification.edited.failure": "Failed to edit EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.failure": "Неможливо відредагувати користувача \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.edited.failure": 'Неможливо відредагувати користувача "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.deleted.success": "Successfully deleted EPerson \"{{name}}\"",
 
-  "admin.access-control.epeople.form.notification.deleted.success": "Користувач \"{{name}}\" успішно видалений",
+  "admin.access-control.epeople.form.notification.deleted.success": 'Користувач "{{name}}" успішно видалений',
 
   // "admin.access-control.epeople.form.notification.deleted.failure": "Failed to delete EPerson \"{{name}}\"",
 
-  "admin.access-control.epeople.form.notification.deleted.failure": "Неможливо видалити користувача \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'Неможливо видалити користувача "{{name}}"',
 
   // "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Member of these groups:",
   "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Член груп:",
@@ -436,12 +425,10 @@
   "admin.access-control.epeople.form.goToGroups": "Додати до груп",
 
   // "admin.access-control.epeople.notification.deleted.failure": "Failed to delete EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.failure": "Неможливо видалити користувача: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.failure": 'Неможливо видалити користувача: "{{name}}"',
 
   // "admin.access-control.epeople.notification.deleted.success": "Successfully deleted EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.success": "Користувача \"{{name}}\" успішно видалено",
-
-
+  "admin.access-control.epeople.notification.deleted.success": 'Користувача "{{name}}" успішно видалено',
 
   // "admin.access-control.groups.title": "Репозитарій :: Групи",
   "admin.access-control.groups.title": "Репозитарій :: Групи",
@@ -482,26 +469,24 @@
   "admin.access-control.groups.table.edit": "Редагувати",
 
   // "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.edit": "Редагувати \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.edit": 'Редагувати "{{name}}"',
 
   // "admin.access-control.groups.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.remove": "Видалити \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.remove": 'Видалити "{{name}}"',
 
   // "admin.access-control.groups.no-items": "No groups found with this in their name or this as UUID",
   "admin.access-control.groups.no-items": "Групи не знайдено за Вашими критеріями ",
 
   // "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.success": "Група \"{{name}}\" успішно видалена",
+  "admin.access-control.groups.notification.deleted.success": 'Група "{{name}}" успішно видалена',
 
   // "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
 
-  "admin.access-control.groups.notification.deleted.failure.title": "Групу \"{{name}}\" видалити неможливо",
+  "admin.access-control.groups.notification.deleted.failure.title": 'Групу "{{name}}" видалити неможливо',
 
   // "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
 
-  "admin.access-control.groups.notification.deleted.failure.content": "Причина: \"{{cause}}\"",
-
-
+  "admin.access-control.groups.notification.deleted.failure.content": 'Причина: "{{cause}}"',
 
   // "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
 
@@ -509,7 +494,7 @@
 
   // "admin.access-control.groups.form.alert.workflowGroup": "This group can’t be modified or deleted because it corresponds to a role in the submission and workflow process in the \"{{name}}\" {{comcol}}. You can delete it from the <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> tab on the edit {{comcol}} page. You can still add and remove group members using this page.",
 
-  "admin.access-control.groups.form.alert.workflowGroup": "Цю групу не можна змінити або видалити, оскільки вона відповідає за ролі в процесі подання чи опрацювання документів в \"{{name}}\" {{comcol}}. Ви можете видалити її <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> на сторінці {{comcol}} вкладки Редагування. Ви все ще можете додавати та видаляти учасників групи за допомогою цієї сторінки.",
+  "admin.access-control.groups.form.alert.workflowGroup": 'Цю групу не можна змінити або видалити, оскільки вона відповідає за ролі в процесі подання чи опрацювання документів в "{{name}}" {{comcol}}. Ви можете видалити її <a href=\'{{comcolEditRolesRoute}}\'>"assign roles"</a> на сторінці {{comcol}} вкладки Редагування. Ви все ще можете додавати та видаляти учасників групи за допомогою цієї сторінки.',
 
   // "admin.access-control.groups.form.head.create": "Create group",
   "admin.access-control.groups.form.head.create": "Створити групу",
@@ -524,25 +509,25 @@
   "admin.access-control.groups.form.groupDescription": "Опис",
 
   // "admin.access-control.groups.form.notification.created.success": "Successfully created Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.success": "Група \"{{name}}\" успішно створена",
+  "admin.access-control.groups.form.notification.created.success": 'Група "{{name}}" успішно створена',
 
   // "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.failure": "Неможливо створити групу \"{{name}}\"",
+  "admin.access-control.groups.form.notification.created.failure": 'Неможливо створити групу "{{name}}"',
 
   // "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Неможливо створити групу: \"{{name}}\". Це ім'я вже зайняте .",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": 'Неможливо створити групу: "{{name}}". Це ім\'я вже зайняте .',
 
   // "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
 
-  "admin.access-control.groups.form.notification.edited.failure": "Неможливо редагувати групу \"{{name}}\"",
+  "admin.access-control.groups.form.notification.edited.failure": 'Неможливо редагувати групу "{{name}}"',
 
   // "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Ім'я \"{{name}}\" вже використовується!",
 
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Ім'я \"{{name}}\" вже використовується!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": 'Ім\'я "{{name}}" вже використовується!',
 
   // "admin.access-control.groups.form.notification.edited.success": "Група \"{{name}}\" успішно відредагована",
 
-  "admin.access-control.groups.form.notification.edited.success": "Група \"{{name}}\" успішно відредагована",
+  "admin.access-control.groups.form.notification.edited.success": 'Група "{{name}}" успішно відредагована',
 
   // "admin.access-control.groups.form.actions.delete": "Delete Group",
 
@@ -550,11 +535,11 @@
 
   // "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
 
-  "admin.access-control.groups.form.delete-group.modal.header": "Видалити групу \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.header": 'Видалити групу "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
 
-  "admin.access-control.groups.form.delete-group.modal.info": "Ви впевнені, що хочете видалити групу \"{{ dsoName }}\"?",
+  "admin.access-control.groups.form.delete-group.modal.info": 'Ви впевнені, що хочете видалити групу "{{ dsoName }}"?',
 
   // "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
 
@@ -566,15 +551,15 @@
 
   // "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
 
-  "admin.access-control.groups.form.notification.deleted.success": "Група \"{{ name }}\" успішно видалена",
+  "admin.access-control.groups.form.notification.deleted.success": 'Група "{{ name }}" успішно видалена',
 
   // "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
 
-  "admin.access-control.groups.form.notification.deleted.failure.title": "Неможливо видалити групу \"{{ name }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.title": 'Неможливо видалити групу "{{ name }}"',
 
   // "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
 
-  "admin.access-control.groups.form.notification.deleted.failure.content": "Причина: \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'Причина: "{{ cause }}"',
 
   // "admin.access-control.groups.form.members-list.head": "EPeople",
   "admin.access-control.groups.form.members-list.head": "Користувачі",
@@ -607,22 +592,22 @@
   "admin.access-control.groups.form.members-list.table.edit": "Видалити / Додати",
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Видалити учасника групи з ім'ям \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": 'Видалити учасника групи з ім\'ям "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "Учасника \"{{name}}\" успішно додано",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": 'Учасника "{{name}}" успішно додано',
 
   // "admin.access-control.groups.form.members-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "Неможливо додати \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'Неможливо додати "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Учасника \"{{name}}\" успішно видалено",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": 'Учасника "{{name}}" успішно видалено',
 
   // "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Неможливо видалити учасника \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'Неможливо видалити учасника "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Додати учасника з ім'ям \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": 'Додати учасника з ім\'ям "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "Відсутня активна/поточна група. Виберіть спочатку її ім'я",
@@ -635,7 +620,7 @@
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
 
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "Щось пішло не так: \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'Щось пішло не так: "{{cause}}"',
 
   // "admin.access-control.groups.form.subgroups-list.head": "Groups",
   "admin.access-control.groups.form.subgroups-list.head": "Групи",
@@ -662,25 +647,25 @@
   "admin.access-control.groups.form.subgroups-list.table.edit": "Видалити / Додати",
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remove subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Видалити підгрупу \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": 'Видалити підгрупу "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Add subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Додати підгрупу \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": 'Додати підгрупу "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Current group",
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Поточна група",
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Successfully added subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Підгрупа \"{{name}}\" успішно додана",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'Підгрупа "{{name}}" успішно додана',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Failed to add subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Неможливо додати підгрупу \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'Неможливо додати підгрупу "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Successfully deleted subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Підгрупа \"{{name}}\" успішно видалена",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": 'Підгрупа "{{name}}" успішно видалена',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Failed to delete subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Неможливо видалити підгрупу \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": 'Неможливо видалити підгрупу "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "Відсутня активна група. Спочатку вкажіть ім'я",
@@ -696,8 +681,6 @@
 
   // "admin.access-control.groups.form.return": "Return to groups",
   "admin.access-control.groups.form.return": "Повернутись до груп",
-
-
 
   // "admin.search.breadcrumbs": "Administrative Search",
   "admin.search.breadcrumbs": "Пошук адміністратора",
@@ -735,9 +718,6 @@
   // "administrativeView.search.results.head": "Administrative Search",
   "administrativeView.search.results.head": "Пошук адміністратора",
 
-
-
-
   // "admin.workflow.breadcrumbs": "Administer Workflow",
   "admin.workflow.breadcrumbs": "Адміністрування робочого процесу",
 
@@ -752,8 +732,6 @@
 
   // "admin.workflow.item.send-back": "Send back",
   "admin.workflow.item.send-back": "Повернути назад",
-
-
 
   // "admin.metadata-import.breadcrumbs": "Import Metadata",
 
@@ -791,22 +769,17 @@
 
   "admin.metadata-import.page.error.addFile": "Спочатку виберіть файл",
 
-
-
-
   // "auth.errors.invalid-user": "Invalid email address or password.",
   "auth.errors.invalid-user": "Неправильний емейл чи пароль.",
 
   // "auth.messages.expired": "Your session has expired. Please log in again.",
   "auth.messages.expired": "Час сесії вичерпано. Увійдіть знову.",
 
-
-
   // "bitstream.edit.bitstream": "Bitstream: ",
   "bitstream.edit.bitstream": "Файл: ",
 
   // "bitstream.edit.form.description.hint": "Optionally, provide a brief description of the file, for example \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
-  "bitstream.edit.form.description.hint": "За бажанням надайте, наприклад, короткий опис файлу, \"<i>Galvanais raksts</i>\" або \"<i>експериментальні читання даних</i>\".",
+  "bitstream.edit.form.description.hint": 'За бажанням надайте, наприклад, короткий опис файлу, "<i>Galvanais raksts</i>" або "<i>експериментальні читання даних</i>".',
 
   // "bitstream.edit.form.description.label": "Description",
   "bitstream.edit.form.description.label": "Опис",
@@ -827,7 +800,7 @@
   "bitstream.edit.form.newFormat.label": "Опишіть новий формат",
 
   // "bitstream.edit.form.newFormat.hint": "The application you used to create the file, and the version number (for example, \"<i>ACMESoft SuperApp version 1.5</i>\").",
-  "bitstream.edit.form.newFormat.hint": "Програмне забезпечення та його версія, яке Ви використали при створенні файлу (наприклад, \"<i> ACMESoft SuperApp versija 1.5 </i>\").",
+  "bitstream.edit.form.newFormat.hint": 'Програмне забезпечення та його версія, яке Ви використали при створенні файлу (наприклад, "<i> ACMESoft SuperApp versija 1.5 </i>").',
 
   // "bitstream.edit.form.primaryBitstream.label": "Primary bitstream",
   "bitstream.edit.form.primaryBitstream.label": "Головний файл",
@@ -852,8 +825,6 @@
 
   // "bitstream.edit.title": "Edit bitstream",
   "bitstream.edit.title": "Редагувати файл",
-
-
 
   // "browse.comcol.by.author": "By Author",
   "browse.comcol.by.author": "За автором",
@@ -957,12 +928,9 @@
   // "browse.title": "Browsing {{ collection }} by {{ field }} {{ value }}",
   "browse.title": "Перегляд {{ collection }} за {{ field }} {{ value }}",
 
-
   // "chips.remove": "Remove chip",
   // TODO "chips.remove": "Remove chip",
   "chips.remove": "Remove chip",
-
-
 
   // "collection.create.head": "Create a Collection",
   "collection.create.head": "Створити зібрання",
@@ -993,9 +961,7 @@
   "collection.delete.notification.success": "Зібрання успішно видалено",
 
   // "collection.delete.text": "Are you sure you want to delete collection \"{{ dso }}\"",
-  "collection.delete.text": "Ви впевнені, що хочете видалити зібрання \"{{ dso }}\"?",
-
-
+  "collection.delete.text": 'Ви впевнені, що хочете видалити зібрання "{{ dso }}"?',
 
   // "collection.edit.delete": "Delete this collection",
   "collection.edit.delete": "Видалити це зібрання",
@@ -1005,8 +971,6 @@
 
   // "collection.edit.breadcrumbs": "Edit Collection",
   "collection.edit.breadcrumbs": "Редагувати зібрання",
-
-
 
   // "collection.edit.tabs.mapper.head": "Item Mapper",
 
@@ -1020,7 +984,7 @@
   "collection.edit.item-mapper.cancel": "Відмінити",
 
   // "collection.edit.item-mapper.collection": "Collection: \"<b>{{name}}</b>\"",
-  "collection.edit.item-mapper.collection": "Зібрання: \"<b>{{name}}</b>\"",
+  "collection.edit.item-mapper.collection": 'Зібрання: "<b>{{name}}</b>"',
 
   // "collection.edit.item-mapper.confirm": "Map selected items",
   "collection.edit.item-mapper.confirm": "Карта вибраних документів",
@@ -1069,8 +1033,6 @@
   // "collection.edit.item-mapper.tabs.map": "Map new items",
   "collection.edit.item-mapper.tabs.map": "mapping нових документів",
 
-
-
   // "collection.edit.logo.label": "Collection logo",
   "collection.edit.logo.label": "Логотип зібрання",
 
@@ -1092,15 +1054,11 @@
   // "collection.edit.logo.upload": "Drop a Collection Logo to upload",
   "collection.edit.logo.upload": "Виберіть логотип зібрання для завантаження",
 
-
-
   // "collection.edit.notifications.success": "Successfully edited the Collection",
   "collection.edit.notifications.success": "Зібрання успішно відредаговано",
 
   // "collection.edit.return": "Return",
   "collection.edit.return": "Повернутись",
-
-
 
   // "collection.edit.tabs.curate.head": "Curate",
   // TODO "collection.edit.tabs.curate.head": "Curate",
@@ -1185,8 +1143,6 @@
   // "collection.edit.tabs.source.title": " - Content Source",
   "collection.edit.tabs.source.title": "Редагування зібрання - джерела даних",
 
-
-
   // "collection.edit.template.add-button": "Add",
 
   "collection.edit.template.add-button": "Додати",
@@ -1209,7 +1165,7 @@
 
   // "collection.edit.template.head": "Edit Template Item for Collection \"{{ collection }}\"",
 
-  "collection.edit.template.head": "Редагувати шаблон документа зібрання \"{{ collection }}\"",
+  "collection.edit.template.head": 'Редагувати шаблон документа зібрання "{{ collection }}"',
 
   // "collection.edit.template.label": "Template item",
 
@@ -1226,8 +1182,6 @@
   // "collection.edit.template.title": "Edit Template Item",
 
   "collection.edit.template.title": "Редагувати шаблон документа",
-
-
 
   // "collection.form.abstract": "Short Description",
   "collection.form.abstract": "Короткий опис",
@@ -1253,16 +1207,12 @@
   // "collection.form.title": "Name",
   "collection.form.title": "Ім'я",
 
-
-
   // "collection.listelement.badge": "Collection",
 
   "collection.listelement.badge": "Зібрання",
 
-
   //"home.recent-submissions.head": "Recent Submissions",
   "home.recent-submissions.head": "Нові надходження",
-
 
   //"thumbnail.default.alt": "Thumbnail Image",
   "thumbnail.default.alt": "Ескіз",
@@ -1287,8 +1237,6 @@
   // "thumbnail.person.placeholder": "No Profile Picture Available",
   "thumbnail.person.placeholder": "Зображення профілю відсутне",
 
-
-
   // "collection.page.browse.recent.head": "Recent Submissions",
   "collection.page.browse.recent.head": "Нові надходження",
 
@@ -1308,8 +1256,6 @@
   // "collection.page.news": "News",
   "collection.page.news": "Новини",
 
-
-
   // "collection.select.confirm": "Confirm selected",
   "collection.select.confirm": "Підтвердити вибрані",
 
@@ -1319,15 +1265,11 @@
   // "collection.select.table.title": "Title",
   "collection.select.table.title": "Назва",
 
-
-
   // "collection.source.update.notifications.error.content": "The provided settings have been tested and didn't work.",
   "collection.source.update.notifications.error.content": "Введені налаштування перевірені та не працюють.",
 
   // "collection.source.update.notifications.error.title": "Server Error",
   "collection.source.update.notifications.error.title": "Помилка роботи сервера, трясця його матері",
-
-
 
   // "communityList.tabTitle": "DSpace - Community List",
   "communityList.tabTitle": "Репозитарій - Фонди",
@@ -1337,8 +1279,6 @@
 
   // "communityList.showMore": "Show More",
   "communityList.showMore": "Детальніше",
-
-
 
   // "community.create.head": "Create a Community",
   "community.create.head": "Створити фонд",
@@ -1369,7 +1309,7 @@
   "community.delete.notification.success": "Фонд успішно видалено",
 
   // "community.delete.text": "Are you sure you want to delete community \"{{ dso }}\"",
-  "community.delete.text": "Ви впевнені, що хочете видалити фонд \"{{ dso }}\"",
+  "community.delete.text": 'Ви впевнені, що хочете видалити фонд "{{ dso }}"',
 
   // "community.edit.delete": "Delete this community",
   "community.edit.delete": "Видалити цей фонд",
@@ -1379,7 +1319,6 @@
 
   // "community.edit.breadcrumbs": "Edit Community",
   "community.edit.breadcrumbs": "Редагувати фонд",
-
 
   // "community.edit.logo.label": "Community logo",
   "community.edit.logo.label": "Логотип фонду",
@@ -1402,8 +1341,6 @@
   // "community.edit.logo.upload": "Drop a Community Logo to upload",
   "community.edit.logo.upload": "Виберіть логотип фонду для завантаження",
 
-
-
   // "community.edit.notifications.success": "Successfully edited the Community",
   "community.edit.notifications.success": "Фонд успішно відредаговано",
 
@@ -1417,8 +1354,6 @@
 
   // "community.edit.return": "Return",
   "community.edit.return": "Повернутись",
-
-
 
   // "community.edit.tabs.curate.head": "Curate",
   "community.edit.tabs.curate.head": "Основне/Curate",
@@ -1446,13 +1381,9 @@
 
   "community.edit.tabs.authorizations.title": "Редагування фонду - авторизація",
 
-
-
   // "community.listelement.badge": "Community",
 
   "community.listelement.badge": "Фонд",
-
-
 
   // "comcol-role.edit.no-group": "None",
 
@@ -1470,7 +1401,6 @@
 
   "comcol-role.edit.delete": "Видалити",
 
-
   // "comcol-role.edit.community-admin.name": "Administrators",
 
   "comcol-role.edit.community-admin.name": "Адміністратори",
@@ -1478,7 +1408,6 @@
   // "comcol-role.edit.collection-admin.name": "Administrators",
 
   "comcol-role.edit.collection-admin.name": "Адміністратори",
-
 
   // "comcol-role.edit.community-admin.description": "Community administrators can create sub-communities or collections, and manage or assign management for those sub-communities or collections. In addition, they decide who can submit items to any sub-collections, edit item metadata (after submission), and add (map) existing items from other collections (subject to authorization).",
   // TODO New key - Add a translation
@@ -1488,7 +1417,6 @@
 
   "comcol-role.edit.collection-admin.description": "Адміністратори зібрання вирішують, хто може надсилати документи до зібрання, редагувати метадані документів (після надсилання) і додавати документи з інших зібрань (за умови наданих повноважень).",
 
-
   // "comcol-role.edit.submitters.name": "Submitters",
 
   "comcol-role.edit.submitters.name": "Подавачі/Submitters",
@@ -1496,7 +1424,6 @@
   // "comcol-role.edit.submitters.description": "The E-People and Groups that have permission to submit new items to this collection.",
 
   "comcol-role.edit.submitters.description": "Користувачі та групи у яких є повноваження вносити документи до цього зібрання.",
-
 
   // "comcol-role.edit.item_read.name": "Default item read access",
 
@@ -1510,7 +1437,6 @@
 
   "comcol-role.edit.item_read.anonymous-group": "Для групи Anonymous встановлено права документа на читання.",
 
-
   // "comcol-role.edit.bitstream_read.name": "Доступ на читання для файла",
 
   "comcol-role.edit.bitstream_read.name": "Доступ на читання для файла",
@@ -1523,7 +1449,6 @@
 
   "comcol-role.edit.bitstream_read.anonymous-group": "Для групи Anonymous встановлено права файла на читання",
 
-
   // "comcol-role.edit.editor.name": "Редактори",
 
   "comcol-role.edit.editor.name": "Редактори",
@@ -1531,7 +1456,6 @@
   // "comcol-role.edit.editor.description": "Editors are able to edit the metadata of incoming submissions, and then accept or reject them.",
 
   "comcol-role.edit.editor.description": "Редактори мають повноваження редагувати метадані, приймати та відхиляти їх, зокрема, для документів, що заносяться у репозитарій.",
-
 
   // "comcol-role.edit.finaleditor.name": "Final editors",
 
@@ -1541,7 +1465,6 @@
 
   "comcol-role.edit.finaleditor.description": "Остаточні редактори мають повноваження редагувати метадані, але не мають права відхилити документ.",
 
-
   // "comcol-role.edit.reviewer.name": "Reviewers",
 
   "comcol-role.edit.reviewer.name": "Рецензенти",
@@ -1549,8 +1472,6 @@
   // "comcol-role.edit.reviewer.description": "Reviewers are able to accept or reject incoming submissions. However, they are not able to edit the submission's metadata.",
 
   "comcol-role.edit.reviewer.description": "Рецензенти можуть приймати або відхиляти вхідні документи. Однак вони не можуть редагувати метадані.",
-
-
 
   // "community.form.abstract": "Short Description",
   "community.form.abstract": "Короткий опис",
@@ -1591,7 +1512,6 @@
 
   // "community.sub-community-list.head": "Communities of this Community",
   "community.sub-community-list.head": "Фонди, що знаходяться у цьому фонді",
-
 
   // "cookies.consent.accept-all": "Accept all",
   "cookies.consent.accept-all": "Прийняти все",
@@ -1671,7 +1591,6 @@
   // "cookies.consent.purpose.statistical": "Statistical",
   "cookies.consent.purpose.statistical": "Статичний",
 
-
   // "curation-task.task.checklinks.label":  "Check Links in Metadata",
   "curation-task.task.checklinks.label": "Перевірте посилання у метаданих",
 
@@ -1690,8 +1609,6 @@
 
   // "curation-task.task.vscan.label": "Virus Scan",
   "curation-task.task.vscan.label": "Перевірка на віруси",
-
-
 
   // "curation.form.task-select.label": "Task:",
   "curation.form.task-select.label": "Завдання:",
@@ -1717,8 +1634,6 @@
 
   // "curation.form.handle.hint": "Hint: Enter [your-handle-prefix]/0 to run a task across entire site (not all tasks may support this capability)",
   "curation.form.handle.hint": "Підказка: Введіть [your-handle-prefix]/0 для запуску завдання на весь сайт (не всі види завдань це підтримують)",
-
-
 
   // "dso-selector.create.collection.head": "New collection",
   "dso-selector.create.collection.head": "Нове зібрання",
@@ -1763,8 +1678,6 @@
   // "dso-selector.placeholder": "Search for a {{ type }}",
   "dso-selector.placeholder": "Шукати {{ type }}",
 
-
-
   // "confirmation-modal.export-metadata.header": "Export metadata for {{ dsoName }}",
   "confirmation-modal.export-metadata.header": "Експорт метаданих для {{ dsoName }}",
 
@@ -1778,17 +1691,16 @@
   "confirmation-modal.export-metadata.confirm": "Скасувати",
 
   // "confirmation-modal.delete-eperson.header": "Delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.header": "Видалити користувача \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.header": 'Видалити користувача "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.info": "Are you sure you want to delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.info": "Ви впевнені, що хочете видалити користувача \"{{ dsoName }}\"?",
+  "confirmation-modal.delete-eperson.info": 'Ви впевнені, що хочете видалити користувача "{{ dsoName }}"?',
 
   // "confirmation-modal.delete-eperson.cancel": "Cancel",
   "confirmation-modal.delete-eperson.cancel": "Скасувати",
 
   // "confirmation-modal.delete-eperson.confirm": "Delete",
   "confirmation-modal.delete-eperson.confirm": "Видалити",
-
 
   // "error.bitstream": "Error fetching bitstream",
   "error.bitstream": "Виникла помилка при отриманні файлу",
@@ -1847,12 +1759,8 @@
   // "error.validation.filerequired": "The file upload is mandatory",
   "error.validation.filerequired": "Завантаження файлу є обов'язковим",
 
-
-
   // "file-section.error.header": "Error obtaining files for this item",
   "file-section.error.header": "Помилка отримання файлів для цього документа",
-
-
 
   // "footer.copyright": "copyright © 2002-{{ year }}",
   "footer.copyright": "copyright © 2002-{{ year }}",
@@ -1872,8 +1780,6 @@
 
   // "footer.link.end-user-agreement":"End User Agreement",
   "footer.link.end-user-agreement": "Угода користувача",
-
-
 
   // "forgot-email.form.header": "Forgot Password",
   "forgot-email.form.header": "Забули пароль?",
@@ -1907,8 +1813,6 @@
 
   // "forgot-email.form.error.content": "An error occured when registering the following email address: {{ email }}",
   "forgot-email.form.error.content": "Виникла помилка при реєстрації email: {{ email }}",
-
-
 
   // "forgot-password.title": "Forgot Password",
   "forgot-password.title": "Забули пароль?",
@@ -1954,8 +1858,6 @@
 
   // "forgot-password.form.submit": "Submit password",
   "forgot-password.form.submit": "Надіслати пароль",
-
-
 
   // "form.add": "Add",
   "form.add": "Додати",
@@ -2029,8 +1931,6 @@
   // "form.submit": "Submit",
   "form.submit": "Надіслати",
 
-
-
   // "home.description": "",
   "home.description": "",
 
@@ -2046,8 +1946,6 @@
 
   // "home.top-level-communities.help": "Select a community to browse its collections.",
   "home.top-level-communities.help": "Виберіть фонд, щоб переглянути його зібрання.",
-
-
 
   // "info.end-user-agreement.accept": "I have read and I agree to the End User Agreement",
   "info.end-user-agreement.accept": "Я прочитав та погоджуюсь із користувацькою угодою",
@@ -2082,15 +1980,11 @@
   // "info.privacy.title": "Privacy Statement",
   "info.privacy.title": "Заява про конфіденційність",
 
-
-
   // "item.alerts.private": "This item is private",
   "item.alerts.private": "Доступ до документа закритий",
 
   // "item.alerts.withdrawn": "This item has been withdrawn",
   "item.alerts.withdrawn": "Цей документ було вилучено",
-
-
 
   // "item.edit.authorizations.heading": "With this editor you can view and alter the policies of an item, plus alter policies of individual item components: bundles and bitstreams. Briefly, an item is a container of bundles, and bundles are containers of bitstreams. Containers usually have ADD/REMOVE/READ/WRITE policies, while bitstreams only have READ/WRITE policies.",
   "item.edit.authorizations.heading": "За допомогою цього редактора ви можете переглядати та змінювати політики документа, а також змінювати політики окремих компонентів документа. Документ — це множина пакетів, а пакети — це множина файлів. Контейнери зазвичай мають політики ADD/REMOVE/READ/WRITE, тоді як файли мають лише політики READ/WRITE.",
@@ -2098,15 +1992,11 @@
   // "item.edit.authorizations.title": "Edit item's Policies",
   "item.edit.authorizations.title": "Редагувати політики документа",
 
-
-
   // "item.badge.private": "Private",
   "item.badge.private": "Приватне",
 
   // "item.badge.withdrawn": "Withdrawn",
   "item.badge.withdrawn": "Вилучено",
-
-
 
   // "item.bitstreams.upload.bundle": "Bundle",
   "item.bitstreams.upload.bundle": "контейнер файлів",
@@ -2140,8 +2030,6 @@
 
   // "item.bitstreams.upload.title": "Upload bitstream",
   "item.bitstreams.upload.title": "Завантажити файл",
-
-
 
   // "item.edit.bitstreams.bundle.edit.buttons.upload": "Upload",
   "item.edit.bitstreams.bundle.edit.buttons.upload": "Завантажити",
@@ -2233,8 +2121,6 @@
   // "item.edit.bitstreams.upload-button": "Upload",
   "item.edit.bitstreams.upload-button": "Завантажити",
 
-
-
   // "item.edit.delete.cancel": "Cancel",
   "item.edit.delete.cancel": "Відмінити",
 
@@ -2259,7 +2145,6 @@
   // "item.edit.breadcrumbs": "Edit Item",
   "item.edit.breadcrumbs": "Редагувати документ",
 
-
   // "item.edit.tabs.mapper.head": "Collection Mapper",
   "item.edit.tabs.mapper.head": "Карта зібрання",
 
@@ -2282,7 +2167,7 @@
   "item.edit.item-mapper.head": "Карта документа - прив'язка документа до зібрання",
 
   // "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
-  "item.edit.item-mapper.item": "Документ: \"<b>{{name}}</b>\"",
+  "item.edit.item-mapper.item": 'Документ: "<b>{{name}}</b>"',
 
   // "item.edit.item-mapper.no-search": "Please enter a query to search",
   "item.edit.item-mapper.no-search": "Введіть запит для пошуку",
@@ -2316,8 +2201,6 @@
 
   // "item.edit.item-mapper.tabs.map": "Map new collections",
   "item.edit.item-mapper.tabs.map": "Прив'язати нове зібрання",
-
-
 
   // "item.edit.metadata.add-button": "Add",
   "item.edit.metadata.add-button": "Додати",
@@ -2388,8 +2271,6 @@
   // "item.edit.metadata.save-button": "Save",
   "item.edit.metadata.save-button": "Зберегти",
 
-
-
   // "item.edit.modify.overview.field": "Field",
   "item.edit.modify.overview.field": "Поле",
 
@@ -2398,8 +2279,6 @@
 
   // "item.edit.modify.overview.value": "Value",
   "item.edit.modify.overview.value": "Значення",
-
-
 
   // "item.edit.move.cancel": "Cancel",
   "item.edit.move.cancel": "Відмінити",
@@ -2434,8 +2313,6 @@
   // "item.edit.move.title": "Move item",
   "item.edit.move.title": "Перенести документ",
 
-
-
   // "item.edit.private.cancel": "Cancel",
   "item.edit.private.cancel": "Відмінити",
 
@@ -2453,8 +2330,6 @@
 
   // "item.edit.private.success": "The item is now private",
   "item.edit.private.success": "Доступ до документа закритий",
-
-
 
   // "item.edit.public.cancel": "Cancel",
   "item.edit.public.cancel": "ВІдмінити",
@@ -2474,8 +2349,6 @@
   // "item.edit.public.success": "The item is now public",
   "item.edit.public.success": "Документ тепер загальнодоступний",
 
-
-
   // "item.edit.reinstate.cancel": "Cancel",
   "item.edit.reinstate.cancel": "Відмінити",
 
@@ -2493,8 +2366,6 @@
 
   // "item.edit.reinstate.success": "The item was reinstated successfully",
   "item.edit.reinstate.success": "Документ був успішно відновлений",
-
-
 
   // "item.edit.relationships.discard-button": "Discard",
   "item.edit.relationships.discard-button": "Відмінити",
@@ -2540,8 +2411,6 @@
 
   // "item.edit.relationships.no-entity-type": "Add 'dspace.entity.type' metadata to enable relationships for this item",
   "item.edit.relationships.no-entity-type": "Додайте 'dspace.entity.type' для створення зв'язків для документа",
-
-
 
   // "item.edit.tabs.bitstreams.head": "Bitstreams",
   "item.edit.tabs.bitstreams.head": "Файли",
@@ -2653,8 +2522,6 @@
   // "item.edit.tabs.view.title": "Item Edit -  View",
   "item.edit.tabs.view.title": "Редагування документа - перегляд",
 
-
-
   // "item.edit.withdraw.cancel": "Cancel",
   "item.edit.withdraw.cancel": "Відмінити",
 
@@ -2672,8 +2539,6 @@
 
   // "item.edit.withdraw.success": "The item was withdrawn successfully",
   "item.edit.withdraw.success": "Документ був успішно вилучений",
-
-
 
   // "item.listelement.badge": "Item",
   "item.listelement.badge": "Документ",
@@ -2701,8 +2566,6 @@
 
   // "item.search.title": "DSpace Angular :: Item Search",
   "item.search.title": "Репозитарій :: Пошук документів",
-
-
 
   // "item.page.abstract": "Abstract",
   "item.page.abstract": "Анотація",
@@ -2821,7 +2684,6 @@
   // "item.preview.person.identifier.orcid": "ORCID:",
   "item.preview.person.identifier.orcid": "ORCID:",
 
-
   // "item.select.confirm": "Confirm selected",
   "item.select.confirm": "Підтвердити вибрані",
 
@@ -2836,7 +2698,6 @@
 
   // "item.select.table.title": "Title",
   "item.select.table.title": "Назва",
-
 
   // "item.version.history.empty": "There are no other versions for this item yet.",
   "item.version.history.empty": "Іншої версії цього документу немає.",
@@ -2865,12 +2726,8 @@
   // "item.version.history.table.summary": "Summary",
   "item.version.history.table.summary": "Анотація/Summary",
 
-
-
   // "item.version.notice": "This is not the latest version of this item. The latest version can be found <a href='{{destination}}'>here</a>.",
   "item.version.notice": "Це не остання версія документа. Останню версію можна знайти за покликанням <a href='{{destination}}'>ТУТ</a>.",
-
-
 
   // "journal.listelement.badge": "Journal",
   "journal.listelement.badge": "Видання",
@@ -2899,8 +2756,6 @@
   // "journal.search.title": "DSpace Angular :: Journal Search",
   "journal.search.title": "Репозитарій :: пошук видання",
 
-
-
   // "journalissue.listelement.badge": "Journal Issue",
   "journalissue.listelement.badge": "Випуск видання",
 
@@ -2928,8 +2783,6 @@
   // "journalissue.page.titleprefix": "Journal Issue: ",
   "journalissue.page.titleprefix": "Випуск видання: ",
 
-
-
   // "journalvolume.listelement.badge": "Journal Volume",
   "journalvolume.listelement.badge": "Том видання",
 
@@ -2948,8 +2801,6 @@
 
   // "journalvolume.page.volume": "Volume",
   "journalvolume.page.volume": "Том",
-
-
 
   // "loading.bitstream": "Loading bitstream...",
   "loading.bitstream": "Файл вантажится...",
@@ -3005,8 +2856,6 @@
   // "loading.top-level-communities": "Loading top-level communities...",
   "loading.top-level-communities": "Фонди верхнього рівня вантажаться...",
 
-
-
   // "login.form.email": "Email address",
   "login.form.email": "Email",
 
@@ -3037,8 +2886,6 @@
   // "login.breadcrumbs": "Login",
   "login.breadcrumbs": "Користувач",
 
-
-
   // "logout.form.header": "Log out from DSpace",
   "logout.form.header": "Вийти з репозиторію",
 
@@ -3048,15 +2895,11 @@
   // "logout.title": "Logout",
   "logout.title": "Вийти",
 
-
-
   // "menu.header.admin": "Admin",
   "menu.header.admin": "Адмін",
 
   // "menu.header.image.logo": "Repository logo",
   "menu.header.image.logo": "Логотип репозиторію",
-
-
 
   // "menu.section.access_control": "Access Control",
   "menu.section.access_control": "Контроль доступу",
@@ -3070,12 +2913,8 @@
   // "menu.section.access_control_people": "People",
   "menu.section.access_control_people": "Користувачі",
 
-
-
   // "menu.section.admin_search": "Admin Search",
   "menu.section.admin_search": "Пошук адміністратора",
-
-
 
   // "menu.section.browse_community": "This Community",
   "menu.section.browse_community": "Цей фонд",
@@ -3107,15 +2946,11 @@
   // "menu.section.browse_global_communities_and_collections": "Communities & Collections",
   "menu.section.browse_global_communities_and_collections": "Фонди та зібрання",
 
-
-
   // "menu.section.control_panel": "Control Panel",
   "menu.section.control_panel": "Панель управління",
 
   // "menu.section.curation_task": "Curation Task",
   "menu.section.curation_task": "Поточні завдання",
-
-
 
   // "menu.section.edit": "Edit",
   "menu.section.edit": "Редагувати",
@@ -3128,8 +2963,6 @@
 
   // "menu.section.edit_item": "Item",
   "menu.section.edit_item": "Документ",
-
-
 
   // "menu.section.export": "Export",
   "menu.section.export": "Експорт",
@@ -3145,8 +2978,6 @@
 
   // "menu.section.export_metadata": "Metadata",
   "menu.section.export_metadata": "Метадані",
-
-
 
   // "menu.section.icon.access_control": "Access Control menu section",
   "menu.section.icon.access_control": "Меню контролю доступу",
@@ -3191,8 +3022,6 @@
   // "menu.section.icon.unpin": "Unpin sidebar",
   "menu.section.icon.unpin": "Відкріпити бічну панель",
 
-
-
   // "menu.section.import": "Import",
   "menu.section.import": "Імпорт",
 
@@ -3201,8 +3030,6 @@
 
   // "menu.section.import_metadata": "Metadata",
   "menu.section.import_metadata": "Метадані",
-
-
 
   // "menu.section.new": "New",
   "menu.section.new": "Новий",
@@ -3223,20 +3050,14 @@
 
   "menu.section.new_process": "Процес",
 
-
-
   // "menu.section.pin": "Pin sidebar",
   "menu.section.pin": "Закріпити бічне меню",
 
   // "menu.section.unpin": "Unpin sidebar",
   "menu.section.unpin": "Відкріпити бічне меню",
 
-
-
   // "menu.section.processes": "Processes",
   "menu.section.processes": "Процеси",
-
-
 
   // "menu.section.registries": "Registries",
   "menu.section.registries": "Реєстри",
@@ -3247,15 +3068,11 @@
   // "menu.section.registries_metadata": "Metadata",
   "menu.section.registries_metadata": "Метадані",
 
-
-
   // "menu.section.statistics": "Statistics",
   "menu.section.statistics": "Статистика",
 
   // "menu.section.statistics_task": "Statistics Task",
   "menu.section.statistics_task": "Завдання статистики",
-
-
 
   // "menu.section.toggle.access_control": "Toggle Access Control section",
   "menu.section.toggle.access_control": "Переключити розділ контролю доступу",
@@ -3287,11 +3104,9 @@
   // "menu.section.toggle.statistics_task": "Toggle Statistics Task section",
   "menu.section.toggle.statistics_task": "Переключити розділ статистики",
 
-
   // "menu.section.workflow": "Administer Workflow",
 
   "menu.section.workflow": "Керування процесу подачі документа",
-
 
   // "mydspace.description": "",
   "mydspace.description": "",
@@ -3421,8 +3236,6 @@
   // "mydspace.view-btn": "View",
   "mydspace.view-btn": "Перегляд",
 
-
-
   // "nav.browse.header": "All of DSpace",
   "nav.browse.header": "Пошук за критеріями",
 
@@ -3454,8 +3267,6 @@
 
   "nav.stop-impersonating": "Припиніть видавати себе за користувача",
 
-
-
   // "orgunit.listelement.badge": "Organizational Unit",
   "orgunit.listelement.badge": "Організаціна одиниця",
 
@@ -3481,8 +3292,6 @@
   // "orgunit.page.titleprefix": "Organizational Unit: ",
   "orgunit.page.titleprefix": "Організаціна одиниця: ",
 
-
-
   // "pagination.results-per-page": "Results Per Page",
   "pagination.results-per-page": "Результатів на сторінці",
 
@@ -3494,8 +3303,6 @@
 
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Налаштування сортування",
-
-
 
   // "person.listelement.badge": "Person",
   "person.listelement.badge": "Користувач",
@@ -3540,8 +3347,6 @@
 
   // "person.search.title": "DSpace Angular :: Person Search",
   "person.search.title": "Репозиторій :: Користувацький пошук",
-
-
 
   // "process.new.select-parameters": "Parameters",
   "process.new.select-parameters": "Параметри",
@@ -3600,8 +3405,6 @@
   // "process.new.breadcrumbs": "Create a new process",
   "process.new.breadcrumbs": "Створити новий процес",
 
-
-
   // "process.detail.arguments" : "Arguments",
   "process.detail.arguments": "Аргументи",
 
@@ -3647,8 +3450,6 @@
   // "process.detail.create" : "Create similar process",
   "process.detail.create": "Створіть аналогічний процес",
 
-
-
   // "process.overview.table.finish" : "Finish time",
   "process.overview.table.finish": "Дата завершення",
 
@@ -3675,7 +3476,6 @@
 
   // "process.overview.new": "New",
   "process.overview.new": "Новий",
-
 
   // "profile.breadcrumbs": "Update Profile",
   "profile.breadcrumbs": "Оновити профіль",
@@ -3761,8 +3561,6 @@
   // "profile.title": "Update Profile",
   "profile.title": "Оновити профіль",
 
-
-
   // "project.listelement.badge": "Research Project",
   "project.listelement.badge": "Дослідницький проект",
 
@@ -3797,8 +3595,6 @@
   // "project.search.results.head": "Project Search Results",
   "project.search.results.head": "Результати пошуку за проектом",
 
-
-
   // "publication.listelement.badge": "Publication",
   "publication.listelement.badge": "Публікація",
 
@@ -3828,7 +3624,6 @@
 
   // "publication.search.title": "DSpace Angular :: Publication Search",
   "publication.search.title": "Репозиторій :: пощук публікацій",
-
 
   // "register-email.title": "New user registration",
   "register-email.title": "Реєстрація нового користувача",
@@ -3912,7 +3707,6 @@
 
   "register-page.create-profile.submit.success.head": "Реєстрацію завершено",
 
-
   // "register-page.registration.header": "New user registration",
 
   "register-page.registration.header": "Реєстрація нового користувача",
@@ -3956,8 +3750,6 @@
   // "register-page.registration.error.content": "An error occured when registering the following email address: {{ email }}",
 
   "register-page.registration.error.content": "Виникла помилка при реєстрації email: {{ email }}",
-
-
 
   // "relationships.add.error.relationship-type.content": "No suitable match could be found for relationship type {{ type }} between the two items",
   // TODO New key - Add a translation
@@ -4017,8 +3809,6 @@
 
   // "relationships.isContributorOf": "Contributors",
   "relationships.isContributorOf": "Дописувачі",
-
-
 
   // "resource-policies.add.button": "Add",
 
@@ -4220,8 +4010,6 @@
 
   "resource-policies.table.headers.title.for.collection": "Політики для зібрання",
 
-
-
   // "search.description": "",
   "search.description": "",
 
@@ -4233,7 +4021,6 @@
 
   // "search.breadcrumbs": "Search",
   "search.breadcrumbs": "Шукати",
-
 
   // "search.filters.applied.f.author": "Author",
   "search.filters.applied.f.author": "Автор",
@@ -4279,8 +4066,6 @@
 
   // "search.filters.applied.f.withdrawn": "Withdrawn",
   "search.filters.applied.f.withdrawn": "Вилучено",
-
-
 
   // "search.filters.filter.author.head": "Author",
   "search.filters.filter.author.head": "Автор",
@@ -4420,8 +4205,6 @@
   // "search.filters.filter.submitter.placeholder": "Submitter",
   "search.filters.filter.submitter.placeholder": "Користувач, який надсилає",
 
-
-
   // "search.filters.entityType.JournalIssue": "Journal Issue",
   "search.filters.entityType.JournalIssue": "Випуск видання",
 
@@ -4449,14 +4232,11 @@
   // "search.filters.withdrawn.false": "No",
   "search.filters.withdrawn.false": "Ні",
 
-
   // "search.filters.head": "Filters",
   "search.filters.head": "Фільтри",
 
   // "search.filters.reset": "Reset filters",
   "search.filters.reset": "Скинути фільтри",
-
-
 
   // "search.form.search": "Search",
   "search.form.search": "Пошук",
@@ -4466,8 +4246,6 @@
 
   // "search.form.search_mydspace": "Search MyDSpace",
   "search.form.search_mydspace": "Шукати у своїх документах",
-
-
 
   // "search.results.head": "Search Results",
   "search.results.head": "Результати пошуку",
@@ -4480,8 +4258,6 @@
 
   // "search.results.empty": "Your search returned no results.",
   "search.results.empty": "Ваш пошук не дав результатів.",
-
-
 
   // "search.sidebar.close": "Back to results",
   "search.sidebar.close": "Повернутись до результатів",
@@ -4504,8 +4280,6 @@
   // "search.sidebar.settings.title": "Settings",
   "search.sidebar.settings.title": "Налаштування",
 
-
-
   // "search.view-switch.show-detail": "Show detail",
   "search.view-switch.show-detail": "Показати деталі",
 
@@ -4514,8 +4288,6 @@
 
   // "search.view-switch.show-list": "Show as list",
   "search.view-switch.show-list": "Показати як список",
-
-
 
   // "sorting.ASC": "Ascending",
 
@@ -4533,8 +4305,6 @@
 
   // "sorting.score.DESC": "Relevance",
   "sorting.score.DESC": "Актуальність",
-
-
 
   // "statistics.title": "Statistics",
 
@@ -4580,8 +4350,6 @@
 
   "statistics.table.header.views": "Перегляди",
 
-
-
   // "submission.edit.title": "Edit Submission",
   "submission.edit.title": "Редагувати внесення нового документа",
 
@@ -4611,7 +4379,6 @@
 
   // "submission.general.save-later": "Save for later",
   "submission.general.save-later": "Зберегти на потім",
-
 
   // "submission.import-external.page.title": "Import metadata from an external source",
 
@@ -5062,7 +4829,7 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title.arxiv": "Результати пошуку",
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Would you like to save \"{{ value }}\" as a name variant for this person so you and others can reuse it for future submissions? If you don't you can still use it for this submission.",
-  "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Чи бажаєте ви зберегти \"{{ value }}\" як варіант імені для цього користувача, щоб ви та інші могли повторно використовувати його для майбутніх надсилань? Якщо ви цього не зробите, ви можете використовувати його для цього надсилання.",
+  "submission.sections.describe.relationship-lookup.name-variant.notification.content": 'Чи бажаєте ви зберегти "{{ value }}" як варіант імені для цього користувача, щоб ви та інші могли повторно використовувати його для майбутніх надсилань? Якщо ви цього не зробите, ви можете використовувати його для цього надсилання.',
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Save a new name variant",
   "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Збережіть новий варіант імені",
@@ -5140,8 +4907,6 @@
   // "submission.sections.general.sections_not_valid": "There are incomplete sections.",
   "submission.sections.general.sections_not_valid": "Неповні розділи.",
 
-
-
   // "submission.sections.submit.progressbar.CClicense": "Creative commons license",
 
   "submission.sections.submit.progressbar.CClicense": "СС ліцензії",
@@ -5166,8 +4931,6 @@
 
   // "submission.sections.submit.progressbar.upload": "Upload files",
   "submission.sections.submit.progressbar.upload": "Завантажені файли",
-
-
 
   // "submission.sections.upload.delete.confirm.cancel": "Cancel",
   "submission.sections.upload.delete.confirm.cancel": "Відмінити",
@@ -5240,18 +5003,14 @@
   // "submission.sections.upload.upload-successful": "Upload successful",
   "submission.sections.upload.upload-successful": "Успішно завантажено",
 
-
-
   // "submission.submit.title": "Submission",
   "submission.submit.title": "Надсилання документів",
-
-
 
   // "submission.workflow.generic.delete": "Delete",
   "submission.workflow.generic.delete": "Видалити",
 
   // "submission.workflow.generic.delete-help": "If you would to discard this item, select \"Delete\".  You will then be asked to confirm it.",
-  "submission.workflow.generic.delete-help": "Якщо ви хочете видалити цей елемент, виберіть \"Видалити\". Потім вас попросять підтвердити це.",
+  "submission.workflow.generic.delete-help": 'Якщо ви хочете видалити цей елемент, виберіть "Видалити". Потім вас попросять підтвердити це.',
 
   // "submission.workflow.generic.edit": "Edit",
   "submission.workflow.generic.edit": "Редагувати",
@@ -5265,13 +5024,11 @@
   // "submission.workflow.generic.view-help": "Select this option to view the item's metadata.",
   "submission.workflow.generic.view-help": "Виберіть цю опцію для перегляду метаданих документа.",
 
-
-
   // "submission.workflow.tasks.claimed.approve": "Approve",
   "submission.workflow.tasks.claimed.approve": "Затвердити",
 
   // "submission.workflow.tasks.claimed.approve_help": "If you have reviewed the item and it is suitable for inclusion in the collection, select \"Approve\".",
-  "submission.workflow.tasks.claimed.approve_help": "Якщо ви переглянули документ і він підходить для включення в зібрання, виберіть \"Затвердити\".",
+  "submission.workflow.tasks.claimed.approve_help": 'Якщо ви переглянули документ і він підходить для включення в зібрання, виберіть "Затвердити".',
 
   // "submission.workflow.tasks.claimed.edit": "Edit",
   "submission.workflow.tasks.claimed.edit": "Редагувати",
@@ -5295,15 +5052,13 @@
   "submission.workflow.tasks.claimed.reject.submit": "Відхилити",
 
   // "submission.workflow.tasks.claimed.reject_help": "If you have reviewed the item and found it is <strong>not</strong> suitable for inclusion in the collection, select \"Reject\".  You will then be asked to enter a message indicating why the item is unsuitable, and whether the submitter should change something and resubmit.",
-  "submission.workflow.tasks.claimed.reject_help": "Якщо ви переглянули документ і виявили, що він <strong>не</strong> підходить для включення в зібрання, виберіть \"Відхилити\". Після цього вас попросять ввести інформацію про причину відхилення і чи повинен автор щось змінити та повторно подати.",
+  "submission.workflow.tasks.claimed.reject_help": 'Якщо ви переглянули документ і виявили, що він <strong>не</strong> підходить для включення в зібрання, виберіть "Відхилити". Після цього вас попросять ввести інформацію про причину відхилення і чи повинен автор щось змінити та повторно подати.',
 
   // "submission.workflow.tasks.claimed.return": "Return to pool",
   "submission.workflow.tasks.claimed.return": "Повернути до черги",
 
   // "submission.workflow.tasks.claimed.return_help": "Return the task to the pool so that another user may perform the task.",
   "submission.workflow.tasks.claimed.return_help": "Поверніть завдання до черги, щоб інший користувач міг виконати завдання.",
-
-
 
   // "submission.workflow.tasks.generic.error": "Error occurred during operation...",
   "submission.workflow.tasks.generic.error": "Виникла помилка...",
@@ -5317,8 +5072,6 @@
   // "submission.workflow.tasks.generic.success": "Operation successful",
   "submission.workflow.tasks.generic.success": "Операція пройшла успішно",
 
-
-
   // "submission.workflow.tasks.pool.claim": "Claim",
   "submission.workflow.tasks.pool.claim": "Претензія",
 
@@ -5331,12 +5084,8 @@
   // "submission.workflow.tasks.pool.show-detail": "Show detail",
   "submission.workflow.tasks.pool.show-detail": "Показати деталі",
 
-
-
   // "title": "DSpace",
-  "title": "Репозиторій",
-
-
+  title: "Репозиторій",
 
   // "vocabulary-treeview.header": "Hierarchical tree view",
 
@@ -5366,8 +5115,6 @@
 
   "vocabulary-treeview.tree.description.srsc": "Категорії дослідницьких напрямків",
 
-
-
   // "uploader.browse": "browse",
   "uploader.browse": "перегляд",
 
@@ -5393,12 +5140,8 @@
   // "virtual-metadata.delete-relationship.modal-head": "Select the items for which you want to save the virtual metadata as real metadata",
   "virtual-metadata.delete-relationship.modal-head": "Виберіть документи, для яких ви хочете зберегти віртуальні метадані як справжні метадані",
 
-
-
   // "workflowAdmin.search.results.head": "Administer Workflow",
   "workflowAdmin.search.results.head": "Робочий процес адміністратора",
-
-
 
   // "workflow-item.delete.notification.success.title": "Deleted",
 
@@ -5432,7 +5175,6 @@
 
   "workflow-item.delete.button.confirm": "Видалити",
 
-
   // "workflow-item.send-back.notification.success.title": "Sent back to submitter",
 
   "workflow-item.send-back.notification.success.title": "Відіслати назад до користувача, котрий надіслав цей документ",
@@ -5464,6 +5206,4 @@
   // "workflow-item.send-back.button.confirm": "Send back"
 
   "workflow-item.send-back.button.confirm": "Надіслати назад",
-
-
 }

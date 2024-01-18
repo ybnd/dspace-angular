@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -11,10 +8,7 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { buildPaginatedList } from '../../core/data/paginated-list.model';
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
@@ -46,7 +40,9 @@ describe('ObjectDetailComponent', () => {
     totalPages: 10,
     currentPage: 1,
   });
-  const mockRD = createSuccessfulRemoteDataObject(buildPaginatedList(pageInfo, testObjects));
+  const mockRD = createSuccessfulRemoteDataObject(
+    buildPaginatedList(pageInfo, testObjects),
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -61,9 +57,11 @@ describe('ObjectDetailComponent', () => {
       ],
       declarations: [ObjectDetailComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ObjectDetailComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ObjectDetailComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

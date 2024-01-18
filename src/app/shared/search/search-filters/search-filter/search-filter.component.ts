@@ -1,21 +1,6 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  filter,
-  map,
-  startWith,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
+import { filter, map, startWith, switchMap, take } from 'rxjs/operators';
 
 import { SearchService } from '../../../../core/shared/search/search.service';
 import { SearchConfigurationService } from '../../../../core/shared/search/search-configuration.service';
@@ -87,7 +72,8 @@ export class SearchFilterComponent implements OnInit {
   constructor(
     private filterService: SearchFilterService,
     private searchService: SearchService,
-    @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    private searchConfigService: SearchConfigurationService,
     private sequenceService: SequenceService,
   ) {
     this.sequenceId = this.sequenceService.next();
@@ -185,15 +171,19 @@ export class SearchFilterComponent implements OnInit {
         } else {
           return this.searchConfigService.searchOptions.pipe(
             switchMap((options) => {
-              return this.searchService.getFacetValuesFor(this.filter, 1, options).pipe(
-                filter((RD) => !RD.isLoading),
-                map((valuesRD) => {
-                  return valuesRD.payload?.totalElements > 0;
-                }));
-            },
-            ));
+              return this.searchService
+                .getFacetValuesFor(this.filter, 1, options)
+                .pipe(
+                  filter((RD) => !RD.isLoading),
+                  map((valuesRD) => {
+                    return valuesRD.payload?.totalElements > 0;
+                  }),
+                );
+            }),
+          );
         }
       }),
-      startWith(true));
+      startWith(true),
+    );
   }
 }

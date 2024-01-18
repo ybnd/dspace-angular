@@ -1,9 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { DebugElement } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
@@ -19,16 +16,24 @@ describe('AccessControlArrayFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ CommonModule, FormsModule, SharedBrowseByModule, TranslateModule.forRoot(), NgbDatepickerModule ],
-      declarations: [ AccessControlArrayFormComponent, ToDatePipe  ],
-    })
-      .compileComponents();
+      imports: [
+        CommonModule,
+        FormsModule,
+        SharedBrowseByModule,
+        TranslateModule.forRoot(),
+        NgbDatepickerModule,
+      ],
+      declarations: [AccessControlArrayFormComponent, ToDatePipe],
+    }).compileComponents();
   });
 
   beforeEach(() => {
     fixture = TestBed.createComponent(AccessControlArrayFormComponent);
     component = fixture.componentInstance;
-    component.dropdownOptions = [{ name: 'Option1' }, { name: 'Option2' }] as any;
+    component.dropdownOptions = [
+      { name: 'Option1' },
+      { name: 'Option2' },
+    ] as any;
     component.type = 'item';
     fixture.detectChanges();
   });
@@ -37,8 +42,10 @@ describe('AccessControlArrayFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should have only one empty control access item in the form',  () => {
-    const accessControlItems = fixture.debugElement.queryAll(By.css('.access-control-item'));
+  it('should have only one empty control access item in the form', () => {
+    const accessControlItems = fixture.debugElement.queryAll(
+      By.css('.access-control-item'),
+    );
     expect(accessControlItems.length).toEqual(1);
   });
 
@@ -59,19 +66,19 @@ describe('AccessControlArrayFormComponent', () => {
   });
 
   it('should reset form value', () => {
-    const item = { itemName: 'item1', startDate: '2022-01-01', endDate: '2022-02-01' };
+    const item = {
+      itemName: 'item1',
+      startDate: '2022-01-01',
+      endDate: '2022-02-01',
+    };
     component.addAccessControlItem(item.itemName);
 
     // set value to item1
-    component.accessControlChanged(
-      component.form.accessControls[1],
-      'item1',
-    );
+    component.accessControlChanged(component.form.accessControls[1], 'item1');
 
     component.reset();
     expect(component.form.accessControls[1]?.itemName).toEqual(undefined);
   });
-
 
   it('should display a select dropdown with options', () => {
     component.enable();
@@ -79,7 +86,9 @@ describe('AccessControlArrayFormComponent', () => {
 
     const id = component.form.accessControls[0].id;
 
-    const selectElement: DebugElement = fixture.debugElement.query(By.css(`select#accesscontroloption-${id}`));
+    const selectElement: DebugElement = fixture.debugElement.query(
+      By.css(`select#accesscontroloption-${id}`),
+    );
     expect(selectElement).toBeTruthy();
 
     const options = selectElement.nativeElement.querySelectorAll('option');
@@ -94,11 +103,15 @@ describe('AccessControlArrayFormComponent', () => {
     component.enable();
     fixture.detectChanges();
 
-    const addButton: DebugElement = fixture.debugElement.query(By.css(`button#add-btn-${component.type}`));
+    const addButton: DebugElement = fixture.debugElement.query(
+      By.css(`button#add-btn-${component.type}`),
+    );
     addButton.nativeElement.click();
     fixture.detectChanges();
 
-    const accessControlItems = fixture.debugElement.queryAll(By.css('.access-control-item'));
+    const accessControlItems = fixture.debugElement.queryAll(
+      By.css('.access-control-item'),
+    );
     expect(accessControlItems.length).toEqual(2);
   });
 
@@ -109,11 +122,15 @@ describe('AccessControlArrayFormComponent', () => {
 
     fixture.detectChanges();
 
-    const removeButton: DebugElement[] = fixture.debugElement.queryAll(By.css('button.btn-outline-danger'));
+    const removeButton: DebugElement[] = fixture.debugElement.queryAll(
+      By.css('button.btn-outline-danger'),
+    );
     removeButton[1].nativeElement.click();
     fixture.detectChanges();
 
-    const accessControlItems = fixture.debugElement.queryAll(By.css('.access-control-item'));
+    const accessControlItems = fixture.debugElement.queryAll(
+      By.css('.access-control-item'),
+    );
     expect(accessControlItems.length).toEqual(1);
   });
 });

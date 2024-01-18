@@ -1,7 +1,4 @@
-import {
-  ActionReducerMap,
-  createFeatureSelector,
-} from '@ngrx/store';
+import { ActionReducerMap, createFeatureSelector } from '@ngrx/store';
 
 import {
   submissionObjectReducer,
@@ -12,11 +9,12 @@ import {
  * The Submission State
  */
 export interface SubmissionState {
-  'objects': SubmissionObjectState;
+  objects: SubmissionObjectState;
 }
 
 export const submissionReducers: ActionReducerMap<SubmissionState> = {
   objects: submissionObjectReducer,
 };
 
-export const submissionSelector = createFeatureSelector<SubmissionState>('submission');
+export const submissionSelector =
+  createFeatureSelector<SubmissionState>('submission');

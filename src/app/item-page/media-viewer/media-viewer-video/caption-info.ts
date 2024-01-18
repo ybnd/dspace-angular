@@ -6,6 +6,9 @@
   langLabel: language label
  */
 export class CaptionInfo {
-  constructor(public src: string, public srclang: string, public langLabel: string ) {
-  }
+  constructor(
+    public src: string,
+    public srclang: string,
+    public langLabel: string,
+  ) {}
 }

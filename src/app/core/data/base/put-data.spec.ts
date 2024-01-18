@@ -6,10 +6,7 @@
  * http://www.dspace.org/license/
  */
 
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { getMockRemoteDataBuildService } from '../../../shared/mocks/remote-data-build.service.mock';
 import { getMockRequestService } from '../../../shared/mocks/request.service.mock';
@@ -23,10 +20,7 @@ import { RemoteData } from '../remote-data';
 import { RequestService } from '../request.service';
 import { RequestEntryState } from '../request-entry-state.model';
 import { RestRequestMethod } from '../rest-request-method';
-import {
-  PutData,
-  PutDataImpl,
-} from './put-data';
+import { PutData, PutDataImpl } from './put-data';
 
 /**
  * Tests whether calls to `PutData` methods are correctly patched through in a concrete data service that implements it
@@ -55,7 +49,6 @@ export function testPutDataImplementation(serviceFactory: () => PutData<any>) {
   });
 }
 
-
 const endpoint = 'https://rest.api/core';
 
 class TestService extends PutDataImpl<any> {
@@ -65,10 +58,20 @@ class TestService extends PutDataImpl<any> {
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super(undefined, requestService, rdbService, objectCache, halService, undefined);
+    super(
+      undefined,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      undefined,
+    );
   }
 
-  public getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  public getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath,
+  ): Observable<string> {
     return observableOf(endpoint);
   }
 }
@@ -90,7 +93,6 @@ describe('PutDataImpl', () => {
     halService = new HALEndpointServiceStub('url') as any;
     rdbService = getMockRemoteDataBuildService();
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
@@ -110,20 +112,63 @@ describe('PutDataImpl', () => {
     const statusCodeError = 404;
     const errorMessage = 'not found';
     remoteDataMocks = {
-      RequestPending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.RequestPending, undefined, undefined, undefined),
-      ResponsePending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.ResponsePending, undefined, undefined, undefined),
-      Success: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Success, undefined, payload, statusCodeSuccess),
-      SuccessStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.SuccessStale, undefined, payload, statusCodeSuccess),
-      Error: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Error, errorMessage, undefined, statusCodeError),
-      ErrorStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.ErrorStale, errorMessage, undefined, statusCodeError),
+      RequestPending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.RequestPending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      ResponsePending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ResponsePending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      Success: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Success,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      SuccessStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.SuccessStale,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      Error: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Error,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
+      ErrorStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ErrorStale,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
     };
 
-    return new TestService(
-      requestService,
-      rdbService,
-      objectCache,
-      halService,
-    );
+    return new TestService(requestService, rdbService, objectCache, halService);
   }
 
   beforeEach(() => {
@@ -131,50 +176,60 @@ describe('PutDataImpl', () => {
 
     obj = Object.assign(new DSpaceObject(), {
       uuid: '1698f1d3-be98-4c51-9fd8-6bfedcbd59b7',
-      metadata: {           // recognized properties will be serialized
-        ['dc.title']: [
-          { language: 'en', value: 'some object' },
-        ],
+      metadata: {
+        // recognized properties will be serialized
+        ['dc.title']: [{ language: 'en', value: 'some object' }],
       },
-      data: [ 1, 2, 3, 4 ], // unrecognized properties won't be serialized
+      data: [1, 2, 3, 4], // unrecognized properties won't be serialized
       _links: { self: { href: selfLink } },
     });
 
-
-    buildFromRequestUUIDSpy = spyOn(rdbService, 'buildFromRequestUUID').and.returnValue(observableOf(remoteDataMocks.Success));
+    buildFromRequestUUIDSpy = spyOn(
+      rdbService,
+      'buildFromRequestUUID',
+    ).and.returnValue(observableOf(remoteDataMocks.Success));
   });
 
   describe('put', () => {
     it('should send a PUT request with the serialized object', (done) => {
       service.put(obj).subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.PUT,
-          body: {  // _links are not serialized
-            uuid: obj.uuid,
-            metadata: obj.metadata,
-          },
-        }));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.objectContaining({
+            method: RestRequestMethod.PUT,
+            body: {
+              // _links are not serialized
+              uuid: obj.uuid,
+              metadata: obj.metadata,
+            },
+          }),
+        );
         done();
       });
     });
 
-    it('should send the PUT request to the object\'s self link', (done) => {
+    it("should send the PUT request to the object's self link", (done) => {
       service.put(obj).subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.PUT,
-          href: selfLink,
-        }));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.objectContaining({
+            method: RestRequestMethod.PUT,
+            href: selfLink,
+          }),
+        );
         done();
       });
     });
 
     it('should return the remote data for the sent request', (done) => {
-      service.put(obj).subscribe(out => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-          method: RestRequestMethod.PUT,
-          uuid: requestService.generateRequestId(),
-        }));
-        expect(buildFromRequestUUIDSpy).toHaveBeenCalledWith(requestService.generateRequestId());
+      service.put(obj).subscribe((out) => {
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.objectContaining({
+            method: RestRequestMethod.PUT,
+            uuid: requestService.generateRequestId(),
+          }),
+        );
+        expect(buildFromRequestUUIDSpy).toHaveBeenCalledWith(
+          requestService.generateRequestId(),
+        );
         expect(out).toEqual(remoteDataMocks.Success);
         done();
       });

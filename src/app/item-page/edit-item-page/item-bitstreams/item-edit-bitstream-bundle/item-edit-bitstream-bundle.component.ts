@@ -26,7 +26,6 @@ import { getItemPageRoute } from '../../../item-page-routing-paths';
  * (which means it'll be added to the parents html without a wrapping ds-item-edit-bitstream-bundle element)
  */
 export class ItemEditBitstreamBundleComponent implements OnInit {
-
   /**
    * The view on the bundle information and bitstreams
    */
@@ -68,8 +67,7 @@ export class ItemEditBitstreamBundleComponent implements OnInit {
   constructor(
     protected viewContainerRef: ViewContainerRef,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bundleNameColumn = this.columnSizes.combineColumns(0, 2);

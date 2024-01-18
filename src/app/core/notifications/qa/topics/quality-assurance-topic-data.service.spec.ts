@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -34,13 +31,19 @@ describe('QualityAssuranceTopicDataService', () => {
   let http: HttpClient;
   let comparator: any;
 
-  const endpointURL = 'https://rest.api/rest/api/integration/qualityassurancetopics';
+  const endpointURL =
+    'https://rest.api/rest/api/integration/qualityassurancetopics';
   const requestUUID = '8b3c913a-5a4b-438b-9181-be1a5b4a1c8a';
 
   const pageInfo = new PageInfo();
-  const array = [qualityAssuranceTopicObjectMorePid, qualityAssuranceTopicObjectMoreAbstract];
+  const array = [
+    qualityAssuranceTopicObjectMorePid,
+    qualityAssuranceTopicObjectMoreAbstract,
+  ];
   const paginatedList = buildPaginatedList(pageInfo, array);
-  const qaTopicObjectRD = createSuccessfulRemoteDataObject(qualityAssuranceTopicObjectMorePid);
+  const qaTopicObjectRD = createSuccessfulRemoteDataObject(
+    qualityAssuranceTopicObjectMorePid,
+  );
   const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
 
   beforeEach(() => {
@@ -83,16 +86,18 @@ describe('QualityAssuranceTopicDataService', () => {
     );
 
     spyOn((service as any).findAllData, 'findAll').and.callThrough();
-    spyOn((service as any), 'findById').and.callThrough();
+    spyOn(service as any, 'findById').and.callThrough();
   });
 
   describe('getTopics', () => {
     it('should call findListByHref', (done) => {
-      service.getTopics().subscribe(
-        (res) => {
-          expect((service as any).findAllData.findAll).toHaveBeenCalledWith({}, true, true);
-        },
-      );
+      service.getTopics().subscribe((res) => {
+        expect((service as any).findAllData.findAll).toHaveBeenCalledWith(
+          {},
+          true,
+          true,
+        );
+      });
       done();
     });
 
@@ -107,11 +112,15 @@ describe('QualityAssuranceTopicDataService', () => {
 
   describe('getTopic', () => {
     it('should call findByHref', (done) => {
-      service.getTopic(qualityAssuranceTopicObjectMorePid.id).subscribe(
-        (res) => {
-          expect((service as any).findById).toHaveBeenCalledWith(qualityAssuranceTopicObjectMorePid.id, true, true);
-        },
-      );
+      service
+        .getTopic(qualityAssuranceTopicObjectMorePid.id)
+        .subscribe((res) => {
+          expect((service as any).findById).toHaveBeenCalledWith(
+            qualityAssuranceTopicObjectMorePid.id,
+            true,
+            true,
+          );
+        });
       done();
     });
 
@@ -123,5 +132,4 @@ describe('QualityAssuranceTopicDataService', () => {
       expect(result).toBeObservable(expected);
     });
   });
-
 });

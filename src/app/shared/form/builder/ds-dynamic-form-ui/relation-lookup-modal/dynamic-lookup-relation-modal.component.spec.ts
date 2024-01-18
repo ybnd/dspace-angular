@@ -1,25 +1,11 @@
-import {
-  DebugElement,
-  NgZone,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, NgZone, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  NgbActiveModal,
-  NgbModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  of as observableOf,
-  Subscription,
-} from 'rxjs';
+import { of as observableOf, Subscription } from 'rxjs';
 
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
 import { ExternalSourceDataService } from '../../../../../core/data/external-source-data.service';
@@ -81,16 +67,26 @@ describe('DsDynamicLookupRelationModalComponent', () => {
   const totalExternal = 8;
   const collection: Collection = new Collection();
 
-
   function init() {
-    item = Object.assign(new Item(), { uuid: '7680ca97-e2bd-4398-bfa7-139a8673dc42', metadata: {} });
-    item1 = Object.assign(new Item(), { uuid: 'e1c51c69-896d-42dc-8221-1d5f2ad5516e' });
-    item2 = Object.assign(new Item(), { uuid: 'c8279647-1acc-41ae-b036-951d5f65649b' });
+    item = Object.assign(new Item(), {
+      uuid: '7680ca97-e2bd-4398-bfa7-139a8673dc42',
+      metadata: {},
+    });
+    item1 = Object.assign(new Item(), {
+      uuid: 'e1c51c69-896d-42dc-8221-1d5f2ad5516e',
+    });
+    item2 = Object.assign(new Item(), {
+      uuid: 'c8279647-1acc-41ae-b036-951d5f65649b',
+    });
     testWSI = new WorkspaceItem();
     testWSI.item = createSuccessfulRemoteDataObject$(item);
     testWSI.collection = createSuccessfulRemoteDataObject$(collection);
-    searchResult1 = Object.assign(new ItemSearchResult(), { indexableObject: item1 });
-    searchResult2 = Object.assign(new ItemSearchResult(), { indexableObject: item2 });
+    searchResult1 = Object.assign(new ItemSearchResult(), {
+      indexableObject: item1,
+    });
+    searchResult2 = Object.assign(new ItemSearchResult(), {
+      indexableObject: item2,
+    });
     listID = '6b0c8221-fcb4-47a8-b483-ca32363fffb3';
     selection$ = observableOf([searchResult1, searchResult2]);
     selectableListService = { getSelectableList: () => selection$ };
@@ -105,7 +101,9 @@ describe('DsDynamicLookupRelationModalComponent', () => {
     metadataField = 'dc.contributor.author';
     pSearchOptions = new PaginatedSearchOptions({});
     externalSourceService = jasmine.createSpyObj('externalSourceService', {
-      findAll: createSuccessfulRemoteDataObject$(createPaginatedList(externalSources)),
+      findAll: createSuccessfulRemoteDataObject$(
+        createPaginatedList(externalSources),
+      ),
       findById: createSuccessfulRemoteDataObject$(externalSources[0]),
     });
     lookupRelationService = jasmine.createSpyObj('lookupRelationService', {
@@ -122,36 +120,42 @@ describe('DsDynamicLookupRelationModalComponent', () => {
     init();
     TestBed.configureTestingModule({
       declarations: [DsDynamicLookupRelationModalComponent],
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NgbModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NgbModule,
+      ],
       providers: [
         {
-          provide: SearchConfigurationService, useValue: {
+          provide: SearchConfigurationService,
+          useValue: {
             paginatedSearchOptions: observableOf(pSearchOptions),
           },
         },
         { provide: ExternalSourceDataService, useValue: externalSourceService },
         { provide: LookupRelationService, useValue: lookupRelationService },
         {
-          provide: SelectableListService, useValue: selectableListService,
+          provide: SelectableListService,
+          useValue: selectableListService,
         },
         {
-          provide: RelationshipDataService, useValue: { getNameVariant: () => observableOf(nameVariant) },
+          provide: RelationshipDataService,
+          useValue: { getNameVariant: () => observableOf(nameVariant) },
         },
         { provide: RelationshipTypeDataService, useValue: {} },
         { provide: RemoteDataBuildService, useValue: rdbService },
         {
-          provide: Store, useValue: {
+          provide: Store,
+          useValue: {
             // eslint-disable-next-line no-empty, @typescript-eslint/no-empty-function
-            dispatch: () => {
-            },
+            dispatch: () => {},
           },
         },
         { provide: NgZone, useValue: new NgZone({}) },
         NgbActiveModal,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -192,8 +196,20 @@ describe('DsDynamicLookupRelationModalComponent', () => {
 
     it('should dispatch an AddRelationshipAction for each selected object', () => {
       component.select(searchResult1, searchResult2);
-      const action = new AddRelationshipAction(component.item, searchResult1.indexableObject, relationship.relationshipType, submissionId, nameVariant);
-      const action2 = new AddRelationshipAction(component.item, searchResult2.indexableObject, relationship.relationshipType, submissionId, nameVariant);
+      const action = new AddRelationshipAction(
+        component.item,
+        searchResult1.indexableObject,
+        relationship.relationshipType,
+        submissionId,
+        nameVariant,
+      );
+      const action2 = new AddRelationshipAction(
+        component.item,
+        searchResult2.indexableObject,
+        relationship.relationshipType,
+        submissionId,
+        nameVariant,
+      );
 
       expect((component as any).store.dispatch).toHaveBeenCalledWith(action);
       expect((component as any).store.dispatch).toHaveBeenCalledWith(action2);
@@ -209,21 +225,34 @@ describe('DsDynamicLookupRelationModalComponent', () => {
 
     it('should dispatch an RemoveRelationshipAction for each deselected object', () => {
       component.deselect(searchResult1, searchResult2);
-      const action = new RemoveRelationshipAction(component.item, searchResult1.indexableObject, relationship.relationshipType, submissionId);
-      const action2 = new RemoveRelationshipAction(component.item, searchResult2.indexableObject, relationship.relationshipType, submissionId);
+      const action = new RemoveRelationshipAction(
+        component.item,
+        searchResult1.indexableObject,
+        relationship.relationshipType,
+        submissionId,
+      );
+      const action2 = new RemoveRelationshipAction(
+        component.item,
+        searchResult2.indexableObject,
+        relationship.relationshipType,
+        submissionId,
+      );
 
       expect((component as any).store.dispatch).toHaveBeenCalledWith(action);
       expect((component as any).store.dispatch).toHaveBeenCalledWith(action2);
     });
   });
 
-
   describe('when initialized and is relationship show the list of buttons', () => {
     it('submit button should be disabled', () => {
-      expect(debugElement.query(By.css('.submit')).nativeElement?.disabled).toBeTrue();
+      expect(
+        debugElement.query(By.css('.submit')).nativeElement?.disabled,
+      ).toBeTrue();
     });
     it('discard button should be disabled', () => {
-      expect(debugElement.query(By.css('.discard')).nativeElement?.disabled).toBeTrue();
+      expect(
+        debugElement.query(By.css('.discard')).nativeElement?.disabled,
+      ).toBeTrue();
     });
   });
 
@@ -234,38 +263,46 @@ describe('DsDynamicLookupRelationModalComponent', () => {
       fixture.detectChanges();
     });
     it('submit button should be enabled', () => {
-      expect(debugElement.query(By.css('.submit')).nativeElement?.disabled).toBeFalse();
+      expect(
+        debugElement.query(By.css('.submit')).nativeElement?.disabled,
+      ).toBeFalse();
     });
     it('discard button should be enabled', () => {
-      expect(debugElement.query(By.css('.discard')).nativeElement?.disabled).toBeFalse();
+      expect(
+        debugElement.query(By.css('.discard')).nativeElement?.disabled,
+      ).toBeFalse();
     });
     it('should call submitEv when submit clicked', () => {
-      const submitFunct = spyOn((component as any), 'submitEv');
+      const submitFunct = spyOn(component as any, 'submitEv');
       debugElement.query(By.css('.submit')).nativeElement.click();
       expect(submitFunct).toHaveBeenCalled();
     });
     it('should call discardEv when discard clicked', () => {
-      const discardFunct = spyOn((component as any), 'discardEv');
+      const discardFunct = spyOn(component as any, 'discardEv');
       debugElement.query(By.css('.discard')).nativeElement.click();
       expect(discardFunct).toHaveBeenCalled();
     });
   });
 
-
   describe('when request starts and isPending changes', () => {
-
     beforeEach(() => {
       component.isPending = true;
       fixture.detectChanges();
     });
 
     it('there should show 1 spinner and disable all 3 buttons', () => {
-      expect(debugElement.queryAll(By.css('.spinner-border')).length).toEqual(1);
-      expect(debugElement.query(By.css('.submit')).nativeElement?.disabled).toBeTrue();
-      expect(debugElement.query(By.css('.discard')).nativeElement?.disabled).toBeTrue();
-      expect(debugElement.query(By.css('.close')).nativeElement?.disabled).toBeTrue();
+      expect(debugElement.queryAll(By.css('.spinner-border')).length).toEqual(
+        1,
+      );
+      expect(
+        debugElement.query(By.css('.submit')).nativeElement?.disabled,
+      ).toBeTrue();
+      expect(
+        debugElement.query(By.css('.discard')).nativeElement?.disabled,
+      ).toBeTrue();
+      expect(
+        debugElement.query(By.css('.close')).nativeElement?.disabled,
+      ).toBeTrue();
     });
-
   });
-
 });

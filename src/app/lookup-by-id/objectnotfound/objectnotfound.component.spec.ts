@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -27,11 +23,8 @@ describe('ObjectNotFoundComponent', () => {
   describe('uuid request', () => {
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          TranslateModule.forRoot(),
-        ], providers: [
-          { provide: ActivatedRoute, useValue: activatedRouteStub },
-        ],
+        imports: [TranslateModule.forRoot()],
+        providers: [{ provide: ActivatedRoute, useValue: activatedRouteStub }],
         declarations: [ObjectNotFoundComponent],
         schemas: [NO_ERRORS_SCHEMA],
       }).compileComponents();
@@ -54,12 +47,11 @@ describe('ObjectNotFoundComponent', () => {
     });
   });
 
-  describe( 'legacy handle request', () => {
+  describe('legacy handle request', () => {
     beforeEach(waitForAsync(() => {
       TestBed.configureTestingModule({
-        imports: [
-          TranslateModule.forRoot(),
-        ], providers: [
+        imports: [TranslateModule.forRoot()],
+        providers: [
           { provide: ActivatedRoute, useValue: activatedRouteStubHandle },
         ],
         declarations: [ObjectNotFoundComponent],
@@ -76,8 +68,9 @@ describe('ObjectNotFoundComponent', () => {
     it('should have handle prefix and id', () => {
       expect(comp.id).toEqual(handleId);
       expect(comp.idType).toEqual(handlePrefix);
-      expect(comp.missingItem).toEqual('handle: ' + handlePrefix + '/' + handleId);
+      expect(comp.missingItem).toEqual(
+        'handle: ' + handlePrefix + '/' + handleId,
+      );
     });
   });
-
 });

@@ -1,8 +1,5 @@
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-} from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 /**
  * Returns true if the passed value is null.
@@ -92,7 +89,8 @@ export function hasValue(obj?: any): boolean {
  * Filter items emitted by the source Observable by only emitting those for
  * which hasValue is true
  */
-export const hasValueOperator = () =>
+export const hasValueOperator =
+  () =>
   <T>(source: Observable<T>): Observable<T> =>
     source.pipe(filter((obj: T) => hasValue(obj)));
 
@@ -167,7 +165,8 @@ export function isNotEmpty(obj?: any): boolean {
  * Filter items emitted by the source Observable by only emitting those for
  * which isNotEmpty is true
  */
-export const isNotEmptyOperator = () =>
+export const isNotEmptyOperator =
+  () =>
   <T>(source: Observable<T>): Observable<T> =>
     source.pipe(filter((obj: T) => isNotEmpty(obj)));
 
@@ -177,9 +176,10 @@ export const isNotEmptyOperator = () =>
  * empty arrays. Used to be able to chain array operators
  * on something that may not have a value
  */
-export const ensureArrayHasValue = () =>
+export const ensureArrayHasValue =
+  () =>
   <T>(source: Observable<T[]>): Observable<T[]> =>
-    source.pipe(map((arr: T[]): T[] => Array.isArray(arr) ? arr : []));
+    source.pipe(map((arr: T[]): T[] => (Array.isArray(arr) ? arr : [])));
 
 /**
  * Verifies that a object keys are all empty or not.
@@ -193,8 +193,7 @@ export const ensureArrayHasValue = () =>
  * isObjectEmpty({ name: 'Adam Hawkins', surname : null});  // false
  */
 export function isObjectEmpty(obj?: any): boolean {
-
-  if (typeof(obj) !== 'object') {
+  if (typeof obj !== 'object') {
     return true;
   }
 
@@ -205,4 +204,3 @@ export function isObjectEmpty(obj?: any): boolean {
   }
   return true;
 }
-

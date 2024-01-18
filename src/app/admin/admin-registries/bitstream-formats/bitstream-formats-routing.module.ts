@@ -34,10 +34,6 @@ const BITSTREAMFORMAT_ADD_PATH = 'add';
       },
     ]),
   ],
-  providers: [
-    BitstreamFormatsResolver,
-  ],
+  providers: [BitstreamFormatsResolver],
 })
-export class BitstreamFormatsRoutingModule {
-
-}
+export class BitstreamFormatsRoutingModule {}

@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { ListableObject } from '../listable-object.model';
 
@@ -28,5 +23,6 @@ export class ImportableListItemControlComponent {
   /**
    * Output the object to import
    */
-  @Output() importObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() importObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 }

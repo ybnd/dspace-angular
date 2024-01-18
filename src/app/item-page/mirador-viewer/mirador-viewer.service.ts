@@ -1,15 +1,6 @@
-import {
-  Injectable,
-  isDevMode,
-} from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  last,
-  map,
-  mergeMap,
-  switchMap,
-} from 'rxjs/operators';
+import { filter, last, map, mergeMap, switchMap } from 'rxjs/operators';
 
 import { BitstreamDataService } from '../../core/data/bitstream-data.service';
 import { BundleDataService } from '../../core/data/bundle-data.service';
@@ -27,16 +18,13 @@ import {
 
 @Injectable()
 export class MiradorViewerService {
-
-  LINKS_TO_FOLLOW: FollowLinkConfig<Bitstream>[] = [
-    followLink('format'),
-  ];
+  LINKS_TO_FOLLOW: FollowLinkConfig<Bitstream>[] = [followLink('format')];
 
   /**
    * Returns boolean to hide viewer when running in development mode.
    * Needed until it's possible to embed the viewer in development builds.
    */
-  showEmbeddedViewer (): boolean {
+  showEmbeddedViewer(): boolean {
     return !isDevMode();
   }
 
@@ -48,8 +36,11 @@ export class MiradorViewerService {
    * @param bundleDataService
    * @returns the total image count
    */
-  getImageCount(item: Item, bitstreamDataService: BitstreamDataService, bundleDataService: BundleDataService):
-      Observable<number> {
+  getImageCount(
+    item: Item,
+    bitstreamDataService: BitstreamDataService,
+    bundleDataService: BundleDataService,
+  ): Observable<number> {
     let count = 0;
     return bundleDataService.findAllByItem(item).pipe(
       getFirstCompletedRemoteData(),
@@ -60,30 +51,42 @@ export class MiradorViewerService {
       switchMap((bundles: Bundle[]) => bundles),
       filter((b: Bundle) => this.isIiifBundle(b.name)),
       mergeMap((bundle: Bundle) => {
-        return bitstreamDataService.findAllByItemAndBundleName(item, bundle.name, {
-          currentPage: 1,
-          elementsPerPage: 5,
-        }, true, true, ...this.LINKS_TO_FOLLOW).pipe(
-          getFirstCompletedRemoteData(),
-          map((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
-            return bitstreamsRD.payload;
-          }),
-          map((paginatedList: PaginatedList<Bitstream>) => paginatedList.page),
-          switchMap((bitstreams: Bitstream[]) => bitstreams),
-          switchMap((bitstream: Bitstream) => bitstream.format.pipe(
+        return bitstreamDataService
+          .findAllByItemAndBundleName(
+            item,
+            bundle.name,
+            {
+              currentPage: 1,
+              elementsPerPage: 5,
+            },
+            true,
+            true,
+            ...this.LINKS_TO_FOLLOW,
+          )
+          .pipe(
             getFirstCompletedRemoteData(),
-            map((formatRD: RemoteData<BitstreamFormat>) => {
-              return formatRD.payload;
+            map((bitstreamsRD: RemoteData<PaginatedList<Bitstream>>) => {
+              return bitstreamsRD.payload;
             }),
-            map((format: BitstreamFormat) => {
-              if (format.mimetype.includes('image')) {
-                count++;
-              }
-              return count;
-            }),
-          ),
-          ),
-        );
+            map(
+              (paginatedList: PaginatedList<Bitstream>) => paginatedList.page,
+            ),
+            switchMap((bitstreams: Bitstream[]) => bitstreams),
+            switchMap((bitstream: Bitstream) =>
+              bitstream.format.pipe(
+                getFirstCompletedRemoteData(),
+                map((formatRD: RemoteData<BitstreamFormat>) => {
+                  return formatRD.payload;
+                }),
+                map((format: BitstreamFormat) => {
+                  if (format.mimetype.includes('image')) {
+                    count++;
+                  }
+                  return count;
+                }),
+              ),
+            ),
+          );
       }),
       last(),
     );
@@ -100,5 +103,4 @@ export class MiradorViewerService {
       bundleName === 'BRANDED_PREVIEW'
     );
   }
-
 }

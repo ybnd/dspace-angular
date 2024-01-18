@@ -19,13 +19,14 @@ import { AdminQualityAssuranceTopicsPageResolver } from './admin-quality-assuran
   imports: [
     RouterModule.forChild([
       {
-        canActivate: [ AuthenticatedGuard ],
+        canActivate: [AuthenticatedGuard],
         path: `${QUALITY_ASSURANCE_EDIT_PATH}/:sourceId`,
         component: AdminQualityAssuranceTopicsPageComponent,
         pathMatch: 'full',
         resolve: {
           breadcrumb: QualityAssuranceBreadcrumbResolver,
-          openaireQualityAssuranceTopicsParams: AdminQualityAssuranceTopicsPageResolver,
+          openaireQualityAssuranceTopicsParams:
+            AdminQualityAssuranceTopicsPageResolver,
         },
         data: {
           title: 'admin.quality-assurance.page.title',
@@ -34,13 +35,14 @@ import { AdminQualityAssuranceTopicsPageResolver } from './admin-quality-assuran
         },
       },
       {
-        canActivate: [ AuthenticatedGuard ],
+        canActivate: [AuthenticatedGuard],
         path: `${QUALITY_ASSURANCE_EDIT_PATH}`,
         component: AdminQualityAssuranceSourcePageComponent,
         pathMatch: 'full',
         resolve: {
           breadcrumb: I18nBreadcrumbResolver,
-          openaireQualityAssuranceSourceParams: AdminQualityAssuranceSourcePageResolver,
+          openaireQualityAssuranceSourceParams:
+            AdminQualityAssuranceSourcePageResolver,
           sourceData: SourceDataResolver,
         },
         data: {
@@ -50,13 +52,14 @@ import { AdminQualityAssuranceTopicsPageResolver } from './admin-quality-assuran
         },
       },
       {
-        canActivate: [ AuthenticatedGuard ],
+        canActivate: [AuthenticatedGuard],
         path: `${QUALITY_ASSURANCE_EDIT_PATH}/:sourceId/:topicId`,
         component: AdminQualityAssuranceEventsPageComponent,
         pathMatch: 'full',
         resolve: {
           breadcrumb: QualityAssuranceBreadcrumbResolver,
-          openaireQualityAssuranceEventsParams: AdminQualityAssuranceEventsPageResolver,
+          openaireQualityAssuranceEventsParams:
+            AdminQualityAssuranceEventsPageResolver,
         },
         data: {
           title: 'admin.notifications.event.page.title',
@@ -80,6 +83,4 @@ import { AdminQualityAssuranceTopicsPageResolver } from './admin-quality-assuran
 /**
  * Routing module for the Notifications section of the admin sidebar
  */
-export class AdminNotificationsRoutingModule {
-
-}
+export class AdminNotificationsRoutingModule {}

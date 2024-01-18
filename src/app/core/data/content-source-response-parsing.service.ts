@@ -13,15 +13,22 @@ import { RestRequest } from './rest-request.model';
  * A ResponseParsingService used to parse RawRestResponse coming from the REST API to a ContentSource object
  */
 export class ContentSourceResponseParsingService extends DspaceRestResponseParsingService {
-
   parse(request: RestRequest, data: RawRestResponse): ParsedResponse {
     const payload = data.payload;
 
-    const deserialized = new DSpaceSerializer(ContentSource).deserialize(payload);
+    const deserialized = new DSpaceSerializer(ContentSource).deserialize(
+      payload,
+    );
 
     let metadataConfigs = [];
-    if (payload._embedded && payload._embedded.harvestermetadata && payload._embedded.harvestermetadata.configs) {
-      metadataConfigs = new DSpaceSerializer(MetadataConfig).serializeArray(payload._embedded.harvestermetadata.configs);
+    if (
+      payload._embedded &&
+      payload._embedded.harvestermetadata &&
+      payload._embedded.harvestermetadata.configs
+    ) {
+      metadataConfigs = new DSpaceSerializer(MetadataConfig).serializeArray(
+        payload._embedded.harvestermetadata.configs,
+      );
     }
     deserialized.metadataConfigs = metadataConfigs;
 
@@ -29,5 +36,4 @@ export class ContentSourceResponseParsingService extends DspaceRestResponseParsi
 
     return new ParsedResponse(data.statusCode, deserialized._links.self);
   }
-
 }

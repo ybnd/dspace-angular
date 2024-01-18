@@ -26,17 +26,29 @@ export abstract class ConfigDataService extends IdentifiableDataService<ConfigOb
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ConfigObject>[]): Observable<RemoteData<ConfigObject>> {
-    return super.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow).pipe(
-      getFirstCompletedRemoteData(),
-      map((rd: RemoteData<ConfigObject>) => {
-        if (rd.hasFailed) {
-          throw new Error(`Couldn't retrieve the config`);
-        } else {
-          return rd;
-        }
-      }),
-    );
+  public findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ConfigObject>[]
+  ): Observable<RemoteData<ConfigObject>> {
+    return super
+      .findByHref(
+        href,
+        useCachedVersionIfAvailable,
+        reRequestOnStale,
+        ...linksToFollow,
+      )
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((rd: RemoteData<ConfigObject>) => {
+          if (rd.hasFailed) {
+            throw new Error(`Couldn't retrieve the config`);
+          } else {
+            return rd;
+          }
+        }),
+      );
   }
 
   /**
@@ -52,7 +64,17 @@ export abstract class ConfigDataService extends IdentifiableDataService<ConfigOb
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public findByName(name: string,  useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ConfigObject>[]): Observable<RemoteData<ConfigObject>> {
-    return super.findById(name, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public findByName(
+    name: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ConfigObject>[]
+  ): Observable<RemoteData<ConfigObject>> {
+    return super.findById(
+      name,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

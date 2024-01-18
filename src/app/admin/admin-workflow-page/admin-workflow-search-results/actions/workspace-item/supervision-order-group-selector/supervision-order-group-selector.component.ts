@@ -1,8 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { getFirstCompletedRemoteData } from 'src/app/core/shared/operators';
@@ -27,7 +23,6 @@ import { SupervisionOrderDataService } from '../../../../../../core/supervision-
   templateUrl: './supervision-order-group-selector.component.html',
 })
 export class SupervisionOrderGroupSelectorComponent {
-
   /**
    * The item to perform the actions on
    */
@@ -51,7 +46,8 @@ export class SupervisionOrderGroupSelectorComponent {
   /**
    * Event emitted when a new SupervisionOrder has been created
    */
-  @Output() create: EventEmitter<SupervisionOrder> = new EventEmitter<SupervisionOrder>();
+  @Output() create: EventEmitter<SupervisionOrder> =
+    new EventEmitter<SupervisionOrder>();
 
   constructor(
     public dsoNameService: DSONameService,
@@ -59,7 +55,7 @@ export class SupervisionOrderGroupSelectorComponent {
     private supervisionOrderDataService: SupervisionOrderDataService,
     protected notificationsService: NotificationsService,
     protected translateService: TranslateService,
-  ) { }
+  ) {}
 
   /**
    * Close the modal
@@ -83,20 +79,37 @@ export class SupervisionOrderGroupSelectorComponent {
     if (this.selectedOrderType && this.selectedGroup) {
       const supervisionDataObject = new SupervisionOrder();
       supervisionDataObject.ordertype = this.selectedOrderType;
-      this.supervisionOrderDataService.create(supervisionDataObject, this.itemUUID, this.selectedGroup.uuid, this.selectedOrderType).pipe(
-        getFirstCompletedRemoteData(),
-      ).subscribe((rd: RemoteData<SupervisionOrder>) => {
-        if (rd.state === 'Success') {
-          this.notificationsService.success(this.translateService.get('supervision-group-selector.notification.create.success.title', { name: this.dsoNameService.getName(this.selectedGroup) }));
-          this.create.emit(rd.payload);
-          this.close();
-        } else {
-          this.notificationsService.error(
-            this.translateService.get('supervision-group-selector.notification.create.failure.title'),
-            rd.statusCode === 422 ? this.translateService.get('supervision-group-selector.notification.create.already-existing') : rd.errorMessage);
-        }
-      });
+      this.supervisionOrderDataService
+        .create(
+          supervisionDataObject,
+          this.itemUUID,
+          this.selectedGroup.uuid,
+          this.selectedOrderType,
+        )
+        .pipe(getFirstCompletedRemoteData())
+        .subscribe((rd: RemoteData<SupervisionOrder>) => {
+          if (rd.state === 'Success') {
+            this.notificationsService.success(
+              this.translateService.get(
+                'supervision-group-selector.notification.create.success.title',
+                { name: this.dsoNameService.getName(this.selectedGroup) },
+              ),
+            );
+            this.create.emit(rd.payload);
+            this.close();
+          } else {
+            this.notificationsService.error(
+              this.translateService.get(
+                'supervision-group-selector.notification.create.failure.title',
+              ),
+              rd.statusCode === 422
+                ? this.translateService.get(
+                    'supervision-group-selector.notification.create.already-existing',
+                  )
+                : rd.errorMessage,
+            );
+          }
+        });
     }
   }
-
 }

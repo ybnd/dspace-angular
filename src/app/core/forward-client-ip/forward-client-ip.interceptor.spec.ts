@@ -29,7 +29,13 @@ describe('ForwardClientIpInterceptor', () => {
           useClass: ForwardClientIpInterceptor,
           multi: true,
         },
-        { provide: REQUEST, useValue: { get: () => undefined, connection: { remoteAddress: clientIp } } },
+        {
+          provide: REQUEST,
+          useValue: {
+            get: () => undefined,
+            connection: { remoteAddress: clientIp },
+          },
+        },
       ],
     });
 
@@ -37,12 +43,14 @@ describe('ForwardClientIpInterceptor', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should add an X-Forwarded-For header matching the client\'s IP', () => {
+  it("should add an X-Forwarded-For header matching the client's IP", () => {
     service.get(requestUrl).subscribe((response) => {
       expect(response).toBeTruthy();
     });
 
     const httpRequest = httpMock.expectOne(requestUrl);
-    expect(httpRequest.request.headers.get('X-Forwarded-For')).toEqual(clientIp);
+    expect(httpRequest.request.headers.get('X-Forwarded-For')).toEqual(
+      clientIp,
+    );
   });
 });

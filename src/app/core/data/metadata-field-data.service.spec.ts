@@ -50,7 +50,11 @@ describe('MetadataFieldDataService', () => {
       buildList: createSuccessfulRemoteDataObject$(createPaginatedList([])),
     });
     metadataFieldService = new MetadataFieldDataService(
-      requestService, rdbService, undefined, halService, notificationsService,
+      requestService,
+      rdbService,
+      undefined,
+      halService,
+      notificationsService,
     );
   }
 
@@ -59,7 +63,8 @@ describe('MetadataFieldDataService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new MetadataFieldDataService(null, null, null, null, null);
+    const initService = () =>
+      new MetadataFieldDataService(null, null, null, null, null);
     testCreateDataImplementation(initService);
     testSearchDataImplementation(initService);
     testPutDataImplementation(initService);
@@ -76,15 +81,24 @@ describe('MetadataFieldDataService', () => {
       const expectedOptions = Object.assign(new FindListOptions(), {
         searchParams: [new RequestParam('schema', schema.prefix)],
       });
-      expect(metadataFieldService.searchBy).toHaveBeenCalledWith('bySchema', expectedOptions, true, true);
+      expect(metadataFieldService.searchBy).toHaveBeenCalledWith(
+        'bySchema',
+        expectedOptions,
+        true,
+        true,
+      );
     });
   });
 
   describe('clearRequests', () => {
-    it('should remove requests on the data service\'s endpoint', () => {
-      spyOn(metadataFieldService, 'getBrowseEndpoint').and.returnValue(observableOf(endpoint));
+    it("should remove requests on the data service's endpoint", () => {
+      spyOn(metadataFieldService, 'getBrowseEndpoint').and.returnValue(
+        observableOf(endpoint),
+      );
       metadataFieldService.clearRequests();
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(endpoint);
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        endpoint,
+      );
     });
   });
 });

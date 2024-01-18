@@ -26,7 +26,10 @@ describe('QualityAssuranceTopicsService', () => {
   let restServiceAsAny: any;
 
   const pageInfo = new PageInfo();
-  const array = [ qualityAssuranceTopicObjectMorePid, qualityAssuranceTopicObjectMoreAbstract ];
+  const array = [
+    qualityAssuranceTopicObjectMorePid,
+    qualityAssuranceTopicObjectMoreAbstract,
+  ];
   const paginatedList = buildPaginatedList(pageInfo, array);
   const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
   const elementsPerPage = 3;
@@ -35,7 +38,10 @@ describe('QualityAssuranceTopicsService', () => {
   beforeEach(async () => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: QualityAssuranceTopicDataService, useClass: getMockQualityAssuranceTopicRestService },
+        {
+          provide: QualityAssuranceTopicDataService,
+          useClass: getMockQualityAssuranceTopicRestService,
+        },
         { provide: QualityAssuranceTopicsService, useValue: service },
       ],
     }).compileComponents();
@@ -60,7 +66,9 @@ describe('QualityAssuranceTopicsService', () => {
       };
       service.setSourceId('ENRICH!MORE!ABSTRACT');
       const result = service.getTopics(elementsPerPage, currentPage);
-      expect((service as any).qualityAssuranceTopicRestService.getTopics).toHaveBeenCalledWith(findListOptions);
+      expect(
+        (service as any).qualityAssuranceTopicRestService.getTopics,
+      ).toHaveBeenCalledWith(findListOptions);
     });
 
     it('Should return a paginated list of Quality Assurance topics', () => {

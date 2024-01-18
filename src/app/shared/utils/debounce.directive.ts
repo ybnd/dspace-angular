@@ -8,11 +8,7 @@ import {
 } from '@angular/core';
 import { NgControl } from '@angular/forms';
 import { Subject } from 'rxjs';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  takeUntil,
-} from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
 @Directive({
   selector: '[ngModel][dsDebounce]',
@@ -23,7 +19,6 @@ import {
  */
 // todo: this class is unused, consider removing it instead of fixing lint
 export class DebounceDirective implements OnInit, OnDestroy {
-
   /**
    * Emits a value when nothing has changed in dsDebounce milliseconds
    */
@@ -41,23 +36,24 @@ export class DebounceDirective implements OnInit, OnDestroy {
    */
   private subject: Subject<void> = new Subject<void>();
 
-  constructor(public model: NgControl) {
-  }
+  constructor(public model: NgControl) {}
 
   /**
    * Start listening to changes of the input field's value changes
    * Emit it when the debounceTime is over without new changes
    */
   ngOnInit() {
-    this.model.valueChanges.pipe(
-      debounceTime(this.dsDebounce),
-      distinctUntilChanged(),
-      takeUntil(this.subject),  // todo: check if this is ok
-    ).subscribe((modelValue) => {
-      if (this.model.dirty) {
-        this.onDebounce.emit(modelValue);
-      }
-    });
+    this.model.valueChanges
+      .pipe(
+        debounceTime(this.dsDebounce),
+        distinctUntilChanged(),
+        takeUntil(this.subject), // todo: check if this is ok
+      )
+      .subscribe((modelValue) => {
+        if (this.model.dirty) {
+          this.onDebounce.emit(modelValue);
+        }
+      });
   }
 
   /**

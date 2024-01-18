@@ -1,13 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  NavigationExtras,
-  Router,
-} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { environment } from '../../../../../environments/environment';
@@ -33,19 +25,29 @@ import {
   // templateUrl: '../dso-selector-modal-wrapper.component.html',
   templateUrl: './create-item-parent-selector.component.html',
 })
-export class CreateItemParentSelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class CreateItemParentSelectorComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.ITEM;
   selectorTypes = [DSpaceObjectType.COLLECTION];
   action = SelectorActionType.CREATE;
   header = 'dso-selector.create.item.sub-level';
-  defaultSort = new SortOptions(environment.comcolSelectionSort.sortField, environment.comcolSelectionSort.sortDirection as SortDirection);
+  defaultSort = new SortOptions(
+    environment.comcolSelectionSort.sortField,
+    environment.comcolSelectionSort.sortDirection as SortDirection,
+  );
 
   /**
    * If present this value is used to filter collection list by entity type
    */
   @Input() entityType: string;
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute, private router: Router) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+    private router: Router,
+  ) {
     super(activeModal, route);
   }
 

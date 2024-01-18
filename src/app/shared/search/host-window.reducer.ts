@@ -13,9 +13,11 @@ const initialState: HostWindowState = {
   height: null,
 };
 
-export function hostWindowReducer(state = initialState, action: HostWindowAction): HostWindowState {
+export function hostWindowReducer(
+  state = initialState,
+  action: HostWindowAction,
+): HostWindowState {
   switch (action.type) {
-
     case HostWindowActionTypes.RESIZE: {
       return Object.assign({}, state, action.payload);
     }

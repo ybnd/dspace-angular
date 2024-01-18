@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { Item } from '../../../../core/shared/item.model';
 import { isNotEmpty } from '../../../../shared/empty.util';
@@ -18,7 +14,6 @@ import { getFilterByRelation } from '../../../../shared/utils/relation-query.uti
  * optional search box.
  */
 export class RelatedEntitiesSearchComponent implements OnInit {
-
   /**
    * The type of relationship to fetch items for
    * e.g. 'isAuthorOfPublication'
@@ -54,5 +49,4 @@ export class RelatedEntitiesSearchComponent implements OnInit {
       this.fixedFilter = getFilterByRelation(this.relationType, this.item.id);
     }
   }
-
 }

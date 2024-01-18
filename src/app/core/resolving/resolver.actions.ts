@@ -16,8 +16,8 @@ export const ResolverActionTypes = {
 export class ResolvedAction implements Action {
   type = ResolverActionTypes.RESOLVED;
   payload: {
-    url: string,
-    dso: DSpaceObject
+    url: string;
+    dso: DSpaceObject;
   };
 
   constructor(url: string, dso: DSpaceObject) {

@@ -14,5 +14,4 @@ import { AbstractListableElementComponent } from '../../../../shared/object-coll
 /**
  * The component for displaying a list element for an item of the type Person
  */
-export class PersonListElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class PersonListElementComponent extends AbstractListableElementComponent<Item> {}

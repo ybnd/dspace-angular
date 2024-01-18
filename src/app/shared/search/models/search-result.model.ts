@@ -1,7 +1,4 @@
-import {
-  autoserialize,
-  deserialize,
-} from 'cerialize';
+import { autoserialize, deserialize } from 'cerialize';
 
 import { typedObject } from '../../../core/cache/builders/build-decorators';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
@@ -20,7 +17,10 @@ import { SEARCH_RESULT } from './types/search-result.resource-type';
  * Represents a search result object of a certain (<T>) DSpaceObject
  */
 @typedObject
-export class SearchResult<T extends DSpaceObject> extends ListableObject implements HALResource {
+export class SearchResult<T extends DSpaceObject>
+  extends ListableObject
+  implements HALResource
+{
   static type = SEARCH_RESULT;
 
   /**
@@ -33,13 +33,13 @@ export class SearchResult<T extends DSpaceObject> extends ListableObject impleme
    */
   @excludeFromEquals
   @autoserialize
-    hitHighlights: MetadataMap;
+  hitHighlights: MetadataMap;
 
   /**
    * The {@link HALLink}s for this SearchResult
    */
   @deserialize
-    _links: {
+  _links: {
     self: HALLink;
     indexableObject: HALLink;
   };
@@ -48,7 +48,7 @@ export class SearchResult<T extends DSpaceObject> extends ListableObject impleme
    * The DSpaceObject that was found
    */
   @fieldsForEquals('uuid')
-    indexableObject: T;
+  indexableObject: T;
 
   /**
    * Method that returns as which type of object this object should be rendered

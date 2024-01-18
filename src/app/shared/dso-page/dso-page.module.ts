@@ -17,8 +17,7 @@ const COMPONENTS = [
   DsoEditMenuExpandableSectionComponent,
 ];
 
-const ENTRY_COMPONENTS = [
-];
+const ENTRY_COMPONENTS = [];
 
 const MODULES = [
   TranslateModule,
@@ -27,30 +26,16 @@ const MODULES = [
   NgbTooltipModule,
   NgbDropdownModule,
 ];
-const PROVIDERS = [
-
-];
+const PROVIDERS = [];
 
 @NgModule({
-  imports: [
-    ...MODULES,
-  ],
-  declarations: [
-    ...COMPONENTS,
-    ...ENTRY_COMPONENTS,
-  ],
-  providers: [
-    ...PROVIDERS,
-    ...ENTRY_COMPONENTS,
-  ],
-  exports: [
-    ...COMPONENTS,
-  ],
+  imports: [...MODULES],
+  declarations: [...COMPONENTS, ...ENTRY_COMPONENTS],
+  providers: [...PROVIDERS, ...ENTRY_COMPONENTS],
+  exports: [...COMPONENTS],
 })
 
 /**
  * This module handles all components, providers and modules that are needed for the menu
  */
-export class DsoPageModule {
-
-}
+export class DsoPageModule {}

@@ -7,11 +7,12 @@ import { DynamicSelectModelConfig } from '@ng-dynamic-forms/core/lib/model/selec
 
 import { environment } from '../../../environments/environment';
 
-export const collectionFormEntityTypeSelectionConfig: DynamicSelectModelConfig<string> = {
-  id: 'entityType',
-  name: 'dspace.entity.type',
-  disabled: false,
-};
+export const collectionFormEntityTypeSelectionConfig: DynamicSelectModelConfig<string> =
+  {
+    id: 'entityType',
+    name: 'dspace.entity.type',
+    disabled: false,
+  };
 
 /**
  * The dynamic form fields used for creating/editing a collection

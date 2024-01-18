@@ -1,7 +1,4 @@
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 
@@ -46,51 +43,49 @@ describe('DSOBreadcrumbsService', () => {
     collectionUUID = '91dfa5b5-5440-4fb4-b869-02610342f886';
     communityUUID = '6c0bfa6b-ce82-4bf4-a2a8-fd7682c567e8';
 
-    testCommunity = Object.assign(new Community(),
-      {
-        type: 'community',
-        metadata: {
-          'dc.title': [{ value: 'community' }],
-        },
-        uuid: communityUUID,
-        parentCommunity: observableOf(Object.assign(createSuccessfulRemoteDataObject(undefined), { statusCode: 204 })),
-
-        _links: {
-          parentCommunity: 'site',
-          self: communityPath + communityUUID,
-        },
+    testCommunity = Object.assign(new Community(), {
+      type: 'community',
+      metadata: {
+        'dc.title': [{ value: 'community' }],
       },
-    );
+      uuid: communityUUID,
+      parentCommunity: observableOf(
+        Object.assign(createSuccessfulRemoteDataObject(undefined), {
+          statusCode: 204,
+        }),
+      ),
 
-    testCollection = Object.assign(new Collection(),
-      {
-        type: 'collection',
-        metadata: {
-          'dc.title': [{ value: 'collection' }],
-        },
-        uuid: collectionUUID,
-        parentCommunity: createSuccessfulRemoteDataObject$(testCommunity),
-        _links: {
-          parentCommunity: communityPath + communityUUID,
-          self: communityPath + collectionUUID,
-        },
+      _links: {
+        parentCommunity: 'site',
+        self: communityPath + communityUUID,
       },
-    );
+    });
 
-    testItem = Object.assign(new Item(),
-      {
-        type: 'item',
-        metadata: {
-          'dc.title': [{ value: 'item' }],
-        },
-        uuid: itemUUID,
-        owningCollection: createSuccessfulRemoteDataObject$(testCollection),
-        _links: {
-          owningCollection: collectionPath + collectionUUID,
-          self: itemPath + itemUUID,
-        },
+    testCollection = Object.assign(new Collection(), {
+      type: 'collection',
+      metadata: {
+        'dc.title': [{ value: 'collection' }],
       },
-    );
+      uuid: collectionUUID,
+      parentCommunity: createSuccessfulRemoteDataObject$(testCommunity),
+      _links: {
+        parentCommunity: communityPath + communityUUID,
+        self: communityPath + collectionUUID,
+      },
+    });
+
+    testItem = Object.assign(new Item(), {
+      type: 'item',
+      metadata: {
+        'dc.title': [{ value: 'item' }],
+      },
+      uuid: itemUUID,
+      owningCollection: createSuccessfulRemoteDataObject$(testCollection),
+      _links: {
+        owningCollection: collectionPath + collectionUUID,
+        self: itemPath + itemUUID,
+      },
+    });
 
     dsoNameService = { getName: (dso) => getName(dso) };
   }
@@ -113,13 +108,18 @@ describe('DSOBreadcrumbsService', () => {
 
   describe('getBreadcrumbs', () => {
     it('should return the breadcrumbs based on an Item', () => {
-      const breadcrumbs = service.getBreadcrumbs(testItem, testItem._links.self);
+      const breadcrumbs = service.getBreadcrumbs(
+        testItem,
+        testItem._links.self,
+      );
       const expectedCrumbs = [
         new Breadcrumb(getName(testCommunity), getDSORoute(testCommunity)),
         new Breadcrumb(getName(testCollection), getDSORoute(testCollection)),
         new Breadcrumb(getName(testItem), getDSORoute(testItem)),
       ];
-      getTestScheduler().expectObservable(breadcrumbs).toBe('(a|)', { a: expectedCrumbs });
+      getTestScheduler()
+        .expectObservable(breadcrumbs)
+        .toBe('(a|)', { a: expectedCrumbs });
     });
   });
 

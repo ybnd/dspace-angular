@@ -1,11 +1,5 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -26,7 +20,6 @@ import { getBitstreamFormatsModuleRoute } from '../../admin-registries-routing-p
   templateUrl: './edit-bitstream-format.component.html',
 })
 export class EditBitstreamFormatComponent implements OnInit {
-
   /**
    * The bitstream format wrapped in a remote-data object
    */
@@ -38,8 +31,7 @@ export class EditBitstreamFormatComponent implements OnInit {
     private notificationService: NotificationsService,
     private translateService: TranslateService,
     private bitstreamFormatDataService: BitstreamFormatDataService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.bitstreamFormatRD$ = this.route.data.pipe(
@@ -53,18 +45,26 @@ export class EditBitstreamFormatComponent implements OnInit {
    * When failed, an error  notification will be shown.
    */
   updateFormat(bitstreamFormat: BitstreamFormat) {
-    this.bitstreamFormatDataService.updateBitstreamFormat(bitstreamFormat).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((response: RemoteData<BitstreamFormat>) => {
-      if (response.hasSucceeded) {
-        this.notificationService.success(this.translateService.get('admin.registries.bitstream-formats.edit.success.head'),
-          this.translateService.get('admin.registries.bitstream-formats.edit.success.content'));
-        this.router.navigate([getBitstreamFormatsModuleRoute()]);
-      } else {
-        this.notificationService.error('admin.registries.bitstream-formats.edit.failure.head',
-          'admin.registries.bitstream-formats.create.edit.content');
-      }
-    },
-    );
+    this.bitstreamFormatDataService
+      .updateBitstreamFormat(bitstreamFormat)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((response: RemoteData<BitstreamFormat>) => {
+        if (response.hasSucceeded) {
+          this.notificationService.success(
+            this.translateService.get(
+              'admin.registries.bitstream-formats.edit.success.head',
+            ),
+            this.translateService.get(
+              'admin.registries.bitstream-formats.edit.success.content',
+            ),
+          );
+          this.router.navigate([getBitstreamFormatsModuleRoute()]);
+        } else {
+          this.notificationService.error(
+            'admin.registries.bitstream-formats.edit.failure.head',
+            'admin.registries.bitstream-formats.create.edit.content',
+          );
+        }
+      });
   }
 }

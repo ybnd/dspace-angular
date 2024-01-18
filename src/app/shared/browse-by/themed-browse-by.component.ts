@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import {
@@ -27,7 +22,6 @@ import { BrowseByComponent } from './browse-by.component';
   templateUrl: '../theme-support/themed.component.html',
 })
 export class ThemedBrowseByComponent extends ThemedComponent<BrowseByComponent> {
-
   @Input() title: string;
 
   @Input() parentname: string;
@@ -52,7 +46,8 @@ export class ThemedBrowseByComponent extends ThemedComponent<BrowseByComponent> 
 
   @Output() pageSizeChange: EventEmitter<number> = new EventEmitter();
 
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter();
 
   protected inAndOutputNames: (keyof BrowseByComponent & keyof this)[] = [
     'title',
@@ -75,11 +70,12 @@ export class ThemedBrowseByComponent extends ThemedComponent<BrowseByComponent> 
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/browse-by/browse-by.component.ts`);
+    return import(
+      `../../../themes/${themeName}/app/shared/browse-by/browse-by.component.ts`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./browse-by.component');
   }
-
 }

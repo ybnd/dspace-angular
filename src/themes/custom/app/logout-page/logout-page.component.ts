@@ -9,5 +9,4 @@ import { LogoutPageComponent as BaseComponent } from '../../../../app/logout-pag
   // templateUrl: './logout-page.component.html'
   templateUrl: '../../../../app/logout-page/logout-page.component.html',
 })
-export class LogoutPageComponent extends BaseComponent {
-}
+export class LogoutPageComponent extends BaseComponent {}

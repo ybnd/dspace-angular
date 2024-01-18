@@ -1,8 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { UntypedFormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -17,7 +13,6 @@ import { SearchEvent } from '../eperson-group-list.component';
   templateUrl: './eperson-search-box.component.html',
 })
 export class EpersonSearchBoxComponent {
-
   labelPrefix = 'admin.access-control.epeople.';
 
   /**
@@ -37,20 +32,20 @@ export class EpersonSearchBoxComponent {
   @Output() search: EventEmitter<SearchEvent> = new EventEmitter<SearchEvent>();
 
   constructor(private formBuilder: UntypedFormBuilder) {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       scope: 'metadata',
       query: '',
-    }));
+    });
   }
 
   /**
    * Reset the search form
    */
   reset() {
-    this.searchForm = this.formBuilder.group(({
+    this.searchForm = this.formBuilder.group({
       scope: 'metadata',
       query: '',
-    }));
+    });
   }
 
   /**

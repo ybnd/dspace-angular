@@ -45,7 +45,13 @@ export class AddRelationshipAction implements Action {
     submissionId: string,
     nameVariant?: string,
   ) {
-    this.payload = { item1, item2, relationshipType, submissionId, nameVariant };
+    this.payload = {
+      item1,
+      item2,
+      relationshipType,
+      submissionId,
+      nameVariant,
+    };
   }
 }
 
@@ -76,7 +82,13 @@ export class UpdateRelationshipNameVariantAction implements Action {
     submissionId: string,
     nameVariant?: string,
   ) {
-    this.payload = { item1, item2, relationshipType, submissionId, nameVariant };
+    this.payload = {
+      item1,
+      item2,
+      relationshipType,
+      submissionId,
+      nameVariant,
+    };
   }
 }
 
@@ -94,10 +106,7 @@ export class UpdateRelationshipAction implements Action {
    * @param relationship The relationship
    * @param submissionId The current submissionId
    */
-  constructor(
-    relationship: Relationship,
-    submissionId: string,
-  ) {
+  constructor(relationship: Relationship, submissionId: string) {
     this.payload = { relationship, submissionId };
   }
 }
@@ -133,10 +142,9 @@ export class RemoveRelationshipAction implements Action {
   }
 }
 
-
 /**
  * A type to encompass all RelationshipActions
  */
-export type RelationshipAction
-  = AddRelationshipAction
+export type RelationshipAction =
+  | AddRelationshipAction
   | RemoveRelationshipAction;

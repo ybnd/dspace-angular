@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -57,9 +53,14 @@ describe('MetadataFieldSelectorComponent', () => {
     ];
 
     registryService = jasmine.createSpyObj('registryService', {
-      queryMetadataFields: createSuccessfulRemoteDataObject$(createPaginatedList(metadataFields)),
+      queryMetadataFields: createSuccessfulRemoteDataObject$(
+        createPaginatedList(metadataFields),
+      ),
     });
-    notificationsService = jasmine.createSpyObj('notificationsService', ['error', 'success']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'error',
+      'success',
+    ]);
 
     TestBed.configureTestingModule({
       declarations: [MetadataFieldSelectorComponent, VarDirective],
@@ -91,7 +92,16 @@ describe('MetadataFieldSelectorComponent', () => {
     });
 
     it('should query the registry service for metadata fields and include the schema', () => {
-      expect(registryService.queryMetadataFields).toHaveBeenCalledWith(query, { elementsPerPage: 10, sort: new SortOptions('fieldName', SortDirection.ASC) }, true, false, followLink('schema'));
+      expect(registryService.queryMetadataFields).toHaveBeenCalledWith(
+        query,
+        {
+          elementsPerPage: 10,
+          sort: new SortOptions('fieldName', SortDirection.ASC),
+        },
+        true,
+        false,
+        followLink('schema'),
+      );
     });
   });
 
@@ -101,7 +111,9 @@ describe('MetadataFieldSelectorComponent', () => {
       component.validate().subscribe((result) => {
         expect(result).toBeTrue();
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.invalid-feedback'))).toBeNull();
+        expect(
+          fixture.debugElement.query(By.css('.invalid-feedback')),
+        ).toBeNull();
         done();
       });
     });
@@ -111,14 +123,18 @@ describe('MetadataFieldSelectorComponent', () => {
       component.validate().subscribe((result) => {
         expect(result).toBeFalse();
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('.invalid-feedback'))).toBeTruthy();
+        expect(
+          fixture.debugElement.query(By.css('.invalid-feedback')),
+        ).toBeTruthy();
         done();
       });
     });
 
     describe('when querying the metadata fields returns an error response', () => {
       beforeEach(() => {
-        (registryService.queryMetadataFields as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$('Failed'));
+        (registryService.queryMetadataFields as jasmine.Spy).and.returnValue(
+          createFailedRemoteDataObject$('Failed'),
+        );
       });
 
       it('should return an observable false and show a notification', (done) => {

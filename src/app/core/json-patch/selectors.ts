@@ -1,9 +1,6 @@
 import { MemoizedSelector } from '@ngrx/store';
 
-import {
-  keySelector,
-  subStateSelector,
-} from '../../submission/selectors';
+import { keySelector, subStateSelector } from '../../submission/selectors';
 import { coreSelector } from '../core.selectors';
 import { CoreState } from '../core-state.model';
 import {
@@ -19,8 +16,14 @@ import {
  * @return MemoizedSelector<CoreState, JsonPatchOperationsResourceEntry>
  *     MemoizedSelector
  */
-export function jsonPatchOperationsByResourceType(resourceType: string): MemoizedSelector<CoreState, JsonPatchOperationsResourceEntry> {
-  return keySelector<CoreState, JsonPatchOperationsResourceEntry>(coreSelector,'json/patch', resourceType);
+export function jsonPatchOperationsByResourceType(
+  resourceType: string,
+): MemoizedSelector<CoreState, JsonPatchOperationsResourceEntry> {
+  return keySelector<CoreState, JsonPatchOperationsResourceEntry>(
+    coreSelector,
+    'json/patch',
+    resourceType,
+  );
 }
 
 /**
@@ -33,7 +36,13 @@ export function jsonPatchOperationsByResourceType(resourceType: string): Memoize
  * @return MemoizedSelector<CoreState, JsonPatchOperationsResourceEntry>
  *     MemoizedSelector
  */
-export function jsonPatchOperationsByResourceId(resourceType: string, resourceId: string): MemoizedSelector<CoreState, JsonPatchOperationsEntry> {
-  const resourceTypeSelector  = jsonPatchOperationsByResourceType(resourceType);
-  return subStateSelector<CoreState, JsonPatchOperationsEntry>(resourceTypeSelector, resourceId);
+export function jsonPatchOperationsByResourceId(
+  resourceType: string,
+  resourceId: string,
+): MemoizedSelector<CoreState, JsonPatchOperationsEntry> {
+  const resourceTypeSelector = jsonPatchOperationsByResourceType(resourceType);
+  return subStateSelector<CoreState, JsonPatchOperationsEntry>(
+    resourceTypeSelector,
+    resourceId,
+  );
 }

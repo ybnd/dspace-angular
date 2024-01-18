@@ -1,7 +1,4 @@
-import {
-  Component,
-  Inject,
-} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 import {
   APP_CONFIG,
@@ -23,7 +20,6 @@ import { TruncatableService } from '../../../../../shared/truncatable/truncatabl
  * The component for displaying a list element for an item search result of the type Person
  */
 export class PersonSearchResultListElementComponent extends ItemSearchResultListElementComponent {
-
   public constructor(
     protected truncatableService: TruncatableService,
     public dsoNameService: DSONameService,

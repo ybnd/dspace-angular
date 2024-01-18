@@ -1,8 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-} from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -29,7 +25,10 @@ import {
   styleUrls: ['./scope-selector-modal.component.scss'],
   templateUrl: './scope-selector-modal.component.html',
 })
-export class ScopeSelectorModalComponent extends DSOSelectorModalWrapperComponent implements OnInit {
+export class ScopeSelectorModalComponent
+  extends DSOSelectorModalWrapperComponent
+  implements OnInit
+{
   objectType = DSpaceObjectType.COMMUNITY;
   /**
    * The types of DSO that can be selected from this list
@@ -49,9 +48,15 @@ export class ScopeSelectorModalComponent extends DSOSelectorModalWrapperComponen
   /**
    * Default DSO ordering
    */
-  defaultSort = new SortOptions(environment.comcolSelectionSort.sortField, environment.comcolSelectionSort.sortDirection as SortDirection);
+  defaultSort = new SortOptions(
+    environment.comcolSelectionSort.sortField,
+    environment.comcolSelectionSort.sortDirection as SortDirection,
+  );
 
-  constructor(protected activeModal: NgbActiveModal, protected route: ActivatedRoute) {
+  constructor(
+    protected activeModal: NgbActiveModal,
+    protected route: ActivatedRoute,
+  ) {
     super(activeModal, route);
   }
 

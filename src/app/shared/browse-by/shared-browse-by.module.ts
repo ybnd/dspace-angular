@@ -8,15 +8,10 @@ import { SharedModule } from '../shared.module';
 import { BrowseByComponent } from './browse-by.component';
 import { ThemedBrowseByComponent } from './themed-browse-by.component';
 
-const DECLARATIONS = [
-  BrowseByComponent,
-  ThemedBrowseByComponent,
-];
+const DECLARATIONS = [BrowseByComponent, ThemedBrowseByComponent];
 
 @NgModule({
-  declarations: [
-    ...DECLARATIONS,
-  ],
+  declarations: [...DECLARATIONS],
   imports: [
     ResultsBackButtonModule,
     BrowseByRoutingModule,
@@ -24,8 +19,6 @@ const DECLARATIONS = [
     CommonModule,
     SharedModule,
   ],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  exports: [...DECLARATIONS],
 })
-export class SharedBrowseByModule { }
+export class SharedBrowseByModule {}

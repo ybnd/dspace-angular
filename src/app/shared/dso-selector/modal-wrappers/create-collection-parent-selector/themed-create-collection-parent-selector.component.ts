@@ -11,19 +11,18 @@ import { CreateCollectionParentSelectorComponent } from './create-collection-par
   styleUrls: [],
   templateUrl: '../../../theme-support/themed.component.html',
 })
-export class ThemedCreateCollectionParentSelectorComponent
-  extends ThemedComponent<CreateCollectionParentSelectorComponent> {
-
+export class ThemedCreateCollectionParentSelectorComponent extends ThemedComponent<CreateCollectionParentSelectorComponent> {
   protected getComponentName(): string {
     return 'CreateCollectionParentSelectorComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../themes/${themeName}/app/shared/dso-selector/modal-wrappers/create-collection-parent-selector/create-collection-parent-selector.component`);
+    return import(
+      `../../../../../themes/${themeName}/app/shared/dso-selector/modal-wrappers/create-collection-parent-selector/create-collection-parent-selector.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./create-collection-parent-selector.component');
   }
-
 }

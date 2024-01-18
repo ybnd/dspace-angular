@@ -12,6 +12,4 @@ import { ProfilePageComponent as BaseComponent } from '../../../../app/profile-p
 /**
  * Component for a user to edit their profile information
  */
-export class ProfilePageComponent extends BaseComponent {
-
-}
+export class ProfilePageComponent extends BaseComponent {}

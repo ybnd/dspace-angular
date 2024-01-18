@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { ItemDataService } from '../../../core/data/item-data.service';
@@ -14,32 +11,41 @@ import { AbstractSimpleItemActionComponent } from '../simple-item-action/abstrac
 
 @Component({
   selector: 'ds-item-reinstate',
-  templateUrl: '../simple-item-action/abstract-simple-item-action.component.html',
+  templateUrl:
+    '../simple-item-action/abstract-simple-item-action.component.html',
 })
 /**
  * Component responsible for rendering the Item Reinstate page
  */
 export class ItemReinstateComponent extends AbstractSimpleItemActionComponent {
-
   protected messageKey = 'reinstate';
   protected predicate = (rd: RemoteData<Item>) => !rd.payload.isWithdrawn;
 
-  constructor(protected route: ActivatedRoute,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected itemDataService: ItemDataService,
-              protected translateService: TranslateService) {
-    super(route, router, notificationsService, itemDataService, translateService);
+  constructor(
+    protected route: ActivatedRoute,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected itemDataService: ItemDataService,
+    protected translateService: TranslateService,
+  ) {
+    super(
+      route,
+      router,
+      notificationsService,
+      itemDataService,
+      translateService,
+    );
   }
 
   /**
    * Perform the reinstate action to the item
    */
   performAction() {
-    this.itemDataService.setWithDrawn(this.item, false).pipe(getFirstCompletedRemoteData()).subscribe(
-      (response: RemoteData<Item>) => {
+    this.itemDataService
+      .setWithDrawn(this.item, false)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((response: RemoteData<Item>) => {
         this.processRestResponse(response);
-      },
-    );
+      });
   }
 }

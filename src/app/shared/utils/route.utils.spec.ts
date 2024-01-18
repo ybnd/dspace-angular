@@ -5,12 +5,8 @@ describe('Route Utils', () => {
     root: {
       children: {
         primary: {
-          segments: [
-            { path: 'test' },
-            { path: 'path' },
-          ],
+          segments: [{ path: 'test' }, { path: 'path' }],
         },
-
       },
     },
   };

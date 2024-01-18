@@ -21,11 +21,7 @@ import {
 import { DynamicDateControlValue } from '@ng-dynamic-forms/core/lib/model/dynamic-date-control.model';
 import { DynamicFormControlCondition } from '@ng-dynamic-forms/core/lib/model/misc/dynamic-form-control-relation.model';
 import { Subscription } from 'rxjs';
-import {
-  filter,
-  mergeMap,
-  take,
-} from 'rxjs/operators';
+import { filter, mergeMap, take } from 'rxjs/operators';
 
 import { AccessConditionOption } from '../../../../../core/config/models/config-access-condition-option.model';
 import { SubmissionFormsModel } from '../../../../../core/config/models/config-submission-forms.model';
@@ -73,8 +69,8 @@ import {
   templateUrl: './section-upload-file-edit.component.html',
 })
 export class SubmissionSectionUploadFileEditComponent
-implements OnInit, OnDestroy {
-
+  implements OnInit, OnDestroy
+{
   /**
    * The FormComponent reference
    */
@@ -187,8 +183,7 @@ implements OnInit, OnDestroy {
     private operationsBuilder: JsonPatchOperationsBuilder,
     private operationsService: SubmissionJsonPatchOperationsService,
     private uploadService: SectionUploadService,
-  ) {
-  }
+  ) {}
 
   /**
    * Initialize form model values
@@ -199,9 +194,17 @@ implements OnInit, OnDestroy {
   public initModelData(formModel: DynamicFormControlModel[]) {
     this.fileData.accessConditions.forEach((accessCondition, index) => {
       Array.of('name', 'startDate', 'endDate')
-        .filter((key) => accessCondition.hasOwnProperty(key) && isNotEmpty(accessCondition[key]))
+        .filter(
+          (key) =>
+            accessCondition.hasOwnProperty(key) &&
+            isNotEmpty(accessCondition[key]),
+        )
         .forEach((key) => {
-          const metadataModel: any = this.formBuilderService.findById(key, formModel, index);
+          const metadataModel: any = this.formBuilderService.findById(
+            key,
+            formModel,
+            index,
+          );
           if (metadataModel) {
             if (metadataModel.type === DYNAMIC_FORM_CONTROL_TYPE_DATEPICKER) {
               const date = new Date(accessCondition[key]);
@@ -247,13 +250,21 @@ implements OnInit, OnDestroy {
    * @param control
    *    The [[FormControl]] object
    */
-  public setOptions(model: DynamicFormControlModel, control: UntypedFormControl) {
+  public setOptions(
+    model: DynamicFormControlModel,
+    control: UntypedFormControl,
+  ) {
     let accessCondition: AccessConditionOption = null;
-    this.availableAccessConditionOptions.filter((element) => element.name === control.value)
-      .forEach((element) => accessCondition = element );
+    this.availableAccessConditionOptions
+      .filter((element) => element.name === control.value)
+      .forEach((element) => (accessCondition = element));
     if (isNotEmpty(accessCondition)) {
-      const startDateControl: UntypedFormControl = control.parent.get('startDate') as UntypedFormControl;
-      const endDateControl: UntypedFormControl = control.parent.get('endDate') as UntypedFormControl;
+      const startDateControl: UntypedFormControl = control.parent.get(
+        'startDate',
+      ) as UntypedFormControl;
+      const endDateControl: UntypedFormControl = control.parent.get(
+        'endDate',
+      ) as UntypedFormControl;
 
       // Clear previous state
       startDateControl?.markAsUntouched();
@@ -281,14 +292,17 @@ implements OnInit, OnDestroy {
 
   protected retrieveValueFromField(field: any) {
     const temp = Array.isArray(field) ? field[0] : field;
-    return (temp) ? temp.value : undefined;
+    return temp ? temp.value : undefined;
   }
 
   /**
    * Initialize form model
    */
   protected buildFileEditForm() {
-    const configDescr: FormFieldModel = Object.assign({}, this.configMetadataForm.rows[0].fields[0]);
+    const configDescr: FormFieldModel = Object.assign(
+      {},
+      this.configMetadataForm.rows[0].fields[0],
+    );
     configDescr.repeatable = false;
     const configForm = Object.assign({}, this.configMetadataForm, {
       fields: Object.assign([], this.configMetadataForm.rows[0].fields[0], [
@@ -297,27 +311,40 @@ implements OnInit, OnDestroy {
       ]),
     });
     const formModel: DynamicFormControlModel[] = [];
-    const metadataGroupModelConfig = Object.assign({}, BITSTREAM_METADATA_FORM_GROUP_CONFIG);
-    metadataGroupModelConfig.group = this.formBuilderService.modelFromConfiguration(
-      this.submissionId,
-      configForm,
-      this.collectionId,
-      this.fileData.metadata,
-      this.submissionService.getSubmissionScope(),
+    const metadataGroupModelConfig = Object.assign(
+      {},
+      BITSTREAM_METADATA_FORM_GROUP_CONFIG,
     );
-    formModel.push(new DynamicFormGroupModel(metadataGroupModelConfig, BITSTREAM_METADATA_FORM_GROUP_LAYOUT));
-    const accessConditionTypeModelConfig = Object.assign({}, BITSTREAM_FORM_ACCESS_CONDITION_TYPE_CONFIG);
-    const accessConditionsArrayConfig = Object.assign({}, BITSTREAM_ACCESS_CONDITIONS_FORM_ARRAY_CONFIG);
+    metadataGroupModelConfig.group =
+      this.formBuilderService.modelFromConfiguration(
+        this.submissionId,
+        configForm,
+        this.collectionId,
+        this.fileData.metadata,
+        this.submissionService.getSubmissionScope(),
+      );
+    formModel.push(
+      new DynamicFormGroupModel(
+        metadataGroupModelConfig,
+        BITSTREAM_METADATA_FORM_GROUP_LAYOUT,
+      ),
+    );
+    const accessConditionTypeModelConfig = Object.assign(
+      {},
+      BITSTREAM_FORM_ACCESS_CONDITION_TYPE_CONFIG,
+    );
+    const accessConditionsArrayConfig = Object.assign(
+      {},
+      BITSTREAM_ACCESS_CONDITIONS_FORM_ARRAY_CONFIG,
+    );
     const accessConditionTypeOptions = [];
 
     if (this.collectionPolicyType === POLICY_DEFAULT_WITH_LIST) {
       for (const accessCondition of this.availableAccessConditionOptions) {
-        accessConditionTypeOptions.push(
-          {
-            label: accessCondition.name,
-            value: accessCondition.name,
-          },
-        );
+        accessConditionTypeOptions.push({
+          label: accessCondition.name,
+          value: accessCondition.name,
+        });
       }
       accessConditionTypeModelConfig.options = accessConditionTypeOptions;
 
@@ -327,7 +354,6 @@ implements OnInit, OnDestroy {
       let maxStartDate: DynamicDateControlValue;
       let maxEndDate: DynamicDateControlValue;
       this.availableAccessConditionOptions.forEach((condition) => {
-
         if (condition.hasStartDate) {
           startDateCondition.push({ id: 'name', value: condition.name });
           if (condition.maxStartDate) {
@@ -351,26 +377,62 @@ implements OnInit, OnDestroy {
           }
         }
       });
-      const confStart = { relations: [{ match: MATCH_ENABLED, operator: OR_OPERATOR, when: startDateCondition }] };
-      const confEnd = { relations: [{ match: MATCH_ENABLED, operator: OR_OPERATOR, when: endDateCondition }] };
+      const confStart = {
+        relations: [
+          {
+            match: MATCH_ENABLED,
+            operator: OR_OPERATOR,
+            when: startDateCondition,
+          },
+        ],
+      };
+      const confEnd = {
+        relations: [
+          {
+            match: MATCH_ENABLED,
+            operator: OR_OPERATOR,
+            when: endDateCondition,
+          },
+        ],
+      };
       const hasStartDate = startDateCondition.length > 0;
       const hasEndDate = endDateCondition.length > 0;
 
       accessConditionsArrayConfig.groupFactory = () => {
-        const type = new DynamicSelectModel(accessConditionTypeModelConfig, BITSTREAM_FORM_ACCESS_CONDITION_TYPE_LAYOUT);
-        const startDateConfig = Object.assign({}, BITSTREAM_FORM_ACCESS_CONDITION_START_DATE_CONFIG, confStart);
+        const type = new DynamicSelectModel(
+          accessConditionTypeModelConfig,
+          BITSTREAM_FORM_ACCESS_CONDITION_TYPE_LAYOUT,
+        );
+        const startDateConfig = Object.assign(
+          {},
+          BITSTREAM_FORM_ACCESS_CONDITION_START_DATE_CONFIG,
+          confStart,
+        );
         if (maxStartDate) {
           startDateConfig.max = maxStartDate;
         }
 
-        const endDateConfig = Object.assign({}, BITSTREAM_FORM_ACCESS_CONDITION_END_DATE_CONFIG, confEnd);
+        const endDateConfig = Object.assign(
+          {},
+          BITSTREAM_FORM_ACCESS_CONDITION_END_DATE_CONFIG,
+          confEnd,
+        );
         if (maxEndDate) {
           endDateConfig.max = maxEndDate;
         }
 
-        const startDate = new DynamicDatePickerModel(startDateConfig, BITSTREAM_FORM_ACCESS_CONDITION_START_DATE_LAYOUT);
-        const endDate = new DynamicDatePickerModel(endDateConfig, BITSTREAM_FORM_ACCESS_CONDITION_END_DATE_LAYOUT);
-        const accessConditionGroupConfig = Object.assign({}, BITSTREAM_ACCESS_CONDITION_GROUP_CONFIG);
+        const startDate = new DynamicDatePickerModel(
+          startDateConfig,
+          BITSTREAM_FORM_ACCESS_CONDITION_START_DATE_LAYOUT,
+        );
+        const endDate = new DynamicDatePickerModel(
+          endDateConfig,
+          BITSTREAM_FORM_ACCESS_CONDITION_END_DATE_LAYOUT,
+        );
+        const accessConditionGroupConfig = Object.assign(
+          {},
+          BITSTREAM_ACCESS_CONDITION_GROUP_CONFIG,
+        );
         accessConditionGroupConfig.group = [type];
         if (hasStartDate) {
           accessConditionGroupConfig.group.push(startDate);
@@ -378,15 +440,26 @@ implements OnInit, OnDestroy {
         if (hasEndDate) {
           accessConditionGroupConfig.group.push(endDate);
         }
-        return [new DynamicFormGroupModel(accessConditionGroupConfig, BITSTREAM_ACCESS_CONDITION_GROUP_LAYOUT)];
+        return [
+          new DynamicFormGroupModel(
+            accessConditionGroupConfig,
+            BITSTREAM_ACCESS_CONDITION_GROUP_LAYOUT,
+          ),
+        ];
       };
 
       // Number of access conditions blocks in form
-      accessConditionsArrayConfig.initialCount = isNotEmpty(this.fileData.accessConditions) ? this.fileData.accessConditions.length : 1;
+      accessConditionsArrayConfig.initialCount = isNotEmpty(
+        this.fileData.accessConditions,
+      )
+        ? this.fileData.accessConditions.length
+        : 1;
       formModel.push(
-        new DynamicFormArrayModel(accessConditionsArrayConfig, BITSTREAM_ACCESS_CONDITIONS_FORM_ARRAY_LAYOUT),
+        new DynamicFormArrayModel(
+          accessConditionsArrayConfig,
+          BITSTREAM_ACCESS_CONDITIONS_FORM_ARRAY_LAYOUT,
+        ),
       );
-
     }
     this.initModelData(formModel);
     return formModel;
@@ -398,108 +471,146 @@ implements OnInit, OnDestroy {
   saveBitstreamData() {
     // validate form
     this.formService.validateAllFormFields(this.formRef.formGroup);
-    const saveBitstreamDataSubscription = this.formService.isValid(this.formId).pipe(
-      take(1),
-      filter((isValid) => isValid),
-      mergeMap(() => this.formService.getFormData(this.formId)),
-      take(1),
-      mergeMap((formData: any) => {
-        // collect bitstream metadata
-        Object.keys((formData.metadata))
-          .filter((key) => isNotEmpty(formData.metadata[key]))
-          .forEach((key) => {
-            const metadataKey = key.replace(/_/g, '.');
-            const path = `metadata/${metadataKey}`;
-            this.operationsBuilder.add(this.pathCombiner.getPath(path), formData.metadata[key], true);
-          });
-        Object.keys((this.fileData.metadata))
-          .filter((key) => isNotEmpty(this.fileData.metadata[key]))
-          .filter((key) => hasNoValue(formData.metadata[key]))
-          .filter((key) => this.formMetadata.includes(key))
-          .forEach((key) => {
-            const metadataKey = key.replace(/_/g, '.');
-            const path = `metadata/${metadataKey}`;
-            this.operationsBuilder.remove(this.pathCombiner.getPath(path));
-          });
-        const accessConditionsToSave = [];
-        formData.accessConditions
-          .map((accessConditions) => accessConditions.accessConditionGroup)
-          .filter((accessCondition) => isNotEmpty(accessCondition))
-          .forEach((accessCondition) => {
-            let accessConditionOpt;
+    const saveBitstreamDataSubscription = this.formService
+      .isValid(this.formId)
+      .pipe(
+        take(1),
+        filter((isValid) => isValid),
+        mergeMap(() => this.formService.getFormData(this.formId)),
+        take(1),
+        mergeMap((formData: any) => {
+          // collect bitstream metadata
+          Object.keys(formData.metadata)
+            .filter((key) => isNotEmpty(formData.metadata[key]))
+            .forEach((key) => {
+              const metadataKey = key.replace(/_/g, '.');
+              const path = `metadata/${metadataKey}`;
+              this.operationsBuilder.add(
+                this.pathCombiner.getPath(path),
+                formData.metadata[key],
+                true,
+              );
+            });
+          Object.keys(this.fileData.metadata)
+            .filter((key) => isNotEmpty(this.fileData.metadata[key]))
+            .filter((key) => hasNoValue(formData.metadata[key]))
+            .filter((key) => this.formMetadata.includes(key))
+            .forEach((key) => {
+              const metadataKey = key.replace(/_/g, '.');
+              const path = `metadata/${metadataKey}`;
+              this.operationsBuilder.remove(this.pathCombiner.getPath(path));
+            });
+          const accessConditionsToSave = [];
+          formData.accessConditions
+            .map((accessConditions) => accessConditions.accessConditionGroup)
+            .filter((accessCondition) => isNotEmpty(accessCondition))
+            .forEach((accessCondition) => {
+              let accessConditionOpt;
 
-            this.availableAccessConditionOptions
-              .filter((element) => isNotNull(accessCondition.name) && element.name === accessCondition.name[0].value)
-              .forEach((element) => accessConditionOpt = element);
+              this.availableAccessConditionOptions
+                .filter(
+                  (element) =>
+                    isNotNull(accessCondition.name) &&
+                    element.name === accessCondition.name[0].value,
+                )
+                .forEach((element) => (accessConditionOpt = element));
 
-            if (accessConditionOpt) {
-              const currentAccessCondition = Object.assign({}, accessCondition);
-              currentAccessCondition.name = this.retrieveValueFromField(accessCondition.name);
+              if (accessConditionOpt) {
+                const currentAccessCondition = Object.assign(
+                  {},
+                  accessCondition,
+                );
+                currentAccessCondition.name = this.retrieveValueFromField(
+                  accessCondition.name,
+                );
 
-              /* When start and end date fields are deactivated, their values may be still present in formData,
+                /* When start and end date fields are deactivated, their values may be still present in formData,
               therefore it is necessary to delete them if they're not allowed by the current access condition option. */
-              if (!accessConditionOpt.hasStartDate) {
-                delete currentAccessCondition.startDate;
-              } else if (accessCondition.startDate) {
-                const startDate = this.retrieveValueFromField(accessCondition.startDate);
-                // Clamp the start date to the maximum, if any, since the
-                // datepicker sometimes exceeds it.
-                let startDateDate = new Date(startDate);
-                if (accessConditionOpt.maxStartDate) {
-                  const maxStartDateDate = new Date(accessConditionOpt.maxStartDate);
-                  if (startDateDate > maxStartDateDate) {
-                    startDateDate = maxStartDateDate;
+                if (!accessConditionOpt.hasStartDate) {
+                  delete currentAccessCondition.startDate;
+                } else if (accessCondition.startDate) {
+                  const startDate = this.retrieveValueFromField(
+                    accessCondition.startDate,
+                  );
+                  // Clamp the start date to the maximum, if any, since the
+                  // datepicker sometimes exceeds it.
+                  let startDateDate = new Date(startDate);
+                  if (accessConditionOpt.maxStartDate) {
+                    const maxStartDateDate = new Date(
+                      accessConditionOpt.maxStartDate,
+                    );
+                    if (startDateDate > maxStartDateDate) {
+                      startDateDate = maxStartDateDate;
+                    }
                   }
+                  currentAccessCondition.startDate =
+                    dateToISOFormat(startDateDate);
                 }
-                currentAccessCondition.startDate = dateToISOFormat(startDateDate);
-              }
-              if (!accessConditionOpt.hasEndDate) {
-                delete currentAccessCondition.endDate;
-              } else if (accessCondition.endDate) {
-                const endDate = this.retrieveValueFromField(accessCondition.endDate);
-                // Clamp the end date to the maximum, if any, since the
-                // datepicker sometimes exceeds it.
-                let endDateDate = new Date(endDate);
-                if (accessConditionOpt.maxEndDate) {
-                  const maxEndDateDate = new Date(accessConditionOpt.maxEndDate);
-                  if (endDateDate > maxEndDateDate) {
-                    endDateDate = maxEndDateDate;
+                if (!accessConditionOpt.hasEndDate) {
+                  delete currentAccessCondition.endDate;
+                } else if (accessCondition.endDate) {
+                  const endDate = this.retrieveValueFromField(
+                    accessCondition.endDate,
+                  );
+                  // Clamp the end date to the maximum, if any, since the
+                  // datepicker sometimes exceeds it.
+                  let endDateDate = new Date(endDate);
+                  if (accessConditionOpt.maxEndDate) {
+                    const maxEndDateDate = new Date(
+                      accessConditionOpt.maxEndDate,
+                    );
+                    if (endDateDate > maxEndDateDate) {
+                      endDateDate = maxEndDateDate;
+                    }
                   }
+                  currentAccessCondition.endDate = dateToISOFormat(endDateDate);
                 }
-                currentAccessCondition.endDate = dateToISOFormat(endDateDate);
+                accessConditionsToSave.push(currentAccessCondition);
               }
-              accessConditionsToSave.push(currentAccessCondition);
-            }
-          });
+            });
 
-        if (isNotEmpty(accessConditionsToSave)) {
-          this.operationsBuilder.add(this.pathCombiner.getPath('accessConditions'), accessConditionsToSave, true);
-        }
+          if (isNotEmpty(accessConditionsToSave)) {
+            this.operationsBuilder.add(
+              this.pathCombiner.getPath('accessConditions'),
+              accessConditionsToSave,
+              true,
+            );
+          }
 
-        // dispatch a PATCH request to save metadata
-        return this.operationsService.jsonPatchByResourceID(
-          this.submissionService.getSubmissionObjectLinkName(),
-          this.submissionId,
-          this.pathCombiner.rootElement,
-          this.pathCombiner.subRootElement);
-      }),
-    ).subscribe((result: SubmissionObject[]) => {
-      if (result[0].sections[this.sectionId]) {
-        const uploadSection = (result[0].sections[this.sectionId] as WorkspaceitemSectionUploadObject);
-        Object.keys(uploadSection.files)
-          .filter((key) => uploadSection.files[key].uuid === this.fileId)
-          .forEach((key) => this.uploadService.updateFileData(
-            this.submissionId, this.sectionId, this.fileId, uploadSection.files[key]),
+          // dispatch a PATCH request to save metadata
+          return this.operationsService.jsonPatchByResourceID(
+            this.submissionService.getSubmissionObjectLinkName(),
+            this.submissionId,
+            this.pathCombiner.rootElement,
+            this.pathCombiner.subRootElement,
           );
-      }
-      this.isSaving = false;
-      this.activeModal.close();
-    });
+        }),
+      )
+      .subscribe((result: SubmissionObject[]) => {
+        if (result[0].sections[this.sectionId]) {
+          const uploadSection = result[0].sections[
+            this.sectionId
+          ] as WorkspaceitemSectionUploadObject;
+          Object.keys(uploadSection.files)
+            .filter((key) => uploadSection.files[key].uuid === this.fileId)
+            .forEach((key) =>
+              this.uploadService.updateFileData(
+                this.submissionId,
+                this.sectionId,
+                this.fileId,
+                uploadSection.files[key],
+              ),
+            );
+        }
+        this.isSaving = false;
+        this.activeModal.close();
+      });
     this.subscriptions.push(saveBitstreamDataSubscription);
   }
 
   private unsubscribeAll() {
-    this.subscriptions.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subscriptions
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
-
 }

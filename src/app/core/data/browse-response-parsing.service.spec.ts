@@ -19,7 +19,6 @@ class TestService extends BrowseResponseParsingService {
 describe('BrowseResponseParsingService', () => {
   let service: TestService;
 
-
   beforeEach(() => {
     service = new TestService(getMockObjectCacheService());
   });

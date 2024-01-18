@@ -8,7 +8,7 @@ import { ThemedSubmissionImportExternalComponent } from '../submission/import-ex
   imports: [
     RouterModule.forChild([
       {
-        canActivate: [ AuthenticatedGuard ],
+        canActivate: [AuthenticatedGuard],
         path: '',
         component: ThemedSubmissionImportExternalComponent,
         pathMatch: 'full',
@@ -18,8 +18,6 @@ import { ThemedSubmissionImportExternalComponent } from '../submission/import-ex
       },
     ]),
   ],
-  providers: [ ],
+  providers: [],
 })
-export class ImportExternalRoutingModule {
-
-}
+export class ImportExternalRoutingModule {}

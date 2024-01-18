@@ -20,7 +20,10 @@ import { QualityAssuranceTopicState } from './qa/topics/quality-assurance-topics
  * @param {AppState} state Top level state.
  * @return {SuggestionNotificationsState}
  */
-const _getNotificationsState = createFeatureSelector<SuggestionNotificationsState>('suggestionNotifications');
+const _getNotificationsState =
+  createFeatureSelector<SuggestionNotificationsState>(
+    'suggestionNotifications',
+  );
 
 // Quality Assurance topics
 // ----------------------------------------------------------------------------
@@ -30,8 +33,14 @@ const _getNotificationsState = createFeatureSelector<SuggestionNotificationsStat
  * @function qualityAssuranceTopicsStateSelector
  * @return {QualityAssuranceTopicState}
  */
-export function qualityAssuranceTopicsStateSelector(): MemoizedSelector<SuggestionNotificationsState, QualityAssuranceTopicState> {
-  return subStateSelector<SuggestionNotificationsState,QualityAssuranceTopicState>(suggestionNotificationsSelector, 'qaTopic');
+export function qualityAssuranceTopicsStateSelector(): MemoizedSelector<
+  SuggestionNotificationsState,
+  QualityAssuranceTopicState
+> {
+  return subStateSelector<
+    SuggestionNotificationsState,
+    QualityAssuranceTopicState
+  >(suggestionNotificationsSelector, 'qaTopic');
 }
 
 /**
@@ -39,8 +48,14 @@ export function qualityAssuranceTopicsStateSelector(): MemoizedSelector<Suggesti
  * @function qualityAssuranceTopicsObjectSelector
  * @return {QualityAssuranceTopicObject[]}
  */
-export function qualityAssuranceTopicsObjectSelector(): MemoizedSelector<SuggestionNotificationsState, QualityAssuranceTopicObject[]> {
-  return subStateSelector<SuggestionNotificationsState, QualityAssuranceTopicObject[]>(qualityAssuranceTopicsStateSelector(), 'topics');
+export function qualityAssuranceTopicsObjectSelector(): MemoizedSelector<
+  SuggestionNotificationsState,
+  QualityAssuranceTopicObject[]
+> {
+  return subStateSelector<
+    SuggestionNotificationsState,
+    QualityAssuranceTopicObject[]
+  >(qualityAssuranceTopicsStateSelector(), 'topics');
 }
 
 /**
@@ -48,7 +63,8 @@ export function qualityAssuranceTopicsObjectSelector(): MemoizedSelector<Suggest
  * @function isQualityAssuranceTopicsLoadedSelector
  * @return {boolean}
  */
-export const isQualityAssuranceTopicsLoadedSelector = createSelector(_getNotificationsState,
+export const isQualityAssuranceTopicsLoadedSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaTopic.loaded,
 );
 
@@ -57,7 +73,8 @@ export const isQualityAssuranceTopicsLoadedSelector = createSelector(_getNotific
  * @function isDeduplicationSetsProcessingSelector
  * @return {boolean}
  */
-export const isQualityAssuranceTopicsProcessingSelector = createSelector(_getNotificationsState,
+export const isQualityAssuranceTopicsProcessingSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaTopic.processing,
 );
 
@@ -66,7 +83,8 @@ export const isQualityAssuranceTopicsProcessingSelector = createSelector(_getNot
  * @function getQualityAssuranceTopicsTotalPagesSelector
  * @return {number}
  */
-export const getQualityAssuranceTopicsTotalPagesSelector = createSelector(_getNotificationsState,
+export const getQualityAssuranceTopicsTotalPagesSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaTopic.totalPages,
 );
 
@@ -75,7 +93,8 @@ export const getQualityAssuranceTopicsTotalPagesSelector = createSelector(_getNo
  * @function getQualityAssuranceTopicsCurrentPageSelector
  * @return {number}
  */
-export const getQualityAssuranceTopicsCurrentPageSelector = createSelector(_getNotificationsState,
+export const getQualityAssuranceTopicsCurrentPageSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaTopic.currentPage,
 );
 
@@ -84,7 +103,8 @@ export const getQualityAssuranceTopicsCurrentPageSelector = createSelector(_getN
  * @function getQualityAssuranceTopicsTotalsSelector
  * @return {number}
  */
-export const getQualityAssuranceTopicsTotalsSelector = createSelector(_getNotificationsState,
+export const getQualityAssuranceTopicsTotalsSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaTopic.totalElements,
 );
 
@@ -96,8 +116,14 @@ export const getQualityAssuranceTopicsTotalsSelector = createSelector(_getNotifi
  * @function qualityAssuranceSourceStateSelector
  * @return {QualityAssuranceSourceState}
  */
-export function qualityAssuranceSourceStateSelector(): MemoizedSelector<SuggestionNotificationsState, QualityAssuranceSourceState> {
-  return subStateSelector<SuggestionNotificationsState,QualityAssuranceSourceState>(suggestionNotificationsSelector, 'qaSource');
+export function qualityAssuranceSourceStateSelector(): MemoizedSelector<
+  SuggestionNotificationsState,
+  QualityAssuranceSourceState
+> {
+  return subStateSelector<
+    SuggestionNotificationsState,
+    QualityAssuranceSourceState
+  >(suggestionNotificationsSelector, 'qaSource');
 }
 
 /**
@@ -105,8 +131,14 @@ export function qualityAssuranceSourceStateSelector(): MemoizedSelector<Suggesti
  * @function qualityAssuranceSourceObjectSelector
  * @return {QualityAssuranceSourceObject[]}
  */
-export function qualityAssuranceSourceObjectSelector(): MemoizedSelector<SuggestionNotificationsState, QualityAssuranceSourceObject[]> {
-  return subStateSelector<SuggestionNotificationsState, QualityAssuranceSourceObject[]>(qualityAssuranceSourceStateSelector(), 'source');
+export function qualityAssuranceSourceObjectSelector(): MemoizedSelector<
+  SuggestionNotificationsState,
+  QualityAssuranceSourceObject[]
+> {
+  return subStateSelector<
+    SuggestionNotificationsState,
+    QualityAssuranceSourceObject[]
+  >(qualityAssuranceSourceStateSelector(), 'source');
 }
 
 /**
@@ -114,7 +146,8 @@ export function qualityAssuranceSourceObjectSelector(): MemoizedSelector<Suggest
  * @function isQualityAssuranceSourceLoadedSelector
  * @return {boolean}
  */
-export const isQualityAssuranceSourceLoadedSelector = createSelector(_getNotificationsState,
+export const isQualityAssuranceSourceLoadedSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaSource.loaded,
 );
 
@@ -123,7 +156,8 @@ export const isQualityAssuranceSourceLoadedSelector = createSelector(_getNotific
  * @function isDeduplicationSetsProcessingSelector
  * @return {boolean}
  */
-export const isQualityAssuranceSourceProcessingSelector = createSelector(_getNotificationsState,
+export const isQualityAssuranceSourceProcessingSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaSource.processing,
 );
 
@@ -132,7 +166,8 @@ export const isQualityAssuranceSourceProcessingSelector = createSelector(_getNot
  * @function getQualityAssuranceSourceTotalPagesSelector
  * @return {number}
  */
-export const getQualityAssuranceSourceTotalPagesSelector = createSelector(_getNotificationsState,
+export const getQualityAssuranceSourceTotalPagesSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaSource.totalPages,
 );
 
@@ -141,7 +176,8 @@ export const getQualityAssuranceSourceTotalPagesSelector = createSelector(_getNo
  * @function getQualityAssuranceSourceCurrentPageSelector
  * @return {number}
  */
-export const getQualityAssuranceSourceCurrentPageSelector = createSelector(_getNotificationsState,
+export const getQualityAssuranceSourceCurrentPageSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaSource.currentPage,
 );
 
@@ -150,6 +186,7 @@ export const getQualityAssuranceSourceCurrentPageSelector = createSelector(_getN
  * @function getQualityAssuranceSourceTotalsSelector
  * @return {number}
  */
-export const getQualityAssuranceSourceTotalsSelector = createSelector(_getNotificationsState,
+export const getQualityAssuranceSourceTotalsSelector = createSelector(
+  _getNotificationsState,
   (state: SuggestionNotificationsState) => state.qaSource.totalElements,
 );

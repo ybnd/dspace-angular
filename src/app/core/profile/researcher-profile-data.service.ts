@@ -1,24 +1,11 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  Operation,
-  ReplaceOperation,
-} from 'fast-json-patch';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  find,
-  map,
-  mergeMap,
-} from 'rxjs/operators';
+import { Operation, ReplaceOperation } from 'fast-json-patch';
+import { Observable, of as observableOf } from 'rxjs';
+import { find, map, mergeMap } from 'rxjs/operators';
 
-import {
-  hasValue,
-  isEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { createFailedRemoteDataObject$ } from '../../shared/remote-data.utils';
 import {
@@ -28,24 +15,12 @@ import {
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
-import {
-  CreateData,
-  CreateDataImpl,
-} from '../data/base/create-data';
+import { CreateData, CreateDataImpl } from '../data/base/create-data';
 import { dataService } from '../data/base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from '../data/base/delete-data';
+import { DeleteData, DeleteDataImpl } from '../data/base/delete-data';
 import { IdentifiableDataService } from '../data/base/identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from '../data/base/patch-data';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../data/base/search-data';
+import { PatchData, PatchDataImpl } from '../data/base/patch-data';
+import { SearchData, SearchDataImpl } from '../data/base/search-data';
 import { DefaultChangeAnalyzer } from '../data/default-change-analyzer.service';
 import { FindListOptions } from '../data/find-list-options.model';
 import { ItemDataService } from '../data/item-data.service';
@@ -67,7 +42,14 @@ import { RESEARCHER_PROFILE } from './model/researcher-profile.resource-type';
  */
 @Injectable()
 @dataService(RESEARCHER_PROFILE)
-export class ResearcherProfileDataService extends IdentifiableDataService<ResearcherProfile> implements CreateData<ResearcherProfile>, SearchData<ResearcherProfile>, PatchData<ResearcherProfile>, DeleteData<ResearcherProfile> {
+export class ResearcherProfileDataService
+  extends IdentifiableDataService<ResearcherProfile>
+  implements
+    CreateData<ResearcherProfile>,
+    SearchData<ResearcherProfile>,
+    PatchData<ResearcherProfile>,
+    DeleteData<ResearcherProfile>
+{
   private createData: CreateDataImpl<ResearcherProfile>;
   private searchData: SearchDataImpl<ResearcherProfile>;
   private patchData: PatchDataImpl<ResearcherProfile>;
@@ -83,12 +65,52 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
     protected comparator: DefaultChangeAnalyzer<ResearcherProfile>,
     protected itemService: ItemDataService,
   ) {
-    super('profiles', requestService, rdbService, objectCache, halService, 10 * 1000);
+    super(
+      'profiles',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      10 * 1000,
+    );
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.patchData = new PatchDataImpl<ResearcherProfile>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.patchData = new PatchDataImpl<ResearcherProfile>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -96,7 +118,9 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    *
    * @param item
    */
-  public findByRelatedItem(item: Item): Observable<RemoteData<ResearcherProfile>> {
+  public findByRelatedItem(
+    item: Item,
+  ): Observable<RemoteData<ResearcherProfile>> {
     const profileId = item.firstMetadata('dspace.object.owner')?.authority;
     if (isEmpty(profileId)) {
       return createFailedRemoteDataObject$();
@@ -110,11 +134,17 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    *
    * @param researcherProfile the profile to find for
    */
-  public findRelatedItemId(researcherProfile: ResearcherProfile): Observable<string> {
-    const relatedItem$ = researcherProfile.item ? researcherProfile.item : this.itemService.findByHref(researcherProfile._links.item.href, false);
+  public findRelatedItemId(
+    researcherProfile: ResearcherProfile,
+  ): Observable<string> {
+    const relatedItem$ = researcherProfile.item
+      ? researcherProfile.item
+      : this.itemService.findByHref(researcherProfile._links.item.href, false);
     return relatedItem$.pipe(
       getFirstCompletedRemoteData(),
-      map((itemRD: RemoteData<Item>) => (itemRD.hasSucceeded && itemRD.payload) ? itemRD.payload.id : null),
+      map((itemRD: RemoteData<Item>) =>
+        itemRD.hasSucceeded && itemRD.payload ? itemRD.payload.id : null,
+      ),
     );
   }
 
@@ -124,7 +154,10 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    * @param researcherProfile the profile to update
    * @param visible the visibility value to set
    */
-  public setVisibility(researcherProfile: ResearcherProfile, visible: boolean): Observable<RemoteData<ResearcherProfile>> {
+  public setVisibility(
+    researcherProfile: ResearcherProfile,
+    visible: boolean,
+  ): Observable<RemoteData<ResearcherProfile>> {
     const replaceOperation: ReplaceOperation<boolean> = {
       path: '/visible',
       op: 'replace',
@@ -138,7 +171,9 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    * Creates a researcher profile starting from an external source URI
    * @param sourceUri URI of source item of researcher profile.
    */
-  public createFromExternalSource(sourceUri: string): Observable<RemoteData<ResearcherProfile>> {
+  public createFromExternalSource(
+    sourceUri: string,
+  ): Observable<RemoteData<ResearcherProfile>> {
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
     headers = headers.append('Content-Type', 'text/uri-list');
@@ -147,13 +182,22 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
     const requestId = this.requestService.generateRequestId();
     const href$ = this.halService.getEndpoint(this.getLinkPath());
 
-    href$.pipe(
-      find((href: string) => hasValue(href)),
-      map((href: string) => this.buildHrefWithParams(href, [], followLink('item'))),
-    ).subscribe((endpoint: string) => {
-      const request = new PostRequest(requestId, endpoint, sourceUri, options);
-      this.requestService.send(request);
-    });
+    href$
+      .pipe(
+        find((href: string) => hasValue(href)),
+        map((href: string) =>
+          this.buildHrefWithParams(href, [], followLink('item')),
+        ),
+      )
+      .subscribe((endpoint: string) => {
+        const request = new PostRequest(
+          requestId,
+          endpoint,
+          sourceUri,
+          options,
+        );
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId, followLink('item'));
   }
@@ -163,7 +207,9 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    * Emits null if the researcher profile doesn't exist after sending out the request
    * @param sourceUri
    */
-  createFromExternalSourceAndReturnRelatedItemId(sourceUri: string): Observable<string> {
+  createFromExternalSourceAndReturnRelatedItemId(
+    sourceUri: string,
+  ): Observable<string> {
     return this.createFromExternalSource(sourceUri).pipe(
       getFirstCompletedRemoteData(),
       mergeMap((rd: RemoteData<ResearcherProfile>) => {
@@ -176,26 +222,48 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
     );
   }
 
-
   /**
    * Create a new object on the server, and store the response in the object cache
    *
    * @param object    The object to create
    * @param params    Array with additional params to combine with query string
    */
-  public create(object?: ResearcherProfile, ...params: RequestParam[]): Observable<RemoteData<ResearcherProfile>> {
+  public create(
+    object?: ResearcherProfile,
+    ...params: RequestParam[]
+  ): Observable<RemoteData<ResearcherProfile>> {
     if (isEmpty(object)) {
       object = new ResearcherProfile();
     }
     return this.createData.create(object, ...params);
   }
 
-  searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<ResearcherProfile>[]): Observable<RemoteData<PaginatedList<ResearcherProfile>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<ResearcherProfile>[]
+  ): Observable<RemoteData<PaginatedList<ResearcherProfile>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
-  getSearchByHref?(searchMethod: string, options?: FindListOptions, ...linksToFollow: FollowLinkConfig<ResearcherProfile>[]): Observable<string> {
-    return this.searchData.getSearchByHref(searchMethod, options, ...linksToFollow);
+  getSearchByHref?(
+    searchMethod: string,
+    options?: FindListOptions,
+    ...linksToFollow: FollowLinkConfig<ResearcherProfile>[]
+  ): Observable<string> {
+    return this.searchData.getSearchByHref(
+      searchMethod,
+      options,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -210,7 +278,9 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    * Return a list of operations representing the difference between an object and its latest value in the cache.
    * @param object  the object to resolve to a list of patch operations
    */
-  public createPatchFromCache(object: ResearcherProfile): Observable<Operation[]> {
+  public createPatchFromCache(
+    object: ResearcherProfile,
+  ): Observable<Operation[]> {
     return this.patchData.createPatchFromCache(object);
   }
 
@@ -219,7 +289,10 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    * @param {T} object The object to send a patch request for
    * @param {Operation[]} operations The patch operations to be performed
    */
-  public patch(object: ResearcherProfile, operations: Operation[]): Observable<RemoteData<ResearcherProfile>> {
+  public patch(
+    object: ResearcherProfile,
+    operations: Operation[],
+  ): Observable<RemoteData<ResearcherProfile>> {
     return this.patchData.patch(object, operations);
   }
 
@@ -228,7 +301,9 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    * The patch is derived from the differences between the given object and its version in the object cache
    * @param {DSpaceObject} object The given object
    */
-  public update(object: ResearcherProfile): Observable<RemoteData<ResearcherProfile>> {
+  public update(
+    object: ResearcherProfile,
+  ): Observable<RemoteData<ResearcherProfile>> {
     return this.patchData.update(object);
   }
 
@@ -240,7 +315,10 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  public delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
@@ -253,8 +331,10 @@ export class ResearcherProfileDataService extends IdentifiableDataService<Resear
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
-
 }

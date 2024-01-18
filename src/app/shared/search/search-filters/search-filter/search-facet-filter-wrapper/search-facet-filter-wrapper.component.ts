@@ -1,9 +1,4 @@
-import {
-  Component,
-  Injector,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import { GenericConstructor } from '../../../../../core/shared/generic-constructor';
@@ -50,8 +45,7 @@ export class SearchFacetFilterWrapperComponent implements OnInit {
    */
   objectInjector: Injector;
 
-  constructor(private injector: Injector) {
-  }
+  constructor(private injector: Injector) {}
 
   /**
    * Initialize and add the filter config to the injector
@@ -60,9 +54,21 @@ export class SearchFacetFilterWrapperComponent implements OnInit {
     this.searchFilter = this.getSearchFilter();
     this.objectInjector = Injector.create({
       providers: [
-        { provide: FILTER_CONFIG, useFactory: () => (this.filterConfig), deps: [] },
-        { provide: IN_PLACE_SEARCH, useFactory: () => (this.inPlaceSearch), deps: [] },
-        { provide: REFRESH_FILTER, useFactory: () => (this.refreshFilters), deps: [] },
+        {
+          provide: FILTER_CONFIG,
+          useFactory: () => this.filterConfig,
+          deps: [],
+        },
+        {
+          provide: IN_PLACE_SEARCH,
+          useFactory: () => this.inPlaceSearch,
+          deps: [],
+        },
+        {
+          provide: REFRESH_FILTER,
+          useFactory: () => this.refreshFilters,
+          deps: [],
+        },
       ],
       parent: this.injector,
     });

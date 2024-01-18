@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { distinctUntilChanged, map, switchMap, take } from 'rxjs/operators';
 
-import {
-  hasValue,
-  isNotEmptyOperator,
-} from '../../shared/empty.util';
+import { hasValue, isNotEmptyOperator } from '../../shared/empty.util';
 import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
@@ -19,10 +11,7 @@ import { ExternalSource } from '../shared/external-source.model';
 import { ExternalSourceEntry } from '../shared/external-source-entry.model';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { IdentifiableDataService } from './base/identifiable-data.service';
-import {
-  SearchData,
-  SearchDataImpl,
-} from './base/search-data';
+import { SearchData, SearchDataImpl } from './base/search-data';
 import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
@@ -32,7 +21,10 @@ import { RequestService } from './request.service';
  * A service handling all external source requests
  */
 @Injectable()
-export class ExternalSourceDataService extends IdentifiableDataService<ExternalSource> implements SearchData<ExternalSource> {
+export class ExternalSourceDataService
+  extends IdentifiableDataService<ExternalSource>
+  implements SearchData<ExternalSource>
+{
   private searchData: SearchData<ExternalSource>;
 
   constructor(
@@ -41,9 +33,22 @@ export class ExternalSourceDataService extends IdentifiableDataService<ExternalS
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('externalsources', requestService, rdbService, objectCache, halService);
+    super(
+      'externalsources',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -51,7 +56,10 @@ export class ExternalSourceDataService extends IdentifiableDataService<ExternalS
    * @param options
    * @param linkPath
    */
-  getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath,
+  ): Observable<string> {
     return this.halService.getEndpoint(linkPath);
   }
 
@@ -77,11 +85,19 @@ export class ExternalSourceDataService extends IdentifiableDataService<ExternalS
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  getExternalSourceEntries(externalSourceId: string, searchOptions?: PaginatedSearchOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ExternalSourceEntry>[]): Observable<RemoteData<PaginatedList<ExternalSourceEntry>>> {
+  getExternalSourceEntries(
+    externalSourceId: string,
+    searchOptions?: PaginatedSearchOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ExternalSourceEntry>[]
+  ): Observable<RemoteData<PaginatedList<ExternalSourceEntry>>> {
     const href$ = this.getEntriesEndpoint(externalSourceId).pipe(
       isNotEmptyOperator(),
       distinctUntilChanged(),
-      map((endpoint: string) => hasValue(searchOptions) ? searchOptions.toRestUrl(endpoint) : endpoint),
+      map((endpoint: string) =>
+        hasValue(searchOptions) ? searchOptions.toRestUrl(endpoint) : endpoint,
+      ),
       take(1),
     );
 
@@ -89,7 +105,13 @@ export class ExternalSourceDataService extends IdentifiableDataService<ExternalS
 
     return this.hasCachedErrorResponse(href$).pipe(
       switchMap((hasCachedErrorResponse) => {
-        return this.findListByHref(href$, undefined, !hasCachedErrorResponse, reRequestOnStale, ...linksToFollow as any);
+        return this.findListByHref(
+          href$,
+          undefined,
+          !hasCachedErrorResponse,
+          reRequestOnStale,
+          ...(linksToFollow as any),
+        );
       }),
     ) as any;
   }
@@ -108,7 +130,19 @@ export class ExternalSourceDataService extends IdentifiableDataService<ExternalS
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  public searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<ExternalSource>[]): Observable<RemoteData<PaginatedList<ExternalSource>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<ExternalSource>[]
+  ): Observable<RemoteData<PaginatedList<ExternalSource>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

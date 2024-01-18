@@ -32,9 +32,7 @@ export class RequestConfigureAction extends RequestUpdateAction {
   type = RequestActionTypes.CONFIGURE;
   payload: RestRequest;
 
-  constructor(
-    request: RestRequest,
-  ) {
+  constructor(request: RestRequest) {
     super();
     this.payload = request;
   }
@@ -62,11 +60,11 @@ export class RequestExecuteAction extends RequestUpdateAction {
 export class RequestSuccessAction extends RequestUpdateAction {
   type = RequestActionTypes.SUCCESS;
   payload: {
-    uuid: string,
-    timeCompleted: number,
-    statusCode: number,
-    link?: HALLink,
-    unCacheableObject?: UnCacheableObject
+    uuid: string;
+    timeCompleted: number;
+    statusCode: number;
+    link?: HALLink;
+    unCacheableObject?: UnCacheableObject;
   };
 
   /**
@@ -82,7 +80,12 @@ export class RequestSuccessAction extends RequestUpdateAction {
    *    in case the REST API returns an object that can't be cached, because it doesn't have a self
    *    link, provide it here
    */
-  constructor(uuid: string, statusCode: number, link?: HALLink, unCacheableObject?: UnCacheableObject) {
+  constructor(
+    uuid: string,
+    statusCode: number,
+    link?: HALLink,
+    unCacheableObject?: UnCacheableObject,
+  ) {
     super();
     this.payload = {
       uuid,
@@ -100,10 +103,10 @@ export class RequestSuccessAction extends RequestUpdateAction {
 export class RequestErrorAction extends RequestUpdateAction {
   type = RequestActionTypes.ERROR;
   payload: {
-    uuid: string,
-    timeCompleted: number,
-    statusCode: number,
-    errorMessage: string
+    uuid: string;
+    timeCompleted: number;
+    statusCode: number;
+    errorMessage: string;
   };
 
   /**
@@ -133,7 +136,7 @@ export class RequestErrorAction extends RequestUpdateAction {
 export class RequestStaleAction extends RequestUpdateAction {
   type = RequestActionTypes.STALE;
   payload: {
-    uuid: string,
+    uuid: string;
   };
 
   /**
@@ -186,12 +189,11 @@ export class RequestRemoveAction implements Action {
   }
 }
 
-
 /**
  * A type to encompass all RequestActions
  */
-export type RequestAction
-  = RequestConfigureAction
+export type RequestAction =
+  | RequestConfigureAction
   | RequestExecuteAction
   | RequestSuccessAction
   | RequestErrorAction

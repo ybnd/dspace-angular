@@ -8,10 +8,7 @@ import {
 } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../../../../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../../../../config/app-config.interface';
 import { FindListOptions } from '../../../core/data/find-list-options.model';
 import { PaginatedList } from '../../../core/data/paginated-list.model';
 import { RelationshipDataService } from '../../../core/data/relationship-data.service';
@@ -30,8 +27,9 @@ import { AbstractIncrementalListComponent } from '../abstract-incremental-list/a
  * This component is used for displaying relations between items
  * It expects a parent item and relationship type, as well as a label to display on top
  */
-export class RelatedItemsComponent extends AbstractIncrementalListComponent<Observable<RemoteData<PaginatedList<Item>>>> {
-
+export class RelatedItemsComponent extends AbstractIncrementalListComponent<
+  Observable<RemoteData<PaginatedList<Item>>>
+> {
   /**
    * The parent of the list of related items to display
    */
@@ -72,10 +70,11 @@ export class RelatedItemsComponent extends AbstractIncrementalListComponent<Obse
    */
   fetchThumbnail: boolean;
 
-  constructor(public relationshipService: RelationshipDataService,
-              protected elementRef: ElementRef,
-              @Inject(APP_CONFIG) protected appConfig: AppConfig,
-              @Inject(PLATFORM_ID) private platformId: any,
+  constructor(
+    public relationshipService: RelationshipDataService,
+    protected elementRef: ElementRef,
+    @Inject(APP_CONFIG) protected appConfig: AppConfig,
+    @Inject(PLATFORM_ID) private platformId: any,
   ) {
     super();
     this.fetchThumbnail = this.appConfig.browseBy.showThumbnails;
@@ -96,7 +95,14 @@ export class RelatedItemsComponent extends AbstractIncrementalListComponent<Obse
    * @param page  The page to fetch
    */
   getPage(page: number): Observable<RemoteData<PaginatedList<Item>>> {
-    return this.relationshipService.getRelatedItemsByLabel(this.parentItem, this.relationType, Object.assign(this.options,
-      { elementsPerPage: this.incrementBy, currentPage: page, fetchThumbnail: this.fetchThumbnail }));
+    return this.relationshipService.getRelatedItemsByLabel(
+      this.parentItem,
+      this.relationType,
+      Object.assign(this.options, {
+        elementsPerPage: this.incrementBy,
+        currentPage: page,
+        fetchThumbnail: this.fetchThumbnail,
+      }),
+    );
   }
 }

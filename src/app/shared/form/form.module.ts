@@ -88,15 +88,10 @@ const COMPONENTS = [
   ThemedExternalSourceEntryImportModalComponent,
 ];
 
-const DIRECTIVES = [
-  AuthorityConfidenceStateDirective,
-];
+const DIRECTIVES = [AuthorityConfidenceStateDirective];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS,
-    ...DIRECTIVES,
-  ],
+  declarations: [...COMPONENTS, ...DIRECTIVES],
   imports: [
     CommonModule,
     DynamicFormsCoreModule,
@@ -110,10 +105,7 @@ const DIRECTIVES = [
     NgbTimepickerModule,
     CdkTreeModule,
   ],
-  exports: [
-    ...COMPONENTS,
-    ...DIRECTIVES,
-  ],
+  exports: [...COMPONENTS, ...DIRECTIVES],
   providers: [
     {
       provide: DYNAMIC_FORM_CONTROL_MAP_FN,
@@ -127,5 +119,4 @@ const DIRECTIVES = [
     FormService,
   ],
 })
-export class FormModule {
-}
+export class FormModule {}

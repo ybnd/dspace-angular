@@ -6,7 +6,6 @@ import { RestRequest } from './rest-request.model';
  * A RestRequest with a method to retrieve the ResponseParsingService needed for its response
  */
 export abstract class RestRequestWithResponseParser extends RestRequest {
-
   /**
    * Get the ResponseParsingService needed to parse the response to this request
    */

@@ -25,7 +25,6 @@ import { AuthTokenInfo } from './models/auth-token-info.model';
  * @interface State
  */
 export interface AuthState {
-
   // boolean if user is authenticated
   authenticated: boolean;
 
@@ -60,11 +59,10 @@ export interface AuthState {
   // all authentication Methods enabled at the backend
   authMethods?: AuthMethod[];
 
-  externalAuth?: boolean,
+  externalAuth?: boolean;
 
   // true when the current user is idle
   idle: boolean;
-
 }
 
 /**
@@ -86,8 +84,10 @@ const initialState: AuthState = {
  * @param {State} state Current state
  * @param {AuthActions} action Incoming action
  */
-export function authReducer(state: any = initialState, action: AuthActions): AuthState {
-
+export function authReducer(
+  state: any = initialState,
+  action: AuthActions,
+): AuthState {
   switch (action.type) {
     case AuthActionTypes.AUTHENTICATE:
       return Object.assign({}, state, {
@@ -193,7 +193,9 @@ export function authReducer(state: any = initialState, action: AuthActions): Aut
         loaded: false,
         blocking: false,
         loading: false,
-        info: (action as RedirectWhenTokenExpiredAction as RedirectWhenAuthenticationIsRequiredAction).payload,
+        info: (
+          action as RedirectWhenTokenExpiredAction as RedirectWhenAuthenticationIsRequiredAction
+        ).payload,
         userId: undefined,
       });
 

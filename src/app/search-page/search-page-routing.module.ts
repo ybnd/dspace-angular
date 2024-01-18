@@ -11,20 +11,22 @@ import { ThemedSearchPageComponent } from './themed-search-page.component';
 @NgModule({
   imports: [
     SearchPageModule,
-    RouterModule.forChild([{
-      path: '',
-      resolve: { breadcrumb: I18nBreadcrumbResolver }, data: { title: 'search.title', breadcrumbKey: 'search' },
-      children: [
-        { path: '', component: ThemedSearchPageComponent },
-        { path: ':configuration', component: ThemedConfigurationSearchPageComponent, canActivate: [ConfigurationSearchPageGuard] },
-      ],
-    }],
-    ),
+    RouterModule.forChild([
+      {
+        path: '',
+        resolve: { breadcrumb: I18nBreadcrumbResolver },
+        data: { title: 'search.title', breadcrumbKey: 'search' },
+        children: [
+          { path: '', component: ThemedSearchPageComponent },
+          {
+            path: ':configuration',
+            component: ThemedConfigurationSearchPageComponent,
+            canActivate: [ConfigurationSearchPageGuard],
+          },
+        ],
+      },
+    ]),
   ],
-  providers: [
-    I18nBreadcrumbResolver,
-    I18nBreadcrumbsService,
-  ],
+  providers: [I18nBreadcrumbResolver, I18nBreadcrumbsService],
 })
-export class SearchPageRoutingModule {
-}
+export class SearchPageRoutingModule {}

@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -20,8 +16,7 @@ describe('ItemAlertsComponent', () => {
       declarations: [ItemAlertsComponent],
       imports: [TranslateModule.forRoot()],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -40,7 +35,9 @@ describe('ItemAlertsComponent', () => {
     });
 
     it('should not display the private alert', () => {
-      const privateWarning = fixture.debugElement.query(By.css('.private-warning'));
+      const privateWarning = fixture.debugElement.query(
+        By.css('.private-warning'),
+      );
       expect(privateWarning).toBeNull();
     });
   });
@@ -55,7 +52,9 @@ describe('ItemAlertsComponent', () => {
     });
 
     it('should display the private alert', () => {
-      const privateWarning = fixture.debugElement.query(By.css('.private-warning'));
+      const privateWarning = fixture.debugElement.query(
+        By.css('.private-warning'),
+      );
       expect(privateWarning).not.toBeNull();
     });
   });
@@ -70,7 +69,9 @@ describe('ItemAlertsComponent', () => {
     });
 
     it('should display the withdrawn alert', () => {
-      const privateWarning = fixture.debugElement.query(By.css('.withdrawn-warning'));
+      const privateWarning = fixture.debugElement.query(
+        By.css('.withdrawn-warning'),
+      );
       expect(privateWarning).not.toBeNull();
     });
   });
@@ -85,7 +86,9 @@ describe('ItemAlertsComponent', () => {
     });
 
     it('should not display the withdrawn alert', () => {
-      const privateWarning = fixture.debugElement.query(By.css('.withdrawn-warning'));
+      const privateWarning = fixture.debugElement.query(
+        By.css('.withdrawn-warning'),
+      );
       expect(privateWarning).toBeNull();
     });
   });

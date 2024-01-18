@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  catchError,
-  map,
-} from 'rxjs/operators';
+import { Observable, of as observableOf } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
@@ -32,7 +26,14 @@ export class RootDataService extends BaseDataService<Root> {
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('', requestService, rdbService, objectCache, halService, 6 * 60 * 60 * 1000);
+    super(
+      '',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      6 * 60 * 60 * 1000,
+    );
   }
 
   /**
@@ -58,8 +59,17 @@ export class RootDataService extends BaseDataService<Root> {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findRoot(useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Root>[]): Observable<RemoteData<Root>> {
-    return this.findByHref(this.halService.getRootHref(), useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findRoot(
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Root>[]
+  ): Observable<RemoteData<Root>> {
+    return this.findByHref(
+      this.halService.getRootHref(),
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**

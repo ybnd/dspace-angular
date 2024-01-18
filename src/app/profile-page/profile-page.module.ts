@@ -12,7 +12,6 @@ import { ProfilePageRoutingModule } from './profile-page-routing.module';
 import { ProfilePageSecurityFormComponent } from './profile-page-security-form/profile-page-security-form.component';
 import { ThemedProfilePageComponent } from './themed-profile-page.component';
 
-
 @NgModule({
   imports: [
     ProfilePageRoutingModule,
@@ -37,6 +36,4 @@ import { ThemedProfilePageComponent } from './themed-profile-page.component';
     ProfilePageResearcherFormComponent,
   ],
 })
-export class ProfilePageModule {
-
-}
+export class ProfilePageModule {}

@@ -5,19 +5,10 @@ import {
   OnInit,
   ViewContainerRef,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  Subscription,
-} from 'rxjs';
-import {
-  debounceTime,
-  switchMap,
-} from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { debounceTime, switchMap } from 'rxjs/operators';
 
 import { SubmissionDefinitionsModel } from '../../core/config/models/config-submission-definitions.model';
 import { ItemDataService } from '../../core/data/item-data.service';
@@ -44,7 +35,6 @@ import { SubmissionService } from '../submission.service';
   templateUrl: './submission-submit.component.html',
 })
 export class SubmissionSubmitComponent implements OnDestroy, OnInit {
-
   /**
    * The collection id this submission belonging to
    * @type {string}
@@ -110,19 +100,19 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
    * @param {ViewContainerRef} viewContainerRef
    * @param {ActivatedRoute} route
    */
-  constructor(private changeDetectorRef: ChangeDetectorRef,
-              private notificationsService: NotificationsService,
-              private router: Router,
-              private itemDataService: ItemDataService,
-              private submissionService: SubmissionService,
-              private translate: TranslateService,
-              private viewContainerRef: ViewContainerRef,
-              private route: ActivatedRoute) {
-    this.route
-      .queryParams
-      .subscribe((params) => {
-        this.collectionParam = (params.collection);
-      });
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private notificationsService: NotificationsService,
+    private router: Router,
+    private itemDataService: ItemDataService,
+    private submissionService: SubmissionService,
+    private translate: TranslateService,
+    private viewContainerRef: ViewContainerRef,
+    private route: ActivatedRoute,
+  ) {
+    this.route.queryParams.subscribe((params) => {
+      this.collectionParam = params.collection;
+    });
   }
 
   /**
@@ -131,31 +121,40 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
   ngOnInit() {
     // NOTE execute the code on the browser side only, otherwise it is executed twice
     this.subs.push(
-      this.submissionService.createSubmission(this.collectionParam)
+      this.submissionService
+        .createSubmission(this.collectionParam)
         .subscribe((submissionObject: SubmissionObject) => {
           // NOTE new submission is created on the browser side only
           if (isNotNull(submissionObject)) {
             if (isEmpty(submissionObject)) {
-              this.notificationsService.info(null, this.translate.get('submission.general.cannot_submit'));
+              this.notificationsService.info(
+                null,
+                this.translate.get('submission.general.cannot_submit'),
+              );
               this.router.navigate(['/mydspace']);
             } else {
-              this.router.navigate(['/workspaceitems', submissionObject.id, 'edit'], { replaceUrl: true });
+              this.router.navigate(
+                ['/workspaceitems', submissionObject.id, 'edit'],
+                { replaceUrl: true },
+              );
             }
           }
         }),
-      this.itemLink$.pipe(
-        isNotEmptyOperator(),
-        switchMap((itemLink: string) =>
-          this.itemDataService.findByHref(itemLink),
-        ),
-        getAllSucceededRemoteData(),
-        // Multiple sources can update the item in quick succession.
-        // We only want to rerender the form if the item is unchanged for some time
-        debounceTime(300),
-      ).subscribe((itemRd: RemoteData<Item>) => {
-        this.item = itemRd.payload;
-        this.changeDetectorRef.detectChanges();
-      }),
+      this.itemLink$
+        .pipe(
+          isNotEmptyOperator(),
+          switchMap((itemLink: string) =>
+            this.itemDataService.findByHref(itemLink),
+          ),
+          getAllSucceededRemoteData(),
+          // Multiple sources can update the item in quick succession.
+          // We only want to rerender the form if the item is unchanged for some time
+          debounceTime(300),
+        )
+        .subscribe((itemRd: RemoteData<Item>) => {
+          this.item = itemRd.payload;
+          this.changeDetectorRef.detectChanges();
+        }),
     );
   }
 
@@ -170,5 +169,4 @@ export class SubmissionSubmitComponent implements OnDestroy, OnInit {
     this.viewContainerRef.clear();
     this.changeDetectorRef.markForCheck();
   }
-
 }

@@ -15,24 +15,12 @@ import {
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
-import {
-  MockStore,
-  provideMockStore,
-} from '@ngrx/store/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  of as observableOf,
-} from 'rxjs';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
 
-import {
-  AppState,
-  storeModuleConfig,
-} from '../../app.reducer';
+import { AppState, storeModuleConfig } from '../../app.reducer';
 import { authReducer } from '../../core/auth/auth.reducer';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
 import { Item } from '../../core/shared/item.model';
@@ -55,8 +43,7 @@ const mockMenuID = 'mock-menuID' as MenuID;
   template: '',
 })
 @rendersSectionForMenu(mockMenuID, true)
-class TestExpandableMenuComponent {
-}
+class TestExpandableMenuComponent {}
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -64,8 +51,7 @@ class TestExpandableMenuComponent {
   template: '',
 })
 @rendersSectionForMenu(mockMenuID, false)
-class TestMenuComponent {
-}
+class TestMenuComponent {}
 
 describe('MenuComponent', () => {
   let comp: MenuComponent;
@@ -73,7 +59,14 @@ describe('MenuComponent', () => {
   let menuService: MenuService;
   let store: MockStore;
 
-  const mockStatisticSection = { 'id': 'statistics_site', 'active': true, 'visible': true, 'index': 2, 'type': 'statistics', 'model': { 'type': 1, 'text': 'menu.section.statistics', 'link': 'statistics' } };
+  const mockStatisticSection = {
+    id: 'statistics_site',
+    active: true,
+    visible: true,
+    index: 2,
+    type: 'statistics',
+    model: { type: 1, text: 'menu.section.statistics', link: 'statistics' },
+  };
 
   let authorizationService: AuthorizationDataService;
 
@@ -88,7 +81,6 @@ describe('MenuComponent', () => {
       },
     },
   });
-
 
   const routeStub = {
     data: observableOf({
@@ -124,7 +116,6 @@ describe('MenuComponent', () => {
   };
 
   beforeEach(waitForAsync(() => {
-
     authorizationService = jasmine.createSpyObj('authorizationService', {
       isAuthorized: observableOf(false),
     });
@@ -148,9 +139,11 @@ describe('MenuComponent', () => {
         TestMenuComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(MenuComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(MenuComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -167,7 +160,9 @@ describe('MenuComponent', () => {
     it('should trigger the section observable again when a new sub section has been added', () => {
       spyOn(comp.sectionMap$, 'next').and.callThrough();
       const hasSubSections = new BehaviorSubject(false);
-      spyOn(menuService, 'hasSubSections').and.returnValue(hasSubSections.asObservable());
+      spyOn(menuService, 'hasSubSections').and.returnValue(
+        hasSubSections.asObservable(),
+      );
       spyOn(store, 'dispatch').and.callThrough();
 
       store.setState({
@@ -266,13 +261,14 @@ describe('MenuComponent', () => {
   });
 
   describe('when unauthorized statistics', () => {
-
     beforeEach(() => {
-      (authorizationService as any).isAuthorized.and.returnValue(observableOf(false));
+      (authorizationService as any).isAuthorized.and.returnValue(
+        observableOf(false),
+      );
       fixture.detectChanges();
     });
 
-    it('should return observable of empty object', done => {
+    it('should return observable of empty object', (done) => {
       comp.getAuthorizedStatistics(mockStatisticSection).subscribe((res) => {
         expect(res).toEqual({});
         done();
@@ -281,18 +277,18 @@ describe('MenuComponent', () => {
   });
 
   describe('get authorized statistics', () => {
-
     beforeEach(() => {
-      (authorizationService as any).isAuthorized.and.returnValue(observableOf(true));
+      (authorizationService as any).isAuthorized.and.returnValue(
+        observableOf(true),
+      );
       fixture.detectChanges();
     });
 
-    it('should return observable of statistics section menu', done => {
+    it('should return observable of statistics section menu', (done) => {
       comp.getAuthorizedStatistics(mockStatisticSection).subscribe((res) => {
         expect(res).toEqual(mockStatisticSection);
         done();
       });
     });
   });
-
 });

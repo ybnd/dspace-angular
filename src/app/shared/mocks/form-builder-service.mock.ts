@@ -1,13 +1,9 @@
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 import { DsDynamicInputModel } from '../form/builder/ds-dynamic-form-ui/models/ds-dynamic-input.model';
 import { FormBuilderService } from '../form/builder/form-builder.service';
 
 export function getMockFormBuilderService(): FormBuilderService {
-
   return jasmine.createSpyObj('FormBuilderService', {
     modelFromConfiguration: [],
     createFormGroup: new UntypedFormGroup({}),
@@ -17,7 +13,7 @@ export function getMockFormBuilderService(): FormBuilderService {
     findById: {},
     getPath: ['test', 'path'],
     getId: 'path',
-    clearAllModelsValue : {},
+    clearAllModelsValue: {},
     insertFormArrayGroup: {},
     isQualdrop: false,
     isQualdropGroup: false,
@@ -40,10 +36,12 @@ export function getMockFormBuilderService(): FormBuilderService {
       metadataFields: ['dc.type'],
       hasSelectableMetadata: false,
       typeBindRelations: [
-        { match: 'VISIBLE', operator: 'OR', when: [{ id: 'dc.type', value: 'boundType' }] },
+        {
+          match: 'VISIBLE',
+          operator: 'OR',
+          when: [{ id: 'dc.type', value: 'boundType' }],
+        },
       ],
-    },
-    ),
+    }),
   });
-
 }

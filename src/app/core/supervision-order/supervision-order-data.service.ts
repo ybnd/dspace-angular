@@ -1,10 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  first,
-  map,
-} from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { isNotEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
@@ -58,12 +55,51 @@ export class SupervisionOrderDataService extends IdentifiableDataService<Supervi
     protected comparator: DefaultChangeAnalyzer<SupervisionOrder>,
     protected groupService: GroupDataService,
   ) {
-    super('supervisionorders', requestService, rdbService, objectCache, halService);
+    super(
+      'supervisionorders',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.patchData = new PatchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.patchData = new PatchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -79,7 +115,12 @@ export class SupervisionOrderDataService extends IdentifiableDataService<Supervi
    * @param {string} type
    *    The type of the supervision order that will be grant of the permission.
    */
-  create(supervisionOrder: SupervisionOrder, itemUUID: string, groupUUID: string, type: string): Observable<RemoteData<SupervisionOrder>> {
+  create(
+    supervisionOrder: SupervisionOrder,
+    itemUUID: string,
+    groupUUID: string,
+    type: string,
+  ): Observable<RemoteData<SupervisionOrder>> {
     const params = [];
     params.push(new RequestParam('uuid', itemUUID));
     params.push(new RequestParam('group', groupUUID));
@@ -121,13 +162,25 @@ export class SupervisionOrderDataService extends IdentifiableDataService<Supervi
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByGroup(UUID: string, itemUUID?: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<SupervisionOrder>[]): Observable<RemoteData<PaginatedList<SupervisionOrder>>> {
+  searchByGroup(
+    UUID: string,
+    itemUUID?: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<SupervisionOrder>[]
+  ): Observable<RemoteData<PaginatedList<SupervisionOrder>>> {
     const options = new FindListOptions();
     options.searchParams = [new RequestParam('uuid', UUID)];
     if (isNotEmpty(itemUUID)) {
       options.searchParams.push(new RequestParam('item', itemUUID));
     }
-    return this.searchData.searchBy(this.searchByGroupMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchData.searchBy(
+      this.searchByGroupMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -142,10 +195,21 @@ export class SupervisionOrderDataService extends IdentifiableDataService<Supervi
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByItem(UUID: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<SupervisionOrder>[]): Observable<RemoteData<PaginatedList<SupervisionOrder>>> {
+  searchByItem(
+    UUID: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<SupervisionOrder>[]
+  ): Observable<RemoteData<PaginatedList<SupervisionOrder>>> {
     const options = new FindListOptions();
     options.searchParams = [new RequestParam('uuid', UUID)];
-    return this.searchData.searchBy(this.searchByItemMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchData.searchBy(
+      this.searchByItemMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -155,7 +219,12 @@ export class SupervisionOrderDataService extends IdentifiableDataService<Supervi
    * @param targetUUID the UUID of the target to which the permission is being granted
    * @param targetType the type of the target (eperson or group) to which the permission is being granted
    */
-  updateTarget(supervisionOrderId: string, supervisionOrderHref: string, targetUUID: string, targetType: string): Observable<RemoteData<any>> {
+  updateTarget(
+    supervisionOrderId: string,
+    supervisionOrderHref: string,
+    targetUUID: string,
+    targetType: string,
+  ): Observable<RemoteData<any>> {
     const targetService = this.groupService;
     const targetEndpoint$ = targetService.getIDHrefObs(targetUUID);
 
@@ -166,11 +235,14 @@ export class SupervisionOrderDataService extends IdentifiableDataService<Supervi
 
     const requestId = this.requestService.generateRequestId();
 
-    targetEndpoint$.pipe(
-      first(),
-    ).subscribe((targetEndpoint) => {
+    targetEndpoint$.pipe(first()).subscribe((targetEndpoint) => {
       const resourceEndpoint = supervisionOrderHref + '/' + targetType;
-      const request = new PutRequest(requestId, resourceEndpoint, targetEndpoint, options);
+      const request = new PutRequest(
+        requestId,
+        resourceEndpoint,
+        targetEndpoint,
+        options,
+      );
       Object.assign(request, {
         getResponseParser(): GenericConstructor<ResponseParsingService> {
           return StatusCodeOnlyResponseParsingService;
@@ -179,7 +251,8 @@ export class SupervisionOrderDataService extends IdentifiableDataService<Supervi
       this.requestService.send(request);
     });
 
-    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () => this.invalidateByHref(supervisionOrderHref));
+    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () =>
+      this.invalidateByHref(supervisionOrderHref),
+    );
   }
-
 }

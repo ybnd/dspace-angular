@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of as observableOf } from 'rxjs';
 
@@ -25,22 +21,30 @@ describe('NavbarSectionComponent', () => {
       providers: [
         { provide: 'sectionDataProvider', useValue: {} },
         { provide: MenuService, useValue: menuService },
-        { provide: HostWindowService, useValue: new HostWindowServiceStub(800) },
+        {
+          provide: HostWindowService,
+          useValue: new HostWindowServiceStub(800),
+        },
       ],
-    }).overrideComponent(NavbarSectionComponent, {
-      set: {
-        entryComponents: [TestComponent],
-      },
     })
+      .overrideComponent(NavbarSectionComponent, {
+        set: {
+          entryComponents: [TestComponent],
+        },
+      })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(observableOf([]));
+    spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(
+      observableOf([]),
+    );
 
     fixture = TestBed.createComponent(NavbarSectionComponent);
     component = fixture.componentInstance;
-    spyOn(component as any, 'getMenuItemComponent').and.returnValue(TestComponent);
+    spyOn(component as any, 'getMenuItemComponent').and.returnValue(
+      TestComponent,
+    );
     fixture.detectChanges();
   });
 
@@ -54,5 +58,4 @@ describe('NavbarSectionComponent', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-}
+class TestComponent {}

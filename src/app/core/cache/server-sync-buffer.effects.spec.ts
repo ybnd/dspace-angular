@@ -1,17 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
-import {
-  cold,
-  hot,
-} from 'jasmine-marbles';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Store, StoreModule } from '@ngrx/store';
+import { cold, hot } from 'jasmine-marbles';
+import { Observable, of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { storeModuleConfig } from '../../app.reducer';
@@ -35,29 +26,27 @@ describe('ServerSyncBufferEffects', () => {
   let actions: Observable<any>;
   let testScheduler: TestScheduler;
   const testConfig = {
-    cache:
-      {
-        autoSync:
-          {
-            timePerMethod: {},
-            defaultTime: 0,
-          },
+    cache: {
+      autoSync: {
+        timePerMethod: {},
+        defaultTime: 0,
       },
+    },
   };
-  const selfLink = 'https://rest.api/endpoint/1698f1d3-be98-4c51-9fd8-6bfedcbd59b7';
+  const selfLink =
+    'https://rest.api/endpoint/1698f1d3-be98-4c51-9fd8-6bfedcbd59b7';
   let store;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot({}, storeModuleConfig),
-      ],
+      imports: [StoreModule.forRoot({}, storeModuleConfig)],
       providers: [
         ServerSyncBufferEffects,
         provideMockActions(() => actions),
         { provide: RequestService, useValue: getMockRequestService() },
         {
-          provide: ObjectCacheService, useValue: {
+          provide: ObjectCacheService,
+          useValue: {
             getObjectBySelfLink: (link) => {
               const object = Object.assign(new DSpaceObject(), {
                 _links: { self: { href: link } },
@@ -110,16 +99,17 @@ describe('ServerSyncBufferEffects', () => {
   describe('commitServerSyncBuffer', () => {
     describe('when the buffer is not empty', () => {
       beforeEach(() => {
-        store
-          .subscribe((state) => {
-            (state as any).core = Object({});
-            (state as any).core['cache/syncbuffer'] = {
-              buffer: [{
+        store.subscribe((state) => {
+          (state as any).core = Object({});
+          (state as any).core['cache/syncbuffer'] = {
+            buffer: [
+              {
                 href: selfLink,
                 method: RestRequestMethod.PATCH,
-              }],
-            };
-          });
+              },
+            ],
+          };
+        });
       });
       it('should return a list of actions in response to a COMMIT action', () => {
         actions = hot('a', {
@@ -140,13 +130,12 @@ describe('ServerSyncBufferEffects', () => {
 
     describe('when the buffer is empty', () => {
       beforeEach(() => {
-        store
-          .subscribe((state) => {
-            (state as any).core = Object({});
-            (state as any).core['cache/syncbuffer'] = {
-              buffer: [],
-            };
-          });
+        store.subscribe((state) => {
+          (state as any).core = Object({});
+          (state as any).core['cache/syncbuffer'] = {
+            buffer: [],
+          };
+        });
       });
       it('should return a placeholder action in response to a COMMIT action', () => {
         store.subscribe();

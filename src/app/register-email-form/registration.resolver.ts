@@ -16,14 +16,15 @@ import { Registration } from '../core/shared/registration.model';
  * Resolver to resolve a Registration object based on the provided token
  */
 export class RegistrationResolver implements Resolve<RemoteData<Registration>> {
+  constructor(private epersonRegistrationService: EpersonRegistrationService) {}
 
-  constructor(private epersonRegistrationService: EpersonRegistrationService) {
-  }
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Registration>> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<Registration>> {
     const token = route.params.token;
-    return this.epersonRegistrationService.searchByToken(token).pipe(
-      getFirstCompletedRemoteData(),
-    );
+    return this.epersonRegistrationService
+      .searchByToken(token)
+      .pipe(getFirstCompletedRemoteData());
   }
 }

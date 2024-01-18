@@ -1,10 +1,7 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  first,
-  map,
-} from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { isNotEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
@@ -63,12 +60,51 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
     protected ePersonService: EPersonDataService,
     protected groupService: GroupDataService,
   ) {
-    super('resourcepolicies', requestService, rdbService, objectCache, halService);
+    super(
+      'resourcepolicies',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.patchData = new PatchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.patchData = new PatchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -84,7 +120,12 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
    * @param {string} groupUUID
    *    The uuid of the group that will be grant of the permission. Exactly one of eperson or group is required
    */
-  create(resourcePolicy: ResourcePolicy, resourceUUID: string, epersonUUID?: string, groupUUID?: string): Observable<RemoteData<ResourcePolicy>> {
+  create(
+    resourcePolicy: ResourcePolicy,
+    resourceUUID: string,
+    epersonUUID?: string,
+    groupUUID?: string,
+  ): Observable<RemoteData<ResourcePolicy>> {
     const params = [];
     params.push(new RequestParam('resource', resourceUUID));
     if (isNotEmpty(epersonUUID)) {
@@ -123,8 +164,14 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
    * @param collection the {@link Collection} to retrieve the defaultAccessConditions for
    * @param findListOptions the {@link FindListOptions} for the request
    */
-  getDefaultAccessConditionsFor(collection: Collection, findListOptions?: FindListOptions): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
-    return this.findListByHref(collection._links.defaultAccessConditions.href, findListOptions);
+  getDefaultAccessConditionsFor(
+    collection: Collection,
+    findListOptions?: FindListOptions,
+  ): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
+    return this.findListByHref(
+      collection._links.defaultAccessConditions.href,
+      findListOptions,
+    );
   }
 
   /**
@@ -139,13 +186,25 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByEPerson(UUID: string, resourceUUID?: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
+  searchByEPerson(
+    UUID: string,
+    resourceUUID?: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]
+  ): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
     const options = new FindListOptions();
     options.searchParams = [new RequestParam('uuid', UUID)];
     if (isNotEmpty(resourceUUID)) {
       options.searchParams.push(new RequestParam('resource', resourceUUID));
     }
-    return this.searchData.searchBy(this.searchByEPersonMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchData.searchBy(
+      this.searchByEPersonMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -160,13 +219,25 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByGroup(UUID: string, resourceUUID?: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
+  searchByGroup(
+    UUID: string,
+    resourceUUID?: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]
+  ): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
     const options = new FindListOptions();
     options.searchParams = [new RequestParam('uuid', UUID)];
     if (isNotEmpty(resourceUUID)) {
       options.searchParams.push(new RequestParam('resource', resourceUUID));
     }
-    return this.searchData.searchBy(this.searchByGroupMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchData.searchBy(
+      this.searchByGroupMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -181,13 +252,25 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchByResource(UUID: string, action?: ActionType, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
+  searchByResource(
+    UUID: string,
+    action?: ActionType,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<ResourcePolicy>[]
+  ): Observable<RemoteData<PaginatedList<ResourcePolicy>>> {
     const options = new FindListOptions();
     options.searchParams = [new RequestParam('uuid', UUID)];
     if (isNotEmpty(action)) {
       options.searchParams.push(new RequestParam('action', action));
     }
-    return this.searchData.searchBy(this.searchByResourceMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchData.searchBy(
+      this.searchByResourceMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -197,8 +280,14 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
    * @param targetUUID the UUID of the target to which the permission is being granted
    * @param targetType the type of the target (eperson or group) to which the permission is being granted
    */
-  updateTarget(resourcePolicyId: string, resourcePolicyHref: string, targetUUID: string, targetType: string): Observable<RemoteData<any>> {
-    const targetService = targetType === 'eperson' ? this.ePersonService : this.groupService;
+  updateTarget(
+    resourcePolicyId: string,
+    resourcePolicyHref: string,
+    targetUUID: string,
+    targetType: string,
+  ): Observable<RemoteData<any>> {
+    const targetService =
+      targetType === 'eperson' ? this.ePersonService : this.groupService;
     const targetEndpoint$ = targetService.getIDHrefObs(targetUUID);
 
     const options: HttpOptions = Object.create({});
@@ -208,11 +297,14 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
 
     const requestId = this.requestService.generateRequestId();
 
-    targetEndpoint$.pipe(
-      first(),
-    ).subscribe((targetEndpoint) => {
+    targetEndpoint$.pipe(first()).subscribe((targetEndpoint) => {
       const resourceEndpoint = resourcePolicyHref + '/' + targetType;
-      const request = new PutRequest(requestId, resourceEndpoint, targetEndpoint, options);
+      const request = new PutRequest(
+        requestId,
+        resourceEndpoint,
+        targetEndpoint,
+        options,
+      );
       Object.assign(request, {
         getResponseParser(): GenericConstructor<ResponseParsingService> {
           return StatusCodeOnlyResponseParsingService;
@@ -221,7 +313,8 @@ export class ResourcePolicyDataService extends IdentifiableDataService<ResourceP
       this.requestService.send(request);
     });
 
-    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () => this.invalidateByHref(resourcePolicyHref));
+    return this.rdbService.buildFromRequestUUIDAndAwait(requestId, () =>
+      this.invalidateByHref(resourcePolicyHref),
+    );
   }
-
 }

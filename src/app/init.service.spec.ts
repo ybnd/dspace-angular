@@ -1,26 +1,10 @@
 import { CommonModule } from '@angular/common';
-import {
-  APP_INITIALIZER,
-  Injectable,
-} from '@angular/core';
-import {
-  inject,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { APP_INITIALIZER, Injectable } from '@angular/core';
+import { inject, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { APP_CONFIG } from 'src/config/app-config.interface';
 
 import { environment } from '../environments/environment';
@@ -72,7 +56,6 @@ const initialState = {
   },
 };
 
-
 describe('InitService', () => {
   describe('providers', () => {
     beforeEach(() => {
@@ -89,26 +72,33 @@ describe('InitService', () => {
     it('should correctly set up provider dependencies', () => {
       const providers = ConcreteInitServiceMock.providers();
 
-      expect(providers).toContain(objectContaining({
-        provide: InitService,
-        useClass: ConcreteInitServiceMock,
-      }));
+      expect(providers).toContain(
+        objectContaining({
+          provide: InitService,
+          useClass: ConcreteInitServiceMock,
+        }),
+      );
 
-      expect(providers).toContain(objectContaining({
-        provide: APP_CONFIG,
-      }));
+      expect(providers).toContain(
+        objectContaining({
+          provide: APP_CONFIG,
+        }),
+      );
 
-      expect(providers).toContain(objectContaining({
-        provide: APP_INITIALIZER,
-        deps: [ InitService ],
-        multi: true,
-      }));
+      expect(providers).toContain(
+        objectContaining({
+          provide: APP_INITIALIZER,
+          deps: [InitService],
+          multi: true,
+        }),
+      );
     });
 
     it('should call resolveAppConfig() in APP_CONFIG factory', () => {
       const factory = (
-        ConcreteInitServiceMock.providers()
-          .find((p: any) => p.provide === APP_CONFIG) as any
+        ConcreteInitServiceMock.providers().find(
+          (p: any) => p.provide === APP_CONFIG,
+        ) as any
       ).useFactory;
 
       // this factory is called _before_ InitService is instantiated
@@ -119,8 +109,9 @@ describe('InitService', () => {
 
     it('should defer to init() in APP_INITIALIZER factory', () => {
       const factory = (
-        ConcreteInitServiceMock.providers()
-          .find((p: any) => p.provide === APP_INITIALIZER) as any
+        ConcreteInitServiceMock.providers().find(
+          (p: any) => p.provide === APP_INITIALIZER,
+        ) as any
       ).useFactory;
 
       // we don't care about the dependencies here
@@ -143,8 +134,8 @@ describe('InitService', () => {
     let menuServiceSpy;
 
     const BLOCKING = {
-      t: {  core: { auth: { blocking: true } } },
-      f: {  core: { auth: { blocking: false } } },
+      t: { core: { auth: { blocking: true } } },
+      f: { core: { auth: { blocking: false } } },
     };
     const BOOLEAN = {
       t: true,
@@ -152,14 +143,16 @@ describe('InitService', () => {
     };
 
     beforeEach(waitForAsync(() => {
-      correlationIdServiceSpy = jasmine.createSpyObj('correlationIdServiceSpy', [
-        'initCorrelationId',
-      ]);
+      correlationIdServiceSpy = jasmine.createSpyObj(
+        'correlationIdServiceSpy',
+        ['initCorrelationId'],
+      );
       dspaceTransferStateSpy = jasmine.createSpyObj('dspaceTransferStateSpy', [
         'transfer',
       ]);
       transferStateSpy = jasmine.createSpyObj('dspaceTransferStateSpy', [
-        'get', 'hasKey',
+        'get',
+        'hasKey',
       ]);
       breadcrumbsServiceSpy = jasmine.createSpyObj('breadcrumbsServiceSpy', [
         'listenForRouteChanges',
@@ -170,7 +163,6 @@ describe('InitService', () => {
       menuServiceSpy = jasmine.createSpyObj('menuServiceSpy', [
         'listenForRouteChanges',
       ]);
-
 
       TestBed.resetTestingModule();
       TestBed.configureTestingModule({
@@ -189,7 +181,10 @@ describe('InitService', () => {
           { provide: CorrelationIdService, useValue: correlationIdServiceSpy },
           { provide: APP_CONFIG, useValue: environment },
           { provide: LocaleService, useValue: getMockLocaleService() },
-          { provide: Angulartics2DSpace, useValue: new AngularticsProviderMock() },
+          {
+            provide: Angulartics2DSpace,
+            useValue: new AngularticsProviderMock(),
+          },
           { provide: MetadataService, useValue: metadataServiceSpy },
           { provide: BreadcrumbsService, useValue: breadcrumbsServiceSpy },
           { provide: AuthService, useValue: new AuthServiceMock() },
@@ -205,26 +200,39 @@ describe('InitService', () => {
     }));
 
     describe('initRouteListeners', () => {
-      it('should call listenForRouteChanges', inject([InitService], (service) => {
-        // @ts-ignore
-        service.initRouteListeners();
-        expect(metadataServiceSpy.listenForRouteChange).toHaveBeenCalledTimes(1);
-        expect(breadcrumbsServiceSpy.listenForRouteChanges).toHaveBeenCalledTimes(1);
-        expect(breadcrumbsServiceSpy.listenForRouteChanges).toHaveBeenCalledTimes(1);
-      }));
+      it('should call listenForRouteChanges', inject(
+        [InitService],
+        (service) => {
+          // @ts-ignore
+          service.initRouteListeners();
+          expect(metadataServiceSpy.listenForRouteChange).toHaveBeenCalledTimes(
+            1,
+          );
+          expect(
+            breadcrumbsServiceSpy.listenForRouteChanges,
+          ).toHaveBeenCalledTimes(1);
+          expect(
+            breadcrumbsServiceSpy.listenForRouteChanges,
+          ).toHaveBeenCalledTimes(1);
+        },
+      ));
     });
 
     describe('authenticationReady', () => {
       it('should emit & complete the first time auth is unblocked', () => {
         getTestScheduler().run(({ cold, expectObservable }) => {
-          TestBed.overrideProvider(Store, { useValue: cold('t--t--f--t--f--', BLOCKING) });
+          TestBed.overrideProvider(Store, {
+            useValue: cold('t--t--f--t--f--', BLOCKING),
+          });
           const service = TestBed.inject(InitService);
 
           // @ts-ignore
-          expectObservable(service.authenticationReady$()).toBe('------(f|)', BOOLEAN);
+          expectObservable(service.authenticationReady$()).toBe(
+            '------(f|)',
+            BOOLEAN,
+          );
         });
       });
     });
   });
 });
-

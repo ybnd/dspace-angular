@@ -1,8 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -55,9 +51,7 @@ describe('BrowseService', () => {
       ],
       defaultSortOrder: 'ASC',
       type: 'browse',
-      metadataKeys: [
-        'dc.date.issued',
-      ],
+      metadataKeys: ['dc.date.issued'],
       _links: {
         self: { href: 'https://rest.api/discover/browses/dateissued' },
         items: { href: 'https://rest.api/discover/browses/dateissued/items' },
@@ -82,10 +76,7 @@ describe('BrowseService', () => {
       ],
       defaultSortOrder: 'ASC',
       type: 'browse',
-      metadataKeys: [
-        'dc.contributor.*',
-        'dc.creator',
-      ],
+      metadataKeys: ['dc.contributor.*', 'dc.creator'],
       _links: {
         self: { href: 'https://rest.api/discover/browses/author' },
         entries: { href: 'https://rest.api/discover/browses/author/entries' },
@@ -98,14 +89,12 @@ describe('BrowseService', () => {
       facetType: 'subject',
       vocabulary: 'srsc',
       type: 'browse',
-      metadata: [
-        'dc.subject',
-      ],
+      metadata: ['dc.subject'],
       _links: {
-        vocabulary: { 'href': 'https://rest.api/submission/vocabularies/srsc/' },
-        items: { 'href': 'https://rest.api/discover/browses/srsc/items' },
-        entries: { 'href': 'https://rest.api/discover/browses/srsc/entries' },
-        self: { 'href': 'https://rest.api/discover/browses/srsc' },
+        vocabulary: { href: 'https://rest.api/submission/vocabularies/srsc/' },
+        items: { href: 'https://rest.api/discover/browses/srsc/items' },
+        entries: { href: 'https://rest.api/discover/browses/srsc/entries' },
+        self: { href: 'https://rest.api/discover/browses/srsc' },
       },
     }),
   ];
@@ -120,9 +109,14 @@ describe('BrowseService', () => {
   };
 
   function initTestService() {
-    browseDefinitionDataService = jasmine.createSpyObj('browseDefinitionDataService', {
-      findAll: createSuccessfulRemoteDataObject$(createPaginatedList(browseDefinitions)),
-    });
+    browseDefinitionDataService = jasmine.createSpyObj(
+      'browseDefinitionDataService',
+      {
+        findAll: createSuccessfulRemoteDataObject$(
+          createPaginatedList(browseDefinitions),
+        ),
+      },
+    );
     hrefOnlyDataService = getMockHrefOnlyDataService();
     return new BrowseService(
       requestService,
@@ -138,20 +132,19 @@ describe('BrowseService', () => {
   });
 
   describe('getBrowseDefinitions', () => {
-
     beforeEach(() => {
       requestService = getMockRequestService(getRequestEntry$(true));
       rdbService = getMockRemoteDataBuildService();
       service = initTestService();
-      spyOn(halService, 'getEndpoint').and
-        .returnValue(hot('--a-', { a: browsesEndpointURL }));
+      spyOn(halService, 'getEndpoint').and.returnValue(
+        hot('--a-', { a: browsesEndpointURL }),
+      );
       spyOn(rdbService, 'buildList').and.callThrough();
     });
 
     it('should call BrowseDefinitionDataService to create the RemoteData Observable', () => {
       service.getBrowseDefinitions();
       expect(browseDefinitionDataService.findAll).toHaveBeenCalled();
-
     });
   });
 
@@ -169,58 +162,99 @@ describe('BrowseService', () => {
 
     describe('when getBrowseEntriesFor is called with a valid browse definition id', () => {
       it('should call hrefOnlyDataService.findListByHref with the expected href', () => {
-        const expected = (browseDefinitions[1] as ValueListBrowseDefinition)._links.entries.href;
+        const expected = (browseDefinitions[1] as ValueListBrowseDefinition)
+          ._links.entries.href;
 
-        scheduler.schedule(() => service.getBrowseEntriesFor(new BrowseEntrySearchOptions(browseDefinitions[1].id)).subscribe());
+        scheduler.schedule(() =>
+          service
+            .getBrowseEntriesFor(
+              new BrowseEntrySearchOptions(browseDefinitions[1].id),
+            )
+            .subscribe(),
+        );
         scheduler.flush();
 
-        expect(getFirstUsedArgumentOfSpyMethod(hrefOnlyDataService.findListByHref)).toBeObservable(cold('(a|)', {
-          a: expected,
-        }));
+        expect(
+          getFirstUsedArgumentOfSpyMethod(hrefOnlyDataService.findListByHref),
+        ).toBeObservable(
+          cold('(a|)', {
+            a: expected,
+          }),
+        );
       });
-
     });
 
     describe('when findList is called with a valid browse definition id', () => {
       it('should call hrefOnlyDataService.findListByHref with the expected href', () => {
-        const expected = browseDefinitions[1]._links.items.href + '?filterValue=' + encodeURIComponent(mockAuthorName);
+        const expected =
+          browseDefinitions[1]._links.items.href +
+          '?filterValue=' +
+          encodeURIComponent(mockAuthorName);
 
-        scheduler.schedule(() => service.getBrowseItemsFor(mockAuthorName, undefined, new BrowseEntrySearchOptions(browseDefinitions[1].id)).subscribe());
+        scheduler.schedule(() =>
+          service
+            .getBrowseItemsFor(
+              mockAuthorName,
+              undefined,
+              new BrowseEntrySearchOptions(browseDefinitions[1].id),
+            )
+            .subscribe(),
+        );
         scheduler.flush();
 
-        expect(getFirstUsedArgumentOfSpyMethod(hrefOnlyDataService.findListByHref)).toBeObservable(cold('(a|)', {
-          a: expected,
-        }));
+        expect(
+          getFirstUsedArgumentOfSpyMethod(hrefOnlyDataService.findListByHref),
+        ).toBeObservable(
+          cold('(a|)', {
+            a: expected,
+          }),
+        );
       });
-
     });
     describe('when getBrowseItemsFor is called with a valid filter value and authority key', () => {
       it('should call hrefOnlyDataService.findListByHref with the expected href', () => {
-        const expected = browseDefinitions[1]._links.items.href +
-          '?filterValue=' + encodeURIComponent(mockAuthorName) +
-          '&filterAuthority=' + encodeURIComponent(mockAuthorityKey);
+        const expected =
+          browseDefinitions[1]._links.items.href +
+          '?filterValue=' +
+          encodeURIComponent(mockAuthorName) +
+          '&filterAuthority=' +
+          encodeURIComponent(mockAuthorityKey);
 
-        scheduler.schedule(() => service.getBrowseItemsFor(mockAuthorName, mockAuthorityKey, new BrowseEntrySearchOptions(browseDefinitions[1].id)).subscribe());
+        scheduler.schedule(() =>
+          service
+            .getBrowseItemsFor(
+              mockAuthorName,
+              mockAuthorityKey,
+              new BrowseEntrySearchOptions(browseDefinitions[1].id),
+            )
+            .subscribe(),
+        );
         scheduler.flush();
 
-        expect(getFirstUsedArgumentOfSpyMethod(hrefOnlyDataService.findListByHref)).toBeObservable(cold('(a|)', {
-          a: expected,
-        }));
+        expect(
+          getFirstUsedArgumentOfSpyMethod(hrefOnlyDataService.findListByHref),
+        ).toBeObservable(
+          cold('(a|)', {
+            a: expected,
+          }),
+        );
       });
     });
   });
 
   describe('getBrowseURLFor', () => {
-
     describe('if getBrowseDefinitions fires', () => {
       beforeEach(() => {
         requestService = getMockRequestService(getRequestEntry$(true));
         rdbService = getMockRemoteDataBuildService();
         service = initTestService();
-        spyOn(service, 'getBrowseDefinitions').and
-          .returnValue(hot('--a-', {
-            a: createSuccessfulRemoteDataObject(createPaginatedList(browseDefinitions)),
-          }));
+        spyOn(service, 'getBrowseDefinitions').and.returnValue(
+          hot('--a-', {
+            a: createSuccessfulRemoteDataObject(
+              createPaginatedList(browseDefinitions),
+            ),
+          }),
+        );
       });
 
       it('should return the URL for the given metadataKey and linkPath', () => {
@@ -235,7 +269,7 @@ describe('BrowseService', () => {
       });
 
       it('should work when the definition uses a wildcard in the metadataKey', () => {
-        const metadataKey = 'dc.contributor.author';  // should match dc.contributor.* in the definition
+        const metadataKey = 'dc.contributor.author'; // should match dc.contributor.* in the definition
         const linkPath = 'items';
         const expectedURL = browseDefinitions[1]._links[linkPath];
 
@@ -245,35 +279,45 @@ describe('BrowseService', () => {
         expect(result).toBeObservable(expected);
       });
 
-      it('should throw an error when the key doesn\'t match', () => {
+      it("should throw an error when the key doesn't match", () => {
         const metadataKey = 'dc.title'; // isn't in the definitions
         const linkPath = 'items';
 
         const result = service.getBrowseURLFor(metadataKey, linkPath);
-        const expected = cold('c-#-', { c: undefined }, new Error(`A browse endpoint for ${linkPath} on ${metadataKey} isn't configured`));
+        const expected = cold(
+          'c-#-',
+          { c: undefined },
+          new Error(
+            `A browse endpoint for ${linkPath} on ${metadataKey} isn't configured`,
+          ),
+        );
 
         expect(result).toBeObservable(expected);
       });
 
-      it('should throw an error when the link doesn\'t match', () => {
+      it("should throw an error when the link doesn't match", () => {
         const metadataKey = 'dc.date.issued';
         const linkPath = 'collections'; // isn't in the definitions
 
         const result = service.getBrowseURLFor(metadataKey, linkPath);
-        const expected = cold('c-#-', { c: undefined }, new Error(`A browse endpoint for ${linkPath} on ${metadataKey} isn't configured`));
+        const expected = cold(
+          'c-#-',
+          { c: undefined },
+          new Error(
+            `A browse endpoint for ${linkPath} on ${metadataKey} isn't configured`,
+          ),
+        );
 
         expect(result).toBeObservable(expected);
       });
-
     });
 
-    describe('if getBrowseDefinitions doesn\'t fire', () => {
+    describe("if getBrowseDefinitions doesn't fire", () => {
       it('should return undefined', () => {
         requestService = getMockRequestService(getRequestEntry$(true));
         rdbService = getMockRemoteDataBuildService();
         service = initTestService();
-        spyOn(service, 'getBrowseDefinitions').and
-          .returnValue(hot('----'));
+        spyOn(service, 'getBrowseDefinitions').and.returnValue(hot('----'));
 
         const metadataKey = 'dc.date.issued';
         const linkPath = 'items';
@@ -294,18 +338,23 @@ describe('BrowseService', () => {
     });
 
     describe('when getFirstItemFor is called with a valid browse definition id', () => {
-      const expectedURL = browseDefinitions[1]._links.items.href + '?page=0&size=1';
+      const expectedURL =
+        browseDefinitions[1]._links.items.href + '?page=0&size=1';
 
       it('should call hrefOnlyDataService.findListByHref with the expected href', () => {
-        scheduler.schedule(() => service.getFirstItemFor(browseDefinitions[1].id).subscribe());
+        scheduler.schedule(() =>
+          service.getFirstItemFor(browseDefinitions[1].id).subscribe(),
+        );
         scheduler.flush();
 
-        expect(getFirstUsedArgumentOfSpyMethod(hrefOnlyDataService.findListByHref)).toBeObservable(cold('(a|)', {
-          a: expectedURL,
-        }));
+        expect(
+          getFirstUsedArgumentOfSpyMethod(hrefOnlyDataService.findListByHref),
+        ).toBeObservable(
+          cold('(a|)', {
+            a: expectedURL,
+          }),
+        );
       });
-
     });
   });
-
 });

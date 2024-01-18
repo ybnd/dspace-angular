@@ -12,22 +12,11 @@ import { SharedModule } from '../../shared/shared.module';
 import { ItemVersionsComponent } from './item-versions.component';
 import { ItemVersionsNoticeComponent } from './notice/item-versions-notice.component';
 
-const DECLARATIONS = [
-  ItemVersionsComponent,
-  ItemVersionsNoticeComponent,
-];
+const DECLARATIONS = [ItemVersionsComponent, ItemVersionsNoticeComponent];
 
 @NgModule({
-  imports: [
-    SharedModule,
-  ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  imports: [SharedModule],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
 })
-export class ItemVersionsModule {
-
-}
+export class ItemVersionsModule {}

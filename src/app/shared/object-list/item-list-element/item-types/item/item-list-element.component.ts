@@ -15,5 +15,4 @@ import { AbstractListableElementComponent } from '../../../../object-collection/
 /**
  * The component for displaying a list element for an item of the type Publication
  */
-export class ItemListElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class ItemListElementComponent extends AbstractListableElementComponent<Item> {}

@@ -64,33 +64,41 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
    * @param {NgbModal} modalService
    * @param {Router} router
    */
-  constructor(private authService: AuthService,
-              private changeDetectorRef: ChangeDetectorRef,
-              private halService: HALEndpointService,
-              private notificationsService: NotificationsService,
-              private translate: TranslateService,
-              private modalService: NgbModal,
-              private router: Router) {
-  }
+  constructor(
+    private authService: AuthService,
+    private changeDetectorRef: ChangeDetectorRef,
+    private halService: HALEndpointService,
+    private notificationsService: NotificationsService,
+    private translate: TranslateService,
+    private modalService: NgbModal,
+    private router: Router,
+  ) {}
 
   /**
    * Initialize url and Bearer token
    */
   ngOnInit() {
     this.uploadFilesOptions.autoUpload = false;
-    this.sub = this.halService.getEndpoint('workspaceitems').pipe(first()).subscribe((url) => {
-      this.uploadFilesOptions.url = url;
-      this.uploadFilesOptions.authToken = this.authService.buildAuthHeader();
-      this.changeDetectorRef.detectChanges();
-    },
-    );
+    this.sub = this.halService
+      .getEndpoint('workspaceitems')
+      .pipe(first())
+      .subscribe((url) => {
+        this.uploadFilesOptions.url = url;
+        this.uploadFilesOptions.authToken = this.authService.buildAuthHeader();
+        this.changeDetectorRef.detectChanges();
+      });
   }
 
   /**
    * Method called when file upload is completed to notify upload status
    */
   public onCompleteItem(res) {
-    if (res && res._embedded && res._embedded.workspaceitems && res._embedded.workspaceitems.length > 0) {
+    if (
+      res &&
+      res._embedded &&
+      res._embedded.workspaceitems &&
+      res._embedded.workspaceitems.length > 0
+    ) {
       const workspaceitems = res._embedded.workspaceitems;
       this.uploadEnd.emit(workspaceitems);
 
@@ -99,11 +107,18 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
         // To avoid confusion and ambiguity, redirect the user on the publication page.
         this.router.navigateByUrl(link);
       } else if (workspaceitems.length > 1) {
-        this.notificationsService.success(null, this.translate.get('mydspace.upload.upload-multiple-successful', { qty: workspaceitems.length }));
+        this.notificationsService.success(
+          null,
+          this.translate.get('mydspace.upload.upload-multiple-successful', {
+            qty: workspaceitems.length,
+          }),
+        );
       }
-
     } else {
-      this.notificationsService.error(null, this.translate.get('mydspace.upload.upload-failed'));
+      this.notificationsService.error(
+        null,
+        this.translate.get('mydspace.upload.upload-failed'),
+      );
     }
   }
 
@@ -124,14 +139,17 @@ export class MyDSpaceNewSubmissionComponent implements OnDestroy, OnInit {
   afterFileLoaded(items) {
     const uploader = this.uploaderComponent.uploader;
     if (hasValue(items) && items.length > 1) {
-      this.notificationsService.error(null, this.translate.get('mydspace.upload.upload-failed-moreonefile'));
+      this.notificationsService.error(
+        null,
+        this.translate.get('mydspace.upload.upload-failed-moreonefile'),
+      );
       uploader.clearQueue();
       this.changeDetectorRef.detectChanges();
     } else {
       const modalRef = this.modalService.open(CollectionSelectorComponent);
       // When the dialog are closes its takes the collection selected and
       // uploads choosed file after adds owningCollection parameter
-      modalRef.result.then( (result) => {
+      modalRef.result.then((result) => {
         uploader.onBuildItemForm = (fileItem: any, form: any) => {
           form.append('owningCollection', result.uuid);
         };

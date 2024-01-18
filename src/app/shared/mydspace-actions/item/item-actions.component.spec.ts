@@ -3,16 +3,9 @@ import {
   Injector,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { ItemDataService } from '../../../core/data/item-data.service';
@@ -84,14 +77,19 @@ describe('ItemActionsComponent', () => {
         { provide: Injector, useValue: {} },
         { provide: Router, useValue: new RouterStub() },
         { provide: ItemDataService, useValue: mockDataService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestServce },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemActionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemActionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -112,5 +110,4 @@ describe('ItemActionsComponent', () => {
 
     expect(component.object).toEqual(mockObject);
   });
-
 });

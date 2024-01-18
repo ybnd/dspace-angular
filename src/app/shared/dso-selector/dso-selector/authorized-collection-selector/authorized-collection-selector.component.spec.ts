@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -31,10 +27,16 @@ describe('AuthorizedCollectionSelectorComponent', () => {
       id: 'authorized-collection',
     });
     collectionService = jasmine.createSpyObj('collectionService', {
-      getAuthorizedCollection: createSuccessfulRemoteDataObject$(createPaginatedList([collection])),
-      getAuthorizedCollectionByEntityType: createSuccessfulRemoteDataObject$(createPaginatedList([collection])),
+      getAuthorizedCollection: createSuccessfulRemoteDataObject$(
+        createPaginatedList([collection]),
+      ),
+      getAuthorizedCollectionByEntityType: createSuccessfulRemoteDataObject$(
+        createPaginatedList([collection]),
+      ),
     });
-    notificationsService = jasmine.createSpyObj('notificationsService', ['error']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'error',
+    ]);
     TestBed.configureTestingModule({
       declarations: [AuthorizedCollectionSelectorComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
@@ -71,7 +73,9 @@ describe('AuthorizedCollectionSelectorComponent', () => {
         component.entityType = 'test';
         fixture.detectChanges();
         component.search('', 1).subscribe((resultRD) => {
-          expect(collectionService.getAuthorizedCollectionByEntityType).toHaveBeenCalled();
+          expect(
+            collectionService.getAuthorizedCollectionByEntityType,
+          ).toHaveBeenCalled();
           expect(resultRD.payload.page.length).toEqual(1);
           expect(resultRD.payload.page[0].indexableObject).toEqual(collection);
           done();

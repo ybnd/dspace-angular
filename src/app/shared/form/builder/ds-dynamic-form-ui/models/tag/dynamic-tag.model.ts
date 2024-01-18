@@ -17,12 +17,13 @@ export interface DynamicTagModelConfig extends DsDynamicInputModelConfig {
 }
 
 export class DynamicTagModel extends DsDynamicInputModel {
-
   @serializable() minChars: number;
   @serializable() readonly type: string = DYNAMIC_FORM_CONTROL_TYPE_TAG;
 
-  constructor(config: DynamicTagModelConfig, layout?: DynamicFormControlLayout) {
-
+  constructor(
+    config: DynamicTagModelConfig,
+    layout?: DynamicFormControlLayout,
+  ) {
     super(config, layout);
 
     this.autoComplete = AUTOCOMPLETE_OFF;
@@ -30,5 +31,4 @@ export class DynamicTagModel extends DsDynamicInputModel {
     const value = config.value || [];
     this.value = value;
   }
-
 }

@@ -13,10 +13,7 @@ import {
   combineLatest as observableCombineLatest,
   Subscription,
 } from 'rxjs';
-import {
-  map,
-  startWith,
-} from 'rxjs/operators';
+import { map, startWith } from 'rxjs/operators';
 import { yearFromString } from 'src/app/shared/date.util';
 
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
@@ -60,12 +57,14 @@ export const RANGE_FILTER_MAX_SUFFIX = '.max';
   templateUrl: './search-range-filter.component.html',
   animations: [facetLoad],
 })
-
 /**
  * Component that represents a range facet for a specific filter configuration
  */
 @renderFacetFor(FilterType.range)
-export class SearchRangeFilterComponent extends SearchFacetFilterComponent implements OnInit, OnDestroy {
+export class SearchRangeFilterComponent
+  extends SearchFacetFilterComponent
+  implements OnInit, OnDestroy
+{
   /**
    * Fallback minimum for the range
    */
@@ -108,19 +107,30 @@ export class SearchRangeFilterComponent extends SearchFacetFilterComponent imple
    */
   keyboardControl: boolean;
 
-  constructor(protected searchService: SearchService,
-              protected filterService: SearchFilterService,
-              protected router: Router,
-              protected rdbs: RemoteDataBuildService,
-              private translateService: TranslateService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService,
-              @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
-              @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig,
-              @Inject(PLATFORM_ID) private platformId: any,
-              @Inject(REFRESH_FILTER) public refreshFilters: BehaviorSubject<boolean>,
-              private route: RouteService) {
-    super(searchService, filterService, rdbs, router, searchConfigService, inPlaceSearch, filterConfig, refreshFilters);
-
+  constructor(
+    protected searchService: SearchService,
+    protected filterService: SearchFilterService,
+    protected router: Router,
+    protected rdbs: RemoteDataBuildService,
+    private translateService: TranslateService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService,
+    @Inject(IN_PLACE_SEARCH) public inPlaceSearch: boolean,
+    @Inject(FILTER_CONFIG) public filterConfig: SearchFilterConfig,
+    @Inject(PLATFORM_ID) private platformId: any,
+    @Inject(REFRESH_FILTER) public refreshFilters: BehaviorSubject<boolean>,
+    private route: RouteService,
+  ) {
+    super(
+      searchService,
+      filterService,
+      rdbs,
+      router,
+      searchConfigService,
+      inPlaceSearch,
+      filterConfig,
+      refreshFilters,
+    );
   }
 
   /**
@@ -131,17 +141,31 @@ export class SearchRangeFilterComponent extends SearchFacetFilterComponent imple
     super.ngOnInit();
     this.min = yearFromString(this.filterConfig.minValue) || this.min;
     this.max = yearFromString(this.filterConfig.maxValue) || this.max;
-    this.minLabel = this.translateService.instant('search.filters.filter.' + this.filterConfig.name + '.min.placeholder');
-    this.maxLabel = this.translateService.instant('search.filters.filter.' + this.filterConfig.name + '.max.placeholder');
-    const iniMin = this.route.getQueryParameterValue(this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX).pipe(startWith(undefined));
-    const iniMax = this.route.getQueryParameterValue(this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX).pipe(startWith(undefined));
-    this.sub = observableCombineLatest(iniMin, iniMax).pipe(
-      map(([min, max]) => {
-        const minimum = hasValue(min) ? min : this.min;
-        const maximum = hasValue(max) ? max : this.max;
-        return [minimum, maximum];
-      }),
-    ).subscribe((minmax) => this.range = minmax);
+    this.minLabel = this.translateService.instant(
+      'search.filters.filter.' + this.filterConfig.name + '.min.placeholder',
+    );
+    this.maxLabel = this.translateService.instant(
+      'search.filters.filter.' + this.filterConfig.name + '.max.placeholder',
+    );
+    const iniMin = this.route
+      .getQueryParameterValue(
+        this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX,
+      )
+      .pipe(startWith(undefined));
+    const iniMax = this.route
+      .getQueryParameterValue(
+        this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX,
+      )
+      .pipe(startWith(undefined));
+    this.sub = observableCombineLatest(iniMin, iniMax)
+      .pipe(
+        map(([min, max]) => {
+          const minimum = hasValue(min) ? min : this.min;
+          const maximum = hasValue(max) ? max : this.max;
+          return [minimum, maximum];
+        }),
+      )
+      .subscribe((minmax) => (this.range = minmax));
 
     // Default/base config for nouislider
     this.config = {
@@ -158,17 +182,16 @@ export class SearchRangeFilterComponent extends SearchFacetFilterComponent imple
    */
   onSubmit() {
     if (this.keyboardControl) {
-      return;  // don't submit if a key is being held down
+      return; // don't submit if a key is being held down
     }
 
     const newMin = this.range[0] !== this.min ? [this.range[0]] : null;
     const newMax = this.range[1] !== this.max ? [this.range[1]] : null;
     this.router.navigate(this.getSearchLinkParts(), {
-      queryParams:
-        {
-          [this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX]: newMin,
-          [this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX]: newMax,
-        },
+      queryParams: {
+        [this.filterConfig.paramName + RANGE_FILTER_MIN_SUFFIX]: newMin,
+        [this.filterConfig.paramName + RANGE_FILTER_MAX_SUFFIX]: newMax,
+      },
       queryParamsHandling: 'merge',
     });
     this.filter = '';

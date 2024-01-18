@@ -1,13 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  NgbAccordionModule,
-  NgbNavModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { NgbAccordionModule, NgbNavModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
@@ -29,28 +22,29 @@ describe('BulkAccessBrowseComponent', () => {
   const selected1 = new SelectableObject(value1);
   const selected2 = new SelectableObject(value2);
 
-  const testSelection = { id: listID1, selection: [selected1, selected2] } ;
+  const testSelection = { id: listID1, selection: [selected1, selected2] };
 
-  const selectableListService = jasmine.createSpyObj('SelectableListService', ['getSelectableList', 'deselectAll']);
+  const selectableListService = jasmine.createSpyObj('SelectableListService', [
+    'getSelectableList',
+    'deselectAll',
+  ]);
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgbAccordionModule,
-        NgbNavModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [NgbAccordionModule, NgbNavModule, TranslateModule.forRoot()],
       declarations: [BulkAccessBrowseComponent],
-      providers: [ { provide: SelectableListService, useValue: selectableListService } ],
-      schemas: [
-        NO_ERRORS_SCHEMA,
+      providers: [
+        { provide: SelectableListService, useValue: selectableListService },
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(BulkAccessBrowseComponent);
     component = fixture.componentInstance;
-    (component as any).selectableListService.getSelectableList.and.returnValue(of(testSelection));
+    (component as any).selectableListService.getSelectableList.and.returnValue(
+      of(testSelection),
+    );
     fixture.detectChanges();
   });
 
@@ -74,15 +68,17 @@ describe('BulkAccessBrowseComponent', () => {
   });
 
   it('should have an initial remote data with a paginated list as value', () => {
-    const list = buildPaginatedList(new PageInfo({
-      'elementsPerPage': 5,
-      'totalElements': 2,
-      'totalPages': 1,
-      'currentPage': 1,
-    }), [selected1, selected2]) ;
+    const list = buildPaginatedList(
+      new PageInfo({
+        elementsPerPage: 5,
+        totalElements: 2,
+        totalPages: 1,
+        currentPage: 1,
+      }),
+      [selected1, selected2],
+    );
     const rd = createSuccessfulRemoteDataObject(list);
 
     expect(component.objectsSelected$.value).toEqual(rd);
   });
-
 });

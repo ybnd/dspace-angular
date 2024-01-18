@@ -15,12 +15,12 @@ import { FeatureID } from '../data/feature-authorization/feature-id';
  */
 @Injectable()
 export class FeedbackGuard implements CanActivate {
+  constructor(private authorizationService: AuthorizationDataService) {}
 
-  constructor(private authorizationService: AuthorizationDataService) {
-  }
-
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> {
     return this.authorizationService.isAuthorized(FeatureID.CanSendFeedback);
   }
-
 }

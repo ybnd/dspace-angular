@@ -25,18 +25,19 @@ describe('MetadataSchemaFormComponent', () => {
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
   const registryServiceStub = {
     getActiveMetadataSchema: () => observableOf(undefined),
-    createOrUpdateMetadataSchema: (schema: MetadataSchema) => observableOf(schema),
-    cancelEditMetadataSchema: () => {
-    },
+    createOrUpdateMetadataSchema: (schema: MetadataSchema) =>
+      observableOf(schema),
+    cancelEditMetadataSchema: () => {},
     clearMetadataSchemaRequests: () => observableOf(undefined),
   };
   const formBuilderServiceStub = {
     createFormGroup: () => {
       return {
-        patchValue: () => {
-        },
-        reset(_value?: any, _options?: { onlySelf?: boolean; emitEvent?: boolean; }): void {
-        },
+        patchValue: () => {},
+        reset(
+          _value?: any,
+          _options?: { onlySelf?: boolean; emitEvent?: boolean },
+        ): void {},
       };
     },
   };
@@ -44,7 +45,12 @@ describe('MetadataSchemaFormComponent', () => {
 
   beforeEach(waitForAsync(() => {
     return TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [MetadataSchemaFormComponent, EnumKeysPipe],
       providers: [
         { provide: RegistryService, useValue: registryServiceStub },
@@ -81,7 +87,9 @@ describe('MetadataSchemaFormComponent', () => {
 
     describe('without an active schema', () => {
       beforeEach(() => {
-        spyOn(registryService, 'getActiveMetadataSchema').and.returnValue(observableOf(undefined));
+        spyOn(registryService, 'getActiveMetadataSchema').and.returnValue(
+          observableOf(undefined),
+        );
         component.onSubmit();
         fixture.detectChanges();
       });
@@ -100,7 +108,9 @@ describe('MetadataSchemaFormComponent', () => {
       } as MetadataSchema);
 
       beforeEach(() => {
-        spyOn(registryService, 'getActiveMetadataSchema').and.returnValue(observableOf(expectedWithId));
+        spyOn(registryService, 'getActiveMetadataSchema').and.returnValue(
+          observableOf(expectedWithId),
+        );
         component.onSubmit();
         fixture.detectChanges();
       });

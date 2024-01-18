@@ -1,20 +1,8 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  combineLatest as observableCombineLatest,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -65,9 +53,7 @@ export class DenyRequestCopyComponent implements OnInit {
     private nameService: DSONameService,
     private itemRequestService: ItemRequestDataService,
     private notificationsService: NotificationsService,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.itemRequestRD$ = this.route.data.pipe(
@@ -97,9 +83,13 @@ export class DenyRequestCopyComponent implements OnInit {
       }),
     );
 
-    this.subject$ = this.translateService.get('deny-request-copy.email.subject');
+    this.subject$ = this.translateService.get(
+      'deny-request-copy.email.subject',
+    );
     this.message$ = msgParams$.pipe(
-      switchMap((params) => this.translateService.get('deny-request-copy.email.message', params)),
+      switchMap((params) =>
+        this.translateService.get('deny-request-copy.email.message', params),
+      ),
     );
   }
 
@@ -108,18 +98,26 @@ export class DenyRequestCopyComponent implements OnInit {
    * @param email Subject and contents of the message to send back to the user requesting the item
    */
   deny(email: RequestCopyEmail) {
-    this.itemRequestRD$.pipe(
-      getFirstSucceededRemoteDataPayload(),
-      switchMap((itemRequest: ItemRequest) => this.itemRequestService.deny(itemRequest.token, email)),
-      getFirstCompletedRemoteData(),
-    ).subscribe((rd) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get('deny-request-copy.success'));
-        this.router.navigateByUrl('/');
-      } else {
-        this.notificationsService.error(this.translateService.get('deny-request-copy.error'), rd.errorMessage);
-      }
-    });
+    this.itemRequestRD$
+      .pipe(
+        getFirstSucceededRemoteDataPayload(),
+        switchMap((itemRequest: ItemRequest) =>
+          this.itemRequestService.deny(itemRequest.token, email),
+        ),
+        getFirstCompletedRemoteData(),
+      )
+      .subscribe((rd) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get('deny-request-copy.success'),
+          );
+          this.router.navigateByUrl('/');
+        } else {
+          this.notificationsService.error(
+            this.translateService.get('deny-request-copy.error'),
+            rd.errorMessage,
+          );
+        }
+      });
   }
-
 }

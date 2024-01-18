@@ -1,8 +1,5 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -21,7 +18,6 @@ import { RouteService } from './route.service';
  */
 @Injectable()
 export class BrowserReferrerService extends ReferrerService {
-
   constructor(
     @Inject(DOCUMENT) protected document: any,
     protected routeService: RouteService,
@@ -43,14 +39,22 @@ export class BrowserReferrerService extends ReferrerService {
         // if the current URL isn't set yet, or the only URL in the history is the current one,
         // return document.referrer (note that that may be empty too, e.g. if you've just opened a
         // new browser tab)
-        if (hasNoValue(currentURL) || history.every((url: string) => url === currentURL)) {
+        if (
+          hasNoValue(currentURL) ||
+          history.every((url: string) => url === currentURL)
+        ) {
           return this.document.referrer;
         } else {
           // reverse the history
           const reversedHistory = [...history].reverse();
           // and find the first URL that differs from the current one
-          const prevUrl = reversedHistory.find((url: string) => url !== currentURL);
-          return new URLCombiner(this.hardRedirectService.getCurrentOrigin(), prevUrl).toString();
+          const prevUrl = reversedHistory.find(
+            (url: string) => url !== currentURL,
+          );
+          return new URLCombiner(
+            this.hardRedirectService.getCurrentOrigin(),
+            prevUrl,
+          ).toString();
         }
       }),
     );

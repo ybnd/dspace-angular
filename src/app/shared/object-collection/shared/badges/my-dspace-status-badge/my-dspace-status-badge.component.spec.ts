@@ -1,17 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { Context } from '../../../../../core/shared/context.model';
@@ -28,9 +18,13 @@ let fixture: ComponentFixture<MyDSpaceStatusBadgeComponent>;
 let mockResultObject: PoolTask;
 
 const rdSumbitter = createSuccessfulRemoteDataObject(EPersonMock);
-const workflowitem = Object.assign(new WorkflowItem(), { submitter: observableOf(rdSumbitter) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  submitter: observableOf(rdSumbitter),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject = Object.assign(new PoolTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject = Object.assign(new PoolTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 
 describe('MyDSpaceItemStatusComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -45,9 +39,11 @@ describe('MyDSpaceItemStatusComponent', () => {
       ],
       declarations: [MyDSpaceStatusBadgeComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(MyDSpaceStatusBadgeComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(MyDSpaceStatusBadgeComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -71,7 +67,9 @@ describe('MyDSpaceItemStatusComponent', () => {
     component.context = Context.MyDSpaceWaitingController;
     fixture.detectChanges();
     expect(component.badgeContent).toBe(Context.MyDSpaceWaitingController);
-    expect(component.badgeClass).toBe('text-light badge badge-waiting-controller');
+    expect(component.badgeClass).toBe(
+      'text-light badge badge-waiting-controller',
+    );
   });
 
   it('should init badge content and class', () => {

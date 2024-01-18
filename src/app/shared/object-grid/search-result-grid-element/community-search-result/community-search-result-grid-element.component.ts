@@ -1,17 +1,11 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 import { LinkService } from '../../../../core/cache/builders/link.service';
 import { BitstreamDataService } from '../../../../core/data/bitstream-data.service';
 import { Community } from '../../../../core/shared/community.model';
 import { ViewMode } from '../../../../core/shared/view-mode.model';
-import {
-  hasNoValue,
-  hasValue,
-} from '../../../empty.util';
+import { hasNoValue, hasValue } from '../../../empty.util';
 import { CommunitySearchResult } from '../../../object-collection/shared/community-search-result.model';
 import { listableObjectComponent } from '../../../object-collection/shared/listable-object/listable-object.decorator';
 import { TruncatableService } from '../../../truncatable/truncatable.service';
@@ -30,7 +24,10 @@ import { SearchResultGridElementComponent } from '../search-result-grid-element.
  * Component representing a grid element for a community search result
  */
 @listableObjectComponent(CommunitySearchResult, ViewMode.GridElement)
-export class CommunitySearchResultGridElementComponent extends SearchResultGridElementComponent<CommunitySearchResult,Community> {
+export class CommunitySearchResultGridElementComponent extends SearchResultGridElementComponent<
+  CommunitySearchResult,
+  Community
+> {
   private _dso: Community;
 
   constructor(

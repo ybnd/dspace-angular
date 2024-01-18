@@ -1,12 +1,6 @@
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { NavigationEnd } from '@angular/router';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
@@ -52,9 +46,7 @@ describe('MenuService', () => {
   let route;
   let router;
 
-
   function init() {
-
     visibleSection1 = {
       id: 'section',
       visible: true,
@@ -92,7 +84,7 @@ describe('MenuService', () => {
       sections: topSections,
       previewCollapsed: true,
       sectionToSubsectionIndex: {
-        'section': ['section_4'],
+        section: ['section_4'],
       },
     } as any;
 
@@ -169,7 +161,10 @@ describe('MenuService', () => {
         snapshot: {
           data: {
             menu: {
-              [MenuID.PUBLIC]: [routeDataMenuSection, alreadyPresentMenuSection],
+              [MenuID.PUBLIC]: [
+                routeDataMenuSection,
+                alreadyPresentMenuSection,
+              ],
             },
           },
           params: {
@@ -194,7 +189,6 @@ describe('MenuService', () => {
               },
             },
           },
-
         },
       },
     };
@@ -225,7 +219,6 @@ describe('MenuService', () => {
 
   describe('getMenu', () => {
     it('should return the menu', () => {
-
       const result = service.getMenu(MenuID.ADMIN);
       const expected = cold('b', {
         b: fakeMenu,
@@ -236,9 +229,7 @@ describe('MenuService', () => {
   });
 
   describe('getMenuTopSections', () => {
-
     it('should return only the visible top MenuSections when mustBeVisible is true', () => {
-
       const result = service.getMenuTopSections(MenuID.ADMIN);
       const expected = cold('b', {
         b: [visibleSection1, visibleSection2],
@@ -248,7 +239,6 @@ describe('MenuService', () => {
     });
 
     it('should return only the all top MenuSections when mustBeVisible is false', () => {
-
       const result = service.getMenuTopSections(MenuID.ADMIN, false);
       const expected = cold('b', {
         b: [visibleSection1, visibleSection2, hiddenSection3],
@@ -261,8 +251,10 @@ describe('MenuService', () => {
   describe('getSubSectionsByParentID', () => {
     describe('when the subsection list is not empty', () => {
       it('should return the MenuSections with the given parentID', () => {
-
-        const result = service.getSubSectionsByParentID(MenuID.ADMIN, 'section');
+        const result = service.getSubSectionsByParentID(
+          MenuID.ADMIN,
+          'section',
+        );
         const expected = cold('b', {
           b: [subSection4],
         });
@@ -272,7 +264,6 @@ describe('MenuService', () => {
     });
     describe('when the subsection list is undefined', () => {
       it('should return an observable that emits nothing', () => {
-
         const result = service.getSubSectionsByParentID(MenuID.ADMIN, 'fakeId');
         const expected = cold('');
 
@@ -283,9 +274,7 @@ describe('MenuService', () => {
 
   describe('hasSubSections', () => {
     describe('when the subsection list is not empty', () => {
-
       it('should return true', () => {
-
         const result = service.hasSubSections(MenuID.ADMIN, 'section');
         const expected = cold('b', {
           b: true,
@@ -297,7 +286,6 @@ describe('MenuService', () => {
 
     describe('when the subsection list is empty', () => {
       it('should return false', () => {
-
         const result = service.hasSubSections(MenuID.ADMIN, 'fakeId');
         const expected = cold('b', {
           b: false,
@@ -310,7 +298,6 @@ describe('MenuService', () => {
 
   describe('getMenuSection', () => {
     it('should return menu section', () => {
-
       const result = service.getMenuSection(MenuID.ADMIN, 'section_3');
       const expected = cold('b', {
         b: hiddenSection3,
@@ -320,7 +307,6 @@ describe('MenuService', () => {
     });
 
     it('should return undefined', () => {
-
       const result = service.getMenuSection(MenuID.ADMIN, 'fake');
       const expected = cold('b', {
         b: undefined,
@@ -335,7 +321,6 @@ describe('MenuService', () => {
       spyOn(service, 'getMenu').and.returnValue(observableOf(fakeMenu));
     });
     it('should return true when the menu is collapsed', () => {
-
       const result = service.isMenuCollapsed(MenuID.ADMIN);
       const expected = cold('(b|)', {
         b: fakeMenu.collapsed,
@@ -349,8 +334,7 @@ describe('MenuService', () => {
     beforeEach(() => {
       spyOn(service, 'getMenu').and.returnValue(observableOf(fakeMenu));
     });
-    it('should return true when the menu\'s preview is collapsed', () => {
-
+    it("should return true when the menu's preview is collapsed", () => {
       const result = service.isMenuPreviewCollapsed(MenuID.ADMIN);
       const expected = cold('(b|)', {
         b: fakeMenu.previewCollapsed,
@@ -394,8 +378,8 @@ describe('MenuService', () => {
         sections: noTopLevelVisibleSections,
         previewCollapsed: false,
         sectionToSubsectionIndex: {
-          'section': ['section_4'],
-          'section_2': ['section_5'],
+          section: ['section_4'],
+          section_2: ['section_5'],
         },
       } as any;
       spyOn(service, 'getMenu').and.returnValue(observableOf(testMenu));
@@ -423,8 +407,8 @@ describe('MenuService', () => {
         sections: noTopLevelVisibleSections,
         previewCollapsed: false,
         sectionToSubsectionIndex: {
-          'section': ['section_4'],
-          'section_2': ['section_5'],
+          section: ['section_4'],
+          section_2: ['section_5'],
         },
       } as any;
       spyOn(service, 'getMenu').and.returnValue(observableOf(testMenu));
@@ -441,10 +425,8 @@ describe('MenuService', () => {
   describe('isMenuVisible', () => {
     beforeEach(() => {
       spyOn(service, 'getMenu').and.returnValue(observableOf(fakeMenu));
-
     });
     it('should return false when the menu is hidden', () => {
-
       const result = service.isMenuVisible(MenuID.ADMIN);
       const expected = cold('(b|)', {
         b: fakeMenu.visible,
@@ -456,7 +438,9 @@ describe('MenuService', () => {
 
   describe('isSectionActive', () => {
     beforeEach(() => {
-      spyOn(service, 'getMenuSection').and.returnValue(observableOf(visibleSection1 as MenuSection));
+      spyOn(service, 'getMenuSection').and.returnValue(
+        observableOf(visibleSection1 as MenuSection),
+      );
     });
 
     it('should return false when the section is not active', () => {
@@ -471,7 +455,9 @@ describe('MenuService', () => {
 
   describe('isSectionVisible', () => {
     beforeEach(() => {
-      spyOn(service, 'getMenuSection').and.returnValue(observableOf(hiddenSection3 as MenuSection));
+      spyOn(service, 'getMenuSection').and.returnValue(
+        observableOf(hiddenSection3 as MenuSection),
+      );
     });
 
     it('should return false when the section is hidden', () => {
@@ -486,84 +472,108 @@ describe('MenuService', () => {
   describe('addSection', () => {
     it('should dispatch an AddMenuSectionAction with the correct arguments', () => {
       service.addSection(MenuID.ADMIN, visibleSection1 as any);
-      expect(store.dispatch).toHaveBeenCalledWith(new AddMenuSectionAction(MenuID.ADMIN, visibleSection1 as any));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new AddMenuSectionAction(MenuID.ADMIN, visibleSection1 as any),
+      );
     });
   });
 
   describe('removeSection', () => {
     it('should dispatch an RemoveMenuSectionAction with the correct arguments', () => {
       service.removeSection(MenuID.ADMIN, 'fakeID');
-      expect(store.dispatch).toHaveBeenCalledWith(new RemoveMenuSectionAction(MenuID.ADMIN, 'fakeID'));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new RemoveMenuSectionAction(MenuID.ADMIN, 'fakeID'),
+      );
     });
   });
 
   describe('expandMenu', () => {
     it('should dispatch an ExpandMenuAction with the correct arguments', () => {
       service.expandMenu(MenuID.ADMIN);
-      expect(store.dispatch).toHaveBeenCalledWith(new ExpandMenuAction(MenuID.ADMIN));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new ExpandMenuAction(MenuID.ADMIN),
+      );
     });
   });
 
   describe('collapseMenu', () => {
     it('should dispatch an CollapseMenuAction with the correct arguments', () => {
       service.collapseMenu(MenuID.ADMIN);
-      expect(store.dispatch).toHaveBeenCalledWith(new CollapseMenuAction(MenuID.ADMIN));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new CollapseMenuAction(MenuID.ADMIN),
+      );
     });
   });
 
   describe('expandMenuPreview', () => {
     it('should dispatch an ExpandMenuPreviewAction with the correct arguments', () => {
       service.expandMenuPreview(MenuID.ADMIN);
-      expect(store.dispatch).toHaveBeenCalledWith(new ExpandMenuPreviewAction(MenuID.ADMIN));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new ExpandMenuPreviewAction(MenuID.ADMIN),
+      );
     });
   });
 
   describe('collapseMenuPreview', () => {
     it('should dispatch an CollapseMenuPreviewAction with the correct arguments', () => {
       service.collapseMenuPreview(MenuID.ADMIN);
-      expect(store.dispatch).toHaveBeenCalledWith(new CollapseMenuPreviewAction(MenuID.ADMIN));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new CollapseMenuPreviewAction(MenuID.ADMIN),
+      );
     });
   });
 
   describe('toggleMenu', () => {
     it('should dispatch an ToggleMenuAction with the correct arguments', () => {
       service.toggleMenu(MenuID.ADMIN);
-      expect(store.dispatch).toHaveBeenCalledWith(new ToggleMenuAction(MenuID.ADMIN));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new ToggleMenuAction(MenuID.ADMIN),
+      );
     });
   });
 
   describe('showMenu', () => {
     it('should dispatch an ShowMenuAction with the correct arguments', () => {
       service.showMenu(MenuID.ADMIN);
-      expect(store.dispatch).toHaveBeenCalledWith(new ShowMenuAction(MenuID.ADMIN));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new ShowMenuAction(MenuID.ADMIN),
+      );
     });
   });
 
   describe('hideMenu', () => {
     it('should dispatch an HideMenuAction with the correct arguments', () => {
       service.hideMenu(MenuID.ADMIN);
-      expect(store.dispatch).toHaveBeenCalledWith(new HideMenuAction(MenuID.ADMIN));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new HideMenuAction(MenuID.ADMIN),
+      );
     });
   });
 
   describe('toggleActiveSection', () => {
     it('should dispatch an ToggleActiveMenuSectionAction with the correct arguments', () => {
       service.toggleActiveSection(MenuID.ADMIN, 'fakeID');
-      expect(store.dispatch).toHaveBeenCalledWith(new ToggleActiveMenuSectionAction(MenuID.ADMIN, 'fakeID'));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new ToggleActiveMenuSectionAction(MenuID.ADMIN, 'fakeID'),
+      );
     });
   });
 
   describe('activateSection', () => {
     it('should dispatch an ActivateMenuSectionAction with the correct arguments', () => {
       service.activateSection(MenuID.ADMIN, 'fakeID');
-      expect(store.dispatch).toHaveBeenCalledWith(new ActivateMenuSectionAction(MenuID.ADMIN, 'fakeID'));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new ActivateMenuSectionAction(MenuID.ADMIN, 'fakeID'),
+      );
     });
   });
 
   describe('deactivateSection', () => {
     it('should dispatch an DeactivateMenuSectionAction with the correct arguments', () => {
       service.deactivateSection(MenuID.ADMIN, 'fakeID');
-      expect(store.dispatch).toHaveBeenCalledWith(new DeactivateMenuSectionAction(MenuID.ADMIN, 'fakeID'));
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new DeactivateMenuSectionAction(MenuID.ADMIN, 'fakeID'),
+      );
     });
   });
 
@@ -572,15 +582,32 @@ describe('MenuService', () => {
       spyOn(service, 'addSection');
       spyOn(service, 'removeSection');
 
-      spyOn(service, 'getNonPersistentMenuSections').and.returnValue(observableOf([toBeRemovedMenuSection, alreadyPresentMenuSection]));
+      spyOn(service, 'getNonPersistentMenuSections').and.returnValue(
+        observableOf([toBeRemovedMenuSection, alreadyPresentMenuSection]),
+      );
 
       service.buildRouteMenuSections(MenuID.PUBLIC);
 
-      expect(service.addSection).toHaveBeenCalledWith(MenuID.PUBLIC, routeDataMenuSectionResolved);
-      expect(service.addSection).not.toHaveBeenCalledWith(MenuID.PUBLIC, routeDataMenuChildSection);
-      expect(service.addSection).toHaveBeenCalledWith(MenuID.PUBLIC, routeDataMenuOverwrittenChildSection);
-      expect(service.addSection).not.toHaveBeenCalledWith(MenuID.PUBLIC, alreadyPresentMenuSection);
-      expect(service.removeSection).toHaveBeenCalledWith(MenuID.PUBLIC, toBeRemovedMenuSection.id);
+      expect(service.addSection).toHaveBeenCalledWith(
+        MenuID.PUBLIC,
+        routeDataMenuSectionResolved,
+      );
+      expect(service.addSection).not.toHaveBeenCalledWith(
+        MenuID.PUBLIC,
+        routeDataMenuChildSection,
+      );
+      expect(service.addSection).toHaveBeenCalledWith(
+        MenuID.PUBLIC,
+        routeDataMenuOverwrittenChildSection,
+      );
+      expect(service.addSection).not.toHaveBeenCalledWith(
+        MenuID.PUBLIC,
+        alreadyPresentMenuSection,
+      );
+      expect(service.removeSection).toHaveBeenCalledWith(
+        MenuID.PUBLIC,
+        toBeRemovedMenuSection.id,
+      );
     });
   });
 
@@ -591,7 +618,9 @@ describe('MenuService', () => {
       service.listenForRouteChanges();
 
       expect(service.buildRouteMenuSections).toHaveBeenCalledWith(MenuID.ADMIN);
-      expect(service.buildRouteMenuSections).toHaveBeenCalledWith(MenuID.PUBLIC);
+      expect(service.buildRouteMenuSections).toHaveBeenCalledWith(
+        MenuID.PUBLIC,
+      );
     });
   });
 
@@ -616,20 +645,23 @@ describe('MenuService', () => {
     });
 
     it(`should replace link params that are also route params`, () => {
-      const result = (service as any).resolveSubstitutions(link,{ 'id': uuid });
+      const result = (service as any).resolveSubstitutions(link, { id: uuid });
       expect(result).toEqual(linkPrefix + uuid);
     });
 
     it(`should not replace link params that aren't route params`, () => {
-      const result = (service as any).resolveSubstitutions(link,{ 'something': 'else' });
+      const result = (service as any).resolveSubstitutions(link, {
+        something: 'else',
+      });
       expect(result).toEqual(link);
     });
 
     it(`should gracefully deal with routes that contain the name of the route param`, () => {
       const selfReferentialParam = `:id:something`;
-      const result = (service as any).resolveSubstitutions(link,{ 'id': selfReferentialParam });
+      const result = (service as any).resolveSubstitutions(link, {
+        id: selfReferentialParam,
+      });
       expect(result).toEqual(linkPrefix + selfReferentialParam);
     });
   });
-
 });

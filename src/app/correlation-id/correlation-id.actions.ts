@@ -12,8 +12,7 @@ export const CorrelationIDActionTypes = {
 export class SetCorrelationIdAction implements Action {
   type = CorrelationIDActionTypes.SET;
 
-  constructor(public payload: string) {
-  }
+  constructor(public payload: string) {}
 }
 
 /**

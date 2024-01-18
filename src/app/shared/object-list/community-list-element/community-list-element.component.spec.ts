@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
@@ -45,13 +38,18 @@ describe('CommunityListElementComponent', () => {
       declarations: [CommunityListElementComponent],
       providers: [
         { provide: DSONameService, useValue: new DSONameServiceMock() },
-        { provide: 'objectElementProvider', useValue: (mockCommunityWithAbstract) },
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCommunityWithAbstract,
+        },
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(CommunityListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(CommunityListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -66,7 +64,9 @@ describe('CommunityListElementComponent', () => {
     });
 
     it('should show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text'),
+      );
       expect(communityAbstractField).not.toBeNull();
     });
   });
@@ -78,7 +78,9 @@ describe('CommunityListElementComponent', () => {
     });
 
     it('should not show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('div.abstract-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('div.abstract-text'),
+      );
       expect(communityAbstractField).toBeNull();
     });
   });

@@ -1,12 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {
-  ControlContainer,
-  NgForm,
-} from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { ControlContainer, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -66,8 +59,8 @@ export class ProcessFormComponent implements OnInit {
     private notificationsService: NotificationsService,
     private translationService: TranslateService,
     private requestService: RequestService,
-    private router: Router) {
-  }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.process = new Process();
@@ -85,24 +78,34 @@ export class ProcessFormComponent implements OnInit {
       return;
     }
 
-    const stringParameters: ProcessParameter[] = this.parameters.map((parameter: ProcessParameter) => {
-      return {
-        name: parameter.name,
-        value: this.checkValue(parameter),
-      };
-    },
+    const stringParameters: ProcessParameter[] = this.parameters.map(
+      (parameter: ProcessParameter) => {
+        return {
+          name: parameter.name,
+          value: this.checkValue(parameter),
+        };
+      },
     );
-    this.scriptService.invoke(this.selectedScript.id, stringParameters, this.files)
+    this.scriptService
+      .invoke(this.selectedScript.id, stringParameters, this.files)
       .pipe(getFirstCompletedRemoteData())
       .subscribe((rd: RemoteData<Process>) => {
         if (rd.hasSucceeded) {
-          const title = this.translationService.get('process.new.notification.success.title');
-          const content = this.translationService.get('process.new.notification.success.content');
+          const title = this.translationService.get(
+            'process.new.notification.success.title',
+          );
+          const content = this.translationService.get(
+            'process.new.notification.success.content',
+          );
           this.notificationsService.success(title, content);
           this.sendBack();
         } else {
-          const title = this.translationService.get('process.new.notification.error.title');
-          const content = this.translationService.get('process.new.notification.error.content');
+          const title = this.translationService.get(
+            'process.new.notification.error.title',
+          );
+          const content = this.translationService.get(
+            'process.new.notification.error.content',
+          );
           this.notificationsService.error(title, content);
         }
       });
@@ -140,9 +143,9 @@ export class ProcessFormComponent implements OnInit {
 
   private isRequiredMissing() {
     this.missingParameters = [];
-    const setParams: string[] = this.parameters
-      .map((param) => param.name);
-    const requiredParams: ScriptParameter[] = this.selectedScript.parameters.filter((param) => param.mandatory);
+    const setParams: string[] = this.parameters.map((param) => param.name);
+    const requiredParams: ScriptParameter[] =
+      this.selectedScript.parameters.filter((param) => param.mandatory);
     for (const rp of requiredParams) {
       if (!setParams.includes(rp.name)) {
         this.missingParameters.push(rp.name);

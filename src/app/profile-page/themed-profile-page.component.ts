@@ -17,7 +17,9 @@ export class ThemedProfilePageComponent extends ThemedComponent<ProfilePageCompo
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/profile-page/profile-page.component`);
+    return import(
+      `../../themes/${themeName}/app/profile-page/profile-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

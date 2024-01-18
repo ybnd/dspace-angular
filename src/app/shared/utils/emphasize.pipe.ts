@@ -1,7 +1,4 @@
-import {
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({ name: 'dsEmphasize' })
 /**
@@ -13,23 +10,23 @@ export class EmphasizePipe implements PipeTransform {
    */
   specials = [
     // order matters for these
-    '-'
-    , '['
-    , ']'
+    '-',
+    '[',
+    ']',
     // order doesn't matter for any of these
-    , '/'
-    , '{'
-    , '}'
-    , '('
-    , ')'
-    , '*'
-    , '+'
-    , '?'
-    , '.'
-    , '\\'
-    , '^'
-    , '$'
-    , '|',
+    '/',
+    '{',
+    '}',
+    '(',
+    ')',
+    '*',
+    '+',
+    '?',
+    '.',
+    '\\',
+    '^',
+    '$',
+    '|',
   ];
   /**
    * Regular expression for escaping the string we're trying to find

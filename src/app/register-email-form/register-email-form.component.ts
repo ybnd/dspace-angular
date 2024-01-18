@@ -23,11 +23,7 @@ import {
   Subscription,
   switchMap,
 } from 'rxjs';
-import {
-  map,
-  startWith,
-  take,
-} from 'rxjs/operators';
+import { map, startWith, take } from 'rxjs/operators';
 
 import { ConfigurationDataService } from '../core/data/configuration-data.service';
 import { EpersonRegistrationService } from '../core/data/eperson-registration.service';
@@ -59,7 +55,6 @@ export const TYPE_REQUEST_REGISTER = 'register';
  * Component responsible to render an email registration form.
  */
 export class RegisterEmailFormComponent implements OnDestroy, OnInit {
-
   /**
    * The form containing the mail address
    */
@@ -69,13 +64,13 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
    * The message prefix
    */
   @Input()
-    MESSAGE_PREFIX: string;
+  MESSAGE_PREFIX: string;
 
   /**
    * Type of register request to be done, register new email or forgot password (same endpoint)
    */
   @Input()
-    typeRequest: string = null;
+  typeRequest: string = null;
 
   public AlertTypeEnum = AlertType;
 
@@ -116,8 +111,7 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
     @Optional() public klaroService: KlaroService,
     private changeDetectorRef: ChangeDetectorRef,
     private notificationsService: NotificationsService,
-  ) {
-  }
+  ) {}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub: Subscription) => sub.unsubscribe());
@@ -129,7 +123,9 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
       Validators.email,
       // Regex pattern borrowed from HTML5 specs for a valid email address:
       // https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address
-      Validators.pattern('^[a-zA-Z0-9.!#$%&\'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'),
+      Validators.pattern(
+        "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$",
+      ),
     ];
     this.form = this.formBuilder.group({
       email: new UntypedFormControl('', {
@@ -138,33 +134,57 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
     });
     this.validMailDomains = [];
     if (this.typeRequest === TYPE_REQUEST_REGISTER) {
-      this.subscriptions.push(this.configService.findByPropertyName('authentication-password.domain.valid')
-        .pipe(getAllSucceededRemoteDataPayload())
-        .subscribe((remoteData: ConfigurationProperty) => {
-          this.validMailDomains = remoteData.values;
-          for (const remoteValue of remoteData.values) {
-            if (this.validMailDomains.length !== 0) {
-              this.form.get('email').setValidators([
-                ...validators,
-                Validators.pattern(this.validMailDomains.map((domain: string) => '(^.*' + domain.replace(new RegExp('\\.', 'g'), '\\.') + '$)').join('|')),
-              ]);
-              this.form.updateValueAndValidity();
+      this.subscriptions.push(
+        this.configService
+          .findByPropertyName('authentication-password.domain.valid')
+          .pipe(getAllSucceededRemoteDataPayload())
+          .subscribe((remoteData: ConfigurationProperty) => {
+            this.validMailDomains = remoteData.values;
+            for (const remoteValue of remoteData.values) {
+              if (this.validMailDomains.length !== 0) {
+                this.form
+                  .get('email')
+                  .setValidators([
+                    ...validators,
+                    Validators.pattern(
+                      this.validMailDomains
+                        .map(
+                          (domain: string) =>
+                            '(^.*' +
+                            domain.replace(new RegExp('\\.', 'g'), '\\.') +
+                            '$)',
+                        )
+                        .join('|'),
+                    ),
+                  ]);
+                this.form.updateValueAndValidity();
+              }
             }
-          }
-          this.changeDetectorRef.detectChanges();
-        }));
+            this.changeDetectorRef.detectChanges();
+          }),
+      );
     }
-    this.subscriptions.push(this.configService.findByPropertyName('registration.verification.enabled').pipe(
-      getFirstSucceededRemoteDataPayload(),
-      map((res: ConfigurationProperty) => res?.values[0].toLowerCase() === 'true'),
-    ).subscribe((res: boolean) => {
-      this.registrationVerification = res;
-    }));
+    this.subscriptions.push(
+      this.configService
+        .findByPropertyName('registration.verification.enabled')
+        .pipe(
+          getFirstSucceededRemoteDataPayload(),
+          map(
+            (res: ConfigurationProperty) =>
+              res?.values[0].toLowerCase() === 'true',
+          ),
+        )
+        .subscribe((res: boolean) => {
+          this.registrationVerification = res;
+        }),
+    );
 
-    this.subscriptions.push(this.disableUntilCheckedFcn().subscribe((res) => {
-      this.disableUntilChecked = res;
-      this.changeDetectorRef.detectChanges();
-    }));
+    this.subscriptions.push(
+      this.disableUntilCheckedFcn().subscribe((res) => {
+        this.disableUntilChecked = res;
+        this.changeDetectorRef.detectChanges();
+      }),
+    );
   }
 
   /**
@@ -180,29 +200,44 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
   register(tokenV2?) {
     if (!this.form.invalid) {
       if (this.registrationVerification) {
-        this.subscriptions.push(combineLatest([this.captchaVersion(), this.captchaMode()]).pipe(
-          switchMap(([captchaVersion, captchaMode])  => {
-            if (captchaVersion === 'v3') {
-              return this.googleRecaptchaService.getRecaptchaToken('register_email');
-            } else if (captchaVersion === 'v2' && captchaMode === 'checkbox') {
-              return of(this.googleRecaptchaService.getRecaptchaTokenResponse());
-            } else if (captchaVersion === 'v2' && captchaMode === 'invisible') {
-              return of(tokenV2);
-            } else {
-              console.error(`Invalid reCaptcha configuration: version = ${captchaVersion}, mode = ${captchaMode}`);
-              this.showNotification('error');
-            }
-          }),
-          take(1),
-        ).subscribe((token) => {
-          if (isNotEmpty(token)) {
-            this.registration(token);
-          } else {
-            console.error('reCaptcha error');
-            this.showNotification('error');
-          }
-        },
-        ));
+        this.subscriptions.push(
+          combineLatest([this.captchaVersion(), this.captchaMode()])
+            .pipe(
+              switchMap(([captchaVersion, captchaMode]) => {
+                if (captchaVersion === 'v3') {
+                  return this.googleRecaptchaService.getRecaptchaToken(
+                    'register_email',
+                  );
+                } else if (
+                  captchaVersion === 'v2' &&
+                  captchaMode === 'checkbox'
+                ) {
+                  return of(
+                    this.googleRecaptchaService.getRecaptchaTokenResponse(),
+                  );
+                } else if (
+                  captchaVersion === 'v2' &&
+                  captchaMode === 'invisible'
+                ) {
+                  return of(tokenV2);
+                } else {
+                  console.error(
+                    `Invalid reCaptcha configuration: version = ${captchaVersion}, mode = ${captchaMode}`,
+                  );
+                  this.showNotification('error');
+                }
+              }),
+              take(1),
+            )
+            .subscribe((token) => {
+              if (isNotEmpty(token)) {
+                this.registration(token);
+              } else {
+                console.error('reCaptcha error');
+                this.showNotification('error');
+              }
+            }),
+        );
       } else {
         this.registration();
       }
@@ -213,21 +248,46 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
    * Registration of an email address
    */
   registration(captchaToken = null) {
-    const registerEmail$ = captchaToken ?
-      this.epersonRegistrationService.registerEmail(this.email.value, captchaToken, this.typeRequest) :
-      this.epersonRegistrationService.registerEmail(this.email.value, null, this.typeRequest);
-    this.subscriptions.push(registerEmail$.subscribe((response: RemoteData<Registration>) => {
-      if (response.hasSucceeded) {
-        this.notificationService.success(this.translateService.get(`${this.MESSAGE_PREFIX}.success.head`),
-          this.translateService.get(`${this.MESSAGE_PREFIX}.success.content`, { email: this.email.value }));
-        this.router.navigate(['/home']);
-      } else if (response.statusCode === 422) {
-        this.notificationService.error(this.translateService.get(`${this.MESSAGE_PREFIX}.error.head`), this.translateService.get(`${this.MESSAGE_PREFIX}.error.maildomain`, { domains: this.validMailDomains.join(', ') }));
-      } else {
-        this.notificationService.error(this.translateService.get(`${this.MESSAGE_PREFIX}.error.head`),
-          this.translateService.get(`${this.MESSAGE_PREFIX}.error.content`, { email: this.email.value }));
-      }
-    }));
+    const registerEmail$ = captchaToken
+      ? this.epersonRegistrationService.registerEmail(
+          this.email.value,
+          captchaToken,
+          this.typeRequest,
+        )
+      : this.epersonRegistrationService.registerEmail(
+          this.email.value,
+          null,
+          this.typeRequest,
+        );
+    this.subscriptions.push(
+      registerEmail$.subscribe((response: RemoteData<Registration>) => {
+        if (response.hasSucceeded) {
+          this.notificationService.success(
+            this.translateService.get(`${this.MESSAGE_PREFIX}.success.head`),
+            this.translateService.get(
+              `${this.MESSAGE_PREFIX}.success.content`,
+              { email: this.email.value },
+            ),
+          );
+          this.router.navigate(['/home']);
+        } else if (response.statusCode === 422) {
+          this.notificationService.error(
+            this.translateService.get(`${this.MESSAGE_PREFIX}.error.head`),
+            this.translateService.get(
+              `${this.MESSAGE_PREFIX}.error.maildomain`,
+              { domains: this.validMailDomains.join(', ') },
+            ),
+          );
+        } else {
+          this.notificationService.error(
+            this.translateService.get(`${this.MESSAGE_PREFIX}.error.head`),
+            this.translateService.get(`${this.MESSAGE_PREFIX}.error.content`, {
+              email: this.email.value,
+            }),
+          );
+        }
+      }),
+    );
   }
 
   /**
@@ -235,7 +295,9 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
    */
   isRecaptchaCookieAccepted(): boolean {
     const klaroAnonymousCookie = this.cookieService.get('klaro-anonymous');
-    return isNotEmpty(klaroAnonymousCookie) ? klaroAnonymousCookie[CAPTCHA_NAME] : false;
+    return isNotEmpty(klaroAnonymousCookie)
+      ? klaroAnonymousCookie[CAPTCHA_NAME]
+      : false;
   }
 
   /**
@@ -243,9 +305,17 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
    */
   disableUntilCheckedFcn(): Observable<boolean> {
     const checked$ = this.checkboxCheckedSubject$.asObservable();
-    return combineLatest([this.captchaVersion(), this.captchaMode(), checked$]).pipe(
+    return combineLatest([
+      this.captchaVersion(),
+      this.captchaMode(),
+      checked$,
+    ]).pipe(
       // disable if checkbox is not checked or if reCaptcha is not in v2 checkbox mode
-      switchMap(([captchaVersion, captchaMode, checked])  => captchaVersion === 'v2' && captchaMode === 'checkbox' ? of(!checked) : of(false)),
+      switchMap(([captchaVersion, captchaMode, checked]) =>
+        captchaVersion === 'v2' && captchaMode === 'checkbox'
+          ? of(!checked)
+          : of(false),
+      ),
       startWith(true),
     );
   }
@@ -263,19 +333,32 @@ export class RegisterEmailFormComponent implements OnDestroy, OnInit {
    * @param key
    */
   showNotification(key) {
-    const notificationTitle = this.translateService.get(this.MESSAGE_PREFIX + '.google-recaptcha.notification.title');
-    const notificationErrorMsg = this.translateService.get(this.MESSAGE_PREFIX + '.google-recaptcha.notification.message.error');
-    const notificationExpiredMsg = this.translateService.get(this.MESSAGE_PREFIX + '.google-recaptcha.notification.message.expired');
+    const notificationTitle = this.translateService.get(
+      this.MESSAGE_PREFIX + '.google-recaptcha.notification.title',
+    );
+    const notificationErrorMsg = this.translateService.get(
+      this.MESSAGE_PREFIX + '.google-recaptcha.notification.message.error',
+    );
+    const notificationExpiredMsg = this.translateService.get(
+      this.MESSAGE_PREFIX + '.google-recaptcha.notification.message.expired',
+    );
     switch (key) {
       case 'expired':
-        this.notificationsService.warning(notificationTitle, notificationExpiredMsg);
+        this.notificationsService.warning(
+          notificationTitle,
+          notificationExpiredMsg,
+        );
         break;
       case 'error':
-        this.notificationsService.error(notificationTitle, notificationErrorMsg);
+        this.notificationsService.error(
+          notificationTitle,
+          notificationErrorMsg,
+        );
         break;
       default:
-        console.warn(`Unimplemented notification '${key}' from reCaptcha service`);
+        console.warn(
+          `Unimplemented notification '${key}' from reCaptcha service`,
+        );
     }
   }
-
 }

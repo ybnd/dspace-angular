@@ -92,8 +92,7 @@ export const klaroConfiguration: any = {
         service: 'cookies.consent.content-modal.service',
         services: 'cookies.consent.content-modal.services',
       },
-      purposes: {
-      },
+      purposes: {},
       save: 'cookies.consent.save',
       service: {
         disableAll: {
@@ -118,28 +117,19 @@ export const klaroConfiguration: any = {
       name: 'authentication',
       purposes: ['functional'],
       required: true,
-      cookies: [
-        TOKENITEM,
-        IMPERSONATING_COOKIE,
-        REDIRECT_COOKIE,
-      ],
+      cookies: [TOKENITEM, IMPERSONATING_COOKIE, REDIRECT_COOKIE],
     },
     {
       name: 'preferences',
       purposes: ['functional'],
       required: true,
-      cookies: [
-        LANG_COOKIE,
-      ],
+      cookies: [LANG_COOKIE],
     },
     {
       name: 'acknowledgement',
       purposes: ['functional'],
       required: true,
-      cookies: [
-        [/^klaro-.+$/],
-        HAS_AGREED_END_USER,
-      ],
+      cookies: [[/^klaro-.+$/], HAS_AGREED_END_USER],
     },
     {
       name: GOOGLE_ANALYTICS_KLARO_KEY,
@@ -188,10 +178,7 @@ export const klaroConfiguration: any = {
       name: CAPTCHA_NAME,
       purposes: ['registration-password-recovery'],
       required: false,
-      cookies: [
-        [/^klaro-.+$/],
-        CAPTCHA_COOKIE,
-      ],
+      cookies: [[/^klaro-.+$/], CAPTCHA_COOKIE],
       onAccept: `window.refreshCaptchaScript?.call()`,
       onDecline: `window.refreshCaptchaScript?.call()`,
       onlyOnce: true,

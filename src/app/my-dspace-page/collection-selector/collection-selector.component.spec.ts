@@ -1,25 +1,11 @@
 /* eslint-disable max-classes-per-file */
-import {
-  ChangeDetectorRef,
-  ElementRef,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectorRef, ElementRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { getTestScheduler, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -39,7 +25,6 @@ import { MockElementRef } from '../../shared/testing/element-ref.mock';
 import { createPaginatedList } from '../../shared/testing/utils.test';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { CollectionSelectorComponent } from './collection-selector.component';
-
 
 describe('CollectionSelectorComponent', () => {
   let component: CollectionSelectorComponent;
@@ -62,7 +47,8 @@ describe('CollectionSelectorComponent', () => {
           key: 'dc.title',
           language: 'en_US',
           value: 'Community 1-Collection 1',
-        }],
+        },
+      ],
       parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
     Object.assign(new Collection(), {
@@ -73,7 +59,8 @@ describe('CollectionSelectorComponent', () => {
           key: 'dc.title',
           language: 'en_US',
           value: 'Community 1-Collection 2',
-        }],
+        },
+      ],
       parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
     Object.assign(new Collection(), {
@@ -84,7 +71,8 @@ describe('CollectionSelectorComponent', () => {
           key: 'dc.title',
           language: 'en_US',
           value: 'Community 1-Collection 3',
-        }],
+        },
+      ],
       parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
     Object.assign(new Collection(), {
@@ -95,7 +83,8 @@ describe('CollectionSelectorComponent', () => {
           key: 'dc.title',
           language: 'en_US',
           value: 'Community 1-Collection 4',
-        }],
+        },
+      ],
       parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
     Object.assign(new Collection(), {
@@ -106,14 +95,19 @@ describe('CollectionSelectorComponent', () => {
           key: 'dc.title',
           language: 'en_US',
           value: 'Community 1-Collection 5',
-        }],
+        },
+      ],
       parentCommunity: createSuccessfulRemoteDataObject$(community),
     }),
   ];
 
   const collectionDataServiceMock = {
-    getAuthorizedCollection(query: string, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<Collection>[]): Observable<RemoteData<PaginatedList<Collection>>> {
-      return hot( 'a|', {
+    getAuthorizedCollection(
+      query: string,
+      options: FindListOptions = {},
+      ...linksToFollow: FollowLinkConfig<Collection>[]
+    ): Observable<RemoteData<PaginatedList<Collection>>> {
+      return hot('a|', {
         a: createSuccessfulRemoteDataObject(createPaginatedList(collections)),
       });
     },
@@ -129,7 +123,7 @@ describe('CollectionSelectorComponent', () => {
           },
         }),
       ],
-      declarations: [ CollectionSelectorComponent, CollectionDropdownComponent ],
+      declarations: [CollectionSelectorComponent, CollectionDropdownComponent],
       providers: [
         { provide: CollectionDataService, useValue: collectionDataServiceMock },
         { provide: ElementRef, useClass: MockElementRef },
@@ -138,15 +132,15 @@ describe('CollectionSelectorComponent', () => {
         ChangeDetectorRef,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     scheduler = getTestScheduler();
     fixture = TestBed.overrideComponent(CollectionSelectorComponent, {
       set: {
-        template: '<ds-collection-dropdown (selectionChange)="selectObject($event)"></ds-collection-dropdown>',
+        template:
+          '<ds-collection-dropdown (selectionChange)="selectObject($event)"></ds-collection-dropdown>',
       },
     }).createComponent(CollectionSelectorComponent);
     component = fixture.componentInstance;
@@ -161,7 +155,9 @@ describe('CollectionSelectorComponent', () => {
     spyOn(component, 'selectObject');
     scheduler.schedule(() => fixture.detectChanges());
     scheduler.flush();
-    const collectionItem = fixture.debugElement.query(By.css('.collection-item:nth-child(2)'));
+    const collectionItem = fixture.debugElement.query(
+      By.css('.collection-item:nth-child(2)'),
+    );
     collectionItem.triggerEventHandler('click', null);
     expect(component.selectObject).toHaveBeenCalled();
   });

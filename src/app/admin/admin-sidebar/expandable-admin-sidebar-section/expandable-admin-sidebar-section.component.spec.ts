@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
@@ -27,24 +23,32 @@ describe('ExpandableAdminSidebarSectionComponent', () => {
       imports: [NoopAnimationsModule, TranslateModule.forRoot()],
       declarations: [ExpandableAdminSidebarSectionComponent, TestComponent],
       providers: [
-        { provide: 'sectionDataProvider', useValue: { icon: iconString, model: {} } },
+        {
+          provide: 'sectionDataProvider',
+          useValue: { icon: iconString, model: {} },
+        },
         { provide: MenuService, useValue: menuService },
         { provide: CSSVariableService, useClass: CSSVariableServiceStub },
         { provide: Router, useValue: new RouterStub() },
       ],
-    }).overrideComponent(ExpandableAdminSidebarSectionComponent, {
-      set: {
-        entryComponents: [TestComponent],
-      },
     })
+      .overrideComponent(ExpandableAdminSidebarSectionComponent, {
+        set: {
+          entryComponents: [TestComponent],
+        },
+      })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(observableOf([]));
+    spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(
+      observableOf([]),
+    );
     fixture = TestBed.createComponent(ExpandableAdminSidebarSectionComponent);
     component = fixture.componentInstance;
-    spyOn(component as any, 'getMenuItemComponent').and.returnValue(TestComponent);
+    spyOn(component as any, 'getMenuItemComponent').and.returnValue(
+      TestComponent,
+    );
     fixture.detectChanges();
   });
 
@@ -54,15 +58,20 @@ describe('ExpandableAdminSidebarSectionComponent', () => {
 
   it('should set the right icon', () => {
     const icon = fixture.debugElement.query(By.css('.shortcut-icon > i.fas'));
-    expect(icon.nativeElement.getAttribute('class')).toContain('fa-' + iconString);
+    expect(icon.nativeElement.getAttribute('class')).toContain(
+      'fa-' + iconString,
+    );
   });
 
   describe('when the header text is clicked', () => {
     beforeEach(() => {
       spyOn(menuService, 'toggleActiveSection');
-      const sidebarToggler = fixture.debugElement.query(By.css('.sidebar-section > div.nav-item'));
+      const sidebarToggler = fixture.debugElement.query(
+        By.css('.sidebar-section > div.nav-item'),
+      );
       sidebarToggler.triggerEventHandler('click', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
     });
@@ -78,5 +87,4 @@ describe('ExpandableAdminSidebarSectionComponent', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-}
+class TestComponent {}

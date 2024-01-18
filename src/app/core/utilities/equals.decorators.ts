@@ -1,8 +1,4 @@
-import {
-  hasNoValue,
-  hasValue,
-  isEmpty,
-} from '../../shared/empty.util';
+import { hasNoValue, hasValue, isEmpty } from '../../shared/empty.util';
 import { GenericConstructor } from '../shared/generic-constructor';
 
 const excludedFromEquals = new Map();
@@ -49,7 +45,7 @@ export abstract class EquatableObject<T> {
     if (hasNoValue(other)) {
       return false;
     }
-    if (this as any === other) {
+    if ((this as any) === other) {
       return true;
     }
     const excludedKeys = getExcludedFromEqualsFor(this.constructor);
@@ -62,11 +58,16 @@ export abstract class EquatableObject<T> {
  * Decorator function that adds the equatable settings from the given (parent) object
  * @param parentCo The constructor of the parent object
  */
-export function inheritEquatable(parentCo: GenericConstructor<EquatableObject<any>>) {
+export function inheritEquatable(
+  parentCo: GenericConstructor<EquatableObject<any>>,
+) {
   return function decorator(childCo: GenericConstructor<EquatableObject<any>>) {
     const parentExcludedFields = getExcludedFromEqualsFor(parentCo) || [];
     const excludedFields = getExcludedFromEqualsFor(childCo) || [];
-    excludedFromEquals.set(childCo, [...excludedFields, ...parentExcludedFields]);
+    excludedFromEquals.set(childCo, [
+      ...excludedFields,
+      ...parentExcludedFields,
+    ]);
 
     const mappedFields = fieldsForEqualsMap.get(childCo) || new Map();
     const parentMappedFields = fieldsForEqualsMap.get(parentCo) || new Map();

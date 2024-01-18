@@ -1,7 +1,4 @@
-import {
-  BehaviorSubject,
-  of as observableOf,
-} from 'rxjs';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
 
 import {
   SortDirection,
@@ -10,11 +7,11 @@ import {
 import { SearchConfig } from '../../core/shared/search/search-filters/search-config.model';
 
 export class SearchConfigurationServiceStub {
-
   public paginationID = 'test-id';
 
   private searchOptions: BehaviorSubject<any> = new BehaviorSubject<any>({});
-  private paginatedSearchOptions: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  private paginatedSearchOptions: BehaviorSubject<any> =
+    new BehaviorSubject<any>({});
 
   getCurrentFrontendFilters() {
     return observableOf([]);
@@ -32,7 +29,7 @@ export class SearchConfigurationServiceStub {
     return observableOf(a);
   }
 
-  getConfig () {
+  getConfig() {
     return observableOf({ hasSucceeded: true, payload: [] });
   }
 
@@ -45,7 +42,10 @@ export class SearchConfigurationServiceStub {
   }
 
   getConfigurationSortOptionsObservable() {
-    return observableOf([new SortOptions('score', SortDirection.ASC), new SortOptions('score', SortDirection.DESC)]);
+    return observableOf([
+      new SortOptions('score', SortDirection.ASC),
+      new SortOptions('score', SortDirection.DESC),
+    ]);
   }
 
   initializeSortOptionsFromConfiguration() {

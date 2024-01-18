@@ -1,27 +1,20 @@
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  map,
-  take,
-} from 'rxjs/operators';
+import { Observable, of as observableOf } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { ConfigurationDataService } from '../core/data/configuration-data.service';
 import { RemoteData } from '../core/data/remote-data';
 import { ConfigurationProperty } from '../core/shared/configuration-property.model';
 import { getFirstCompletedRemoteData } from '../core/shared/operators';
-import {
-  hasNoValue,
-  isEmpty,
-} from './empty.util';
+import { hasNoValue, isEmpty } from './empty.util';
 
 export const CANONICAL_PREFIX_KEY = 'handle.canonical.prefix';
 
 const PREFIX_REGEX = (prefix: string | undefined) => {
   const formattedPrefix: string = prefix?.replace(/\/$/, '');
-  return new RegExp(`(${formattedPrefix ? formattedPrefix  + '|' : '' }handle)\/([^\/]+\/[^\/]+)$`);
+  return new RegExp(
+    `(${formattedPrefix ? formattedPrefix + '|' : ''}handle)\/([^\/]+\/[^\/]+)$`,
+  );
 };
 const NO_PREFIX_REGEX = /^([^\/]+\/[^\/]+)$/;
 
@@ -29,11 +22,7 @@ const NO_PREFIX_REGEX = /^([^\/]+\/[^\/]+)$/;
   providedIn: 'root',
 })
 export class HandleService {
-
-  constructor(
-    protected configurationService: ConfigurationDataService,
-  ) {
-  }
+  constructor(protected configurationService: ConfigurationDataService) {}
 
   /**
    * Turns a handle string into the default 123456789/12345 format
@@ -55,32 +44,35 @@ export class HandleService {
     if (hasNoValue(handle)) {
       return observableOf(null);
     }
-    return this.configurationService.findByPropertyName(CANONICAL_PREFIX_KEY).pipe(
-      getFirstCompletedRemoteData(),
-      map((configurationPropertyRD: RemoteData<ConfigurationProperty>) => {
-        if (configurationPropertyRD.hasSucceeded) {
-          return configurationPropertyRD.payload.values.length >= 1 ? configurationPropertyRD.payload.values[0] : undefined;
-        } else {
-          return undefined;
-        }
-      }),
-      map((prefix: string | undefined) => {
-        let matches: string[];
+    return this.configurationService
+      .findByPropertyName(CANONICAL_PREFIX_KEY)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((configurationPropertyRD: RemoteData<ConfigurationProperty>) => {
+          if (configurationPropertyRD.hasSucceeded) {
+            return configurationPropertyRD.payload.values.length >= 1
+              ? configurationPropertyRD.payload.values[0]
+              : undefined;
+          } else {
+            return undefined;
+          }
+        }),
+        map((prefix: string | undefined) => {
+          let matches: string[];
 
-        matches = handle.match(PREFIX_REGEX(prefix));
+          matches = handle.match(PREFIX_REGEX(prefix));
 
-        if (isEmpty(matches) || matches.length < 3) {
-          matches = handle.match(NO_PREFIX_REGEX);
-        }
+          if (isEmpty(matches) || matches.length < 3) {
+            matches = handle.match(NO_PREFIX_REGEX);
+          }
 
-        if (isEmpty(matches) || matches.length < 2) {
-          return null;
-        } else {
-          return matches[matches.length - 1];
-        }
-      }),
-      take(1),
-    );
+          if (isEmpty(matches) || matches.length < 2) {
+            return null;
+          } else {
+            return matches[matches.length - 1];
+          }
+        }),
+        take(1),
+      );
   }
-
 }

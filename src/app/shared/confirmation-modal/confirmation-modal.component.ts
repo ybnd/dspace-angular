@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -30,13 +25,12 @@ export class ConfirmationModalComponent {
    * An event fired when the cancel or confirm button is clicked, with respectively false or true
    */
   @Output()
-    response = new EventEmitter<boolean>();
+  response = new EventEmitter<boolean>();
 
   constructor(
     protected activeModal: NgbActiveModal,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   /**
    * Confirm the action that led to the modal

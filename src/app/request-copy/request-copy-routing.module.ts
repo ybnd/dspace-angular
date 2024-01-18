@@ -35,10 +35,6 @@ import {
       },
     ]),
   ],
-  providers: [
-    RequestCopyResolver,
-    GrantDenyRequestCopyComponent,
-  ],
+  providers: [RequestCopyResolver, GrantDenyRequestCopyComponent],
 })
-export class RequestCopyRoutingModule {
-}
+export class RequestCopyRoutingModule {}

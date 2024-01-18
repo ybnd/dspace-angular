@@ -12,5 +12,4 @@ import { ItemMetadataRepresentationListElementComponent } from '../../../../shar
 /**
  * The component for displaying an item of the type Person as a metadata field
  */
-export class PersonItemMetadataListElementComponent extends ItemMetadataRepresentationListElementComponent {
-}
+export class PersonItemMetadataListElementComponent extends ItemMetadataRepresentationListElementComponent {}

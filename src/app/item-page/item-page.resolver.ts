@@ -36,7 +36,10 @@ export class ItemPageResolver extends ItemResolver {
    * @returns Observable<<RemoteData<Item>> Emits the found item based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<Item>> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<Item>> {
     return super.resolve(route, state).pipe(
       map((rd: RemoteData<Item>) => {
         if (rd.hasSucceeded && hasValue(rd.payload)) {
@@ -46,11 +49,16 @@ export class ItemPageResolver extends ItemResolver {
           // or semicolons) and thisRoute has been encoded with that function. If we want to compare
           // it with itemRoute, we have to run itemRoute through Angular's version as well to ensure
           // the same characters are encoded the same way.
-          const itemRoute = this.router.parseUrl(getItemPageRoute(rd.payload)).toString();
+          const itemRoute = this.router
+            .parseUrl(getItemPageRoute(rd.payload))
+            .toString();
 
           if (!thisRoute.startsWith(itemRoute)) {
             const itemId = rd.payload.uuid;
-            const subRoute = thisRoute.substring(thisRoute.indexOf(itemId) + itemId.length, thisRoute.length);
+            const subRoute = thisRoute.substring(
+              thisRoute.indexOf(itemId) + itemId.length,
+              thisRoute.length,
+            );
             this.router.navigateByUrl(itemRoute + subRoute);
           }
         }

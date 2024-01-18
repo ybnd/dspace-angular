@@ -23,7 +23,8 @@ export function serverApi(req, res) {
   }
   console.log('/data.json Cache Miss');
 
-  fakeDataBase.get()
+  fakeDataBase
+    .get()
     .then((data) => {
       fakeDemoRedisCache.set(key, data);
       return data;
@@ -47,7 +48,6 @@ function toHALResponse(req, data, included?) {
 }
 
 export function createMockApi() {
-
   const router = Router();
 
   router.route('/communities').get((req, res) => {

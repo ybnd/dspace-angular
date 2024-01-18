@@ -1,7 +1,4 @@
-import {
-  routerReducer,
-  RouterReducerState,
-} from '@ngrx/router-store';
+import { routerReducer, RouterReducerState } from '@ngrx/router-store';
 import {
   ActionReducerMap,
   createSelector,
@@ -34,10 +31,7 @@ import {
   NameVariantListsState,
   nameVariantReducer,
 } from './shared/form/builder/ds-dynamic-form-ui/relation-lookup-modal/name-variant.reducer';
-import {
-  formReducer,
-  FormState,
-} from './shared/form/form.reducer';
+import { formReducer, FormState } from './shared/form/form.reducer';
 import { menusReducer } from './shared/menu/menu.reducer';
 import { MenusState } from './shared/menu/menus-state.model';
 import {
@@ -64,14 +58,8 @@ import {
   filterReducer,
   SearchFiltersState,
 } from './shared/search/search-filters/search-filter/search-filter.reducer';
-import {
-  sidebarReducer,
-  SidebarState,
-} from './shared/sidebar/sidebar.reducer';
-import {
-  themeReducer,
-  ThemeState,
-} from './shared/theme-support/theme.reducer';
+import { sidebarReducer, SidebarState } from './shared/sidebar/sidebar.reducer';
+import { themeReducer, ThemeState } from './shared/theme-support/theme.reducer';
 import {
   truncatableReducer,
   TruncatablesState,
@@ -123,7 +111,10 @@ export const appReducers: ActionReducerMap<AppState> = {
 
 export const routerStateSelector = (state: AppState) => state.router;
 
-export function keySelector<T>(key: string, selector): MemoizedSelector<AppState, T> {
+export function keySelector<T>(
+  key: string,
+  selector,
+): MemoizedSelector<AppState, T> {
   return createSelector(selector, (state) => {
     if (hasValue(state)) {
       return state[key];

@@ -16,14 +16,16 @@ import { CommunityPageSubCommunityListComponent } from './sub-community-list/com
 import { ThemedCommunityPageSubCommunityListComponent } from './sub-community-list/themed-community-page-sub-community-list.component';
 import { ThemedCommunityPageComponent } from './themed-community-page.component';
 
-const DECLARATIONS = [CommunityPageComponent,
+const DECLARATIONS = [
+  CommunityPageComponent,
   ThemedCommunityPageComponent,
   ThemedCommunityPageSubCommunityListComponent,
   CommunityPageSubCollectionListComponent,
   ThemedCollectionPageSubCollectionListComponent,
   CommunityPageSubCommunityListComponent,
   CreateCommunityPageComponent,
-  DeleteCommunityPageComponent];
+  DeleteCommunityPageComponent,
+];
 
 @NgModule({
   imports: [
@@ -35,14 +37,7 @@ const DECLARATIONS = [CommunityPageComponent,
     ComcolModule,
     DsoPageModule,
   ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
 })
-
-export class CommunityPageModule {
-
-}
+export class CommunityPageModule {}

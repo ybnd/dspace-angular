@@ -1,14 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -52,11 +45,16 @@ describe('FormatFormComponent', () => {
 
   const initAsync = () => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), ReactiveFormsModule, FormsModule, TranslateModule.forRoot(), NgbModule],
-      declarations: [FormatFormComponent],
-      providers: [
-        { provide: Router, useValue: router },
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        ReactiveFormsModule,
+        FormsModule,
+        TranslateModule.forRoot(),
+        NgbModule,
       ],
+      declarations: [FormatFormComponent],
+      providers: [{ provide: Router, useValue: router }],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
   };
@@ -73,14 +71,23 @@ describe('FormatFormComponent', () => {
     beforeEach(waitForAsync(initAsync));
     beforeEach(initBeforeEach);
     it('should initialises the values in the form', () => {
+      expect((comp.formModel[0] as DynamicInputModel).value).toBe(
+        bitstreamFormat.shortDescription,
+      );
+      expect((comp.formModel[1] as DynamicInputModel).value).toBe(
+        bitstreamFormat.mimetype,
+      );
+      expect((comp.formModel[2] as DynamicInputModel).value).toBe(
+        bitstreamFormat.description,
+      );
+      expect((comp.formModel[3] as DynamicInputModel).value).toBe(
+        bitstreamFormat.supportLevel,
+      );
+      expect((comp.formModel[4] as DynamicCheckboxModel).value).toBe(
+        bitstreamFormat.internal,
+      );
 
-      expect((comp.formModel[0] as DynamicInputModel).value).toBe(bitstreamFormat.shortDescription);
-      expect((comp.formModel[1] as DynamicInputModel).value).toBe(bitstreamFormat.mimetype);
-      expect((comp.formModel[2] as DynamicInputModel).value).toBe(bitstreamFormat.description);
-      expect((comp.formModel[3] as DynamicInputModel).value).toBe(bitstreamFormat.supportLevel);
-      expect((comp.formModel[4] as DynamicCheckboxModel).value).toBe(bitstreamFormat.internal);
-
-      const formArray = (comp.formModel[5] as DynamicFormArrayModel);
+      const formArray = comp.formModel[5] as DynamicFormArrayModel;
       const extensions = [];
       for (let i = 0; i < formArray.groups.length; i++) {
         const value = (formArray.get(i).get(0) as DynamicInputModel).value;
@@ -90,7 +97,6 @@ describe('FormatFormComponent', () => {
       }
 
       expect(extensions).toEqual(bitstreamFormat.extensions);
-
     });
   });
   describe('onSubmit', () => {
@@ -101,7 +107,9 @@ describe('FormatFormComponent', () => {
       spyOn(comp.updatedFormat, 'emit');
       comp.onSubmit();
 
-      expect(comp.updatedFormat.emit).toHaveBeenCalledWith(submittedBitstreamFormat);
+      expect(comp.updatedFormat.emit).toHaveBeenCalledWith(
+        submittedBitstreamFormat,
+      );
     });
   });
   describe('onCancel', () => {
@@ -110,7 +118,9 @@ describe('FormatFormComponent', () => {
 
     it('should navigate back to the bitstream overview', () => {
       comp.onCancel();
-      expect(router.navigate).toHaveBeenCalledWith(['/admin/registries/bitstream-formats']);
+      expect(router.navigate).toHaveBeenCalledWith([
+        '/admin/registries/bitstream-formats',
+      ]);
     });
   });
 });

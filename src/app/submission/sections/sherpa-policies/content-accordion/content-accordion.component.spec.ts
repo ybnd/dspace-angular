@@ -1,14 +1,8 @@
 import { DebugElement } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { SherpaDataResponse } from '../../../../shared/mocks/section-sherpa-policies.service.mock';
 import { TranslateLoaderMock } from '../../../../shared/mocks/translate-loader.mock';
@@ -31,8 +25,7 @@ describe('ContentAccordionComponent', () => {
         NgbCollapseModule,
       ],
       declarations: [ContentAccordionComponent],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -40,7 +33,8 @@ describe('ContentAccordionComponent', () => {
     component = fixture.componentInstance;
     de = fixture.debugElement;
     component.isCollapsed = false;
-    component.version = SherpaDataResponse.sherpaResponse.journals[0].policies[0].permittedVersions[0];
+    component.version =
+      SherpaDataResponse.sherpaResponse.journals[0].policies[0].permittedVersions[0];
     fixture.detectChanges();
   });
 
@@ -49,13 +43,15 @@ describe('ContentAccordionComponent', () => {
   });
 
   it('should show 2 rows', () => {
-    component.version = SherpaDataResponse.sherpaResponse.journals[0].policies[0].permittedVersions[0];
+    component.version =
+      SherpaDataResponse.sherpaResponse.journals[0].policies[0].permittedVersions[0];
     fixture.detectChanges();
     expect(de.queryAll(By.css('.row')).length).toEqual(2);
   });
 
   it('should show 5 rows', () => {
-    component.version = SherpaDataResponse.sherpaResponse.journals[0].policies[0].permittedVersions[2];
+    component.version =
+      SherpaDataResponse.sherpaResponse.journals[0].policies[0].permittedVersions[2];
     fixture.detectChanges();
     expect(de.queryAll(By.css('.row')).length).toEqual(5);
   });

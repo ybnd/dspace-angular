@@ -1,15 +1,8 @@
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  utcToZonedTime,
-  zonedTimeToUtc,
-} from 'date-fns-tz';
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
 import { UiSwitchModule } from 'ngx-ui-switch';
 
 import { RequestService } from '../../core/data/request.service';
@@ -36,9 +29,7 @@ describe('SystemWideAlertFormComponent', () => {
   let notificationsService;
   let router;
 
-
   beforeEach(waitForAsync(() => {
-
     const countDownDate = new Date();
     countDownDate.setDate(countDownDate.getDate() + 1);
     countDownDate.setHours(countDownDate.getHours() + 1);
@@ -51,22 +42,37 @@ describe('SystemWideAlertFormComponent', () => {
       countdownTo: utcToZonedTime(countDownDate, 'UTC').toISOString(),
     });
 
-    systemWideAlertDataService = jasmine.createSpyObj('systemWideAlertDataService', {
-      findAll: createSuccessfulRemoteDataObject$(createPaginatedList([systemWideAlert])),
-      put: createSuccessfulRemoteDataObject$(systemWideAlert),
-      create: createSuccessfulRemoteDataObject$(systemWideAlert),
-    });
+    systemWideAlertDataService = jasmine.createSpyObj(
+      'systemWideAlertDataService',
+      {
+        findAll: createSuccessfulRemoteDataObject$(
+          createPaginatedList([systemWideAlert]),
+        ),
+        put: createSuccessfulRemoteDataObject$(systemWideAlert),
+        create: createSuccessfulRemoteDataObject$(systemWideAlert),
+      },
+    );
 
-    requestService = jasmine.createSpyObj('requestService', ['setStaleByHrefSubstring']);
+    requestService = jasmine.createSpyObj('requestService', [
+      'setStaleByHrefSubstring',
+    ]);
 
     notificationsService = new NotificationsServiceStub();
     router = new RouterStub();
 
     TestBed.configureTestingModule({
-      imports: [FormsModule, SystemWideAlertModule, UiSwitchModule, TranslateModule.forRoot()],
+      imports: [
+        FormsModule,
+        SystemWideAlertModule,
+        UiSwitchModule,
+        TranslateModule.forRoot(),
+      ],
       declarations: [SystemWideAlertFormComponent],
       providers: [
-        { provide: SystemWideAlertDataService, useValue: systemWideAlertDataService },
+        {
+          provide: SystemWideAlertDataService,
+          useValue: systemWideAlertDataService,
+        },
         { provide: NotificationsService, useValue: notificationsService },
         { provide: Router, useValue: router },
         { provide: RequestService, useValue: requestService },
@@ -101,8 +107,15 @@ describe('SystemWideAlertFormComponent', () => {
       comp.createForm();
       expect(comp.formMessage.value).toEqual('');
       expect(comp.formActive.value).toEqual(false);
-      expect(comp.time).toEqual({ hour: now.getHours(), minute: now.getMinutes() });
-      expect(comp.date).toEqual({ year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() });
+      expect(comp.time).toEqual({
+        hour: now.getHours(),
+        minute: now.getMinutes(),
+      });
+      expect(comp.date).toEqual({
+        year: now.getFullYear(),
+        month: now.getMonth() + 1,
+        day: now.getDate(),
+      });
     });
   });
 
@@ -114,7 +127,10 @@ describe('SystemWideAlertFormComponent', () => {
 
       expect(comp.formMessage.value).toEqual(systemWideAlert.message);
       expect(comp.formActive.value).toEqual(true);
-      expect(comp.time).toEqual({ hour: countDownTo.getHours(), minute: countDownTo.getMinutes() });
+      expect(comp.time).toEqual({
+        hour: countDownTo.getHours(),
+        minute: countDownTo.getMinutes(),
+      });
       expect(comp.date).toEqual({
         year: countDownTo.getFullYear(),
         month: countDownTo.getMonth() + 1,
@@ -149,8 +165,15 @@ describe('SystemWideAlertFormComponent', () => {
       countDownDate.setHours(countDownDate.getHours() + 1);
       countDownDate.setMinutes(countDownDate.getMinutes() + 1);
 
-      comp.time = { hour: countDownDate.getHours(), minute: countDownDate.getMinutes() };
-      comp.date = { year: countDownDate.getFullYear(), month: countDownDate.getMonth() + 1, day: countDownDate.getDate() };
+      comp.time = {
+        hour: countDownDate.getHours(),
+        minute: countDownDate.getMinutes(),
+      };
+      comp.date = {
+        year: countDownDate.getFullYear(),
+        month: countDownDate.getMonth() + 1,
+        day: countDownDate.getDate(),
+      };
 
       comp.updatePreviewTime();
 
@@ -186,13 +209,20 @@ describe('SystemWideAlertFormComponent', () => {
       expectedAlert.message = 'New message';
       expectedAlert.active = true;
       const countDownTo = new Date(2023, 0, 25, 4, 26);
-      expectedAlert.countdownTo = utcToZonedTime(countDownTo, 'UTC').toUTCString();
+      expectedAlert.countdownTo = utcToZonedTime(
+        countDownTo,
+        'UTC',
+      ).toUTCString();
 
       comp.save();
 
-      expect(systemWideAlertDataService.put).toHaveBeenCalledWith(expectedAlert);
+      expect(systemWideAlertDataService.put).toHaveBeenCalledWith(
+        expectedAlert,
+      );
       expect(notificationsService.success).toHaveBeenCalled();
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('systemwidealerts');
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        'systemwidealerts',
+      );
       expect(comp.back).toHaveBeenCalled();
     });
     it('should update the exising alert with the form values and show a success notification on success and not navigate back when false is provided to the save method', () => {
@@ -209,13 +239,20 @@ describe('SystemWideAlertFormComponent', () => {
       expectedAlert.message = 'New message';
       expectedAlert.active = true;
       const countDownTo = new Date(2023, 0, 25, 4, 26);
-      expectedAlert.countdownTo = utcToZonedTime(countDownTo, 'UTC').toUTCString();
+      expectedAlert.countdownTo = utcToZonedTime(
+        countDownTo,
+        'UTC',
+      ).toUTCString();
 
       comp.save(false);
 
-      expect(systemWideAlertDataService.put).toHaveBeenCalledWith(expectedAlert);
+      expect(systemWideAlertDataService.put).toHaveBeenCalledWith(
+        expectedAlert,
+      );
       expect(notificationsService.success).toHaveBeenCalled();
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('systemwidealerts');
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        'systemwidealerts',
+      );
       expect(comp.back).not.toHaveBeenCalled();
     });
     it('should update the exising alert with the form values but add an empty countdown date when disabled and show a success notification on success', () => {
@@ -236,14 +273,20 @@ describe('SystemWideAlertFormComponent', () => {
 
       comp.save();
 
-      expect(systemWideAlertDataService.put).toHaveBeenCalledWith(expectedAlert);
+      expect(systemWideAlertDataService.put).toHaveBeenCalledWith(
+        expectedAlert,
+      );
       expect(notificationsService.success).toHaveBeenCalled();
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('systemwidealerts');
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        'systemwidealerts',
+      );
       expect(comp.back).toHaveBeenCalled();
     });
     it('should update the exising alert with the form values and show a error notification on error', () => {
       spyOn(comp, 'back');
-      (systemWideAlertDataService.put as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$());
+      (systemWideAlertDataService.put as jasmine.Spy).and.returnValue(
+        createFailedRemoteDataObject$(),
+      );
       comp.currentAlert = systemWideAlert;
 
       comp.formMessage.patchValue('New message');
@@ -256,13 +299,20 @@ describe('SystemWideAlertFormComponent', () => {
       expectedAlert.message = 'New message';
       expectedAlert.active = true;
       const countDownTo = new Date(2023, 0, 25, 4, 26);
-      expectedAlert.countdownTo = utcToZonedTime(countDownTo, 'UTC').toUTCString();
+      expectedAlert.countdownTo = utcToZonedTime(
+        countDownTo,
+        'UTC',
+      ).toUTCString();
 
       comp.save();
 
-      expect(systemWideAlertDataService.put).toHaveBeenCalledWith(expectedAlert);
+      expect(systemWideAlertDataService.put).toHaveBeenCalledWith(
+        expectedAlert,
+      );
       expect(notificationsService.error).toHaveBeenCalled();
-      expect(requestService.setStaleByHrefSubstring).not.toHaveBeenCalledWith('systemwidealerts');
+      expect(requestService.setStaleByHrefSubstring).not.toHaveBeenCalledWith(
+        'systemwidealerts',
+      );
       expect(comp.back).not.toHaveBeenCalled();
     });
     it('should create a new alert with the form values and show a success notification on success', () => {
@@ -278,19 +328,27 @@ describe('SystemWideAlertFormComponent', () => {
       expectedAlert.message = 'New message';
       expectedAlert.active = true;
       const countDownTo = new Date(2023, 0, 25, 4, 26);
-      expectedAlert.countdownTo = utcToZonedTime(countDownTo, 'UTC').toUTCString();
+      expectedAlert.countdownTo = utcToZonedTime(
+        countDownTo,
+        'UTC',
+      ).toUTCString();
 
       comp.save();
 
-      expect(systemWideAlertDataService.create).toHaveBeenCalledWith(expectedAlert);
+      expect(systemWideAlertDataService.create).toHaveBeenCalledWith(
+        expectedAlert,
+      );
       expect(notificationsService.success).toHaveBeenCalled();
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('systemwidealerts');
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        'systemwidealerts',
+      );
       expect(comp.back).toHaveBeenCalled();
-
     });
     it('should create a new alert with the form values and show a error notification on error', () => {
       spyOn(comp, 'back');
-      (systemWideAlertDataService.create as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$());
+      (systemWideAlertDataService.create as jasmine.Spy).and.returnValue(
+        createFailedRemoteDataObject$(),
+      );
 
       comp.currentAlert = undefined;
 
@@ -303,15 +361,21 @@ describe('SystemWideAlertFormComponent', () => {
       expectedAlert.message = 'New message';
       expectedAlert.active = true;
       const countDownTo = new Date(2023, 0, 25, 4, 26);
-      expectedAlert.countdownTo = utcToZonedTime(countDownTo, 'UTC').toUTCString();
+      expectedAlert.countdownTo = utcToZonedTime(
+        countDownTo,
+        'UTC',
+      ).toUTCString();
 
       comp.save();
 
-      expect(systemWideAlertDataService.create).toHaveBeenCalledWith(expectedAlert);
+      expect(systemWideAlertDataService.create).toHaveBeenCalledWith(
+        expectedAlert,
+      );
       expect(notificationsService.error).toHaveBeenCalled();
-      expect(requestService.setStaleByHrefSubstring).not.toHaveBeenCalledWith('systemwidealerts');
+      expect(requestService.setStaleByHrefSubstring).not.toHaveBeenCalledWith(
+        'systemwidealerts',
+      );
       expect(comp.back).not.toHaveBeenCalled();
-
     });
   });
   describe('back', () => {
@@ -320,6 +384,4 @@ describe('SystemWideAlertFormComponent', () => {
       expect(router.navigate).toHaveBeenCalledWith(['/home']);
     });
   });
-
-
 });

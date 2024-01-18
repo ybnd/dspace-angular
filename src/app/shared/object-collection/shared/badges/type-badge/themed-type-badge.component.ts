@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { DSpaceObject } from '../../../../../core/shared/dspace-object.model';
 import { ThemedComponent } from '../../../../theme-support/themed.component';
@@ -18,14 +15,18 @@ import { TypeBadgeComponent } from './type-badge.component';
 export class ThemedTypeBadgeComponent extends ThemedComponent<TypeBadgeComponent> {
   @Input() object: DSpaceObject;
 
-  protected inAndOutputNames: (keyof TypeBadgeComponent & keyof this)[] = ['object'];
+  protected inAndOutputNames: (keyof TypeBadgeComponent & keyof this)[] = [
+    'object',
+  ];
 
   protected getComponentName(): string {
     return 'TypeBadgeComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../../themes/${themeName}/app/shared/object-collection/shared/badges/type-badge/type-badge.component`);
+    return import(
+      `../../../../../../themes/${themeName}/app/shared/object-collection/shared/badges/type-badge/type-badge.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

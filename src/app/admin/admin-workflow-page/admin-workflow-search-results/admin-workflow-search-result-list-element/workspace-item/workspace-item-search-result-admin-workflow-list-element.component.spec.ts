@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -49,43 +45,53 @@ describe('WorkspaceItemSearchResultAdminWorkflowListElementComponent', () => {
     wfi.item = itemRD$;
     object.indexableObject = wfi;
     linkService = getMockLinkService();
-    supervisionOrderDataService = jasmine.createSpyObj('supervisionOrderDataService', {
-      searchByItem: jasmine.createSpy('searchByItem'),
-      delete: jasmine.createSpy('delete'),
-    });
+    supervisionOrderDataService = jasmine.createSpyObj(
+      'supervisionOrderDataService',
+      {
+        searchByItem: jasmine.createSpy('searchByItem'),
+        delete: jasmine.createSpy('delete'),
+      },
+    );
   }
 
   beforeEach(waitForAsync(() => {
     init();
-    TestBed.configureTestingModule(
-      {
-        declarations: [WorkspaceItemSearchResultAdminWorkflowListElementComponent],
-        imports: [
-          NoopAnimationsModule,
-          TranslateModule.forRoot(),
-          RouterTestingModule.withRoutes([]),
-        ],
-        providers: [
-          { provide: TruncatableService, useValue: mockTruncatableService },
-          { provide: LinkService, useValue: linkService },
-          { provide: DSONameService, useClass: DSONameServiceMock },
-          { provide: SupervisionOrderDataService, useValue: supervisionOrderDataService },
-          { provide: APP_CONFIG, useValue: environment },
-        ],
-        schemas: [NO_ERRORS_SCHEMA],
-      })
-      .compileComponents();
+    TestBed.configureTestingModule({
+      declarations: [
+        WorkspaceItemSearchResultAdminWorkflowListElementComponent,
+      ],
+      imports: [
+        NoopAnimationsModule,
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+      ],
+      providers: [
+        { provide: TruncatableService, useValue: mockTruncatableService },
+        { provide: LinkService, useValue: linkService },
+        { provide: DSONameService, useClass: DSONameServiceMock },
+        {
+          provide: SupervisionOrderDataService,
+          useValue: supervisionOrderDataService,
+        },
+        { provide: APP_CONFIG, useValue: environment },
+      ],
+      schemas: [NO_ERRORS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
     linkService.resolveLink.and.callFake((a) => a);
-    fixture = TestBed.createComponent(WorkspaceItemSearchResultAdminWorkflowListElementComponent);
+    fixture = TestBed.createComponent(
+      WorkspaceItemSearchResultAdminWorkflowListElementComponent,
+    );
     component = fixture.componentInstance;
     component.object = object;
     component.linkTypes = CollectionElementLinkType;
     component.index = 0;
     component.viewModes = ViewMode;
-    supervisionOrderDataService.searchByItem.and.returnValue(supervisionOrderPaginatedListRD$);
+    supervisionOrderDataService.searchByItem.and.returnValue(
+      supervisionOrderPaginatedListRD$,
+    );
     fixture.detectChanges();
   });
 
@@ -94,11 +100,16 @@ describe('WorkspaceItemSearchResultAdminWorkflowListElementComponent', () => {
   });
 
   it('should retrieve the item using the link service', () => {
-    expect(linkService.resolveLink).toHaveBeenCalledWith(wfi, followLink('item'));
+    expect(linkService.resolveLink).toHaveBeenCalledWith(
+      wfi,
+      followLink('item'),
+    );
   });
 
   it('should retrieve supervision order objects properly', () => {
-    expect(component.supervisionOrder$.value).toEqual(supervisionOrderPaginatedListRD.payload.page);
+    expect(component.supervisionOrder$.value).toEqual(
+      supervisionOrderPaginatedListRD.payload.page,
+    );
   });
 
   it('should emit reloadedObject properly ', () => {

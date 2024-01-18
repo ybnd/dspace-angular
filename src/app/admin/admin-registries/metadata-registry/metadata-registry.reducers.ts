@@ -37,10 +37,11 @@ const initialState: MetadataRegistryState = {
  * @param state   The current MetadataRegistryState
  * @param action  The MetadataRegistryAction to perform on the state
  */
-export function metadataRegistryReducer(state = initialState, action: MetadataRegistryAction): MetadataRegistryState {
-
+export function metadataRegistryReducer(
+  state = initialState,
+  action: MetadataRegistryAction,
+): MetadataRegistryState {
   switch (action.type) {
-
     case MetadataRegistryActionTypes.EDIT_SCHEMA: {
       return Object.assign({}, state, {
         editSchema: (action as MetadataRegistryEditSchemaAction).schema,
@@ -55,14 +56,19 @@ export function metadataRegistryReducer(state = initialState, action: MetadataRe
 
     case MetadataRegistryActionTypes.SELECT_SCHEMA: {
       return Object.assign({}, state, {
-        selectedSchemas: [...state.selectedSchemas, (action as MetadataRegistrySelectSchemaAction).schema],
+        selectedSchemas: [
+          ...state.selectedSchemas,
+          (action as MetadataRegistrySelectSchemaAction).schema,
+        ],
       });
     }
 
     case MetadataRegistryActionTypes.DESELECT_SCHEMA: {
       return Object.assign({}, state, {
         selectedSchemas: state.selectedSchemas.filter(
-          (selectedSchema) => selectedSchema !== (action as MetadataRegistryDeselectSchemaAction).schema,
+          (selectedSchema) =>
+            selectedSchema !==
+            (action as MetadataRegistryDeselectSchemaAction).schema,
         ),
       });
     }
@@ -87,14 +93,19 @@ export function metadataRegistryReducer(state = initialState, action: MetadataRe
 
     case MetadataRegistryActionTypes.SELECT_FIELD: {
       return Object.assign({}, state, {
-        selectedFields: [...state.selectedFields, (action as MetadataRegistrySelectFieldAction).field],
+        selectedFields: [
+          ...state.selectedFields,
+          (action as MetadataRegistrySelectFieldAction).field,
+        ],
       });
     }
 
     case MetadataRegistryActionTypes.DESELECT_FIELD: {
       return Object.assign({}, state, {
         selectedFields: state.selectedFields.filter(
-          (selectedField) => selectedField !== (action as MetadataRegistryDeselectFieldAction).field,
+          (selectedField) =>
+            selectedField !==
+            (action as MetadataRegistryDeselectFieldAction).field,
         ),
       });
     }

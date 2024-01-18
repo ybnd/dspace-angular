@@ -9,6 +9,4 @@ import { HomePageComponent as BaseComponent } from '../../../../app/home-page/ho
   // templateUrl: './home-page.component.html'
   templateUrl: '../../../../app/home-page/home-page.component.html',
 })
-export class HomePageComponent extends BaseComponent {
-
-}
+export class HomePageComponent extends BaseComponent {}

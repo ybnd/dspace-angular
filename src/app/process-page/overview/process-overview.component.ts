@@ -1,17 +1,7 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { FindListOptions } from '../../core/data/find-list-options.model';
@@ -35,7 +25,6 @@ import { ProcessBulkDeleteService } from './process-bulk-delete.service';
  * Component displaying a list of all processes in a paginated table
  */
 export class ProcessOverviewComponent implements OnInit, OnDestroy {
-
   /**
    * List of all processes
    */
@@ -51,10 +40,13 @@ export class ProcessOverviewComponent implements OnInit, OnDestroy {
   /**
    * The current pagination configuration for the page
    */
-  pageConfig: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'po',
-    pageSize: 20,
-  });
+  pageConfig: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'po',
+      pageSize: 20,
+    },
+  );
 
   /**
    * Date format to use for start and end time of processes
@@ -66,14 +58,14 @@ export class ProcessOverviewComponent implements OnInit, OnDestroy {
 
   isProcessingSub: Subscription;
 
-  constructor(protected processService: ProcessDataService,
-              protected paginationService: PaginationService,
-              protected ePersonService: EPersonDataService,
-              protected modalService: NgbModal,
-              public processBulkDeleteService: ProcessBulkDeleteService,
-              protected dsoNameService: DSONameService,
-  ) {
-  }
+  constructor(
+    protected processService: ProcessDataService,
+    protected paginationService: PaginationService,
+    protected ePersonService: EPersonDataService,
+    protected modalService: NgbModal,
+    public processBulkDeleteService: ProcessBulkDeleteService,
+    protected dsoNameService: DSONameService,
+  ) {}
 
   ngOnInit(): void {
     this.setProcesses();
@@ -84,9 +76,11 @@ export class ProcessOverviewComponent implements OnInit, OnDestroy {
    * Send a request to fetch all processes for the current page
    */
   setProcesses() {
-    this.processesRD$ = this.paginationService.getFindListOptions(this.pageConfig.id, this.config).pipe(
-      switchMap((config) => this.processService.findAll(config, true, false)),
-    );
+    this.processesRD$ = this.paginationService
+      .getFindListOptions(this.pageConfig.id, this.config)
+      .pipe(
+        switchMap((config) => this.processService.findAll(config, true, false)),
+      );
   }
 
   /**
@@ -133,7 +127,8 @@ export class ProcessOverviewComponent implements OnInit, OnDestroy {
     if (hasValue(this.isProcessingSub)) {
       this.isProcessingSub.unsubscribe();
     }
-    this.isProcessingSub = this.processBulkDeleteService.isProcessing$()
+    this.isProcessingSub = this.processBulkDeleteService
+      .isProcessing$()
       .subscribe((isProcessing) => {
         if (!isProcessing) {
           this.closeModal();

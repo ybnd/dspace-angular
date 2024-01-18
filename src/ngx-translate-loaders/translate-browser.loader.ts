@@ -1,18 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { TransferState } from '@angular/platform-browser';
 import { TranslateLoader } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { hasValue } from '../app/shared/empty.util';
 import { environment } from '../environments/environment';
-import {
-  NGX_TRANSLATE_STATE,
-  NgxTranslateState,
-} from './ngx-translate-state';
+import { NGX_TRANSLATE_STATE, NgxTranslateState } from './ngx-translate-state';
 
 /**
  * A TranslateLoader for ngx-translate to retrieve i18n messages from the TransferState, or download
@@ -24,8 +18,7 @@ export class TranslateBrowserLoader implements TranslateLoader {
     protected http: HttpClient,
     protected prefix?: string,
     protected suffix?: string,
-  ) {
-  }
+  ) {}
 
   /**
    * Return the i18n messages for a given language, first try to find them in the TransferState
@@ -36,17 +29,24 @@ export class TranslateBrowserLoader implements TranslateLoader {
   getTranslation(lang: string): Observable<any> {
     // Get the ngx-translate messages from the transfer state, to speed up the initial page load
     // client side
-    const state = this.transferState.get<NgxTranslateState>(NGX_TRANSLATE_STATE, {});
+    const state = this.transferState.get<NgxTranslateState>(
+      NGX_TRANSLATE_STATE,
+      {},
+    );
     const messages = state[lang];
     if (hasValue(messages)) {
       return observableOf(messages);
     } else {
-      const translationHash: string = environment.production ? `.${(process.env.languageHashes as any)[lang + '.json5']}` : '';
+      const translationHash: string = environment.production
+        ? `.${(process.env.languageHashes as any)[lang + '.json5']}`
+        : '';
       // If they're not available on the transfer state (e.g. when running in dev mode), retrieve
       // them using HttpClient
-      return this.http.get(`${this.prefix}${lang}${translationHash}${this.suffix}`, { responseType: 'text' }).pipe(
-        map((json: any) => JSON.parse(json)),
-      );
+      return this.http
+        .get(`${this.prefix}${lang}${translationHash}${this.suffix}`, {
+          responseType: 'text',
+        })
+        .pipe(map((json: any) => JSON.parse(json)));
     }
   }
 }

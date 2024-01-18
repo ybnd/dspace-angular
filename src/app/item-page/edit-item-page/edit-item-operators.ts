@@ -8,7 +8,7 @@ import { getAllSucceededRemoteData } from '../../core/shared/operators';
  * Return first Observable of a RemoteData object that complies to the provided predicate
  * @param predicate
  */
-export const findSuccessfulAccordingTo = <T>(predicate: (rd: RemoteData<T>) => boolean) =>
+export const findSuccessfulAccordingTo =
+  <T>(predicate: (rd: RemoteData<T>) => boolean) =>
   (source: Observable<RemoteData<T>>): Observable<RemoteData<T>> =>
-    source.pipe(getAllSucceededRemoteData(),
-      first(predicate));
+    source.pipe(getAllSucceededRemoteData(), first(predicate));

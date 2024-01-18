@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -25,9 +22,11 @@ describe('ObjectListComponent', () => {
       declarations: [ObjectListComponent],
       providers: [{ provide: SelectableListService, useValue: {} }],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ObjectListComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ObjectListComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

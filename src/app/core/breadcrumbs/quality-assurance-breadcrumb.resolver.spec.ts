@@ -19,12 +19,21 @@ describe('QualityAssuranceBreadcrumbResolver', () => {
         },
       };
       qualityAssuranceBreadcrumbService = {};
-      resolver = new QualityAssuranceBreadcrumbResolver(qualityAssuranceBreadcrumbService);
+      resolver = new QualityAssuranceBreadcrumbResolver(
+        qualityAssuranceBreadcrumbService,
+      );
     });
 
     it('should resolve the breadcrumb config', () => {
-      const resolvedConfig = resolver.resolve(route as any, { url: fullPath + 'testSourceId' } as any);
-      const expectedConfig = { provider: qualityAssuranceBreadcrumbService, key: expectedKey, url: fullPath };
+      const resolvedConfig = resolver.resolve(
+        route as any,
+        { url: fullPath + 'testSourceId' } as any,
+      );
+      const expectedConfig = {
+        provider: qualityAssuranceBreadcrumbService,
+        key: expectedKey,
+        url: fullPath,
+      };
       expect(resolvedConfig).toEqual(expectedConfig);
     });
   });

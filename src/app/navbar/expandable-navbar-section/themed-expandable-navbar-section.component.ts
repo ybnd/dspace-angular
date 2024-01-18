@@ -14,13 +14,15 @@ import { ExpandableNavbarSectionComponent } from './expandable-navbar-section.co
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 @rendersSectionForMenu(MenuID.PUBLIC, true)
-export class ThemedExpandableNavbarSectionComponent  extends ThemedComponent<ExpandableNavbarSectionComponent> {
+export class ThemedExpandableNavbarSectionComponent extends ThemedComponent<ExpandableNavbarSectionComponent> {
   protected getComponentName(): string {
     return 'ExpandableNavbarSectionComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/navbar/expandable-navbar-section/expandable-navbar-section.component`);
+    return import(
+      `../../../themes/${themeName}/app/navbar/expandable-navbar-section/expandable-navbar-section.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,8 +15,7 @@ describe('DsoEditMetadataHeadersComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DsoEditMetadataHeadersComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
-      providers: [
-      ],
+      providers: [],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
@@ -32,6 +27,8 @@ describe('DsoEditMetadataHeadersComponent', () => {
   });
 
   it('should display three headers', () => {
-    expect(fixture.debugElement.queryAll(By.css('.ds-flex-cell')).length).toEqual(3);
+    expect(
+      fixture.debugElement.queryAll(By.css('.ds-flex-cell')).length,
+    ).toEqual(3);
   });
 });

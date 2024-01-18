@@ -9,11 +9,7 @@ import {
   Output,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 import { AppState } from '../../../../../app.reducer';
@@ -24,10 +20,7 @@ import {
 } from '../../../../../core/shared/operators';
 import { ViewMode } from '../../../../../core/shared/view-mode.model';
 import { SubmissionService } from '../../../../../submission/submission.service';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../../empty.util';
+import { hasValue, isNotEmpty } from '../../../../empty.util';
 import { ItemSearchResult } from '../../../../object-collection/shared/item-search-result.model';
 import { SelectableListService } from '../../../../object-list/selectable-list/selectable-list.service';
 import { RelationshipOptions } from '../../models/relationship-options.model';
@@ -38,9 +31,10 @@ import { RemoveRelationshipAction } from '../relation-lookup-modal/relationship.
  * Abstract class that defines objects that can be reordered
  */
 export abstract class Reorderable {
-
-  constructor(public oldIndex?: number, public newIndex?: number) {
-  }
+  constructor(
+    public oldIndex?: number,
+    public newIndex?: number,
+  ) {}
 
   /**
    * Return the id for this Reorderable
@@ -74,7 +68,9 @@ export abstract class Reorderable {
   templateUrl: './existing-relation-list-element.component.html',
   styleUrls: ['./existing-relation-list-element.component.scss'],
 })
-export class ExistingRelationListElementComponent implements OnInit, OnChanges, OnDestroy {
+export class ExistingRelationListElementComponent
+  implements OnInit, OnChanges, OnDestroy
+{
   @Input() listId: string;
   @Input() submissionItem: Item;
   @Input() reoRel: ReorderableRelationship;
@@ -94,8 +90,7 @@ export class ExistingRelationListElementComponent implements OnInit, OnChanges, 
     private selectableListService: SelectableListService,
     private submissionService: SubmissionService,
     private store: Store<AppState>,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.ngOnChanges();
@@ -106,17 +101,21 @@ export class ExistingRelationListElementComponent implements OnInit, OnChanges, 
    */
   ngOnChanges() {
     if (hasValue(this.reoRel)) {
-      const item$ = this.reoRel.useLeftItem ?
-        this.reoRel.relationship.leftItem : this.reoRel.relationship.rightItem;
-      this.subs.push(item$.pipe(
-        getAllSucceededRemoteData(),
-        getRemoteDataPayload(),
-        filter((item: Item) => hasValue(item) && isNotEmpty(item.uuid)),
-      ).subscribe((item: Item) => {
-        this.relatedItem$.next(item);
-      }));
+      const item$ = this.reoRel.useLeftItem
+        ? this.reoRel.relationship.leftItem
+        : this.reoRel.relationship.rightItem;
+      this.subs.push(
+        item$
+          .pipe(
+            getAllSucceededRemoteData(),
+            getRemoteDataPayload(),
+            filter((item: Item) => hasValue(item) && isNotEmpty(item.uuid)),
+          )
+          .subscribe((item: Item) => {
+            this.relatedItem$.next(item);
+          }),
+      );
     }
-
   }
 
   /**
@@ -124,8 +123,20 @@ export class ExistingRelationListElementComponent implements OnInit, OnChanges, 
    */
   removeSelection() {
     this.submissionService.dispatchSave(this.submissionId);
-    this.selectableListService.deselectSingle(this.listId, Object.assign(new ItemSearchResult(), { indexableObject: this.relatedItem$.getValue() }));
-    this.store.dispatch(new RemoveRelationshipAction(this.submissionItem, this.relatedItem$.getValue(), this.relationshipOptions.relationshipType, this.submissionId));
+    this.selectableListService.deselectSingle(
+      this.listId,
+      Object.assign(new ItemSearchResult(), {
+        indexableObject: this.relatedItem$.getValue(),
+      }),
+    );
+    this.store.dispatch(
+      new RemoveRelationshipAction(
+        this.submissionItem,
+        this.relatedItem$.getValue(),
+        this.relationshipOptions.relationshipType,
+        this.submissionId,
+      ),
+    );
   }
 
   /**
@@ -136,6 +147,4 @@ export class ExistingRelationListElementComponent implements OnInit, OnChanges, 
       .filter((sub) => hasValue(sub))
       .forEach((sub) => sub.unsubscribe());
   }
-
 }
-

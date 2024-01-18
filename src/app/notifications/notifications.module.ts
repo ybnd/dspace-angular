@@ -1,11 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { EffectsModule } from '@ngrx/effects';
-import {
-  Action,
-  StoreConfig,
-  StoreModule,
-} from '@ngrx/store';
+import { Action, StoreConfig, StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { storeModuleConfig } from '../app.reducer';
@@ -33,7 +29,11 @@ const MODULES = [
   SharedModule,
   SearchModule,
   CoreModule.forRoot(),
-  StoreModule.forFeature('suggestionNotifications', suggestionNotificationsReducers, storeModuleConfig as StoreConfig<SuggestionNotificationsState, Action>),
+  StoreModule.forFeature(
+    'suggestionNotifications',
+    suggestionNotificationsReducers,
+    storeModuleConfig as StoreConfig<SuggestionNotificationsState, Action>,
+  ),
   EffectsModule.forFeature(notificationsEffects),
   TranslateModule,
 ];
@@ -44,11 +44,9 @@ const COMPONENTS = [
   QualityAssuranceSourceComponent,
 ];
 
-const DIRECTIVES = [ ];
+const DIRECTIVES = [];
 
-const ENTRY_COMPONENTS = [
-  ProjectEntryImportModalComponent,
-];
+const ENTRY_COMPONENTS = [ProjectEntryImportModalComponent];
 
 const PROVIDERS = [
   NotificationsStateService,
@@ -60,28 +58,14 @@ const PROVIDERS = [
 ];
 
 @NgModule({
-  imports: [
-    ...MODULES,
-  ],
-  declarations: [
-    ...COMPONENTS,
-    ...DIRECTIVES,
-    ...ENTRY_COMPONENTS,
-  ],
-  providers: [
-    ...PROVIDERS,
-  ],
-  entryComponents: [
-    ...ENTRY_COMPONENTS,
-  ],
-  exports: [
-    ...COMPONENTS,
-    ...DIRECTIVES,
-  ],
+  imports: [...MODULES],
+  declarations: [...COMPONENTS, ...DIRECTIVES, ...ENTRY_COMPONENTS],
+  providers: [...PROVIDERS],
+  entryComponents: [...ENTRY_COMPONENTS],
+  exports: [...COMPONENTS, ...DIRECTIVES],
 })
 
 /**
  * This module handles all components that are necessary for the OpenAIRE components
  */
-export class NotificationsModule {
-}
+export class NotificationsModule {}

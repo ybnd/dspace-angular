@@ -3,15 +3,8 @@ import {
   DebugElement,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { getTestScheduler } from 'jasmine-marbles';
 import {
@@ -60,16 +53,26 @@ let relationshipService;
 let requestService;
 let entityTypeService;
 let objectCache;
-const infoNotification: INotification = new Notification('id', NotificationType.Info, 'info');
-const warningNotification: INotification = new Notification('id', NotificationType.Warning, 'warning');
-const successNotification: INotification = new Notification('id', NotificationType.Success, 'success');
-const notificationsService = jasmine.createSpyObj('notificationsService',
-  {
-    info: infoNotification,
-    warning: warningNotification,
-    success: successNotification,
-  },
+const infoNotification: INotification = new Notification(
+  'id',
+  NotificationType.Info,
+  'info',
 );
+const warningNotification: INotification = new Notification(
+  'id',
+  NotificationType.Warning,
+  'warning',
+);
+const successNotification: INotification = new Notification(
+  'id',
+  NotificationType.Success,
+  'success',
+);
+const notificationsService = jasmine.createSpyObj('notificationsService', {
+  info: infoNotification,
+  warning: warningNotification,
+  success: successNotification,
+});
 const router = new RouterStub();
 let relationshipTypeService;
 let routeStub;
@@ -124,7 +127,9 @@ describe('ItemRelationshipsComponent', () => {
       },
       id: 'publication',
       uuid: 'publication',
-      relationships: createSuccessfulRemoteDataObject$(createPaginatedList(relationships)),
+      relationships: createSuccessfulRemoteDataObject$(
+        createPaginatedList(relationships),
+      ),
       lastModified: date,
     });
 
@@ -151,10 +156,10 @@ describe('ItemRelationshipsComponent', () => {
       changeType: undefined,
     };
     fieldUpdate2 = {
-      field: Object.assign(
-        relationships[1],
-        { keepLeftVirtualMetadata: true, keepRightVirtualMetadata: false },
-      ),
+      field: Object.assign(relationships[1], {
+        keepLeftVirtualMetadata: true,
+        keepRightVirtualMetadata: false,
+      }),
       changeType: FieldChangeType.REMOVE,
     };
 
@@ -169,65 +174,62 @@ describe('ItemRelationshipsComponent', () => {
       },
     };
 
-    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService',
-      {
-        getFieldUpdates: observableOf({
-          [relationships[0].uuid]: fieldUpdate1,
-          [relationships[1].uuid]: fieldUpdate2,
-        }),
-        getFieldUpdatesExclusive: observableOf({
-          [relationships[0].uuid]: fieldUpdate1,
-          [relationships[1].uuid]: fieldUpdate2,
-        }),
-        saveAddFieldUpdate: {},
-        discardFieldUpdates: {},
-        reinstateFieldUpdates: observableOf(true),
-        initialize: {},
-        getUpdatedFields: observableOf([author1, author2]),
-        getLastModified: observableOf(date),
-        hasUpdates: observableOf(true),
-        isReinstatable: observableOf(false), // should always return something --> its in ngOnInit
-        isValidPage: observableOf(true),
-      },
-    );
+    objectUpdatesService = jasmine.createSpyObj('objectUpdatesService', {
+      getFieldUpdates: observableOf({
+        [relationships[0].uuid]: fieldUpdate1,
+        [relationships[1].uuid]: fieldUpdate2,
+      }),
+      getFieldUpdatesExclusive: observableOf({
+        [relationships[0].uuid]: fieldUpdate1,
+        [relationships[1].uuid]: fieldUpdate2,
+      }),
+      saveAddFieldUpdate: {},
+      discardFieldUpdates: {},
+      reinstateFieldUpdates: observableOf(true),
+      initialize: {},
+      getUpdatedFields: observableOf([author1, author2]),
+      getLastModified: observableOf(date),
+      hasUpdates: observableOf(true),
+      isReinstatable: observableOf(false), // should always return something --> its in ngOnInit
+      isValidPage: observableOf(true),
+    });
 
-    relationshipService = jasmine.createSpyObj('relationshipService',
-      {
-        getItemRelationshipLabels: observableOf(['isAuthorOfPublication']),
-        getRelatedItems: observableOf([author1, author2]),
-        getRelatedItemsByLabel: observableOf([author1, author2]),
-        getItemRelationshipsArray: observableOf(relationships),
-        deleteRelationship: observableOf(new RestResponse(true, 200, 'OK')),
-        getItemResolvedRelatedItemsAndRelationships: observableCombineLatest(observableOf([author1, author2]), observableOf([item, item]), observableOf(relationships)),
-        getRelationshipsByRelatedItemIds: observableOf(relationships),
-        getRelationshipTypeLabelsByItem: observableOf([relationshipType.leftwardType]),
-      },
-    );
+    relationshipService = jasmine.createSpyObj('relationshipService', {
+      getItemRelationshipLabels: observableOf(['isAuthorOfPublication']),
+      getRelatedItems: observableOf([author1, author2]),
+      getRelatedItemsByLabel: observableOf([author1, author2]),
+      getItemRelationshipsArray: observableOf(relationships),
+      deleteRelationship: observableOf(new RestResponse(true, 200, 'OK')),
+      getItemResolvedRelatedItemsAndRelationships: observableCombineLatest(
+        observableOf([author1, author2]),
+        observableOf([item, item]),
+        observableOf(relationships),
+      ),
+      getRelationshipsByRelatedItemIds: observableOf(relationships),
+      getRelationshipTypeLabelsByItem: observableOf([
+        relationshipType.leftwardType,
+      ]),
+    });
 
+    relationshipTypeService = jasmine.createSpyObj('searchByEntityType', {
+      searchByEntityType: observableOf(relationshipTypes),
+    });
 
-    relationshipTypeService = jasmine.createSpyObj('searchByEntityType',
-      {
-        searchByEntityType: observableOf(relationshipTypes),
-      },
-    );
-
-    requestService = jasmine.createSpyObj('requestService',
-      {
-        removeByHrefSubstring: {},
-        hasByHref$: observableOf(false),
-      },
-    );
+    requestService = jasmine.createSpyObj('requestService', {
+      removeByHrefSubstring: {},
+      hasByHref$: observableOf(false),
+    });
 
     objectCache = jasmine.createSpyObj('objectCache', {
       remove: undefined,
     });
 
-    entityTypeService = jasmine.createSpyObj('entityTypeService',
-      {
-        getEntityTypeByLabel: createSuccessfulRemoteDataObject$(entityType),
-        getEntityTypeRelationships: createSuccessfulRemoteDataObject$(createPaginatedList([relationshipType])),
-      },
-    );
+    entityTypeService = jasmine.createSpyObj('entityTypeService', {
+      getEntityTypeByLabel: createSuccessfulRemoteDataObject$(entityType),
+      getEntityTypeRelationships: createSuccessfulRemoteDataObject$(
+        createPaginatedList([relationshipType]),
+      ),
+    });
 
     scheduler = getTestScheduler();
     TestBed.configureTestingModule({
@@ -244,11 +246,13 @@ describe('ItemRelationshipsComponent', () => {
         { provide: EntityTypeDataService, useValue: entityTypeService },
         { provide: ObjectCacheService, useValue: objectCache },
         { provide: RequestService, useValue: requestService },
-        { provide: RelationshipTypeDataService, useValue: relationshipTypeService },
+        {
+          provide: RelationshipTypeDataService,
+          useValue: relationshipTypeService,
+        },
         ChangeDetectorRef,
-      ], schemas: [
-        NO_ERRORS_SCHEMA,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -267,7 +271,10 @@ describe('ItemRelationshipsComponent', () => {
     });
 
     it('it should call discardFieldUpdates on the objectUpdatesService with the correct url and notification', () => {
-      expect(objectUpdatesService.discardFieldUpdates).toHaveBeenCalledWith(url, infoNotification);
+      expect(objectUpdatesService.discardFieldUpdates).toHaveBeenCalledWith(
+        url,
+        infoNotification,
+      );
     });
   });
 
@@ -277,7 +284,9 @@ describe('ItemRelationshipsComponent', () => {
     });
 
     it('it should call reinstateFieldUpdates on the objectUpdatesService with the correct url', () => {
-      expect(objectUpdatesService.reinstateFieldUpdates).toHaveBeenCalledWith(url);
+      expect(objectUpdatesService.reinstateFieldUpdates).toHaveBeenCalledWith(
+        url,
+      );
     });
   });
 
@@ -287,11 +296,12 @@ describe('ItemRelationshipsComponent', () => {
     });
 
     it('it should delete the correct relationship', () => {
-      expect(relationshipService.deleteRelationship).toHaveBeenCalledWith(relationships[1].uuid, 'left');
+      expect(relationshipService.deleteRelationship).toHaveBeenCalledWith(
+        relationships[1].uuid,
+        'left',
+      );
     });
   });
-
-
 
   describe('discard', () => {
     beforeEach(() => {
@@ -307,5 +317,4 @@ describe('ItemRelationshipsComponent', () => {
       expect(relationshipTypeService.searchByEntityType).toHaveBeenCalled();
     });
   });
-
 });

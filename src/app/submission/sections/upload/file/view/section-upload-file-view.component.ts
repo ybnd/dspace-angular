@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import {
   MetadataMap,
@@ -20,7 +16,6 @@ import { isNotEmpty } from '../../../../../shared/empty.util';
   templateUrl: './section-upload-file-view.component.html',
 })
 export class SubmissionSectionUploadFileViewComponent implements OnInit {
-
   /**
    * The bitstream's metadata data
    * @type {WorkspaceitemSectionUploadFileObject}
@@ -57,8 +52,14 @@ export class SubmissionSectionUploadFileViewComponent implements OnInit {
    */
   ngOnInit() {
     if (isNotEmpty(this.fileData.metadata)) {
-      this.metadata[this.fileTitleKey] = Metadata.all(this.fileData.metadata, 'dc.title');
-      this.metadata[this.fileDescrKey] = Metadata.all(this.fileData.metadata, 'dc.description');
+      this.metadata[this.fileTitleKey] = Metadata.all(
+        this.fileData.metadata,
+        'dc.title',
+      );
+      this.metadata[this.fileDescrKey] = Metadata.all(
+        this.fileData.metadata,
+        'dc.description',
+      );
     }
     this.fileCheckSum = this.fileData.checkSum;
     this.fileFormat = this.fileData.format.shortDescription;

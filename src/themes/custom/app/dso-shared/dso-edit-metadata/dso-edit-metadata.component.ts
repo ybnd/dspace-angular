@@ -5,9 +5,11 @@ import { DsoEditMetadataComponent as BaseComponent } from '../../../../../app/ds
 @Component({
   selector: 'ds-dso-edit-metadata',
   // styleUrls: ['./dso-edit-metadata.component.scss'],
-  styleUrls: ['../../../../../app/dso-shared/dso-edit-metadata/dso-edit-metadata.component.scss'],
+  styleUrls: [
+    '../../../../../app/dso-shared/dso-edit-metadata/dso-edit-metadata.component.scss',
+  ],
   // templateUrl: './dso-edit-metadata.component.html',
-  templateUrl: '../../../../../app/dso-shared/dso-edit-metadata/dso-edit-metadata.component.html',
+  templateUrl:
+    '../../../../../app/dso-shared/dso-edit-metadata/dso-edit-metadata.component.html',
 })
-export class DsoEditMetadataComponent extends BaseComponent {
-}
+export class DsoEditMetadataComponent extends BaseComponent {}

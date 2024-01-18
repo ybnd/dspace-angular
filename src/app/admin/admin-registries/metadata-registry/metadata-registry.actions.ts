@@ -14,7 +14,6 @@ import { type } from '../../../shared/ngrx/type';
  * action types in the application are unique.
  */
 export const MetadataRegistryActionTypes = {
-
   EDIT_SCHEMA: type('dspace/metadata-registry/EDIT_SCHEMA'),
   CANCEL_EDIT_SCHEMA: type('dspace/metadata-registry/CANCEL_SCHEMA'),
   SELECT_SCHEMA: type('dspace/metadata-registry/SELECT_SCHEMA'),
@@ -134,14 +133,13 @@ export class MetadataRegistryDeselectAllFieldAction implements Action {
   type = MetadataRegistryActionTypes.DESELECT_ALL_FIELD;
 }
 
-
 /**
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types
  * These are all the actions to perform on the metadata registry state
  */
-export type MetadataRegistryAction
-  = MetadataRegistryEditSchemaAction
+export type MetadataRegistryAction =
+  | MetadataRegistryEditSchemaAction
   | MetadataRegistryCancelSchemaAction
   | MetadataRegistrySelectSchemaAction
   | MetadataRegistryDeselectSchemaAction

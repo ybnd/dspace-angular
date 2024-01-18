@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 /**
  * This component renders any content inside this wrapper.
@@ -13,7 +10,6 @@ import {
   templateUrl: './metadata-field-wrapper.component.html',
 })
 export class MetadataFieldWrapperComponent {
-
   /**
    * The label (title) for the content
    */

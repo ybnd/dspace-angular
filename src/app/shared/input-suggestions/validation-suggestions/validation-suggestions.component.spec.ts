@@ -3,15 +3,8 @@ import {
   DebugElement,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -22,29 +15,41 @@ import { ObjectUpdatesService } from '../../../core/data/object-updates/object-u
 import { ValidationSuggestionsComponent } from './validation-suggestions.component';
 
 describe('ValidationSuggestionsComponent', () => {
-
   let comp: ValidationSuggestionsComponent;
   let fixture: ComponentFixture<ValidationSuggestionsComponent>;
   let de: DebugElement;
   let el: HTMLElement;
-  const suggestions = [{ displayValue: 'suggestion uno', value: 'suggestion uno' }, {
-    displayValue: 'suggestion dos',
-    value: 'suggestion dos',
-  }, { displayValue: 'suggestion tres', value: 'suggestion tres' }];
+  const suggestions = [
+    { displayValue: 'suggestion uno', value: 'suggestion uno' },
+    {
+      displayValue: 'suggestion dos',
+      value: 'suggestion dos',
+    },
+    { displayValue: 'suggestion tres', value: 'suggestion tres' },
+  ];
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([]), NoopAnimationsModule, FormsModule, ReactiveFormsModule],
+      imports: [
+        TranslateModule.forRoot(),
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
+        FormsModule,
+        ReactiveFormsModule,
+      ],
       declarations: [ValidationSuggestionsComponent],
-      providers: [FormsModule,
+      providers: [
+        FormsModule,
         ReactiveFormsModule,
         { provide: MetadataFieldDataService, useValue: {} },
         { provide: ObjectUpdatesService, useValue: {} },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ValidationSuggestionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ValidationSuggestionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -63,12 +68,16 @@ describe('ValidationSuggestionsComponent', () => {
     const clickedIndex = 0;
     beforeEach(() => {
       spyOn(comp, 'onClickSuggestion');
-      const clickedLink = de.query(By.css('.dropdown-list > div:nth-child(' + (clickedIndex + 1) + ') a'));
+      const clickedLink = de.query(
+        By.css('.dropdown-list > div:nth-child(' + (clickedIndex + 1) + ') a'),
+      );
       clickedLink.triggerEventHandler('click', {});
       fixture.detectChanges();
     });
     it('should call onClickSuggestion() with the suggestion as a parameter', () => {
-      expect(comp.onClickSuggestion).toHaveBeenCalledWith(suggestions[clickedIndex].value);
+      expect(comp.onClickSuggestion).toHaveBeenCalledWith(
+        suggestions[clickedIndex].value,
+      );
     });
   });
   describe('can edit input', () => {

@@ -1,7 +1,4 @@
-import {
-  Component,
-  Inject,
-} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 import {
@@ -28,12 +25,16 @@ import { SearchResultListElementComponent } from '../../search-result-list-eleme
  */
 @Component({
   selector: 'ds-workflow-item-my-dspace-result-list-element',
-  styleUrls: ['../../search-result-list-element/search-result-list-element.component.scss'],
+  styleUrls: [
+    '../../search-result-list-element/search-result-list-element.component.scss',
+  ],
   templateUrl: './workflow-item-search-result-list-element.component.html',
 })
-
 @listableObjectComponent(WorkflowItemSearchResult, ViewMode.ListElement)
-export class WorkflowItemSearchResultListElementComponent extends SearchResultListElementComponent<WorkflowItemSearchResult, WorkflowItem> {
+export class WorkflowItemSearchResultListElementComponent extends SearchResultListElementComponent<
+  WorkflowItemSearchResult,
+  WorkflowItem
+> {
   LinkTypes = CollectionElementLinkType;
 
   ViewModes = ViewMode;
@@ -41,7 +42,9 @@ export class WorkflowItemSearchResultListElementComponent extends SearchResultLi
   /**
    * The item search result derived from the WorkspaceItemSearchResult
    */
-  derivedSearchResult$: BehaviorSubject<ItemSearchResult> = new BehaviorSubject(undefined);
+  derivedSearchResult$: BehaviorSubject<ItemSearchResult> = new BehaviorSubject(
+    undefined,
+  );
 
   /**
    * Represents the badge context
@@ -72,15 +75,20 @@ export class WorkflowItemSearchResultListElementComponent extends SearchResultLi
   }
 
   private deriveSearchResult() {
-    this.linkService.resolveLink(this.object.indexableObject, followLink('item'));
-    this.object.indexableObject.item.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    ).subscribe((item: Item) => {
-      const result = new ItemSearchResult();
-      this.derivedSearchResult$.next(Object.assign(new ItemSearchResult(), {
-        indexableObject: item,
-        hitHighlights: this.object.hitHighlights,
-      }));
-    });
+    this.linkService.resolveLink(
+      this.object.indexableObject,
+      followLink('item'),
+    );
+    this.object.indexableObject.item
+      .pipe(getFirstSucceededRemoteDataPayload())
+      .subscribe((item: Item) => {
+        const result = new ItemSearchResult();
+        this.derivedSearchResult$.next(
+          Object.assign(new ItemSearchResult(), {
+            indexableObject: item,
+            hitHighlights: this.object.hitHighlights,
+          }),
+        );
+      });
   }
 }

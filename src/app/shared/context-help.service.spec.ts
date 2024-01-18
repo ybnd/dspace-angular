@@ -1,14 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { TestScheduler } from 'rxjs/testing';
 
-import {
-  appReducers,
-  storeModuleConfig,
-} from '../app.reducer';
+import { appReducers, storeModuleConfig } from '../app.reducer';
 import { ContextHelpService } from './context-help.service';
 
 describe('ContextHelpService', () => {
@@ -16,20 +10,23 @@ describe('ContextHelpService', () => {
   let store;
   let testScheduler;
   const booleans = { f: false, t: true };
-  const mkContextHelp = (id: string) => ({ 0: { id, isTooltipVisible: false }, 1: { id, isTooltipVisible: true } });
+  const mkContextHelp = (id: string) => ({
+    0: { id, isTooltipVisible: false },
+    1: { id, isTooltipVisible: true },
+  });
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(appReducers, storeModuleConfig),
-      ],
+      imports: [StoreModule.forRoot(appReducers, storeModuleConfig)],
     });
   });
 
   beforeEach(() => {
     store = TestBed.inject(Store);
     service = new ContextHelpService(store);
-    testScheduler = new TestScheduler((actual, expected) => expect(actual).toEqual(expected));
+    testScheduler = new TestScheduler((actual, expected) =>
+      expect(actual).toEqual(expected),
+    );
   });
 
   it('should be created', () => {
@@ -50,13 +47,27 @@ describe('ContextHelpService', () => {
         a: () => service.add({ id: 'a', isTooltipVisible: false }),
         b: () => service.add({ id: 'b', isTooltipVisible: false }),
         c: () => service.add({ id: 'c', isTooltipVisible: false }),
-        A: () => service.remove('a'), B: () => service.remove('b'), C: () => service.remove('c'),
+        A: () => service.remove('a'),
+        B: () => service.remove('b'),
+        C: () => service.remove('c'),
       });
-      modifications.subscribe(mod => mod());
-      const match = (id) => ({ 0: undefined, 1: { id, isTooltipVisible: false } });
-      expectObservable(service.getContextHelp$('a')).toBe('01-0---', match('a'));
-      expectObservable(service.getContextHelp$('b')).toBe('0-1---0', match('b'));
-      expectObservable(service.getContextHelp$('c')).toBe('0---10-', match('c'));
+      modifications.subscribe((mod) => mod());
+      const match = (id) => ({
+        0: undefined,
+        1: { id, isTooltipVisible: false },
+      });
+      expectObservable(service.getContextHelp$('a')).toBe(
+        '01-0---',
+        match('a'),
+      );
+      expectObservable(service.getContextHelp$('b')).toBe(
+        '0-1---0',
+        match('b'),
+      );
+      expectObservable(service.getContextHelp$('c')).toBe(
+        '0---10-',
+        match('c'),
+      );
     });
   });
 
@@ -65,9 +76,15 @@ describe('ContextHelpService', () => {
     service.add({ id: 'b', isTooltipVisible: false });
     testScheduler.run(({ cold, expectObservable }) => {
       const toggles = cold('-aaababbabba');
-      toggles.subscribe(id => service.toggleTooltip(id));
-      expectObservable(service.getContextHelp$('a')).toBe('0101-0--1--0', mkContextHelp('a'));
-      expectObservable(service.getContextHelp$('b')).toBe('0---1-01-01-', mkContextHelp('b'));
+      toggles.subscribe((id) => service.toggleTooltip(id));
+      expectObservable(service.getContextHelp$('a')).toBe(
+        '0101-0--1--0',
+        mkContextHelp('a'),
+      );
+      expectObservable(service.getContextHelp$('b')).toBe(
+        '0---1-01-01-',
+        mkContextHelp('b'),
+      );
     });
   });
 
@@ -75,10 +92,14 @@ describe('ContextHelpService', () => {
     service.add({ id: 'a', isTooltipVisible: false });
     testScheduler.run(({ cold, expectObservable }) => {
       const hideShowCalls = cold('-shssshhs', {
-        s: () => service.showTooltip('a'), h: () => service.hideTooltip('a'),
+        s: () => service.showTooltip('a'),
+        h: () => service.hideTooltip('a'),
       });
-      hideShowCalls.subscribe(fn => fn());
-      expectObservable(service.getContextHelp$('a')).toBe('010111001', mkContextHelp('a'));
+      hideShowCalls.subscribe((fn) => fn());
+      expectObservable(service.getContextHelp$('a')).toBe(
+        '010111001',
+        mkContextHelp('a'),
+      );
     });
   });
 });

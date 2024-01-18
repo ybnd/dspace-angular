@@ -14,10 +14,7 @@ import { ConfigurationSearchPageGuard } from './configuration-search-page.guard'
 import { SearchPageComponent } from './search-page.component';
 import { ThemedSearchPageComponent } from './themed-search-page.component';
 
-const components = [
-  SearchPageComponent,
-  ThemedSearchPageComponent,
-];
+const components = [SearchPageComponent, ThemedSearchPageComponent];
 
 @NgModule({
   imports: [
@@ -42,5 +39,4 @@ const components = [
 /**
  * This module handles all components and pipes that are necessary for the search page
  */
-export class SearchPageModule {
-}
+export class SearchPageModule {}

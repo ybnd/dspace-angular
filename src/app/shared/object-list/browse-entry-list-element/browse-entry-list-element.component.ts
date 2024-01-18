@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Params } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -20,12 +17,14 @@ import { AbstractListableElementComponent } from '../../object-collection/shared
   styleUrls: ['./browse-entry-list-element.component.scss'],
   templateUrl: './browse-entry-list-element.component.html',
 })
-
 /**
  * This component is automatically used to create a list view for BrowseEntry objects when used in ObjectCollectionComponent
  */
 @listableObjectComponent(BrowseEntry, ViewMode.ListElement)
-export class BrowseEntryListElementComponent extends AbstractListableElementComponent<BrowseEntry> implements OnInit {
+export class BrowseEntryListElementComponent
+  extends AbstractListableElementComponent<BrowseEntry>
+  implements OnInit
+{
   /**
    * Emits the query parameters for the link of this browse entry list element
    */
@@ -47,7 +46,8 @@ export class BrowseEntryListElementComponent extends AbstractListableElementComp
    * Get the query params to access the item page of this browse entry.
    */
   private getQueryParams(): Observable<Params> {
-    const pageParamName = this.paginationService.getPageParam(BBM_PAGINATION_ID);
+    const pageParamName =
+      this.paginationService.getPageParam(BBM_PAGINATION_ID);
     return this.routeService.getQueryParameterValue(pageParamName).pipe(
       map((currentPage) => {
         return {

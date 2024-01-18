@@ -1,13 +1,6 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  of,
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -31,12 +24,11 @@ import { isEmpty } from '../../shared/empty.util';
   styleUrls: ['./statistics-table.component.scss'],
 })
 export class StatisticsTableComponent implements OnInit {
-
   /**
    * The usage report to display a statistics table for
    */
   @Input()
-    report: UsageReport;
+  report: UsageReport;
 
   /**
    * Boolean indicating whether the usage report has data
@@ -52,9 +44,7 @@ export class StatisticsTableComponent implements OnInit {
     protected dsoService: DSpaceObjectDataService,
     protected nameService: DSONameService,
     private translateService: TranslateService,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     this.hasData = this.report.points.length > 0;
@@ -73,7 +63,11 @@ export class StatisticsTableComponent implements OnInit {
         return this.dsoService.findById(point.id).pipe(
           getFinishedRemoteData(),
           getRemoteDataPayload(),
-          map((item) => !isEmpty(item) ?  this.nameService.getName(item) : this.translateService.instant('statistics.table.no-name')),
+          map((item) =>
+            !isEmpty(item)
+              ? this.nameService.getName(item)
+              : this.translateService.instant('statistics.table.no-name'),
+          ),
         );
       case 'TopCities':
       case 'topCountries':

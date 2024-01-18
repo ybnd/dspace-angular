@@ -18,5 +18,4 @@ export class HostWindowResizeAction implements Action {
   }
 }
 
-export type HostWindowAction
-  = HostWindowResizeAction;
+export type HostWindowAction = HostWindowResizeAction;

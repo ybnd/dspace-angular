@@ -1,7 +1,4 @@
-import {
-  fakeAsync,
-  waitForAsync,
-} from '@angular/core/testing';
+import { fakeAsync, waitForAsync } from '@angular/core/testing';
 import { of } from 'rxjs';
 
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
@@ -70,7 +67,9 @@ describe('VersionHistoryDataService', () => {
     },
   });
   const versions = [version1, version2];
-  versionHistory.versions = createSuccessfulRemoteDataObject$(createPaginatedList(versions));
+  versionHistory.versions = createSuccessfulRemoteDataObject$(
+    createPaginatedList(versions),
+  );
   const item1 = Object.assign(new Item(), {
     uuid: item1Uuid,
     handle: '123456789/1',
@@ -169,7 +168,9 @@ describe('VersionHistoryDataService', () => {
   describe('when cache is invalidated', () => {
     it('should call setStaleByHrefSubstring', () => {
       service.invalidateVersionHistoryCache(versionHistoryId);
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('versioning/versionhistories/' + versionHistoryId);
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        'versioning/versionhistories/' + versionHistoryId,
+      );
     });
   });
 
@@ -191,7 +192,9 @@ describe('VersionHistoryDataService', () => {
 
   describe('hasDraftVersion$', () => {
     beforeEach(waitForAsync(() => {
-      versionService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$<Version>(version1));
+      versionService.findByHref.and.returnValue(
+        createSuccessfulRemoteDataObject$<Version>(version1),
+      );
     }));
     it('should return false if draftVersion is false', fakeAsync(() => {
       versionService.getHistoryFromVersion.and.returnValue(of(versionHistory));
@@ -200,11 +203,12 @@ describe('VersionHistoryDataService', () => {
       });
     }));
     it('should return true if draftVersion is true', fakeAsync(() => {
-      versionService.getHistoryFromVersion.and.returnValue(of(versionHistoryDraft));
+      versionService.getHistoryFromVersion.and.returnValue(
+        of(versionHistoryDraft),
+      );
       service.hasDraftVersion$('href').subscribe((res) => {
         expect(res).toBeTrue();
       });
     }));
   });
-
 });

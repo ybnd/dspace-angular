@@ -11,8 +11,10 @@ import { RawRestResponse } from '../dspace-rest/raw-rest-response.model';
  * Provides methods to parse response for a task request.
  */
 @Injectable()
-export class TaskResponseParsingService extends BaseResponseParsingService implements ResponseParsingService {
-
+export class TaskResponseParsingService
+  extends BaseResponseParsingService
+  implements ResponseParsingService
+{
   protected toCache = false;
 
   /**
@@ -38,5 +40,4 @@ export class TaskResponseParsingService extends BaseResponseParsingService imple
       throw new Error('Unexpected response from server');
     }
   }
-
 }

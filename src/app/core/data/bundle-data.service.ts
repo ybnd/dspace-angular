@@ -1,11 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Operation } from 'fast-json-patch';
 import { Observable } from 'rxjs';
-import {
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import { hasValue } from '../../shared/empty.util';
 import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
@@ -19,10 +15,7 @@ import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { Item } from '../shared/item.model';
 import { dataService } from './base/data-service.decorator';
 import { IdentifiableDataService } from './base/identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from './base/patch-data';
+import { PatchData, PatchDataImpl } from './base/patch-data';
 import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
 import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
@@ -35,11 +28,12 @@ import { RestRequestMethod } from './rest-request-method';
 /**
  * A service to retrieve {@link Bundle}s from the REST API
  */
-@Injectable(
-  { providedIn: 'root' },
-)
+@Injectable({ providedIn: 'root' })
 @dataService(BUNDLE)
-export class BundleDataService extends IdentifiableDataService<Bundle> implements PatchData<Bundle> {
+export class BundleDataService
+  extends IdentifiableDataService<Bundle>
+  implements PatchData<Bundle>
+{
   private bitstreamsEndpoint = 'bitstreams';
 
   private patchData: PatchDataImpl<Bundle>;
@@ -53,7 +47,16 @@ export class BundleDataService extends IdentifiableDataService<Bundle> implement
   ) {
     super('bundles', requestService, rdbService, objectCache, halService);
 
-    this.patchData = new PatchDataImpl<Bundle>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
+    this.patchData = new PatchDataImpl<Bundle>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -68,8 +71,20 @@ export class BundleDataService extends IdentifiableDataService<Bundle> implement
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findAllByItem(item: Item, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Bundle>[]): Observable<RemoteData<PaginatedList<Bundle>>> {
-    return this.findListByHref(item._links.bundles.href, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllByItem(
+    item: Item,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Bundle>[]
+  ): Observable<RemoteData<PaginatedList<Bundle>>> {
+    return this.findListByHref(
+      item._links.bundles.href,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -85,12 +100,25 @@ export class BundleDataService extends IdentifiableDataService<Bundle> implement
    *                                    {@link HALLink}s should be automatically resolved
    */
   // TODO should be implemented rest side
-  findByItemAndName(item: Item, bundleName: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Bundle>[]): Observable<RemoteData<Bundle>> {
-    return this.findAllByItem(item, { elementsPerPage: 9999 }, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow).pipe(
+  findByItemAndName(
+    item: Item,
+    bundleName: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Bundle>[]
+  ): Observable<RemoteData<Bundle>> {
+    return this.findAllByItem(
+      item,
+      { elementsPerPage: 9999 },
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    ).pipe(
       map((rd: RemoteData<PaginatedList<Bundle>>) => {
         if (hasValue(rd.payload) && hasValue(rd.payload.page)) {
-          const matchingBundle = rd.payload.page.find((bundle: Bundle) =>
-            bundle.name === bundleName);
+          const matchingBundle = rd.payload.page.find(
+            (bundle: Bundle) => bundle.name === bundleName,
+          );
           if (hasValue(matchingBundle)) {
             return new RemoteData(
               rd.timeCompleted,
@@ -124,10 +152,18 @@ export class BundleDataService extends IdentifiableDataService<Bundle> implement
    * @param bundleId
    * @param searchOptions
    */
-  getBitstreamsEndpoint(bundleId: string, searchOptions?: PaginatedSearchOptions): Observable<string> {
+  getBitstreamsEndpoint(
+    bundleId: string,
+    searchOptions?: PaginatedSearchOptions,
+  ): Observable<string> {
     return this.getBrowseEndpoint().pipe(
-      switchMap((href: string) => this.halService.getEndpoint(this.bitstreamsEndpoint, `${href}/${bundleId}`)),
-      map((href) => searchOptions ? searchOptions.toRestUrl(href) : href),
+      switchMap((href: string) =>
+        this.halService.getEndpoint(
+          this.bitstreamsEndpoint,
+          `${href}/${bundleId}`,
+        ),
+      ),
+      map((href) => (searchOptions ? searchOptions.toRestUrl(href) : href)),
     );
   }
 
@@ -137,13 +173,18 @@ export class BundleDataService extends IdentifiableDataService<Bundle> implement
    * @param searchOptions   The search options to use
    * @param linksToFollow   The {@link FollowLinkConfig}s for the request
    */
-  getBitstreams(bundleId: string, searchOptions?: PaginatedSearchOptions, ...linksToFollow: FollowLinkConfig<Bitstream>[]): Observable<RemoteData<PaginatedList<Bitstream>>> {
+  getBitstreams(
+    bundleId: string,
+    searchOptions?: PaginatedSearchOptions,
+    ...linksToFollow: FollowLinkConfig<Bitstream>[]
+  ): Observable<RemoteData<PaginatedList<Bitstream>>> {
     const hrefObs = this.getBitstreamsEndpoint(bundleId, searchOptions);
 
-    hrefObs.pipe(
-      take(1),
-    ).subscribe((href) => {
-      const request = new GetRequest(this.requestService.generateRequestId(), href);
+    hrefObs.pipe(take(1)).subscribe((href) => {
+      const request = new GetRequest(
+        this.requestService.generateRequestId(),
+        href,
+      );
       this.requestService.send(request, true);
     });
 
@@ -163,7 +204,10 @@ export class BundleDataService extends IdentifiableDataService<Bundle> implement
    * @param {T} object The object to send a patch request for
    * @param {Operation[]} operations The patch operations to be performed
    */
-  public patch(object: Bundle, operations: Operation[]): Observable<RemoteData<Bundle>> {
+  public patch(
+    object: Bundle,
+    operations: Operation[],
+  ): Observable<RemoteData<Bundle>> {
     return this.patchData.patch(object, operations);
   }
 

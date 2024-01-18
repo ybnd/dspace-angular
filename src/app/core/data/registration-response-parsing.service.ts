@@ -12,8 +12,9 @@ import { RestRequest } from './rest-request.model';
 /**
  * Parsing service responsible for parsing a Registration response
  */
-export class RegistrationResponseParsingService implements ResponseParsingService {
-
+export class RegistrationResponseParsingService
+  implements ResponseParsingService
+{
   parse(request: RestRequest, data: RawRestResponse): ParsedResponse {
     const payload = data.payload;
 
@@ -21,5 +22,4 @@ export class RegistrationResponseParsingService implements ResponseParsingServic
 
     return new ParsedResponse(data.statusCode, undefined, registration);
   }
-
 }

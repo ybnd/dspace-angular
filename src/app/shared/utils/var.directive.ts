@@ -1,9 +1,4 @@
-import {
-  Directive,
-  Input,
-  TemplateRef,
-  ViewContainerRef,
-} from '@angular/core';
+import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 /* eslint-disable @angular-eslint/directive-selector */
 @Directive({
@@ -18,7 +13,10 @@ export class VarDirective {
 
   context: any = {};
 
-  constructor(private vcRef: ViewContainerRef, private templateRef: TemplateRef<any>) {}
+  constructor(
+    private vcRef: ViewContainerRef,
+    private templateRef: TemplateRef<any>,
+  ) {}
 
   updateView() {
     this.vcRef.clear();

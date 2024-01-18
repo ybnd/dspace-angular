@@ -1,10 +1,7 @@
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import {
-  NgbModule,
-  NgbTooltipModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { BundleDataService } from '../../core/data/bundle-data.service';
 import { IdentifierDataService } from '../../core/data/identifier-data.service';
@@ -94,15 +91,7 @@ import { VirtualMetadataComponent } from './virtual-metadata/virtual-metadata.co
     ItemCurateComponent,
     ItemAccessControlComponent,
   ],
-  providers: [
-    BundleDataService,
-    IdentifierDataService,
-    ObjectValuesPipe,
-  ],
-  exports: [
-    ItemOperationComponent,
-  ],
+  providers: [BundleDataService, IdentifierDataService, ObjectValuesPipe],
+  exports: [ItemOperationComponent],
 })
-export class EditItemPageModule {
-
-}
+export class EditItemPageModule {}

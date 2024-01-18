@@ -1,14 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-} from 'rxjs';
+import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import {
   map,
   scan,
@@ -42,7 +33,6 @@ import { hasValue } from '../../../shared/empty.util';
   templateUrl: './collections.component.html',
 })
 export class CollectionsComponent implements OnInit {
-
   @Input() item: Item;
 
   label = 'item.page.collections';
@@ -86,14 +76,15 @@ export class CollectionsComponent implements OnInit {
     private cds: CollectionDataService,
     public dsoNameService: DSONameService,
     protected cdr: ChangeDetectorRef,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    const owningCollection$: Observable<Collection> = this.cds.findOwningCollectionFor(this.item).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      startWith(null as Collection),
-    );
+    const owningCollection$: Observable<Collection> = this.cds
+      .findOwningCollectionFor(this.item)
+      .pipe(
+        getFirstSucceededRemoteDataPayload(),
+        startWith(null as Collection),
+      );
 
     const mappedCollections$: Observable<Collection[]> = this.loadMore$.pipe(
       // update isLoading$
@@ -102,10 +93,13 @@ export class CollectionsComponent implements OnInit {
       // request next batch of mapped collections
       withLatestFrom(this.lastPage$),
       switchMap(([_, lastPage]: [void, number]) => {
-        return this.cds.findMappedCollectionsFor(this.item, Object.assign(new FindListOptions(), {
-          elementsPerPage: this.pageSize,
-          currentPage: lastPage + 1,
-        }));
+        return this.cds.findMappedCollectionsFor(
+          this.item,
+          Object.assign(new FindListOptions(), {
+            elementsPerPage: this.pageSize,
+            currentPage: lastPage + 1,
+          }),
+        );
       }),
 
       getAllCompletedRemoteData<PaginatedList<Collection>>(),
@@ -116,23 +110,37 @@ export class CollectionsComponent implements OnInit {
       getAllSucceededRemoteDataPayload(),
 
       // update hasMore$
-      tap((response: PaginatedList<Collection>) => this.hasMore$.next(response.currentPage < response.totalPages)),
+      tap((response: PaginatedList<Collection>) =>
+        this.hasMore$.next(response.currentPage < response.totalPages),
+      ),
 
       // update lastPage$
-      tap((response: PaginatedList<Collection>) => this.lastPage$.next(response.currentPage)),
+      tap((response: PaginatedList<Collection>) =>
+        this.lastPage$.next(response.currentPage),
+      ),
 
       getPaginatedListPayload<Collection>(),
 
       // add current batch to list of collections
-      scan((prev: Collection[], current: Collection[]) => [...prev, ...current], []),
+      scan(
+        (prev: Collection[], current: Collection[]) => [...prev, ...current],
+        [],
+      ),
 
       startWith([]),
     ) as Observable<Collection[]>;
 
-    this.collections$ = combineLatest([owningCollection$, mappedCollections$]).pipe(
-      map(([owningCollection, mappedCollections]: [Collection, Collection[]]) => {
-        return [owningCollection, ...mappedCollections].filter(collection => hasValue(collection));
-      }),
+    this.collections$ = combineLatest([
+      owningCollection$,
+      mappedCollections$,
+    ]).pipe(
+      map(
+        ([owningCollection, mappedCollections]: [Collection, Collection[]]) => {
+          return [owningCollection, ...mappedCollections].filter((collection) =>
+            hasValue(collection),
+          );
+        },
+      ),
     );
     this.cdr.detectChanges();
   }
@@ -140,5 +148,4 @@ export class CollectionsComponent implements OnInit {
   handleLoadMore() {
     this.loadMore$.next();
   }
-
 }

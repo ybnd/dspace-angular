@@ -1,9 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  find,
-  map,
-} from 'rxjs/operators';
+import { find, map } from 'rxjs/operators';
 
 import { hasValue } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
@@ -12,15 +9,9 @@ import { RemoteDataBuildService } from '../cache/builders/remote-data-build.serv
 import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { dataService } from '../data/base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from '../data/base/delete-data';
+import { DeleteData, DeleteDataImpl } from '../data/base/delete-data';
 import { IdentifiableDataService } from '../data/base/identifiable-data.service';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../data/base/search-data';
+import { SearchData, SearchDataImpl } from '../data/base/search-data';
 import { FindListOptions } from '../data/find-list-options.model';
 import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
@@ -37,7 +28,10 @@ import { WorkspaceItem } from './models/workspaceitem.model';
  */
 @Injectable()
 @dataService(WorkflowItem.type)
-export class WorkflowItemDataService extends IdentifiableDataService<WorkflowItem> implements SearchData<WorkflowItem>, DeleteData<WorkflowItem> {
+export class WorkflowItemDataService
+  extends IdentifiableDataService<WorkflowItem>
+  implements SearchData<WorkflowItem>, DeleteData<WorkflowItem>
+{
   protected linkPath = 'workflowitems';
   protected searchByItemLinkPath = 'item';
   protected responseMsToLive = 10 * 1000;
@@ -52,10 +46,32 @@ export class WorkflowItemDataService extends IdentifiableDataService<WorkflowIte
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
   ) {
-    super('workspaceitems', requestService, rdbService, objectCache, halService);
+    super(
+      'workspaceitems',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -86,7 +102,10 @@ export class WorkflowItemDataService extends IdentifiableDataService<WorkflowIte
    * When true, the workflow item and its item will be permanently expunged on the server
    * When false, the workflow item will be removed, but the item will still be available as a workspace item
    */
-  private deleteWFI(id: string, expunge: boolean): Observable<RemoteData<NoContent>> {
+  private deleteWFI(
+    id: string,
+    expunge: boolean,
+  ): Observable<RemoteData<NoContent>> {
     const requestId = this.requestService.generateRequestId();
 
     const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
@@ -94,12 +113,12 @@ export class WorkflowItemDataService extends IdentifiableDataService<WorkflowIte
       map((endpoint: string) => endpoint + '?expunge=' + expunge),
     );
 
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-    ).subscribe((href: string) => {
-      const request = new DeleteByIDRequest(requestId, href, id);
-      this.requestService.send(request);
-    });
+    hrefObs
+      .pipe(find((href: string) => hasValue(href)))
+      .subscribe((href: string) => {
+        const request = new DeleteByIDRequest(requestId, href, id);
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -115,11 +134,28 @@ export class WorkflowItemDataService extends IdentifiableDataService<WorkflowIte
    * @param options        The {@link FindListOptions} object
    * @param linksToFollow  List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public findByItem(uuid: string, useCachedVersionIfAvailable = false, reRequestOnStale = true, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]): Observable<RemoteData<WorkspaceItem>> {
+  public findByItem(
+    uuid: string,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]
+  ): Observable<RemoteData<WorkspaceItem>> {
     const findListOptions = new FindListOptions();
-    findListOptions.searchParams = [new RequestParam('uuid', encodeURIComponent(uuid))];
-    const href$ = this.searchData.getSearchByHref(this.searchByItemLinkPath, findListOptions, ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    findListOptions.searchParams = [
+      new RequestParam('uuid', encodeURIComponent(uuid)),
+    ];
+    const href$ = this.searchData.getSearchByHref(
+      this.searchByItemLinkPath,
+      findListOptions,
+      ...linksToFollow,
+    );
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -136,8 +172,20 @@ export class WorkflowItemDataService extends IdentifiableDataService<WorkflowIte
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  public searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]): Observable<RemoteData<PaginatedList<WorkspaceItem>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]
+  ): Observable<RemoteData<PaginatedList<WorkspaceItem>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -149,7 +197,10 @@ export class WorkflowItemDataService extends IdentifiableDataService<WorkflowIte
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
 }

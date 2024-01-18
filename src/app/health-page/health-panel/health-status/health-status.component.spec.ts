@@ -1,13 +1,7 @@
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderMock } from '../../../shared/mocks/translate-loader.mock';
 import { HealthStatus } from '../../models/health-component.model';
@@ -28,9 +22,8 @@ describe('HealthStatusComponent', () => {
           },
         }),
       ],
-      declarations: [ HealthStatusComponent ],
-    })
-      .compileComponents();
+      declarations: [HealthStatusComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

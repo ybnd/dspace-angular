@@ -17,7 +17,9 @@ export class ThemedSubmissionSubmitComponent extends ThemedComponent<SubmissionS
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/submission/submit/submission-submit.component`);
+    return import(
+      `../../../themes/${themeName}/app/submission/submit/submission-submit.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

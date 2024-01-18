@@ -12,7 +12,8 @@ import { EntityTypeDataService } from './entity-type-data.service';
 
 describe('EntityTypeDataService', () => {
   describe('composition', () => {
-    const initService = () => new EntityTypeDataService(null, null, null, null, null);
+    const initService = () =>
+      new EntityTypeDataService(null, null, null, null, null);
     testFindAllDataImplementation(initService);
     testSearchDataImplementation(initService);
   });

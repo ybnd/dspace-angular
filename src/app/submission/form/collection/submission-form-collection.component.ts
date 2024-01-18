@@ -15,11 +15,7 @@ import {
   of as observableOf,
   Subscription,
 } from 'rxjs';
-import {
-  find,
-  map,
-  mergeMap,
-} from 'rxjs/operators';
+import { find, map, mergeMap } from 'rxjs/operators';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 import { CollectionDataService } from '../../../core/data/collection-data.service';
@@ -31,10 +27,7 @@ import { getFirstSucceededRemoteDataPayload } from '../../../core/shared/operato
 import { SubmissionObject } from '../../../core/submission/models/submission-object.model';
 import { SubmissionJsonPatchOperationsService } from '../../../core/submission/submission-json-patch-operations.service';
 import { CollectionDropdownComponent } from '../../../shared/collection-dropdown/collection-dropdown.component';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { SectionsService } from '../../sections/sections.service';
 import { SectionsType } from '../../sections/sections-type';
 import { SubmissionService } from '../../submission.service';
@@ -48,7 +41,6 @@ import { SubmissionService } from '../../submission.service';
   templateUrl: './submission-form-collection.component.html',
 })
 export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
-
   /**
    * The current collection id this submission belonging to
    * @type {string}
@@ -82,7 +74,8 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
    * An event fired when a different collection is selected.
    * Event's payload equals to new SubmissionObject.
    */
-  @Output() collectionChange: EventEmitter<SubmissionObject> = new EventEmitter<SubmissionObject>();
+  @Output() collectionChange: EventEmitter<SubmissionObject> =
+    new EventEmitter<SubmissionObject>();
 
   /**
    * A boolean representing if a collection change operation is processing
@@ -117,7 +110,8 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
   /**
    * The html child that contains the collections list
    */
-  @ViewChild(CollectionDropdownComponent) collectionDropdown: CollectionDropdownComponent;
+  @ViewChild(CollectionDropdownComponent)
+  collectionDropdown: CollectionDropdownComponent;
 
   /**
    * A boolean representing if the collection section is available
@@ -125,28 +119,36 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
    */
   available$: Observable<boolean>;
 
-  constructor(protected cdr: ChangeDetectorRef,
-              private collectionDataService: CollectionDataService,
-              private operationsBuilder: JsonPatchOperationsBuilder,
-              private operationsService: SubmissionJsonPatchOperationsService,
-              private submissionService: SubmissionService,
-              private sectionsService: SectionsService,
-              public dsoNameService: DSONameService,
-  ) {
-  }
+  constructor(
+    protected cdr: ChangeDetectorRef,
+    private collectionDataService: CollectionDataService,
+    private operationsBuilder: JsonPatchOperationsBuilder,
+    private operationsService: SubmissionJsonPatchOperationsService,
+    private submissionService: SubmissionService,
+    private sectionsService: SectionsService,
+    public dsoNameService: DSONameService,
+  ) {}
 
   /**
    * Initialize collection list
    */
   ngOnChanges(changes: SimpleChanges) {
-    if (hasValue(changes.currentCollectionId)
-      && hasValue(changes.currentCollectionId.currentValue)) {
+    if (
+      hasValue(changes.currentCollectionId) &&
+      hasValue(changes.currentCollectionId.currentValue)
+    ) {
       this.selectedCollectionId = this.currentCollectionId;
 
-      this.selectedCollectionName$ = this.collectionDataService.findById(this.currentCollectionId).pipe(
-        find((collectionRD: RemoteData<Collection>) => isNotEmpty(collectionRD.payload)),
-        map((collectionRD: RemoteData<Collection>) => this.dsoNameService.getName(collectionRD.payload)),
-      );
+      this.selectedCollectionName$ = this.collectionDataService
+        .findById(this.currentCollectionId)
+        .pipe(
+          find((collectionRD: RemoteData<Collection>) =>
+            isNotEmpty(collectionRD.payload),
+          ),
+          map((collectionRD: RemoteData<Collection>) =>
+            this.dsoNameService.getName(collectionRD.payload),
+          ),
+        );
     }
   }
 
@@ -154,15 +156,23 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
    * Initialize all instance variables
    */
   ngOnInit() {
-    this.pathCombiner = new JsonPatchOperationPathCombiner('sections', 'collection');
-    this.available$ = this.sectionsService.isSectionTypeAvailable(this.submissionId, SectionsType.collection);
+    this.pathCombiner = new JsonPatchOperationPathCombiner(
+      'sections',
+      'collection',
+    );
+    this.available$ = this.sectionsService.isSectionTypeAvailable(
+      this.submissionId,
+      SectionsType.collection,
+    );
   }
 
   /**
    * Unsubscribe from all subscriptions
    */
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
 
   /**
@@ -173,26 +183,38 @@ export class SubmissionFormCollectionComponent implements OnChanges, OnInit {
    */
   onSelect(event) {
     this.processingChange$.next(true);
-    this.operationsBuilder.replace(this.pathCombiner.getPath(), event.collection.id, true);
-    this.subs.push(this.operationsService.jsonPatchByResourceID(
-      this.submissionService.getSubmissionObjectLinkName(),
-      this.submissionId,
-      'sections',
-      'collection').pipe(
-      mergeMap((submissionObject: SubmissionObject[]) => {
-        // retrieve the full submission object with embeds
-        return this.submissionService.retrieveSubmission(submissionObject[0].id).pipe(
-          getFirstSucceededRemoteDataPayload(),
-        );
-      }),
-    ).subscribe((submissionObject: SubmissionObject) => {
-      this.selectedCollectionId = event.collection.id;
-      this.selectedCollectionName$ = observableOf(event.collection.name);
-      this.collectionChange.emit(submissionObject);
-      this.submissionService.changeSubmissionCollection(this.submissionId, event.collection.id);
-      this.processingChange$.next(false);
-      this.cdr.detectChanges();
-    }),
+    this.operationsBuilder.replace(
+      this.pathCombiner.getPath(),
+      event.collection.id,
+      true,
+    );
+    this.subs.push(
+      this.operationsService
+        .jsonPatchByResourceID(
+          this.submissionService.getSubmissionObjectLinkName(),
+          this.submissionId,
+          'sections',
+          'collection',
+        )
+        .pipe(
+          mergeMap((submissionObject: SubmissionObject[]) => {
+            // retrieve the full submission object with embeds
+            return this.submissionService
+              .retrieveSubmission(submissionObject[0].id)
+              .pipe(getFirstSucceededRemoteDataPayload());
+          }),
+        )
+        .subscribe((submissionObject: SubmissionObject) => {
+          this.selectedCollectionId = event.collection.id;
+          this.selectedCollectionName$ = observableOf(event.collection.name);
+          this.collectionChange.emit(submissionObject);
+          this.submissionService.changeSubmissionCollection(
+            this.submissionId,
+            event.collection.id,
+          );
+          this.processingChange$.next(false);
+          this.cdr.detectChanges();
+        }),
     );
   }
 

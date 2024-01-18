@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Context } from 'src/app/core/shared/context.model';
 
 /**
@@ -14,7 +10,6 @@ import { Context } from 'src/app/core/shared/context.model';
   templateUrl: './my-dspace-status-badge.component.html',
 })
 export class MyDSpaceStatusBadgeComponent implements OnInit {
-
   /**
    * This mydspace item context
    */
@@ -54,5 +49,4 @@ export class MyDSpaceStatusBadgeComponent implements OnInit {
         break;
     }
   }
-
 }

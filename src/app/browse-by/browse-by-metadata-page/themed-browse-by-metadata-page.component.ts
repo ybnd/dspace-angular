@@ -15,16 +15,16 @@ import { BrowseByMetadataPageComponent } from './browse-by-metadata-page.compone
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
-
 @rendersBrowseBy(BrowseByDataType.Metadata)
-export class ThemedBrowseByMetadataPageComponent
-  extends ThemedComponent<BrowseByMetadataPageComponent> {
+export class ThemedBrowseByMetadataPageComponent extends ThemedComponent<BrowseByMetadataPageComponent> {
   protected getComponentName(): string {
     return 'BrowseByMetadataPageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/browse-by/browse-by-metadata-page/browse-by-metadata-page.component`);
+    return import(
+      `../../../themes/${themeName}/app/browse-by/browse-by-metadata-page/browse-by-metadata-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

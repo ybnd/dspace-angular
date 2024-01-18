@@ -1,12 +1,6 @@
 import { Injector } from '@angular/core';
-import {
-  inject,
-  TestBed,
-} from '@angular/core/testing';
-import {
-  ReactiveFormsModule,
-  UntypedFormControl,
-} from '@angular/forms';
+import { inject, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import {
   DISABLED_MATCHER_PROVIDER,
   DynamicFormControlRelation,
@@ -37,33 +31,46 @@ describe('DSDynamicTypeBindRelationService test suite', () => {
       imports: [ReactiveFormsModule],
       providers: [
         { provide: FormBuilderService, useValue: getMockFormBuilderService() },
-        { provide: DsDynamicTypeBindRelationService, useClass: DsDynamicTypeBindRelationService },
+        {
+          provide: DsDynamicTypeBindRelationService,
+          useClass: DsDynamicTypeBindRelationService,
+        },
         { provide: DynamicFormRelationService },
-        DISABLED_MATCHER_PROVIDER, HIDDEN_MATCHER_PROVIDER, REQUIRED_MATCHER_PROVIDER,
+        DISABLED_MATCHER_PROVIDER,
+        HIDDEN_MATCHER_PROVIDER,
+        REQUIRED_MATCHER_PROVIDER,
       ],
-    }).compileComponents().then();
+    })
+      .compileComponents()
+      .then();
   });
 
-  beforeEach(inject([DsDynamicTypeBindRelationService, DynamicFormRelationService],
-    (relationService: DsDynamicTypeBindRelationService,
+  beforeEach(inject(
+    [DsDynamicTypeBindRelationService, DynamicFormRelationService],
+    (
+      relationService: DsDynamicTypeBindRelationService,
       formRelationService: DynamicFormRelationService,
     ) => {
       service = relationService;
       dynamicFormRelationService = formRelationService;
-    }));
+    },
+  ));
 
   describe('Test getTypeBindValue method', () => {
     it('Should get type bind "boundType" from the given metadata object value', () => {
-      const mockMetadataValueObject: FormFieldMetadataValueObject = new FormFieldMetadataValueObject(
-        'boundType', null, null, 'Bound Type',
-      );
+      const mockMetadataValueObject: FormFieldMetadataValueObject =
+        new FormFieldMetadataValueObject('boundType', null, null, 'Bound Type');
       const bindType = service.getTypeBindValue(mockMetadataValueObject);
       expect(bindType).toBe('boundType');
     });
     it('Should get type authority key "bound-auth-key" from the given metadata object value', () => {
-      const mockMetadataValueObject: FormFieldMetadataValueObject = new FormFieldMetadataValueObject(
-        'boundType', null, 'bound-auth-key', 'Bound Type',
-      );
+      const mockMetadataValueObject: FormFieldMetadataValueObject =
+        new FormFieldMetadataValueObject(
+          'boundType',
+          null,
+          'bound-auth-key',
+          'Bound Type',
+        );
       const bindType = service.getTypeBindValue(mockMetadataValueObject);
       expect(bindType).toBe('bound-auth-key');
     });
@@ -107,7 +114,10 @@ describe('DSDynamicTypeBindRelationService test suite', () => {
       const dcTypeControl = new UntypedFormControl();
       dcTypeControl.setValue('boundType');
       testModel.typeBindRelations[0].when[0].value = 'anotherType';
-      const relation = dynamicFormRelationService.findRelationByMatcher((testModel as any).typeBindRelations, HIDDEN_MATCHER);
+      const relation = dynamicFormRelationService.findRelationByMatcher(
+        (testModel as any).typeBindRelations,
+        HIDDEN_MATCHER,
+      );
       const matcher = HIDDEN_MATCHER;
       if (relation !== undefined) {
         const hasMatch = service.matchesCondition(relation, matcher);
@@ -122,7 +132,10 @@ describe('DSDynamicTypeBindRelationService test suite', () => {
       const dcTypeControl = new UntypedFormControl();
       dcTypeControl.setValue('boundType');
       testModel.typeBindRelations[0].when[0].value = 'boundType';
-      const relation = dynamicFormRelationService.findRelationByMatcher((testModel as any).typeBindRelations, HIDDEN_MATCHER);
+      const relation = dynamicFormRelationService.findRelationByMatcher(
+        (testModel as any).typeBindRelations,
+        HIDDEN_MATCHER,
+      );
       const matcher = HIDDEN_MATCHER;
       if (relation !== undefined) {
         const hasMatch = service.matchesCondition(relation, matcher);
@@ -130,12 +143,12 @@ describe('DSDynamicTypeBindRelationService test suite', () => {
         expect(hasMatch).toBeFalsy();
       }
     });
-
   });
-
 });
 
-function getTypeBindRelations(configuredTypeBindValues: string[]): DynamicFormControlRelation[] {
+function getTypeBindRelations(
+  configuredTypeBindValues: string[],
+): DynamicFormControlRelation[] {
   const bindValues = [];
   configuredTypeBindValues.forEach((value) => {
     bindValues.push({
@@ -143,9 +156,11 @@ function getTypeBindRelations(configuredTypeBindValues: string[]): DynamicFormCo
       value: value,
     });
   });
-  return [{
-    match: MATCH_VISIBLE,
-    operator: OR_OPERATOR,
-    when: bindValues,
-  }];
+  return [
+    {
+      match: MATCH_VISIBLE,
+      operator: OR_OPERATOR,
+      when: bindValues,
+    },
+  ];
 }

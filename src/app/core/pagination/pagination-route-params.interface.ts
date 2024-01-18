@@ -8,8 +8,8 @@
 import { SortDirection } from '../cache/models/sort-options.model';
 
 export interface PaginationRouteParams {
-  page?: number
-  pageSize?: number
-  sortField?: string
-  sortDirection?: SortDirection
+  page?: number;
+  pageSize?: number;
+  sortField?: string;
+  sortDirection?: SortDirection;
 }

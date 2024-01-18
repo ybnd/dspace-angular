@@ -6,8 +6,7 @@ import { DenyRequestCopyComponent as BaseComponent } from 'src/app/request-copy/
   // styleUrls: ['./deny-request-copy.component.scss'],
   styleUrls: [],
   // templateUrl: './deny-request-copy.component.html',
-  templateUrl: './../../../../../app/request-copy/deny-request-copy/deny-request-copy.component.html',
+  templateUrl:
+    './../../../../../app/request-copy/deny-request-copy/deny-request-copy.component.html',
 })
-export class DenyRequestCopyComponent
-  extends BaseComponent {
-}
+export class DenyRequestCopyComponent extends BaseComponent {}

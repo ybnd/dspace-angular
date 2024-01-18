@@ -5,15 +5,9 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { ItemDataService } from '../../core/data/item-data.service';
@@ -31,7 +25,6 @@ import { SubmissionService } from '../submission.service';
 import { SubmissionEditComponent } from './submission-edit.component';
 
 describe('SubmissionEditComponent Component', () => {
-
   let comp: SubmissionEditComponent;
   let fixture: ComponentFixture<SubmissionEditComponent>;
   let submissionServiceStub: SubmissionServiceStub;
@@ -51,19 +44,25 @@ describe('SubmissionEditComponent Component', () => {
       imports: [
         TranslateModule.forRoot(),
         RouterTestingModule.withRoutes([
-          { path: ':id/edit', component: SubmissionEditComponent, pathMatch: 'full' },
+          {
+            path: ':id/edit',
+            component: SubmissionEditComponent,
+            pathMatch: 'full',
+          },
         ]),
       ],
       declarations: [SubmissionEditComponent],
       providers: [
         { provide: NotificationsService, useClass: NotificationsServiceStub },
         { provide: SubmissionService, useClass: SubmissionServiceStub },
-        { provide: SubmissionJsonPatchOperationsService, useClass: SubmissionJsonPatchOperationsServiceStub },
+        {
+          provide: SubmissionJsonPatchOperationsService,
+          useClass: SubmissionJsonPatchOperationsServiceStub,
+        },
         { provide: ItemDataService, useValue: itemDataService },
         { provide: TranslateService, useValue: getMockTranslateService() },
         { provide: Router, useValue: new RouterStub() },
         { provide: ActivatedRoute, useValue: route },
-
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -73,7 +72,9 @@ describe('SubmissionEditComponent Component', () => {
     fixture = TestBed.createComponent(SubmissionEditComponent);
     comp = fixture.componentInstance;
     submissionServiceStub = TestBed.inject(SubmissionService as any);
-    submissionJsonPatchOperationsServiceStub = TestBed.inject(SubmissionJsonPatchOperationsService as any);
+    submissionJsonPatchOperationsServiceStub = TestBed.inject(
+      SubmissionJsonPatchOperationsService as any,
+    );
     router = TestBed.inject(Router as any);
   });
 
@@ -83,8 +84,7 @@ describe('SubmissionEditComponent Component', () => {
     router = null;
   });
 
-  it('should init properly when a valid SubmissionObject has been retrieved',() => {
-
+  it('should init properly when a valid SubmissionObject has been retrieved', () => {
     route.testParams = { id: submissionId };
     submissionServiceStub.retrieveSubmission.and.returnValue(
       createSuccessfulRemoteDataObject$(submissionObject),
@@ -96,26 +96,27 @@ describe('SubmissionEditComponent Component', () => {
     expect(comp.collectionId).toBe(submissionObject.collection.id);
     expect(comp.selfUrl).toBe(submissionObject._links.self.href);
     expect(comp.sections).toBe(submissionObject.sections);
-    expect(comp.submissionDefinition).toBe(submissionObject.submissionDefinition);
-
+    expect(comp.submissionDefinition).toBe(
+      submissionObject.submissionDefinition,
+    );
   });
 
-  it('should redirect to mydspace when an empty SubmissionObject has been retrieved',() => {
-
+  it('should redirect to mydspace when an empty SubmissionObject has been retrieved', () => {
     route.testParams = { id: submissionId };
-    submissionServiceStub.retrieveSubmission.and.returnValue(createSuccessfulRemoteDataObject$({}),
+    submissionServiceStub.retrieveSubmission.and.returnValue(
+      createSuccessfulRemoteDataObject$({}),
     );
 
     fixture.detectChanges();
 
     expect(router.navigate).toHaveBeenCalled();
-
   });
 
-  it('should not has effects when an invalid SubmissionObject has been retrieved',() => {
-
+  it('should not has effects when an invalid SubmissionObject has been retrieved', () => {
     route.testParams = { id: submissionId };
-    submissionServiceStub.retrieveSubmission.and.returnValue(observableOf(null));
+    submissionServiceStub.retrieveSubmission.and.returnValue(
+      observableOf(null),
+    );
 
     fixture.detectChanges();
 
@@ -128,14 +129,16 @@ describe('SubmissionEditComponent Component', () => {
 
   describe('ngOnDestroy', () => {
     it('should call delete pending json patch operations', fakeAsync(() => {
-
-      submissionJsonPatchOperationsServiceStub.deletePendingJsonPatchOperations.and.callFake(() => { /* */ });
+      submissionJsonPatchOperationsServiceStub.deletePendingJsonPatchOperations.and.callFake(
+        () => {
+          /* */
+        },
+      );
       comp.ngOnDestroy();
 
-      expect(submissionJsonPatchOperationsServiceStub.deletePendingJsonPatchOperations).toHaveBeenCalled();
+      expect(
+        submissionJsonPatchOperationsServiceStub.deletePendingJsonPatchOperations,
+      ).toHaveBeenCalled();
     }));
-
   });
-
-
 });

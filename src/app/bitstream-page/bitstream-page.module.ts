@@ -28,5 +28,4 @@ import { ThemedEditBitstreamPageComponent } from './edit-bitstream-page/themed-e
     BitstreamDownloadPageComponent,
   ],
 })
-export class BitstreamPageModule {
-}
+export class BitstreamPageModule {}

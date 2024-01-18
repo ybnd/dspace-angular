@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  createSelector,
-  select,
-  Store,
-} from '@ngrx/store';
+import { createSelector, select, Store } from '@ngrx/store';
 import { Operation } from 'fast-json-patch';
 import { Observable } from 'rxjs';
-import {
-  find,
-  map,
-  take,
-} from 'rxjs/operators';
+import { find, map, take } from 'rxjs/operators';
 
 import { getEPersonEditRoute } from '../../access-control/access-control-routing-paths';
 import {
@@ -19,33 +11,18 @@ import {
 } from '../../access-control/epeople-registry/epeople-registry.actions';
 import { EPeopleRegistryState } from '../../access-control/epeople-registry/epeople-registry.reducers';
 import { AppState } from '../../app.reducer';
-import {
-  hasNoValue,
-  hasValue,
-} from '../../shared/empty.util';
+import { hasNoValue, hasValue } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
-import {
-  CreateData,
-  CreateDataImpl,
-} from '../data/base/create-data';
+import { CreateData, CreateDataImpl } from '../data/base/create-data';
 import { dataService } from '../data/base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from '../data/base/delete-data';
+import { DeleteData, DeleteDataImpl } from '../data/base/delete-data';
 import { IdentifiableDataService } from '../data/base/identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from '../data/base/patch-data';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../data/base/search-data';
+import { PatchData, PatchDataImpl } from '../data/base/patch-data';
+import { SearchData, SearchDataImpl } from '../data/base/search-data';
 import { DSOChangeAnalyzer } from '../data/dso-change-analyzer.service';
 import { FindListOptions } from '../data/find-list-options.model';
 import {
@@ -53,10 +30,7 @@ import {
   PaginatedList,
 } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
-import {
-  PatchRequest,
-  PostRequest,
-} from '../data/request.models';
+import { PatchRequest, PostRequest } from '../data/request.models';
 import { RequestService } from '../data/request.service';
 import { RestRequestMethod } from '../data/rest-request-method';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
@@ -72,14 +46,25 @@ import { EPERSON } from './models/eperson.resource-type';
 // todo: optimize imports
 
 const ePeopleRegistryStateSelector = (state: AppState) => state.epeopleRegistry;
-const editEPersonSelector = createSelector(ePeopleRegistryStateSelector, (ePeopleRegistryState: EPeopleRegistryState) => ePeopleRegistryState.editEPerson);
+const editEPersonSelector = createSelector(
+  ePeopleRegistryStateSelector,
+  (ePeopleRegistryState: EPeopleRegistryState) =>
+    ePeopleRegistryState.editEPerson,
+);
 
 /**
  * A service to retrieve {@link EPerson}s from the REST API & EPerson related CRUD actions
  */
 @Injectable()
 @dataService(EPERSON)
-export class EPersonDataService extends IdentifiableDataService<EPerson> implements CreateData<EPerson>, SearchData<EPerson>, PatchData<EPerson>, DeleteData<EPerson> {
+export class EPersonDataService
+  extends IdentifiableDataService<EPerson>
+  implements
+    CreateData<EPerson>,
+    SearchData<EPerson>,
+    PatchData<EPerson>,
+    DeleteData<EPerson>
+{
   protected searchByEmailPath = 'byEmail';
   protected searchByMetadataPath = 'byMetadata';
 
@@ -99,10 +84,43 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
   ) {
     super('epersons', requestService, rdbService, objectCache, halService);
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.patchData = new PatchDataImpl<EPerson>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.patchData = new PatchDataImpl<EPerson>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -111,10 +129,19 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param query   Query of search
    * @param options Options of search request
    */
-  public searchByScope(scope: string, query: string, options: FindListOptions = {}, useCachedVersionIfAvailable?: boolean): Observable<RemoteData<PaginatedList<EPerson>>> {
+  public searchByScope(
+    scope: string,
+    query: string,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable?: boolean,
+  ): Observable<RemoteData<PaginatedList<EPerson>>> {
     switch (scope) {
       case 'metadata':
-        return this.getEpeopleByMetadata(query.trim(), options, useCachedVersionIfAvailable);
+        return this.getEpeopleByMetadata(
+          query.trim(),
+          options,
+          useCachedVersionIfAvailable,
+        );
       case 'email':
         return this.getEPersonByEmail(query.trim()).pipe(
           map((rd: RemoteData<EPerson | NoContent>) => {
@@ -132,12 +159,15 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
                 rd.lastUpdated,
                 rd.state,
                 rd.errorMessage,
-                buildPaginatedList(new PageInfo({
-                  elementsPerPage: options.elementsPerPage,
-                  totalElements: page.length,
-                  totalPages: page.length,
-                  currentPage: 1,
-                }), page),
+                buildPaginatedList(
+                  new PageInfo({
+                    elementsPerPage: options.elementsPerPage,
+                    totalElements: page.length,
+                    totalPages: page.length,
+                    currentPage: 1,
+                  }),
+                  page,
+                ),
                 rd.statusCode,
               );
             } else {
@@ -148,7 +178,11 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
           }),
         );
       default:
-        return this.getEpeopleByMetadata(query.trim(), options, useCachedVersionIfAvailable);
+        return this.getEpeopleByMetadata(
+          query.trim(),
+          options,
+          useCachedVersionIfAvailable,
+        );
     }
   }
 
@@ -164,11 +198,27 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public getEPersonByEmail(query: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<EPerson>[]): Observable<RemoteData<EPerson | NoContent>> {
+  public getEPersonByEmail(
+    query: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<EPerson>[]
+  ): Observable<RemoteData<EPerson | NoContent>> {
     const findListOptions = new FindListOptions();
-    findListOptions.searchParams = [new RequestParam('email', encodeURIComponent(query))];
-    const href$ = this.searchData.getSearchByHref(this.searchByEmailPath, findListOptions, ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    findListOptions.searchParams = [
+      new RequestParam('email', encodeURIComponent(query)),
+    ];
+    const href$ = this.searchData.getSearchByHref(
+      this.searchByEmailPath,
+      findListOptions,
+      ...linksToFollow,
+    );
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -182,9 +232,22 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  private getEpeopleByMetadata(query: string, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<EPerson>[]): Observable<RemoteData<PaginatedList<EPerson>>> {
+  private getEpeopleByMetadata(
+    query: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<EPerson>[]
+  ): Observable<RemoteData<PaginatedList<EPerson>>> {
     const searchParams = [new RequestParam('query', encodeURIComponent(query))];
-    return this.getEPeopleBy(searchParams, this.searchByMetadataPath, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.getEPeopleBy(
+      searchParams,
+      this.searchByMetadataPath,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -199,17 +262,33 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  private getEPeopleBy(searchParams: RequestParam[], searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<EPerson>[]): Observable<RemoteData<PaginatedList<EPerson>>> {
+  private getEPeopleBy(
+    searchParams: RequestParam[],
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<EPerson>[]
+  ): Observable<RemoteData<PaginatedList<EPerson>>> {
     let findListOptions = new FindListOptions();
     if (options) {
       findListOptions = Object.assign(new FindListOptions(), options);
     }
     if (findListOptions.searchParams) {
-      findListOptions.searchParams = [...findListOptions.searchParams, ...searchParams];
+      findListOptions.searchParams = [
+        ...findListOptions.searchParams,
+        ...searchParams,
+      ];
     } else {
       findListOptions.searchParams = searchParams;
     }
-    return this.searchBy(searchMethod, findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchBy(
+      searchMethod,
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -226,18 +305,37 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  public searchNonMembers(query: string, group: string, options?: FindListOptions, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<EPerson>[]): Observable<RemoteData<PaginatedList<EPerson>>> {
-    const searchParams = [new RequestParam('query', query), new RequestParam('group', group)];
+  public searchNonMembers(
+    query: string,
+    group: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<EPerson>[]
+  ): Observable<RemoteData<PaginatedList<EPerson>>> {
+    const searchParams = [
+      new RequestParam('query', query),
+      new RequestParam('group', group),
+    ];
     let findListOptions = new FindListOptions();
     if (options) {
       findListOptions = Object.assign(new FindListOptions(), options);
     }
     if (findListOptions.searchParams) {
-      findListOptions.searchParams = [...findListOptions.searchParams, ...searchParams];
+      findListOptions.searchParams = [
+        ...findListOptions.searchParams,
+        ...searchParams,
+      ];
     } else {
       findListOptions.searchParams = searchParams;
     }
-    return this.searchBy('isNotMemberOf', findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchBy(
+      'isNotMemberOf',
+      findListOptions,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -248,15 +346,17 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
   public updateEPerson(ePerson: EPerson): Observable<RemoteData<EPerson>> {
     const requestId = this.requestService.generateRequestId();
     const oldVersion$ = this.findByHref(ePerson._links.self.href, true, false);
-    oldVersion$.pipe(
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-      take(1),
-    ).subscribe((oldEPerson: EPerson) => {
-      const operations = this.generateOperations(oldEPerson, ePerson);
-      const patchRequest = new PatchRequest(requestId, ePerson._links.self.href, operations);
-      return this.requestService.send(patchRequest);
-    });
+    oldVersion$
+      .pipe(getFirstSucceededRemoteData(), getRemoteDataPayload(), take(1))
+      .subscribe((oldEPerson: EPerson) => {
+        const operations = this.generateOperations(oldEPerson, ePerson);
+        const patchRequest = new PatchRequest(
+          requestId,
+          ePerson._links.self.href,
+          operations,
+        );
+        return this.requestService.send(patchRequest);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -267,22 +367,48 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param oldEPerson
    * @param newEPerson
    */
-  private generateOperations(oldEPerson: EPerson, newEPerson: EPerson): Operation[] {
-    let operations = this.comparator.diff(oldEPerson, newEPerson).filter((operation: Operation) => operation.op === 'replace');
+  private generateOperations(
+    oldEPerson: EPerson,
+    newEPerson: EPerson,
+  ): Operation[] {
+    let operations = this.comparator
+      .diff(oldEPerson, newEPerson)
+      .filter((operation: Operation) => operation.op === 'replace');
     if (hasValue(oldEPerson.email) && oldEPerson.email !== newEPerson.email) {
-      operations = [...operations, {
-        op: 'replace', path: '/email', value: newEPerson.email,
-      }];
+      operations = [
+        ...operations,
+        {
+          op: 'replace',
+          path: '/email',
+          value: newEPerson.email,
+        },
+      ];
     }
-    if (hasValue(oldEPerson.requireCertificate) && oldEPerson.requireCertificate !== newEPerson.requireCertificate) {
-      operations = [...operations, {
-        op: 'replace', path: '/certificate', value: newEPerson.requireCertificate,
-      }];
+    if (
+      hasValue(oldEPerson.requireCertificate) &&
+      oldEPerson.requireCertificate !== newEPerson.requireCertificate
+    ) {
+      operations = [
+        ...operations,
+        {
+          op: 'replace',
+          path: '/certificate',
+          value: newEPerson.requireCertificate,
+        },
+      ];
     }
-    if (hasValue(oldEPerson.canLogIn) && oldEPerson.canLogIn !== newEPerson.canLogIn) {
-      operations = [...operations, {
-        op: 'replace', path: '/canLogIn', value: newEPerson.canLogIn,
-      }];
+    if (
+      hasValue(oldEPerson.canLogIn) &&
+      oldEPerson.canLogIn !== newEPerson.canLogIn
+    ) {
+      operations = [
+        ...operations,
+        {
+          op: 'replace',
+          path: '/canLogIn',
+          value: newEPerson.canLogIn,
+        },
+      ];
     }
     return operations;
   }
@@ -291,9 +417,11 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * Method that clears a cached EPerson request
    */
   public clearEPersonRequests(): void {
-    this.getBrowseEndpoint().pipe(take(1)).subscribe((link: string) => {
-      this.requestService.removeByHrefSubstring(link);
-    });
+    this.getBrowseEndpoint()
+      .pipe(take(1))
+      .subscribe((link: string) => {
+        this.requestService.removeByHrefSubstring(link);
+      });
   }
 
   /**
@@ -338,13 +466,15 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param ePerson New EPerson to edit
    */
   public startEditingNewEPerson(ePerson: EPerson): string {
-    this.getActiveEPerson().pipe(take(1)).subscribe((activeEPerson: EPerson) => {
-      if (ePerson === activeEPerson) {
-        this.cancelEditEPerson();
-      } else {
-        this.editEPerson(ePerson);
-      }
-    });
+    this.getActiveEPerson()
+      .pipe(take(1))
+      .subscribe((activeEPerson: EPerson) => {
+        if (ePerson === activeEPerson) {
+          this.cancelEditEPerson();
+        } else {
+          this.editEPerson(ePerson);
+        }
+      });
     return getEPersonEditRoute(ePerson.id);
   }
 
@@ -353,19 +483,22 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param eperson
    * @param token
    */
-  public createEPersonForToken(eperson: EPerson, token: string): Observable<RemoteData<EPerson>> {
+  public createEPersonForToken(
+    eperson: EPerson,
+    token: string,
+  ): Observable<RemoteData<EPerson>> {
     const requestId = this.requestService.generateRequestId();
     const hrefObs = this.getBrowseEndpoint().pipe(
-      map((href: string) => `${href}?token=${token}`));
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-    ).subscribe((href: string) => {
-      const request = new PostRequest(requestId, href, eperson);
-      this.requestService.send(request);
-    });
+      map((href: string) => `${href}?token=${token}`),
+    );
+    hrefObs
+      .pipe(find((href: string) => hasValue(href)))
+      .subscribe((href: string) => {
+        const request = new PostRequest(requestId, href, eperson);
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
-
   }
 
   /**
@@ -374,25 +507,33 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param token     The forgot password token
    * @param password  The new password value
    */
-  patchPasswordWithToken(uuid: string, token: string, password: string): Observable<RemoteData<EPerson>> {
+  patchPasswordWithToken(
+    uuid: string,
+    token: string,
+    password: string,
+  ): Observable<RemoteData<EPerson>> {
     const requestId = this.requestService.generateRequestId();
 
-    const operation = Object.assign({ op: 'add', path: '/password', value: { 'new_password': password } });
+    const operation = Object.assign({
+      op: 'add',
+      path: '/password',
+      value: { new_password: password },
+    });
 
     const hrefObs = this.halService.getEndpoint(this.linkPath).pipe(
       map((endpoint: string) => this.getIDHref(endpoint, uuid)),
-      map((href: string) => `${href}?token=${token}`));
+      map((href: string) => `${href}?token=${token}`),
+    );
 
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-    ).subscribe((href: string) => {
-      const request = new PatchRequest(requestId, href, [operation]);
-      this.requestService.send(request);
-    });
+    hrefObs
+      .pipe(find((href: string) => hasValue(href)))
+      .subscribe((href: string) => {
+        const request = new PatchRequest(requestId, href, [operation]);
+        this.requestService.send(request);
+      });
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
-
 
   /**
    * Create a new object on the server, and store the response in the object cache
@@ -400,7 +541,10 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param object    The object to create
    * @param params    Array with additional params to combine with query string
    */
-  public create(object: EPerson, ...params: RequestParam[]): Observable<RemoteData<EPerson>> {
+  public create(
+    object: EPerson,
+    ...params: RequestParam[]
+  ): Observable<RemoteData<EPerson>> {
     return this.createData.create(object, ...params);
   }
 
@@ -418,8 +562,20 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<EPerson>[]): Observable<RemoteData<PaginatedList<EPerson>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<EPerson>[]
+  ): Observable<RemoteData<PaginatedList<EPerson>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -435,7 +591,10 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @param {T} object The object to send a patch request for
    * @param {Operation[]} operations The patch operations to be performed
    */
-  patch(object: EPerson, operations: Operation[]): Observable<RemoteData<EPerson>> {
+  patch(
+    object: EPerson,
+    operations: Operation[],
+  ): Observable<RemoteData<EPerson>> {
     return this.patchData.patch(object, operations);
   }
 
@@ -464,7 +623,10 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  public delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
@@ -477,7 +639,10 @@ export class EPersonDataService extends IdentifiableDataService<EPerson> impleme
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
 }

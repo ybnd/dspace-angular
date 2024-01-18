@@ -1,12 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { Component, Input, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../../app.reducer';
@@ -29,7 +22,6 @@ import { MYDSPACE_ROUTE } from '../../../my-dspace-page/my-dspace-page.component
   styleUrls: ['./user-menu.component.scss'],
 })
 export class UserMenuComponent implements OnInit {
-
   /**
    * The input flag to show user details in navbar expandable menu
    */
@@ -67,19 +59,16 @@ export class UserMenuComponent implements OnInit {
     protected store: Store<AppState>,
     protected authService: AuthService,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   /**
    * Initialize all instance variables
    */
   ngOnInit(): void {
-
     // set loading
     this.loading$ = this.store.pipe(select(isAuthenticationLoading));
 
     // set user
     this.user$ = this.authService.getAuthenticatedUserFromStore();
-
   }
 }

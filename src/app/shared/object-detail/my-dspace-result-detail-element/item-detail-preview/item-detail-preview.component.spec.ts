@@ -1,19 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Store } from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 
 import { RemoteDataBuildService } from '../../../../core/cache/builders/remote-data-build.service';
@@ -45,7 +35,9 @@ import { ItemDetailPreviewFieldComponent } from './item-detail-preview-field/ite
 function getMockFileService(): FileService {
   return jasmine.createSpyObj('FileService', {
     downloadFile: jasmine.createSpy('downloadFile'),
-    getFileNameFromResponseContentDisposition: jasmine.createSpy('getFileNameFromResponseContentDisposition'),
+    getFileNameFromResponseContentDisposition: jasmine.createSpy(
+      'getFileNameFromResponseContentDisposition',
+    ),
   });
 }
 
@@ -87,7 +79,12 @@ describe('ItemDetailPreviewComponent', () => {
     getThumbnailFor(item: Item): Observable<RemoteData<Bitstream>> {
       return createSuccessfulRemoteDataObject$(new Bitstream());
     },
-    findAllByItemAndBundleName(item: Item, bundleName: string, options?: FindListOptions, ...linksToFollow: FollowLinkConfig<Bitstream>[]): Observable<RemoteData<PaginatedList<Bitstream>>> {
+    findAllByItemAndBundleName(
+      item: Item,
+      bundleName: string,
+      options?: FindListOptions,
+      ...linksToFollow: FollowLinkConfig<Bitstream>[]
+    ): Observable<RemoteData<PaginatedList<Bitstream>>> {
       return createSuccessfulRemoteDataObject$(createPaginatedList([]));
     },
   };
@@ -102,10 +99,19 @@ describe('ItemDetailPreviewComponent', () => {
           },
         }),
       ],
-      declarations: [ItemDetailPreviewComponent, ItemDetailPreviewFieldComponent, TruncatePipe, FileSizePipe, VarDirective],
+      declarations: [
+        ItemDetailPreviewComponent,
+        ItemDetailPreviewFieldComponent,
+        TruncatePipe,
+        FileSizePipe,
+        VarDirective,
+      ],
       providers: [
         { provide: FileService, useValue: getMockFileService() },
-        { provide: HALEndpointService, useValue: new HALEndpointServiceStub('workspaceitems') },
+        {
+          provide: HALEndpointService,
+          useValue: new HALEndpointServiceStub('workspaceitems'),
+        },
         { provide: ObjectCacheService, useValue: {} },
         { provide: UUIDService, useValue: {} },
         { provide: Store, useValue: {} },
@@ -119,9 +125,11 @@ describe('ItemDetailPreviewComponent', () => {
         { provide: BitstreamDataService, useValue: mockBitstreamDataService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemDetailPreviewComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemDetailPreviewComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -132,7 +140,6 @@ describe('ItemDetailPreviewComponent', () => {
     component.separator = ', ';
     // spyOn(component.item, 'getFiles').and.returnValue(mockItem.bundles as any);
     fixture.detectChanges();
-
   }));
 
   it('should get item bitstreams', (done) => {

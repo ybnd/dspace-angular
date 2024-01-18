@@ -18,11 +18,12 @@ export class ThemedHomeNewsComponent extends ThemedComponent<HomeNewsComponent> 
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/home-page/home-news/home-news.component`);
+    return import(
+      `../../../themes/${themeName}/app/home-page/home-news/home-news.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import(`./home-news.component`);
   }
-
 }

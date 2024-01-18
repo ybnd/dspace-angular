@@ -1,13 +1,7 @@
-import {
-  Component,
-  Injector,
-} from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { RemoteData } from 'src/app/core/data/remote-data';
 
 import { RequestService } from '../../../../core/data/request.service';
@@ -30,16 +24,24 @@ export const WORKFLOW_TASK_OPTION_DECLINE_TASK = 'submit_decline_task';
  * Component for displaying and processing the decline task action on a workflow task item
  */
 export class ClaimedTaskActionsDeclineTaskComponent extends ClaimedTaskActionsAbstractComponent {
-
   option = WORKFLOW_TASK_OPTION_DECLINE_TASK;
 
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService) {
-    super(injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+  ) {
+    super(
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService,
+    );
   }
 
   reloadObjectExecution(): Observable<RemoteData<DSpaceObject> | DSpaceObject> {
@@ -51,5 +53,4 @@ export class ClaimedTaskActionsDeclineTaskComponent extends ClaimedTaskActionsAb
       indexableObject: dso,
     });
   }
-
 }

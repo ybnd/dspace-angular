@@ -8,10 +8,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import {
-  NgbModal,
-  NgbNavChangeEvent,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbNavChangeEvent } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicDatePickerModel,
   DynamicFormControlModel,
@@ -25,11 +22,7 @@ import {
   of as observableOf,
   Subscription,
 } from 'rxjs';
-import {
-  filter,
-  map,
-  take,
-} from 'rxjs/operators';
+import { filter, map, take } from 'rxjs/operators';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -40,10 +33,7 @@ import { ResourcePolicy } from '../../../core/resource-policy/models/resource-po
 import { RESOURCE_POLICY } from '../../../core/resource-policy/models/resource-policy.resource-type';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { getFirstSucceededRemoteData } from '../../../core/shared/operators';
-import {
-  dateToISOFormat,
-  stringToNgbDateStruct,
-} from '../../date.util';
+import { dateToISOFormat, stringToNgbDateStruct } from '../../date.util';
 import {
   hasValue,
   hasValueOperator,
@@ -69,8 +59,8 @@ import {
 export interface ResourcePolicyEvent {
   object: ResourcePolicy;
   target: {
-    type: string,
-    uuid: string
+    type: string;
+    uuid: string;
   };
   updateTarget: boolean;
 }
@@ -83,7 +73,6 @@ export interface ResourcePolicyEvent {
  * Component that show form for adding/editing a resource policy
  */
 export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
-
   /**
    * If given contains the resource policy to edit
    * @type {ResourcePolicy}
@@ -106,7 +95,8 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
    * An event fired when form is submitted.
    * Event's payload equals to a new ResourcePolicy.
    */
-  @Output() submit: EventEmitter<ResourcePolicyEvent> = new EventEmitter<ResourcePolicyEvent>();
+  @Output() submit: EventEmitter<ResourcePolicyEvent> =
+    new EventEmitter<ResourcePolicyEvent>();
 
   @ViewChild('content') content: ElementRef;
 
@@ -138,7 +128,8 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
    * The name of the eperson or group that will be granted the permission
    * @type {BehaviorSubject<string>}
    */
-  public resourcePolicyTargetName$: BehaviorSubject<string> = new BehaviorSubject('');
+  public resourcePolicyTargetName$: BehaviorSubject<string> =
+    new BehaviorSubject('');
 
   /**
    * A boolean representing if component is active
@@ -173,8 +164,7 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
     private groupService: GroupDataService,
     private requestService: RequestService,
     private modalService: NgbModal,
-  ) {
-  }
+  ) {}
 
   /**
    * Initialize the component, setting up the form model
@@ -185,26 +175,31 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
     this.formModel = this.buildResourcePolicyForm();
 
     if (this.isBeingEdited()) {
-      const epersonRD$ = this.ePersonService.findByHref(this.resourcePolicy._links.eperson.href, false).pipe(
-        getFirstSucceededRemoteData(),
-      );
-      const groupRD$ = this.groupService.findByHref(this.resourcePolicy._links.group.href, false).pipe(
-        getFirstSucceededRemoteData(),
-      );
-      const dsoRD$: Observable<RemoteData<DSpaceObject>> = observableCombineLatest([epersonRD$, groupRD$]).pipe(
-        map((rdArr: RemoteData<DSpaceObject>[]) => {
-          return rdArr.find((rd: RemoteData<DSpaceObject>) => isNotEmpty(rd.payload));
-        }),
-        hasValueOperator(),
-      );
+      const epersonRD$ = this.ePersonService
+        .findByHref(this.resourcePolicy._links.eperson.href, false)
+        .pipe(getFirstSucceededRemoteData());
+      const groupRD$ = this.groupService
+        .findByHref(this.resourcePolicy._links.group.href, false)
+        .pipe(getFirstSucceededRemoteData());
+      const dsoRD$: Observable<RemoteData<DSpaceObject>> =
+        observableCombineLatest([epersonRD$, groupRD$]).pipe(
+          map((rdArr: RemoteData<DSpaceObject>[]) => {
+            return rdArr.find((rd: RemoteData<DSpaceObject>) =>
+              isNotEmpty(rd.payload),
+            );
+          }),
+          hasValueOperator(),
+        );
       this.subs.push(
-        dsoRD$.pipe(
-          filter(() => this.isActive),
-        ).subscribe((dsoRD: RemoteData<DSpaceObject>) => {
-          this.resourcePolicyGrant = dsoRD.payload;
-          this.navActiveId = String(dsoRD.payload.type);
-          this.resourcePolicyTargetName$.next(this.getResourcePolicyTargetName());
-        }),
+        dsoRD$
+          .pipe(filter(() => this.isActive))
+          .subscribe((dsoRD: RemoteData<DSpaceObject>) => {
+            this.resourcePolicyGrant = dsoRD.payload;
+            this.navActiveId = String(dsoRD.payload.type);
+            this.resourcePolicyTargetName$.next(
+              this.getResourcePolicyTargetName(),
+            );
+          }),
       );
     }
   }
@@ -215,9 +210,13 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
    * @return Observable that emits the form status
    */
   isFormValid(): Observable<boolean> {
-    return this.formService.isValid(this.formId).pipe(
-      map((isValid: boolean) => isValid && isNotEmpty(this.resourcePolicyGrant)),
-    );
+    return this.formService
+      .isValid(this.formId)
+      .pipe(
+        map(
+          (isValid: boolean) => isValid && isNotEmpty(this.resourcePolicyGrant),
+        ),
+      );
   }
 
   /**
@@ -243,9 +242,18 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
       RESOURCE_POLICY_FORM_END_DATE_CONFIG,
       RESOURCE_POLICY_FORM_END_DATE_LAYOUT,
     );
-    const dateGroupConfig = Object.assign({}, RESOURCE_POLICY_FORM_DATE_GROUP_CONFIG, { group: [] });
+    const dateGroupConfig = Object.assign(
+      {},
+      RESOURCE_POLICY_FORM_DATE_GROUP_CONFIG,
+      { group: [] },
+    );
     dateGroupConfig.group.push(startDateModel, endDateModel);
-    formModel.push(new DynamicFormGroupModel(dateGroupConfig, RESOURCE_POLICY_FORM_DATE_GROUP_LAYOUT));
+    formModel.push(
+      new DynamicFormGroupModel(
+        dateGroupConfig,
+        RESOURCE_POLICY_FORM_DATE_GROUP_LAYOUT,
+      ),
+    );
 
     this.initModelsValue(formModel);
     return formModel;
@@ -256,18 +264,27 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
    *
    * @return the form models
    */
-  initModelsValue(formModel: DynamicFormControlModel[]): DynamicFormControlModel[] {
+  initModelsValue(
+    formModel: DynamicFormControlModel[],
+  ): DynamicFormControlModel[] {
     if (this.resourcePolicy) {
       formModel.forEach((model: any) => {
         if (model.id === 'date') {
           if (hasValue(this.resourcePolicy.startDate)) {
-            model.get(0).value = stringToNgbDateStruct(this.resourcePolicy.startDate);
+            model.get(0).value = stringToNgbDateStruct(
+              this.resourcePolicy.startDate,
+            );
           }
           if (hasValue(this.resourcePolicy.endDate)) {
-            model.get(1).value = stringToNgbDateStruct(this.resourcePolicy.endDate);
+            model.get(1).value = stringToNgbDateStruct(
+              this.resourcePolicy.endDate,
+            );
           }
         } else {
-          if (this.resourcePolicy.hasOwnProperty(model.id) && this.resourcePolicy[model.id]) {
+          if (
+            this.resourcePolicy.hasOwnProperty(model.id) &&
+            this.resourcePolicy[model.id]
+          ) {
             model.value = this.resourcePolicy[model.id];
           }
         }
@@ -292,7 +309,9 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
    * @return the object name
    */
   getResourcePolicyTargetName(): string {
-    return isNotEmpty(this.resourcePolicyGrant) ? this.dsoNameService.getName(this.resourcePolicyGrant) : '';
+    return isNotEmpty(this.resourcePolicyGrant)
+      ? this.dsoNameService.getName(this.resourcePolicyGrant)
+      : '';
   }
 
   /**
@@ -318,7 +337,9 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
    * Emit a new submit Event whether the form is valid
    */
   onSubmit(): void {
-    this.formService.getFormData(this.formId).pipe(take(1))
+    this.formService
+      .getFormData(this.formId)
+      .pipe(take(1))
       .subscribe((data) => {
         const eventPayload: ResourcePolicyEvent = Object.create({});
         eventPayload.object = this.createResourcePolicyByFormData(data);
@@ -338,12 +359,22 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
    */
   createResourcePolicyByFormData(data): ResourcePolicy {
     const resourcePolicy = new ResourcePolicy();
-    resourcePolicy.name = (data.name) ? data.name[0].value : null;
-    resourcePolicy.description = (data.description) ? data.description[0].value : null;
-    resourcePolicy.policyType = (data.policyType) ? data.policyType[0].value : null;
-    resourcePolicy.action = (data.action) ? data.action[0].value : null;
-    resourcePolicy.startDate = (data.date && data.date.start) ? dateToISOFormat(data.date.start[0].value) : null;
-    resourcePolicy.endDate = (data.date && data.date.end) ? dateToISOFormat(data.date.end[0].value) : null;
+    resourcePolicy.name = data.name ? data.name[0].value : null;
+    resourcePolicy.description = data.description
+      ? data.description[0].value
+      : null;
+    resourcePolicy.policyType = data.policyType
+      ? data.policyType[0].value
+      : null;
+    resourcePolicy.action = data.action ? data.action[0].value : null;
+    resourcePolicy.startDate =
+      data.date && data.date.start
+        ? dateToISOFormat(data.date.start[0].value)
+        : null;
+    resourcePolicy.endDate =
+      data.date && data.date.end
+        ? dateToISOFormat(data.date.end[0].value)
+        : null;
     resourcePolicy.type = RESOURCE_POLICY;
 
     return resourcePolicy;
@@ -362,7 +393,7 @@ export class ResourcePolicyFormComponent implements OnInit, OnDestroy {
 
   onNavChange(changeEvent: NgbNavChangeEvent) {
     // if a policy is being edited it should not be possible to switch between group and eperson
-    if (this.isBeingEdited())  {
+    if (this.isBeingEdited()) {
       changeEvent.preventDefault();
       this.modalService.open(this.content);
     }

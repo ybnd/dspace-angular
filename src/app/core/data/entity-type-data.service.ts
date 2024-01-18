@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
@@ -18,14 +13,8 @@ import {
   getRemoteDataPayload,
 } from '../shared/operators';
 import { BaseDataService } from './base/base-data.service';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from './base/find-all-data';
-import {
-  SearchData,
-  SearchDataImpl,
-} from './base/search-data';
+import { FindAllData, FindAllDataImpl } from './base/find-all-data';
+import { SearchData, SearchDataImpl } from './base/search-data';
 import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RelationshipTypeDataService } from './relationship-type-data.service';
@@ -36,7 +25,10 @@ import { RequestService } from './request.service';
  * Service handling all ItemType requests
  */
 @Injectable()
-export class EntityTypeDataService extends BaseDataService<ItemType> implements FindAllData<ItemType>, SearchData<ItemType> {
+export class EntityTypeDataService
+  extends BaseDataService<ItemType>
+  implements FindAllData<ItemType>, SearchData<ItemType>
+{
   private findAllData: FindAllData<ItemType>;
   private searchData: SearchDataImpl<ItemType>;
 
@@ -49,8 +41,22 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
   ) {
     super('entitytypes', requestService, rdbService, objectCache, halService);
 
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   getBrowseEndpoint(options, linkPath?: string): Observable<string> {
@@ -62,9 +68,16 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
    * @param entityTypeId
    */
   getRelationshipTypesEndpoint(entityTypeId: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((href) => this.halService.getEndpoint('relationshiptypes', `${href}/${entityTypeId}`)),
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((href) =>
+          this.halService.getEndpoint(
+            'relationshiptypes',
+            `${href}/${entityTypeId}`,
+          ),
+        ),
+      );
   }
 
   /**
@@ -72,8 +85,10 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
    * @param relationshipType  the relationship type for which to check whether the given entity type is the left type
    * @param itemType  the entity type for which to check whether it is the left type of the given relationship type
    */
-  isLeftType(relationshipType: RelationshipType, itemType: ItemType): Observable<boolean> {
-
+  isLeftType(
+    relationshipType: RelationshipType,
+    itemType: ItemType,
+  ): Observable<boolean> {
     return relationshipType.leftType.pipe(
       getFirstSucceededRemoteData(),
       getRemoteDataPayload(),
@@ -86,11 +101,16 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
    *
    * @param {FindListOptions} options
    */
-  getAllAuthorizedRelationshipType(options: FindListOptions = {}): Observable<RemoteData<PaginatedList<ItemType>>> {
+  getAllAuthorizedRelationshipType(
+    options: FindListOptions = {},
+  ): Observable<RemoteData<PaginatedList<ItemType>>> {
     const searchHref = 'findAllByAuthorizedCollection';
 
     return this.searchBy(searchHref, options).pipe(
-      filter((type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending));
+      filter(
+        (type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending,
+      ),
+    );
   }
 
   /**
@@ -105,7 +125,7 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
       map((result: RemoteData<PaginatedList<ItemType>>) => {
         let output: boolean;
         if (result.payload) {
-          output = ( result.payload.page.length > 1 );
+          output = result.payload.page.length > 1;
         } else {
           output = false;
         }
@@ -120,11 +140,16 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
    *
    * @param {FindListOptions} options
    */
-  getAllAuthorizedRelationshipTypeImport(options: FindListOptions = {}): Observable<RemoteData<PaginatedList<ItemType>>> {
+  getAllAuthorizedRelationshipTypeImport(
+    options: FindListOptions = {},
+  ): Observable<RemoteData<PaginatedList<ItemType>>> {
     const searchHref = 'findAllByAuthorizedExternalSource';
 
     return this.searchBy(searchHref, options).pipe(
-      filter((type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending));
+      filter(
+        (type: RemoteData<PaginatedList<ItemType>>) => !type.isResponsePending,
+      ),
+    );
   }
 
   /**
@@ -139,7 +164,7 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
       map((result: RemoteData<PaginatedList<ItemType>>) => {
         let output: boolean;
         if (result.payload) {
-          output = ( result.payload.page.length > 1 );
+          output = result.payload.page.length > 1;
         } else {
           output = false;
         }
@@ -158,9 +183,20 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  getEntityTypeRelationships(entityTypeId: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<RelationshipType>[]): Observable<RemoteData<PaginatedList<RelationshipType>>> {
+  getEntityTypeRelationships(
+    entityTypeId: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<RelationshipType>[]
+  ): Observable<RemoteData<PaginatedList<RelationshipType>>> {
     const href$ = this.getRelationshipTypesEndpoint(entityTypeId);
-    return this.relationshipTypeService.findListByHref(href$, undefined, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.relationshipTypeService.findListByHref(
+      href$,
+      undefined,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -171,7 +207,8 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
     return this.halService.getEndpoint(this.linkPath).pipe(
       take(1),
       switchMap((endPoint: string) =>
-        this.findByHref(endPoint + '/label/' + label)),
+        this.findByHref(endPoint + '/label/' + label),
+      ),
     );
   }
 
@@ -189,8 +226,18 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  public findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<ItemType>[]): Observable<RemoteData<PaginatedList<ItemType>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<ItemType>[]
+  ): Observable<RemoteData<PaginatedList<ItemType>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -207,7 +254,19 @@ export class EntityTypeDataService extends BaseDataService<ItemType> implements 
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<ItemType>[]): Observable<RemoteData<PaginatedList<ItemType>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<ItemType>[]
+  ): Observable<RemoteData<PaginatedList<ItemType>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

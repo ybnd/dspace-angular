@@ -33,6 +33,15 @@ export class CreateCollectionPageComponent extends CreateComColPageComponent<Col
     protected translate: TranslateService,
     protected requestService: RequestService,
   ) {
-    super(collectionDataService, dsoNameService, communityDataService, routeService, router, notificationsService, translate, requestService);
+    super(
+      collectionDataService,
+      dsoNameService,
+      communityDataService,
+      routeService,
+      router,
+      notificationsService,
+      translate,
+      requestService,
+    );
   }
 }

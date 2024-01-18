@@ -1,15 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderMock } from '../../../../shared/mocks/translate-loader.mock';
 import { FileValueAccessorDirective } from '../../../../shared/utils/file-value-accessor.directive';
@@ -32,11 +25,21 @@ describe('ParameterValueInputComponent', () => {
   let outputParameter;
 
   function init() {
-    booleanParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.BOOLEAN });
-    stringParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.STRING });
-    fileParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.FILE });
-    dateParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.DATE });
-    outputParameter = Object.assign(new ScriptParameter(), { type: ScriptParameterType.OUTPUT });
+    booleanParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.BOOLEAN,
+    });
+    stringParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.STRING,
+    });
+    fileParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.FILE,
+    });
+    dateParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.DATE,
+    });
+    outputParameter = Object.assign(new ScriptParameter(), {
+      type: ScriptParameterType.OUTPUT,
+    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -49,7 +52,8 @@ describe('ParameterValueInputComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
+        }),
+      ],
       declarations: [
         ParameterValueInputComponent,
         BooleanValueInputComponent,
@@ -60,8 +64,7 @@ describe('ParameterValueInputComponent', () => {
         FileValidator,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -78,35 +81,45 @@ describe('ParameterValueInputComponent', () => {
   it('should show a BooleanValueInputComponent when the parameter type is boolean', () => {
     component.parameter = booleanParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(BooleanValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(BooleanValueInputComponent),
+    );
     expect(valueInput).toBeTruthy();
   });
 
   it('should show a StringValueInputComponent when the parameter type is string', () => {
     component.parameter = stringParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(StringValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(StringValueInputComponent),
+    );
     expect(valueInput).toBeTruthy();
   });
 
   it('should show a FileValueInputComponent when the parameter type is file', () => {
     component.parameter = fileParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(FileValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(FileValueInputComponent),
+    );
     expect(valueInput).toBeTruthy();
   });
 
   it('should show a DateValueInputComponent when the parameter type is date', () => {
     component.parameter = dateParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(DateValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(DateValueInputComponent),
+    );
     expect(valueInput).toBeTruthy();
   });
 
   it('should show a StringValueInputComponent when the parameter type is output', () => {
     component.parameter = outputParameter;
     fixture.detectChanges();
-    const valueInput = fixture.debugElement.query(By.directive(StringValueInputComponent));
+    const valueInput = fixture.debugElement.query(
+      By.directive(StringValueInputComponent),
+    );
     expect(valueInput).toBeTruthy();
   });
 });

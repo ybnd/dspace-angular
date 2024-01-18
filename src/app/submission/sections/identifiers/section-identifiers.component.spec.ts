@@ -1,19 +1,12 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateModule } from '@ngx-translate/core';
@@ -86,18 +79,19 @@ const mockItem = Object.assign(new Item(), {
 
 // Mock identifier data to use with tests
 const identifierData: WorkspaceitemSectionIdentifiersObject = {
-  identifiers: [{
-    value: 'https://doi.org/10.33515/dspace-61',
-    identifierType: 'doi',
-    identifierStatus: 'TO_BE_REGISTERED',
-    type: 'identifier',
-  },
-  {
-    value: '123456789/418',
-    identifierType: 'handle',
-    identifierStatus: null,
-    type: 'identifier',
-  },
+  identifiers: [
+    {
+      value: 'https://doi.org/10.33515/dspace-61',
+      identifierType: 'doi',
+      identifierStatus: 'TO_BE_REGISTERED',
+      type: 'identifier',
+    },
+    {
+      value: '123456789/418',
+      identifierType: 'handle',
+      identifierStatus: null,
+      type: 'identifier',
+    },
   ],
   displayTypes: ['doi', 'handle'],
 };
@@ -144,8 +138,11 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
         key: 'dc.title',
         language: 'en_US',
         value: 'Community 1-Collection 1',
-      }],
-    license: createSuccessfulRemoteDataObject$(Object.assign(new License(), { text: licenseText })),
+      },
+    ],
+    license: createSuccessfulRemoteDataObject$(
+      Object.assign(new License(), { text: licenseText }),
+    ),
   });
   const paginationService = new PaginationServiceStub();
 
@@ -167,11 +164,20 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
         VarDirective,
       ],
       providers: [
-        { provide: CollectionDataService, useValue: getMockCollectionDataService() },
-        { provide: SectionFormOperationsService, useValue: getMockFormOperationsService() },
+        {
+          provide: CollectionDataService,
+          useValue: getMockCollectionDataService(),
+        },
+        {
+          provide: SectionFormOperationsService,
+          useValue: getMockFormOperationsService(),
+        },
         { provide: FormService, useValue: getMockFormService() },
         { provide: JsonPatchOperationsBuilder, useValue: jsonPatchOpBuilder },
-        { provide: SubmissionFormsConfigDataService, useValue: getMockSubmissionFormsConfigService() },
+        {
+          provide: SubmissionFormsConfigDataService,
+          useValue: getMockSubmissionFormsConfigService(),
+        },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
         { provide: SectionsService, useClass: SectionsServiceStub },
         { provide: SubmissionService, useClass: SubmissionServiceStub },
@@ -184,7 +190,9 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
         SubmissionSectionIdentifiersComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then();
+    })
+      .compileComponents()
+      .then();
   }));
 
   // First test to check the correct component creation
@@ -194,11 +202,18 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-      sectionsServiceStub.isSectionReadOnly.and.returnValue(observableOf(false));
+      sectionsServiceStub.isSectionReadOnly.and.returnValue(
+        observableOf(false),
+      );
       sectionsServiceStub.getSectionErrors.and.returnValue(observableOf([]));
-      sectionsServiceStub.getSectionData.and.returnValue(observableOf(identifierData));
+      sectionsServiceStub.getSectionData.and.returnValue(
+        observableOf(identifierData),
+      );
       const html = `<ds-submission-section-identifiers></ds-submission-section-identifiers>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -206,9 +221,12 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionSectionIdentifiersComponent', inject([SubmissionSectionIdentifiersComponent], (idComp: SubmissionSectionIdentifiersComponent) => {
-      expect(idComp).toBeDefined();
-    }));
+    it('should create SubmissionSectionIdentifiersComponent', inject(
+      [SubmissionSectionIdentifiersComponent],
+      (idComp: SubmissionSectionIdentifiersComponent) => {
+        expect(idComp).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -221,7 +239,10 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
       formBuilderService = TestBed.inject(FormBuilderService);
       formOperationsService = TestBed.inject(SectionFormOperationsService);
       collectionDataService = TestBed.inject(CollectionDataService);
-      compAsAny.pathCombiner = new JsonPatchOperationPathCombiner('sections', sectionObject.id);
+      compAsAny.pathCombiner = new JsonPatchOperationPathCombiner(
+        'sections',
+        sectionObject.id,
+      );
     });
 
     afterEach(() => {
@@ -232,12 +253,20 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
 
     // Test initialisation of the submission section
     it('Should init section properly', () => {
-      collectionDataService.findById.and.returnValue(createSuccessfulRemoteDataObject$(mockCollection));
+      collectionDataService.findById.and.returnValue(
+        createSuccessfulRemoteDataObject$(mockCollection),
+      );
       sectionsServiceStub.getSectionErrors.and.returnValue(observableOf([]));
-      sectionsServiceStub.isSectionReadOnly.and.returnValue(observableOf(false));
-      compAsAny.submissionService.getSubmissionScope.and.returnValue(SubmissionScopeType.WorkspaceItem);
+      sectionsServiceStub.isSectionReadOnly.and.returnValue(
+        observableOf(false),
+      );
+      compAsAny.submissionService.getSubmissionScope.and.returnValue(
+        SubmissionScopeType.WorkspaceItem,
+      );
       spyOn(comp, 'getSectionStatus').and.returnValue(observableOf(true));
-      spyOn(comp, 'getIdentifierData').and.returnValue(observableOf(identifierData));
+      spyOn(comp, 'getIdentifierData').and.returnValue(
+        observableOf(identifierData),
+      );
       expect(comp.isLoading).toBeTruthy();
       comp.onSectionInit();
       fixture.detectChanges();
@@ -248,18 +277,21 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
     // These are very simple as we don't really have a 'false' state unless we're still loading
     it('Should return TRUE if the isLoading is FALSE', () => {
       compAsAny.isLoading = false;
-      expect(compAsAny.getSectionStatus()).toBeObservable(cold('(a|)', {
-        a: true,
-      }));
+      expect(compAsAny.getSectionStatus()).toBeObservable(
+        cold('(a|)', {
+          a: true,
+        }),
+      );
     });
     it('Should return FALSE if the identifier data is missing handle', () => {
       compAsAny.isLoadin = true;
-      expect(compAsAny.getSectionStatus()).toBeObservable(cold('(a|)', {
-        a: false,
-      }));
+      expect(compAsAny.getSectionStatus()).toBeObservable(
+        cold('(a|)', {
+          a: false,
+        }),
+      );
     });
   });
-
 });
 
 // declare a test component
@@ -267,6 +299,4 @@ describe('SubmissionSectionIdentifiersComponent test suite', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

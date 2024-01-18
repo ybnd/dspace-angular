@@ -6,4 +6,6 @@ import { ResourceType } from '../../../shared/resource-type';
  * Needs to be in a separate file to prevent circular
  * dependencies in webpack.
  */
-export const QUALITY_ASSURANCE_EVENT_OBJECT = new ResourceType('qualityassuranceevent');
+export const QUALITY_ASSURANCE_EVENT_OBJECT = new ResourceType(
+  'qualityassuranceevent',
+);

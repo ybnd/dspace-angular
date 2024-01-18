@@ -1,9 +1,5 @@
 import { DebugElement } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {
   TranslateLoader,
@@ -15,7 +11,6 @@ import { TranslateLoaderMock } from '../mocks/translate-loader.mock';
 import { LoadingComponent } from './loading.component';
 
 describe('LoadingComponent (inline template)', () => {
-
   let comp: LoadingComponent;
   let fixture: ComponentFixture<LoadingComponent>;
   let de: DebugElement;
@@ -33,7 +28,7 @@ describe('LoadingComponent (inline template)', () => {
       ],
       declarations: [LoadingComponent], // declare the test component
       providers: [TranslateService],
-    }).compileComponents();  // compile template and css
+    }).compileComponents(); // compile template and css
   }));
 
   beforeEach(() => {
@@ -61,5 +56,4 @@ describe('LoadingComponent (inline template)', () => {
     fixture.detectChanges();
     expect(el.textContent).toContain('Test Message');
   });
-
 });

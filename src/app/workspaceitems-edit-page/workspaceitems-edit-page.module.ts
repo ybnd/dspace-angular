@@ -22,6 +22,4 @@ import { WorkspaceitemsEditPageRoutingModule } from './workspaceitems-edit-page-
 /**
  * This module handles all modules that need to access the workspaceitems edit page.
  */
-export class WorkspaceitemsEditPageModule {
-
-}
+export class WorkspaceitemsEditPageModule {}

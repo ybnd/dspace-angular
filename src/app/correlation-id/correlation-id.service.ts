@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
 
 import { AppState } from '../app.reducer';
@@ -19,13 +16,11 @@ import { correlationIdSelector } from './correlation-id.selector';
   providedIn: 'root',
 })
 export class CorrelationIdService {
-
   constructor(
     protected cookieService: CookieService,
     protected uuidService: UUIDService,
     protected store: Store<AppState>,
-  ) {
-  }
+  ) {}
 
   /**
    * Initialize the correlation id based on the cookie or the ngrx store
@@ -55,13 +50,12 @@ export class CorrelationIdService {
   getCorrelationId(): string {
     let correlationId;
 
-    this.store.pipe(
-      select(correlationIdSelector),
-      take(1),
-    ).subscribe((storeId: string) => {
-      // we can do this because ngrx selects are synchronous
-      correlationId = storeId;
-    });
+    this.store
+      .pipe(select(correlationIdSelector), take(1))
+      .subscribe((storeId: string) => {
+        // we can do this because ngrx selects are synchronous
+        correlationId = storeId;
+      });
 
     return correlationId;
   }

@@ -38,10 +38,7 @@ import {
 import { NoContent } from '../../../../core/shared/NoContent.model';
 import { getFirstCompletedRemoteData } from '../../../../core/shared/operators';
 import { ResourceType } from '../../../../core/shared/resource-type';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../empty.util';
+import { hasValue, isNotEmpty } from '../../../empty.util';
 import { NotificationsService } from '../../../notifications/notifications.service';
 import { UploaderComponent } from '../../../upload/uploader/uploader.component';
 import { UploaderOptions } from '../../../upload/uploader/uploader-options.model';
@@ -54,8 +51,9 @@ import { UploaderOptions } from '../../../upload/uploader/uploader-options.model
   styleUrls: ['./comcol-form.component.scss'],
   templateUrl: './comcol-form.component.html',
 })
-export class ComColFormComponent<T extends Collection | Community> implements OnInit, OnDestroy {
-
+export class ComColFormComponent<T extends Collection | Community>
+  implements OnInit, OnDestroy
+{
   /**
    * The logo uploader component
    */
@@ -103,10 +101,10 @@ export class ComColFormComponent<T extends Collection | Community> implements On
    * Emits DSO and Uploader when the form is submitted
    */
   @Output() submitForm: EventEmitter<{
-    dso: T,
-    uploader: FileUploader,
-    deleteLogo: boolean,
-    operations: Operation[],
+    dso: T;
+    uploader: FileUploader;
+    deleteLogo: boolean;
+    operations: Operation[];
   }> = new EventEmitter();
 
   /**
@@ -141,28 +139,26 @@ export class ComColFormComponent<T extends Collection | Community> implements On
    */
   protected dsoService: ComColDataService<Community | Collection>;
 
-  public constructor(protected formService: DynamicFormService,
-                     protected translate: TranslateService,
-                     protected notificationsService: NotificationsService,
-                     protected authService: AuthService,
-                     protected requestService: RequestService,
-                     protected objectCache: ObjectCacheService) {
-  }
+  public constructor(
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected notificationsService: NotificationsService,
+    protected authService: AuthService,
+    protected requestService: RequestService,
+    protected objectCache: ObjectCacheService,
+  ) {}
 
   ngOnInit(): void {
     if (hasValue(this.formModel)) {
-      this.formModel.forEach(
-        (fieldModel: DynamicInputModel) => {
-          fieldModel.value = this.dso.firstMetadataValue(fieldModel.name);
-        },
-      );
+      this.formModel.forEach((fieldModel: DynamicInputModel) => {
+        fieldModel.value = this.dso.firstMetadataValue(fieldModel.name);
+      });
       this.formGroup = this.formService.createFormGroup(this.formModel);
 
       this.updateFieldTranslations();
-      this.translate.onLangChange
-        .subscribe(() => {
-          this.updateFieldTranslations();
-        });
+      this.translate.onLangChange.subscribe(() => {
+        this.updateFieldTranslations();
+      });
 
       if (hasValue(this.dso.id)) {
         this.subs.push(
@@ -171,7 +167,8 @@ export class ComColFormComponent<T extends Collection | Community> implements On
             this.dso.logo,
           ]).subscribe(([href, logoRD]: [string, RemoteData<Bitstream>]) => {
             this.uploadFilesOptions.url = href;
-            this.uploadFilesOptions.authToken = this.authService.buildAuthHeader();
+            this.uploadFilesOptions.authToken =
+              this.authService.buildAuthHeader();
             // If the object already contains a logo, send out a PUT request instead of POST for setting a new logo
             if (hasValue(logoRD.payload)) {
               this.uploadFilesOptions.method = RestRequestMethod.PUT;
@@ -192,28 +189,41 @@ export class ComColFormComponent<T extends Collection | Community> implements On
    * Checks which new fields were added and sends the updated version of the DSO to the parent component
    */
   onSubmit() {
-    if (this.markLogoForDeletion && hasValue(this.dso.id) && hasValue(this.dso._links.logo)) {
-      this.dsoService.deleteLogo(this.dso).pipe(
-        getFirstCompletedRemoteData(),
-      ).subscribe((response: RemoteData<NoContent>) => {
-        if (response.hasSucceeded) {
-          this.notificationsService.success(
-            this.translate.get(this.type.value + '.edit.logo.notifications.delete.success.title'),
-            this.translate.get(this.type.value + '.edit.logo.notifications.delete.success.content'),
-          );
-        } else {
-          this.notificationsService.error(
-            this.translate.get(this.type.value + '.edit.logo.notifications.delete.error.title'),
-            response.errorMessage,
-          );
-        }
-        this.dso.logo = undefined;
-        this.uploadFilesOptions.method = RestRequestMethod.POST;
-        this.finish.emit();
-      });
+    if (
+      this.markLogoForDeletion &&
+      hasValue(this.dso.id) &&
+      hasValue(this.dso._links.logo)
+    ) {
+      this.dsoService
+        .deleteLogo(this.dso)
+        .pipe(getFirstCompletedRemoteData())
+        .subscribe((response: RemoteData<NoContent>) => {
+          if (response.hasSucceeded) {
+            this.notificationsService.success(
+              this.translate.get(
+                this.type.value +
+                  '.edit.logo.notifications.delete.success.title',
+              ),
+              this.translate.get(
+                this.type.value +
+                  '.edit.logo.notifications.delete.success.content',
+              ),
+            );
+          } else {
+            this.notificationsService.error(
+              this.translate.get(
+                this.type.value + '.edit.logo.notifications.delete.error.title',
+              ),
+              response.errorMessage,
+            );
+          }
+          this.dso.logo = undefined;
+          this.uploadFilesOptions.method = RestRequestMethod.POST;
+          this.finish.emit();
+        });
     }
 
-    const formMetadata = {}  as MetadataMap;
+    const formMetadata = {} as MetadataMap;
     this.formModel.forEach((fieldModel: DynamicInputModel) => {
       const value: MetadataValue = {
         value: fieldModel.value as string,
@@ -250,7 +260,9 @@ export class ComColFormComponent<T extends Collection | Community> implements On
 
     this.submitForm.emit({
       dso: updatedDSO,
-      uploader: hasValue(this.uploaderComponent) ? this.uploaderComponent.uploader : undefined,
+      uploader: hasValue(this.uploaderComponent)
+        ? this.uploaderComponent.uploader
+        : undefined,
       deleteLogo: this.markLogoForDeletion,
       operations: operations,
     });
@@ -260,17 +272,19 @@ export class ComColFormComponent<T extends Collection | Community> implements On
    * Used the update translations of errors and labels on init and on language change
    */
   private updateFieldTranslations() {
-    this.formModel.forEach(
-      (fieldModel: DynamicInputModel) => {
-        fieldModel.label = this.translate.instant(this.type.value + this.LABEL_KEY_PREFIX + fieldModel.id);
-        if (isNotEmpty(fieldModel.validators)) {
-          fieldModel.errorMessages = {};
-          Object.keys(fieldModel.validators).forEach((key) => {
-            fieldModel.errorMessages[key] = this.translate.instant(this.type.value + this.ERROR_KEY_PREFIX + fieldModel.id + '.' + key);
-          });
-        }
-      },
-    );
+    this.formModel.forEach((fieldModel: DynamicInputModel) => {
+      fieldModel.label = this.translate.instant(
+        this.type.value + this.LABEL_KEY_PREFIX + fieldModel.id,
+      );
+      if (isNotEmpty(fieldModel.validators)) {
+        fieldModel.errorMessages = {};
+        Object.keys(fieldModel.validators).forEach((key) => {
+          fieldModel.errorMessages[key] = this.translate.instant(
+            this.type.value + this.ERROR_KEY_PREFIX + fieldModel.id + '.' + key,
+          );
+        });
+      }
+    });
   }
 
   /**
@@ -303,7 +317,12 @@ export class ComColFormComponent<T extends Collection | Community> implements On
     if (hasValue(this.dso.id)) {
       this.refreshCache();
     }
-    this.notificationsService.success(null, this.translate.get(this.type.value + '.edit.logo.notifications.add.success'));
+    this.notificationsService.success(
+      null,
+      this.translate.get(
+        this.type.value + '.edit.logo.notifications.add.success',
+      ),
+    );
     this.finish.emit();
   }
 
@@ -311,7 +330,12 @@ export class ComColFormComponent<T extends Collection | Community> implements On
    * The request was unsuccessful, display an error notification
    */
   public onUploadError() {
-    this.notificationsService.error(null, this.translate.get(this.type.value + '.edit.logo.notifications.add.error'));
+    this.notificationsService.error(
+      null,
+      this.translate.get(
+        this.type.value + '.edit.logo.notifications.add.error',
+      ),
+    );
     this.finish.emit();
   }
 

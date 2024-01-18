@@ -7,13 +7,13 @@ name: Port merged Pull Request
 # (This is required when the PR comes from a forked repo)
 on:
   pull_request_target:
-    types: [ closed ]
+    types: [closed]
     branches:
       - main
       - 'dspace-**'
 
 permissions:
-  contents: write      # so action can add comments
+  contents: write # so action can add comments
   pull-requests: write # so action can create pull requests
 
 jobs:

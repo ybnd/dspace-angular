@@ -22,9 +22,7 @@ describe('RootDataService', () => {
     halService = jasmine.createSpyObj('halService', {
       getRootHref: rootEndpoint,
     });
-    requestService = jasmine.createSpyObj('requestService', [
-      'setStaleByHref',
-    ]);
+    requestService = jasmine.createSpyObj('requestService', ['setStaleByHref']);
     service = new RootDataService(requestService, null, null, halService);
 
     findByHrefSpy = spyOn(service as any, 'findByHref');
@@ -50,25 +48,32 @@ describe('RootDataService', () => {
     let result$: Observable<boolean>;
 
     it('should return observable of true when root endpoint is available', () => {
-      spyOn(service, 'findRoot').and.returnValue(createSuccessfulRemoteDataObject$<Root>({} as any));
+      spyOn(service, 'findRoot').and.returnValue(
+        createSuccessfulRemoteDataObject$<Root>({} as any),
+      );
 
       result$ = service.checkServerAvailability();
 
-      expect(result$).toBeObservable(cold('(a|)', {
-        a: true,
-      }));
+      expect(result$).toBeObservable(
+        cold('(a|)', {
+          a: true,
+        }),
+      );
     });
 
     it('should return observable of false when root endpoint is not available', () => {
-      spyOn(service, 'findRoot').and.returnValue(createFailedRemoteDataObject$<Root>('500'));
+      spyOn(service, 'findRoot').and.returnValue(
+        createFailedRemoteDataObject$<Root>('500'),
+      );
 
       result$ = service.checkServerAvailability();
 
-      expect(result$).toBeObservable(cold('(a|)', {
-        a: false,
-      }));
+      expect(result$).toBeObservable(
+        cold('(a|)', {
+          a: false,
+        }),
+      );
     });
-
   });
 
   describe(`invalidateRootCache`, () => {

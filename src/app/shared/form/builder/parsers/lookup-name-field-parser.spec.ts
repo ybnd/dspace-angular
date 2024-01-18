@@ -34,17 +34,26 @@ describe('LookupNameFieldParser test suite', () => {
       ],
       languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new LookupNameFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupNameFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     expect(parser instanceof LookupNameFieldParser).toBe(true);
   });
 
   it('should return a DynamicLookupNameModel object when repeatable option is false', () => {
-    const parser = new LookupNameFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupNameFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
@@ -57,11 +66,15 @@ describe('LookupNameFieldParser test suite', () => {
     };
     const expectedValue = new FormFieldMetadataValueObject('test author');
 
-    const parser = new LookupNameFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new LookupNameFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(expectedValue);
   });
-
 });

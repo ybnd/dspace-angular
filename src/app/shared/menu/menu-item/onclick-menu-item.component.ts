@@ -1,7 +1,4 @@
-import {
-  Component,
-  Inject,
-} from '@angular/core';
+import { Component, Inject } from '@angular/core';
 
 import { rendersMenuItemForType } from '../menu-item.decorator';
 import { MenuItemType } from '../menu-item-type.model';

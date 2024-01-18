@@ -1,8 +1,4 @@
-import {
-  autoserialize,
-  deserialize,
-  deserializeAs,
-} from 'cerialize';
+import { autoserialize, deserialize, deserializeAs } from 'cerialize';
 
 import { typedObject } from '../../cache/builders/build-decorators';
 import { CacheableObject } from '../../cache/cacheable-object.model';
@@ -24,16 +20,16 @@ export class ItemType implements CacheableObject {
    */
   @excludeFromEquals
   @autoserialize
-    type: ResourceType;
+  type: ResourceType;
 
   /**
    * The identifier of this ItemType
    */
   @autoserialize
-    id: string;
+  id: string;
 
   @autoserialize
-    label: string;
+  label: string;
 
   /**
    * The universally unique identifier of this ItemType
@@ -41,13 +37,13 @@ export class ItemType implements CacheableObject {
    * It is based on the ID, so it will be the same for each refresh.
    */
   @deserializeAs(new IDToUUIDSerializer(ItemType.type.value), 'id')
-    uuid: string;
+  uuid: string;
 
   /**
    * The {@link HALLink}s for this ItemType
    */
   @deserialize
-    _links: {
-    self: HALLink,
+  _links: {
+    self: HALLink;
   };
 }

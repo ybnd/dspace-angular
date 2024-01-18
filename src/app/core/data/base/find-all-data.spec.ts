@@ -5,10 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { getMockRemoteDataBuildService } from '../../../shared/mocks/remote-data-build.service.mock';
@@ -28,27 +25,26 @@ import { RemoteData } from '../remote-data';
 import { RequestService } from '../request.service';
 import { RequestEntryState } from '../request-entry-state.model';
 import { EMBED_SEPARATOR } from './base-data.service';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from './find-all-data';
+import { FindAllData, FindAllDataImpl } from './find-all-data';
 
 /**
  * Tests whether calls to `FindAllData` methods are correctly patched through in a concrete data service that implements it
  */
-export function testFindAllDataImplementation(serviceFactory: () => FindAllData<any>) {
+export function testFindAllDataImplementation(
+  serviceFactory: () => FindAllData<any>,
+) {
   let service;
 
   describe('FindAllData implementation', () => {
-    const OPTIONS = Object.assign(new FindListOptions(), { elementsPerPage: 10, currentPage: 3 });
-    const FOLLOWLINKS = [
-      followLink('test'),
-      followLink('something'),
-    ];
+    const OPTIONS = Object.assign(new FindListOptions(), {
+      elementsPerPage: 10,
+      currentPage: 3,
+    });
+    const FOLLOWLINKS = [followLink('test'), followLink('something')];
 
     beforeAll(() => {
       service = serviceFactory();
-      (service as any).findAllData =  jasmine.createSpyObj('findAllData', {
+      (service as any).findAllData = jasmine.createSpyObj('findAllData', {
         findAll: 'TEST findAll',
       });
     });
@@ -56,7 +52,12 @@ export function testFindAllDataImplementation(serviceFactory: () => FindAllData<
     it('should handle calls to findAll', () => {
       const out: any = service.findAll(OPTIONS, false, true, ...FOLLOWLINKS);
 
-      expect((service as any).findAllData.findAll).toHaveBeenCalledWith(OPTIONS, false, true, ...FOLLOWLINKS);
+      expect((service as any).findAllData.findAll).toHaveBeenCalledWith(
+        OPTIONS,
+        false,
+        true,
+        ...FOLLOWLINKS,
+      );
       expect(out).toBe('TEST findAll');
     });
   });
@@ -71,10 +72,20 @@ class TestService extends FindAllDataImpl<any> {
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super(undefined, requestService, rdbService, objectCache, halService, undefined);
+    super(
+      undefined,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      undefined,
+    );
   }
 
-  public getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  public getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath,
+  ): Observable<string> {
     return observableOf(endpoint);
   }
 }
@@ -96,7 +107,6 @@ describe('FindAllDataImpl', () => {
     halService = new HALEndpointServiceStub('url') as any;
     rdbService = getMockRemoteDataBuildService();
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
@@ -108,10 +118,7 @@ describe('FindAllDataImpl', () => {
       },
     } as any;
     selfLink = 'https://rest.api/endpoint/1698f1d3-be98-4c51-9fd8-6bfedcbd59b7';
-    linksToFollow = [
-      followLink('a'),
-      followLink('b'),
-    ];
+    linksToFollow = [followLink('a'), followLink('b')];
 
     testScheduler = new TestScheduler((actual, expected) => {
       // asserting the two objects are equal
@@ -126,20 +133,63 @@ describe('FindAllDataImpl', () => {
     const statusCodeError = 404;
     const errorMessage = 'not found';
     remoteDataMocks = {
-      RequestPending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.RequestPending, undefined, undefined, undefined),
-      ResponsePending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.ResponsePending, undefined, undefined, undefined),
-      Success: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Success, undefined, payload, statusCodeSuccess),
-      SuccessStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.SuccessStale, undefined, payload, statusCodeSuccess),
-      Error: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Error, errorMessage, undefined, statusCodeError),
-      ErrorStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.ErrorStale, errorMessage, undefined, statusCodeError),
+      RequestPending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.RequestPending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      ResponsePending: new RemoteData(
+        undefined,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ResponsePending,
+        undefined,
+        undefined,
+        undefined,
+      ),
+      Success: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Success,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      SuccessStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.SuccessStale,
+        undefined,
+        payload,
+        statusCodeSuccess,
+      ),
+      Error: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.Error,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
+      ErrorStale: new RemoteData(
+        timeStamp,
+        msToLive,
+        timeStamp,
+        RequestEntryState.ErrorStale,
+        errorMessage,
+        undefined,
+        statusCodeError,
+      ),
     };
 
-    return new TestService(
-      requestService,
-      rdbService,
-      objectCache,
-      halService,
-    );
+    return new TestService(requestService, rdbService, objectCache, halService);
   }
 
   beforeEach(() => {
@@ -147,14 +197,12 @@ describe('FindAllDataImpl', () => {
   });
 
   describe('getFindAllHref', () => {
-
     it('should return an observable with the endpoint', () => {
       options = {};
 
       (service as any).getFindAllHref(options).subscribe((value) => {
         expect(value).toBe(endpoint);
-      },
-      );
+      });
     });
 
     it('should include page in href if currentPage provided in options', () => {
@@ -201,9 +249,9 @@ describe('FindAllDataImpl', () => {
         elementsPerPage: 10,
         sort: sortOptions,
         startsWith: 'ab',
-
       };
-      const expected = `${endpoint}?page=${options.currentPage - 1}&size=${options.elementsPerPage}` +
+      const expected =
+        `${endpoint}?page=${options.currentPage - 1}&size=${options.elementsPerPage}` +
         `&sort=${sortOptions.field},${sortOptions.direction}&startsWith=${options.startsWith}`;
 
       (service as any).getFindAllHref(options).subscribe((value) => {
@@ -236,9 +284,11 @@ describe('FindAllDataImpl', () => {
     it('should include single linksToFollow as embed', () => {
       const expected = `${endpoint}?embed=bundles`;
 
-      (service as any).getFindAllHref({}, null, followLink('bundles')).subscribe((value) => {
-        expect(value).toBe(expected);
-      });
+      (service as any)
+        .getFindAllHref({}, null, followLink('bundles'))
+        .subscribe((value) => {
+          expect(value).toBe(expected);
+        });
     });
 
     it('should include single linksToFollow as embed and its size', () => {
@@ -246,17 +296,31 @@ describe('FindAllDataImpl', () => {
       const config: FindListOptions = Object.assign(new FindListOptions(), {
         elementsPerPage: 5,
       });
-      (service as any).getFindAllHref({}, null, followLink('bundles', { findListOptions: config })).subscribe((value) => {
-        expect(value).toBe(expected);
-      });
+      (service as any)
+        .getFindAllHref(
+          {},
+          null,
+          followLink('bundles', { findListOptions: config }),
+        )
+        .subscribe((value) => {
+          expect(value).toBe(expected);
+        });
     });
 
     it('should include multiple linksToFollow as embed', () => {
       const expected = `${endpoint}?embed=bundles&embed=owningCollection&embed=templateItemOf`;
 
-      (service as any).getFindAllHref({}, null, followLink('bundles'), followLink('owningCollection'), followLink('templateItemOf')).subscribe((value) => {
-        expect(value).toBe(expected);
-      });
+      (service as any)
+        .getFindAllHref(
+          {},
+          null,
+          followLink('bundles'),
+          followLink('owningCollection'),
+          followLink('templateItemOf'),
+        )
+        .subscribe((value) => {
+          expect(value).toBe(expected);
+        });
     });
 
     it('should include multiple linksToFollow as embed and its sizes if given', () => {
@@ -266,41 +330,71 @@ describe('FindAllDataImpl', () => {
         elementsPerPage: 2,
       });
 
-      (service as any).getFindAllHref({}, null, followLink('bundles'), followLink('owningCollection', { findListOptions: config }), followLink('templateItemOf')).subscribe((value) => {
-        expect(value).toBe(expected);
-      });
+      (service as any)
+        .getFindAllHref(
+          {},
+          null,
+          followLink('bundles'),
+          followLink('owningCollection', { findListOptions: config }),
+          followLink('templateItemOf'),
+        )
+        .subscribe((value) => {
+          expect(value).toBe(expected);
+        });
     });
 
     it('should not include linksToFollow with shouldEmbed = false', () => {
       const expected = `${endpoint}?embed=templateItemOf`;
 
-      (service as any).getFindAllHref(
-        {},
-        null,
-        followLink('bundles', { shouldEmbed: false }),
-        followLink('owningCollection', { shouldEmbed: false }),
-        followLink('templateItemOf'),
-      ).subscribe((value) => {
-        expect(value).toBe(expected);
-      });
+      (service as any)
+        .getFindAllHref(
+          {},
+          null,
+          followLink('bundles', { shouldEmbed: false }),
+          followLink('owningCollection', { shouldEmbed: false }),
+          followLink('templateItemOf'),
+        )
+        .subscribe((value) => {
+          expect(value).toBe(expected);
+        });
     });
 
     it('should include nested linksToFollow 3lvl', () => {
       const expected = `${endpoint}?embed=owningCollection${EMBED_SEPARATOR}itemtemplate${EMBED_SEPARATOR}relationships`;
 
-      (service as any).getFindAllHref({}, null, followLink('owningCollection', {}, followLink('itemtemplate', {}, followLink('relationships')))).subscribe((value) => {
-        expect(value).toBe(expected);
-      });
+      (service as any)
+        .getFindAllHref(
+          {},
+          null,
+          followLink(
+            'owningCollection',
+            {},
+            followLink('itemtemplate', {}, followLink('relationships')),
+          ),
+        )
+        .subscribe((value) => {
+          expect(value).toBe(expected);
+        });
     });
 
-    it('should include nested linksToFollow 2lvl and nested embed\'s size', () => {
+    it("should include nested linksToFollow 2lvl and nested embed's size", () => {
       const expected = `${endpoint}?embed.size=owningCollection${EMBED_SEPARATOR}itemtemplate=4&embed=owningCollection${EMBED_SEPARATOR}itemtemplate`;
       const config: FindListOptions = Object.assign(new FindListOptions(), {
         elementsPerPage: 4,
       });
-      (service as any).getFindAllHref({}, null, followLink('owningCollection', {}, followLink('itemtemplate', { findListOptions: config }))).subscribe((value) => {
-        expect(value).toBe(expected);
-      });
+      (service as any)
+        .getFindAllHref(
+          {},
+          null,
+          followLink(
+            'owningCollection',
+            {},
+            followLink('itemtemplate', { findListOptions: config }),
+          ),
+        )
+        .subscribe((value) => {
+          expect(value).toBe(expected);
+        });
     });
   });
 });

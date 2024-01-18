@@ -7,10 +7,6 @@ import { SubscriptionsPageComponent } from './subscriptions-page.component';
 
 @NgModule({
   declarations: [SubscriptionsPageComponent],
-  imports: [
-    CommonModule,
-    SharedModule,
-    SubscriptionsModule,
-  ],
+  imports: [CommonModule, SharedModule, SubscriptionsModule],
 })
-export class SubscriptionsPageModule { }
+export class SubscriptionsPageModule {}

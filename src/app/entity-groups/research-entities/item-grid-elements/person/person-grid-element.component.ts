@@ -14,5 +14,4 @@ import { AbstractListableElementComponent } from '../../../../shared/object-coll
 /**
  * The component for displaying a grid element for an item of the type Person
  */
-export class PersonGridElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class PersonGridElementComponent extends AbstractListableElementComponent<Item> {}

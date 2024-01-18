@@ -1,12 +1,5 @@
-import {
-  Component,
-  Inject,
-  Input,
-} from '@angular/core';
-import {
-  Params,
-  Router,
-} from '@angular/router';
+import { Component, Inject, Input } from '@angular/core';
+import { Params, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -38,16 +31,19 @@ export class SearchLabelsComponent {
    */
   constructor(
     protected router: Router,
-    @Inject(SEARCH_CONFIG_SERVICE) public searchConfigService: SearchConfigurationService) {
-    this.appliedFilters = this.searchConfigService.getCurrentFrontendFilters().pipe(
-      map((params) => {
-        const labels = {};
-        Object.keys(params)
-          .forEach((key) => {
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigService: SearchConfigurationService,
+  ) {
+    this.appliedFilters = this.searchConfigService
+      .getCurrentFrontendFilters()
+      .pipe(
+        map((params) => {
+          const labels = {};
+          Object.keys(params).forEach((key) => {
             labels[key] = [...params[key].map((value) => value)];
           });
-        return labels;
-      }),
-    );
+          return labels;
+        }),
+      );
   }
 }

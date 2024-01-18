@@ -1,9 +1,4 @@
-import {
-  Component,
-  Inject,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Context } from 'src/app/core/shared/context.model';
 import { WorkflowItem } from 'src/app/core/submission/models/workflowitem.model';
 
@@ -26,7 +21,6 @@ import { SearchResult } from '../../../search/models/search-result.model';
   animations: [fadeInOut],
 })
 export class ItemListPreviewComponent implements OnInit {
-
   /**
    * The item to display
    */
@@ -62,13 +56,13 @@ export class ItemListPreviewComponent implements OnInit {
   constructor(
     @Inject(APP_CONFIG) protected appConfig: AppConfig,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.showThumbnails = this.appConfig.browseBy.showThumbnails;
-    this.dsoTitle = this.dsoNameService.getHitHighlights(this.object, this.item);
+    this.dsoTitle = this.dsoNameService.getHitHighlights(
+      this.object,
+      this.item,
+    );
   }
-
-
 }

@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -42,7 +35,8 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         ],
       },
     }),
-  });
+  },
+);
 
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
@@ -84,15 +78,16 @@ describe('JournalSearchResultListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(JournalSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(JournalSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(JournalSearchResultListElementComponent);
     journalListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('with environment.browseBy.showThumbnails set to true', () => {
@@ -105,7 +100,9 @@ describe('JournalSearchResultListElementComponent', () => {
     });
 
     it('should add thumbnail element', () => {
-      const thumbnailElement = fixture.debugElement.query(By.css('ds-thumbnail'));
+      const thumbnailElement = fixture.debugElement.query(
+        By.css('ds-thumbnail'),
+      );
       expect(thumbnailElement).toBeTruthy();
     });
   });
@@ -117,7 +114,9 @@ describe('JournalSearchResultListElementComponent', () => {
     });
 
     it('should show the journals span', () => {
-      const issnField = fixture.debugElement.query(By.css('span.item-list-journals'));
+      const issnField = fixture.debugElement.query(
+        By.css('span.item-list-journals'),
+      );
       expect(issnField).not.toBeNull();
     });
   });
@@ -129,14 +128,15 @@ describe('JournalSearchResultListElementComponent', () => {
     });
 
     it('should not show the journals span', () => {
-      const issnField = fixture.debugElement.query(By.css('span.item-list-journals'));
+      const issnField = fixture.debugElement.query(
+        By.css('span.item-list-journals'),
+      );
       expect(issnField).toBeNull();
     });
   });
 });
 
 describe('JournalSearchResultListElementComponent', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [JournalSearchResultListElementComponent, TruncatePipe],
@@ -147,9 +147,11 @@ describe('JournalSearchResultListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(JournalSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(JournalSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -159,13 +161,14 @@ describe('JournalSearchResultListElementComponent', () => {
 
   describe('with environment.browseBy.showThumbnails set to false', () => {
     beforeEach(() => {
-
       journalListElementComponent.object = mockItemWithMetadata;
       fixture.detectChanges();
     });
 
     it('should not add thumbnail element', () => {
-      const thumbnailElement = fixture.debugElement.query(By.css('ds-thumbnail'));
+      const thumbnailElement = fixture.debugElement.query(
+        By.css('ds-thumbnail'),
+      );
       expect(thumbnailElement).toBeFalsy();
     });
   });

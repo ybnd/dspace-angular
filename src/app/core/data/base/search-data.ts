@@ -6,15 +6,9 @@
  * http://www.dspace.org/license/
  */
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-} from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
-import {
-  hasNoValue,
-  isNotEmpty,
-} from '../../../shared/empty.util';
+import { hasNoValue, isNotEmpty } from '../../../shared/empty.util';
 import { FollowLinkConfig } from '../../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
 import { CacheableObject } from '../../cache/cacheable-object.model';
@@ -29,12 +23,18 @@ import { BaseDataService } from './base-data.service';
 /**
  * Shorthand type for method to construct a search endpoint
  */
-export type ConstructSearchEndpoint = (href: string, searchMethod: string) => string;
+export type ConstructSearchEndpoint = (
+  href: string,
+  searchMethod: string,
+) => string;
 
 /**
  * Default method to construct a search endpoint
  */
-export const constructSearchEndpointDefault = (href: string, searchMethod: string): string => `${href}/search/${searchMethod}`;
+export const constructSearchEndpointDefault = (
+  href: string,
+  searchMethod: string,
+): string => `${href}/search/${searchMethod}`;
 
 /**
  * Interface for a data service that can search for objects.
@@ -54,7 +54,13 @@ export interface SearchData<T extends CacheableObject> {
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>>;
+  searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>>;
 }
 
 /**
@@ -63,7 +69,10 @@ export interface SearchData<T extends CacheableObject> {
  * Concrete data services can use this feature by implementing {@link SearchData}
  * and delegating its method to an inner instance of this class.
  */
-export class SearchDataImpl<T extends CacheableObject> extends BaseDataService<T> implements SearchData<T> {
+export class SearchDataImpl<T extends CacheableObject>
+  extends BaseDataService<T>
+  implements SearchData<T>
+{
   /**
    * @param linkPath
    * @param requestService
@@ -83,9 +92,18 @@ export class SearchDataImpl<T extends CacheableObject> extends BaseDataService<T
     protected responseMsToLive: number,
     private constructSearchEndpoint: ConstructSearchEndpoint = constructSearchEndpointDefault,
   ) {
-    super(linkPath, requestService, rdbService, objectCache, halService, responseMsToLive);
+    super(
+      linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      responseMsToLive,
+    );
     if (hasNoValue(constructSearchEndpoint)) {
-      throw new Error(`SearchDataImpl initialized without a constructSearchEndpoint method (linkPath: ${linkPath})`);
+      throw new Error(
+        `SearchDataImpl initialized without a constructSearchEndpoint method (linkPath: ${linkPath})`,
+      );
     }
   }
 
@@ -103,10 +121,26 @@ export class SearchDataImpl<T extends CacheableObject> extends BaseDataService<T
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  searchBy(searchMethod: string, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    const hrefObs = this.getSearchByHref(searchMethod, options, ...linksToFollow);
+  searchBy(
+    searchMethod: string,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    const hrefObs = this.getSearchByHref(
+      searchMethod,
+      options,
+      ...linksToFollow,
+    );
 
-    return this.findListByHref(hrefObs, undefined, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.findListByHref(
+      hrefObs,
+      undefined,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -118,12 +152,20 @@ export class SearchDataImpl<T extends CacheableObject> extends BaseDataService<T
    *    Return an observable that emits created HREF
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  getSearchByHref(searchMethod: string, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<T>[]): Observable<string> {
+  getSearchByHref(
+    searchMethod: string,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<string> {
     const args = [];
 
     const result$ = this.getSearchEndpoint(searchMethod);
 
-    return result$.pipe(map((result: string) => this.buildHrefFromFindOptions(result, options, args, ...linksToFollow)));
+    return result$.pipe(
+      map((result: string) =>
+        this.buildHrefFromFindOptions(result, options, args, ...linksToFollow),
+      ),
+    );
   }
 
   /**
@@ -134,7 +176,7 @@ export class SearchDataImpl<T extends CacheableObject> extends BaseDataService<T
   private getSearchEndpoint(searchMethod: string): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map(href => this.constructSearchEndpoint(href, searchMethod)),
+      map((href) => this.constructSearchEndpoint(href, searchMethod)),
     );
   }
 }

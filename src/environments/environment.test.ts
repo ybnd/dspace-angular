@@ -118,7 +118,12 @@ export const environment: BuildConfig = {
   submission: {
     autosave: {
       // NOTE: which metadata trigger an autosave
-      metadata: ['dc.title', 'dc.identifier.doi', 'dc.identifier.pmid', 'dc.identifier.arxiv'],
+      metadata: [
+        'dc.title',
+        'dc.identifier.doi',
+        'dc.identifier.pmid',
+        'dc.identifier.arxiv',
+      ],
       // NOTE: every how many minutes submission is saved automatically
       timer: 5,
     },
@@ -175,47 +180,58 @@ export const environment: BuildConfig = {
 
   // Languages. DSpace Angular holds a message catalog for each of the following languages.
   // When set to active, users will be able to switch to the use of this language in the user interface.
-  languages: [{
-    code: 'en',
-    label: 'English',
-    active: true,
-  }, {
-    code: 'de',
-    label: 'Deutsch',
-    active: true,
-  }, {
-    code: 'cs',
-    label: 'Čeština',
-    active: true,
-  }, {
-    code: 'nl',
-    label: 'Nederlands',
-    active: true,
-  }, {
-    code: 'pt',
-    label: 'Português',
-    active: true,
-  }, {
-    code: 'fr',
-    label: 'Français',
-    active: true,
-  }, {
-    code: 'lv',
-    label: 'Latviešu',
-    active: true,
-  }, {
-    code: 'bn',
-    label: 'বাংলা',
-    active: true,
-  }, {
-    code: 'el',
-    label: 'Ελληνικά',
-    active: true,
-  }, {
-    code: 'disabled',
-    label: 'Disabled',
-    active: false,
-  }],
+  languages: [
+    {
+      code: 'en',
+      label: 'English',
+      active: true,
+    },
+    {
+      code: 'de',
+      label: 'Deutsch',
+      active: true,
+    },
+    {
+      code: 'cs',
+      label: 'Čeština',
+      active: true,
+    },
+    {
+      code: 'nl',
+      label: 'Nederlands',
+      active: true,
+    },
+    {
+      code: 'pt',
+      label: 'Português',
+      active: true,
+    },
+    {
+      code: 'fr',
+      label: 'Français',
+      active: true,
+    },
+    {
+      code: 'lv',
+      label: 'Latviešu',
+      active: true,
+    },
+    {
+      code: 'bn',
+      label: 'বাংলা',
+      active: true,
+    },
+    {
+      code: 'el',
+      label: 'Ελληνικά',
+      active: true,
+    },
+    {
+      code: 'disabled',
+      label: 'Disabled',
+      active: false,
+    },
+  ],
 
   // Browse-By Pages
   browseBy: {
@@ -278,7 +294,7 @@ export const environment: BuildConfig = {
     },
     {
       name: 'regex-theme',
-      regex: 'collections\/e8043bc2.*',
+      regex: 'collections/e8043bc2.*',
     },
     {
       name: 'uuid-theme',
@@ -304,8 +320,8 @@ export const environment: BuildConfig = {
     mathjax: false,
   },
   comcolSelectionSort: {
-    sortField:'dc.title',
-    sortDirection:'ASC',
+    sortField: 'dc.title',
+    sortDirection: 'ASC',
   },
   qualityAssuranceConfig: {
     sourceUrlMapForProjectSearch: {

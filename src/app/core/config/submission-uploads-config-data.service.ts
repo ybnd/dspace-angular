@@ -25,10 +25,26 @@ export class SubmissionUploadsConfigDataService extends ConfigDataService {
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('submissionuploads', requestService, rdbService, objectCache, halService);
+    super(
+      'submissionuploads',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
   }
 
-  findByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow): Observable<RemoteData<SubmissionUploadsModel>> {
-    return super.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow as FollowLinkConfig<ConfigObject>[]) as Observable<RemoteData<SubmissionUploadsModel>>;
+  findByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow
+  ): Observable<RemoteData<SubmissionUploadsModel>> {
+    return super.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...(linksToFollow as FollowLinkConfig<ConfigObject>[]),
+    ) as Observable<RemoteData<SubmissionUploadsModel>>;
   }
 }

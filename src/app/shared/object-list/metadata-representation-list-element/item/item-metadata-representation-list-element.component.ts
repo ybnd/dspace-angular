@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 import { ItemMetadataRepresentation } from '../../../../core/shared/metadata-representation/item/item-metadata-representation.model';
 import { getItemPageRoute } from '../../../../item-page/item-page-routing-paths';
@@ -15,7 +11,10 @@ import { MetadataRepresentationListElementComponent } from '../metadata-represen
 /**
  * An abstract class for displaying a single ItemMetadataRepresentation
  */
-export class ItemMetadataRepresentationListElementComponent extends MetadataRepresentationListElementComponent implements OnInit {
+export class ItemMetadataRepresentationListElementComponent
+  extends MetadataRepresentationListElementComponent
+  implements OnInit
+{
   @Input() mdRepresentation: ItemMetadataRepresentation;
 
   /**

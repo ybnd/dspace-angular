@@ -19,14 +19,13 @@ import { getFirstCompletedRemoteData } from '../../../core/shared/operators';
  */
 @Injectable()
 export class QualityAssuranceTopicsService {
-
   /**
    * Initialize the service variables.
    * @param {QualityAssuranceTopicDataService} qualityAssuranceTopicRestService
    */
   constructor(
     private qualityAssuranceTopicRestService: QualityAssuranceTopicDataService,
-  ) { }
+  ) {}
 
   /**
    * sourceId used to get topics
@@ -43,7 +42,10 @@ export class QualityAssuranceTopicsService {
    * @return Observable<PaginatedList<QualityAssuranceTopicObject>>
    *    The list of Quality Assurance topics.
    */
-  public getTopics(elementsPerPage, currentPage): Observable<PaginatedList<QualityAssuranceTopicObject>> {
+  public getTopics(
+    elementsPerPage,
+    currentPage,
+  ): Observable<PaginatedList<QualityAssuranceTopicObject>> {
     const sortOptions = new SortOptions('name', SortDirection.ASC);
 
     const findListOptions: FindListOptions = {
@@ -53,16 +55,20 @@ export class QualityAssuranceTopicsService {
       searchParams: [new RequestParam('source', this.sourceId)],
     };
 
-    return this.qualityAssuranceTopicRestService.getTopics(findListOptions).pipe(
-      getFirstCompletedRemoteData(),
-      map((rd: RemoteData<PaginatedList<QualityAssuranceTopicObject>>) => {
-        if (rd.hasSucceeded) {
-          return rd.payload;
-        } else {
-          throw new Error('Can\'t retrieve Quality Assurance topics from the Broker topics REST service');
-        }
-      }),
-    );
+    return this.qualityAssuranceTopicRestService
+      .getTopics(findListOptions)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((rd: RemoteData<PaginatedList<QualityAssuranceTopicObject>>) => {
+          if (rd.hasSucceeded) {
+            return rd.payload;
+          } else {
+            throw new Error(
+              "Can't retrieve Quality Assurance topics from the Broker topics REST service",
+            );
+          }
+        }),
+      );
   }
 
   /**

@@ -21,17 +21,8 @@ import { SystemWideAlertRoutingModule } from './system-wide-alert-routing.module
     NgbTimepickerModule,
     NgbDatepickerModule,
   ],
-  exports: [
-    SystemWideAlertBannerComponent,
-  ],
-  declarations: [
-    SystemWideAlertBannerComponent,
-    SystemWideAlertFormComponent,
-  ],
-  providers: [
-    SystemWideAlertDataService,
-  ],
+  exports: [SystemWideAlertBannerComponent],
+  declarations: [SystemWideAlertBannerComponent, SystemWideAlertFormComponent],
+  providers: [SystemWideAlertDataService],
 })
-export class SystemWideAlertModule {
-
-}
+export class SystemWideAlertModule {}

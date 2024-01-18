@@ -1,14 +1,6 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  map,
-  startWith,
-  switchMap,
-} from 'rxjs/operators';
+import { map, startWith, switchMap } from 'rxjs/operators';
 
 import { RemoteData } from '../../../core/data/remote-data';
 import { VersionHistoryDataService } from '../../../core/data/version-history-data.service';
@@ -21,10 +13,7 @@ import {
 import { Version } from '../../../core/shared/version.model';
 import { VersionHistory } from '../../../core/shared/version-history.model';
 import { AlertType } from '../../../shared/alert/alert-type';
-import {
-  hasValue,
-  hasValueOperator,
-} from '../../../shared/empty.util';
+import { hasValue, hasValueOperator } from '../../../shared/empty.util';
 import { getItemPageRoute } from '../../item-page-routing-paths';
 
 @Component({
@@ -72,8 +61,7 @@ export class ItemVersionsNoticeComponent implements OnInit {
    */
   public AlertTypeEnum = AlertType;
 
-  constructor(private versionHistoryService: VersionHistoryDataService) {
-  }
+  constructor(private versionHistoryService: VersionHistoryDataService) {}
 
   /**
    * Initialize the component's observables
@@ -90,7 +78,9 @@ export class ItemVersionsNoticeComponent implements OnInit {
 
       this.latestVersion$ = this.versionHistoryRD$.pipe(
         getFirstSucceededRemoteDataPayload(),
-        switchMap((vh) => this.versionHistoryService.getLatestVersionFromHistory$(vh)),
+        switchMap((vh) =>
+          this.versionHistoryService.getLatestVersionFromHistory$(vh),
+        ),
       );
 
       this.showLatestVersionNotice$ = this.versionRD$.pipe(

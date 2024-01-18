@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  map,
-  mergeMap,
-  switchMap,
-} from 'rxjs/operators';
+import { map, mergeMap, switchMap } from 'rxjs/operators';
 
 import { isNotEmpty } from '../../../shared/empty.util';
 import {
@@ -40,8 +36,7 @@ export class VocabularyService {
     protected requestService: RequestService,
     protected vocabularyDataService: VocabularyDataService,
     protected vocabularyEntryDetailDataService: VocabularyEntryDetailsDataService,
-  ) {
-  }
+  ) {}
 
   /**
    * Returns an observable of {@link RemoteData} of a {@link Vocabulary}, based on an href, with a list of {@link FollowLinkConfig},
@@ -56,8 +51,18 @@ export class VocabularyService {
    * @return {Observable<RemoteData<Vocabulary>>}
    *    Return an observable that emits vocabulary object
    */
-  findVocabularyByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Vocabulary>[]): Observable<RemoteData<any>> {
-    return this.vocabularyDataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findVocabularyByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Vocabulary>[]
+  ): Observable<RemoteData<any>> {
+    return this.vocabularyDataService.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -73,8 +78,18 @@ export class VocabularyService {
    * @return {Observable<RemoteData<Vocabulary>>}
    *    Return an observable that emits vocabulary object
    */
-  findVocabularyById(name: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Vocabulary>[]): Observable<RemoteData<Vocabulary>> {
-    return this.vocabularyDataService.findById(name, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findVocabularyById(
+    name: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Vocabulary>[]
+  ): Observable<RemoteData<Vocabulary>> {
+    return this.vocabularyDataService.findById(
+      name,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -91,8 +106,18 @@ export class VocabularyService {
    * @return {Observable<RemoteData<PaginatedList<Vocabulary>>>}
    *    Return an observable that emits object list
    */
-  findAllVocabularies(options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<Vocabulary>[]): Observable<RemoteData<PaginatedList<Vocabulary>>> {
-    return this.vocabularyDataService.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAllVocabularies(
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<Vocabulary>[]
+  ): Observable<RemoteData<PaginatedList<Vocabulary>>> {
+    return this.vocabularyDataService.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -103,8 +128,10 @@ export class VocabularyService {
    * @return {Observable<RemoteData<PaginatedList<VocabularyEntry>>>}
    *    Return an observable that emits object list
    */
-  getVocabularyEntries(vocabularyOptions: VocabularyOptions, pageInfo: PageInfo): Observable<RemoteData<PaginatedList<VocabularyEntry>>> {
-
+  getVocabularyEntries(
+    vocabularyOptions: VocabularyOptions,
+    pageInfo: PageInfo,
+  ): Observable<RemoteData<PaginatedList<VocabularyEntry>>> {
     const options: VocabularyFindOptions = new VocabularyFindOptions(
       null,
       null,
@@ -115,7 +142,12 @@ export class VocabularyService {
     );
 
     // TODO remove false for the entries embed when https://github.com/DSpace/DSpace/issues/3096 is solved
-    return this.findVocabularyById(vocabularyOptions.name, true, true, followLink('entries', { findListOptions: options, shouldEmbed: false })).pipe(
+    return this.findVocabularyById(
+      vocabularyOptions.name,
+      true,
+      true,
+      followLink('entries', { findListOptions: options, shouldEmbed: false }),
+    ).pipe(
       getFirstSucceededRemoteDataPayload(),
       switchMap((vocabulary: Vocabulary) => vocabulary.entries),
     );
@@ -131,7 +163,12 @@ export class VocabularyService {
    * @return {Observable<RemoteData<PaginatedList<VocabularyEntry>>>}
    *    Return an observable that emits object list
    */
-  getVocabularyEntriesByValue(value: string, exact: boolean, vocabularyOptions: VocabularyOptions, pageInfo: PageInfo): Observable<RemoteData<PaginatedList<VocabularyEntry>>> {
+  getVocabularyEntriesByValue(
+    value: string,
+    exact: boolean,
+    vocabularyOptions: VocabularyOptions,
+    pageInfo: PageInfo,
+  ): Observable<RemoteData<PaginatedList<VocabularyEntry>>> {
     const options: VocabularyFindOptions = new VocabularyFindOptions(
       null,
       value,
@@ -142,11 +179,15 @@ export class VocabularyService {
     );
 
     // TODO remove false for the entries embed when https://github.com/DSpace/DSpace/issues/3096 is solved
-    return this.findVocabularyById(vocabularyOptions.name, true, true, followLink('entries', { findListOptions: options, shouldEmbed: false })).pipe(
+    return this.findVocabularyById(
+      vocabularyOptions.name,
+      true,
+      true,
+      followLink('entries', { findListOptions: options, shouldEmbed: false }),
+    ).pipe(
       getFirstSucceededRemoteDataPayload(),
       switchMap((vocabulary: Vocabulary) => vocabulary.entries),
     );
-
   }
 
   /**
@@ -157,9 +198,16 @@ export class VocabularyService {
    * @return {Observable<RemoteData<PaginatedList<VocabularyEntry>>>}
    *    Return an observable that emits {@link VocabularyEntry} object
    */
-  getVocabularyEntryByValue(value: string, vocabularyOptions: VocabularyOptions): Observable<VocabularyEntry> {
-
-    return this.getVocabularyEntriesByValue(value, true, vocabularyOptions, new PageInfo()).pipe(
+  getVocabularyEntryByValue(
+    value: string,
+    vocabularyOptions: VocabularyOptions,
+  ): Observable<VocabularyEntry> {
+    return this.getVocabularyEntriesByValue(
+      value,
+      true,
+      vocabularyOptions,
+      new PageInfo(),
+    ).pipe(
       getFirstSucceededRemoteListPayload(),
       map((list: VocabularyEntry[]) => {
         if (isNotEmpty(list)) {
@@ -179,7 +227,10 @@ export class VocabularyService {
    * @return {Observable<RemoteData<PaginatedList<VocabularyEntry>>>}
    *    Return an observable that emits {@link VocabularyEntry} object
    */
-  getVocabularyEntryByID(ID: string, vocabularyOptions: VocabularyOptions): Observable<VocabularyEntry> {
+  getVocabularyEntryByID(
+    ID: string,
+    vocabularyOptions: VocabularyOptions,
+  ): Observable<VocabularyEntry> {
     const pageInfo = new PageInfo();
     const options: VocabularyFindOptions = new VocabularyFindOptions(
       null,
@@ -191,7 +242,12 @@ export class VocabularyService {
     );
 
     // TODO remove false for the entries embed when https://github.com/DSpace/DSpace/issues/3096 is solved
-    return this.findVocabularyById(vocabularyOptions.name, true, true, followLink('entries', { findListOptions: options, shouldEmbed: false })).pipe(
+    return this.findVocabularyById(
+      vocabularyOptions.name,
+      true,
+      true,
+      followLink('entries', { findListOptions: options, shouldEmbed: false }),
+    ).pipe(
       getFirstSucceededRemoteDataPayload(),
       switchMap((vocabulary: Vocabulary) => vocabulary.entries),
       getFirstSucceededRemoteListPayload(),
@@ -218,8 +274,18 @@ export class VocabularyService {
    * @return {Observable<RemoteData<VocabularyEntryDetail>>}
    *    Return an observable that emits vocabulary object
    */
-  findEntryDetailByHref(href: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]): Observable<RemoteData<VocabularyEntryDetail>> {
-    return this.vocabularyEntryDetailDataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findEntryDetailByHref(
+    href: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]
+  ): Observable<RemoteData<VocabularyEntryDetail>> {
+    return this.vocabularyEntryDetailDataService.findByHref(
+      href,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -238,9 +304,21 @@ export class VocabularyService {
    * @return {Observable<RemoteData<VocabularyEntryDetail>>}
    *    Return an observable that emits VocabularyEntryDetail object
    */
-  findEntryDetailById(id: string, name: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, constructId: boolean = true, ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]): Observable<RemoteData<VocabularyEntryDetail>> {
-    const findId: string = (constructId ? `${name}:${id}` : id);
-    return this.vocabularyEntryDetailDataService.findById(findId, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findEntryDetailById(
+    id: string,
+    name: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    constructId: boolean = true,
+    ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]
+  ): Observable<RemoteData<VocabularyEntryDetail>> {
+    const findId: string = constructId ? `${name}:${id}` : id;
+    return this.vocabularyEntryDetailDataService.findById(
+      findId,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -257,12 +335,25 @@ export class VocabularyService {
    * @return {Observable<RemoteData<PaginatedList<VocabularyEntryDetail>>>}
    *    Return an observable that emits a PaginatedList of VocabularyEntryDetail
    */
-  getEntryDetailParent(value: string, name: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]): Observable<RemoteData<VocabularyEntryDetail>> {
+  getEntryDetailParent(
+    value: string,
+    name: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]
+  ): Observable<RemoteData<VocabularyEntryDetail>> {
     const linkPath = `${name}:${value}/parent`;
 
     return this.vocabularyEntryDetailDataService.getBrowseEndpoint().pipe(
       map((href: string) => `${href}/${linkPath}`),
-      mergeMap((href) => this.vocabularyEntryDetailDataService.findByHref(href, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow)),
+      mergeMap((href) =>
+        this.vocabularyEntryDetailDataService.findByHref(
+          href,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow,
+        ),
+      ),
     );
   }
 
@@ -281,7 +372,14 @@ export class VocabularyService {
    * @return {Observable<RemoteData<PaginatedList<VocabularyEntryDetail>>>}
    *    Return an observable that emits a PaginatedList of VocabularyEntryDetail
    */
-  getEntryDetailChildren(value: string, name: string, pageInfo: PageInfo, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]): Observable<RemoteData<PaginatedList<VocabularyEntryDetail>>> {
+  getEntryDetailChildren(
+    value: string,
+    name: string,
+    pageInfo: PageInfo,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]
+  ): Observable<RemoteData<PaginatedList<VocabularyEntryDetail>>> {
     const options: VocabularyFindOptions = new VocabularyFindOptions(
       null,
       null,
@@ -292,8 +390,16 @@ export class VocabularyService {
     );
 
     return this.vocabularyEntryDetailDataService.getBrowseEndpoint().pipe(
-      map(href => `${href}/${name}:${value}/children`),
-      switchMap(href => this.vocabularyEntryDetailDataService.findListByHref(href, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow)),
+      map((href) => `${href}/${name}:${value}/children`),
+      switchMap((href) =>
+        this.vocabularyEntryDetailDataService.findListByHref(
+          href,
+          options,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow,
+        ),
+      ),
     );
   }
 
@@ -310,7 +416,13 @@ export class VocabularyService {
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  searchTopEntries(name: string, pageInfo: PageInfo, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]): Observable<RemoteData<PaginatedList<VocabularyEntryDetail>>> {
+  searchTopEntries(
+    name: string,
+    pageInfo: PageInfo,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<VocabularyEntryDetail>[]
+  ): Observable<RemoteData<PaginatedList<VocabularyEntryDetail>>> {
     const options: VocabularyFindOptions = new VocabularyFindOptions(
       null,
       null,
@@ -320,7 +432,13 @@ export class VocabularyService {
       pageInfo.currentPage,
     );
     options.searchParams = [new RequestParam('vocabulary', name)];
-    return this.vocabularyEntryDetailDataService.searchBy(this.searchTopMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.vocabularyEntryDetailDataService.searchBy(
+      this.searchTopMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -330,4 +448,3 @@ export class VocabularyService {
     this.requestService.removeByHrefSubstring(`search/${this.searchTopMethod}`);
   }
 }
-

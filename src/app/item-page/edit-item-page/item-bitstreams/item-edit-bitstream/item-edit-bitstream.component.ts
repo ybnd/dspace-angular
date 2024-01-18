@@ -34,7 +34,6 @@ import { ResponsiveTableSizes } from '../../../../shared/responsive-table-sizes/
  * (which means it'll be added to the parents html without a wrapping ds-item-edit-bitstream element)
  */
 export class ItemEditBitstreamComponent implements OnChanges, OnInit {
-
   /**
    * The view on the bitstream
    */
@@ -75,10 +74,11 @@ export class ItemEditBitstreamComponent implements OnChanges, OnInit {
    */
   format$: Observable<BitstreamFormat>;
 
-  constructor(private objectUpdatesService: ObjectUpdatesService,
-              private dsoNameService: DSONameService,
-              private viewContainerRef: ViewContainerRef) {
-  }
+  constructor(
+    private objectUpdatesService: ObjectUpdatesService,
+    private dsoNameService: DSONameService,
+    private viewContainerRef: ViewContainerRef,
+  ) {}
 
   ngOnInit(): void {
     this.viewContainerRef.createEmbeddedView(this.bitstreamView);
@@ -102,14 +102,20 @@ export class ItemEditBitstreamComponent implements OnChanges, OnInit {
    * Sends a new remove update for this field to the object updates service
    */
   remove(): void {
-    this.objectUpdatesService.saveRemoveFieldUpdate(this.bundleUrl, this.bitstream);
+    this.objectUpdatesService.saveRemoveFieldUpdate(
+      this.bundleUrl,
+      this.bitstream,
+    );
   }
 
   /**
    * Cancels the current update for this field in the object updates service
    */
   undo(): void {
-    this.objectUpdatesService.removeSingleFieldUpdate(this.bundleUrl, this.bitstream.uuid);
+    this.objectUpdatesService.removeSingleFieldUpdate(
+      this.bundleUrl,
+      this.bitstream.uuid,
+    );
   }
 
   /**
@@ -125,5 +131,4 @@ export class ItemEditBitstreamComponent implements OnChanges, OnInit {
   canUndo(): boolean {
     return this.fieldUpdate.changeType >= 0;
   }
-
 }

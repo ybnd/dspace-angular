@@ -1,15 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 import { APP_CONFIG } from 'src/config/app-config.interface';
 import { environment } from 'src/environments/environment';
@@ -33,52 +26,64 @@ describe('FullFileSectionComponent', () => {
   let comp: FullFileSectionComponent;
   let fixture: ComponentFixture<FullFileSectionComponent>;
 
-  const mockBitstream: Bitstream = Object.assign(new Bitstream(),
-    {
-      sizeBytes: 10201,
-      content: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
-      format: observableOf(MockBitstreamFormat1),
-      bundleName: 'ORIGINAL',
-      _links: {
-        self: {
-          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
-        },
-        content: {
-          href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
-        },
+  const mockBitstream: Bitstream = Object.assign(new Bitstream(), {
+    sizeBytes: 10201,
+    content:
+      'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
+    format: observableOf(MockBitstreamFormat1),
+    bundleName: 'ORIGINAL',
+    _links: {
+      self: {
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713',
       },
-      id: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
-      uuid: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
-      type: 'bitstream',
-      metadata: {
-        'dc.title': [
-          {
-            language: null,
-            value: 'test_word.docx',
-          },
-        ],
+      content: {
+        href: 'https://dspace7.4science.it/dspace-spring-rest/api/core/bitstreams/cf9b0c8e-a1eb-4b65-afd0-567366448713/content',
       },
-    });
+    },
+    id: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
+    uuid: 'cf9b0c8e-a1eb-4b65-afd0-567366448713',
+    type: 'bitstream',
+    metadata: {
+      'dc.title': [
+        {
+          language: null,
+          value: 'test_word.docx',
+        },
+      ],
+    },
+  });
 
   const bitstreamDataService = jasmine.createSpyObj('bitstreamDataService', {
-    findAllByItemAndBundleName: createSuccessfulRemoteDataObject$(createPaginatedList([mockBitstream, mockBitstream, mockBitstream])),
+    findAllByItemAndBundleName: createSuccessfulRemoteDataObject$(
+      createPaginatedList([mockBitstream, mockBitstream, mockBitstream]),
+    ),
   });
 
   const paginationService = new PaginationServiceStub();
 
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      }), BrowserAnimationsModule],
-      declarations: [FullFileSectionComponent, VarDirective, FileSizePipe, MetadataFieldWrapperComponent],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+        BrowserAnimationsModule,
+      ],
+      declarations: [
+        FullFileSectionComponent,
+        VarDirective,
+        FileSizePipe,
+        MetadataFieldWrapperComponent,
+      ],
       providers: [
         { provide: BitstreamDataService, useValue: bitstreamDataService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: PaginationService, useValue: paginationService },
         { provide: APP_CONFIG, useValue: environment },
       ],
@@ -95,7 +100,9 @@ describe('FullFileSectionComponent', () => {
 
   describe('when the full file section gets loaded with bitstreams available', () => {
     it('should contain a list with bitstreams', () => {
-      const fileSection = fixture.debugElement.queryAll(By.css('.file-section'));
+      const fileSection = fixture.debugElement.queryAll(
+        By.css('.file-section'),
+      );
       expect(fileSection.length).toEqual(6);
     });
   });

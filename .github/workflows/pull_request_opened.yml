@@ -6,7 +6,7 @@ name: Pull Request opened
 # (This is required to assign a PR back to the creator when the PR comes from a forked repo)
 on:
   pull_request_target:
-    types: [ opened ]
+    types: [opened]
     branches:
       - main
       - 'dspace-**'
@@ -18,7 +18,7 @@ jobs:
   automation:
     runs-on: ubuntu-latest
     steps:
-    # Assign the PR to whomever created it. This is useful for visualizing assignments on project boards
-    # See https://github.com/toshimaru/auto-author-assign
-    - name: Assign PR to creator
-      uses: toshimaru/auto-author-assign@v2.0.1
+      # Assign the PR to whomever created it. This is useful for visualizing assignments on project boards
+      # See https://github.com/toshimaru/auto-author-assign
+      - name: Assign PR to creator
+        uses: toshimaru/auto-author-assign@v2.0.1

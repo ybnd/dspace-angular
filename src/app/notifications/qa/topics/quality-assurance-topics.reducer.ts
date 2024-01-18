@@ -38,7 +38,10 @@ const qualityAssuranceTopicInitialState: QualityAssuranceTopicState = {
  * @return QualityAssuranceTopicState
  *    the new state
  */
-export function qualityAssuranceTopicsReducer(state = qualityAssuranceTopicInitialState, action: QualityAssuranceTopicsActions): QualityAssuranceTopicState {
+export function qualityAssuranceTopicsReducer(
+  state = qualityAssuranceTopicInitialState,
+  action: QualityAssuranceTopicsActions,
+): QualityAssuranceTopicState {
   switch (action.type) {
     case QualityAssuranceTopicActionTypes.RETRIEVE_ALL_TOPICS: {
       return Object.assign({}, state, {

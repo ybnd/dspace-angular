@@ -6,7 +6,7 @@ import { CreateItemParentSelectorComponent as BaseComponent } from '../../../../
   selector: 'ds-create-item-parent-selector',
   // styleUrls: ['./create-item-parent-selector.component.scss'],
   // templateUrl: './create-item-parent-selector.component.html',
-  templateUrl: '../../../../../../../app/shared/dso-selector/modal-wrappers/create-item-parent-selector/create-item-parent-selector.component.html',
+  templateUrl:
+    '../../../../../../../app/shared/dso-selector/modal-wrappers/create-item-parent-selector/create-item-parent-selector.component.html',
 })
-export class CreateItemParentSelectorComponent extends BaseComponent {
-}
+export class CreateItemParentSelectorComponent extends BaseComponent {}

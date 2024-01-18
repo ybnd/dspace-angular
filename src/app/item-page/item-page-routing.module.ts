@@ -48,8 +48,10 @@ import { VersionPageComponent } from './version-page/version-page/version-page.c
           },
           {
             path: ITEM_EDIT_PATH,
-            loadChildren: () => import('./edit-item-page/edit-item-page.module')
-              .then((m) => m.EditItemPageModule),
+            loadChildren: () =>
+              import('./edit-item-page/edit-item-page.module').then(
+                (m) => m.EditItemPageModule,
+              ),
           },
           {
             path: UPLOAD_BITSTREAM_PATH,
@@ -68,17 +70,19 @@ import { VersionPageComponent } from './version-page/version-page/version-page.c
         ],
         data: {
           menu: {
-            public: [{
-              id: 'statistics_item_:id',
-              active: true,
-              visible: true,
-              index: 2,
-              model: {
-                type: MenuItemType.LINK,
-                text: 'menu.section.statistics',
-                link: 'statistics/items/:id/',
-              } as LinkMenuItemModel,
-            }],
+            public: [
+              {
+                id: 'statistics_item_:id',
+                active: true,
+                visible: true,
+                index: 2,
+                model: {
+                  type: MenuItemType.LINK,
+                  text: 'menu.section.statistics',
+                  link: 'statistics/items/:id/',
+                } as LinkMenuItemModel,
+              },
+            ],
           },
         },
       },
@@ -105,8 +109,5 @@ import { VersionPageComponent } from './version-page/version-page/version-page.c
     VersionResolver,
     OrcidPageGuard,
   ],
-
 })
-export class ItemPageRoutingModule {
-
-}
+export class ItemPageRoutingModule {}

@@ -4,11 +4,7 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { getTestScheduler } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
@@ -55,13 +51,11 @@ const entities: ItemType[] = [
   }),
 ];
 
-const listElementMock: ItemType = Object.assign(
-  new ItemType(), {
-    id: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
-    label: 'Entity_1',
-    uuid: 'UUID-ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
-  },
-);
+const listElementMock: ItemType = Object.assign(new ItemType(), {
+  id: 'ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
+  label: 'Entity_1',
+  uuid: 'UUID-ce64f48e-2c9b-411a-ac36-ee429c0e6a88',
+});
 
 describe('EntityDropdownComponent', () => {
   let component: EntityDropdownComponent;
@@ -70,15 +64,19 @@ describe('EntityDropdownComponent', () => {
   let scheduler: TestScheduler;
 
   const entityTypeServiceMock: any = jasmine.createSpyObj('EntityTypeService', {
-    getAllAuthorizedRelationshipType: jasmine.createSpy('getAllAuthorizedRelationshipType'),
-    getAllAuthorizedRelationshipTypeImport: jasmine.createSpy('getAllAuthorizedRelationshipTypeImport'),
+    getAllAuthorizedRelationshipType: jasmine.createSpy(
+      'getAllAuthorizedRelationshipType',
+    ),
+    getAllAuthorizedRelationshipTypeImport: jasmine.createSpy(
+      'getAllAuthorizedRelationshipTypeImport',
+    ),
   });
-
 
   let translatePipeSpy: jasmine.Spy;
 
   const paginatedEntities = createPaginatedList(entities);
-  const paginatedEntitiesRD$ = createSuccessfulRemoteDataObject$(paginatedEntities);
+  const paginatedEntitiesRD$ =
+    createSuccessfulRemoteDataObject$(paginatedEntities);
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -89,8 +87,7 @@ describe('EntityDropdownComponent', () => {
         ChangeDetectorRef,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -98,8 +95,12 @@ describe('EntityDropdownComponent', () => {
     fixture = TestBed.createComponent(EntityDropdownComponent);
     component = fixture.componentInstance;
     componentAsAny = fixture.componentInstance;
-    componentAsAny.entityTypeService.getAllAuthorizedRelationshipType.and.returnValue(paginatedEntitiesRD$);
-    componentAsAny.entityTypeService.getAllAuthorizedRelationshipTypeImport.and.returnValue(paginatedEntitiesRD$);
+    componentAsAny.entityTypeService.getAllAuthorizedRelationshipType.and.returnValue(
+      paginatedEntitiesRD$,
+    );
+    componentAsAny.entityTypeService.getAllAuthorizedRelationshipTypeImport.and.returnValue(
+      paginatedEntitiesRD$,
+    );
     component.isSubmission = true;
 
     translatePipeSpy = spyOn(MockTranslatePipe.prototype, 'transform');
@@ -125,7 +126,9 @@ describe('EntityDropdownComponent', () => {
     expect(component.subs.push).toHaveBeenCalled();
     expect(component.resetPagination).toHaveBeenCalled();
     expect(component.populateEntityList).toHaveBeenCalled();
-    expect((component as any).entityTypeService.getAllAuthorizedRelationshipType).toHaveBeenCalled();
+    expect(
+      (component as any).entityTypeService.getAllAuthorizedRelationshipType,
+    ).toHaveBeenCalled();
   });
 
   it('should trigger onSelect method when select a new entity from list', () => {
@@ -133,7 +136,9 @@ describe('EntityDropdownComponent', () => {
     scheduler.flush();
 
     spyOn(component, 'onSelect');
-    const entityItem = fixture.debugElement.query(By.css('.entity-item:nth-child(2)'));
+    const entityItem = fixture.debugElement.query(
+      By.css('.entity-item:nth-child(2)'),
+    );
     entityItem.triggerEventHandler('click', null);
 
     scheduler.schedule(() => fixture.detectChanges());
@@ -148,7 +153,9 @@ describe('EntityDropdownComponent', () => {
     component.onSelect(listElementMock as any);
     fixture.detectChanges();
 
-    expect(component.selectionChange.emit).toHaveBeenCalledWith(listElementMock as any);
+    expect(component.selectionChange.emit).toHaveBeenCalledWith(
+      listElementMock as any,
+    );
   });
 
   it('should change loader status', () => {
@@ -172,6 +179,9 @@ describe('EntityDropdownComponent', () => {
     scheduler.schedule(() => fixture.detectChanges());
     scheduler.flush();
 
-    expect((component as any).entityTypeService.getAllAuthorizedRelationshipTypeImport).toHaveBeenCalled();
+    expect(
+      (component as any).entityTypeService
+        .getAllAuthorizedRelationshipTypeImport,
+    ).toHaveBeenCalled();
   });
 });

@@ -24,19 +24,13 @@ import { DSOChangeAnalyzer } from '../../core/data/dso-change-analyzer.service';
 import { FindListOptions } from '../../core/data/find-list-options.model';
 import { PaginatedList } from '../../core/data/paginated-list.model';
 import { RemoteData } from '../../core/data/remote-data';
-import {
-  CreateRequest,
-  PutRequest,
-} from '../../core/data/request.models';
+import { CreateRequest, PutRequest } from '../../core/data/request.models';
 import { RequestService } from '../../core/data/request.service';
 import { RestRequest } from '../../core/data/rest-request.model';
 import { HALEndpointService } from '../../core/shared/hal-endpoint.service';
 import { NoContent } from '../../core/shared/NoContent.model';
 import { getFirstCompletedRemoteData } from '../../core/shared/operators';
-import {
-  isNotEmpty,
-  isNotEmptyOperator,
-} from '../empty.util';
+import { isNotEmpty, isNotEmptyOperator } from '../empty.util';
 import { NotificationsService } from '../notifications/notifications.service';
 import { followLink } from '../utils/follow-link-config.model';
 import { Subscription } from './models/subscription.model';
@@ -69,8 +63,24 @@ export class SubscriptionsDataService extends IdentifiableDataService<Subscripti
   ) {
     super('subscriptions', requestService, rdbService, objectCache, halService);
 
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
   /**
    * Get subscriptions for a given item or community or collection & eperson.
@@ -78,8 +88,10 @@ export class SubscriptionsDataService extends IdentifiableDataService<Subscripti
    * @param eperson The eperson to search for
    * @param uuid The uuid of the dsobjcet to search for
    */
-  getSubscriptionsByPersonDSO(eperson: string, uuid: string): Observable<RemoteData<PaginatedList<Subscription>>> {
-
+  getSubscriptionsByPersonDSO(
+    eperson: string,
+    uuid: string,
+  ): Observable<RemoteData<PaginatedList<Subscription>>> {
     const optionsWithObject = Object.assign(new FindListOptions(), {
       searchParams: [
         new RequestParam('resource', uuid),
@@ -87,7 +99,12 @@ export class SubscriptionsDataService extends IdentifiableDataService<Subscripti
       ],
     });
 
-    return this.searchData.searchBy('findByEPersonAndDso', optionsWithObject, false, true);
+    return this.searchData.searchBy(
+      'findByEPersonAndDso',
+      optionsWithObject,
+      false,
+      true,
+    );
   }
 
   /**
@@ -97,15 +114,30 @@ export class SubscriptionsDataService extends IdentifiableDataService<Subscripti
    * @param ePerson The ePerson to create for
    * @param uuid The uuid of the dsobjcet to create for
    */
-  createSubscription(subscription: Subscription, ePerson: string, uuid: string): Observable<RemoteData<Subscription>> {
-
+  createSubscription(
+    subscription: Subscription,
+    ePerson: string,
+    uuid: string,
+  ): Observable<RemoteData<Subscription>> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       isNotEmptyOperator(),
       take(1),
-      map((endpointUrl: string) => `${endpointUrl}?resource=${uuid}&eperson_id=${ePerson}`),
-      map((endpointURL: string) => new CreateRequest(this.requestService.generateRequestId(), endpointURL, JSON.stringify(subscription))),
+      map(
+        (endpointUrl: string) =>
+          `${endpointUrl}?resource=${uuid}&eperson_id=${ePerson}`,
+      ),
+      map(
+        (endpointURL: string) =>
+          new CreateRequest(
+            this.requestService.generateRequestId(),
+            endpointURL,
+            JSON.stringify(subscription),
+          ),
+      ),
       sendRequest(this.requestService),
-      switchMap((restRequest: RestRequest) => this.rdbService.buildFromRequestUUID(restRequest.uuid)),
+      switchMap((restRequest: RestRequest) =>
+        this.rdbService.buildFromRequestUUID(restRequest.uuid),
+      ),
       getFirstCompletedRemoteData(),
     ) as Observable<RemoteData<Subscription>>;
   }
@@ -118,18 +150,28 @@ export class SubscriptionsDataService extends IdentifiableDataService<Subscripti
    * @param uuid The uuid of the dsobjcet to update for
    */
   updateSubscription(subscription, ePerson: string, uuid: string) {
-
     return this.halService.getEndpoint(this.linkPath).pipe(
       isNotEmptyOperator(),
       take(1),
-      map((endpointUrl: string) => `${endpointUrl}/${subscription.id}?resource=${uuid}&eperson_id=${ePerson}`),
-      map((endpointURL: string) => new PutRequest(this.requestService.generateRequestId(), endpointURL, JSON.stringify(subscription))),
+      map(
+        (endpointUrl: string) =>
+          `${endpointUrl}/${subscription.id}?resource=${uuid}&eperson_id=${ePerson}`,
+      ),
+      map(
+        (endpointURL: string) =>
+          new PutRequest(
+            this.requestService.generateRequestId(),
+            endpointURL,
+            JSON.stringify(subscription),
+          ),
+      ),
       sendRequest(this.requestService),
-      switchMap((restRequest: RestRequest) => this.rdbService.buildFromRequestUUID(restRequest.uuid)),
+      switchMap((restRequest: RestRequest) =>
+        this.rdbService.buildFromRequestUUID(restRequest.uuid),
+      ),
       getFirstCompletedRemoteData(),
     ) as Observable<RemoteData<Subscription>>;
   }
-
 
   /**
    * Deletes the subscription with a give id
@@ -150,10 +192,17 @@ export class SubscriptionsDataService extends IdentifiableDataService<Subscripti
    *
    * @param options                     options for the find all request
    */
-  findAllSubscriptions(options?): Observable<RemoteData<PaginatedList<Subscription>>> {
-    return this.findAllData.findAll(options, true, true, followLink('resource'), followLink('eperson'));
+  findAllSubscriptions(
+    options?,
+  ): Observable<RemoteData<PaginatedList<Subscription>>> {
+    return this.findAllData.findAll(
+      options,
+      true,
+      true,
+      followLink('resource'),
+      followLink('eperson'),
+    );
   }
-
 
   /**
    * Retrieves the list of subscription with {@link dSpaceObject} and {@link ePerson}
@@ -161,21 +210,28 @@ export class SubscriptionsDataService extends IdentifiableDataService<Subscripti
    * @param ePersonId  The eperson id
    * @param options    The options for the find all request
    */
-  findByEPerson(ePersonId: string, options?: FindListOptions): Observable<RemoteData<PaginatedList<Subscription>>> {
+  findByEPerson(
+    ePersonId: string,
+    options?: FindListOptions,
+  ): Observable<RemoteData<PaginatedList<Subscription>>> {
     const optionsWithObject = Object.assign(new FindListOptions(), options, {
-      searchParams: [
-        new RequestParam('uuid', ePersonId),
-      ],
+      searchParams: [new RequestParam('uuid', ePersonId)],
     });
 
     // return this.searchData.searchBy(this.findByEpersonLinkPath, optionsWithObject, true, true, followLink('dSpaceObject'), followLink('ePerson'));
 
     return this.getEndpoint().pipe(
-      map(href => `${href}/search/${this.findByEpersonLinkPath}`),
-      switchMap(href => this.findListByHref(href, optionsWithObject, false, true, followLink('resource'), followLink('eperson'))),
+      map((href) => `${href}/search/${this.findByEpersonLinkPath}`),
+      switchMap((href) =>
+        this.findListByHref(
+          href,
+          optionsWithObject,
+          false,
+          true,
+          followLink('resource'),
+          followLink('eperson'),
+        ),
+      ),
     );
-
-
   }
-
 }

@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { ExternalSourceEntry } from '../../../../../core/shared/external-source-entry.model';
@@ -36,17 +32,19 @@ describe('ExternalSourceEntryListSubmissionElementComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ExternalSourceEntryListSubmissionElementComponent);
+    fixture = TestBed.createComponent(
+      ExternalSourceEntryListSubmissionElementComponent,
+    );
     component = fixture.componentInstance;
     component.object = entry;
     fixture.detectChanges();
   });
 
-  it('should display the entry\'s display value', () => {
+  it("should display the entry's display value", () => {
     expect(fixture.nativeElement.textContent).toContain(entry.display);
   });
 
-  it('should display the entry\'s uri', () => {
+  it("should display the entry's uri", () => {
     expect(fixture.nativeElement.textContent).toContain(uri);
   });
 });

@@ -22,7 +22,6 @@ import { isNotEmpty } from '../empty.util';
   styleUrls: ['./google-recaptcha.component.scss'],
 })
 export class GoogleRecaptchaComponent implements OnInit {
-
   @Input() captchaMode: string;
 
   /**
@@ -39,16 +38,15 @@ export class GoogleRecaptchaComponent implements OnInit {
   constructor(
     @Inject(NativeWindowService) private _window: NativeWindowRef,
     private configService: ConfigurationDataService,
-  ) {
-  }
+  ) {}
 
   /**
    * Retrieve the google recaptcha site key
    */
   ngOnInit() {
-    this.recaptchaKey$ = this.configService.findByPropertyName('google.recaptcha.key.site').pipe(
-      getFirstSucceededRemoteDataPayload(),
-    );
+    this.recaptchaKey$ = this.configService
+      .findByPropertyName('google.recaptcha.key.site')
+      .pipe(getFirstSucceededRemoteDataPayload());
     this._window.nativeWindow.dataCallback = this.dataCallbackFcn;
     this._window.nativeWindow.expiredCallback = this.expiredCallbackFcn;
     this._window.nativeWindow.errorCallback = this.errorCallbackFcn;
@@ -76,5 +74,4 @@ export class GoogleRecaptchaComponent implements OnInit {
   errorCallbackFcn = () => {
     this.showNotification.emit('error');
   };
-
 }

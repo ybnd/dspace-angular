@@ -23,16 +23,16 @@ li.breadcrumb-item {
 }
 
 li.breadcrumb-item {
-    a {
-        color: var(--ds-breadcrumb-link-color);
-    }
+  a {
+    color: var(--ds-breadcrumb-link-color);
+  }
 }
 
 li.breadcrumb-item.active {
   color: var(--ds-breadcrumb-link-active-color);
 }
 
-.breadcrumb-item+ .breadcrumb-item::before {
+.breadcrumb-item + .breadcrumb-item::before {
   display: block;
-  content: quote("•") !important;
+  content: quote('•') !important;
 }

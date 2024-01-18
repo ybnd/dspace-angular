@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -24,13 +20,27 @@ describe('CreateCommunityPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       declarations: [CreateCommunityPageComponent],
       providers: [
-        { provide: CommunityDataService, useValue: { findById: () => observableOf({}) } },
-        { provide: RouteService, useValue: { getQueryParameterValue: () => observableOf('1234') } },
+        {
+          provide: CommunityDataService,
+          useValue: { findById: () => observableOf({}) },
+        },
+        {
+          provide: RouteService,
+          useValue: { getQueryParameterValue: () => observableOf('1234') },
+        },
         { provide: Router, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: RequestService, useValue: {} },
       ],
       schemas: [NO_ERRORS_SCHEMA],

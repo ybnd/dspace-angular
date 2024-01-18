@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  NgModule,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { MySimpleItemActionComponent } from '../../item-page/edit-item-page/simple-item-action/abstract-simple-item-action.component.spec';
 import { SharedModule } from '../shared.module';
@@ -18,10 +15,7 @@ import { RouterLinkDirectiveStub } from './router-link-directive.stub';
  * See https://github.com/angular/angular/issues/13590
  */
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-  ],
+  imports: [CommonModule, SharedModule],
   declarations: [
     QueryParamsDirectiveStub,
     MySimpleItemActionComponent,
@@ -29,13 +23,7 @@ import { RouterLinkDirectiveStub } from './router-link-directive.stub';
     NgComponentOutletDirectiveStub,
     BrowserOnlyMockPipe,
   ],
-  exports: [
-    QueryParamsDirectiveStub,
-    RouterLinkDirectiveStub,
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA,
-  ],
+  exports: [QueryParamsDirectiveStub, RouterLinkDirectiveStub],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class TestModule {
-}
+export class TestModule {}

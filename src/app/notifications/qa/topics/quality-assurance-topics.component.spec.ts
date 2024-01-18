@@ -1,9 +1,6 @@
 /* eslint-disable no-empty, @typescript-eslint/no-empty-function */
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -42,39 +39,61 @@ describe('QualityAssuranceTopicsComponent test suite', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        QualityAssuranceTopicsComponent,
-        TestComponent,
-      ],
+      imports: [CommonModule, TranslateModule.forRoot()],
+      declarations: [QualityAssuranceTopicsComponent, TestComponent],
       providers: [
-        { provide: NotificationsStateService, useValue: mockNotificationsStateService },
-        { provide: ActivatedRoute, useValue: { data: observableOf(activatedRouteParams), snapshot: {
-          paramMap: {
-            get: () => 'openaire',
+        {
+          provide: NotificationsStateService,
+          useValue: mockNotificationsStateService,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: observableOf(activatedRouteParams),
+            snapshot: {
+              paramMap: {
+                get: () => 'openaire',
+              },
+            },
           },
-        } } },
+        },
         { provide: PaginationService, useValue: paginationService },
         QualityAssuranceTopicsComponent,
         // tslint:disable-next-line: no-empty
-        { provide: QualityAssuranceTopicsService, useValue: { setSourceId: (sourceId: string) => { } } },
+        {
+          provide: QualityAssuranceTopicsService,
+          useValue: { setSourceId: (sourceId: string) => {} },
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then(() => {
-      mockNotificationsStateService.getQualityAssuranceTopics.and.returnValue(observableOf([
-        qualityAssuranceTopicObjectMorePid,
-        qualityAssuranceTopicObjectMoreAbstract,
-      ]));
-      mockNotificationsStateService.getQualityAssuranceTopicsTotalPages.and.returnValue(observableOf(1));
-      mockNotificationsStateService.getQualityAssuranceTopicsCurrentPage.and.returnValue(observableOf(0));
-      mockNotificationsStateService.getQualityAssuranceTopicsTotals.and.returnValue(observableOf(2));
-      mockNotificationsStateService.isQualityAssuranceTopicsLoaded.and.returnValue(observableOf(true));
-      mockNotificationsStateService.isQualityAssuranceTopicsLoading.and.returnValue(observableOf(false));
-      mockNotificationsStateService.isQualityAssuranceTopicsProcessing.and.returnValue(observableOf(false));
-    });
+    })
+      .compileComponents()
+      .then(() => {
+        mockNotificationsStateService.getQualityAssuranceTopics.and.returnValue(
+          observableOf([
+            qualityAssuranceTopicObjectMorePid,
+            qualityAssuranceTopicObjectMoreAbstract,
+          ]),
+        );
+        mockNotificationsStateService.getQualityAssuranceTopicsTotalPages.and.returnValue(
+          observableOf(1),
+        );
+        mockNotificationsStateService.getQualityAssuranceTopicsCurrentPage.and.returnValue(
+          observableOf(0),
+        );
+        mockNotificationsStateService.getQualityAssuranceTopicsTotals.and.returnValue(
+          observableOf(2),
+        );
+        mockNotificationsStateService.isQualityAssuranceTopicsLoaded.and.returnValue(
+          observableOf(true),
+        );
+        mockNotificationsStateService.isQualityAssuranceTopicsLoading.and.returnValue(
+          observableOf(false),
+        );
+        mockNotificationsStateService.isQualityAssuranceTopicsProcessing.and.returnValue(
+          observableOf(false),
+        );
+      });
   }));
 
   // First test to check the correct component creation
@@ -86,7 +105,10 @@ describe('QualityAssuranceTopicsComponent test suite', () => {
     beforeEach(() => {
       const html = `
         <ds-quality-assurance-topic></ds-quality-assurance-topic>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -94,9 +116,12 @@ describe('QualityAssuranceTopicsComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create QualityAssuranceTopicsComponent', inject([QualityAssuranceTopicsComponent], (app: QualityAssuranceTopicsComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create QualityAssuranceTopicsComponent', inject(
+      [QualityAssuranceTopicsComponent],
+      (app: QualityAssuranceTopicsComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('Main tests running with two topics', () => {
@@ -104,7 +129,6 @@ describe('QualityAssuranceTopicsComponent test suite', () => {
       fixture = TestBed.createComponent(QualityAssuranceTopicsComponent);
       comp = fixture.componentInstance;
       compAsAny = comp;
-
     });
 
     afterEach(() => {
@@ -113,22 +137,26 @@ describe('QualityAssuranceTopicsComponent test suite', () => {
       compAsAny = null;
     });
 
-    it(('Should init component properly'), () => {
+    it('Should init component properly', () => {
       comp.ngOnInit();
       fixture.detectChanges();
 
-      expect(comp.topics$).toBeObservable(cold('(a|)', {
-        a: [
-          qualityAssuranceTopicObjectMorePid,
-          qualityAssuranceTopicObjectMoreAbstract,
-        ],
-      }));
-      expect(comp.totalElements$).toBeObservable(cold('(a|)', {
-        a: 2,
-      }));
+      expect(comp.topics$).toBeObservable(
+        cold('(a|)', {
+          a: [
+            qualityAssuranceTopicObjectMorePid,
+            qualityAssuranceTopicObjectMoreAbstract,
+          ],
+        }),
+      );
+      expect(comp.totalElements$).toBeObservable(
+        cold('(a|)', {
+          a: 2,
+        }),
+      );
     });
 
-    it(('Should set data properly after the view init'), () => {
+    it('Should set data properly after the view init', () => {
       spyOn(compAsAny, 'getQualityAssuranceTopics');
 
       comp.ngAfterViewInit();
@@ -137,24 +165,39 @@ describe('QualityAssuranceTopicsComponent test suite', () => {
       expect(compAsAny.getQualityAssuranceTopics).toHaveBeenCalled();
     });
 
-    it(('isTopicsLoading should return FALSE'), () => {
-      expect(comp.isTopicsLoading()).toBeObservable(cold('(a|)', {
-        a: false,
-      }));
+    it('isTopicsLoading should return FALSE', () => {
+      expect(comp.isTopicsLoading()).toBeObservable(
+        cold('(a|)', {
+          a: false,
+        }),
+      );
     });
 
-    it(('isTopicsProcessing should return FALSE'), () => {
-      expect(comp.isTopicsProcessing()).toBeObservable(cold('(a|)', {
-        a: false,
-      }));
+    it('isTopicsProcessing should return FALSE', () => {
+      expect(comp.isTopicsProcessing()).toBeObservable(
+        cold('(a|)', {
+          a: false,
+        }),
+      );
     });
 
-    it(('getQualityAssuranceTopics should call the service to dispatch a STATE change'), () => {
+    it('getQualityAssuranceTopics should call the service to dispatch a STATE change', () => {
       comp.ngOnInit();
       fixture.detectChanges();
 
-      compAsAny.notificationsStateService.dispatchRetrieveQualityAssuranceTopics(comp.paginationConfig.pageSize, comp.paginationConfig.currentPage).and.callThrough();
-      expect(compAsAny.notificationsStateService.dispatchRetrieveQualityAssuranceTopics).toHaveBeenCalledWith(comp.paginationConfig.pageSize, comp.paginationConfig.currentPage);
+      compAsAny.notificationsStateService
+        .dispatchRetrieveQualityAssuranceTopics(
+          comp.paginationConfig.pageSize,
+          comp.paginationConfig.currentPage,
+        )
+        .and.callThrough();
+      expect(
+        compAsAny.notificationsStateService
+          .dispatchRetrieveQualityAssuranceTopics,
+      ).toHaveBeenCalledWith(
+        comp.paginationConfig.pageSize,
+        comp.paginationConfig.currentPage,
+      );
     });
   });
 });
@@ -164,6 +207,4 @@ describe('QualityAssuranceTopicsComponent test suite', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

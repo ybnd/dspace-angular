@@ -10,10 +10,7 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -21,7 +18,6 @@ import { createTestComponent } from '../../testing/utils.test';
 import { NumberPickerComponent } from './number-picker.component';
 
 describe('NumberPickerComponent test suite', () => {
-
   let testComp: TestComponent;
   let numberPickerComp: NumberPickerComponent;
   let testFixture: ComponentFixture<TestComponent>;
@@ -30,24 +26,12 @@ describe('NumberPickerComponent test suite', () => {
 
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-      imports: [
-        FormsModule,
-        ReactiveFormsModule,
-        NgbModule,
-      ],
-      declarations: [
-        NumberPickerComponent,
-        TestComponent,
-      ], // declare the test component
-      providers: [
-        ChangeDetectorRef,
-        NumberPickerComponent,
-      ],
+      imports: [FormsModule, ReactiveFormsModule, NgbModule],
+      declarations: [NumberPickerComponent, TestComponent], // declare the test component
+      providers: [ChangeDetectorRef, NumberPickerComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   // synchronous beforeEach
@@ -69,13 +53,19 @@ describe('NumberPickerComponent test suite', () => {
         (change)="onChange($event)"
         (focus)="onFocus($event)"></ds-number-picker>`;
 
-    testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+    testFixture = createTestComponent(
+      html,
+      TestComponent,
+    ) as ComponentFixture<TestComponent>;
     testComp = testFixture.componentInstance;
   });
 
-  it('should create NumberPickerComponent', inject([NumberPickerComponent], (app: NumberPickerComponent) => {
-    expect(app).toBeDefined();
-  }));
+  it('should create NumberPickerComponent', inject(
+    [NumberPickerComponent],
+    (app: NumberPickerComponent) => {
+      expect(app).toBeDefined();
+    },
+  ));
 
   beforeEach(() => {
     numberPickerFixture = TestBed.createComponent(NumberPickerComponent);
@@ -88,8 +78,7 @@ describe('NumberPickerComponent test suite', () => {
     numberPickerComp = null;
   });
 
-  it('should use default value when component\'s property is not passed', () => {
-
+  it("should use default value when component's property is not passed", () => {
     expect(numberPickerComp.min).toBe(0);
     expect(numberPickerComp.max).toBe(100);
     expect(numberPickerComp.size).toBe(1);
@@ -112,7 +101,6 @@ describe('NumberPickerComponent test suite', () => {
     numberPickerComp.toggleUp();
 
     expect(numberPickerComp.value).toBe(0);
-
   });
 
   it('should decrease value', () => {
@@ -131,11 +119,12 @@ describe('NumberPickerComponent test suite', () => {
     numberPickerComp.toggleDown();
 
     expect(numberPickerComp.value).toBe(100);
-
   });
 
   it('should update value on input type', () => {
-    const de = numberPickerFixture.debugElement.query(By.css('input.form-control'));
+    const de = numberPickerFixture.debugElement.query(
+      By.css('input.form-control'),
+    );
     const inputEl = de.nativeElement;
 
     inputEl.value = 99;
@@ -145,7 +134,9 @@ describe('NumberPickerComponent test suite', () => {
   });
 
   it('should not update value when input value is invalid', () => {
-    const de = numberPickerFixture.debugElement.query(By.css('input.form-control'));
+    const de = numberPickerFixture.debugElement.query(
+      By.css('input.form-control'),
+    );
     const inputEl = de.nativeElement;
 
     inputEl.value = 101;
@@ -153,7 +144,6 @@ describe('NumberPickerComponent test suite', () => {
 
     expect(numberPickerComp.value).toBe(undefined);
   });
-
 });
 
 // declare a test component
@@ -162,12 +152,10 @@ describe('NumberPickerComponent test suite', () => {
   template: ``,
 })
 class TestComponent {
-
   public disabled = false;
   public max = 100;
   public min = 0;
   public initValue = 0;
   public size = 4;
   public value;
-
 }

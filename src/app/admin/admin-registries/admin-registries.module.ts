@@ -27,6 +27,4 @@ import { MetadataSchemaComponent } from './metadata-schema/metadata-schema.compo
     MetadataFieldFormComponent,
   ],
 })
-export class AdminRegistriesModule {
-
-}
+export class AdminRegistriesModule {}

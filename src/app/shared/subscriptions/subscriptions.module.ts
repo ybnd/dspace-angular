@@ -9,15 +9,10 @@ import { SharedModule } from '../shared.module';
 import { SubscriptionModalComponent } from './subscription-modal/subscription-modal.component';
 import { SubscriptionViewComponent } from './subscription-view/subscription-view.component';
 
-const COMPONENTS = [
-  SubscriptionViewComponent,
-  SubscriptionModalComponent,
-];
+const COMPONENTS = [SubscriptionViewComponent, SubscriptionModalComponent];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS,
-  ],
+  declarations: [...COMPONENTS],
   imports: [
     CommonModule,
     NgbModalModule,
@@ -26,9 +21,6 @@ const COMPONENTS = [
     RouterModule,
     SharedModule,
   ],
-  exports: [
-    ...COMPONENTS,
-  ],
+  exports: [...COMPONENTS],
 })
-export class SubscriptionsModule {
-}
+export class SubscriptionsModule {}

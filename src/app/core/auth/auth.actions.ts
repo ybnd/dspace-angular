@@ -17,13 +17,19 @@ export const AuthActionTypes = {
   AUTHENTICATED_ERROR: type('dspace/auth/AUTHENTICATED_ERROR'),
   AUTHENTICATED_SUCCESS: type('dspace/auth/AUTHENTICATED_SUCCESS'),
   CHECK_AUTHENTICATION_TOKEN: type('dspace/auth/CHECK_AUTHENTICATION_TOKEN'),
-  CHECK_AUTHENTICATION_TOKEN_COOKIE: type('dspace/auth/CHECK_AUTHENTICATION_TOKEN_COOKIE'),
+  CHECK_AUTHENTICATION_TOKEN_COOKIE: type(
+    'dspace/auth/CHECK_AUTHENTICATION_TOKEN_COOKIE',
+  ),
   SET_AUTH_COOKIE_STATUS: type('dspace/auth/SET_AUTH_COOKIE_STATUS'),
   RETRIEVE_AUTH_METHODS: type('dspace/auth/RETRIEVE_AUTH_METHODS'),
-  RETRIEVE_AUTH_METHODS_SUCCESS: type('dspace/auth/RETRIEVE_AUTH_METHODS_SUCCESS'),
+  RETRIEVE_AUTH_METHODS_SUCCESS: type(
+    'dspace/auth/RETRIEVE_AUTH_METHODS_SUCCESS',
+  ),
   RETRIEVE_AUTH_METHODS_ERROR: type('dspace/auth/RETRIEVE_AUTH_METHODS_ERROR'),
   REDIRECT_TOKEN_EXPIRED: type('dspace/auth/REDIRECT_TOKEN_EXPIRED'),
-  REDIRECT_AUTHENTICATION_REQUIRED: type('dspace/auth/REDIRECT_AUTHENTICATION_REQUIRED'),
+  REDIRECT_AUTHENTICATION_REQUIRED: type(
+    'dspace/auth/REDIRECT_AUTHENTICATION_REQUIRED',
+  ),
   REFRESH_TOKEN: type('dspace/auth/REFRESH_TOKEN'),
   REFRESH_TOKEN_SUCCESS: type('dspace/auth/REFRESH_TOKEN_SUCCESS'),
   REFRESH_TOKEN_ERROR: type('dspace/auth/REFRESH_TOKEN_ERROR'),
@@ -34,14 +40,21 @@ export const AuthActionTypes = {
   LOG_OUT_ERROR: type('dspace/auth/LOG_OUT_ERROR'),
   LOG_OUT_SUCCESS: type('dspace/auth/LOG_OUT_SUCCESS'),
   SET_REDIRECT_URL: type('dspace/auth/SET_REDIRECT_URL'),
-  RETRIEVE_AUTHENTICATED_EPERSON: type('dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON'),
-  RETRIEVE_AUTHENTICATED_EPERSON_SUCCESS: type('dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON_SUCCESS'),
-  RETRIEVE_AUTHENTICATED_EPERSON_ERROR: type('dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON_ERROR'),
-  REDIRECT_AFTER_LOGIN_SUCCESS: type('dspace/auth/REDIRECT_AFTER_LOGIN_SUCCESS'),
+  RETRIEVE_AUTHENTICATED_EPERSON: type(
+    'dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON',
+  ),
+  RETRIEVE_AUTHENTICATED_EPERSON_SUCCESS: type(
+    'dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON_SUCCESS',
+  ),
+  RETRIEVE_AUTHENTICATED_EPERSON_ERROR: type(
+    'dspace/auth/RETRIEVE_AUTHENTICATED_EPERSON_ERROR',
+  ),
+  REDIRECT_AFTER_LOGIN_SUCCESS: type(
+    'dspace/auth/REDIRECT_AFTER_LOGIN_SUCCESS',
+  ),
   SET_USER_AS_IDLE: type('dspace/auth/SET_USER_AS_IDLE'),
   UNSET_USER_AS_IDLE: type('dspace/auth/UNSET_USER_AS_IDLE'),
 };
-
 
 /**
  * Authenticate.
@@ -52,7 +65,7 @@ export class AuthenticateAction implements Action {
   public type: string = AuthActionTypes.AUTHENTICATE;
   payload: {
     email: string;
-    password: string
+    password: string;
   };
 
   constructor(email: string, password: string) {
@@ -84,10 +97,14 @@ export class AuthenticatedSuccessAction implements Action {
   payload: {
     authenticated: boolean;
     authToken: AuthTokenInfo;
-    userHref: string
+    userHref: string;
   };
 
-  constructor(authenticated: boolean, authToken: AuthTokenInfo, userHref: string) {
+  constructor(
+    authenticated: boolean,
+    authToken: AuthTokenInfo,
+    userHref: string,
+  ) {
     this.payload = { authenticated, authToken, userHref };
   }
 }
@@ -173,8 +190,7 @@ export class SetAuthCookieStatus implements Action {
 export class LogOutAction implements Action {
   public type: string = AuthActionTypes.LOG_OUT;
 
-  constructor(public payload?: any) {
-  }
+  constructor(public payload?: any) {}
 }
 
 /**
@@ -199,8 +215,7 @@ export class LogOutErrorAction implements Action {
 export class LogOutSuccessAction implements Action {
   public type: string = AuthActionTypes.LOG_OUT_SUCCESS;
 
-  constructor(public payload?: any) {
-  }
+  constructor(public payload?: any) {}
 }
 
 /**
@@ -325,7 +340,7 @@ export class RetrieveAuthMethodsSuccessAction implements Action {
   public type: string = AuthActionTypes.RETRIEVE_AUTH_METHODS_SUCCESS;
   payload: AuthMethod[];
 
-  constructor(authMethods: AuthMethod[] ) {
+  constructor(authMethods: AuthMethod[]) {
     this.payload = authMethods;
   }
 }
@@ -377,7 +392,7 @@ export class RetrieveAuthenticatedEpersonAction implements Action {
   payload: string;
 
   constructor(user: string) {
-    this.payload = user ;
+    this.payload = user;
   }
 }
 
@@ -391,7 +406,7 @@ export class RetrieveAuthenticatedEpersonSuccessAction implements Action {
   payload: string;
 
   constructor(userId: string) {
-    this.payload = userId ;
+    this.payload = userId;
   }
 }
 
@@ -405,7 +420,7 @@ export class RetrieveAuthenticatedEpersonErrorAction implements Action {
   payload: Error;
 
   constructor(payload: Error) {
-    this.payload = payload ;
+    this.payload = payload;
   }
 }
 
@@ -430,8 +445,8 @@ export class UnsetUserAsIdleAction implements Action {
 /**
  * Authentication error actions that include Error payloads.
  */
-export type AuthErrorActionsWithErrorPayload
-  = AuthenticatedErrorAction
+export type AuthErrorActionsWithErrorPayload =
+  | AuthenticatedErrorAction
   | AuthenticationErrorAction
   | LogOutErrorAction
   | RetrieveAuthenticatedEpersonErrorAction;
@@ -440,8 +455,8 @@ export type AuthErrorActionsWithErrorPayload
  * Actions type.
  * @type {AuthActions}
  */
-export type AuthActions
-  = AuthenticateAction
+export type AuthActions =
+  | AuthenticateAction
   | AuthenticatedAction
   | AuthenticatedSuccessAction
   | AuthenticationSuccessAction

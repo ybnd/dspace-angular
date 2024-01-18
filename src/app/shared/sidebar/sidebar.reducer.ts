@@ -1,7 +1,4 @@
-import {
-  SidebarAction,
-  SidebarActionTypes,
-} from './sidebar.actions';
+import { SidebarAction, SidebarActionTypes } from './sidebar.actions';
 
 /**
  * Interface that represents the state of the sidebar
@@ -20,9 +17,11 @@ const initialState: SidebarState = {
  * @param {SidebarAction} action The action that should be performed
  * @returns {SidebarState} The state after the action is performed
  */
-export function sidebarReducer(state = initialState, action: SidebarAction): SidebarState {
+export function sidebarReducer(
+  state = initialState,
+  action: SidebarAction,
+): SidebarState {
   switch (action.type) {
-
     case SidebarActionTypes.COLLAPSE: {
       return Object.assign({}, state, {
         sidebarCollapsed: true,
@@ -33,14 +32,12 @@ export function sidebarReducer(state = initialState, action: SidebarAction): Sid
       return Object.assign({}, state, {
         sidebarCollapsed: false,
       });
-
     }
 
     case SidebarActionTypes.TOGGLE: {
       return Object.assign({}, state, {
         sidebarCollapsed: !state.sidebarCollapsed,
       });
-
     }
 
     default: {

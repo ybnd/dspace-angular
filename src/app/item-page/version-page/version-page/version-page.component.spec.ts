@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
@@ -34,8 +30,7 @@ const mockVersion: Version = Object.assign(new Version(), {
 });
 
 @Component({ template: '' })
-class DummyComponent {
-}
+class DummyComponent {}
 
 describe('VersionPageComponent', () => {
   let component: VersionPageComponent;
@@ -53,7 +48,15 @@ describe('VersionPageComponent', () => {
     });
     TestBed.configureTestingModule({
       declarations: [VersionPageComponent, DummyComponent],
-      imports: [RouterTestingModule.withRoutes([{ path: 'items/item-uuid', component: DummyComponent, pathMatch: 'full' }])],
+      imports: [
+        RouterTestingModule.withRoutes([
+          {
+            path: 'items/item-uuid',
+            component: DummyComponent,
+            pathMatch: 'full',
+          },
+        ]),
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: mockRoute },
         { provide: VersionDataService, useValue: {} },
@@ -61,8 +64,6 @@ describe('VersionPageComponent', () => {
       ],
     }).compileComponents();
   }));
-
-
 
   beforeEach(() => {
     fixture = TestBed.createComponent(VersionPageComponent);

@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { RemoteData } from '../../../core/data/remote-data';
@@ -18,7 +15,6 @@ import { SearchFiltersComponent } from './search-filters.component';
   templateUrl: '../../theme-support/themed.component.html',
 })
 export class ThemedSearchFiltersComponent extends ThemedComponent<SearchFiltersComponent> {
-
   @Input() currentConfiguration;
   @Input() currentScope: string;
   @Input() inPlaceSearch;
@@ -26,14 +22,21 @@ export class ThemedSearchFiltersComponent extends ThemedComponent<SearchFiltersC
   @Input() filters: Observable<RemoteData<SearchFilterConfig[]>>;
 
   protected inAndOutputNames: (keyof SearchFiltersComponent & keyof this)[] = [
-    'filters', 'currentConfiguration', 'currentScope', 'inPlaceSearch', 'refreshFilters'];
+    'filters',
+    'currentConfiguration',
+    'currentScope',
+    'inPlaceSearch',
+    'refreshFilters',
+  ];
 
   protected getComponentName(): string {
     return 'SearchFiltersComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../themes/${themeName}/app/shared/search/search-filters/search-filters.component`);
+    return import(
+      `../../../../themes/${themeName}/app/shared/search/search-filters/search-filters.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

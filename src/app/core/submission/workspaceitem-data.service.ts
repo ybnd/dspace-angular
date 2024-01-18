@@ -7,15 +7,9 @@ import { RemoteDataBuildService } from '../cache/builders/remote-data-build.serv
 import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { dataService } from '../data/base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from '../data/base/delete-data';
+import { DeleteData, DeleteDataImpl } from '../data/base/delete-data';
 import { IdentifiableDataService } from '../data/base/identifiable-data.service';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../data/base/search-data';
+import { SearchData, SearchDataImpl } from '../data/base/search-data';
 import { FindListOptions } from '../data/find-list-options.model';
 import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
@@ -29,7 +23,10 @@ import { WorkspaceItem } from './models/workspaceitem.model';
  */
 @Injectable()
 @dataService(WorkspaceItem.type)
-export class WorkspaceitemDataService extends IdentifiableDataService<WorkspaceItem> implements SearchData<WorkspaceItem>, DeleteData<WorkspaceItem> {
+export class WorkspaceitemDataService
+  extends IdentifiableDataService<WorkspaceItem>
+  implements SearchData<WorkspaceItem>, DeleteData<WorkspaceItem>
+{
   protected searchByItemLinkPath = 'item';
 
   private searchData: SearchDataImpl<WorkspaceItem>;
@@ -42,10 +39,32 @@ export class WorkspaceitemDataService extends IdentifiableDataService<WorkspaceI
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
   ) {
-    super('workspaceitems', requestService, rdbService, objectCache, halService);
+    super(
+      'workspaceitems',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -59,11 +78,28 @@ export class WorkspaceitemDataService extends IdentifiableDataService<WorkspaceI
    * @param options        The {@link FindListOptions} object
    * @param linksToFollow  List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public findByItem(uuid: string, useCachedVersionIfAvailable = false, reRequestOnStale = true, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]): Observable<RemoteData<WorkspaceItem>> {
+  public findByItem(
+    uuid: string,
+    useCachedVersionIfAvailable = false,
+    reRequestOnStale = true,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]
+  ): Observable<RemoteData<WorkspaceItem>> {
     const findListOptions = new FindListOptions();
-    findListOptions.searchParams = [new RequestParam('uuid', encodeURIComponent(uuid))];
-    const href$ = this.getSearchByHref(this.searchByItemLinkPath, findListOptions, ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    findListOptions.searchParams = [
+      new RequestParam('uuid', encodeURIComponent(uuid)),
+    ];
+    const href$ = this.getSearchByHref(
+      this.searchByItemLinkPath,
+      findListOptions,
+      ...linksToFollow,
+    );
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -75,8 +111,16 @@ export class WorkspaceitemDataService extends IdentifiableDataService<WorkspaceI
    *    Return an observable that emits created HREF
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public getSearchByHref(searchMethod: string, options?: FindListOptions, ...linksToFollow): Observable<string> {
-    return this.searchData.getSearchByHref(searchMethod, options, ...linksToFollow);
+  public getSearchByHref(
+    searchMethod: string,
+    options?: FindListOptions,
+    ...linksToFollow
+  ): Observable<string> {
+    return this.searchData.getSearchByHref(
+      searchMethod,
+      options,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -93,8 +137,20 @@ export class WorkspaceitemDataService extends IdentifiableDataService<WorkspaceI
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  public searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]): Observable<RemoteData<PaginatedList<WorkspaceItem>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<WorkspaceItem>[]
+  ): Observable<RemoteData<PaginatedList<WorkspaceItem>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -105,7 +161,10 @@ export class WorkspaceitemDataService extends IdentifiableDataService<WorkspaceI
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  public delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
@@ -118,8 +177,10 @@ export class WorkspaceitemDataService extends IdentifiableDataService<WorkspaceI
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
-
 }

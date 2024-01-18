@@ -1,12 +1,6 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../app.reducer';
@@ -32,9 +26,10 @@ export class LogOutComponent implements OnInit {
    * @param {Store<State>} store
    * @param {Router} router
    */
-  constructor(private router: Router,
-              private store: Store<AppState>) {
-  }
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+  ) {}
 
   /**
    * Lifecycle hook that is called after data-bound properties of a directive are initialized.
@@ -54,5 +49,4 @@ export class LogOutComponent implements OnInit {
   public logOut() {
     this.store.dispatch(new LogOutAction());
   }
-
 }

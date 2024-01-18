@@ -34,17 +34,26 @@ describe('TagFieldParser test suite', () => {
       ],
       languageCodes: [],
     } as FormFieldModel;
-
   });
 
   it('should init parser properly', () => {
-    const parser = new TagFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TagFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     expect(parser instanceof TagFieldParser).toBe(true);
   });
 
   it('should return a DynamicTagModel object when repeatable option is false', () => {
-    const parser = new TagFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TagFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
@@ -59,11 +68,15 @@ describe('TagFieldParser test suite', () => {
       ],
     };
 
-    const parser = new TagFieldParser(submissionId, field, initFormValues, parserOptions);
+    const parser = new TagFieldParser(
+      submissionId,
+      field,
+      initFormValues,
+      parserOptions,
+    );
 
     const fieldModel = parser.parse();
 
     expect(fieldModel.value).toEqual(initFormValues.subject);
   });
-
 });

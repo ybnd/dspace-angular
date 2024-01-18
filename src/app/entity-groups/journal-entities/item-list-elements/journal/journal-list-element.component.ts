@@ -14,5 +14,4 @@ import { AbstractListableElementComponent } from '../../../../shared/object-coll
 /**
  * The component for displaying a list element for an item of the type Journal
  */
-export class JournalListElementComponent extends AbstractListableElementComponent<Item> {
-}
+export class JournalListElementComponent extends AbstractListableElementComponent<Item> {}

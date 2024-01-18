@@ -1,11 +1,5 @@
-import {
-  Component,
-  Injector,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, Injector } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { RequestService } from '../../../../core/data/request.service';
@@ -28,7 +22,6 @@ import { rendersWorkflowTaskOption } from '../switcher/claimed-task-actions-deco
   styleUrls: ['./advanced-claimed-task-action-select-reviewer.component.scss'],
 })
 export class AdvancedClaimedTaskActionSelectReviewerComponent extends AdvancedClaimedTaskActionsAbstractComponent {
-
   /**
    * This component represents the advanced select option
    */
@@ -45,7 +38,14 @@ export class AdvancedClaimedTaskActionSelectReviewerComponent extends AdvancedCl
     protected requestService: RequestService,
     protected route: ActivatedRoute,
   ) {
-    super(injector, router, notificationsService, translate, searchService, requestService, route);
+    super(
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService,
+      route,
+    );
   }
-
 }

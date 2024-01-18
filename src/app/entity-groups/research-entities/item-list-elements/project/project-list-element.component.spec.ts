@@ -1,11 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -50,9 +44,11 @@ describe('ProjectListElementComponent', () => {
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ProjectListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ProjectListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -67,7 +63,9 @@ describe('ProjectListElementComponent', () => {
     });
 
     it(`should contain a ProjectListElementComponent`, () => {
-      const projectListElement = fixture.debugElement.query(By.css(`ds-project-search-result-list-element`));
+      const projectListElement = fixture.debugElement.query(
+        By.css(`ds-project-search-result-list-element`),
+      );
       expect(projectListElement).not.toBeNull();
     });
   });

@@ -15,17 +15,11 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { StoreModule } from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BehaviorSubject } from 'rxjs';
 
@@ -59,31 +53,46 @@ function expectPages(fixture: ComponentFixture<any>, pagesDef: string[]): void {
     if (classIndicator === '+') {
       expect(pages[i].classList.contains('active')).toBeTruthy();
       expect(pages[i].classList.contains('disabled')).toBeFalsy();
-      expect(normalizeText(pages[i].textContent)).toEqual(normalizeText(pageDef));
+      expect(normalizeText(pages[i].textContent)).toEqual(
+        normalizeText(pageDef),
+      );
     } else if (classIndicator === '-') {
       expect(pages[i].classList.contains('active')).toBeFalsy();
       expect(pages[i].classList.contains('disabled')).toBeTruthy();
-      expect(normalizeText(pages[i].textContent)).toEqual(normalizeText(pageDef));
+      expect(normalizeText(pages[i].textContent)).toEqual(
+        normalizeText(pageDef),
+      );
       if (normalizeText(pages[i].textContent) !== '...') {
-        expect(pages[i].querySelector('a').getAttribute('tabindex')).toEqual('-1');
+        expect(pages[i].querySelector('a').getAttribute('tabindex')).toEqual(
+          '-1',
+        );
       }
     } else {
       expect(pages[i].classList.contains('active')).toBeFalsy();
       expect(pages[i].classList.contains('disabled')).toBeFalsy();
-      expect(normalizeText(pages[i].textContent)).toEqual(normalizeText(pageDef));
+      expect(normalizeText(pages[i].textContent)).toEqual(
+        normalizeText(pageDef),
+      );
       if (normalizeText(pages[i].textContent) !== '...') {
-        expect(pages[i].querySelector('a').hasAttribute('tabindex')).toBeFalsy();
+        expect(
+          pages[i].querySelector('a').hasAttribute('tabindex'),
+        ).toBeFalsy();
       }
     }
   }
 }
 
-function changePageSize(fixture: ComponentFixture<any>, pageSize: string): void {
+function changePageSize(
+  fixture: ComponentFixture<any>,
+  pageSize: string,
+): void {
   const buttonEl = fixture.nativeElement.querySelector('#paginationControls');
 
   buttonEl.click();
 
-  const dropdownMenu = fixture.debugElement.query(By.css('#paginationControlsDropdownMenu'));
+  const dropdownMenu = fixture.debugElement.query(
+    By.css('#paginationControlsDropdownMenu'),
+  );
   const buttons = dropdownMenu.nativeElement.querySelectorAll('button');
 
   for (const button of buttons) {
@@ -109,7 +118,6 @@ function normalizeText(txt: string): string {
 }
 
 describe('Pagination component', () => {
-
   let testComp: TestComponent;
   let testFixture: ComponentFixture<TestComponent>;
   let de: DebugElement;
@@ -129,7 +137,10 @@ describe('Pagination component', () => {
   pagination.pageSize = 10;
 
   const sort = new SortOptions('score', SortDirection.DESC);
-  const findlistOptions = Object.assign(new FindListOptions(), { currentPage: 1, elementsPerPage: 10 });
+  const findlistOptions = Object.assign(new FindListOptions(), {
+    currentPage: 1,
+    elementsPerPage: 10,
+  });
   let currentPagination;
   let currentSort;
   let currentFindListOptions;
@@ -140,10 +151,13 @@ describe('Pagination component', () => {
     routerStub = new RouterMock();
     hostWindowServiceStub = new HostWindowServiceMock(_initialState.width);
 
-    currentPagination = new BehaviorSubject<PaginationComponentOptions>(pagination);
+    currentPagination = new BehaviorSubject<PaginationComponentOptions>(
+      pagination,
+    );
     currentSort = new BehaviorSubject<SortOptions>(sort);
-    currentFindListOptions = new BehaviorSubject<FindListOptions>(findlistOptions);
-
+    currentFindListOptions = new BehaviorSubject<FindListOptions>(
+      findlistOptions,
+    );
 
     paginationService = jasmine.createSpyObj('PaginationService', {
       getCurrentPagination: currentPagination,
@@ -168,12 +182,9 @@ describe('Pagination component', () => {
         NgbModule,
         RouterTestingModule.withRoutes([
           { path: 'home', component: TestComponent },
-        ])],
-      declarations: [
-        PaginationComponent,
-        TestComponent,
-        EnumKeysPipe,
-      ], // declare the test component
+        ]),
+      ],
+      declarations: [PaginationComponent, TestComponent, EnumKeysPipe], // declare the test component
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: routerStub },
@@ -184,7 +195,6 @@ describe('Pagination component', () => {
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   describe('when showPaginator is false', () => {
@@ -203,39 +213,64 @@ describe('Pagination component', () => {
                       currentPage: paginationOptions.currentPage, totalItems: collectionSize }'> {{item}} </li>
         </ul>
       </ds-pagination>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
-    it('should create Pagination Component', inject([PaginationComponent], (app: PaginationComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create Pagination Component', inject(
+      [PaginationComponent],
+      (app: PaginationComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
 
     it('should render', () => {
       expect(testComp.paginationOptions.id).toEqual('test');
       expect(testComp.paginationOptions.currentPage).toEqual(1);
       expect(testComp.paginationOptions.pageSize).toEqual(10);
-      expectPages(testFixture, ['-« Previous', '+1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '» Next']);
+      expectPages(testFixture, [
+        '-« Previous',
+        '+1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '7',
+        '8',
+        '9',
+        '10',
+        '» Next',
+      ]);
     });
 
     it('should render and respond to page change', () => {
       testComp.collectionSize = 30;
       testFixture.detectChanges();
 
-
-      currentPagination.next(Object.assign(new PaginationComponentOptions(), pagination, { currentPage: 3 }));
+      currentPagination.next(
+        Object.assign(new PaginationComponentOptions(), pagination, {
+          currentPage: 3,
+        }),
+      );
       testFixture.detectChanges();
 
       expectPages(testFixture, ['« Previous', '1', '2', '+3', '-» Next']);
 
-      currentPagination.next(Object.assign(new PaginationComponentOptions(), pagination, { currentPage: 2 }));
+      currentPagination.next(
+        Object.assign(new PaginationComponentOptions(), pagination, {
+          currentPage: 2,
+        }),
+      );
       testFixture.detectChanges();
 
       expectPages(testFixture, ['« Previous', '1', '+2', '3', '» Next']);
     });
 
     it('should render and respond to collectionSize change', () => {
-
       testComp.collectionSize = 30;
       testFixture.detectChanges();
       expectPages(testFixture, ['-« Previous', '+1', '2', '3', '» Next']);
@@ -246,28 +281,51 @@ describe('Pagination component', () => {
     });
 
     it('should render and respond to pageSize change', () => {
-      const paginationComponent: PaginationComponent = testFixture.debugElement.query(By.css('ds-pagination')).references.p;
+      const paginationComponent: PaginationComponent =
+        testFixture.debugElement.query(By.css('ds-pagination')).references.p;
 
       testComp.collectionSize = 30;
       testFixture.detectChanges();
       expectPages(testFixture, ['-« Previous', '+1', '2', '3', '» Next']);
 
-      currentPagination.next(Object.assign(new PaginationComponentOptions(), pagination, { pageSize: 5 }));
+      currentPagination.next(
+        Object.assign(new PaginationComponentOptions(), pagination, {
+          pageSize: 5,
+        }),
+      );
       testFixture.detectChanges();
 
-      expectPages(testFixture, ['-« Previous', '+1', '2', '3', '4', '5', '6', '» Next']);
+      expectPages(testFixture, [
+        '-« Previous',
+        '+1',
+        '2',
+        '3',
+        '4',
+        '5',
+        '6',
+        '» Next',
+      ]);
 
-      currentPagination.next(Object.assign(new PaginationComponentOptions(), pagination, { pageSize: 10 }));
+      currentPagination.next(
+        Object.assign(new PaginationComponentOptions(), pagination, {
+          pageSize: 10,
+        }),
+      );
       testFixture.detectChanges();
       expectPages(testFixture, ['-« Previous', '+1', '2', '3', '» Next']);
 
-      currentPagination.next(Object.assign(new PaginationComponentOptions(), pagination, { pageSize: 20 }));
+      currentPagination.next(
+        Object.assign(new PaginationComponentOptions(), pagination, {
+          pageSize: 20,
+        }),
+      );
       testFixture.detectChanges();
       expectPages(testFixture, ['-« Previous', '+1', '2', '» Next']);
     });
 
     it('should emit pageSizeChange event with correct value', fakeAsync(() => {
-      const paginationComponent: PaginationComponent = testFixture.debugElement.query(By.css('ds-pagination')).references.p;
+      const paginationComponent: PaginationComponent =
+        testFixture.debugElement.query(By.css('ds-pagination')).references.p;
 
       spyOn(testComp, 'pageSizeChanged');
 
@@ -282,11 +340,21 @@ describe('Pagination component', () => {
 
       changePage(testFixture, 3);
       tick();
-      expect(paginationService.updateRoute).toHaveBeenCalledWith('test', Object.assign({ page: 3 }), {},  false);
+      expect(paginationService.updateRoute).toHaveBeenCalledWith(
+        'test',
+        Object.assign({ page: 3 }),
+        {},
+        false,
+      );
 
       changePage(testFixture, 0);
       tick();
-      expect(paginationService.updateRoute).toHaveBeenCalledWith('test', Object.assign({ page: 2 }), {},  false);
+      expect(paginationService.updateRoute).toHaveBeenCalledWith(
+        'test',
+        Object.assign({ page: 2 }),
+        {},
+        false,
+      );
     }));
 
     it('should set correct pageSize route parameters', fakeAsync(() => {
@@ -296,21 +364,41 @@ describe('Pagination component', () => {
 
       changePageSize(testFixture, '20');
       tick();
-      expect(paginationService.updateRoute).toHaveBeenCalledWith('test', Object.assign({ page: 1, pageSize: 20 }), {},  false);
+      expect(paginationService.updateRoute).toHaveBeenCalledWith(
+        'test',
+        Object.assign({ page: 1, pageSize: 20 }),
+        {},
+        false,
+      );
     }));
 
     it('should respond to windows resize', () => {
-      const paginationComponent: PaginationComponent = testFixture.debugElement.query(By.css('ds-pagination')).references.p;
-      hostWindowServiceStub = testFixture.debugElement.injector.get(HostWindowService) as any;
+      const paginationComponent: PaginationComponent =
+        testFixture.debugElement.query(By.css('ds-pagination')).references.p;
+      hostWindowServiceStub = testFixture.debugElement.injector.get(
+        HostWindowService,
+      ) as any;
 
       hostWindowServiceStub.setWidth(400);
 
       hostWindowServiceStub.isXs().subscribe((status) => {
         paginationComponent.isXs = status;
         testFixture.detectChanges();
-        expectPages(testFixture, ['-« Previous', '+1', '2', '3', '4', '5', '-...', '10', '» Next']);
+        expectPages(testFixture, [
+          '-« Previous',
+          '+1',
+          '2',
+          '3',
+          '4',
+          '5',
+          '-...',
+          '10',
+          '» Next',
+        ]);
         de = testFixture.debugElement.query(By.css('ul.pagination'));
-        expect(de.nativeElement.classList.contains('pagination-sm')).toBeTruthy();
+        expect(
+          de.nativeElement.classList.contains('pagination-sm'),
+        ).toBeTruthy();
       });
     });
   });
@@ -335,7 +423,10 @@ describe('Pagination component', () => {
                       currentPage: paginationOptions.currentPage, totalItems: collectionSize }'> {{item}} </li>
         </ul>
       </ds-pagination>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -386,13 +477,11 @@ describe('Pagination component', () => {
       });
     });
   });
-
 });
 
 // declare a test component
 @Component({ selector: 'ds-test-cmp', template: '' })
 class TestComponent {
-
   collection: string[] = [];
   collectionSize: number;
   paginationOptions = new PaginationComponentOptions();
@@ -421,10 +510,10 @@ class TestComponent {
   }
 
   goPrev() {
-    this.objects.payload.currentPage --;
+    this.objects.payload.currentPage--;
   }
 
   goNext() {
-    this.objects.payload.currentPage ++;
+    this.objects.payload.currentPage++;
   }
 }

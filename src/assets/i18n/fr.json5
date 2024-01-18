@@ -1,5 +1,4 @@
 {
-
   // "401.help": "You're not authorized to access this page. You can use the button below to get back to the home page.",
   "401.help": "Vous n'êtes pas autorisé à accéder à cette page. Vous pouvez utiliser le bouton ci-dessous pour revenir à la page d'accueil.",
 
@@ -368,13 +367,13 @@
   "admin.access-control.epeople.table.edit": "Éditer",
 
   // "admin.access-control.epeople.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.edit": "Éditer \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.edit": 'Éditer "{{name}}"',
 
   // "admin.access-control.epeople.table.edit.buttons.edit-disabled": "You are not authorized to edit this group",
   "admin.access-control.epeople.table.edit.buttons.edit-disabled": "Vous n'êtes pas autorisé à modifier ce groupe",
 
   // "admin.access-control.epeople.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.remove": "Supprimer \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.remove": 'Supprimer "{{name}}"',
 
   // "admin.access-control.epeople.no-items": "No EPeople to show.",
   "admin.access-control.epeople.no-items": "Aucun(e) EPerson ne correspond à votre recherche",
@@ -407,28 +406,28 @@
   "admin.access-control.epeople.form.return": "Retour",
 
   // "admin.access-control.epeople.form.notification.created.success": "Successfully created EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.success": "EPerson \"{{name}}\" créé(e) avec succès",
+  "admin.access-control.epeople.form.notification.created.success": 'EPerson "{{name}}" créé(e) avec succès',
 
   // "admin.access-control.epeople.form.notification.created.failure": "Failed to create EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.failure": "Erreur lors de la création de l'EPerson \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.created.failure": 'Erreur lors de la création de l\'EPerson "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Failed to create EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Erreur lors de la création de l'EPerson \"{{name}}\", l'adresse électronique \"{{email}}\" est déjà utilisée.",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": 'Erreur lors de la création de l\'EPerson "{{name}}", l\'adresse électronique "{{email}}" est déjà utilisée.',
 
   // "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Failed to edit EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Erreur lors de la modification de l'EPerson \"{{name}}\", l'adresse électronique \"{{email}}\" est déjà utilisée.",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'Erreur lors de la modification de l\'EPerson "{{name}}", l\'adresse électronique "{{email}}" est déjà utilisée.',
 
   // "admin.access-control.epeople.form.notification.edited.success": "Successfully edited EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.success": "EPerson \"{{name}}\" modifié(e) avec succès",
+  "admin.access-control.epeople.form.notification.edited.success": 'EPerson "{{name}}" modifié(e) avec succès',
 
   // "admin.access-control.epeople.form.notification.edited.failure": "Failed to edit EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.failure": "Erreur lors de la modification de l'EPerson \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.edited.failure": 'Erreur lors de la modification de l\'EPerson "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.deleted.success": "Successfully deleted EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.success": "EPerson \"{{name}}\" supprimé(e) avec succès",
+  "admin.access-control.epeople.form.notification.deleted.success": 'EPerson "{{name}}" supprimé(e) avec succès',
 
   // "admin.access-control.epeople.form.notification.deleted.failure": "Failed to delete EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.failure": "Erreur lors de la suppression de l'EPerson \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'Erreur lors de la suppression de l\'EPerson "{{name}}"',
 
   // "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Member of these groups:",
   "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Membre des groupes suivants :",
@@ -449,10 +448,10 @@
   "admin.access-control.epeople.form.goToGroups": "Ajouter au(x) groupe(s)",
 
   // "admin.access-control.epeople.notification.deleted.failure": "Failed to delete EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.failure": "Erreur lors de la suppression de l'EPerson \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.failure": 'Erreur lors de la suppression de l\'EPerson "{{name}}"',
 
   // "admin.access-control.epeople.notification.deleted.success": "Successfully deleted EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.success": "EPerson \"{{name}}\" supprimé(e) avec succès",
+  "admin.access-control.epeople.notification.deleted.success": 'EPerson "{{name}}" supprimé(e) avec succès',
 
   // "admin.access-control.groups.title": "Groups",
   "admin.access-control.groups.title": "Groupes",
@@ -506,22 +505,22 @@
   "admin.access-control.groups.table.edit": "Éditer",
 
   // "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.edit": "Éditer \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.edit": 'Éditer "{{name}}"',
 
   // "admin.access-control.groups.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.remove": "Supprimer \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.remove": 'Supprimer "{{name}}"',
 
   // "admin.access-control.groups.no-items": "No groups found with this in their name or this as UUID",
   "admin.access-control.groups.no-items": "Aucun groupe ne correspond à ce nom ou cet identifiant UUID",
 
   // "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.success": "Groupe \"{{name}}\" supprimé avec succès",
+  "admin.access-control.groups.notification.deleted.success": 'Groupe "{{name}}" supprimé avec succès',
 
   // "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.failure.title": "Erreur lors de la suppression du groupe \"{{name}}\"",
+  "admin.access-control.groups.notification.deleted.failure.title": 'Erreur lors de la suppression du groupe "{{name}}"',
 
   // "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
-  "admin.access-control.groups.notification.deleted.failure.content": "Cause : \"{{cause}}\"",
+  "admin.access-control.groups.notification.deleted.failure.content": 'Cause : "{{cause}}"',
 
   // "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
   "admin.access-control.groups.form.alert.permanent": "Ce groupe est permanent et ne peut être édité ni supprimé. Vous pouvez toutefois ajouter ou retirer ici des membres au groupe.",
@@ -545,31 +544,31 @@
   "admin.access-control.groups.form.groupDescription": "Description",
 
   // "admin.access-control.groups.form.notification.created.success": "Successfully created Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.success": "Groupe \"{{name}}\" créé avec succès",
+  "admin.access-control.groups.form.notification.created.success": 'Groupe "{{name}}" créé avec succès',
 
   // "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.failure": "Erreur lors de la création du groupe \"{{name}}\"",
+  "admin.access-control.groups.form.notification.created.failure": 'Erreur lors de la création du groupe "{{name}}"',
 
   // "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Erreur lors de la création du groupe \"{{name}}\", veuillez vérifier que ce nom n'est pas déjà utilisé.",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": 'Erreur lors de la création du groupe "{{name}}", veuillez vérifier que ce nom n\'est pas déjà utilisé.',
 
   // "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.failure": "Erreur lors de la modification du groupe \"{{name}}\"",
+  "admin.access-control.groups.form.notification.edited.failure": 'Erreur lors de la modification du groupe "{{name}}"',
 
   // "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Name \"{{name}}\" already in use!",
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Le nom \"{{name}}\" est déjà utilisé!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": 'Le nom "{{name}}" est déjà utilisé!',
 
   // "admin.access-control.groups.form.notification.edited.success": "Successfully edited Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.success": "Groupe \"{{name}}\" édité avec succès",
+  "admin.access-control.groups.form.notification.edited.success": 'Groupe "{{name}}" édité avec succès',
 
   // "admin.access-control.groups.form.actions.delete": "Delete Group",
   "admin.access-control.groups.form.actions.delete": "Supprimer le groupe",
 
   // "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.header": "Supprimer le groupe \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.header": 'Supprimer le groupe "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.info": "Êtes-vous certain(e) de vouloir supprimer le groupe \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.info": 'Êtes-vous certain(e) de vouloir supprimer le groupe "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
   "admin.access-control.groups.form.delete-group.modal.cancel": "Annuler",
@@ -578,13 +577,13 @@
   "admin.access-control.groups.form.delete-group.modal.confirm": "Supprimer",
 
   // "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.success": "Groupe \"{{ name }}\" supprimé avec succès",
+  "admin.access-control.groups.form.notification.deleted.success": 'Groupe "{{ name }}" supprimé avec succès',
 
   // "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.title": "Erreur lors de la suppression du groupe \"{{ name }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.title": 'Erreur lors de la suppression du groupe "{{ name }}"',
 
   // "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.content": "Cause : \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'Cause : "{{ cause }}"',
 
   // "admin.access-control.groups.form.members-list.head": "EPeople",
   "admin.access-control.groups.form.members-list.head": "EPeople",
@@ -626,22 +625,22 @@
   "admin.access-control.groups.form.members-list.table.edit": "Supprimer / Ajouter",
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Supprimer le membre \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": 'Supprimer le membre "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "Membre \"{{name}}\" ajouté avec succès",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": 'Membre "{{name}}" ajouté avec succès',
 
   // "admin.access-control.groups.form.members-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "Erreur lors de l'ajout de \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'Erreur lors de l\'ajout de "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Membre \"{{name}}\" supprimé avec succès",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": 'Membre "{{name}}" supprimé avec succès',
 
   // "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Erreur lors de la suppression de \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'Erreur lors de la suppression de "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Ajouter le membre \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": 'Ajouter le membre "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "Pas de groupe actif, veuillez d'abord entrer un nom.",
@@ -653,7 +652,7 @@
   "admin.access-control.groups.form.members-list.no-items": "Aucun(e) EPerson ne correspond à cette recherche",
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "Une erreur s'est produite : \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'Une erreur s\'est produite : "{{cause}}"',
 
   // "admin.access-control.groups.form.subgroups-list.head": "Groups",
   "admin.access-control.groups.form.subgroups-list.head": "Groupes",
@@ -683,25 +682,25 @@
   "admin.access-control.groups.form.subgroups-list.table.edit": "Supprimer / Ajouter",
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remove subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Supprimer le sous-groupe \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": 'Supprimer le sous-groupe "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Add subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Ajouter le sous-groupe \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": 'Ajouter le sous-groupe "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Current group",
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Groupe actuel",
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Successfully added subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Sous-groupe \"{{name}}\" ajouté avec succès",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'Sous-groupe "{{name}}" ajouté avec succès',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Failed to add subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Erreur lors de la création du sous-groupe \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'Erreur lors de la création du sous-groupe "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Successfully deleted subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Sous-groupe \"{{name}}\" supprimé avec succès",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": 'Sous-groupe "{{name}}" supprimé avec succès',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Failed to delete subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Erreur lors de la suppression du sous-groupe \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": 'Erreur lors de la suppression du sous-groupe "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "Pas de groupe actif, veuillez d'abord entrer un nom.",
@@ -824,7 +823,7 @@
   "bitstream.edit.bitstream": "Bitstream : ",
 
   // "bitstream.edit.form.description.hint": "Optionally, provide a brief description of the file, for example \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
-  "bitstream.edit.form.description.hint": "Il vous est possible d'entrer une description facultative pour le fichier, par exemple \"<i>Article principal</i>\" ou \"<i>Données expérimentales</i>\".",
+  "bitstream.edit.form.description.hint": 'Il vous est possible d\'entrer une description facultative pour le fichier, par exemple "<i>Article principal</i>" ou "<i>Données expérimentales</i>".',
 
   // "bitstream.edit.form.description.label": "Description",
   "bitstream.edit.form.description.label": "Description",
@@ -845,13 +844,13 @@
   "bitstream.edit.form.newFormat.label": "Décrire un nouveau format",
 
   // "bitstream.edit.form.newFormat.hint": "The application you used to create the file, and the version number (for example, \"<i>ACMESoft SuperApp version 1.5</i>\").",
-  "bitstream.edit.form.newFormat.hint": "L'application utilisée pour créer le fichier et le numéro de version (par exemple, \"<i>ACMESoft SuperApp version 1.5</i>\").",
+  "bitstream.edit.form.newFormat.hint": 'L\'application utilisée pour créer le fichier et le numéro de version (par exemple, "<i>ACMESoft SuperApp version 1.5</i>").',
 
   // "bitstream.edit.form.primaryBitstream.label": "Primary bitstream",
   "bitstream.edit.form.primaryBitstream.label": "Bitstream principal",
 
   // "bitstream.edit.form.selectedFormat.hint": "If the format is not in the above list, <b>select \"format not in list\" above</b> and describe it under \"Describe new format\".",
-  "bitstream.edit.form.selectedFormat.hint": "Si le format souhaité ne se trouve pas dans la liste ci-dessus, <b>sélectionner \"Format non disponible dans la liste\" ci-dessus</b> et le décrire via \"Décrire un nouveau format\".",
+  "bitstream.edit.form.selectedFormat.hint": 'Si le format souhaité ne se trouve pas dans la liste ci-dessus, <b>sélectionner "Format non disponible dans la liste" ci-dessus</b> et le décrire via "Décrire un nouveau format".',
 
   // "bitstream.edit.form.selectedFormat.label": "Selected Format",
   "bitstream.edit.form.selectedFormat.label": "Format sélectionné",
@@ -1240,8 +1239,6 @@
   //"collection.edit.item.authorizations.show-bitstreams-button": "Show bitstream policies for bundle",
   "collection.edit.item.authorizations.show-bitstreams-button": "Afficher les politiques de Bitstream pour le Bundle",
 
-
-
   // "collection.edit.tabs.metadata.head": "Edit Metadata",
   "collection.edit.tabs.metadata.head": "Éditer les Métadonnées",
 
@@ -1327,7 +1324,7 @@
   "collection.edit.template.error": "Une erreur s'est produite lors de la récupération du modèle d'Item",
 
   // "collection.edit.template.head": "Edit Template Item for Collection \"{{ collection }}\"",
-  "collection.edit.template.head": "Éditer le modèle d'Item pour la collection \"{{ collection }}\"",
+  "collection.edit.template.head": 'Éditer le modèle d\'Item pour la collection "{{ collection }}"',
 
   // "collection.edit.template.label": "Template item",
   "collection.edit.template.label": "Modèle modèle d'Item",
@@ -1918,10 +1915,10 @@
   "confirmation-modal.export-metadata.confirm": "Exporter",
 
   // "confirmation-modal.delete-eperson.header": "Delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.header": "Supprimer l'EPerson \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.header": 'Supprimer l\'EPerson "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.info": "Are you sure you want to delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.info": "Êtes-vous certain(e) de vouloir supprimer l'EPerson \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.info": 'Êtes-vous certain(e) de vouloir supprimer l\'EPerson "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.cancel": "Cancel",
   "confirmation-modal.delete-eperson.cancel": "Annuler",
@@ -1966,7 +1963,7 @@
   "error.search-results": "Erreur lors de la récupération des résultats de recherche",
 
   // "error.invalid-search-query": "Search query is not valid. Please check <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> best practices for further information about this error.",
-  "error.invalid-search-query": "La requête de recherche n'est pas valide. Veuillez consulter les meilleures pratiques de la syntaxe des <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">requêtes Solr</a> pour plus d'informations sur cette erreur.",
+  "error.invalid-search-query": 'La requête de recherche n\'est pas valide. Veuillez consulter les meilleures pratiques de la syntaxe des <a href="https://solr.apache.org/guide/query-syntax-and-parsing.html" target="_blank">requêtes Solr</a> pour plus d\'informations sur cette erreur.',
 
   // "error.sub-collections": "Error fetching sub-collections",
   "error.sub-collections": "Erreur lors de la récupération des sous-collections",
@@ -2574,8 +2571,6 @@
   // "item.edit.register-doi.to-update": "The following DOI has already been minted and will be queued for registration online",
   "item.edit.register-doi.to-update": "Le DOI suivant a déjà été généré et sera mis en attente pour être inscrit",
 
-
-
   // "item.edit.item-mapper.buttons.add": "Map item to selected collections",
   "item.edit.item-mapper.buttons.add": "Associer l'Item aux collections sélectionnées",
 
@@ -3010,7 +3005,6 @@
 
   //"item.truncatable-part.show-less": "Collapse",
   "item.truncatable-part.show-less": "Réduire",
-
 
   // "item.page.abstract": "Abstract",
   "item.page.abstract": "Résumé",
@@ -4133,8 +4127,6 @@
 
   // "process.bulk.delete.success": "{{count}} process(es) have been succesfully deleted",
   "process.bulk.delete.success": "{{count}} processus ont été supprimés.",
-
-
 
   // "profile.breadcrumbs": "Update Profile",
   "profile.breadcrumbs": "Mise à jour profil",
@@ -5828,7 +5820,6 @@
   // "submission.sections.accesses.form.until-placeholder": "Until",
   "submission.sections.accesses.form.until-placeholder": "Jusqu'au",
 
-
   // "submission.sections.license.granted-label": "I confirm the license above",
   "submission.sections.license.granted-label": "J'approuve la licence ci-dessus",
 
@@ -5915,7 +5906,6 @@
 
   // "submission.sections.sherpa.error.message": "There was an error retrieving sherpa informations",
   "submission.sections.sherpa.error.message": "Une erreur s'est produite lors de la recherche d'infomation dans Sherpa.",
-
 
   // "submission.submit.breadcrumbs": "New submission",
   "submission.submit.breadcrumbs": "Nouvelle soumission",
@@ -6032,7 +6022,7 @@
   "thumbnail.person.placeholder": "Aucune photo de profil disponible",
 
   // "title": "DSpace",
-  "title": "DSpace",
+  title: "DSpace",
 
   // "vocabulary-treeview.header": "Hierarchical tree view",
   "vocabulary-treeview.header": "Arborescence hiérarchique",
@@ -6082,7 +6072,6 @@
 
   // "virtual-metadata.delete-relationship.modal-head": "Select the items for which you want to save the virtual metadata as real metadata",
   "virtual-metadata.delete-relationship.modal-head": "Sélectionner les Items pour lesquels vous souhaitez sauvegarder les métadonnées virtuelles en tant que métadonnées réelles",
-
 
   //"supervisedWorkspace.search.results.head": "Supervised Items",
   "supervisedWorkspace.search.results.head": "Documents supervisés",
@@ -6177,8 +6166,6 @@
   // "idle-modal.extend-session": "Extend session",
   "idle-modal.extend-session": "Prolonger la session",
 
-
-
   // "system-wide-alert-banner.retrieval.error": "Something went wrong retrieving the system-wide alert banner",
   "system-wide-alert-banner.retrieval.error": "Une erreur s'est produite lors de la récupération de la bannière du message d'avertissement",
 
@@ -6194,8 +6181,6 @@
   // "system-wide-alert-banner.countdown.minutes": "{{minutes}} minute(s):",
   "system-wide-alert-banner.countdown.minutes": "{{minutes}} minute(s):",
 
-
-
   // "menu.section.system-wide-alert": "System-wide Alert",
   "menu.section.system-wide-alert": "Messages d'avertissement",
 
@@ -6207,7 +6192,6 @@
 
   //"system-wide-alert.form.cancel": "Cancel",
   "system-wide-alert.form.cancel": "Annuler",
-
 
   //"system-wide-alert.form.save": "Save",
   "system-wide-alert.form.save": "Sauvegarder",
@@ -6250,7 +6234,4 @@
 
   //"admin.system-wide-alert.title": "System-wide Alerts",
   "admin.system-wide-alert.title": "Messages d'avertissement",
-
-
 }
-

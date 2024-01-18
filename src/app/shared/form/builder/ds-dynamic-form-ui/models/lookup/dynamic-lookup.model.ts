@@ -17,12 +17,13 @@ export interface DynamicLookupModelConfig extends DsDynamicInputModelConfig {
 }
 
 export class DynamicLookupModel extends DsDynamicInputModel {
-
   @serializable() maxOptions: number;
   @serializable() readonly type: string = DYNAMIC_FORM_CONTROL_TYPE_LOOKUP;
 
-  constructor(config: DynamicLookupModelConfig, layout?: DynamicFormControlLayout) {
-
+  constructor(
+    config: DynamicLookupModelConfig,
+    layout?: DynamicFormControlLayout,
+  ) {
     super(config, layout);
 
     this.autoComplete = AUTOCOMPLETE_OFF;

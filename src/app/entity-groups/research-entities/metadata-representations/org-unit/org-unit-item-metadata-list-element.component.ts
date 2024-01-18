@@ -12,5 +12,4 @@ import { ItemMetadataRepresentationListElementComponent } from '../../../../shar
 /**
  * The component for displaying an item of the type OrgUnit as a metadata field
  */
-export class OrgUnitItemMetadataListElementComponent extends ItemMetadataRepresentationListElementComponent {
-}
+export class OrgUnitItemMetadataListElementComponent extends ItemMetadataRepresentationListElementComponent {}

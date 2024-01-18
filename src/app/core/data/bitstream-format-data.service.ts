@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
-import {
-  createSelector,
-  select,
-  Store,
-} from '@ngrx/store';
+import { createSelector, select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  distinctUntilChanged,
-  map,
-  tap,
-} from 'rxjs/operators';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { FollowLinkConfig } from 'src/app/shared/utils/follow-link-config.model';
 
 import {
@@ -30,22 +22,13 @@ import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { NoContent } from '../shared/NoContent.model';
 import { sendRequest } from '../shared/request.operators';
 import { dataService } from './base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from './base/delete-data';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from './base/find-all-data';
+import { DeleteData, DeleteDataImpl } from './base/delete-data';
+import { FindAllData, FindAllDataImpl } from './base/find-all-data';
 import { IdentifiableDataService } from './base/identifiable-data.service';
 import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
-import {
-  PostRequest,
-  PutRequest,
-} from './request.models';
+import { PostRequest, PutRequest } from './request.models';
 import { RequestService } from './request.service';
 
 const bitstreamFormatsStateSelector = createSelector(
@@ -54,7 +37,8 @@ const bitstreamFormatsStateSelector = createSelector(
 );
 const selectedBitstreamFormatSelector = createSelector(
   bitstreamFormatsStateSelector,
-  (bitstreamFormatRegistryState: BitstreamFormatRegistryState) => bitstreamFormatRegistryState.selectedBitstreamFormats,
+  (bitstreamFormatRegistryState: BitstreamFormatRegistryState) =>
+    bitstreamFormatRegistryState.selectedBitstreamFormats,
 );
 
 /**
@@ -62,8 +46,10 @@ const selectedBitstreamFormatSelector = createSelector(
  */
 @Injectable()
 @dataService(BITSTREAM_FORMAT)
-export class BitstreamFormatDataService extends IdentifiableDataService<BitstreamFormat> implements FindAllData<BitstreamFormat>, DeleteData<BitstreamFormat> {
-
+export class BitstreamFormatDataService
+  extends IdentifiableDataService<BitstreamFormat>
+  implements FindAllData<BitstreamFormat>, DeleteData<BitstreamFormat>
+{
   protected linkPath = 'bitstreamformats';
 
   private findAllData: FindAllDataImpl<BitstreamFormat>;
@@ -77,10 +63,32 @@ export class BitstreamFormatDataService extends IdentifiableDataService<Bitstrea
     protected notificationsService: NotificationsService,
     protected store: Store<CoreState>,
   ) {
-    super('bitstreamformats', requestService, rdbService, objectCache, halService);
+    super(
+      'bitstreamformats',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -104,32 +112,42 @@ export class BitstreamFormatDataService extends IdentifiableDataService<Bitstrea
    * Update an existing bitstreamFormat
    * @param bitstreamFormat
    */
-  updateBitstreamFormat(bitstreamFormat: BitstreamFormat): Observable<RemoteData<BitstreamFormat>> {
+  updateBitstreamFormat(
+    bitstreamFormat: BitstreamFormat,
+  ): Observable<RemoteData<BitstreamFormat>> {
     const requestId = this.requestService.generateRequestId();
 
-    this.getUpdateEndpoint(bitstreamFormat.id).pipe(
-      distinctUntilChanged(),
-      map((endpointURL: string) =>
-        new PutRequest(requestId, endpointURL, bitstreamFormat)),
-      sendRequest(this.requestService)).subscribe();
+    this.getUpdateEndpoint(bitstreamFormat.id)
+      .pipe(
+        distinctUntilChanged(),
+        map(
+          (endpointURL: string) =>
+            new PutRequest(requestId, endpointURL, bitstreamFormat),
+        ),
+        sendRequest(this.requestService),
+      )
+      .subscribe();
 
     return this.rdbService.buildFromRequestUUID(requestId);
-
   }
 
   /**
    * Create a new BitstreamFormat
    * @param {BitstreamFormat} bitstreamFormat
    */
-  public createBitstreamFormat(bitstreamFormat: BitstreamFormat): Observable<RemoteData<BitstreamFormat>> {
+  public createBitstreamFormat(
+    bitstreamFormat: BitstreamFormat,
+  ): Observable<RemoteData<BitstreamFormat>> {
     const requestId = this.requestService.generateRequestId();
 
-    this.getCreateEndpoint().pipe(
-      map((endpointURL: string) => {
-        return new PostRequest(requestId, endpointURL, bitstreamFormat);
-      }),
-      sendRequest(this.requestService),
-    ).subscribe();
+    this.getCreateEndpoint()
+      .pipe(
+        map((endpointURL: string) => {
+          return new PostRequest(requestId, endpointURL, bitstreamFormat);
+        }),
+        sendRequest(this.requestService),
+      )
+      .subscribe();
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }
@@ -155,7 +173,9 @@ export class BitstreamFormatDataService extends IdentifiableDataService<Bitstrea
    * @param bitstreamFormat
    */
   public selectBitstreamFormat(bitstreamFormat: BitstreamFormat) {
-    this.store.dispatch(new BitstreamFormatsRegistrySelectAction(bitstreamFormat));
+    this.store.dispatch(
+      new BitstreamFormatsRegistrySelectAction(bitstreamFormat),
+    );
   }
 
   /**
@@ -163,7 +183,9 @@ export class BitstreamFormatDataService extends IdentifiableDataService<Bitstrea
    * @param bitstreamFormat
    */
   public deselectBitstreamFormat(bitstreamFormat: BitstreamFormat) {
-    this.store.dispatch(new BitstreamFormatsRegistryDeselectAction(bitstreamFormat));
+    this.store.dispatch(
+      new BitstreamFormatsRegistryDeselectAction(bitstreamFormat),
+    );
   }
 
   /**
@@ -173,7 +195,9 @@ export class BitstreamFormatDataService extends IdentifiableDataService<Bitstrea
     this.store.dispatch(new BitstreamFormatsRegistryDeselectAllAction());
   }
 
-  findByBitstream(bitstream: Bitstream): Observable<RemoteData<BitstreamFormat>> {
+  findByBitstream(
+    bitstream: Bitstream,
+  ): Observable<RemoteData<BitstreamFormat>> {
     return this.findByHref(bitstream._links.format.href);
   }
 
@@ -191,8 +215,18 @@ export class BitstreamFormatDataService extends IdentifiableDataService<Bitstrea
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<BitstreamFormat>[]): Observable<RemoteData<PaginatedList<BitstreamFormat>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<BitstreamFormat>[]
+  ): Observable<RemoteData<PaginatedList<BitstreamFormat>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -203,7 +237,10 @@ export class BitstreamFormatDataService extends IdentifiableDataService<Bitstrea
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
@@ -216,7 +253,10 @@ export class BitstreamFormatDataService extends IdentifiableDataService<Bitstrea
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
 }

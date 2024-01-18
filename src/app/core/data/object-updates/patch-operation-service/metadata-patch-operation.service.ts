@@ -19,7 +19,6 @@ import { PatchOperationService } from './patch-operation.service';
   providedIn: 'root',
 })
 export class MetadataPatchOperationService implements PatchOperationService {
-
   /**
    * Transform a {@link FieldUpdates} object into an array of fast-json-patch Operations for metadata values
    * This method first creates an array of {@link MetadataPatchOperation} wrapper operations, which are then
@@ -28,7 +27,8 @@ export class MetadataPatchOperationService implements PatchOperationService {
    * @param fieldUpdates
    */
   fieldUpdatesToPatchOperations(fieldUpdates: FieldUpdates): Operation[] {
-    const metadataPatch = this.fieldUpdatesToMetadataPatchOperations(fieldUpdates);
+    const metadataPatch =
+      this.fieldUpdatesToMetadataPatchOperations(fieldUpdates);
 
     // This map stores what metadata fields had a value deleted at which places
     // This is used to modify the place of operations to match previous operations
@@ -37,7 +37,11 @@ export class MetadataPatchOperationService implements PatchOperationService {
     metadataPatch.forEach((operation) => {
       // If this operation is removing or editing an existing value, first check the map for previous operations
       // If the map contains remove operations before this operation's place, lower the place by 1 for each
-      if ((operation.op === MetadataPatchRemoveOperation.operationType || operation.op === MetadataPatchReplaceOperation.operationType) && hasValue((operation as any).place)) {
+      if (
+        (operation.op === MetadataPatchRemoveOperation.operationType ||
+          operation.op === MetadataPatchReplaceOperation.operationType) &&
+        hasValue((operation as any).place)
+      ) {
         if (metadataRemoveMap.has(operation.field)) {
           metadataRemoveMap.get(operation.field).forEach((index) => {
             if (index < (operation as any).place) {
@@ -48,7 +52,10 @@ export class MetadataPatchOperationService implements PatchOperationService {
       }
 
       // If this is a remove operation, add its (updated) place to the map, so we can adjust following operations accordingly
-      if (operation.op === MetadataPatchRemoveOperation.operationType && hasValue((operation as any).place)) {
+      if (
+        operation.op === MetadataPatchRemoveOperation.operationType &&
+        hasValue((operation as any).place)
+      ) {
         if (!metadataRemoveMap.has(operation.field)) {
           metadataRemoveMap.set(operation.field, []);
         }
@@ -68,7 +75,9 @@ export class MetadataPatchOperationService implements PatchOperationService {
    * This information can then be modified before creating the actual patch
    * @param fieldUpdates
    */
-  fieldUpdatesToMetadataPatchOperations(fieldUpdates: FieldUpdates): MetadataPatchOperation[] {
+  fieldUpdatesToMetadataPatchOperations(
+    fieldUpdates: FieldUpdates,
+  ): MetadataPatchOperation[] {
     const metadataPatch = [];
 
     Object.keys(fieldUpdates).forEach((uuid) => {
@@ -82,13 +91,20 @@ export class MetadataPatchOperationService implements PatchOperationService {
       let operation: MetadataPatchOperation;
       switch (update.changeType) {
         case FieldChangeType.ADD:
-          operation = new MetadataPatchAddOperation(metadatum.key, [ val ]);
+          operation = new MetadataPatchAddOperation(metadatum.key, [val]);
           break;
         case FieldChangeType.REMOVE:
-          operation = new MetadataPatchRemoveOperation(metadatum.key, metadatum.place);
+          operation = new MetadataPatchRemoveOperation(
+            metadatum.key,
+            metadatum.place,
+          );
           break;
         case FieldChangeType.UPDATE:
-          operation = new MetadataPatchReplaceOperation(metadatum.key, metadatum.place, val);
+          operation = new MetadataPatchReplaceOperation(
+            metadatum.key,
+            metadatum.place,
+            val,
+          );
           break;
       }
 
@@ -97,5 +113,4 @@ export class MetadataPatchOperationService implements PatchOperationService {
 
     return metadataPatch;
   }
-
 }

@@ -11,7 +11,9 @@ import { QualityAssuranceBreadcrumbService } from './quality-assurance-breadcrum
 @Injectable({
   providedIn: 'root',
 })
-export class QualityAssuranceBreadcrumbResolver implements Resolve<BreadcrumbConfig<string>>  {
+export class QualityAssuranceBreadcrumbResolver
+  implements Resolve<BreadcrumbConfig<string>>
+{
   constructor(protected breadcrumbService: QualityAssuranceBreadcrumbService) {}
 
   /**
@@ -21,7 +23,10 @@ export class QualityAssuranceBreadcrumbResolver implements Resolve<BreadcrumbCon
    * @param {RouterStateSnapshot} state The current RouterStateSnapshot
    * @returns BreadcrumbConfig object
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): BreadcrumbConfig<string> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): BreadcrumbConfig<string> {
     const sourceId = route.paramMap.get('sourceId');
     const topicId = route.paramMap.get('topicId');
     let key = sourceId;

@@ -15,7 +15,6 @@ describe('ItemFromWorkspaceResolver', () => {
       item: createSuccessfulRemoteDataObject$({ id: itemUuid }),
     };
 
-
     beforeEach(() => {
       wfiService = {
         findById: (id: string) => createSuccessfulRemoteDataObject$(wfi),
@@ -24,14 +23,13 @@ describe('ItemFromWorkspaceResolver', () => {
     });
 
     it('should resolve a an item from from the workflow item with the correct id', (done) => {
-      resolver.resolve({ params: { id: uuid } } as any, undefined)
+      resolver
+        .resolve({ params: { id: uuid } } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (resolved) => {
-            expect(resolved.payload.id).toEqual(itemUuid);
-            done();
-          },
-        );
+        .subscribe((resolved) => {
+          expect(resolved.payload.id).toEqual(itemUuid);
+          done();
+        });
     });
   });
 });

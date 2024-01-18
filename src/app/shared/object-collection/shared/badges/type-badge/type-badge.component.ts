@@ -1,14 +1,8 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { getResourceTypeValueFor } from '../../../../../core/cache/object-cache.reducer';
 import { DSpaceObject } from '../../../../../core/shared/dspace-object.model';
-import {
-  hasValue,
-  isEmpty,
-} from '../../../../empty.util';
+import { hasValue, isEmpty } from '../../../../empty.util';
 
 @Component({
   selector: 'ds-type-badge',
@@ -18,7 +12,6 @@ import {
  * Component rendering the type of an item as a badge
  */
 export class TypeBadgeComponent {
-
   private _object: DSpaceObject;
   private _typeMessage: string;
 

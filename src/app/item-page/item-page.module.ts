@@ -111,13 +111,8 @@ const DECLARATIONS = [
     UploadModule,
     DsoPageModule,
   ],
-  declarations: [
-    ...DECLARATIONS,
-
-  ],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
 })
 export class ItemPageModule {
   /**
@@ -130,5 +125,4 @@ export class ItemPageModule {
       providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
-
 }

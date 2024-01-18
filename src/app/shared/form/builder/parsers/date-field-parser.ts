@@ -8,10 +8,13 @@ import { FormFieldMetadataValueObject } from '../models/form-field-metadata-valu
 import { FieldParser } from './field-parser';
 
 export class DateFieldParser extends FieldParser {
-
-  public modelFactory(fieldValue?: FormFieldMetadataValueObject | any, label?: boolean): any {
+  public modelFactory(
+    fieldValue?: FormFieldMetadataValueObject | any,
+    label?: boolean,
+  ): any {
     let malformedDate = false;
-    const inputDateModelConfig: DynamicDsDateControlModelConfig = this.initModel(null, false, true);
+    const inputDateModelConfig: DynamicDsDateControlModelConfig =
+      this.initModel(null, false, true);
     inputDateModelConfig.legend = this.configData.label;
     inputDateModelConfig.disabled = inputDateModelConfig.readOnly;
     inputDateModelConfig.toggleIcon = 'fas fa-calendar';
@@ -30,7 +33,6 @@ export class DateFieldParser extends FieldParser {
           }
         }
       }
-
     }
     const dateModel = new DynamicDsDatePickerModel(inputDateModelConfig);
     dateModel.malformedDate = malformedDate;

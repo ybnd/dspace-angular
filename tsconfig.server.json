@@ -3,15 +3,9 @@
   "compilerOptions": {
     "outDir": "./out-tsc/app-server",
     "target": "ES2022",
-    "types": [
-      "node",
-      "grecaptcha"
-    ]
+    "types": ["node", "grecaptcha"]
   },
-  "files": [
-    "src/main.server.ts",
-    "server.ts"
-  ],
+  "files": ["src/main.server.ts", "server.ts"],
   "angularCompilerOptions": {
     "entryModule": "./src/modules/app/server-app.module#ServerAppModule"
   }

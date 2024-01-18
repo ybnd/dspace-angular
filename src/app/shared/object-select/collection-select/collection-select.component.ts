@@ -17,7 +17,6 @@ import { ObjectSelectComponent } from '../object-select/object-select.component'
  * A component used to select collections from a specific list and returning the UUIDs of the selected collections
  */
 export class CollectionSelectComponent extends ObjectSelectComponent<Collection> {
-
   constructor(
     protected objectSelectService: ObjectSelectService,
     protected authorizationService: AuthorizationDataService,
@@ -32,5 +31,4 @@ export class CollectionSelectComponent extends ObjectSelectComponent<Collection>
       this.confirmButton = 'collection.select.confirm';
     }
   }
-
 }

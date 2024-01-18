@@ -1,12 +1,5 @@
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  DebugElement,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -25,7 +18,10 @@ describe('CollectionCurateComponent', () => {
   let dsoNameService;
 
   const collection = Object.assign(new Collection(), {
-    metadata: { 'dc.title': ['Collection Name'], 'dc.identifier.uri': [ { value: '123456789/1' }] },
+    metadata: {
+      'dc.title': ['Collection Name'],
+      'dc.identifier.uri': [{ value: '123456789/1' }],
+    },
   });
 
   beforeEach(waitForAsync(() => {
@@ -66,8 +62,7 @@ describe('CollectionCurateComponent', () => {
     });
     it('should contain the collection information provided in the route', () => {
       comp.dsoRD$.subscribe((value) => {
-        expect(value.payload.handle,
-        ).toEqual('123456789/1');
+        expect(value.payload.handle).toEqual('123456789/1');
       });
       comp.collectionName$.subscribe((value) => {
         expect(value).toEqual('Collection Name');

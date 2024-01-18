@@ -19,7 +19,12 @@ export class DSpaceObjectDataService extends IdentifiableDataService<DSpaceObjec
     protected halService: HALEndpointService,
   ) {
     super(
-      'dso', requestService, rdbService, objectCache, halService, undefined,
+      'dso',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      undefined,
       // interpolate uuid as query parameter
       (endpoint: string, resourceID: string): string => {
         return endpoint.replace(/{\?uuid}/, `?uuid=${resourceID}`);

@@ -1,8 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 
@@ -67,7 +64,9 @@ describe('NotificationsStateService', () => {
         init('empty');
         TestBed.configureTestingModule({
           imports: [
-            StoreModule.forRoot({ suggestionNotifications: suggestionNotificationsReducers } as any),
+            StoreModule.forRoot({
+              suggestionNotifications: suggestionNotificationsReducers,
+            } as any),
           ],
           providers: [
             provideMockStore({ initialState }),
@@ -159,7 +158,9 @@ describe('NotificationsStateService', () => {
         init('full');
         TestBed.configureTestingModule({
           imports: [
-            StoreModule.forRoot({ suggestionNotifications: suggestionNotificationsReducers } as any),
+            StoreModule.forRoot({
+              suggestionNotifications: suggestionNotificationsReducers,
+            } as any),
           ],
           providers: [
             provideMockStore({ initialState }),
@@ -255,7 +256,9 @@ describe('NotificationsStateService', () => {
         init('full');
         TestBed.configureTestingModule({
           imports: [
-            StoreModule.forRoot({ suggestionNotifications: suggestionNotificationsReducers } as any),
+            StoreModule.forRoot({
+              suggestionNotifications: suggestionNotificationsReducers,
+            } as any),
           ],
           providers: [
             provideMockStore({ initialState }),
@@ -275,8 +278,14 @@ describe('NotificationsStateService', () => {
         it('Should call store.dispatch', () => {
           const elementsPerPage = 3;
           const currentPage = 1;
-          const action = new RetrieveAllTopicsAction(elementsPerPage, currentPage);
-          service.dispatchRetrieveQualityAssuranceTopics(elementsPerPage, currentPage);
+          const action = new RetrieveAllTopicsAction(
+            elementsPerPage,
+            currentPage,
+          );
+          service.dispatchRetrieveQualityAssuranceTopics(
+            elementsPerPage,
+            currentPage,
+          );
           expect(serviceAsAny.store.dispatch).toHaveBeenCalledWith(action);
         });
       });
@@ -325,7 +334,9 @@ describe('NotificationsStateService', () => {
         init('empty');
         TestBed.configureTestingModule({
           imports: [
-            StoreModule.forRoot({ suggestionNotifications: suggestionNotificationsReducers } as any),
+            StoreModule.forRoot({
+              suggestionNotifications: suggestionNotificationsReducers,
+            } as any),
           ],
           providers: [
             provideMockStore({ initialState }),
@@ -417,7 +428,9 @@ describe('NotificationsStateService', () => {
         init('full');
         TestBed.configureTestingModule({
           imports: [
-            StoreModule.forRoot({ suggestionNotifications: suggestionNotificationsReducers } as any),
+            StoreModule.forRoot({
+              suggestionNotifications: suggestionNotificationsReducers,
+            } as any),
           ],
           providers: [
             provideMockStore({ initialState }),
@@ -513,7 +526,9 @@ describe('NotificationsStateService', () => {
         init('full');
         TestBed.configureTestingModule({
           imports: [
-            StoreModule.forRoot({ suggestionNotifications: suggestionNotificationsReducers } as any),
+            StoreModule.forRoot({
+              suggestionNotifications: suggestionNotificationsReducers,
+            } as any),
           ],
           providers: [
             provideMockStore({ initialState }),
@@ -533,13 +548,17 @@ describe('NotificationsStateService', () => {
         it('Should call store.dispatch', () => {
           const elementsPerPage = 3;
           const currentPage = 1;
-          const action = new RetrieveAllSourceAction(elementsPerPage, currentPage);
-          service.dispatchRetrieveQualityAssuranceSource(elementsPerPage, currentPage);
+          const action = new RetrieveAllSourceAction(
+            elementsPerPage,
+            currentPage,
+          );
+          service.dispatchRetrieveQualityAssuranceSource(
+            elementsPerPage,
+            currentPage,
+          );
           expect(serviceAsAny.store.dispatch).toHaveBeenCalledWith(action);
         });
       });
     });
   });
-
-
 });

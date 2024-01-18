@@ -6,20 +6,15 @@ import {
   DynamicFormControlRelation,
   serializable,
 } from '@ng-dynamic-forms/core';
-import {
-  BehaviorSubject,
-  Subject,
-} from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { MetadataValue } from '../../../../../../core/shared/metadata.models';
-import {
-  isEmpty,
-  isNotUndefined,
-} from '../../../../../empty.util';
+import { isEmpty, isNotUndefined } from '../../../../../empty.util';
 
 export const DYNAMIC_FORM_CONTROL_TYPE_DSDATEPICKER = 'DATE';
 
-export interface DynamicDsDateControlModelConfig extends DynamicDatePickerModelConfig {
+export interface DynamicDsDateControlModelConfig
+  extends DynamicDatePickerModelConfig {
   legend?: string;
   typeBindRelations?: DynamicFormControlRelation[];
   repeatable: boolean;
@@ -31,19 +26,25 @@ export interface DynamicDsDateControlModelConfig extends DynamicDatePickerModelC
 export class DynamicDsDatePickerModel extends DynamicDateControlModel {
   @serializable() hiddenUpdates: Subject<boolean>;
   @serializable() typeBindRelations: DynamicFormControlRelation[];
-  @serializable() readonly type: string = DYNAMIC_FORM_CONTROL_TYPE_DSDATEPICKER;
+  @serializable() readonly type: string =
+    DYNAMIC_FORM_CONTROL_TYPE_DSDATEPICKER;
   @serializable() metadataValue: MetadataValue;
   malformedDate: boolean;
   legend: string;
   hasLanguages = false;
   repeatable = false;
 
-  constructor(config: DynamicDsDateControlModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DynamicDsDateControlModelConfig,
+    layout?: DynamicFormControlLayout,
+  ) {
     super(config, layout);
     this.malformedDate = false;
     this.legend = config.legend;
     this.metadataValue = (config as any).metadataValue;
-    this.typeBindRelations = config.typeBindRelations ? config.typeBindRelations : [];
+    this.typeBindRelations = config.typeBindRelations
+      ? config.typeBindRelations
+      : [];
     this.hiddenUpdates = new BehaviorSubject<boolean>(this.hidden);
     this.repeatable = config.repeatable;
     // This was a subscription, then an async setTimeout, but it seems unnecessary
@@ -60,5 +61,4 @@ export class DynamicDsDatePickerModel extends DynamicDateControlModel {
       return this.getRootParent(model.parent);
     }
   }
-
 }

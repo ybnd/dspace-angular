@@ -1,11 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -68,9 +62,11 @@ describe('ItemListElementComponent', () => {
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -85,7 +81,9 @@ describe('ItemListElementComponent', () => {
     });
 
     it(`should contain a PublicationListElementComponent`, () => {
-      const publicationListElement = fixture.debugElement.query(By.css(`ds-item-search-result-list-element`));
+      const publicationListElement = fixture.debugElement.query(
+        By.css(`ds-item-search-result-list-element`),
+      );
       expect(publicationListElement).not.toBeNull();
     });
   });

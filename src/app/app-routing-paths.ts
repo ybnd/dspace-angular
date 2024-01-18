@@ -23,10 +23,21 @@ export function getBitstreamModuleRoute() {
 }
 
 export function getBitstreamDownloadRoute(bitstream): string {
-  return new URLCombiner(getBitstreamModuleRoute(), bitstream.uuid, 'download').toString();
+  return new URLCombiner(
+    getBitstreamModuleRoute(),
+    bitstream.uuid,
+    'download',
+  ).toString();
 }
-export function getBitstreamRequestACopyRoute(item, bitstream): { routerLink: string, queryParams: any } {
-  const url = new URLCombiner(getItemModuleRoute(), item.uuid, 'request-a-copy').toString();
+export function getBitstreamRequestACopyRoute(
+  item,
+  bitstream,
+): { routerLink: string; queryParams: any } {
+  const url = new URLCombiner(
+    getItemModuleRoute(),
+    item.uuid,
+    'request-a-copy',
+  ).toString();
   return {
     routerLink: url,
     queryParams: {
@@ -57,14 +68,12 @@ export const REGISTER_PATH = 'register';
 
 export function getRegisterRoute() {
   return `/${REGISTER_PATH}`;
-
 }
 
 export const FORGOT_PASSWORD_PATH = 'forgot';
 
 export function getForgotPasswordRoute() {
   return `/${FORGOT_PASSWORD_PATH}`;
-
 }
 
 export const WORKFLOW_ITEM_MODULE_PATH = 'workflowitems';

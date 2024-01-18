@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 /**
@@ -22,6 +19,5 @@ export class NameVariantModalComponent {
    */
   @Input() value: string;
 
-  constructor(public modal: NgbActiveModal) {
-  }
+  constructor(public modal: NgbActiveModal) {}
 }

@@ -1,7 +1,4 @@
-import {
-  Component,
-  Injector,
-} from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthorizationDataService } from 'src/app/core/data/feature-authorization/authorization-data.service';
 
@@ -25,14 +22,13 @@ export class DsoEditMenuComponent extends MenuComponent {
    */
   menuID = MenuID.DSO_EDIT;
 
-
-  constructor(protected menuService: MenuService,
-              protected injector: Injector,
-              public authorizationService: AuthorizationDataService,
-              public route: ActivatedRoute,
-              protected themeService: ThemeService,
+  constructor(
+    protected menuService: MenuService,
+    protected injector: Injector,
+    public authorizationService: AuthorizationDataService,
+    public route: ActivatedRoute,
+    protected themeService: ThemeService,
   ) {
     super(menuService, injector, authorizationService, route, themeService);
   }
-
 }

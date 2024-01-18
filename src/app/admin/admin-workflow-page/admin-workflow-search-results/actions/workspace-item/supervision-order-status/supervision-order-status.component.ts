@@ -6,16 +6,8 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  BehaviorSubject,
-  from,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  mergeMap,
-  reduce,
-} from 'rxjs/operators';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+import { map, mergeMap, reduce } from 'rxjs/operators';
 
 import { DSONameService } from '../../../../../../core/breadcrumbs/dso-name.service';
 import { RemoteData } from '../../../../../../core/data/remote-data';
@@ -26,7 +18,7 @@ import { isNotEmpty } from '../../../../../../shared/empty.util';
 
 export interface SupervisionOrderListEntry {
   supervisionOrder: SupervisionOrder;
-  group: Group
+  group: Group;
 }
 
 @Component({
@@ -35,7 +27,6 @@ export interface SupervisionOrderListEntry {
   styleUrls: ['./supervision-order-status.component.scss'],
 })
 export class SupervisionOrderStatusComponent implements OnChanges {
-
   /**
    * The list of supervision order object to show
    */
@@ -44,21 +35,21 @@ export class SupervisionOrderStatusComponent implements OnChanges {
   /**
    * List of the supervision orders combined with the group
    */
-  supervisionOrderEntries$: BehaviorSubject<SupervisionOrderListEntry[]> = new BehaviorSubject([]);
+  supervisionOrderEntries$: BehaviorSubject<SupervisionOrderListEntry[]> =
+    new BehaviorSubject([]);
 
-  @Output() delete: EventEmitter<SupervisionOrderListEntry> = new EventEmitter<SupervisionOrderListEntry>();
+  @Output() delete: EventEmitter<SupervisionOrderListEntry> =
+    new EventEmitter<SupervisionOrderListEntry>();
 
-  constructor(
-    public dsoNameService: DSONameService,
-  ) {
-  }
+  constructor(public dsoNameService: DSONameService) {}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes && changes.supervisionOrderList) {
-      this.getSupervisionOrderEntries(changes.supervisionOrderList.currentValue)
-        .subscribe((supervisionOrderEntries: SupervisionOrderListEntry[]) => {
-          this.supervisionOrderEntries$.next(supervisionOrderEntries);
-        });
+      this.getSupervisionOrderEntries(
+        changes.supervisionOrderList.currentValue,
+      ).subscribe((supervisionOrderEntries: SupervisionOrderListEntry[]) => {
+        this.supervisionOrderEntries$.next(supervisionOrderEntries);
+      });
     }
   }
 
@@ -67,22 +58,26 @@ export class SupervisionOrderStatusComponent implements OnChanges {
    *
    * @param supervisionOrderList
    */
-  private getSupervisionOrderEntries(supervisionOrderList: SupervisionOrder[]): Observable<SupervisionOrderListEntry[]> {
+  private getSupervisionOrderEntries(
+    supervisionOrderList: SupervisionOrder[],
+  ): Observable<SupervisionOrderListEntry[]> {
     return from(supervisionOrderList).pipe(
-      mergeMap((so: SupervisionOrder) => so.group.pipe(
-        getFirstCompletedRemoteData(),
-        map((sogRD: RemoteData<Group>) => {
-          if (sogRD.hasSucceeded) {
-            const entry: SupervisionOrderListEntry = {
-              supervisionOrder: so,
-              group: sogRD.payload,
-            };
-            return entry;
-          } else {
-            return null;
-          }
-        }),
-      )),
+      mergeMap((so: SupervisionOrder) =>
+        so.group.pipe(
+          getFirstCompletedRemoteData(),
+          map((sogRD: RemoteData<Group>) => {
+            if (sogRD.hasSucceeded) {
+              const entry: SupervisionOrderListEntry = {
+                supervisionOrder: so,
+                group: sogRD.payload,
+              };
+              return entry;
+            } else {
+              return null;
+            }
+          }),
+        ),
+      ),
       reduce((acc: SupervisionOrderListEntry[], value: any) => {
         if (isNotEmpty(value)) {
           return [...acc, value];

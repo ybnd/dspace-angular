@@ -1,4 +1,4 @@
-input[type="text"] {
+input[type='text'] {
   margin-top: calc(-0.5 * var(--bs-font-size-base));
   background-color: #fff !important;
   border-color: var(--ds-header-icon-color);
@@ -15,7 +15,8 @@ input[type="text"] {
   border: 0 !important;
 
   color: var(--ds-header-icon-color);
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     color: var(--ds-header-icon-color-hover);
   }
 }
@@ -25,6 +26,4 @@ input[type="text"] {
     max-width: 250px !important;
     width: 40vw !important;
   }
-
 }
-

@@ -35,14 +35,11 @@ const components = [
     StatisticsModule.forRoot(),
   ],
   declarations: components,
-  providers: [
-    UsageReportDataService,
-  ],
+  providers: [UsageReportDataService],
   exports: components,
 })
 
 /**
  * This module handles all components and pipes that are necessary for the search page
  */
-export class StatisticsPageModule {
-}
+export class StatisticsPageModule {}

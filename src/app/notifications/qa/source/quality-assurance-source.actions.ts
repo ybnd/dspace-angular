@@ -14,8 +14,12 @@ import { type } from '../../../shared/ngrx/type';
  */
 export const QualityAssuranceSourceActionTypes = {
   ADD_SOURCE: type('dspace/integration/notifications/qa/ADD_SOURCE'),
-  RETRIEVE_ALL_SOURCE: type('dspace/integration/notifications/qa/RETRIEVE_ALL_SOURCE'),
-  RETRIEVE_ALL_SOURCE_ERROR: type('dspace/integration/notifications/qa/RETRIEVE_ALL_SOURCE_ERROR'),
+  RETRIEVE_ALL_SOURCE: type(
+    'dspace/integration/notifications/qa/RETRIEVE_ALL_SOURCE',
+  ),
+  RETRIEVE_ALL_SOURCE_ERROR: type(
+    'dspace/integration/notifications/qa/RETRIEVE_ALL_SOURCE_ERROR',
+  ),
 };
 
 /**
@@ -76,7 +80,12 @@ export class AddSourceAction implements Action {
    * @param totalElements
    *    the total available Quality Assurance source
    */
-  constructor(source: QualityAssuranceSourceObject[], totalPages: number, currentPage: number, totalElements: number) {
+  constructor(
+    source: QualityAssuranceSourceObject[],
+    totalPages: number,
+    currentPage: number,
+    totalElements: number,
+  ) {
     this.payload = {
       source,
       totalPages,
@@ -84,7 +93,6 @@ export class AddSourceAction implements Action {
       totalElements,
     };
   }
-
 }
 
 /* tslint:enable:max-classes-per-file */
@@ -93,7 +101,7 @@ export class AddSourceAction implements Action {
  * Export a type alias of all actions in this action group
  * so that reducers can easily compose action types.
  */
-export type QualityAssuranceSourceActions
-  = RetrieveAllSourceAction
-  |RetrieveAllSourceErrorAction
-  |AddSourceAction;
+export type QualityAssuranceSourceActions =
+  | RetrieveAllSourceAction
+  | RetrieveAllSourceErrorAction
+  | AddSourceAction;

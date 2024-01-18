@@ -13,10 +13,7 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {
@@ -50,7 +47,6 @@ export const DATE_TEST_MODEL_CONFIG = {
 };
 
 describe('DsDatePickerComponent test suite', () => {
-
   let testComp: TestComponent;
   let dateComp: DsDatePickerComponent;
   let testFixture: ComponentFixture<TestComponent>;
@@ -64,25 +60,24 @@ describe('DsDatePickerComponent test suite', () => {
 
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-      imports: [
-        NgbModule,
-      ],
-      declarations: [
-        DsDatePickerComponent,
-        TestComponent,
-      ], // declare the test component
+      imports: [NgbModule],
+      declarations: [DsDatePickerComponent, TestComponent], // declare the test component
       providers: [
         ChangeDetectorRef,
         DsDatePickerComponent,
-        { provide: DynamicFormLayoutService, useValue: mockDynamicFormLayoutService },
-        { provide: DynamicFormValidationService, useValue: mockDynamicFormValidationService },
+        {
+          provide: DynamicFormLayoutService,
+          useValue: mockDynamicFormLayoutService,
+        },
+        {
+          provide: DynamicFormValidationService,
+          useValue: mockDynamicFormValidationService,
+        },
         { provide: Renderer2, useValue: renderer2 },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     });
-
   }));
 
   describe('', () => {
@@ -98,21 +93,24 @@ describe('DsDatePickerComponent test suite', () => {
             (change)='onValueChange($event)'
             (focus)='onFocus($event)'></ds-date-picker>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
-    it('should create DsDatePickerComponent', inject([DsDatePickerComponent], (app: DsDatePickerComponent) => {
-
-      expect(app).toBeDefined();
-    }));
-
+    it('should create DsDatePickerComponent', inject(
+      [DsDatePickerComponent],
+      (app: DsDatePickerComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
     describe('when init model value is empty', () => {
       beforeEach(() => {
-
         dateFixture = TestBed.createComponent(DsDatePickerComponent);
         dateComp = dateFixture.componentInstance; // FormComponent test instance
         dateComp.group = DATE_TEST_GROUP;
@@ -195,7 +193,6 @@ describe('DsDatePickerComponent test suite', () => {
 
     describe('when init model value is not empty', () => {
       beforeEach(() => {
-
         dateFixture = TestBed.createComponent(DsDatePickerComponent);
         dateComp = dateFixture.componentInstance; // FormComponent test instance
         dateComp.group = DATE_TEST_GROUP;
@@ -270,15 +267,21 @@ describe('DsDatePickerComponent test suite', () => {
         dateComp.onChange(event);
         dateComp.onChange(event1);
 
-        const yearElement = dateFixture.debugElement.query(By.css(`#${dateComp.model.id}_year`));
-        const monthElement = dateFixture.debugElement.query(By.css(`#${dateComp.model.id}_month`));
+        const yearElement = dateFixture.debugElement.query(
+          By.css(`#${dateComp.model.id}_year`),
+        );
+        const monthElement = dateFixture.debugElement.query(
+          By.css(`#${dateComp.model.id}_month`),
+        );
 
         yearElement.nativeElement.focus();
         dateFixture.detectChanges();
 
         expect(document.activeElement).toBe(yearElement.nativeElement);
 
-        dateFixture.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'tab' }));
+        dateFixture.nativeElement.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'tab' }),
+        );
         dateFixture.detectChanges();
 
         tick(200);
@@ -294,15 +297,21 @@ describe('DsDatePickerComponent test suite', () => {
         };
         dateComp.onChange(event);
 
-        const monthElement = dateFixture.debugElement.query(By.css(`#${dateComp.model.id}_month`));
-        const dayElement = dateFixture.debugElement.query(By.css(`#${dateComp.model.id}_day`));
+        const monthElement = dateFixture.debugElement.query(
+          By.css(`#${dateComp.model.id}_month`),
+        );
+        const dayElement = dateFixture.debugElement.query(
+          By.css(`#${dateComp.model.id}_day`),
+        );
 
         monthElement.nativeElement.focus();
         dateFixture.detectChanges();
 
         expect(document.activeElement).toBe(monthElement.nativeElement);
 
-        dateFixture.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'tab' }));
+        dateFixture.nativeElement.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'tab' }),
+        );
         dateFixture.detectChanges();
 
         tick(200);
@@ -318,15 +327,21 @@ describe('DsDatePickerComponent test suite', () => {
         };
         dateComp.onChange(event);
 
-        const monthElement = dateFixture.debugElement.query(By.css(`#${dateComp.model.id}_month`));
-        const dayElement = dateFixture.debugElement.query(By.css(`#${dateComp.model.id}_day`));
+        const monthElement = dateFixture.debugElement.query(
+          By.css(`#${dateComp.model.id}_month`),
+        );
+        const dayElement = dateFixture.debugElement.query(
+          By.css(`#${dateComp.model.id}_day`),
+        );
 
         dayElement.nativeElement.focus();
         dateFixture.detectChanges();
 
         expect(document.activeElement).toBe(dayElement.nativeElement);
 
-        dateFixture.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'shift.tab' }));
+        dateFixture.nativeElement.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'shift.tab' }),
+        );
         dateFixture.detectChanges();
 
         tick(200);
@@ -336,15 +351,21 @@ describe('DsDatePickerComponent test suite', () => {
       }));
 
       it('should move focus on year field when on month field and shift tab pressed', fakeAsync(() => {
-        const yearElement = dateFixture.debugElement.query(By.css(`#${dateComp.model.id}_year`));
-        const monthElement = dateFixture.debugElement.query(By.css(`#${dateComp.model.id}_month`));
+        const yearElement = dateFixture.debugElement.query(
+          By.css(`#${dateComp.model.id}_year`),
+        );
+        const monthElement = dateFixture.debugElement.query(
+          By.css(`#${dateComp.model.id}_month`),
+        );
 
         monthElement.nativeElement.focus();
         dateFixture.detectChanges();
 
         expect(document.activeElement).toBe(monthElement.nativeElement);
 
-        dateFixture.nativeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'shift.tab' }));
+        dateFixture.nativeElement.dispatchEvent(
+          new KeyboardEvent('keydown', { key: 'shift.tab' }),
+        );
         dateFixture.detectChanges();
 
         tick(200);
@@ -352,10 +373,8 @@ describe('DsDatePickerComponent test suite', () => {
 
         expect(document.activeElement).toBe(yearElement.nativeElement);
       }));
-
     });
   });
-
 });
 
 // declare a test component
@@ -364,11 +383,9 @@ describe('DsDatePickerComponent test suite', () => {
   template: ``,
 })
 class TestComponent {
-
   group = DATE_TEST_GROUP;
 
   model = new DynamicDsDatePickerModel(DATE_TEST_MODEL_CONFIG);
 
   showErrorMessages = false;
-
 }

@@ -1,11 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { of as observableOf } from 'rxjs';
@@ -21,7 +15,9 @@ import { TruncatePipe } from '../../../../utils/truncate.pipe';
 import { ItemGridElementComponent } from './item-grid-element.component';
 
 const mockItem = Object.assign(new Item(), {
-  bundles: createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [])),
+  bundles: createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), []),
+  ),
   metadata: {
     'dc.title': [
       {
@@ -67,9 +63,11 @@ describe('ItemGridElementComponent', () => {
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -84,7 +82,9 @@ describe('ItemGridElementComponent', () => {
     });
 
     it(`should contain a PublicationGridElementComponent`, () => {
-      const publicationGridElement = fixture.debugElement.query(By.css(`ds-item-search-result-grid-element`));
+      const publicationGridElement = fixture.debugElement.query(
+        By.css(`ds-item-search-result-grid-element`),
+      );
       expect(publicationGridElement).not.toBeNull();
     });
   });

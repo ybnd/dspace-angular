@@ -3,5 +3,4 @@ import { SearchResult } from '../../search/models/search-result.model';
 import { searchResultFor } from '../../search/search-result-element-decorator';
 
 @searchResultFor(Collection)
-export class CollectionSearchResult extends SearchResult<Collection> {
-}
+export class CollectionSearchResult extends SearchResult<Collection> {}

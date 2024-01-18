@@ -13,27 +13,12 @@ import { SharedModule } from '../shared.module';
 import { FileDropzoneNoUploaderComponent } from './file-dropzone-no-uploader/file-dropzone-no-uploader.component';
 import { UploaderComponent } from './uploader/uploader.component';
 
-const COMPONENTS = [
-  UploaderComponent,
-  FileDropzoneNoUploaderComponent,
-];
+const COMPONENTS = [UploaderComponent, FileDropzoneNoUploaderComponent];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-    FileUploadModule,
-  ],
-  declarations: [
-    ...COMPONENTS,
-  ],
-  providers: [
-    ...COMPONENTS,
-  ],
-  exports: [
-    ...COMPONENTS,
-    FileUploadModule,
-  ],
+  imports: [CommonModule, SharedModule, FileUploadModule],
+  declarations: [...COMPONENTS],
+  providers: [...COMPONENTS],
+  exports: [...COMPONENTS, FileUploadModule],
 })
-export class UploadModule {
-}
+export class UploadModule {}

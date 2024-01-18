@@ -20,7 +20,6 @@ const ENTRY_COMPONENTS = [
   ExpandableAdminSidebarSectionComponent,
 ];
 
-
 @NgModule({
   imports: [
     AdminRoutingModule,

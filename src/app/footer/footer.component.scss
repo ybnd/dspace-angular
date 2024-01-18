@@ -14,7 +14,6 @@
       height: var(--ds-footer-logo-height);
     }
 
-
     .top-footer {
       background-color: var(--ds-top-footer-bg);
       padding: var(--ds-footer-padding);
@@ -26,10 +25,11 @@
         li {
           display: inline-flex;
 
-          a, .btn-link {
+          a,
+          .btn-link {
             padding: 0 calc(var(--bs-spacer) / 2);
             color: inherit;
-            font-size: .875em;
+            font-size: 0.875em;
 
             &:focus {
               box-shadow: none;
@@ -46,12 +46,9 @@
               content: '';
               border-right: 1px var(--bs-secondary) solid;
             }
-
           }
         }
       }
     }
   }
 }
-
-

@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Context } from 'src/app/core/shared/context.model';
 
 import { DSpaceObject } from '../../../../core/shared/dspace-object.model';
@@ -21,14 +18,20 @@ export class ThemedBadgesComponent extends ThemedComponent<BadgesComponent> {
   @Input() context: Context;
   @Input() showAccessStatus = false;
 
-  protected inAndOutputNames: (keyof BadgesComponent & keyof this)[] = ['object', 'context', 'showAccessStatus'];
+  protected inAndOutputNames: (keyof BadgesComponent & keyof this)[] = [
+    'object',
+    'context',
+    'showAccessStatus',
+  ];
 
   protected getComponentName(): string {
     return 'BadgesComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../themes/${themeName}/app/shared/object-collection/shared/badges/badges.component`);
+    return import(
+      `../../../../../themes/${themeName}/app/shared/object-collection/shared/badges/badges.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

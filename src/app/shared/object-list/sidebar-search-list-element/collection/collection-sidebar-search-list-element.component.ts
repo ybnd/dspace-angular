@@ -7,8 +7,16 @@ import { CollectionSearchResult } from '../../../object-collection/shared/collec
 import { listableObjectComponent } from '../../../object-collection/shared/listable-object/listable-object.decorator';
 import { SidebarSearchListElementComponent } from '../sidebar-search-list-element.component';
 
-@listableObjectComponent(CollectionSearchResult, ViewMode.ListElement, Context.SideBarSearchModal)
-@listableObjectComponent(CollectionSearchResult, ViewMode.ListElement, Context.SideBarSearchModalCurrent)
+@listableObjectComponent(
+  CollectionSearchResult,
+  ViewMode.ListElement,
+  Context.SideBarSearchModal,
+)
+@listableObjectComponent(
+  CollectionSearchResult,
+  ViewMode.ListElement,
+  Context.SideBarSearchModalCurrent,
+)
 @Component({
   selector: 'ds-collection-sidebar-search-list-element',
   templateUrl: '../sidebar-search-list-element.component.html',
@@ -16,7 +24,10 @@ import { SidebarSearchListElementComponent } from '../sidebar-search-list-elemen
 /**
  * Component displaying a list element for a {@link CollectionSearchResult} within the context of a sidebar search modal
  */
-export class CollectionSidebarSearchListElementComponent extends SidebarSearchListElementComponent<CollectionSearchResult, Collection> {
+export class CollectionSidebarSearchListElementComponent extends SidebarSearchListElementComponent<
+  CollectionSearchResult,
+  Collection
+> {
   /**
    * Get the description of the Collection by returning its abstract
    */

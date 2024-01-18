@@ -1,10 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -12,23 +8,11 @@ import {
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { BrowserModule, By } from '@angular/platform-browser';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AuthService } from '../../../core/auth/auth.service';
 import { EpersonRegistrationService } from '../../../core/data/eperson-registration.service';
@@ -81,40 +65,54 @@ describe('EPersonFormComponent', () => {
 
   let paginationService;
 
-
-
   beforeEach(waitForAsync(() => {
     mockEPeople = [EPersonMock, EPersonMock2];
     ePersonDataServiceStub = {
       activeEPerson: null,
       allEpeople: mockEPeople,
       getEPeople(): Observable<RemoteData<PaginatedList<EPerson>>> {
-        return createSuccessfulRemoteDataObject$(buildPaginatedList(null, this.allEpeople));
+        return createSuccessfulRemoteDataObject$(
+          buildPaginatedList(null, this.allEpeople),
+        );
       },
       getActiveEPerson(): Observable<EPerson> {
         return observableOf(this.activeEPerson);
       },
-      searchByScope(scope: string, query: string, options: FindListOptions = {}): Observable<RemoteData<PaginatedList<EPerson>>> {
+      searchByScope(
+        scope: string,
+        query: string,
+        options: FindListOptions = {},
+      ): Observable<RemoteData<PaginatedList<EPerson>>> {
         if (scope === 'email') {
           const result = this.allEpeople.find((ePerson: EPerson) => {
             return ePerson.email === query;
           });
-          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [result]));
+          return createSuccessfulRemoteDataObject$(
+            buildPaginatedList(new PageInfo(), [result]),
+          );
         }
         if (scope === 'metadata') {
           if (query === '') {
-            return createSuccessfulRemoteDataObject$(buildPaginatedList(null, this.allEpeople));
+            return createSuccessfulRemoteDataObject$(
+              buildPaginatedList(null, this.allEpeople),
+            );
           }
           const result = this.allEpeople.find((ePerson: EPerson) => {
-            return (ePerson.name.includes(query) || ePerson.email.includes(query));
+            return (
+              ePerson.name.includes(query) || ePerson.email.includes(query)
+            );
           });
-          return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), [result]));
+          return createSuccessfulRemoteDataObject$(
+            buildPaginatedList(new PageInfo(), [result]),
+          );
         }
-        return createSuccessfulRemoteDataObject$(buildPaginatedList(null, this.allEpeople));
+        return createSuccessfulRemoteDataObject$(
+          buildPaginatedList(null, this.allEpeople),
+        );
       },
       deleteEPerson(ePerson: EPerson): Observable<boolean> {
         this.allEpeople = this.allEpeople.filter((ePerson2: EPerson) => {
-          return (ePerson2.uuid !== ePerson.uuid);
+          return ePerson2.uuid !== ePerson.uuid;
         });
         return observableOf(true);
       },
@@ -142,25 +140,47 @@ describe('EPersonFormComponent', () => {
       getEPersonByEmail(email): Observable<RemoteData<EPerson>> {
         return createSuccessfulRemoteDataObject$(null);
       },
-      findById(_id: string, _useCachedVersionIfAvailable = true, _reRequestOnStale = true, ..._linksToFollow: FollowLinkConfig<EPerson>[]): Observable<RemoteData<EPerson>> {
+      findById(
+        _id: string,
+        _useCachedVersionIfAvailable = true,
+        _reRequestOnStale = true,
+        ..._linksToFollow: FollowLinkConfig<EPerson>[]
+      ): Observable<RemoteData<EPerson>> {
         return createSuccessfulRemoteDataObject$(null);
       },
     };
-    builderService = Object.assign(getMockFormBuilderService(),{
+    builderService = Object.assign(getMockFormBuilderService(), {
       createFormGroup(formModel, options = null) {
         const controls = {};
-        formModel.forEach( model => {
+        formModel.forEach((model) => {
           model.parent = parent;
           const controlModel = model;
-          const controlState = { value: controlModel.value, disabled: controlModel.disabled };
-          const controlOptions = this.createAbstractControlOptions(controlModel.validators, controlModel.asyncValidators, controlModel.updateOn);
-          controls[model.id] = new UntypedFormControl(controlState, controlOptions);
+          const controlState = {
+            value: controlModel.value,
+            disabled: controlModel.disabled,
+          };
+          const controlOptions = this.createAbstractControlOptions(
+            controlModel.validators,
+            controlModel.asyncValidators,
+            controlModel.updateOn,
+          );
+          controls[model.id] = new UntypedFormControl(
+            controlState,
+            controlOptions,
+          );
         });
         return new UntypedFormGroup(controls, options);
       },
-      createAbstractControlOptions(validatorsConfig = null, asyncValidatorsConfig = null, updateOn = null) {
+      createAbstractControlOptions(
+        validatorsConfig = null,
+        asyncValidatorsConfig = null,
+        updateOn = null,
+      ) {
         return {
-          validators: validatorsConfig !== null ? this.getValidators(validatorsConfig) : null,
+          validators:
+            validatorsConfig !== null
+              ? this.getValidators(validatorsConfig)
+              : null,
         };
       },
       getValidators(validatorsConfig) {
@@ -169,30 +189,54 @@ describe('EPersonFormComponent', () => {
       getValidatorFns(validatorsConfig, validatorsToken = this._NG_VALIDATORS) {
         let validatorFns = [];
         if (this.isObject(validatorsConfig)) {
-          validatorFns = Object.keys(validatorsConfig).map(validatorConfigKey => {
-            const validatorConfigValue = validatorsConfig[validatorConfigKey];
-            if (this.isValidatorDescriptor(validatorConfigValue)) {
-              const descriptor = validatorConfigValue;
-              return this.getValidatorFn(descriptor.name, descriptor.args, validatorsToken);
-            }
-            return this.getValidatorFn(validatorConfigKey, validatorConfigValue, validatorsToken);
-          });
+          validatorFns = Object.keys(validatorsConfig).map(
+            (validatorConfigKey) => {
+              const validatorConfigValue = validatorsConfig[validatorConfigKey];
+              if (this.isValidatorDescriptor(validatorConfigValue)) {
+                const descriptor = validatorConfigValue;
+                return this.getValidatorFn(
+                  descriptor.name,
+                  descriptor.args,
+                  validatorsToken,
+                );
+              }
+              return this.getValidatorFn(
+                validatorConfigKey,
+                validatorConfigValue,
+                validatorsToken,
+              );
+            },
+          );
         }
         return validatorFns;
       },
-      getValidatorFn(validatorName, validatorArgs = null, validatorsToken = this._NG_VALIDATORS) {
+      getValidatorFn(
+        validatorName,
+        validatorArgs = null,
+        validatorsToken = this._NG_VALIDATORS,
+      ) {
         let validatorFn;
-        if (Validators.hasOwnProperty(validatorName)) { // Built-in Angular Validators
+        if (Validators.hasOwnProperty(validatorName)) {
+          // Built-in Angular Validators
           validatorFn = Validators[validatorName];
-        } else { // Custom Validators
-          if (this._DYNAMIC_VALIDATORS && this._DYNAMIC_VALIDATORS.has(validatorName)) {
+        } else {
+          // Custom Validators
+          if (
+            this._DYNAMIC_VALIDATORS &&
+            this._DYNAMIC_VALIDATORS.has(validatorName)
+          ) {
             validatorFn = this._DYNAMIC_VALIDATORS.get(validatorName);
           } else if (validatorsToken) {
-            validatorFn = validatorsToken.find(validator => validator.name === validatorName);
+            validatorFn = validatorsToken.find(
+              (validator) => validator.name === validatorName,
+            );
           }
         }
-        if (validatorFn === undefined) { // throw when no validator could be resolved
-          throw new Error(`validator '${validatorName}' is not provided via NG_VALIDATORS, NG_ASYNC_VALIDATORS or DYNAMIC_FORM_VALIDATORS`);
+        if (validatorFn === undefined) {
+          // throw when no validator could be resolved
+          throw new Error(
+            `validator '${validatorName}' is not provided via NG_VALIDATORS, NG_ASYNC_VALIDATORS or DYNAMIC_FORM_VALIDATORS`,
+          );
         }
         if (validatorArgs !== null) {
           return validatorFn(validatorArgs);
@@ -212,10 +256,11 @@ describe('EPersonFormComponent', () => {
     authService = new AuthServiceStub();
     authorizationService = jasmine.createSpyObj('authorizationService', {
       isAuthorized: observableOf(true),
-
     });
     groupsDataService = jasmine.createSpyObj('groupsDataService', {
-      findListByHref: createSuccessfulRemoteDataObject$(createPaginatedList([])),
+      findListByHref: createSuccessfulRemoteDataObject$(
+        createPaginatedList([]),
+      ),
       getGroupRegistryRouterLink: '',
     });
 
@@ -223,7 +268,12 @@ describe('EPersonFormComponent', () => {
     route = new ActivatedRouteStub();
     router = new RouterStub();
     TestBed.configureTestingModule({
-      imports: [CommonModule, NgbModule, FormsModule, ReactiveFormsModule, BrowserModule,
+      imports: [
+        CommonModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
+        BrowserModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -236,12 +286,23 @@ describe('EPersonFormComponent', () => {
         { provide: EPersonDataService, useValue: ePersonDataServiceStub },
         { provide: GroupDataService, useValue: groupsDataService },
         { provide: FormBuilderService, useValue: builderService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: AuthService, useValue: authService },
         { provide: AuthorizationDataService, useValue: authorizationService },
         { provide: PaginationService, useValue: paginationService },
-        { provide: RequestService, useValue: jasmine.createSpyObj('requestService', ['removeByHrefSubstring']) },
-        { provide: EpersonRegistrationService, useValue: epersonRegistrationService },
+        {
+          provide: RequestService,
+          useValue: jasmine.createSpyObj('requestService', [
+            'removeByHrefSubstring',
+          ]),
+        },
+        {
+          provide: EpersonRegistrationService,
+          useValue: epersonRegistrationService,
+        },
         { provide: ActivatedRoute, useValue: route },
         { provide: Router, useValue: router },
         EPeopleRegistryComponent,
@@ -250,9 +311,12 @@ describe('EPersonFormComponent', () => {
     }).compileComponents();
   }));
 
-  epersonRegistrationService = jasmine.createSpyObj('epersonRegistrationService', {
-    registerEmail: createSuccessfulRemoteDataObject$(null),
-  });
+  epersonRegistrationService = jasmine.createSpyObj(
+    'epersonRegistrationService',
+    {
+      registerEmail: createSuccessfulRemoteDataObject$(null),
+    },
+  );
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EPersonFormComponent);
@@ -307,11 +371,15 @@ describe('EPersonFormComponent', () => {
     describe('firstName, lastName and email should be required', () => {
       it('form should be invalid because the firstName is required', () => {
         expect(component.formGroup.controls.firstName.valid).toBeFalse();
-        expect(component.formGroup.controls.firstName.errors.required).toBeTrue();
+        expect(
+          component.formGroup.controls.firstName.errors.required,
+        ).toBeTrue();
       });
       it('form should be invalid because the lastName is required', () => {
         expect(component.formGroup.controls.lastName.valid).toBeFalse();
-        expect(component.formGroup.controls.lastName.errors.required).toBeTrue();
+        expect(
+          component.formGroup.controls.lastName.errors.required,
+        ).toBeTrue();
       });
       it('form should be invalid because the email is required', () => {
         expect(component.formGroup.controls.email.valid).toBeFalse();
@@ -340,7 +408,6 @@ describe('EPersonFormComponent', () => {
       });
     });
 
-
     describe('after inserting email wrong should show pattern validation error', () => {
       beforeEach(() => {
         component.formGroup.controls.email.setValue('test@test');
@@ -354,24 +421,28 @@ describe('EPersonFormComponent', () => {
 
     describe('after already utilized email', () => {
       beforeEach(() => {
-        const ePersonServiceWithEperson = Object.assign(ePersonDataServiceStub,{
-          getEPersonByEmail(): Observable<RemoteData<EPerson>> {
-            return createSuccessfulRemoteDataObject$(EPersonMock);
+        const ePersonServiceWithEperson = Object.assign(
+          ePersonDataServiceStub,
+          {
+            getEPersonByEmail(): Observable<RemoteData<EPerson>> {
+              return createSuccessfulRemoteDataObject$(EPersonMock);
+            },
           },
-        });
+        );
         component.formGroup.controls.email.setValue('test@test.com');
-        component.formGroup.controls.email.setAsyncValidators(ValidateEmailNotTaken.createValidator(ePersonServiceWithEperson));
+        component.formGroup.controls.email.setAsyncValidators(
+          ValidateEmailNotTaken.createValidator(ePersonServiceWithEperson),
+        );
         fixture.detectChanges();
       });
 
       it('email should not be valid because email is already taken', () => {
         expect(component.formGroup.controls.email.valid).toBeFalse();
-        expect(component.formGroup.controls.email.errors.emailTaken).toBeTruthy();
+        expect(
+          component.formGroup.controls.email.errors.emailTaken,
+        ).toBeTruthy();
       });
     });
-
-
-
   });
   describe('when submitting the form', () => {
     let firstName;
@@ -414,7 +485,9 @@ describe('EPersonFormComponent', () => {
     });
     describe('without active EPerson', () => {
       beforeEach(() => {
-        spyOn(ePersonDataServiceStub, 'getActiveEPerson').and.returnValue(observableOf(undefined));
+        spyOn(ePersonDataServiceStub, 'getActiveEPerson').and.returnValue(
+          observableOf(undefined),
+        );
         component.onSubmit();
         fixture.detectChanges();
       });
@@ -447,7 +520,9 @@ describe('EPersonFormComponent', () => {
           requireCertificate: requireCertificate,
           _links: undefined,
         });
-        spyOn(ePersonDataServiceStub, 'getActiveEPerson').and.returnValue(observableOf(expectedWithId));
+        spyOn(ePersonDataServiceStub, 'getActiveEPerson').and.returnValue(
+          observableOf(expectedWithId),
+        );
         component.onSubmit();
         fixture.detectChanges();
       });
@@ -495,7 +570,6 @@ describe('EPersonFormComponent', () => {
   });
 
   describe('delete', () => {
-
     let ePersonId;
     let eperson: EPerson;
     let modalService;
@@ -506,11 +580,16 @@ describe('EPersonFormComponent', () => {
       eperson = EPersonMock;
       component.epersonInitial = eperson;
       component.canDelete$ = observableOf(true);
-      spyOn(component.epersonService, 'getActiveEPerson').and.returnValue(observableOf(eperson));
+      spyOn(component.epersonService, 'getActiveEPerson').and.returnValue(
+        observableOf(eperson),
+      );
       modalService = (component as any).modalService;
-      spyOn(modalService, 'open').and.returnValue(Object.assign({ componentInstance: Object.assign({ response: observableOf(true) }) }));
+      spyOn(modalService, 'open').and.returnValue(
+        Object.assign({
+          componentInstance: Object.assign({ response: observableOf(true) }),
+        }),
+      );
       fixture.detectChanges();
-
     });
 
     it('the delete button should be visible if the ePerson can be deleted', () => {
@@ -527,7 +606,9 @@ describe('EPersonFormComponent', () => {
 
     it('should call the epersonFormComponent delete when clicked on the button', () => {
       spyOn(component, 'delete').and.stub();
-      spyOn(component.epersonService, 'deleteEPerson').and.returnValue(createSuccessfulRemoteDataObject$('No Content', 204));
+      spyOn(component.epersonService, 'deleteEPerson').and.returnValue(
+        createSuccessfulRemoteDataObject$('No Content', 204),
+      );
       const deleteButton = fixture.debugElement.query(By.css('.delete-button'));
       deleteButton.triggerEventHandler('click', null);
       expect(component.delete).toHaveBeenCalled();
@@ -535,12 +616,16 @@ describe('EPersonFormComponent', () => {
 
     it('should call the epersonService delete when clicked on the button', () => {
       // ePersonDataServiceStub.activeEPerson = eperson;
-      spyOn(component.epersonService, 'deleteEPerson').and.returnValue(createSuccessfulRemoteDataObject$('No Content', 204));
+      spyOn(component.epersonService, 'deleteEPerson').and.returnValue(
+        createSuccessfulRemoteDataObject$('No Content', 204),
+      );
       const deleteButton = fixture.debugElement.query(By.css('.delete-button'));
       expect(deleteButton.nativeElement.disabled).toBe(false);
       deleteButton.triggerEventHandler('click', null);
       fixture.detectChanges();
-      expect(component.epersonService.deleteEPerson).toHaveBeenCalledWith(eperson);
+      expect(component.epersonService.deleteEPerson).toHaveBeenCalledWith(
+        eperson,
+      );
     });
   });
 
@@ -559,7 +644,11 @@ describe('EPersonFormComponent', () => {
     });
 
     it('should call epersonRegistrationService.registerEmail', () => {
-      expect(epersonRegistrationService.registerEmail).toHaveBeenCalledWith(ePersonEmail, null, 'forgot');
+      expect(epersonRegistrationService.registerEmail).toHaveBeenCalledWith(
+        ePersonEmail,
+        null,
+        'forgot',
+      );
     });
   });
 });

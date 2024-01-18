@@ -1,28 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import {
   TranslateLoader,
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
-import {
-  cold,
-  hot,
-} from 'jasmine-marbles';
+import { cold, hot } from 'jasmine-marbles';
 import {
   Observable,
   of as observableOf,
   throwError as observableThrowError,
 } from 'rxjs';
 
-import {
-  AppState,
-  storeModuleConfig,
-} from '../../app.reducer';
+import { AppState, storeModuleConfig } from '../../app.reducer';
 import { SubmissionSectionModel } from '../../core/config/models/config-submission-section.model';
 import { HALEndpointService } from '../../core/shared/hal-endpoint.service';
 import { Item } from '../../core/shared/item.model';
@@ -90,13 +81,15 @@ describe('SubmissionObjectEffects test suite', () => {
   const submissionState: any = Object.assign({}, mockSubmissionState);
 
   beforeEach(() => {
-
     notificationsServiceStub = new NotificationsServiceStub();
-    submissionServiceStub =  new SubmissionServiceStub();
-    submissionJsonPatchOperationsServiceStub = new SubmissionJsonPatchOperationsServiceStub();
+    submissionServiceStub = new SubmissionServiceStub();
+    submissionJsonPatchOperationsServiceStub =
+      new SubmissionJsonPatchOperationsServiceStub();
     submissionObjectDataServiceStub = mockSubmissionObjectDataService;
 
-    submissionServiceStub.hasUnsavedModification.and.returnValue(observableOf(true));
+    submissionServiceStub.hasUnsavedModification.and.returnValue(
+      observableOf(true),
+    );
 
     TestBed.configureTestingModule({
       imports: [
@@ -116,12 +109,18 @@ describe('SubmissionObjectEffects test suite', () => {
         { provide: NotificationsService, useValue: notificationsServiceStub },
         { provide: SectionsService, useClass: SectionsServiceStub },
         { provide: SubmissionService, useValue: submissionServiceStub },
-        { provide: SubmissionJsonPatchOperationsService, useValue: submissionJsonPatchOperationsServiceStub },
+        {
+          provide: SubmissionJsonPatchOperationsService,
+          useValue: submissionJsonPatchOperationsServiceStub,
+        },
         { provide: WorkspaceitemDataService, useValue: {} },
         { provide: WorkflowItemDataService, useValue: {} },
         { provide: WorkflowItemDataService, useValue: {} },
         { provide: HALEndpointService, useValue: {} },
-        { provide: SubmissionObjectDataService, useValue: submissionObjectDataServiceStub },
+        {
+          provide: SubmissionObjectDataService,
+          useValue: submissionObjectDataServiceStub,
+        },
       ],
     });
 
@@ -147,14 +146,18 @@ describe('SubmissionObjectEffects test suite', () => {
       });
 
       const mappedActions = [];
-      (submissionDefinitionResponse.sections as SubmissionSectionModel[])
-        .forEach((sectionDefinition: SubmissionSectionModel) => {
-          const sectionId = sectionDefinition._links.self.href.substr(sectionDefinition._links.self.href.lastIndexOf('/') + 1);
-          const config = sectionDefinition._links.config.href || '';
-          const enabled = (sectionDefinition.mandatory);
-          const sectionData = {};
-          const sectionErrors = null;
-          mappedActions.push(new InitSectionAction(
+      (
+        submissionDefinitionResponse.sections as SubmissionSectionModel[]
+      ).forEach((sectionDefinition: SubmissionSectionModel) => {
+        const sectionId = sectionDefinition._links.self.href.substr(
+          sectionDefinition._links.self.href.lastIndexOf('/') + 1,
+        );
+        const config = sectionDefinition._links.config.href || '';
+        const enabled = sectionDefinition.mandatory;
+        const sectionData = {};
+        const sectionErrors = null;
+        mappedActions.push(
+          new InitSectionAction(
             submissionId,
             sectionId,
             sectionDefinition.header,
@@ -164,8 +167,10 @@ describe('SubmissionObjectEffects test suite', () => {
             sectionDefinition.visibility,
             enabled,
             sectionData,
-            sectionErrors));
-        });
+            sectionErrors,
+          ),
+        );
+      });
       mappedActions.push(new CompleteInitSubmissionFormAction(submissionId));
 
       const expected = cold('--(bcdefgh)', {
@@ -226,7 +231,9 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(observableOf(mockSubmissionRestResponse));
+      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(
+        observableOf(mockSubmissionRestResponse),
+      );
       const expected = cold('--b-', {
         b: new SaveSubmissionFormSuccessAction(
           submissionId,
@@ -248,7 +255,9 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(observableOf(mockSubmissionRestResponse));
+      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(
+        observableOf(mockSubmissionRestResponse),
+      );
       const expected = cold('--b-', {
         b: new SaveSubmissionFormSuccessAction(
           submissionId,
@@ -272,7 +281,9 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(observableOf(mockSubmissionRestResponse));
+      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(
+        observableOf(mockSubmissionRestResponse),
+      );
       const expected = cold('--b-', {
         b: new SaveSubmissionFormSuccessAction(
           submissionId,
@@ -299,9 +310,7 @@ describe('SubmissionObjectEffects test suite', () => {
         () => observableThrowError('Error'),
       );
       const expected = cold('--b-', {
-        b: new SaveSubmissionFormErrorAction(
-          submissionId,
-        ),
+        b: new SaveSubmissionFormErrorAction(submissionId),
       });
 
       expect(submissionObjectEffects.saveSubmission$).toBeObservable(expected);
@@ -319,7 +328,9 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(observableOf(mockSubmissionRestResponse));
+      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(
+        observableOf(mockSubmissionRestResponse),
+      );
       const expected = cold('--b-', {
         b: new SaveForLaterSubmissionFormSuccessAction(
           submissionId,
@@ -327,7 +338,9 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveForLaterSubmission$).toBeObservable(expected);
+      expect(submissionObjectEffects.saveForLaterSubmission$).toBeObservable(
+        expected,
+      );
     });
 
     it('should return a SAVE_SUBMISSION_FORM_ERROR action on error', () => {
@@ -344,17 +357,16 @@ describe('SubmissionObjectEffects test suite', () => {
         () => observableThrowError('Error'),
       );
       const expected = cold('--b-', {
-        b: new SaveSubmissionFormErrorAction(
-          submissionId,
-        ),
+        b: new SaveSubmissionFormErrorAction(submissionId),
       });
 
-      expect(submissionObjectEffects.saveForLaterSubmission$).toBeObservable(expected);
+      expect(submissionObjectEffects.saveForLaterSubmission$).toBeObservable(
+        expected,
+      );
     });
   });
 
   describe('saveSubmissionSuccess$', () => {
-
     it('should return a UPDATE_SECTION_DATA action for each updated section', () => {
       store.nextState({
         submission: {
@@ -362,10 +374,12 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsData,
-        errors: mockSectionsErrors,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsData,
+          errors: mockSectionsErrors,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_FORM_SUCCESS,
@@ -402,9 +416,10 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSuccess$).toBeObservable(expected);
+      expect(submissionObjectEffects.saveSubmissionSuccess$).toBeObservable(
+        expected,
+      );
       expect(notificationsServiceStub.success).toHaveBeenCalled();
-
     });
 
     it('should not display errors when notification are disabled and field are not touched', () => {
@@ -421,10 +436,12 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsData,
-        errors: mockSectionsErrors,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsData,
+          errors: mockSectionsErrors,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_SECTION_FORM_SUCCESS,
@@ -436,7 +453,9 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      const errorsToShowList = parseSectionErrors(mockSectionsErrorsTouchedField);
+      const errorsToShowList = parseSectionErrors(
+        mockSectionsErrorsTouchedField,
+      );
       const serverValidationErrorsList = parseSectionErrors(mockSectionsErrors);
       const expected = cold('--(bcd)-', {
         b: new UpdateSectionDataAction(
@@ -462,7 +481,9 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSectionSuccess$).toBeObservable(expected);
+      expect(
+        submissionObjectEffects.saveSubmissionSectionSuccess$,
+      ).toBeObservable(expected);
       expect(notificationsServiceStub.warning).not.toHaveBeenCalled();
     });
 
@@ -473,9 +494,11 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsData,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsData,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_FORM_SUCCESS,
@@ -510,7 +533,9 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSuccess$).toBeObservable(expected);
+      expect(submissionObjectEffects.saveSubmissionSuccess$).toBeObservable(
+        expected,
+      );
       expect(notificationsServiceStub.success).toHaveBeenCalled();
     });
 
@@ -521,10 +546,12 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsData,
-        errors: mockSectionsErrors,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsData,
+          errors: mockSectionsErrors,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_FORM_SUCCESS,
@@ -560,7 +587,9 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSuccess$).toBeObservable(expected);
+      expect(submissionObjectEffects.saveSubmissionSuccess$).toBeObservable(
+        expected,
+      );
       expect(notificationsServiceStub.warning).toHaveBeenCalled();
     });
 
@@ -571,10 +600,12 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsDataTwo,
-        errors: mockSectionsErrors,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsDataTwo,
+          errors: mockSectionsErrors,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_FORM_SUCCESS,
@@ -617,14 +648,14 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSuccess$).toBeObservable(expected);
+      expect(submissionObjectEffects.saveSubmissionSuccess$).toBeObservable(
+        expected,
+      );
       expect(submissionServiceStub.notifyNewSection).toHaveBeenCalled();
     });
-
   });
 
   describe('saveSubmissionSectionSuccess$', () => {
-
     it('should return a UPDATE_SECTION_DATA action for each updated section', () => {
       store.nextState({
         submission: {
@@ -632,10 +663,12 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsData,
-        errors: mockSectionsErrors,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsData,
+          errors: mockSectionsErrors,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_SECTION_FORM_SUCCESS,
@@ -671,8 +704,9 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSectionSuccess$).toBeObservable(expected);
-
+      expect(
+        submissionObjectEffects.saveSubmissionSectionSuccess$,
+      ).toBeObservable(expected);
     });
 
     it('should not display a success notification', () => {
@@ -682,9 +716,11 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsData,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsData,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_SECTION_FORM_SUCCESS,
@@ -719,7 +755,9 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSectionSuccess$).toBeObservable(expected);
+      expect(
+        submissionObjectEffects.saveSubmissionSectionSuccess$,
+      ).toBeObservable(expected);
       expect(notificationsServiceStub.success).not.toHaveBeenCalled();
     });
 
@@ -730,10 +768,12 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsData,
-        errors: mockSectionsErrors,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsData,
+          errors: mockSectionsErrors,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_SECTION_FORM_SUCCESS,
@@ -769,7 +809,9 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSectionSuccess$).toBeObservable(expected);
+      expect(
+        submissionObjectEffects.saveSubmissionSectionSuccess$,
+      ).toBeObservable(expected);
       expect(notificationsServiceStub.warning).not.toHaveBeenCalled();
     });
 
@@ -780,10 +822,12 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       } as any);
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsDataTwo,
-        errors: mockSectionsErrors,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsDataTwo,
+          errors: mockSectionsErrors,
+        }),
+      ];
       actions = hot('--a-', {
         a: {
           type: SubmissionObjectActionTypes.SAVE_SUBMISSION_SECTION_FORM_SUCCESS,
@@ -826,10 +870,11 @@ describe('SubmissionObjectEffects test suite', () => {
         ),
       });
 
-      expect(submissionObjectEffects.saveSubmissionSectionSuccess$).toBeObservable(expected);
+      expect(
+        submissionObjectEffects.saveSubmissionSectionSuccess$,
+      ).toBeObservable(expected);
       expect(submissionServiceStub.notifyNewSection).not.toHaveBeenCalled();
     });
-
   });
 
   describe('saveSection$', () => {
@@ -844,7 +889,9 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceID.and.returnValue(observableOf(mockSubmissionRestResponse));
+      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceID.and.returnValue(
+        observableOf(mockSubmissionRestResponse),
+      );
       const expected = cold('--b-', {
         b: new SaveSubmissionSectionFormSuccessAction(
           submissionId,
@@ -870,9 +917,7 @@ describe('SubmissionObjectEffects test suite', () => {
         () => observableThrowError('Error'),
       );
       const expected = cold('--b-', {
-        b: new SaveSubmissionSectionFormErrorAction(
-          submissionId,
-        ),
+        b: new SaveSubmissionSectionFormErrorAction(submissionId),
       });
 
       expect(submissionObjectEffects.saveSection$).toBeObservable(expected);
@@ -890,15 +935,17 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsDataTwo,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsDataTwo,
+        }),
+      ];
 
-      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(observableOf(response));
+      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(
+        observableOf(response),
+      );
       const expected = cold('--b-', {
-        b: new DepositSubmissionAction(
-          submissionId,
-        ),
+        b: new DepositSubmissionAction(submissionId),
       });
 
       expect(submissionObjectEffects.saveAndDeposit$).toBeObservable(expected);
@@ -921,15 +968,24 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      const response = [Object.assign({}, mockSubmissionRestResponse[0], {
-        sections: mockSectionsData,
-        errors: mockSectionsErrors,
-      })];
+      const response = [
+        Object.assign({}, mockSubmissionRestResponse[0], {
+          sections: mockSectionsData,
+          errors: mockSectionsErrors,
+        }),
+      ];
 
-      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(observableOf(response));
+      submissionJsonPatchOperationsServiceStub.jsonPatchByResourceType.and.returnValue(
+        observableOf(response),
+      );
 
       const expected = cold('--b-', {
-        b: new SaveSubmissionFormSuccessAction(submissionId, response as any[], false, true),
+        b: new SaveSubmissionFormSuccessAction(
+          submissionId,
+          response as any[],
+          false,
+          true,
+        ),
       });
 
       expect(submissionObjectEffects.saveAndDeposit$).toBeObservable(expected);
@@ -950,9 +1006,7 @@ describe('SubmissionObjectEffects test suite', () => {
         () => observableThrowError('Error'),
       );
       const expected = cold('--b-', {
-        b: new SaveSubmissionFormErrorAction(
-          submissionId,
-        ),
+        b: new SaveSubmissionFormErrorAction(submissionId),
       });
 
       expect(submissionObjectEffects.saveAndDeposit$).toBeObservable(expected);
@@ -976,14 +1030,16 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionServiceStub.depositSubmission.and.returnValue(observableOf(mockSubmissionRestResponse));
+      submissionServiceStub.depositSubmission.and.returnValue(
+        observableOf(mockSubmissionRestResponse),
+      );
       const expected = cold('--b-', {
-        b: new DepositSubmissionSuccessAction(
-          submissionId,
-        ),
+        b: new DepositSubmissionSuccessAction(submissionId),
       });
 
-      expect(submissionObjectEffects.depositSubmission$).toBeObservable(expected);
+      expect(submissionObjectEffects.depositSubmission$).toBeObservable(
+        expected,
+      );
     });
 
     it('should return a DEPOSIT_SUBMISSION_ERROR action on error', () => {
@@ -1002,16 +1058,16 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionServiceStub.depositSubmission.and.callFake(
-        () => observableThrowError('Error'),
+      submissionServiceStub.depositSubmission.and.callFake(() =>
+        observableThrowError('Error'),
       );
       const expected = cold('--b-', {
-        b: new DepositSubmissionErrorAction(
-          submissionId,
-        ),
+        b: new DepositSubmissionErrorAction(submissionId),
       });
 
-      expect(submissionObjectEffects.depositSubmission$).toBeObservable(expected);
+      expect(submissionObjectEffects.depositSubmission$).toBeObservable(
+        expected,
+      );
     });
   });
 
@@ -1118,14 +1174,16 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionServiceStub.discardSubmission.and.returnValue(observableOf(mockSubmissionRestResponse));
+      submissionServiceStub.discardSubmission.and.returnValue(
+        observableOf(mockSubmissionRestResponse),
+      );
       const expected = cold('--b-', {
-        b: new DiscardSubmissionSuccessAction(
-          submissionId,
-        ),
+        b: new DiscardSubmissionSuccessAction(submissionId),
       });
 
-      expect(submissionObjectEffects.discardSubmission$).toBeObservable(expected);
+      expect(submissionObjectEffects.discardSubmission$).toBeObservable(
+        expected,
+      );
     });
 
     it('should return a DISCARD_SUBMISSION_ERROR action on error', () => {
@@ -1144,16 +1202,16 @@ describe('SubmissionObjectEffects test suite', () => {
         },
       });
 
-      submissionServiceStub.discardSubmission.and.callFake(
-        () => observableThrowError('Error'),
+      submissionServiceStub.discardSubmission.and.callFake(() =>
+        observableThrowError('Error'),
       );
       const expected = cold('--b-', {
-        b: new DiscardSubmissionErrorAction(
-          submissionId,
-        ),
+        b: new DiscardSubmissionErrorAction(submissionId),
       });
 
-      expect(submissionObjectEffects.discardSubmission$).toBeObservable(expected);
+      expect(submissionObjectEffects.discardSubmission$).toBeObservable(
+        expected,
+      );
     });
   });
 

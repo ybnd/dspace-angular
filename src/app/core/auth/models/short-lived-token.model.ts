@@ -1,8 +1,4 @@
-import {
-  autoserialize,
-  autoserializeAs,
-  deserialize,
-} from 'cerialize';
+import { autoserialize, autoserializeAs, deserialize } from 'cerialize';
 
 import { typedObject } from '../../cache/builders/build-decorators';
 import { CacheableObject } from '../../cache/cacheable-object.model';
@@ -22,19 +18,19 @@ export class ShortLivedToken implements CacheableObject {
    */
   @excludeFromEquals
   @autoserialize
-    type: ResourceType;
+  type: ResourceType;
 
   /**
    * The value for this ShortLivedToken
    */
   @autoserializeAs('token')
-    value: string;
+  value: string;
 
   /**
    * The {@link HALLink}s for this ShortLivedToken
    */
   @deserialize
-    _links: {
+  _links: {
     self: HALLink;
   };
 }

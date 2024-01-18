@@ -14,14 +14,18 @@ import { BULK_ACCESS_CONDITION_OPTIONS } from './models/config-type';
 @Injectable({ providedIn: 'root' })
 @dataService(BULK_ACCESS_CONDITION_OPTIONS)
 export class BulkAccessConfigDataService extends ConfigDataService {
-
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('bulkaccessconditionoptions', requestService, rdbService, objectCache, halService);
+    super(
+      'bulkaccessconditionoptions',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
   }
-
 }

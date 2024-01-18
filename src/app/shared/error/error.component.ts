@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
@@ -13,7 +10,6 @@ import { AlertType } from '../alert/alert-type';
   templateUrl: './error.component.html',
 })
 export class ErrorComponent {
-
   @Input() message = 'Error...';
 
   /**
@@ -24,15 +20,15 @@ export class ErrorComponent {
 
   private subscription: Subscription;
 
-  constructor(private translate: TranslateService) {
-
-  }
+  constructor(private translate: TranslateService) {}
 
   ngOnInit() {
     if (this.message === undefined) {
-      this.subscription = this.translate.get('error.default').subscribe((message: string) => {
-        this.message = message;
-      });
+      this.subscription = this.translate
+        .get('error.default')
+        .subscribe((message: string) => {
+          this.message = message;
+        });
     }
   }
 

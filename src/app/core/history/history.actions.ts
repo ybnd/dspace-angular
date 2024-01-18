@@ -8,7 +8,6 @@ export const HistoryActionTypes = {
   GET_HISTORY: type('dspace/history/GET_HISTORY'),
 };
 
-
 export class AddUrlToHistoryAction implements Action {
   type = HistoryActionTypes.ADD_TO_HISTORY;
   payload: {
@@ -20,6 +19,4 @@ export class AddUrlToHistoryAction implements Action {
   }
 }
 
-
-export type HistoryAction
-  = AddUrlToHistoryAction;
+export type HistoryAction = AddUrlToHistoryAction;

@@ -81,7 +81,9 @@ describe('RelationshipDataService', () => {
   const item = Object.assign(new Item(), {
     id: 'publication',
     uuid: 'publication',
-    relationships: createSuccessfulRemoteDataObject$(createPaginatedList(relationships)),
+    relationships: createSuccessfulRemoteDataObject$(
+      createPaginatedList(relationships),
+    ),
     _links: {
       relationships: { href: restEndpointURL + '/publication/relationships' },
       self: { href: itemSelfLink },
@@ -109,23 +111,29 @@ describe('RelationshipDataService', () => {
   relationship2.rightItem = createSuccessfulRemoteDataObject$(item);
   const relatedItems = [relatedItem1, relatedItem2];
 
-  const buildList$ = createSuccessfulRemoteDataObject$(createPaginatedList(relatedItems));
-  const relationships$ = createSuccessfulRemoteDataObject$(createPaginatedList(relationships));
+  const buildList$ = createSuccessfulRemoteDataObject$(
+    createPaginatedList(relatedItems),
+  );
+  const relationships$ = createSuccessfulRemoteDataObject$(
+    createPaginatedList(relationships),
+  );
   const rdbService = getMockRemoteDataBuildServiceHrefMap(undefined, {
-    'href': buildList$,
+    href: buildList$,
     'https://rest.api/core/publication/relationships': relationships$,
   });
   const objectCache = Object.assign({
     /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-    remove: () => {
-    },
+    remove: () => {},
     hasBySelfLinkObservable: () => observableOf(false),
     hasByHref$: () => observableOf(false),
     /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
   }) as ObjectCacheService;
 
   const itemService = jasmine.createSpyObj('itemService', {
-    findById: (uuid) => createSuccessfulRemoteDataObject(relatedItems.find((relatedItem) => relatedItem.id === uuid)),
+    findById: (uuid) =>
+      createSuccessfulRemoteDataObject(
+        relatedItems.find((relatedItem) => relatedItem.id === uuid),
+      ),
     findByHref: createSuccessfulRemoteDataObject$(relatedItems[0]),
   });
 
@@ -153,33 +161,48 @@ describe('RelationshipDataService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new RelationshipDataService(null, null, null, null, null, null, null);
+    const initService = () =>
+      new RelationshipDataService(null, null, null, null, null, null, null);
 
     testSearchDataImplementation(initService);
   });
 
   describe('deleteRelationship', () => {
     beforeEach(() => {
-      spyOn(service, 'findById').and.returnValue(createSuccessfulRemoteDataObject$(relationship1));
+      spyOn(service, 'findById').and.returnValue(
+        createSuccessfulRemoteDataObject$(relationship1),
+      );
       spyOn(objectCache, 'remove');
       service.deleteRelationship(relationships[0].uuid, 'right').subscribe();
     });
 
     it('should send a DeleteRequest', () => {
-      const expected = new DeleteRequest(requestService.generateRequestId(), relationshipsEndpointURL + '/' + relationship1.uuid + '?copyVirtualMetadata=right');
+      const expected = new DeleteRequest(
+        requestService.generateRequestId(),
+        relationshipsEndpointURL +
+          '/' +
+          relationship1.uuid +
+          '?copyVirtualMetadata=right',
+      );
       expect(requestService.send).toHaveBeenCalledWith(expected);
     });
 
     it('should clear the cache of the related items', () => {
-      expect(objectCache.remove).toHaveBeenCalledWith(relatedItem1._links.self.href);
+      expect(objectCache.remove).toHaveBeenCalledWith(
+        relatedItem1._links.self.href,
+      );
       expect(objectCache.remove).toHaveBeenCalledWith(item._links.self.href);
-      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(relatedItem1.uuid);
-      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(item.uuid);
+      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(
+        relatedItem1.uuid,
+      );
+      expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(
+        item.uuid,
+      );
     });
   });
 
   describe('getItemRelationshipsArray', () => {
-    it('should return the item\'s relationships in the form of an array', (done) => {
+    it("should return the item's relationships in the form of an array", (done) => {
       service.getItemRelationshipsArray(item).subscribe((result) => {
         expect(result).toEqual(relationships);
         done();
@@ -194,12 +217,15 @@ describe('RelationshipDataService', () => {
     let mockOptions;
 
     beforeEach(() => {
-      relationsList = buildPaginatedList(new PageInfo({
-        elementsPerPage: relationships.length,
-        totalElements: relationships.length,
-        currentPage: 1,
-        totalPages: 1,
-      }), relationships);
+      relationsList = buildPaginatedList(
+        new PageInfo({
+          elementsPerPage: relationships.length,
+          totalElements: relationships.length,
+          currentPage: 1,
+          totalPages: 1,
+        }),
+        relationships,
+      );
       mockItem = { uuid: 'someid' } as Item;
       mockLabel = 'label';
       mockOptions = { label: 'options' } as FindListOptions;
@@ -210,34 +236,32 @@ describe('RelationshipDataService', () => {
 
     it('should call getItemRelationshipsByLabel with the correct params', (done) => {
       mockOptions = Object.assign(mockOptions, { fetchThumbnail: true });
-      service.getRelatedItemsByLabel(
-        mockItem,
-        mockLabel,
-        mockOptions,
-      ).subscribe((result) => {
-        expect(service.getItemRelationshipsByLabel).toHaveBeenCalledWith(
-          mockItem,
-          mockLabel,
-          mockOptions,
-          true,
-          true,
-          followLink('leftItem',{}, followLink('thumbnail')),
-          followLink('rightItem',{}, followLink('thumbnail')),
-          followLink('relationshipType'),
-        );
-        done();
-      });
+      service
+        .getRelatedItemsByLabel(mockItem, mockLabel, mockOptions)
+        .subscribe((result) => {
+          expect(service.getItemRelationshipsByLabel).toHaveBeenCalledWith(
+            mockItem,
+            mockLabel,
+            mockOptions,
+            true,
+            true,
+            followLink('leftItem', {}, followLink('thumbnail')),
+            followLink('rightItem', {}, followLink('thumbnail')),
+            followLink('relationshipType'),
+          );
+          done();
+        });
     });
 
     it('should use the paginatedRelationsToItems operator', (done) => {
-      service.getRelatedItemsByLabel(
-        mockItem,
-        mockLabel,
-        mockOptions,
-      ).subscribe((result) => {
-        expect((service as any).paginatedRelationsToItems).toHaveBeenCalledWith(mockItem.uuid);
-        done();
-      });
+      service
+        .getRelatedItemsByLabel(mockItem, mockLabel, mockOptions)
+        .subscribe((result) => {
+          expect(
+            (service as any).paginatedRelationsToItems,
+          ).toHaveBeenCalledWith(mockItem.uuid);
+          done();
+        });
     });
   });
 
@@ -311,10 +335,13 @@ describe('RelationshipDataService', () => {
       leftItem: createSuccessfulRemoteDataObject$(parentItem),
       rightItem: createSuccessfulRemoteDataObject$(relatedCreator),
     });
-    const creatorRelationUnauthorized: Relationship = Object.assign(new Relationship(), {
-      leftItem: createSuccessfulRemoteDataObject$(parentItem),
-      rightItem: createFailedRemoteDataObject$('Unauthorized', 401),
-    });
+    const creatorRelationUnauthorized: Relationship = Object.assign(
+      new Relationship(),
+      {
+        leftItem: createSuccessfulRemoteDataObject$(parentItem),
+        rightItem: createFailedRemoteDataObject$('Unauthorized', 401),
+      },
+    );
 
     let metadatum: MetadataValue;
 
@@ -332,16 +359,20 @@ describe('RelationshipDataService', () => {
       };
     });
 
-    describe('when the metadata isn\'t virtual', () => {
+    describe("when the metadata isn't virtual", () => {
       beforeEach(() => {
         metadatum = parentItem.metadata['dc.contributor.author'][1];
       });
 
       it('should return a plain text MetadatumRepresentation', (done) => {
-        service.resolveMetadataRepresentation(metadatum, parentItem, 'Person').subscribe((result) => {
-          expect(result.representationType).toEqual(MetadataRepresentationType.PlainText);
-          done();
-        });
+        service
+          .resolveMetadataRepresentation(metadatum, parentItem, 'Person')
+          .subscribe((result) => {
+            expect(result.representationType).toEqual(
+              MetadataRepresentationType.PlainText,
+            );
+            done();
+          });
       });
     });
 
@@ -351,12 +382,16 @@ describe('RelationshipDataService', () => {
       });
 
       it('should return a ItemMetadataRepresentation with the correct value', (done) => {
-        service.resolveMetadataRepresentation(metadatum, parentItem, 'Person').subscribe((result) => {
-          expect(result.representationType).toEqual(MetadataRepresentationType.Item);
-          expect(result.getValue()).toEqual(metadatum.value);
-          expect((result as any).id).toEqual(relatedAuthor.id);
-          done();
-        });
+        service
+          .resolveMetadataRepresentation(metadatum, parentItem, 'Person')
+          .subscribe((result) => {
+            expect(result.representationType).toEqual(
+              MetadataRepresentationType.Item,
+            );
+            expect(result.getValue()).toEqual(metadatum.value);
+            expect((result as any).id).toEqual(relatedAuthor.id);
+            done();
+          });
       });
     });
 
@@ -366,12 +401,16 @@ describe('RelationshipDataService', () => {
       });
 
       it('should return a ItemMetadataRepresentation with the correct value', (done) => {
-        service.resolveMetadataRepresentation(metadatum, parentItem, 'Person').subscribe((result) => {
-          expect(result.representationType).toEqual(MetadataRepresentationType.Item);
-          expect(result.getValue()).toEqual(metadatum.value);
-          expect((result as any).id).toEqual(relatedCreator.id);
-          done();
-        });
+        service
+          .resolveMetadataRepresentation(metadatum, parentItem, 'Person')
+          .subscribe((result) => {
+            expect(result.representationType).toEqual(
+              MetadataRepresentationType.Item,
+            );
+            expect(result.getValue()).toEqual(metadatum.value);
+            expect((result as any).id).toEqual(relatedCreator.id);
+            done();
+          });
       });
     });
 
@@ -381,10 +420,14 @@ describe('RelationshipDataService', () => {
       });
 
       it('should return an authority controlled MetadatumRepresentation', (done) => {
-        service.resolveMetadataRepresentation(metadatum, parentItem, 'Person').subscribe((result) => {
-          expect(result.representationType).toEqual(MetadataRepresentationType.AuthorityControlled);
-          done();
-        });
+        service
+          .resolveMetadataRepresentation(metadatum, parentItem, 'Person')
+          .subscribe((result) => {
+            expect(result.representationType).toEqual(
+              MetadataRepresentationType.AuthorityControlled,
+            );
+            done();
+          });
       });
     });
   });

@@ -1,18 +1,11 @@
 import { DOCUMENT } from '@angular/common';
-import {
-  Renderer2,
-  RendererFactory2,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { Renderer2, RendererFactory2 } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { MockProvider } from 'ng-mocks';
 
 import { LinkHeadService } from './link-head.service';
 
 describe('LinkHeadService', () => {
-
   let service: LinkHeadService;
 
   const renderer2: Renderer2 = {
@@ -34,7 +27,10 @@ describe('LinkHeadService', () => {
   }));
 
   beforeEach(() => {
-    service = new LinkHeadService(TestBed.inject(RendererFactory2), TestBed.inject(DOCUMENT));
+    service = new LinkHeadService(
+      TestBed.inject(RendererFactory2),
+      TestBed.inject(DOCUMENT),
+    );
   });
 
   describe('link', () => {
@@ -48,5 +44,4 @@ describe('LinkHeadService', () => {
       expect(link).not.toBeUndefined();
     });
   });
-
 });

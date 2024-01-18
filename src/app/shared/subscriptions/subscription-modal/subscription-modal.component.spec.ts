@@ -1,27 +1,14 @@
 import { CommonModule } from '@angular/common';
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   ReactiveFormsModule,
   UntypedFormControl,
   UntypedFormGroup,
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  NgbActiveModal,
-  NgbModalModule,
-} from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { NgbActiveModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { AuthService } from '../../../core/auth/auth.service';
 import { buildPaginatedList } from '../../../core/data/paginated-list.model';
@@ -51,14 +38,13 @@ describe('SubscriptionModalComponent', () => {
   });
 
   const emptyPageInfo = Object.assign(new PageInfo(), {
-    'elementsPerPage': 0,
-    'totalElements': 0,
+    elementsPerPage: 0,
+    totalElements: 0,
   });
 
-
   const pageInfo = Object.assign(new PageInfo(), {
-    'elementsPerPage': 2,
-    'totalElements': 2,
+    elementsPerPage: 2,
+    totalElements: 2,
   });
 
   const mockEperson = Object.assign(new EPerson(), {
@@ -84,17 +70,19 @@ describe('SubscriptionModalComponent', () => {
   });
 
   const authService = jasmine.createSpyObj('authService', {
-    getAuthenticatedUserFromStore: createSuccessfulRemoteDataObject$(mockEperson),
+    getAuthenticatedUserFromStore:
+      createSuccessfulRemoteDataObject$(mockEperson),
   });
 
   subscriptionServiceStub = jasmine.createSpyObj('SubscriptionsDataService', {
-    getSubscriptionsByPersonDSO: jasmine.createSpy('getSubscriptionsByPersonDSO'),
+    getSubscriptionsByPersonDSO: jasmine.createSpy(
+      'getSubscriptionsByPersonDSO',
+    ),
     createSubscription: createSuccessfulRemoteDataObject$({}),
     updateSubscription: createSuccessfulRemoteDataObject$({}),
   });
 
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
       imports: [
         CommonModule,
@@ -112,17 +100,16 @@ describe('SubscriptionModalComponent', () => {
         NgbActiveModal,
         { provide: AuthService, useValue: authService },
         { provide: NotificationsService, useValue: notificationServiceStub },
-        { provide: SubscriptionsDataService, useValue: subscriptionServiceStub },
+        {
+          provide: SubscriptionsDataService,
+          useValue: subscriptionServiceStub,
+        },
       ],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   describe('when submitting subscriptions', () => {
-
     const testSubscriptionId = 'test-subscription-id';
     const testTypes = ['test1', 'test2'];
     const testFrequencies = ['f', 'g'];
@@ -184,7 +171,6 @@ describe('SubscriptionModalComponent', () => {
       expect(subscriptionServiceStub.updateSubscription).not.toHaveBeenCalled();
       expect(component.subscriptionForm.controls).toBeTruthy();
     });
-
   });
 
   describe('when no subscription is given', () => {
@@ -198,7 +184,11 @@ describe('SubscriptionModalComponent', () => {
 
     describe('and no subscriptions are present for the given dso', () => {
       beforeEach(() => {
-        subscriptionServiceStub.getSubscriptionsByPersonDSO.and.returnValue(createSuccessfulRemoteDataObject$(buildPaginatedList(emptyPageInfo, [])));
+        subscriptionServiceStub.getSubscriptionsByPersonDSO.and.returnValue(
+          createSuccessfulRemoteDataObject$(
+            buildPaginatedList(emptyPageInfo, []),
+          ),
+        );
         fixture.detectChanges();
       });
 
@@ -207,20 +197,36 @@ describe('SubscriptionModalComponent', () => {
       });
 
       it('should init form properly', () => {
-        expect(de.query(By.css(' [data-test="subscription-form"]'))).toBeTruthy();
+        expect(
+          de.query(By.css(' [data-test="subscription-form"]')),
+        ).toBeTruthy();
         expect(component.subscriptionForm).toBeTruthy();
         expect(component.subscriptionForm.get('test1')).toBeTruthy();
         expect(component.subscriptionForm.get('test2')).toBeTruthy();
         (component as any).frequencyDefaultValues.forEach((frequency) => {
-          expect(component.subscriptionForm.get('test1').get('frequencies').get(frequency)).toBeTruthy();
-          expect(component.subscriptionForm.get('test2').get('frequencies').get(frequency)).toBeTruthy();
+          expect(
+            component.subscriptionForm
+              .get('test1')
+              .get('frequencies')
+              .get(frequency),
+          ).toBeTruthy();
+          expect(
+            component.subscriptionForm
+              .get('test2')
+              .get('frequencies')
+              .get(frequency),
+          ).toBeTruthy();
         });
       });
     });
 
     describe('and subscriptions are present for the given dso', () => {
       beforeEach(() => {
-        subscriptionServiceStub.getSubscriptionsByPersonDSO.and.returnValue(createSuccessfulRemoteDataObject$(buildPaginatedList(pageInfo, [subscriptionMock, subscriptionMock2])));
+        subscriptionServiceStub.getSubscriptionsByPersonDSO.and.returnValue(
+          createSuccessfulRemoteDataObject$(
+            buildPaginatedList(pageInfo, [subscriptionMock, subscriptionMock2]),
+          ),
+        );
         fixture.detectChanges();
       });
 
@@ -229,22 +235,52 @@ describe('SubscriptionModalComponent', () => {
       });
 
       it('should init form properly', () => {
-        expect(de.query(By.css(' [data-test="subscription-form"]'))).toBeTruthy();
+        expect(
+          de.query(By.css(' [data-test="subscription-form"]')),
+        ).toBeTruthy();
         expect(component.subscriptionForm).toBeTruthy();
         expect(component.subscriptionForm.get('test1')).toBeTruthy();
         expect(component.subscriptionForm.get('test2')).toBeTruthy();
         (component as any).frequencyDefaultValues.forEach((frequency) => {
-          expect(component.subscriptionForm.get('test1').get('frequencies').get(frequency)).toBeTruthy();
+          expect(
+            component.subscriptionForm
+              .get('test1')
+              .get('frequencies')
+              .get(frequency),
+          ).toBeTruthy();
 
-          expect(component.subscriptionForm.get('test2').get('frequencies').get(frequency)).toBeTruthy();
+          expect(
+            component.subscriptionForm
+              .get('test2')
+              .get('frequencies')
+              .get(frequency),
+          ).toBeTruthy();
         });
-        expect(component.subscriptionForm.get('test1').get('frequencies').get('D').value).toBeTrue();
-        expect(component.subscriptionForm.get('test1').get('frequencies').get('M').value).toBeTrue();
-        expect(component.subscriptionForm.get('test1').get('frequencies').get('W').value).toBeFalse();
+        expect(
+          component.subscriptionForm.get('test1').get('frequencies').get('D')
+            .value,
+        ).toBeTrue();
+        expect(
+          component.subscriptionForm.get('test1').get('frequencies').get('M')
+            .value,
+        ).toBeTrue();
+        expect(
+          component.subscriptionForm.get('test1').get('frequencies').get('W')
+            .value,
+        ).toBeFalse();
 
-        expect(component.subscriptionForm.get('test2').get('frequencies').get('D').value).toBeTrue();
-        expect(component.subscriptionForm.get('test2').get('frequencies').get('M').value).toBeFalse();
-        expect(component.subscriptionForm.get('test2').get('frequencies').get('W').value).toBeFalse();
+        expect(
+          component.subscriptionForm.get('test2').get('frequencies').get('D')
+            .value,
+        ).toBeTrue();
+        expect(
+          component.subscriptionForm.get('test2').get('frequencies').get('M')
+            .value,
+        ).toBeFalse();
+        expect(
+          component.subscriptionForm.get('test2').get('frequencies').get('W')
+            .value,
+        ).toBeFalse();
       });
     });
   });
@@ -269,12 +305,25 @@ describe('SubscriptionModalComponent', () => {
       expect(component.subscriptionForm).toBeTruthy();
       expect(component.subscriptionForm.get('test1')).toBeTruthy();
       (component as any).frequencyDefaultValues.forEach((frequency) => {
-        expect(component.subscriptionForm.get('test1').get('frequencies').get(frequency)).toBeTruthy();
+        expect(
+          component.subscriptionForm
+            .get('test1')
+            .get('frequencies')
+            .get(frequency),
+        ).toBeTruthy();
       });
-      expect(component.subscriptionForm.get('test1').get('frequencies').get('D').value).toBeTrue();
-      expect(component.subscriptionForm.get('test1').get('frequencies').get('M').value).toBeTrue();
-      expect(component.subscriptionForm.get('test1').get('frequencies').get('W').value).toBeFalse();
+      expect(
+        component.subscriptionForm.get('test1').get('frequencies').get('D')
+          .value,
+      ).toBeTrue();
+      expect(
+        component.subscriptionForm.get('test1').get('frequencies').get('M')
+          .value,
+      ).toBeTrue();
+      expect(
+        component.subscriptionForm.get('test1').get('frequencies').get('W')
+          .value,
+      ).toBeFalse();
     });
   });
-
 });

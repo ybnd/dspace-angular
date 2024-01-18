@@ -1,7 +1,4 @@
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  DebugElement,
-} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -10,18 +7,12 @@ import {
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 import { of } from 'rxjs';
 
 import { AppState } from '../../app.reducer';
-import {
-  authReducer,
-  AuthState,
-} from '../../core/auth/auth.reducer';
+import { authReducer, AuthState } from '../../core/auth/auth.reducer';
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthTokenInfo } from '../../core/auth/models/auth-token-info.model';
 import { HostWindowService } from '../host-window.service';
@@ -31,7 +22,6 @@ import { HostWindowServiceStub } from '../testing/host-window-service.stub';
 import { AuthNavMenuComponent } from './auth-nav-menu.component';
 
 describe('AuthNavMenuComponent', () => {
-
   let component: AuthNavMenuComponent;
   let deNavMenu: DebugElement;
   let deNavMenuItem: DebugElement;
@@ -73,7 +63,6 @@ describe('AuthNavMenuComponent', () => {
   }
 
   describe('when is a not mobile view', () => {
-
     beforeEach(waitForAsync(() => {
       const window = new HostWindowServiceStub(800);
       serviceInit();
@@ -90,20 +79,13 @@ describe('AuthNavMenuComponent', () => {
           }),
           TranslateModule.forRoot(),
         ],
-        declarations: [
-          AuthNavMenuComponent,
-          BrowserOnlyMockPipe,
-        ],
+        declarations: [AuthNavMenuComponent, BrowserOnlyMockPipe],
         providers: [
           { provide: HostWindowService, useValue: window },
           { provide: AuthService, useValue: authService },
         ],
-        schemas: [
-          CUSTOM_ELEMENTS_SCHEMA,
-        ],
-      })
-        .compileComponents();
-
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -114,13 +96,12 @@ describe('AuthNavMenuComponent', () => {
         routerState = {
           url: '/login',
         };
-        store
-          .subscribe((state) => {
-            (state as any).router = Object.create({});
-            (state as any).router.state = routerState;
-            (state as any).core = Object.create({});
-            (state as any).core.auth = notAuthState;
-          });
+        store.subscribe((state) => {
+          (state as any).router = Object.create({});
+          (state as any).router.state = routerState;
+          (state as any).core = Object.create({});
+          (state as any).core.auth = notAuthState;
+        });
 
         // create component and test fixture
         fixture = TestBed.createComponent(AuthNavMenuComponent);
@@ -144,7 +125,6 @@ describe('AuthNavMenuComponent', () => {
         expect(deNavMenu.nativeElement).toBeDefined();
         expect(deNavMenuItem).toBeNull();
       });
-
     });
 
     describe('when route is /logout and user is authenticated', () => {
@@ -152,13 +132,12 @@ describe('AuthNavMenuComponent', () => {
         routerState = {
           url: '/logout',
         };
-        store
-          .subscribe((state) => {
-            (state as any).router = Object.create({});
-            (state as any).router.state = routerState;
-            (state as any).core = Object.create({});
-            (state as any).core.auth = authState;
-          });
+        store.subscribe((state) => {
+          (state as any).router = Object.create({});
+          (state as any).router.state = routerState;
+          (state as any).core = Object.create({});
+          (state as any).core.auth = authState;
+        });
 
         // create component and test fixture
         fixture = TestBed.createComponent(AuthNavMenuComponent);
@@ -184,23 +163,20 @@ describe('AuthNavMenuComponent', () => {
         expect(deNavMenu.nativeElement).toBeDefined();
         expect(deNavMenuItem).toBeNull();
       });
-
     });
 
     describe('when route is not /login neither /logout', () => {
       describe('when user is not authenticated', () => {
-
         beforeEach(inject([Store], (store: Store<AppState>) => {
           routerState = {
             url: '/home',
           };
-          store
-            .subscribe((state) => {
-              (state as any).router = Object.create({});
-              (state as any).router.state = routerState;
-              (state as any).core = Object.create({});
-              (state as any).core.auth = notAuthState;
-            });
+          store.subscribe((state) => {
+            (state as any).router = Object.create({});
+            (state as any).router.state = routerState;
+            (state as any).core = Object.create({});
+            (state as any).core.auth = notAuthState;
+          });
 
           // create component and test fixture
           fixture = TestBed.createComponent(AuthNavMenuComponent);
@@ -223,7 +199,9 @@ describe('AuthNavMenuComponent', () => {
         });
 
         it('should render login dropdown menu', () => {
-          const loginDropdownMenu = deNavMenuItem.query(By.css('div.loginDropdownMenu'));
+          const loginDropdownMenu = deNavMenuItem.query(
+            By.css('div.loginDropdownMenu'),
+          );
           expect(loginDropdownMenu.nativeElement).toBeDefined();
         });
       });
@@ -233,13 +211,12 @@ describe('AuthNavMenuComponent', () => {
           routerState = {
             url: '/home',
           };
-          store
-            .subscribe((state) => {
-              (state as any).router = Object.create({});
-              (state as any).router.state = routerState;
-              (state as any).core = Object.create({});
-              (state as any).core.auth = authState;
-            });
+          store.subscribe((state) => {
+            (state as any).router = Object.create({});
+            (state as any).router.state = routerState;
+            (state as any).core = Object.create({});
+            (state as any).core.auth = authState;
+          });
 
           // create component and test fixture
           fixture = TestBed.createComponent(AuthNavMenuComponent);
@@ -261,7 +238,9 @@ describe('AuthNavMenuComponent', () => {
           component = null;
         });
         it('should render UserMenuComponent component', () => {
-          const logoutDropdownMenu = deNavMenuItem.query(By.css('ds-themed-user-menu'));
+          const logoutDropdownMenu = deNavMenuItem.query(
+            By.css('ds-themed-user-menu'),
+          );
           expect(logoutDropdownMenu.nativeElement).toBeDefined();
         });
       });
@@ -285,34 +264,26 @@ describe('AuthNavMenuComponent', () => {
           }),
           TranslateModule.forRoot(),
         ],
-        declarations: [
-          AuthNavMenuComponent,
-        ],
+        declarations: [AuthNavMenuComponent],
         providers: [
           { provide: HostWindowService, useValue: window },
           { provide: AuthService, useValue: authService },
         ],
-        schemas: [
-          CUSTOM_ELEMENTS_SCHEMA,
-        ],
-      })
-        .compileComponents();
-
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      }).compileComponents();
     }));
 
     beforeEach(() => {
       init();
     });
     describe('when user is not authenticated', () => {
-
       beforeEach(inject([Store], (store: Store<AppState>) => {
-        store
-          .subscribe((state) => {
-            (state as any).router = Object.create({});
-            (state as any).router.state = routerState;
-            (state as any).core = Object.create({});
-            (state as any).core.auth = notAuthState;
-          });
+        store.subscribe((state) => {
+          (state as any).router = Object.create({});
+          (state as any).router.state = routerState;
+          (state as any).core = Object.create({});
+          (state as any).core.auth = notAuthState;
+        });
 
         // create component and test fixture
         fixture = TestBed.createComponent(AuthNavMenuComponent);
@@ -342,13 +313,12 @@ describe('AuthNavMenuComponent', () => {
 
     describe('when user is authenticated', () => {
       beforeEach(inject([Store], (store: Store<AppState>) => {
-        store
-          .subscribe((state) => {
-            (state as any).router = Object.create({});
-            (state as any).router.state = routerState;
-            (state as any).core = Object.create({});
-            (state as any).core.auth = authState;
-          });
+        store.subscribe((state) => {
+          (state as any).router = Object.create({});
+          (state as any).router.state = routerState;
+          (state as any).core = Object.create({});
+          (state as any).core.auth = authState;
+        });
 
         // create component and test fixture
         fixture = TestBed.createComponent(AuthNavMenuComponent);
@@ -370,10 +340,15 @@ describe('AuthNavMenuComponent', () => {
         component = null;
       });
 
-      it('should render logout link', inject([Store], (store: Store<AppState>) => {
-        const logoutDropdownMenu = deNavMenuItem.query(By.css('a.logoutLink'));
-        expect(logoutDropdownMenu.nativeElement).toBeDefined();
-      }));
+      it('should render logout link', inject(
+        [Store],
+        (store: Store<AppState>) => {
+          const logoutDropdownMenu = deNavMenuItem.query(
+            By.css('a.logoutLink'),
+          );
+          expect(logoutDropdownMenu.nativeElement).toBeDefined();
+        },
+      ));
     });
   });
 });

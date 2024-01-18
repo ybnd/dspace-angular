@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -40,70 +36,55 @@ describe('CommunityPageSubCollectionList Component', () => {
   let themeService;
   let subCollList = [];
 
-  const collections = [Object.assign(new Community(), {
-    id: '123456789-1',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Collection 1' },
-      ],
-    },
-  }),
-  Object.assign(new Community(), {
-    id: '123456789-2',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Collection 2' },
-      ],
-    },
-  }),
-  Object.assign(new Community(), {
-    id: '123456789-3',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Collection 3' },
-      ],
-    },
-  }),
-  Object.assign(new Community(), {
-    id: '123456789-4',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Collection 4' },
-      ],
-    },
-  }),
-  Object.assign(new Community(), {
-    id: '123456789-5',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Collection 5' },
-      ],
-    },
-  }),
-  Object.assign(new Community(), {
-    id: '123456789-6',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Collection 6' },
-      ],
-    },
-  }),
-  Object.assign(new Community(), {
-    id: '123456789-7',
-    metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Collection 7' },
-      ],
-    },
-  }),
+  const collections = [
+    Object.assign(new Community(), {
+      id: '123456789-1',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'Collection 1' }],
+      },
+    }),
+    Object.assign(new Community(), {
+      id: '123456789-2',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'Collection 2' }],
+      },
+    }),
+    Object.assign(new Community(), {
+      id: '123456789-3',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'Collection 3' }],
+      },
+    }),
+    Object.assign(new Community(), {
+      id: '123456789-4',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'Collection 4' }],
+      },
+    }),
+    Object.assign(new Community(), {
+      id: '123456789-5',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'Collection 5' }],
+      },
+    }),
+    Object.assign(new Community(), {
+      id: '123456789-6',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'Collection 6' }],
+      },
+    }),
+    Object.assign(new Community(), {
+      id: '123456789-7',
+      metadata: {
+        'dc.title': [{ language: 'en_US', value: 'Collection 7' }],
+      },
+    }),
   ];
 
   const mockCommunity = Object.assign(new Community(), {
     id: '123456789',
     metadata: {
-      'dc.title': [
-        { language: 'en_US', value: 'Test title' },
-      ],
+      'dc.title': [{ language: 'en_US', value: 'Test title' }],
     },
   });
 
@@ -116,12 +97,16 @@ describe('CommunityPageSubCollectionList Component', () => {
       }
       elementsPerPage = 5;
       const startPageIndex = (currentPage - 1) * elementsPerPage;
-      let endPageIndex = (currentPage * elementsPerPage);
+      let endPageIndex = currentPage * elementsPerPage;
       if (endPageIndex > subCollList.length) {
         endPageIndex = subCollList.length;
       }
-      return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), subCollList.slice(startPageIndex, endPageIndex)));
-
+      return createSuccessfulRemoteDataObject$(
+        buildPaginatedList(
+          new PageInfo(),
+          subCollList.slice(startPageIndex, endPageIndex),
+        ),
+      );
     },
   };
 
@@ -139,14 +124,17 @@ describe('CommunityPageSubCollectionList Component', () => {
     getUUIDFromString: '',
   });
 
-  const configurationDataService = jasmine.createSpyObj('configurationDataService', {
-    findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-      name: 'test',
-      values: [
-        'org.dspace.ctask.general.ProfileFormats = test',
-      ],
-    })),
-  });
+  const configurationDataService = jasmine.createSpyObj(
+    'configurationDataService',
+    {
+      findByPropertyName: createSuccessfulRemoteDataObject$(
+        Object.assign(new ConfigurationProperty(), {
+          name: 'test',
+          values: ['org.dspace.ctask.general.ProfileFormats = test'],
+        }),
+      ),
+    },
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
@@ -166,8 +154,14 @@ describe('CommunityPageSubCollectionList Component', () => {
         { provide: ThemeService, useValue: themeService },
         { provide: GroupDataService, useValue: groupDataService },
         { provide: LinkHeadService, useValue: linkHeadService },
-        { provide: ConfigurationDataService, useValue: configurationDataService },
-        { provide: SearchConfigurationService, useValue: new SearchConfigurationServiceStub() },
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationDataService,
+        },
+        {
+          provide: SearchConfigurationService,
+          useValue: new SearchConfigurationServiceStub(),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -178,7 +172,6 @@ describe('CommunityPageSubCollectionList Component', () => {
     comp = fixture.componentInstance;
     comp.community = mockCommunity;
   });
-
 
   it('should display a list of collections', () => {
     waitForAsync(() => {

@@ -1,13 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-} from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { SortOptions } from '../../../core/cache/models/sort-options.model';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -27,7 +19,6 @@ import { SearchSidebarComponent } from './search-sidebar.component';
   templateUrl: '../../theme-support/themed.component.html',
 })
 export class ThemedSearchSidebarComponent extends ThemedComponent<SearchSidebarComponent> {
-
   @Input() configuration;
   @Input() configurationList: SearchConfigurationOption[];
   @Input() currentScope: string;
@@ -41,20 +32,37 @@ export class ThemedSearchSidebarComponent extends ThemedComponent<SearchSidebarC
   @Input() sortOptionsList: SortOptions[];
   @Input() refreshFilters: BehaviorSubject<boolean>;
   @Output() toggleSidebar = new EventEmitter<boolean>();
-  @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> = new EventEmitter<SearchConfigurationOption>();
-  @Output() changeViewMode: EventEmitter<ViewMode> = new EventEmitter<ViewMode>();
+  @Output() changeConfiguration: EventEmitter<SearchConfigurationOption> =
+    new EventEmitter<SearchConfigurationOption>();
+  @Output() changeViewMode: EventEmitter<ViewMode> =
+    new EventEmitter<ViewMode>();
 
   protected inAndOutputNames: (keyof SearchSidebarComponent & keyof this)[] = [
-    'configuration', 'configurationList', 'currentScope', 'currentSortOption',
-    'resultCount', 'filters', 'viewModeList', 'showViewModes', 'inPlaceSearch',
-    'searchOptions', 'sortOptionsList', 'refreshFilters', 'toggleSidebar', 'changeConfiguration', 'changeViewMode'];
+    'configuration',
+    'configurationList',
+    'currentScope',
+    'currentSortOption',
+    'resultCount',
+    'filters',
+    'viewModeList',
+    'showViewModes',
+    'inPlaceSearch',
+    'searchOptions',
+    'sortOptionsList',
+    'refreshFilters',
+    'toggleSidebar',
+    'changeConfiguration',
+    'changeViewMode',
+  ];
 
   protected getComponentName(): string {
     return 'SearchSidebarComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../themes/${themeName}/app/shared/search/search-sidebar/search-sidebar.component`);
+    return import(
+      `../../../../themes/${themeName}/app/shared/search/search-sidebar/search-sidebar.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

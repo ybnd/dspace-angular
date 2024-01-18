@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Metadata } from '../../../../core/submission/models/sherpa-policies-details.model';
 
@@ -18,5 +15,4 @@ export class MetadataInformationComponent {
    * Metadata to show information from
    */
   @Input() metadata: Metadata;
-
 }

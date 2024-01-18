@@ -1,7 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -13,12 +10,8 @@ describe('AdvancedWorkflowActionPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        AdvancedWorkflowActionPageComponent,
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [AdvancedWorkflowActionPageComponent],
       providers: [
         {
           provide: ActivatedRoute,

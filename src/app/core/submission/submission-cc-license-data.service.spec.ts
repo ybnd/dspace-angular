@@ -9,9 +9,9 @@ import { testFindAllDataImplementation } from '../data/base/find-all-data.spec';
 import { SubmissionCcLicenseDataService } from './submission-cc-license-data.service';
 
 describe('SubmissionCcLicenseDataService', () => {
-
   describe('composition', () => {
-    const initService = () => new SubmissionCcLicenseDataService(null, null, null, null);
+    const initService = () =>
+      new SubmissionCcLicenseDataService(null, null, null, null);
     testFindAllDataImplementation(initService);
   });
 });

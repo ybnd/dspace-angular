@@ -5,17 +5,8 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -30,14 +21,8 @@ import {
   getAllSucceededRemoteData,
   getFirstSucceededRemoteDataPayload,
 } from '../../../core/shared/operators';
-import {
-  dateToString,
-  stringToNgbDateStruct,
-} from '../../date.util';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../empty.util';
+import { dateToString, stringToNgbDateStruct } from '../../date.util';
+import { hasValue, isNotEmpty } from '../../empty.util';
 
 export interface ResourcePolicyCheckboxEntry {
   id: string;
@@ -52,7 +37,7 @@ export interface ResourcePolicyCheckboxEntry {
 })
 export class ResourcePolicyEntryComponent implements OnInit {
   @Input()
-    entry: ResourcePolicyCheckboxEntry;
+  entry: ResourcePolicyCheckboxEntry;
 
   @Output()
   public toggleCheckbox: EventEmitter<boolean> = new EventEmitter();
@@ -65,15 +50,16 @@ export class ResourcePolicyEntryComponent implements OnInit {
     protected groupService: GroupDataService,
     protected route: ActivatedRoute,
     protected router: Router,
-  ) {
-  }
+  ) {}
 
   public ngOnInit(): void {
     this.epersonName$ = this.getName$(this.entry.policy.eperson);
     this.groupName$ = this.getName$(this.entry.policy.group);
   }
 
-  private getName$(dso$: Observable<RemoteData<DSpaceObject>>): Observable<string> {
+  private getName$(
+    dso$: Observable<RemoteData<DSpaceObject>>,
+  ): Observable<string> {
     return dso$.pipe(
       getAllSucceededRemoteData(),
       map((rd: RemoteData<DSpaceObject>) => {
@@ -111,11 +97,14 @@ export class ResourcePolicyEntryComponent implements OnInit {
    * Redirect to group edit page
    */
   redirectToGroupEditPage(): void {
-    this.groupService.findByHref(this.entry.policy._links.group.href, false).pipe(
-      getFirstSucceededRemoteDataPayload(),
-      map((group: Group) => group.id),
-    ).subscribe((groupUUID) => {
-      void this.router.navigate([getGroupEditRoute(groupUUID)]);
-    });
+    this.groupService
+      .findByHref(this.entry.policy._links.group.href, false)
+      .pipe(
+        getFirstSucceededRemoteDataPayload(),
+        map((group: Group) => group.id),
+      )
+      .subscribe((groupUUID) => {
+        void this.router.navigate([getGroupEditRoute(groupUUID)]);
+      });
   }
 }

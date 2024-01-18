@@ -6,7 +6,10 @@ import { PaginationComponentOptions } from './pagination-component-options.model
  * @param pagination  The PaginationComponentOptions to transform
  * @param original    An original FindListOptions object to start from
  */
-export function toFindListOptions(pagination: PaginationComponentOptions, original?: FindListOptions): FindListOptions {
+export function toFindListOptions(
+  pagination: PaginationComponentOptions,
+  original?: FindListOptions,
+): FindListOptions {
   return Object.assign(new FindListOptions(), original, {
     currentPage: pagination.currentPage,
     elementsPerPage: pagination.pageSize,

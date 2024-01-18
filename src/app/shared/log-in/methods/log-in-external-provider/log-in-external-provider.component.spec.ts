@@ -1,13 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -26,7 +19,6 @@ import { RouterStub } from '../../../testing/router.stub';
 import { LogInExternalProviderComponent } from './log-in-external-provider.component';
 
 describe('LogInExternalProviderComponent', () => {
-
   let component: LogInExternalProviderComponent;
   let fixture: ComponentFixture<LogInExternalProviderComponent>;
   let componentAsAny: any;
@@ -65,12 +57,13 @@ describe('LogInExternalProviderComponent', () => {
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
         TranslateModule.forRoot(),
       ],
-      declarations: [
-        LogInExternalProviderComponent,
-      ],
+      declarations: [LogInExternalProviderComponent],
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
-        { provide: 'authMethodProvider', useValue: new AuthMethod(AuthMethodType.Orcid, 0, location) },
+        {
+          provide: 'authMethodProvider',
+          useValue: new AuthMethod(AuthMethodType.Orcid, 0, location),
+        },
         { provide: 'isStandalonePage', useValue: true },
         { provide: NativeWindowService, useFactory: NativeWindowMockFactory },
         { provide: Router, useValue: new RouterStub() },
@@ -78,12 +71,8 @@ describe('LogInExternalProviderComponent', () => {
         { provide: HardRedirectService, useValue: hardRedirectService },
         provideMockStore({ initialState }),
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-      ],
-    })
-      .compileComponents();
-
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -95,8 +84,11 @@ describe('LogInExternalProviderComponent', () => {
     componentAsAny = component;
 
     // create page
-    setHrefSpy = spyOnProperty(componentAsAny._window.nativeWindow.location, 'href', 'set').and.callThrough();
-
+    setHrefSpy = spyOnProperty(
+      componentAsAny._window.nativeWindow.location,
+      'href',
+      'set',
+    ).and.callThrough();
   });
 
   it('should set the properly a new redirectUrl', () => {
@@ -111,7 +103,6 @@ describe('LogInExternalProviderComponent', () => {
     component.redirectToExternalProvider();
 
     expect(setHrefSpy).toHaveBeenCalledWith(currentUrl);
-
   });
 
   it('should not set a new redirectUrl', () => {
@@ -126,7 +117,5 @@ describe('LogInExternalProviderComponent', () => {
     component.redirectToExternalProvider();
 
     expect(setHrefSpy).toHaveBeenCalledWith(currentUrl);
-
   });
-
 });

@@ -1,8 +1,4 @@
-import {
-  Component,
-  Injector,
-  OnInit,
-} from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import {
   ActivatedRoute,
   NavigationExtras,
@@ -29,8 +25,10 @@ import { ClaimedTaskActionsAbstractComponent } from './claimed-task-actions-abst
   selector: 'ds-advanced-claimed-task-action-abstract',
   template: '',
 })
-export abstract class AdvancedClaimedTaskActionsAbstractComponent extends ClaimedTaskActionsAbstractComponent implements OnInit {
-
+export abstract class AdvancedClaimedTaskActionsAbstractComponent
+  extends ClaimedTaskActionsAbstractComponent
+  implements OnInit
+{
   /**
    * The {@link WorkflowAction} id of the advanced workflow that needs to be opened.
    */
@@ -50,7 +48,14 @@ export abstract class AdvancedClaimedTaskActionsAbstractComponent extends Claime
     protected requestService: RequestService,
     protected route: ActivatedRoute,
   ) {
-    super(injector, router, notificationsService, translate, searchService, requestService);
+    super(
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService,
+    );
   }
 
   ngOnInit(): void {
@@ -62,11 +67,15 @@ export abstract class AdvancedClaimedTaskActionsAbstractComponent extends Claime
    * Initialise the route to the advanced workflow page
    */
   initPageRoute() {
-    this.subs.push(this.object.workflowitem.pipe(
-      getFirstSucceededRemoteDataPayload(),
-    ).subscribe((workflowItem: WorkflowItem) => {
-      this.workflowTaskPageRoute = getAdvancedWorkflowRoute(workflowItem.id);
-    }));
+    this.subs.push(
+      this.object.workflowitem
+        .pipe(getFirstSucceededRemoteDataPayload())
+        .subscribe((workflowItem: WorkflowItem) => {
+          this.workflowTaskPageRoute = getAdvancedWorkflowRoute(
+            workflowItem.id,
+          );
+        }),
+    );
   }
 
   /**
@@ -78,7 +87,8 @@ export abstract class AdvancedClaimedTaskActionsAbstractComponent extends Claime
     };
     if (Object.keys(this.route.snapshot.queryParams).length > 0) {
       navigationExtras.state = {};
-      navigationExtras.state.previousQueryParams = this.route.snapshot.queryParams;
+      navigationExtras.state.previousQueryParams =
+        this.route.snapshot.queryParams;
     }
     void this.router.navigate([this.workflowTaskPageRoute], navigationExtras);
   }
@@ -92,5 +102,4 @@ export abstract class AdvancedClaimedTaskActionsAbstractComponent extends Claime
       claimedTask: this.object.id,
     };
   }
-
 }

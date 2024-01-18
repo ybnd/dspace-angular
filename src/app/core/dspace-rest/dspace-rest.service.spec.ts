@@ -1,22 +1,13 @@
-import {
-  HttpErrorResponse,
-  HttpHeaders,
-} from '@angular/common/http';
+import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
-import {
-  inject,
-  TestBed,
-} from '@angular/core/testing';
+import { inject, TestBed } from '@angular/core/testing';
 
 import { RestRequestMethod } from '../data/rest-request-method';
 import { DSpaceObject } from '../shared/dspace-object.model';
-import {
-  DEFAULT_CONTENT_TYPE,
-  DspaceRestService,
-} from './dspace-rest.service';
+import { DEFAULT_CONTENT_TYPE, DspaceRestService } from './dspace-rest.service';
 
 describe('DspaceRestService', () => {
   let dspaceRestService: DspaceRestService;
@@ -43,9 +34,12 @@ describe('DspaceRestService', () => {
 
   afterEach(() => httpMock.verify());
 
-  it('should be created', inject([DspaceRestService], (service: DspaceRestService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should be created', inject(
+    [DspaceRestService],
+    (service: DspaceRestService) => {
+      expect(service).toBeTruthy();
+    },
+  ));
 
   describe('#get', () => {
     it('should return an Observable<RawRestResponse>', () => {
@@ -64,16 +58,24 @@ describe('DspaceRestService', () => {
 
       const req = httpMock.expectOne(url);
       expect(req.request.method).toBe('GET');
-      req.flush(mockPayload, { status: mockStatusCode, statusText: mockStatusText });
+      req.flush(mockPayload, {
+        status: mockStatusCode,
+        statusText: mockStatusText,
+      });
     });
     it('should throw an error', () => {
-      dspaceRestService.get(url).subscribe(() => undefined, (err: unknown) => {
-        expect(err).toEqual(jasmine.objectContaining({
-          statusCode: 0,
-          statusText: 'Unknown Error',
-          message: 'Http failure response for http://www.dspace.org/: 0 ',
-        }));
-      });
+      dspaceRestService.get(url).subscribe(
+        () => undefined,
+        (err: unknown) => {
+          expect(err).toEqual(
+            jasmine.objectContaining({
+              statusCode: 0,
+              statusText: 'Unknown Error',
+              message: 'Http failure response for http://www.dspace.org/: 0 ',
+            }),
+          );
+        },
+      );
       const req = httpMock.expectOne(url);
       expect(req.request.method).toBe('GET');
       req.error({ error: mockError } as ErrorEvent);
@@ -82,9 +84,12 @@ describe('DspaceRestService', () => {
     it('should log an error', () => {
       spyOn(console, 'log');
 
-      dspaceRestService.get(url).subscribe(() => undefined, (err: unknown) => {
-        expect(console.log).toHaveBeenCalled();
-      });
+      dspaceRestService.get(url).subscribe(
+        () => undefined,
+        (err: unknown) => {
+          expect(console.log).toHaveBeenCalled();
+        },
+      );
 
       const req = httpMock.expectOne(url);
       expect(req.request.method).toBe('GET');
@@ -95,7 +100,9 @@ describe('DspaceRestService', () => {
       dspaceRestService.request(RestRequestMethod.POST, url, {}).subscribe();
 
       const req = httpMock.expectOne(url);
-      expect(req.request.headers.get('Content-Type')).toContain(DEFAULT_CONTENT_TYPE);
+      expect(req.request.headers.get('Content-Type')).toContain(
+        DEFAULT_CONTENT_TYPE,
+      );
     });
   });
 
@@ -107,32 +114,43 @@ describe('DspaceRestService', () => {
       const mockStatusCode = 200;
       const mockStatusText = 'GREAT';
 
-      dspaceRestService.request(RestRequestMethod.POST, url, {}).subscribe((response) => {
-        expect(response).toBeTruthy();
-        expect(response.statusCode).toEqual(mockStatusCode);
-        expect(response.statusText).toEqual(mockStatusText);
-        expect(response.payload.page).toEqual(mockPayload.page);
-      });
+      dspaceRestService
+        .request(RestRequestMethod.POST, url, {})
+        .subscribe((response) => {
+          expect(response).toBeTruthy();
+          expect(response.statusCode).toEqual(mockStatusCode);
+          expect(response.statusText).toEqual(mockStatusText);
+          expect(response.payload.page).toEqual(mockPayload.page);
+        });
 
       const req = httpMock.expectOne(url);
       expect(req.request.method).toBe('POST');
-      req.flush(mockPayload, { status: mockStatusCode, statusText: mockStatusText });
+      req.flush(mockPayload, {
+        status: mockStatusCode,
+        statusText: mockStatusText,
+      });
     });
 
     it('when a content-type header is provided, it should not use application/json', () => {
       let headers = new HttpHeaders();
       headers = headers.set('Content-Type', 'text/html');
-      dspaceRestService.request(RestRequestMethod.POST, url, {}, { headers }).subscribe();
+      dspaceRestService
+        .request(RestRequestMethod.POST, url, {}, { headers })
+        .subscribe();
 
       const req = httpMock.expectOne(url);
-      expect(req.request.headers.get('Content-Type')).not.toContain(DEFAULT_CONTENT_TYPE);
+      expect(req.request.headers.get('Content-Type')).not.toContain(
+        DEFAULT_CONTENT_TYPE,
+      );
     });
 
     it('when no content-type header is provided, it should use application/json', () => {
       dspaceRestService.request(RestRequestMethod.POST, url, {}).subscribe();
 
       const req = httpMock.expectOne(url);
-      expect(req.request.headers.get('Content-Type')).toContain(DEFAULT_CONTENT_TYPE);
+      expect(req.request.headers.get('Content-Type')).toContain(
+        DEFAULT_CONTENT_TYPE,
+      );
     });
   });
 

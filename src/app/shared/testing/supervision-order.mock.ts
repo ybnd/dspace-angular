@@ -6,10 +6,7 @@ import {
   createSuccessfulRemoteDataObject,
   createSuccessfulRemoteDataObject$,
 } from '../remote-data.utils';
-import {
-  GroupMock,
-  GroupMock2,
-} from './group-mock';
+import { GroupMock, GroupMock2 } from './group-mock';
 
 const itemMock = Object.assign(new Item(), {
   metadata: {
@@ -71,7 +68,7 @@ const anotherItemMock = Object.assign(new Item(), {
   },
 });
 
-export const supervisionOrderMock: any = Object.assign(new SupervisionOrder(),{
+export const supervisionOrderMock: any = Object.assign(new SupervisionOrder(), {
   id: '1',
   item: createSuccessfulRemoteDataObject$(itemMock),
   group: createSuccessfulRemoteDataObject$(GroupMock),
@@ -83,7 +80,10 @@ export const anotherSupervisionOrderMock: any = {
   group: createSuccessfulRemoteDataObject$(GroupMock2),
 };
 
-export const supervisionOrderListMock = [supervisionOrderMock, anotherSupervisionOrderMock];
+export const supervisionOrderListMock = [
+  supervisionOrderMock,
+  anotherSupervisionOrderMock,
+];
 export const supervisionOrderEntryMock = {
   supervisionOrder: supervisionOrderMock,
   group: GroupMock,
@@ -97,5 +97,7 @@ const pageInfo = new PageInfo({
 });
 const array = [supervisionOrderMock, anotherSupervisionOrderMock];
 const paginatedList = buildPaginatedList(pageInfo, array);
-export const supervisionOrderPaginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
-export const supervisionOrderPaginatedListRD$ = createSuccessfulRemoteDataObject$(paginatedList);
+export const supervisionOrderPaginatedListRD =
+  createSuccessfulRemoteDataObject(paginatedList);
+export const supervisionOrderPaginatedListRD$ =
+  createSuccessfulRemoteDataObject$(paginatedList);

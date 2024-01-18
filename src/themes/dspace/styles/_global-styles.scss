@@ -3,7 +3,8 @@
 // imports the base global style
 @import '../../../styles/_global-styles.scss';
 
-.facet-filter, .setting-option {
+.facet-filter,
+.setting-option {
   background-color: var(--bs-light);
   border-radius: var(--bs-border-radius);
 
@@ -18,6 +19,6 @@
   }
 
   h4 {
-    font-size: 1.1rem
+    font-size: 1.1rem;
   }
 }

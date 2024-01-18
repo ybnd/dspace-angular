@@ -33,13 +33,7 @@ const DECLARATIONS = [
     HomePageRoutingModule,
     StatisticsModule.forRoot(),
   ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  declarations: [...DECLARATIONS],
+  exports: [...DECLARATIONS],
 })
-export class HomePageModule {
-
-}
+export class HomePageModule {}

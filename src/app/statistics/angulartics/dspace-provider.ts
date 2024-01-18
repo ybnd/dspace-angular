@@ -8,12 +8,10 @@ import { StatisticsService } from '../statistics.service';
  */
 @Injectable({ providedIn: 'root' })
 export class Angulartics2DSpace {
-
   constructor(
     private angulartics2: Angulartics2,
     private statisticsService: StatisticsService,
-  ) {
-  }
+  ) {}
 
   /**
    * Activates this plugin
@@ -26,7 +24,10 @@ export class Angulartics2DSpace {
 
   private eventTrack(event) {
     if (event.action === 'page_view') {
-      this.statisticsService.trackViewEvent(event.properties.object, event.properties.referrer);
+      this.statisticsService.trackViewEvent(
+        event.properties.object,
+        event.properties.referrer,
+      );
     } else if (event.action === 'search') {
       this.statisticsService.trackSearchEvent(
         event.properties.searchOptions,

@@ -16,16 +16,17 @@ import { getFirstCompletedRemoteData } from '../core/shared/operators';
  */
 @Injectable()
 export class RequestCopyResolver implements Resolve<RemoteData<ItemRequest>> {
+  constructor(private itemRequestDataService: ItemRequestDataService) {}
 
-  constructor(
-    private itemRequestDataService: ItemRequestDataService,
-  ) {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ):
+    | Observable<RemoteData<ItemRequest>>
+    | Promise<RemoteData<ItemRequest>>
+    | RemoteData<ItemRequest> {
+    return this.itemRequestDataService
+      .findById(route.params.token)
+      .pipe(getFirstCompletedRemoteData());
   }
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<ItemRequest>> | Promise<RemoteData<ItemRequest>> | RemoteData<ItemRequest> {
-    return this.itemRequestDataService.findById(route.params.token).pipe(
-      getFirstCompletedRemoteData(),
-    );
-  }
-
 }

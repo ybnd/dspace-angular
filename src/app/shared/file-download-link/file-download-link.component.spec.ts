@@ -1,14 +1,7 @@
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 
 import { getBitstreamModuleRoute } from '../../app-routing-paths';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
@@ -50,15 +43,12 @@ describe('FileDownloadLinkComponent', () => {
 
   function initTestbed() {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [FileDownloadLinkComponent, RouterLinkDirectiveStub],
       providers: [
         { provide: AuthorizationDataService, useValue: authorizationService },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }
 
   describe('init', () => {
@@ -78,15 +68,35 @@ describe('FileDownloadLinkComponent', () => {
           fixture.detectChanges();
         });
         it('should return the bitstreamPath based on the input bitstream', () => {
-          expect(component.bitstreamPath$).toBeObservable(cold('-a', { a: { routerLink: new URLCombiner(getBitstreamModuleRoute(), bitstream.uuid, 'download').toString(), queryParams: {} } }));
-          expect(component.canDownload$).toBeObservable(cold('--a', { a: true }));
-
+          expect(component.bitstreamPath$).toBeObservable(
+            cold('-a', {
+              a: {
+                routerLink: new URLCombiner(
+                  getBitstreamModuleRoute(),
+                  bitstream.uuid,
+                  'download',
+                ).toString(),
+                queryParams: {},
+              },
+            }),
+          );
+          expect(component.canDownload$).toBeObservable(
+            cold('--a', { a: true }),
+          );
         });
         it('should init the component', () => {
           scheduler.flush();
           fixture.detectChanges();
           const link = fixture.debugElement.query(By.css('a'));
-          expect(link.injector.get(RouterLinkDirectiveStub).routerLink).toContain(new URLCombiner(getBitstreamModuleRoute(), bitstream.uuid, 'download').toString());
+          expect(
+            link.injector.get(RouterLinkDirectiveStub).routerLink,
+          ).toContain(
+            new URLCombiner(
+              getBitstreamModuleRoute(),
+              bitstream.uuid,
+              'download',
+            ).toString(),
+          );
           const lock = fixture.debugElement.query(By.css('.fa-lock'));
           expect(lock).toBeNull();
         });
@@ -95,12 +105,14 @@ describe('FileDownloadLinkComponent', () => {
         beforeEach(waitForAsync(() => {
           scheduler = getTestScheduler();
           init();
-          (authorizationService.isAuthorized as jasmine.Spy).and.callFake((featureId, object) => {
-            if (featureId === FeatureID.CanDownload) {
-              return cold('-a', { a: false });
-            }
-            return cold('-a', { a: true });
-          });
+          (authorizationService.isAuthorized as jasmine.Spy).and.callFake(
+            (featureId, object) => {
+              if (featureId === FeatureID.CanDownload) {
+                return cold('-a', { a: false });
+              }
+              return cold('-a', { a: true });
+            },
+          );
           initTestbed();
         }));
         beforeEach(() => {
@@ -111,16 +123,38 @@ describe('FileDownloadLinkComponent', () => {
           fixture.detectChanges();
         });
         it('should return the bitstreamPath based on the input bitstream', () => {
-          expect(component.bitstreamPath$).toBeObservable(cold('-a', { a: { routerLink: new URLCombiner(getItemModuleRoute(), item.uuid, 'request-a-copy').toString(), queryParams: { bitstream: bitstream.uuid } } }));
-          expect(component.canDownload$).toBeObservable(cold('--a', { a: false }));
-
+          expect(component.bitstreamPath$).toBeObservable(
+            cold('-a', {
+              a: {
+                routerLink: new URLCombiner(
+                  getItemModuleRoute(),
+                  item.uuid,
+                  'request-a-copy',
+                ).toString(),
+                queryParams: { bitstream: bitstream.uuid },
+              },
+            }),
+          );
+          expect(component.canDownload$).toBeObservable(
+            cold('--a', { a: false }),
+          );
         });
         it('should init the component', () => {
           scheduler.flush();
           fixture.detectChanges();
           const link = fixture.debugElement.query(By.css('a'));
-          expect(link.injector.get(RouterLinkDirectiveStub).routerLink).toContain(new URLCombiner(getItemModuleRoute(), item.uuid, 'request-a-copy').toString());
-          const lock = fixture.debugElement.query(By.css('.fa-lock')).nativeElement;
+          expect(
+            link.injector.get(RouterLinkDirectiveStub).routerLink,
+          ).toContain(
+            new URLCombiner(
+              getItemModuleRoute(),
+              item.uuid,
+              'request-a-copy',
+            ).toString(),
+          );
+          const lock = fixture.debugElement.query(
+            By.css('.fa-lock'),
+          ).nativeElement;
           expect(lock).toBeTruthy();
         });
       });
@@ -128,7 +162,9 @@ describe('FileDownloadLinkComponent', () => {
         beforeEach(waitForAsync(() => {
           scheduler = getTestScheduler();
           init();
-          (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(cold('-a', { a: false }));
+          (authorizationService.isAuthorized as jasmine.Spy).and.returnValue(
+            cold('-a', { a: false }),
+          );
           initTestbed();
         }));
         beforeEach(() => {
@@ -139,16 +175,38 @@ describe('FileDownloadLinkComponent', () => {
           fixture.detectChanges();
         });
         it('should return the bitstreamPath based on the input bitstream', () => {
-          expect(component.bitstreamPath$).toBeObservable(cold('-a', { a: { routerLink: new URLCombiner(getBitstreamModuleRoute(), bitstream.uuid, 'download').toString(), queryParams: {} } }));
-          expect(component.canDownload$).toBeObservable(cold('--a', { a: false }));
-
+          expect(component.bitstreamPath$).toBeObservable(
+            cold('-a', {
+              a: {
+                routerLink: new URLCombiner(
+                  getBitstreamModuleRoute(),
+                  bitstream.uuid,
+                  'download',
+                ).toString(),
+                queryParams: {},
+              },
+            }),
+          );
+          expect(component.canDownload$).toBeObservable(
+            cold('--a', { a: false }),
+          );
         });
         it('should init the component', () => {
           scheduler.flush();
           fixture.detectChanges();
           const link = fixture.debugElement.query(By.css('a'));
-          expect(link.injector.get(RouterLinkDirectiveStub).routerLink).toContain(new URLCombiner(getBitstreamModuleRoute(), bitstream.uuid, 'download').toString());
-          const lock = fixture.debugElement.query(By.css('.fa-lock')).nativeElement;
+          expect(
+            link.injector.get(RouterLinkDirectiveStub).routerLink,
+          ).toContain(
+            new URLCombiner(
+              getBitstreamModuleRoute(),
+              bitstream.uuid,
+              'download',
+            ).toString(),
+          );
+          const lock = fixture.debugElement.query(
+            By.css('.fa-lock'),
+          ).nativeElement;
           expect(lock).toBeTruthy();
         });
       });

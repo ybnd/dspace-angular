@@ -61,8 +61,17 @@ describe('PrimaryBitstreamService', () => {
 
     rdbService = getMockRemoteDataBuildService();
     notificationService = new NotificationsServiceStub() as any;
-    bundleDataService = jasmine.createSpyObj('bundleDataService', { 'findByHref': createSuccessfulRemoteDataObject$(bundle) });
-    service = new PrimaryBitstreamService(requestService, rdbService, objectCache, halService, notificationService, bundleDataService);
+    bundleDataService = jasmine.createSpyObj('bundleDataService', {
+      findByHref: createSuccessfulRemoteDataObject$(bundle),
+    });
+    service = new PrimaryBitstreamService(
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationService,
+      bundleDataService,
+    );
   });
 
   describe('getHttpOptions', () => {
@@ -79,14 +88,24 @@ describe('PrimaryBitstreamService', () => {
 
     beforeEach(() => {
       spyOn(service as any, 'getHttpOptions').and.returnValue(options);
-      (requestService.generateRequestId as jasmine.Spy<any>).and.returnValue(testId);
-      spyOn(rdbService, 'buildFromRequestUUID').and.returnValue(observableOf(testResult));
+      (requestService.generateRequestId as jasmine.Spy<any>).and.returnValue(
+        testId,
+      );
+      spyOn(rdbService, 'buildFromRequestUUID').and.returnValue(
+        observableOf(testResult),
+      );
     });
 
     it('should return a Request object with the given constructor and the given parameters', () => {
-      const result = (service as any).createAndSendRequest(CreateRequest, url, bitstream.self);
+      const result = (service as any).createAndSendRequest(
+        CreateRequest,
+        url,
+        bitstream.self,
+      );
       const request = new CreateRequest(testId, url, bitstream.self, options);
-      getTestScheduler().expectObservable(result).toBe('(a|)', { a: testResult });
+      getTestScheduler()
+        .expectObservable(result)
+        .toBe('(a|)', { a: testResult });
 
       expect(requestService.send).toHaveBeenCalledWith(request);
       expect(rdbService.buildFromRequestUUID).toHaveBeenCalledWith(testId);
@@ -96,12 +115,16 @@ describe('PrimaryBitstreamService', () => {
   describe('create', () => {
     const testResult = createSuccessfulRemoteDataObject(new Bundle());
     beforeEach(() => {
-      spyOn((service as any), 'createAndSendRequest').and.returnValue(observableOf(testResult));
+      spyOn(service as any, 'createAndSendRequest').and.returnValue(
+        observableOf(testResult),
+      );
     });
 
     it('should delegate the call to createAndSendRequest', () => {
       const result = service.create(bitstream, bundle);
-      getTestScheduler().expectObservable(result).toBe('(a|)', { a: testResult });
+      getTestScheduler()
+        .expectObservable(result)
+        .toBe('(a|)', { a: testResult });
 
       expect((service as any).createAndSendRequest).toHaveBeenCalledWith(
         PostRequest,
@@ -113,12 +136,16 @@ describe('PrimaryBitstreamService', () => {
   describe('put', () => {
     const testResult = createSuccessfulRemoteDataObject(new Bundle());
     beforeEach(() => {
-      spyOn((service as any), 'createAndSendRequest').and.returnValue(observableOf(testResult));
+      spyOn(service as any, 'createAndSendRequest').and.returnValue(
+        observableOf(testResult),
+      );
     });
 
     it('should delegate the call to createAndSendRequest and return the requested bundle', () => {
       const result = service.put(bitstream, bundle);
-      getTestScheduler().expectObservable(result).toBe('(a|)', { a: testResult });
+      getTestScheduler()
+        .expectObservable(result)
+        .toBe('(a|)', { a: testResult });
 
       expect((service as any).createAndSendRequest).toHaveBeenCalledWith(
         PutRequest,
@@ -144,17 +171,26 @@ describe('PrimaryBitstreamService', () => {
       const bundleServiceResult = createSuccessfulRemoteDataObject(testBundle);
 
       beforeEach(() => {
-        spyOn((service as any), 'createAndSendRequest').and.returnValue(observableOf(testResult));
-        (bundleDataService.findByHref as jasmine.Spy<any>).and.returnValue(observableOf(bundleServiceResult));
+        spyOn(service as any, 'createAndSendRequest').and.returnValue(
+          observableOf(testResult),
+        );
+        (bundleDataService.findByHref as jasmine.Spy<any>).and.returnValue(
+          observableOf(bundleServiceResult),
+        );
       });
 
       it('should delegate the call to createAndSendRequest', () => {
         const result = service.delete(testBundle);
-        getTestScheduler().expectObservable(result).toBe('(a|)', { a: bundleServiceResult });
+        getTestScheduler()
+          .expectObservable(result)
+          .toBe('(a|)', { a: bundleServiceResult });
 
         result.subscribe();
 
-        expect(bundleDataService.findByHref).toHaveBeenCalledWith(testBundle.self, false);
+        expect(bundleDataService.findByHref).toHaveBeenCalledWith(
+          testBundle.self,
+          false,
+        );
 
         expect((service as any).createAndSendRequest).toHaveBeenCalledWith(
           DeleteRequest,
@@ -167,8 +203,12 @@ describe('PrimaryBitstreamService', () => {
       const bundleServiceResult = createSuccessfulRemoteDataObject(testBundle);
 
       beforeEach(() => {
-        spyOn((service as any), 'createAndSendRequest').and.returnValue(observableOf(testResult));
-        (bundleDataService.findByHref as jasmine.Spy<any>).and.returnValue(observableOf(bundleServiceResult));
+        spyOn(service as any, 'createAndSendRequest').and.returnValue(
+          observableOf(testResult),
+        );
+        (bundleDataService.findByHref as jasmine.Spy<any>).and.returnValue(
+          observableOf(bundleServiceResult),
+        );
       });
 
       it('should delegate the call to createAndSendRequest and request the bundle from the bundleDataService', () => {
@@ -178,13 +218,17 @@ describe('PrimaryBitstreamService', () => {
           DeleteRequest,
           testBundle._links.primaryBitstream.href,
         );
-        expect(bundleDataService.findByHref).toHaveBeenCalledWith(testBundle.self, true);
-
+        expect(bundleDataService.findByHref).toHaveBeenCalledWith(
+          testBundle.self,
+          true,
+        );
       });
 
       it('should delegate the call to createAndSendRequest and', () => {
         const result = service.delete(bundle);
-        getTestScheduler().expectObservable(result).toBe('(a|)', { a: bundleServiceResult });
+        getTestScheduler()
+          .expectObservable(result)
+          .toBe('(a|)', { a: bundleServiceResult });
       });
     });
   });

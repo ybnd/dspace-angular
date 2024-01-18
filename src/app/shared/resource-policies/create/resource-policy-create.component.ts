@@ -1,20 +1,8 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  take,
-} from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -31,7 +19,6 @@ import { ResourcePolicyEvent } from '../form/resource-policy-form.component';
   templateUrl: './resource-policy-create.component.html',
 })
 export class ResourcePolicyCreateComponent implements OnInit {
-
   /**
    * The name of the resource target of the policy
    */
@@ -64,20 +51,26 @@ export class ResourcePolicyCreateComponent implements OnInit {
     private resourcePolicyService: ResourcePolicyDataService,
     private route: ActivatedRoute,
     private router: Router,
-    private translate: TranslateService) {
-  }
+    private translate: TranslateService,
+  ) {}
 
   /**
    * Initialize the component
    */
   ngOnInit(): void {
-    this.route.data.pipe(
-      map((data) => data),
-      take(1),
-    ).subscribe((data: any) => {
-      this.targetResourceUUID = (data.resourcePolicyTarget as RemoteData<DSpaceObject>).payload.id;
-      this.targetResourceName = this.dsoNameService.getName((data.resourcePolicyTarget as RemoteData<DSpaceObject>).payload);
-    });
+    this.route.data
+      .pipe(
+        map((data) => data),
+        take(1),
+      )
+      .subscribe((data: any) => {
+        this.targetResourceUUID = (
+          data.resourcePolicyTarget as RemoteData<DSpaceObject>
+        ).payload.id;
+        this.targetResourceName = this.dsoNameService.getName(
+          (data.resourcePolicyTarget as RemoteData<DSpaceObject>).payload,
+        );
+      });
   }
 
   /**
@@ -93,7 +86,9 @@ export class ResourcePolicyCreateComponent implements OnInit {
    * Redirect to the authorizations page
    */
   redirectToAuthorizationsPage(): void {
-    this.router.navigate([`../../${ITEM_EDIT_AUTHORIZATIONS_PATH}`], { relativeTo: this.route });
+    this.router.navigate([`../../${ITEM_EDIT_AUTHORIZATIONS_PATH}`], {
+      relativeTo: this.route,
+    });
   }
 
   /**
@@ -105,20 +100,35 @@ export class ResourcePolicyCreateComponent implements OnInit {
     this.processing$.next(true);
     let response$;
     if (event.target.type === 'eperson') {
-      response$ = this.resourcePolicyService.create(event.object, this.targetResourceUUID, event.target.uuid);
+      response$ = this.resourcePolicyService.create(
+        event.object,
+        this.targetResourceUUID,
+        event.target.uuid,
+      );
     } else {
-      response$ = this.resourcePolicyService.create(event.object, this.targetResourceUUID, null, event.target.uuid);
+      response$ = this.resourcePolicyService.create(
+        event.object,
+        this.targetResourceUUID,
+        null,
+        event.target.uuid,
+      );
     }
-    response$.pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((responseRD: RemoteData<ResourcePolicy>) => {
-      this.processing$.next(false);
-      if (responseRD.hasSucceeded) {
-        this.notificationsService.success(null, this.translate.get('resource-policies.create.page.success.content'));
-        this.redirectToAuthorizationsPage();
-      } else {
-        this.notificationsService.error(null, this.translate.get('resource-policies.create.page.failure.content'));
-      }
-    });
+    response$
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((responseRD: RemoteData<ResourcePolicy>) => {
+        this.processing$.next(false);
+        if (responseRD.hasSucceeded) {
+          this.notificationsService.success(
+            null,
+            this.translate.get('resource-policies.create.page.success.content'),
+          );
+          this.redirectToAuthorizationsPage();
+        } else {
+          this.notificationsService.error(
+            null,
+            this.translate.get('resource-policies.create.page.failure.content'),
+          );
+        }
+      });
   }
 }

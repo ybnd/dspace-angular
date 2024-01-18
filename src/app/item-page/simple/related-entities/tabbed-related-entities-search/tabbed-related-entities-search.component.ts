@@ -1,12 +1,5 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -27,9 +20,9 @@ export class TabbedRelatedEntitiesSearchComponent implements OnInit {
    * e.g. 'isAuthorOfPublication'
    */
   @Input() relationTypes: {
-    label: string,
-    filter: string,
-    configuration?: string
+    label: string;
+    filter: string;
+    configuration?: string;
   }[];
 
   /**
@@ -54,17 +47,16 @@ export class TabbedRelatedEntitiesSearchComponent implements OnInit {
    */
   activeTab$: Observable<string>;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
 
   /**
    * If the url contains a "tab" query parameter, set this tab to be the active tab
    */
   ngOnInit(): void {
-    this.activeTab$ = this.route.queryParams.pipe(
-      map((params) => params.tab),
-    );
+    this.activeTab$ = this.route.queryParams.pipe(map((params) => params.tab));
   }
 
   /**
@@ -80,5 +72,4 @@ export class TabbedRelatedEntitiesSearchComponent implements OnInit {
       queryParamsHandling: 'merge',
     });
   }
-
 }

@@ -1,19 +1,13 @@
 import { XhrFactory } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import {
-  BrowserModule,
-  TransferState,
-} from '@angular/platform-browser';
+import { BrowserModule, TransferState } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ServerModule,
   ServerTransferStateModule,
 } from '@angular/platform-server';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import {
   Angulartics2,
   Angulartics2GoogleAnalytics,
@@ -45,7 +39,11 @@ import { TranslateServerLoader } from '../../ngx-translate-loaders/translate-ser
 import { ServerInitService } from './server-init.service';
 
 export function createTranslateLoader(transferState: TransferState) {
-  return new TranslateServerLoader(transferState, 'dist/server/assets/i18n/', '.json');
+  return new TranslateServerLoader(
+    transferState,
+    'dist/server/assets/i18n/',
+    '.json',
+  );
 }
 
 @NgModule({
@@ -59,7 +57,7 @@ export function createTranslateLoader(transferState: TransferState) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
+        useFactory: createTranslateLoader,
         deps: [TransferState],
       },
     }),
@@ -124,5 +122,4 @@ export function createTranslateLoader(transferState: TransferState) {
     },
   ],
 })
-export class ServerAppModule {
-}
+export class ServerAppModule {}

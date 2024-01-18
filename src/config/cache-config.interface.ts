@@ -12,9 +12,9 @@ export interface CacheConfig extends Config {
   // of re-generating SSR pages to improve performance.
   serverSide: {
     // Debug server-side caching.  Set to true to see cache hits/misses/refreshes in console logs.
-    debug: boolean,
+    debug: boolean;
     // List of response headers to save into the cache
-    headers: string[],
+    headers: string[];
     // Cache specific to known bots.  Allows you to serve cached contents to bots only.
     botCache: {
       // Maximum number of pages (rendered via SSR) to cache. Setting max=0 disables the cache.
@@ -23,7 +23,7 @@ export interface CacheConfig extends Config {
       timeToLive: number;
       // true = return page from cache after timeToLive expires. false = return a fresh page after timeToLive expires
       allowStale: boolean;
-    },
+    };
     // Cache specific to anonymous users. Allows you to serve cached content to non-authenticated users.
     anonymousCache: {
       // Maximum number of pages (rendered via SSR) to cache. Setting max=0 disables the cache.
@@ -32,6 +32,6 @@ export interface CacheConfig extends Config {
       timeToLive: number;
       // true = return page from cache after timeToLive expires. false = return a fresh page after timeToLive expires
       allowStale: boolean;
-    }
-  }
+    };
+  };
 }

@@ -1,16 +1,6 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -28,10 +18,12 @@ describe('CreateItemParentSelectorComponent', () => {
   const collection = new Collection();
   collection.uuid = '1234-1234-1234-1234';
   collection.metadata = {
-    'dc.title': [Object.assign(new MetadataValue(), {
-      value: 'Collection title',
-      language: undefined,
-    })],
+    'dc.title': [
+      Object.assign(new MetadataValue(), {
+        value: 'Collection title',
+        language: undefined,
+      }),
+    ],
   };
   const router = new RouterStub();
   const collectionRD = createSuccessfulRemoteDataObject(collection);
@@ -56,12 +48,12 @@ describe('CreateItemParentSelectorComponent', () => {
           },
         },
         {
-          provide: Router, useValue: router,
+          provide: Router,
+          useValue: router,
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -77,13 +69,17 @@ describe('CreateItemParentSelectorComponent', () => {
 
   it('should call navigate on the router with the correct create path when navigate is called', () => {
     component.navigate(collection);
-    expect(router.navigate).toHaveBeenCalledWith(['/submit'], { queryParams: { collection: collection.uuid } });
+    expect(router.navigate).toHaveBeenCalledWith(['/submit'], {
+      queryParams: { collection: collection.uuid },
+    });
   });
 
   it('should call navigate on the router with entityType parameter', () => {
     const entityType = 'Person';
     component.entityType = entityType;
     component.navigate(collection);
-    expect(router.navigate).toHaveBeenCalledWith(['/submit'], { queryParams: { collection: collection.uuid, entityType: entityType } });
+    expect(router.navigate).toHaveBeenCalledWith(['/submit'], {
+      queryParams: { collection: collection.uuid, entityType: entityType },
+    });
   });
 });

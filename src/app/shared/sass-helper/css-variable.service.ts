@@ -1,25 +1,14 @@
 import { Injectable } from '@angular/core';
-import {
-  createSelector,
-  MemoizedSelector,
-  select,
-  Store,
-} from '@ngrx/store';
+import { createSelector, MemoizedSelector, select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import {
-  AppState,
-  keySelector,
-} from '../../app.reducer';
+import { AppState, keySelector } from '../../app.reducer';
 import {
   buildPaginatedList,
   PaginatedList,
 } from '../../core/data/paginated-list.model';
 import { PageInfo } from '../../core/shared/page-info.model';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../empty.util';
+import { hasValue, isNotEmpty } from '../empty.util';
 import { KeyValuePair } from '../key-value-pair.model';
 import { PaginationComponentOptions } from '../pagination/pagination-component-options.model';
 import {
@@ -64,9 +53,7 @@ export class CSSVariableService {
   */
   isStyleRule = (rule) => rule.type === 1;
 
-  constructor(
-    protected store: Store<AppState>) {
-  }
+  constructor(protected store: Store<AppState>) {}
 
   /**
    * Adds a CSS variable to the store
@@ -112,8 +99,13 @@ export class CSSVariableService {
    * @param query The query to look for in the keys
    * @param paginationOptions The pagination options for the requested page
    */
-  searchVariable(query: string, paginationOptions: PaginationComponentOptions): Observable<PaginatedList<KeyValuePair<string, string>>> {
-    return this.store.pipe(select(themePaginatedVariablesByQuery(query, paginationOptions)));
+  searchVariable(
+    query: string,
+    paginationOptions: PaginationComponentOptions,
+  ): Observable<PaginatedList<KeyValuePair<string, string>>> {
+    return this.store.pipe(
+      select(themePaginatedVariablesByQuery(query, paginationOptions)),
+    );
   }
 
   /**
@@ -121,7 +113,9 @@ export class CSSVariableService {
    * @return array<KeyValuePair<string, string>>
    * ex; [{key: "--color-accent", value: "#b9f500"}, {key: "--color-text", value: "#252525"}, ...]
    */
-  getCSSVariablesFromStylesheets(document: Document): KeyValuePair<string, string>[] {
+  getCSSVariablesFromStylesheets(
+    document: Document,
+  ): KeyValuePair<string, string>[] {
     if (isNotEmpty(document.styleSheets)) {
       // styleSheets is array-like, so we convert it to an array.
       // Filter out any stylesheets not on this domain
@@ -133,20 +127,24 @@ export class CSSVariableService {
           (finalArr, sheet) =>
             finalArr.concat(
               // cssRules is array-like, so we convert it to an array
-              [...sheet.cssRules].filter(this.isStyleRule).reduce((propValArr, rule: any) => {
-                const props = [...rule.style]
-                  .map((propName) => {
-                    return {
-                      key: propName.trim(),
-                      value: rule.style.getPropertyValue(propName).trim(),
-                    } as KeyValuePair<string, string>;
-                  },
-                  )
-                  // Discard any props that don't start with "--". Custom props are required to.
-                  .filter(({ key }: KeyValuePair<string, string>) => key.indexOf('--') === 0);
+              [...sheet.cssRules]
+                .filter(this.isStyleRule)
+                .reduce((propValArr, rule: any) => {
+                  const props = [...rule.style]
+                    .map((propName) => {
+                      return {
+                        key: propName.trim(),
+                        value: rule.style.getPropertyValue(propName).trim(),
+                      } as KeyValuePair<string, string>;
+                    })
+                    // Discard any props that don't start with "--". Custom props are required to.
+                    .filter(
+                      ({ key }: KeyValuePair<string, string>) =>
+                        key.indexOf('--') === 0,
+                    );
 
-                return [...propValArr, ...props];
-              }, []),
+                  return [...propValArr, ...props];
+                }, []),
             ),
           [],
         );
@@ -158,13 +156,18 @@ export class CSSVariableService {
 
 const themeVariablesSelector = (state: AppState) => state.cssVariables;
 
-const themeVariableByNameSelector = (name: string): MemoizedSelector<AppState, string> => {
+const themeVariableByNameSelector = (
+  name: string,
+): MemoizedSelector<AppState, string> => {
   return keySelector<string>(name, themeVariablesSelector);
 };
 
 // Split this up into two memoized selectors so the query search gets cached separately from the pagination,
 // since the entire list has to be retrieved every time anyway
-const themePaginatedVariablesByQuery = (query: string, pagination: PaginationComponentOptions): MemoizedSelector<AppState, PaginatedList<KeyValuePair<string, string>>> => {
+const themePaginatedVariablesByQuery = (
+  query: string,
+  pagination: PaginationComponentOptions,
+): MemoizedSelector<AppState, PaginatedList<KeyValuePair<string, string>>> => {
   return createSelector(themeVariablesByQuery(query), (pairs) => {
     if (hasValue(pairs)) {
       const { currentPage, pageSize } = pagination;
@@ -172,7 +175,12 @@ const themePaginatedVariablesByQuery = (query: string, pagination: PaginationCom
       const endIndex = startIndex + pageSize;
       const pairsPage = pairs.slice(startIndex, endIndex);
       const totalPages = Math.ceil(pairs.length / pageSize);
-      const pageInfo = new PageInfo({ currentPage, elementsPerPage: pageSize, totalElements: pairs.length, totalPages });
+      const pageInfo = new PageInfo({
+        currentPage,
+        elementsPerPage: pageSize,
+        totalElements: pairs.length,
+        totalPages,
+      });
       return buildPaginatedList(pageInfo, pairsPage);
     } else {
       return undefined;
@@ -180,7 +188,9 @@ const themePaginatedVariablesByQuery = (query: string, pagination: PaginationCom
   });
 };
 
-const themeVariablesByQuery = (query: string): MemoizedSelector<AppState, KeyValuePair<string, string>[]> => {
+const themeVariablesByQuery = (
+  query: string,
+): MemoizedSelector<AppState, KeyValuePair<string, string>[]> => {
   return createSelector(themeVariablesSelector, (state) => {
     if (hasValue(state)) {
       return Object.keys(state)

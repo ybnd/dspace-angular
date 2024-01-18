@@ -1,8 +1,4 @@
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -61,15 +57,19 @@ describe('CollectionAdminSearchResultGridElementComponent', () => {
         { provide: LinkService, useValue: linkService },
         { provide: AuthService, useClass: AuthServiceStub },
         { provide: FileService, useClass: FileServiceStub },
-        { provide: AuthorizationDataService, useClass: AuthorizationDataServiceStub },
+        {
+          provide: AuthorizationDataService,
+          useClass: AuthorizationDataServiceStub,
+        },
         { provide: ThemeService, useValue: getMockThemeService() },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CollectionAdminSearchResultGridElementComponent);
+    fixture = TestBed.createComponent(
+      CollectionAdminSearchResultGridElementComponent,
+    );
     component = fixture.componentInstance;
     component.object = searchResult;
     component.linkTypes = CollectionElementLinkType;

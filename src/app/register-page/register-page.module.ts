@@ -30,6 +30,4 @@ import { RegisterPageRoutingModule } from './register-page-routing.module';
 /**
  * Module related to components used to register a new user
  */
-export class RegisterPageModule {
-
-}
+export class RegisterPageModule {}

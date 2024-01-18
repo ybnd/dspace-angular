@@ -1,18 +1,11 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
-import {
-  first,
-  take,
-} from 'rxjs/operators';
+import { first, take } from 'rxjs/operators';
 
 import {
   SortDirection,
@@ -27,11 +20,11 @@ import { VarDirective } from '../utils/var.directive';
 import { PageSizeSelectorComponent } from './page-size-selector.component';
 
 describe('PageSizeSelectorComponent', () => {
-
   let comp: PageSizeSelectorComponent;
   let fixture: ComponentFixture<PageSizeSelectorComponent>;
 
-  const pagination: PaginationComponentOptions = new PaginationComponentOptions();
+  const pagination: PaginationComponentOptions =
+    new PaginationComponentOptions();
   pagination.id = 'search-results-pagination';
   pagination.currentPage = 1;
   pagination.pageSize = 10;
@@ -79,28 +72,33 @@ describe('PageSizeSelectorComponent', () => {
 
     // SearchPageComponent test instance
     fixture.detectChanges();
-
   });
 
   it('it should show the size settings with the respective selectable options', (done) => {
-    comp.paginationOptions$.pipe(first()).subscribe((options: PaginationComponentOptions) => {
-      const pageSizeSetting = fixture.debugElement.query(By.css('div.page-size-settings'));
-      expect(pageSizeSetting).not.toBeNull();
-      const childElements = pageSizeSetting.queryAll(By.css('option'));
-      expect(childElements.length).toEqual(options.pageSizeOptions.length);
-      done();
-    },
-    );
+    comp.paginationOptions$
+      .pipe(first())
+      .subscribe((options: PaginationComponentOptions) => {
+        const pageSizeSetting = fixture.debugElement.query(
+          By.css('div.page-size-settings'),
+        );
+        expect(pageSizeSetting).not.toBeNull();
+        const childElements = pageSizeSetting.queryAll(By.css('option'));
+        expect(childElements.length).toEqual(options.pageSizeOptions.length);
+        done();
+      });
   });
 
   it('should have the proper rpp value selected by default', (done) => {
     comp.paginationOptions$.pipe(take(1)).subscribe(() => {
-      const pageSizeSetting = fixture.debugElement.query(By.css('div.page-size-settings'));
-      const childElementToBeSelected = pageSizeSetting.query(By.css('option[value="10"]'));
+      const pageSizeSetting = fixture.debugElement.query(
+        By.css('div.page-size-settings'),
+      );
+      const childElementToBeSelected = pageSizeSetting.query(
+        By.css('option[value="10"]'),
+      );
       expect(childElementToBeSelected).not.toBeNull();
       expect(childElementToBeSelected.nativeElement.selected).toBeTrue();
       done();
     });
   });
-
 });

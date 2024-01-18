@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 import { AccessStatusDataService } from 'src/app/core/data/access-status-data.service';
@@ -82,7 +78,9 @@ describe('ItemAccessStatusBadgeComponent', () => {
 
   function lookForAccessStatusBadge(status: string) {
     const badge = fixture.debugElement.query(By.css('span.badge'));
-    expect(badge.nativeElement.textContent).toEqual(`access-status.${status.toLowerCase()}.listelement.badge`);
+    expect(badge.nativeElement.textContent).toEqual(
+      `access-status.${status.toLowerCase()}.listelement.badge`,
+    );
   }
 
   describe('init', () => {
@@ -114,7 +112,9 @@ describe('ItemAccessStatusBadgeComponent', () => {
   describe('When the findAccessStatusFor method returns metadata.only', () => {
     beforeEach(waitForAsync(() => {
       init();
-      (accessStatusDataService.findAccessStatusFor as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$(metadataOnlyStatus));
+      (
+        accessStatusDataService.findAccessStatusFor as jasmine.Spy
+      ).and.returnValue(createSuccessfulRemoteDataObject$(metadataOnlyStatus));
       initTestBed();
     }));
     beforeEach(() => {
@@ -128,7 +128,9 @@ describe('ItemAccessStatusBadgeComponent', () => {
   describe('When the findAccessStatusFor method returns open.access', () => {
     beforeEach(waitForAsync(() => {
       init();
-      (accessStatusDataService.findAccessStatusFor as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$(openAccessStatus));
+      (
+        accessStatusDataService.findAccessStatusFor as jasmine.Spy
+      ).and.returnValue(createSuccessfulRemoteDataObject$(openAccessStatus));
       initTestBed();
     }));
     beforeEach(() => {
@@ -142,7 +144,9 @@ describe('ItemAccessStatusBadgeComponent', () => {
   describe('When the findAccessStatusFor method returns embargo', () => {
     beforeEach(waitForAsync(() => {
       init();
-      (accessStatusDataService.findAccessStatusFor as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$(embargoStatus));
+      (
+        accessStatusDataService.findAccessStatusFor as jasmine.Spy
+      ).and.returnValue(createSuccessfulRemoteDataObject$(embargoStatus));
       initTestBed();
     }));
     beforeEach(() => {
@@ -156,7 +160,9 @@ describe('ItemAccessStatusBadgeComponent', () => {
   describe('When the findAccessStatusFor method returns restricted', () => {
     beforeEach(waitForAsync(() => {
       init();
-      (accessStatusDataService.findAccessStatusFor as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$(restrictedStatus));
+      (
+        accessStatusDataService.findAccessStatusFor as jasmine.Spy
+      ).and.returnValue(createSuccessfulRemoteDataObject$(restrictedStatus));
       initTestBed();
     }));
     beforeEach(() => {

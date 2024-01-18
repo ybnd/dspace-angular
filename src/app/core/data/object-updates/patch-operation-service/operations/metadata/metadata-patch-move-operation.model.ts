@@ -29,6 +29,10 @@ export class MetadataPatchMoveOperation extends MetadataPatchOperation {
    * using the information provided.
    */
   toOperation(): Operation {
-    return { op: this.op as any, from: `/metadata/${this.field}/${this.from}`, path: `/metadata/${this.field}/${this.to}` };
+    return {
+      op: this.op as any,
+      from: `/metadata/${this.field}/${this.from}`,
+      path: `/metadata/${this.field}/${this.to}`,
+    };
   }
 }

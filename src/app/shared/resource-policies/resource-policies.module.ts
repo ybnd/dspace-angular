@@ -21,27 +21,12 @@ const COMPONENTS = [
   ResourcePolicyCreateComponent,
 ];
 
-const PROVIDERS = [
-  ResourcePolicyResolver,
-  ResourcePolicyTargetResolver,
-];
+const PROVIDERS = [ResourcePolicyResolver, ResourcePolicyTargetResolver];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS,
-  ],
-  imports: [
-    NgbModule,
-    CommonModule,
-    FormModule,
-    TranslateModule,
-    SharedModule,
-  ],
-  providers: [
-    ...PROVIDERS,
-  ],
-  exports: [
-    ...COMPONENTS,
-  ],
+  declarations: [...COMPONENTS],
+  imports: [NgbModule, CommonModule, FormModule, TranslateModule, SharedModule],
+  providers: [...PROVIDERS],
+  exports: [...COMPONENTS],
 })
-export class ResourcePoliciesModule { }
+export class ResourcePoliciesModule {}

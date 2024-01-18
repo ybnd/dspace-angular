@@ -1,16 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -74,9 +65,7 @@ export class GrantDenyRequestCopyComponent implements OnInit {
     private authService: AuthService,
     private itemDataService: ItemDataService,
     private nameService: DSONameService,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.itemRequestRD$ = this.route.data.pipe(
@@ -86,7 +75,9 @@ export class GrantDenyRequestCopyComponent implements OnInit {
     );
     this.itemRD$ = this.itemRequestRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((itemRequest: ItemRequest) => this.itemDataService.findById(itemRequest.itemId)),
+      switchMap((itemRequest: ItemRequest) =>
+        this.itemDataService.findById(itemRequest.itemId),
+      ),
     );
     this.itemName$ = this.itemRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
@@ -99,12 +90,15 @@ export class GrantDenyRequestCopyComponent implements OnInit {
 
     this.denyRoute$ = this.itemRequestRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      map((itemRequest: ItemRequest) => getRequestCopyDenyRoute(itemRequest.token)),
+      map((itemRequest: ItemRequest) =>
+        getRequestCopyDenyRoute(itemRequest.token),
+      ),
     );
     this.grantRoute$ = this.itemRequestRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      map((itemRequest: ItemRequest) => getRequestCopyGrantRoute(itemRequest.token)),
+      map((itemRequest: ItemRequest) =>
+        getRequestCopyGrantRoute(itemRequest.token),
+      ),
     );
   }
-
 }

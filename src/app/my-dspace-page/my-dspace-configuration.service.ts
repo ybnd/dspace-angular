@@ -1,13 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  combineLatest,
-  Observable,
-} from 'rxjs';
-import {
-  first,
-  map,
-} from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { first, map } from 'rxjs/operators';
 
 import { LinkService } from '../core/cache/builders/link.service';
 import { RemoteDataBuildService } from '../core/cache/builders/remote-data-build.service';
@@ -32,7 +26,6 @@ export const MyDSpaceConfigurationToContextMap = new Map([
   [MyDSpaceConfigurationValueType.Workflow, Context.Workflow],
 ]);
 
-
 /**
  * Service that performs all actions that have to do with the current mydspace configuration
  */
@@ -41,11 +34,14 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
   /**
    * Default pagination settings
    */
-  protected defaultPagination = Object.assign(new PaginationComponentOptions(), {
-    id: 'mydspace-page',
-    pageSize: 10,
-    currentPage: 1,
-  });
+  protected defaultPagination = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'mydspace-page',
+      pageSize: 10,
+      currentPage: 1,
+    },
+  );
 
   /**
    * Default sort settings
@@ -83,16 +79,25 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
    * @param requestService
    * @param rdb
    */
-  constructor(protected roleService: RoleService,
-              protected routeService: RouteService,
-              protected paginationService: PaginationService,
-              protected route: ActivatedRoute,
-              protected linkService: LinkService,
-              protected halService: HALEndpointService,
-              protected requestService: RequestService,
-              protected rdb: RemoteDataBuildService) {
-
-    super(routeService, paginationService, route, linkService, halService, requestService, rdb);
+  constructor(
+    protected roleService: RoleService,
+    protected routeService: RouteService,
+    protected paginationService: PaginationService,
+    protected route: ActivatedRoute,
+    protected linkService: LinkService,
+    protected halService: HALEndpointService,
+    protected requestService: RequestService,
+    protected rdb: RemoteDataBuildService,
+  ) {
+    super(
+      routeService,
+      paginationService,
+      route,
+      linkService,
+      halService,
+      requestService,
+      rdb,
+    );
 
     // override parent class initialization
     this._defaults = null;
@@ -109,20 +114,29 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
    * @return {Observable<MyDSpaceConfigurationValueType[]>}
    *    Emits the available configuration list
    */
-  public getAvailableConfigurationTypes(): Observable<MyDSpaceConfigurationValueType[]> {
-    return combineLatest(this.isSubmitter$, this.isController$, this.isAdmin$).pipe(
+  public getAvailableConfigurationTypes(): Observable<
+    MyDSpaceConfigurationValueType[]
+  > {
+    return combineLatest(
+      this.isSubmitter$,
+      this.isController$,
+      this.isAdmin$,
+    ).pipe(
       first(),
-      map(([isSubmitter, isController, isAdmin]: [boolean, boolean, boolean]) => {
-        const availableConf: MyDSpaceConfigurationValueType[] = [];
-        if (isSubmitter) {
-          availableConf.push(MyDSpaceConfigurationValueType.Workspace);
-        }
-        if (isController || isAdmin) {
-          availableConf.push(MyDSpaceConfigurationValueType.SupervisedItems);
-          availableConf.push(MyDSpaceConfigurationValueType.Workflow);
-        }
-        return availableConf;
-      }));
+      map(
+        ([isSubmitter, isController, isAdmin]: [boolean, boolean, boolean]) => {
+          const availableConf: MyDSpaceConfigurationValueType[] = [];
+          if (isSubmitter) {
+            availableConf.push(MyDSpaceConfigurationValueType.Workspace);
+          }
+          if (isController || isAdmin) {
+            availableConf.push(MyDSpaceConfigurationValueType.SupervisedItems);
+            availableConf.push(MyDSpaceConfigurationValueType.Workflow);
+          }
+          return availableConf;
+        },
+      ),
+    );
   }
 
   /**
@@ -131,7 +145,9 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
    * @return {Observable<SearchConfigurationOption[]>}
    *    Emits the select options list
    */
-  public getAvailableConfigurationOptions(): Observable<SearchConfigurationOption[]> {
+  public getAvailableConfigurationOptions(): Observable<
+    SearchConfigurationOption[]
+  > {
     return this.getAvailableConfigurationTypes().pipe(
       first(),
       map((availableConfigurationTypes: MyDSpaceConfigurationValueType[]) => {
@@ -146,5 +162,4 @@ export class MyDSpaceConfigurationService extends SearchConfigurationService {
       }),
     );
   }
-
 }

@@ -1,12 +1,5 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -33,8 +26,7 @@ describe('ExternalLinkMenuItemComponent', () => {
         { provide: 'itemModelProvider', useValue: { text: text, href: link } },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -49,7 +41,8 @@ describe('ExternalLinkMenuItemComponent', () => {
   });
 
   it('should contain the correct text', () => {
-    const textContent = debugElement.query(By.css('a')).nativeElement.textContent;
+    const textContent = debugElement.query(By.css('a')).nativeElement
+      .textContent;
     expect(textContent).toEqual(text);
   });
 

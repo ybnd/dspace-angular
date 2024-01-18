@@ -1,10 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -68,7 +64,11 @@ describe('WorkspaceitemDataService test', () => {
     },
   });
   const itemRD = createSuccessfulRemoteDataObject(item);
-  const wsi = Object.assign(new WorkspaceItem(), { item: observableOf(itemRD), id: '1234', uuid: '1234' });
+  const wsi = Object.assign(new WorkspaceItem(), {
+    item: observableOf(itemRD),
+    id: '1234',
+    uuid: '1234',
+  });
   const wsiRD = createSuccessfulRemoteDataObject(wsi);
 
   const endpointURL = `https://rest.api/rest/api/submission/workspaceitems`;
@@ -97,14 +97,14 @@ describe('WorkspaceitemDataService test', () => {
   }
 
   describe('composition', () => {
-    const initService = () => new WorkspaceitemDataService(null, null, null, null, null);
+    const initService = () =>
+      new WorkspaceitemDataService(null, null, null, null, null);
     testSearchDataImplementation(initService);
     testDeleteDataImplementation(initService);
   });
 
   describe('', () => {
     beforeEach(() => {
-
       scheduler = getTestScheduler();
 
       halService = jasmine.createSpyObj('halService', {
@@ -129,8 +129,10 @@ describe('WorkspaceitemDataService test', () => {
 
       service = initTestService();
 
-      spyOn((service as any), 'findByHref').and.callThrough();
-      spyOn((service as any), 'getSearchByHref').and.returnValue(searchRequestURL$);
+      spyOn(service as any, 'findByHref').and.callThrough();
+      spyOn(service as any, 'getSearchByHref').and.returnValue(
+        searchRequestURL$,
+      );
     });
 
     afterEach(() => {
@@ -139,10 +141,16 @@ describe('WorkspaceitemDataService test', () => {
 
     describe('findByItem', () => {
       it('should proxy the call to DataService.findByHref', () => {
-        scheduler.schedule(() => service.findByItem('1234-1234', true, true, pageInfo));
+        scheduler.schedule(() =>
+          service.findByItem('1234-1234', true, true, pageInfo),
+        );
         scheduler.flush();
 
-        expect((service as any).findByHref).toHaveBeenCalledWith(searchRequestURL$, true, true);
+        expect((service as any).findByHref).toHaveBeenCalledWith(
+          searchRequestURL$,
+          true,
+          true,
+        );
       });
 
       it('should return a RemoteData<WorkspaceItem> for the search', () => {
@@ -152,8 +160,6 @@ describe('WorkspaceitemDataService test', () => {
         });
         expect(result).toBeObservable(expected);
       });
-
     });
   });
-
 });

@@ -14,11 +14,7 @@ import {
 import { Item } from '../../../../core/shared/item.model';
 import { WorkflowItem } from '../../../../core/submission/models/workflowitem.model';
 import { ClaimedTask } from '../../../../core/tasks/models/claimed-task-object.model';
-import {
-  hasNoValue,
-  hasValue,
-  isNotEmpty,
-} from '../../../empty.util';
+import { hasNoValue, hasValue, isNotEmpty } from '../../../empty.util';
 import { MyDSpaceActionsResult } from '../../mydspace-actions';
 import { ClaimedTaskActionsAbstractComponent } from '../abstract/claimed-task-actions-abstract.component';
 import { ClaimedTaskActionsDirective } from './claimed-task-actions.directive';
@@ -62,7 +58,8 @@ export class ClaimedTaskActionsLoaderComponent implements OnInit, OnChanges {
   /**
    * Directive to determine where the dynamic child component is located
    */
-  @ViewChild(ClaimedTaskActionsDirective, { static: true }) claimedTaskActionsDirective: ClaimedTaskActionsDirective;
+  @ViewChild(ClaimedTaskActionsDirective, { static: true })
+  claimedTaskActionsDirective: ClaimedTaskActionsDirective;
 
   /**
    * The reference to the dynamic component
@@ -72,14 +69,10 @@ export class ClaimedTaskActionsLoaderComponent implements OnInit, OnChanges {
   /**
    * The list of input and output names for the dynamic component
    */
-  protected inAndOutputNames: (keyof ClaimedTaskActionsAbstractComponent & keyof this)[] = [
-    'object',
-    'option',
-    'processCompleted',
-  ];
+  protected inAndOutputNames: (keyof ClaimedTaskActionsAbstractComponent &
+    keyof this)[] = ['object', 'option', 'processCompleted'];
 
-  constructor(private componentFactoryResolver: ComponentFactoryResolver) {
-  }
+  constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
 
   /**
    * Fetch, create and initialize the relevant component
@@ -110,9 +103,11 @@ export class ClaimedTaskActionsLoaderComponent implements OnInit, OnChanges {
   private instantiateComponent(changes?: SimpleChanges): void {
     const comp = this.getComponentByWorkflowTaskOption(this.option);
     if (hasValue(comp)) {
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(comp);
+      const componentFactory =
+        this.componentFactoryResolver.resolveComponentFactory(comp);
 
-      const viewContainerRef = this.claimedTaskActionsDirective.viewContainerRef;
+      const viewContainerRef =
+        this.claimedTaskActionsDirective.viewContainerRef;
       viewContainerRef.clear();
 
       this.compRef = viewContainerRef.createComponent(componentFactory);
@@ -134,10 +129,16 @@ export class ClaimedTaskActionsLoaderComponent implements OnInit, OnChanges {
    * to ensure they're in sync
    */
   protected connectInputsAndOutputs(): void {
-    if (isNotEmpty(this.inAndOutputNames) && hasValue(this.compRef) && hasValue(this.compRef.instance)) {
-      this.inAndOutputNames.filter((name: any) => this[name] !== undefined).forEach((name: any) => {
-        this.compRef.instance[name] = this[name];
-      });
+    if (
+      isNotEmpty(this.inAndOutputNames) &&
+      hasValue(this.compRef) &&
+      hasValue(this.compRef.instance)
+    ) {
+      this.inAndOutputNames
+        .filter((name: any) => this[name] !== undefined)
+        .forEach((name: any) => {
+          this.compRef.instance[name] = this[name];
+        });
     }
   }
 }

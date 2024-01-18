@@ -10,11 +10,7 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import {
-  hasValue,
-  isEmpty,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isEmpty, isNotEmpty } from '../../shared/empty.util';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { CacheableObject } from '../cache/cacheable-object.model';
 import { EndpointMap } from '../cache/response.models';
@@ -26,12 +22,10 @@ import { getFirstCompletedRemoteData } from './operators';
 
 @Injectable()
 export class HALEndpointService {
-
   constructor(
     private requestService: RequestService,
     private rdbService: RemoteDataBuildService,
-  ) {
-  }
+  ) {}
 
   public getRootHref(): string {
     return new RESTURLCombiner().toString();
@@ -42,7 +36,10 @@ export class HALEndpointService {
   }
 
   private getEndpointMapAt(href): Observable<EndpointMap> {
-    const request = new EndpointMapRequest(this.requestService.generateRequestId(), href);
+    const request = new EndpointMapRequest(
+      this.requestService.generateRequestId(),
+      href,
+    );
 
     this.requestService.send(request, true);
 
@@ -69,8 +66,13 @@ export class HALEndpointService {
   }
 
   public getEndpoint(linkPath: string, startHref?: string): Observable<string> {
-    const halNames = linkPath.split('/').filter((name: string) => isNotEmpty(name));
-    return this.getEndpointAt(startHref || this.getRootHref(), ...halNames).pipe(take(1));
+    const halNames = linkPath
+      .split('/')
+      .filter((name: string) => isNotEmpty(name));
+    return this.getEndpointAt(
+      startHref || this.getRootHref(),
+      ...halNames,
+    ).pipe(take(1));
   }
 
   /**
@@ -79,9 +81,12 @@ export class HALEndpointService {
    * @param {string} halNames List of hal names for which a url should be resolved
    * @returns {Observable<string>} Observable that emits the found hal url
    */
-  private getEndpointAt(href: string, ...halNames: string[]): Observable<string> {
+  private getEndpointAt(
+    href: string,
+    ...halNames: string[]
+  ): Observable<string> {
     if (isEmpty(halNames)) {
-      throw new Error('cant\'t fetch the URL without the HAL link names');
+      throw new Error("cant't fetch the URL without the HAL link names");
     }
 
     const nextHref$ = this.getEndpointMapAt(href).pipe(
@@ -90,7 +95,9 @@ export class HALEndpointService {
         if (hasValue(endpointMap) && hasValue(endpointMap[nextName])) {
           return endpointMap[nextName].href;
         } else {
-          throw new Error(`${JSON.stringify(endpointMap)} doesn't contain the link ${nextName}`);
+          throw new Error(
+            `${JSON.stringify(endpointMap)} doesn't contain the link ${nextName}`,
+          );
         }
       }),
     ) as Observable<string>;
@@ -99,7 +106,9 @@ export class HALEndpointService {
       return nextHref$.pipe(take(1));
     } else {
       return nextHref$.pipe(
-        switchMap((nextHref) => this.getEndpointAt(nextHref, ...halNames.slice(1))),
+        switchMap((nextHref) =>
+          this.getEndpointAt(nextHref, ...halNames.slice(1)),
+        ),
         take(1),
       );
     }
@@ -113,5 +122,4 @@ export class HALEndpointService {
       distinctUntilChanged(),
     );
   }
-
 }

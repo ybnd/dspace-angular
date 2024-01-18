@@ -185,6 +185,3 @@ export const languageHelper = {
   za: 'Zhuang, Chuang',
   zu: 'Zulu',
 };
-
-
-

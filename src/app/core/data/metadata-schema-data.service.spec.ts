@@ -10,10 +10,7 @@ import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { testDeleteDataImplementation } from './base/delete-data.spec';
 import { testFindAllDataImplementation } from './base/find-all-data.spec';
 import { MetadataSchemaDataService } from './metadata-schema-data.service';
-import {
-  CreateRequest,
-  PutRequest,
-} from './request.models';
+import { CreateRequest, PutRequest } from './request.models';
 import { RequestService } from './request.service';
 
 describe('MetadataSchemaDataService', () => {
@@ -51,7 +48,8 @@ describe('MetadataSchemaDataService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new MetadataSchemaDataService(null, null, null, null, null);
+    const initService = () =>
+      new MetadataSchemaDataService(null, null, null, null, null);
 
     testFindAllDataImplementation(initService);
     testDeleteDataImplementation(initService);
@@ -72,10 +70,14 @@ describe('MetadataSchemaDataService', () => {
 
     describe('called with a new metadata schema', () => {
       it('should send a CreateRequest', (done) => {
-        metadataSchemaService.createOrUpdateMetadataSchema(schema).subscribe(() => {
-          expect(requestService.send).toHaveBeenCalledWith(jasmine.any(CreateRequest));
-          done();
-        });
+        metadataSchemaService
+          .createOrUpdateMetadataSchema(schema)
+          .subscribe(() => {
+            expect(requestService.send).toHaveBeenCalledWith(
+              jasmine.any(CreateRequest),
+            );
+            done();
+          });
       });
     });
 
@@ -87,18 +89,24 @@ describe('MetadataSchemaDataService', () => {
       });
 
       it('should send a PutRequest', (done) => {
-        metadataSchemaService.createOrUpdateMetadataSchema(schema).subscribe(() => {
-          expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PutRequest));
-          done();
-        });
+        metadataSchemaService
+          .createOrUpdateMetadataSchema(schema)
+          .subscribe(() => {
+            expect(requestService.send).toHaveBeenCalledWith(
+              jasmine.any(PutRequest),
+            );
+            done();
+          });
       });
     });
   });
 
   describe('clearRequests', () => {
-    it('should remove requests on the data service\'s endpoint', (done) => {
+    it("should remove requests on the data service's endpoint", (done) => {
       metadataSchemaService.clearRequests().subscribe(() => {
-        expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(`${endpoint}/${(metadataSchemaService as any).linkPath}`);
+        expect(requestService.removeByHrefSubstring).toHaveBeenCalledWith(
+          `${endpoint}/${(metadataSchemaService as any).linkPath}`,
+        );
         done();
       });
     });

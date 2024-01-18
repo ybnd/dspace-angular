@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -57,19 +54,18 @@ describe('MetadataRegistryComponent', () => {
       namespace: 'http://dspace.org/mockschema',
     },
   ];
-  const mockSchemas = createSuccessfulRemoteDataObject$(buildPaginatedList(null, mockSchemasList));
+  const mockSchemas = createSuccessfulRemoteDataObject$(
+    buildPaginatedList(null, mockSchemasList),
+  );
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
   const registryServiceStub = {
     getMetadataSchemas: () => mockSchemas,
     getActiveMetadataSchema: () => observableOf(undefined),
     getSelectedMetadataSchemas: () => observableOf([]),
-    editMetadataSchema: (schema) => {
-    },
-    cancelEditMetadataSchema: () => {
-    },
+    editMetadataSchema: (schema) => {},
+    cancelEditMetadataSchema: () => {},
     deleteMetadataSchema: () => observableOf(new RestResponse(true, 200, 'OK')),
-    deselectAllMetadataSchema: () => {
-    },
+    deselectAllMetadataSchema: () => {},
     clearMetadataSchemaRequests: () => observableOf(undefined),
   };
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
@@ -78,18 +74,32 @@ describe('MetadataRegistryComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-      declarations: [MetadataRegistryComponent, PaginationComponent, EnumKeysPipe],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
+      declarations: [
+        MetadataRegistryComponent,
+        PaginationComponent,
+        EnumKeysPipe,
+      ],
       providers: [
         { provide: RegistryService, useValue: registryServiceStub },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
         { provide: PaginationService, useValue: paginationService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(MetadataRegistryComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(MetadataRegistryComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -103,15 +113,21 @@ describe('MetadataRegistryComponent', () => {
   }));
 
   it('should contain two schemas', () => {
-    const tbody: HTMLElement = fixture.debugElement.query(By.css('#metadata-schemas>tbody')).nativeElement;
+    const tbody: HTMLElement = fixture.debugElement.query(
+      By.css('#metadata-schemas>tbody'),
+    ).nativeElement;
     expect(tbody.children.length).toBe(2);
   });
 
   it('should contain the correct schemas', () => {
-    const dcName: HTMLElement = fixture.debugElement.query(By.css('#metadata-schemas tr:nth-child(1) td:nth-child(4)')).nativeElement;
+    const dcName: HTMLElement = fixture.debugElement.query(
+      By.css('#metadata-schemas tr:nth-child(1) td:nth-child(4)'),
+    ).nativeElement;
     expect(dcName.textContent).toBe('dc');
 
-    const mockName: HTMLElement = fixture.debugElement.query(By.css('#metadata-schemas tr:nth-child(2) td:nth-child(4)')).nativeElement;
+    const mockName: HTMLElement = fixture.debugElement.query(
+      By.css('#metadata-schemas tr:nth-child(2) td:nth-child(4)'),
+    ).nativeElement;
     expect(mockName.textContent).toBe('mock');
   });
 
@@ -127,12 +143,16 @@ describe('MetadataRegistryComponent', () => {
 
     it('should start editing the selected schema', waitForAsync(() => {
       fixture.whenStable().then(() => {
-        expect(registryService.editMetadataSchema).toHaveBeenCalledWith(mockSchemasList[0] as MetadataSchema);
+        expect(registryService.editMetadataSchema).toHaveBeenCalledWith(
+          mockSchemasList[0] as MetadataSchema,
+        );
       });
     }));
 
     it('should cancel editing the selected schema when clicked again', waitForAsync(() => {
-      spyOn(registryService, 'getActiveMetadataSchema').and.returnValue(observableOf(mockSchemasList[0] as MetadataSchema));
+      spyOn(registryService, 'getActiveMetadataSchema').and.returnValue(
+        observableOf(mockSchemasList[0] as MetadataSchema),
+      );
       spyOn(registryService, 'cancelEditMetadataSchema');
       row.click();
       fixture.detectChanges();
@@ -147,14 +167,18 @@ describe('MetadataRegistryComponent', () => {
 
     beforeEach(() => {
       spyOn(registryService, 'deleteMetadataSchema').and.callThrough();
-      spyOn(registryService, 'getSelectedMetadataSchemas').and.returnValue(observableOf(selectedSchemas as MetadataSchema[]));
+      spyOn(registryService, 'getSelectedMetadataSchemas').and.returnValue(
+        observableOf(selectedSchemas as MetadataSchema[]),
+      );
       comp.deleteSchemas();
       fixture.detectChanges();
     });
 
     it('should call deleteMetadataSchema with the selected id', waitForAsync(() => {
       fixture.whenStable().then(() => {
-        expect(registryService.deleteMetadataSchema).toHaveBeenCalledWith(selectedSchemas[0].id);
+        expect(registryService.deleteMetadataSchema).toHaveBeenCalledWith(
+          selectedSchemas[0].id,
+        );
       });
     }));
   });

@@ -1,7 +1,4 @@
-import {
-  autoserialize,
-  deserialize,
-} from 'cerialize';
+import { autoserialize, deserialize } from 'cerialize';
 
 import { typedObject } from '../../cache/builders/build-decorators';
 import { CacheableObject } from '../../cache/cacheable-object.model';
@@ -15,7 +12,6 @@ import { ORCID_QUEUE } from './orcid-queue.resource-type';
  */
 @typedObject
 export class OrcidQueue extends CacheableObject {
-
   static type = ORCID_QUEUE;
 
   /**
@@ -23,50 +19,49 @@ export class OrcidQueue extends CacheableObject {
    */
   @excludeFromEquals
   @autoserialize
-    type: ResourceType;
+  type: ResourceType;
 
   /**
    * The identifier of this Orcid Queue record
    */
   @autoserialize
-    id: number;
+  id: number;
 
   /**
    * The record description.
    */
   @autoserialize
-    description: string;
+  description: string;
 
   /**
    * The identifier of the profileItem of this Orcid Queue record.
    */
   @autoserialize
-    profileItemId: string;
+  profileItemId: string;
 
   /**
    * The identifier of the entity related to this Orcid Queue record.
    */
   @autoserialize
-    entityId: string;
+  entityId: string;
 
   /**
    * The type of this Orcid Queue record.
    */
   @autoserialize
-    recordType: string;
+  recordType: string;
 
   /**
    * The operation related to this Orcid Queue record.
    */
   @autoserialize
-    operation: string;
+  operation: string;
 
   /**
    * The {@link HALLink}s for this Orcid Queue record
    */
   @deserialize
-    _links: {
-    self: HALLink,
+  _links: {
+    self: HALLink;
   };
-
 }

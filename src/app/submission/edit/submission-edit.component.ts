@@ -1,24 +1,8 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  ParamMap,
-  Router,
-} from '@angular/router';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  Subscription,
-} from 'rxjs';
-import {
-  debounceTime,
-  filter,
-  switchMap,
-} from 'rxjs/operators';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { debounceTime, filter, switchMap } from 'rxjs/operators';
 
 import { SubmissionDefinitionsModel } from '../../core/config/models/config-submission-definitions.model';
 import { ItemDataService } from '../../core/data/item-data.service';
@@ -49,7 +33,6 @@ import parseSectionErrors from '../utils/parseSectionErrors';
   templateUrl: './submission-edit.component.html',
 })
 export class SubmissionEditComponent implements OnDestroy, OnInit {
-
   /**
    * The collection id this submission belonging to
    * @type {string}
@@ -61,7 +44,6 @@ export class SubmissionEditComponent implements OnDestroy, OnInit {
    * @type {booelan}
    */
   public collectionModifiable: boolean | null = null;
-
 
   /**
    * The list of submission's sections
@@ -122,65 +104,80 @@ export class SubmissionEditComponent implements OnDestroy, OnInit {
    * @param {TranslateService} translate
    * @param {SubmissionJsonPatchOperationsService} submissionJsonPatchOperationsService
    */
-  constructor(private changeDetectorRef: ChangeDetectorRef,
-              private notificationsService: NotificationsService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private itemDataService: ItemDataService,
-              private submissionService: SubmissionService,
-              private translate: TranslateService,
-              private submissionJsonPatchOperationsService: SubmissionJsonPatchOperationsService) {
-  }
+  constructor(
+    private changeDetectorRef: ChangeDetectorRef,
+    private notificationsService: NotificationsService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private itemDataService: ItemDataService,
+    private submissionService: SubmissionService,
+    private translate: TranslateService,
+    private submissionJsonPatchOperationsService: SubmissionJsonPatchOperationsService,
+  ) {}
 
   /**
    * Retrieve workspaceitem/workflowitem from server and initialize all instance variables
    */
   ngOnInit() {
-
-    this.collectionModifiable = this.route.snapshot.data?.collectionModifiable ?? null;
+    this.collectionModifiable =
+      this.route.snapshot.data?.collectionModifiable ?? null;
 
     this.subs.push(
-      this.route.paramMap.pipe(
-        switchMap((params: ParamMap) => this.submissionService.retrieveSubmission(params.get('id'))),
-        // NOTE new submission is retrieved on the browser side only, so get null on server side rendering
-        filter((submissionObjectRD: RemoteData<SubmissionObject>) => isNotNull(submissionObjectRD)),
-      ).subscribe((submissionObjectRD: RemoteData<SubmissionObject>) => {
-        if (submissionObjectRD.hasSucceeded) {
-          if (isEmpty(submissionObjectRD.payload)) {
-            this.notificationsService.info(null, this.translate.get('submission.general.cannot_submit'));
-            this.router.navigate(['/mydspace']);
+      this.route.paramMap
+        .pipe(
+          switchMap((params: ParamMap) =>
+            this.submissionService.retrieveSubmission(params.get('id')),
+          ),
+          // NOTE new submission is retrieved on the browser side only, so get null on server side rendering
+          filter((submissionObjectRD: RemoteData<SubmissionObject>) =>
+            isNotNull(submissionObjectRD),
+          ),
+        )
+        .subscribe((submissionObjectRD: RemoteData<SubmissionObject>) => {
+          if (submissionObjectRD.hasSucceeded) {
+            if (isEmpty(submissionObjectRD.payload)) {
+              this.notificationsService.info(
+                null,
+                this.translate.get('submission.general.cannot_submit'),
+              );
+              this.router.navigate(['/mydspace']);
+            } else {
+              const { errors } = submissionObjectRD.payload;
+              this.submissionErrors = parseSectionErrors(errors);
+              this.submissionId = submissionObjectRD.payload.id.toString();
+              this.collectionId = (
+                submissionObjectRD.payload.collection as Collection
+              ).id;
+              this.selfUrl = submissionObjectRD.payload._links.self.href;
+              this.sections = submissionObjectRD.payload.sections;
+              this.itemLink$.next(submissionObjectRD.payload._links.item.href);
+              this.item = submissionObjectRD.payload.item;
+              this.submissionDefinition = submissionObjectRD.payload
+                .submissionDefinition as SubmissionDefinitionsModel;
+            }
           } else {
-            const { errors } = submissionObjectRD.payload;
-            this.submissionErrors = parseSectionErrors(errors);
-            this.submissionId = submissionObjectRD.payload.id.toString();
-            this.collectionId = (submissionObjectRD.payload.collection as Collection).id;
-            this.selfUrl = submissionObjectRD.payload._links.self.href;
-            this.sections = submissionObjectRD.payload.sections;
-            this.itemLink$.next(submissionObjectRD.payload._links.item.href);
-            this.item = submissionObjectRD.payload.item;
-            this.submissionDefinition = (submissionObjectRD.payload.submissionDefinition as SubmissionDefinitionsModel);
+            if (submissionObjectRD.statusCode === 404) {
+              // redirect to not found page
+              this.router.navigate(['/404'], { skipLocationChange: true });
+            }
+            // TODO handle generic error
           }
-        } else {
-          if (submissionObjectRD.statusCode === 404) {
-            // redirect to not found page
-            this.router.navigate(['/404'], { skipLocationChange: true });
-          }
-          // TODO handle generic error
-        }
-      }),
-      this.itemLink$.pipe(
-        isNotEmptyOperator(),
-        switchMap((itemLink: string) =>
-          this.itemDataService.findByHref(itemLink),
-        ),
-        getAllSucceededRemoteData(),
-        // Multiple sources can update the item in quick succession.
-        // We only want to rerender the form if the item is unchanged for some time
-        debounceTime(300),
-      ).subscribe((itemRd: RemoteData<Item>) => {
-        this.item = itemRd.payload;
-        this.changeDetectorRef.detectChanges();
-      }),
+        }),
+      this.itemLink$
+        .pipe(
+          isNotEmptyOperator(),
+          switchMap((itemLink: string) =>
+            this.itemDataService.findByHref(itemLink),
+          ),
+          getAllSucceededRemoteData(),
+          // Multiple sources can update the item in quick succession.
+          // We only want to rerender the form if the item is unchanged for some time
+          debounceTime(300),
+        )
+        .subscribe((itemRd: RemoteData<Item>) => {
+          this.item = itemRd.payload;
+          this.changeDetectorRef.detectChanges();
+        }),
     );
   }
 

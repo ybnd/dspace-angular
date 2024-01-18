@@ -6,15 +6,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  concatMap,
-  Observable,
-  shareReplay,
-} from 'rxjs';
-import {
-  map,
-  take,
-} from 'rxjs/operators';
+import { concatMap, Observable, shareReplay } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { BulkAccessConfigDataService } from '../../core/config/bulk-access-config-data.service';
 import { BulkAccessConditionOptions } from '../../core/config/models/bulk-access-condition-options.model';
@@ -35,11 +28,12 @@ import {
 @Component({
   selector: 'ds-access-control-form-container',
   templateUrl: './access-control-form-container.component.html',
-  styleUrls: [ './access-control-form-container.component.scss' ],
+  styleUrls: ['./access-control-form-container.component.scss'],
   exportAs: 'dsAccessControlForm',
 })
-export class AccessControlFormContainerComponent<T extends DSpaceObject> implements OnDestroy {
-
+export class AccessControlFormContainerComponent<T extends DSpaceObject>
+  implements OnDestroy
+{
   /**
    * Will be used to determine if we need to show the limit changes to specific bitstreams radio buttons
    */
@@ -62,8 +56,10 @@ export class AccessControlFormContainerComponent<T extends DSpaceObject> impleme
    */
   @Input() showSubmit = true;
 
-  @ViewChild('bitstreamAccessCmp', { static: true }) bitstreamAccessCmp: AccessControlArrayFormComponent;
-  @ViewChild('itemAccessCmp', { static: true }) itemAccessCmp: AccessControlArrayFormComponent;
+  @ViewChild('bitstreamAccessCmp', { static: true })
+  bitstreamAccessCmp: AccessControlArrayFormComponent;
+  @ViewChild('itemAccessCmp', { static: true })
+  itemAccessCmp: AccessControlArrayFormComponent;
 
   readonly AlertType = AlertType;
 
@@ -77,11 +73,14 @@ export class AccessControlFormContainerComponent<T extends DSpaceObject> impleme
 
   state = createAccessControlInitialFormState();
 
-  dropdownData$: Observable<BulkAccessConditionOptions> = this.bulkAccessConfigService.findByName('default').pipe(
-    getFirstCompletedRemoteData(),
-    map((configRD: RemoteData<BulkAccessConditionOptions>) => configRD.hasSucceeded ? configRD.payload : null),
-    shareReplay({ refCount: false, bufferSize: 1 }),
-  );
+  dropdownData$: Observable<BulkAccessConditionOptions> =
+    this.bulkAccessConfigService.findByName('default').pipe(
+      getFirstCompletedRemoteData(),
+      map((configRD: RemoteData<BulkAccessConditionOptions>) =>
+        configRD.hasSucceeded ? configRD.payload : null,
+      ),
+      shareReplay({ refCount: false, bufferSize: 1 }),
+    );
 
   /**
    * Will be used from a parent component to read the value of the form
@@ -123,12 +122,12 @@ export class AccessControlFormContainerComponent<T extends DSpaceObject> impleme
       state: this.state,
     });
 
-    this.bulkAccessControlService.executeScript(
-      [ this.itemRD.payload.uuid ],
-      file,
-    ).pipe(take(1)).subscribe((res) => {
-      console.log('success', res);
-    });
+    this.bulkAccessControlService
+      .executeScript([this.itemRD.payload.uuid], file)
+      .pipe(take(1))
+      .subscribe((res) => {
+        console.log('success', res);
+      });
   }
 
   /**
@@ -139,7 +138,9 @@ export class AccessControlFormContainerComponent<T extends DSpaceObject> impleme
    */
   handleStatusChange(type: 'item' | 'bitstream', active: boolean) {
     if (type === 'bitstream') {
-      active ? this.bitstreamAccessCmp.enable() : this.bitstreamAccessCmp.disable();
+      active
+        ? this.bitstreamAccessCmp.enable()
+        : this.bitstreamAccessCmp.disable();
     } else if (type === 'item') {
       active ? this.itemAccessCmp.enable() : this.itemAccessCmp.disable();
     }
@@ -151,22 +152,31 @@ export class AccessControlFormContainerComponent<T extends DSpaceObject> impleme
    * @param item The item for which to change the access control
    */
   openSelectBitstreamsModal(item: Item) {
-    const ref = this.modalService.open(ItemAccessControlSelectBitstreamsModalComponent);
-    ref.componentInstance.selectedBitstreams = this.state.bitstream.selectedBitstreams;
+    const ref = this.modalService.open(
+      ItemAccessControlSelectBitstreamsModalComponent,
+    );
+    ref.componentInstance.selectedBitstreams =
+      this.state.bitstream.selectedBitstreams;
     ref.componentInstance.item = item;
 
-    ref.closed.pipe(
-      concatMap(() => this.selectableListService.getSelectableList(ITEM_ACCESS_CONTROL_SELECT_BITSTREAMS_LIST_ID)),
-      take(1),
-    ).subscribe((list) => {
-      this.state.bitstream.selectedBitstreams = list?.selection || [];
-      this.cdr.detectChanges();
-    });
+    ref.closed
+      .pipe(
+        concatMap(() =>
+          this.selectableListService.getSelectableList(
+            ITEM_ACCESS_CONTROL_SELECT_BITSTREAMS_LIST_ID,
+          ),
+        ),
+        take(1),
+      )
+      .subscribe((list) => {
+        this.state.bitstream.selectedBitstreams = list?.selection || [];
+        this.cdr.detectChanges();
+      });
   }
 
   ngOnDestroy(): void {
-    this.selectableListService.deselectAll(ITEM_ACCESS_CONTROL_SELECT_BITSTREAMS_LIST_ID);
+    this.selectableListService.deselectAll(
+      ITEM_ACCESS_CONTROL_SELECT_BITSTREAMS_LIST_ID,
+    );
   }
-
 }
-

@@ -1,8 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -34,13 +31,19 @@ describe('QualityAssuranceSourceDataService', () => {
   let http: HttpClient;
   let comparator: any;
 
-  const endpointURL = 'https://rest.api/rest/api/integration/qualityassurancesources';
+  const endpointURL =
+    'https://rest.api/rest/api/integration/qualityassurancesources';
   const requestUUID = '8b3c913a-5a4b-438b-9181-be1a5b4a1c8a';
 
   const pageInfo = new PageInfo();
-  const array = [qualityAssuranceSourceObjectMorePid, qualityAssuranceSourceObjectMoreAbstract];
+  const array = [
+    qualityAssuranceSourceObjectMorePid,
+    qualityAssuranceSourceObjectMoreAbstract,
+  ];
   const paginatedList = buildPaginatedList(pageInfo, array);
-  const qaSourceObjectRD = createSuccessfulRemoteDataObject(qualityAssuranceSourceObjectMorePid);
+  const qaSourceObjectRD = createSuccessfulRemoteDataObject(
+    qualityAssuranceSourceObjectMorePid,
+  );
   const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
 
   beforeEach(() => {
@@ -83,16 +86,18 @@ describe('QualityAssuranceSourceDataService', () => {
     );
 
     spyOn((service as any).findAllData, 'findAll').and.callThrough();
-    spyOn((service as any), 'findById').and.callThrough();
+    spyOn(service as any, 'findById').and.callThrough();
   });
 
   describe('getSources', () => {
     it('should call findAll', (done) => {
-      service.getSources().subscribe(
-        (res) => {
-          expect((service as any).findAllData.findAll).toHaveBeenCalledWith({}, true, true);
-        },
-      );
+      service.getSources().subscribe((res) => {
+        expect((service as any).findAllData.findAll).toHaveBeenCalledWith(
+          {},
+          true,
+          true,
+        );
+      });
       done();
     });
 
@@ -107,11 +112,15 @@ describe('QualityAssuranceSourceDataService', () => {
 
   describe('getSource', () => {
     it('should call findById', (done) => {
-      service.getSource(qualityAssuranceSourceObjectMorePid.id).subscribe(
-        (res) => {
-          expect((service as any).findById).toHaveBeenCalledWith(qualityAssuranceSourceObjectMorePid.id, true, true);
-        },
-      );
+      service
+        .getSource(qualityAssuranceSourceObjectMorePid.id)
+        .subscribe((res) => {
+          expect((service as any).findById).toHaveBeenCalledWith(
+            qualityAssuranceSourceObjectMorePid.id,
+            true,
+            true,
+          );
+        });
       done();
     });
 
@@ -123,5 +132,4 @@ describe('QualityAssuranceSourceDataService', () => {
       expect(result).toBeObservable(expected);
     });
   });
-
 });

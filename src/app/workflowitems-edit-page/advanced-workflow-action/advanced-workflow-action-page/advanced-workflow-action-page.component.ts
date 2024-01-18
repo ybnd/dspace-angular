@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 /**
@@ -14,16 +11,11 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./advanced-workflow-action-page.component.scss'],
 })
 export class AdvancedWorkflowActionPageComponent implements OnInit {
-
   public type: string;
 
-  constructor(
-    protected route: ActivatedRoute,
-  ) {
-  }
+  constructor(protected route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.type = this.route.snapshot.queryParams.workflow;
   }
-
 }

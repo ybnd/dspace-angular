@@ -1,16 +1,9 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  of,
-} from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 import { MetadataValue } from '../../../core/shared/metadata.models';
@@ -63,8 +56,7 @@ describe('DsoEditMetadataFieldValuesComponent', () => {
     TestBed.configureTestingModule({
       declarations: [DsoEditMetadataFieldValuesComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
-      providers: [
-      ],
+      providers: [],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
@@ -87,7 +79,9 @@ describe('DsoEditMetadataFieldValuesComponent', () => {
     });
 
     it('should not disable the list', () => {
-      expect(fixture.debugElement.query(By.css('.ds-drop-list.disabled'))).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('.ds-drop-list.disabled')),
+      ).toBeNull();
     });
   });
 
@@ -98,7 +92,9 @@ describe('DsoEditMetadataFieldValuesComponent', () => {
     });
 
     it('should disable the list', () => {
-      expect(fixture.debugElement.query(By.css('.ds-drop-list.disabled'))).toBeTruthy();
+      expect(
+        fixture.debugElement.query(By.css('.ds-drop-list.disabled')),
+      ).toBeTruthy();
     });
   });
 
@@ -109,16 +105,20 @@ describe('DsoEditMetadataFieldValuesComponent', () => {
     });
 
     it('should not disable the list', () => {
-      expect(fixture.debugElement.query(By.css('.ds-drop-list.disabled'))).toBeNull();
+      expect(
+        fixture.debugElement.query(By.css('.ds-drop-list.disabled')),
+      ).toBeNull();
     });
   });
 
   describe('dropping a value on a different index', () => {
     beforeEach(() => {
-      component.drop(Object.assign({
-        previousIndex: 0,
-        currentIndex: 2,
-      }));
+      component.drop(
+        Object.assign({
+          previousIndex: 0,
+          currentIndex: 2,
+        }),
+      );
     });
 
     it('should physically move the relevant metadata value within the form', () => {

@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { WorkflowItem } from '../../../../../core/submission/models/workflowitem.model';
 import {
@@ -18,7 +15,6 @@ import {
  * The component for displaying the actions for a list element for a workflow-item on the admin workflow search page
  */
 export class WorkflowItemAdminWorkflowActionsComponent {
-
   /**
    * The workflow item to perform the actions on
    */
@@ -42,5 +38,4 @@ export class WorkflowItemAdminWorkflowActionsComponent {
   getSendBackRoute(): string {
     return getWorkflowItemSendBackRoute(this.wfi.id);
   }
-
 }

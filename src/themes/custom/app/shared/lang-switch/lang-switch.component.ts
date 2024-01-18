@@ -5,9 +5,11 @@ import { LangSwitchComponent as BaseComponent } from '../../../../../app/shared/
 @Component({
   selector: 'ds-lang-switch',
   // styleUrls: ['./lang-switch.component.scss'],
-  styleUrls: ['../../../../../app/shared/lang-switch/lang-switch.component.scss'],
+  styleUrls: [
+    '../../../../../app/shared/lang-switch/lang-switch.component.scss',
+  ],
   // templateUrl: './lang-switch.component.html',
-  templateUrl: '../../../../../app/shared/lang-switch/lang-switch.component.html',
+  templateUrl:
+    '../../../../../app/shared/lang-switch/lang-switch.component.html',
 })
-export class LangSwitchComponent extends BaseComponent {
-}
+export class LangSwitchComponent extends BaseComponent {}

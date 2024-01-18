@@ -1,7 +1,4 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -9,22 +6,13 @@ import {
   waitForAsync,
 } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { Store, StoreModule } from '@ngrx/store';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
 import { of } from 'rxjs';
 
 import { AppState } from '../../../app.reducer';
-import {
-  authReducer,
-  AuthState,
-} from '../../../core/auth/auth.reducer';
+import { authReducer, AuthState } from '../../../core/auth/auth.reducer';
 import { AuthService } from '../../../core/auth/auth.service';
 import { AuthTokenInfo } from '../../../core/auth/models/auth-token-info.model';
 import { TranslateLoaderMock } from '../../mocks/translate-loader.mock';
@@ -32,7 +20,6 @@ import { EPersonMock } from '../../testing/eperson.mock';
 import { UserMenuComponent } from './user-menu.component';
 
 describe('UserMenuComponent', () => {
-
   let component: UserMenuComponent;
   let fixture: ComponentFixture<UserMenuComponent>;
   let deUserMenu: DebugElement;
@@ -84,17 +71,10 @@ describe('UserMenuComponent', () => {
           },
         }),
       ],
-      providers: [
-        { provide: AuthService, useValue: authService },
-      ],
-      declarations: [
-        UserMenuComponent,
-      ],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-      ],
+      providers: [{ provide: AuthService, useValue: authService }],
+      declarations: [UserMenuComponent],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -103,11 +83,10 @@ describe('UserMenuComponent', () => {
 
   describe('when auth state is loading', () => {
     beforeEach(inject([Store], (store: Store<AppState>) => {
-      store
-        .subscribe((state) => {
-          (state as any).core = Object.create({});
-          (state as any).core.auth = authStateLoading;
-        });
+      store.subscribe((state) => {
+        (state as any).core = Object.create({});
+        (state as any).core.auth = authStateLoading;
+      });
 
       // create component and test fixture
       fixture = TestBed.createComponent(UserMenuComponent);
@@ -127,26 +106,28 @@ describe('UserMenuComponent', () => {
     it('should init component properly', () => {
       expect(component).toBeDefined();
 
-      expect(component.loading$).toBeObservable(cold('b', {
-        b: true,
-      }));
+      expect(component.loading$).toBeObservable(
+        cold('b', {
+          b: true,
+        }),
+      );
 
-      expect(component.user$).toBeObservable(cold('(c|)', {
-        c: EPersonMock,
-      }));
+      expect(component.user$).toBeObservable(
+        cold('(c|)', {
+          c: EPersonMock,
+        }),
+      );
 
       expect(deUserMenu).toBeNull();
     });
-
   });
 
   describe('when auth state is not loading', () => {
     beforeEach(inject([Store], (store: Store<AppState>) => {
-      store
-        .subscribe((state) => {
-          (state as any).core = Object.create({});
-          (state as any).core.auth = authState;
-        });
+      store.subscribe((state) => {
+        (state as any).core = Object.create({});
+        (state as any).core.auth = authState;
+      });
 
       // create component and test fixture
       fixture = TestBed.createComponent(UserMenuComponent);
@@ -166,13 +147,17 @@ describe('UserMenuComponent', () => {
     it('should init component properly', () => {
       expect(component).toBeDefined();
 
-      expect(component.loading$).toBeObservable(cold('b', {
-        b: false,
-      }));
+      expect(component.loading$).toBeObservable(
+        cold('b', {
+          b: false,
+        }),
+      );
 
-      expect(component.user$).toBeObservable(cold('(c|)', {
-        c: EPersonMock,
-      }));
+      expect(component.user$).toBeObservable(
+        cold('(c|)', {
+          c: EPersonMock,
+        }),
+      );
 
       expect(deUserMenu).toBeDefined();
     });
@@ -187,17 +172,19 @@ describe('UserMenuComponent', () => {
     });
 
     it('should create logout component', () => {
-      const components = fixture.debugElement.query(By.css('[data-test="log-out-component"]'));
+      const components = fixture.debugElement.query(
+        By.css('[data-test="log-out-component"]'),
+      );
       expect(components).toBeTruthy();
     });
 
     it('should not create logout component', () => {
       component.inExpandableNavbar = true;
       fixture.detectChanges();
-      const components = fixture.debugElement.query(By.css('[data-test="log-out-component"]'));
+      const components = fixture.debugElement.query(
+        By.css('[data-test="log-out-component"]'),
+      );
       expect(components).toBeFalsy();
     });
-
   });
-
 });

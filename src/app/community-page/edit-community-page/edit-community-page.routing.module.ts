@@ -46,17 +46,26 @@ import { EditCommunityPageComponent } from './edit-community-page.component';
           {
             path: 'roles',
             component: CommunityRolesComponent,
-            data: { title: 'community.edit.tabs.roles.title', showBreadcrumbs: true },
+            data: {
+              title: 'community.edit.tabs.roles.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'curate',
             component: CommunityCurateComponent,
-            data: { title: 'community.edit.tabs.curate.title', showBreadcrumbs: true },
+            data: {
+              title: 'community.edit.tabs.curate.title',
+              showBreadcrumbs: true,
+            },
           },
           {
             path: 'access-control',
             component: CommunityAccessControlComponent,
-            data: { title: 'collection.edit.tabs.access-control.title', showBreadcrumbs: true },
+            data: {
+              title: 'collection.edit.tabs.access-control.title',
+              showBreadcrumbs: true,
+            },
           },
           /*{
             path: 'authorizations',
@@ -86,7 +95,11 @@ import { EditCommunityPageComponent } from './edit-community-page.component';
               {
                 path: '',
                 component: CommunityAuthorizationsComponent,
-                data: { title: 'community.edit.tabs.authorizations.title', showBreadcrumbs: true, hideReturnButton: true },
+                data: {
+                  title: 'community.edit.tabs.authorizations.title',
+                  showBreadcrumbs: true,
+                  hideReturnButton: true,
+                },
               },
             ],
           },
@@ -94,11 +107,6 @@ import { EditCommunityPageComponent } from './edit-community-page.component';
       },
     ]),
   ],
-  providers: [
-    ResourcePolicyResolver,
-    ResourcePolicyTargetResolver,
-  ],
+  providers: [ResourcePolicyResolver, ResourcePolicyTargetResolver],
 })
-export class EditCommunityPageRoutingModule {
-
-}
+export class EditCommunityPageRoutingModule {}

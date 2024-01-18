@@ -1,13 +1,6 @@
-import {
-  fakeAsync,
-  tick,
-} from '@angular/core/testing';
+import { fakeAsync, tick } from '@angular/core/testing';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { Observable } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -92,7 +85,18 @@ describe('CollectionDataService', () => {
   const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
 
   describe('composition', () => {
-    const initService = () => new CollectionDataService(null, null, null, null, null, null, null, null, null);
+    const initService = () =>
+      new CollectionDataService(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      );
 
     testCreateDataImplementation(initService);
     testFindAllDataImplementation(initService);
@@ -116,7 +120,10 @@ describe('CollectionDataService', () => {
       it('should send a new ContentSourceRequest', fakeAsync(() => {
         contentSource$.subscribe();
         tick();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(ContentSourceRequest), true);
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(ContentSourceRequest),
+          true,
+        );
       }));
     });
 
@@ -126,13 +133,18 @@ describe('CollectionDataService', () => {
 
       beforeEach(() => {
         contentSource = new ContentSource();
-        returnedContentSource$ = service.updateContentSource(collectionId, contentSource);
+        returnedContentSource$ = service.updateContentSource(
+          collectionId,
+          contentSource,
+        );
       });
 
       it('should send a new UpdateContentSourceRequest', fakeAsync(() => {
         returnedContentSource$.subscribe();
         tick();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(UpdateContentSourceRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(UpdateContentSourceRequest),
+        );
       }));
     });
 
@@ -147,7 +159,9 @@ describe('CollectionDataService', () => {
         scheduler.schedule(() => service.getAuthorizedCollection(queryString));
         scheduler.flush();
 
-        expect(service.getAuthorizedCollection).toHaveBeenCalledWith(queryString);
+        expect(service.getAuthorizedCollection).toHaveBeenCalledWith(
+          queryString,
+        );
       });
 
       it('should return a RemoteData<PaginatedList<Colletion>> for the getAuthorizedCollection', () => {
@@ -159,14 +173,22 @@ describe('CollectionDataService', () => {
       });
 
       it('should proxy the call to getAuthorizedCollectionByCommunity', () => {
-        scheduler.schedule(() => service.getAuthorizedCollectionByCommunity(communityId, queryString));
+        scheduler.schedule(() =>
+          service.getAuthorizedCollectionByCommunity(communityId, queryString),
+        );
         scheduler.flush();
 
-        expect(service.getAuthorizedCollectionByCommunity).toHaveBeenCalledWith(communityId, queryString);
+        expect(service.getAuthorizedCollectionByCommunity).toHaveBeenCalledWith(
+          communityId,
+          queryString,
+        );
       });
 
       it('should return a RemoteData<PaginatedList<Colletion>> for the getAuthorizedCollectionByCommunity', () => {
-        const result = service.getAuthorizedCollectionByCommunity(communityId, queryString);
+        const result = service.getAuthorizedCollectionByCommunity(
+          communityId,
+          queryString,
+        );
         const expected = cold('a|', {
           a: paginatedListRD,
         });
@@ -186,13 +208,18 @@ describe('CollectionDataService', () => {
 
       beforeEach(() => {
         contentSource = new ContentSource();
-        returnedContentSource$ = service.updateContentSource(collectionId, contentSource);
+        returnedContentSource$ = service.updateContentSource(
+          collectionId,
+          contentSource,
+        );
       });
 
       it('should send a new UpdateContentSourceRequest', fakeAsync(() => {
         returnedContentSource$.subscribe();
         tick();
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(UpdateContentSourceRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(UpdateContentSourceRequest),
+        );
       }));
 
       it('should display an error notification', fakeAsync(() => {
@@ -227,7 +254,16 @@ describe('CollectionDataService', () => {
     notificationsService = new NotificationsServiceStub();
     translate = getMockTranslateService();
 
-    service = new CollectionDataService(requestService, rdbService, objectCache, halService, null, notificationsService, null, null, translate);
+    service = new CollectionDataService(
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      null,
+      notificationsService,
+      null,
+      null,
+      translate,
+    );
   }
-
 });

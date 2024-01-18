@@ -1,7 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { TestScheduler } from 'rxjs/testing';
 
 import { AppConfig } from '../../../config/app-config.interface';
@@ -15,10 +12,7 @@ import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { Item } from '../shared/item.model';
 import { EMBED_SEPARATOR } from './base/base-data.service';
 import { DsoRedirectService } from './dso-redirect.service';
-import {
-  GetRequest,
-  IdentifierType,
-} from './request.models';
+import { GetRequest, IdentifierType } from './request.models';
 import { RequestService } from './request.service';
 
 describe('DsoRedirectService', () => {
@@ -49,10 +43,12 @@ describe('DsoRedirectService', () => {
       send: true,
     });
 
-    remoteData = createSuccessfulRemoteDataObject(Object.assign(new Item(), {
-      type: 'item',
-      uuid: '123456789',
-    }));
+    remoteData = createSuccessfulRemoteDataObject(
+      Object.assign(new Item(), {
+        type: 'item',
+        uuid: '123456789',
+      }),
+    );
 
     rdbService = jasmine.createSpyObj('rdbService', {
       buildSingle: cold('a', {
@@ -76,14 +72,18 @@ describe('DsoRedirectService', () => {
 
   describe('findByIdAndIDType', () => {
     it('should call HALEndpointService with the path to the pid endpoint', () => {
-      scheduler.schedule(() => service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE));
+      scheduler.schedule(() =>
+        service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE),
+      );
       scheduler.flush();
 
       expect(halService.getEndpoint).toHaveBeenCalledWith('pid');
     });
 
     it('should call HALEndpointService with the path to the dso endpoint', () => {
-      scheduler.schedule(() => service.findByIdAndIDType(dsoUUID, IdentifierType.UUID));
+      scheduler.schedule(() =>
+        service.findByIdAndIDType(dsoUUID, IdentifierType.UUID),
+      );
       scheduler.flush();
 
       expect(halService.getEndpoint).toHaveBeenCalledWith('dso');
@@ -97,17 +97,27 @@ describe('DsoRedirectService', () => {
     });
 
     it('should send the proper FindByIDRequest for uuid', () => {
-      scheduler.schedule(() => service.findByIdAndIDType(dsoUUID, IdentifierType.UUID));
+      scheduler.schedule(() =>
+        service.findByIdAndIDType(dsoUUID, IdentifierType.UUID),
+      );
       scheduler.flush();
 
-      expect(requestService.send).toHaveBeenCalledWith(new GetRequest(requestUUID, requestUUIDURL), true);
+      expect(requestService.send).toHaveBeenCalledWith(
+        new GetRequest(requestUUID, requestUUIDURL),
+        true,
+      );
     });
 
     it('should send the proper FindByIDRequest for handle', () => {
-      scheduler.schedule(() => service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE));
+      scheduler.schedule(() =>
+        service.findByIdAndIDType(dsoHandle, IdentifierType.HANDLE),
+      );
       scheduler.flush();
 
-      expect(requestService.send).toHaveBeenCalledWith(new GetRequest(requestUUID, requestHandleURL), true);
+      expect(requestService.send).toHaveBeenCalledWith(
+        new GetRequest(requestUUID, requestHandleURL),
+        true,
+      );
     });
 
     it('should navigate to item route', () => {
@@ -117,7 +127,10 @@ describe('DsoRedirectService', () => {
       redir.subscribe();
       scheduler.schedule(() => redir);
       scheduler.flush();
-      expect(redirectService.redirect).toHaveBeenCalledWith(`${environment.ui.nameSpace}/items/${remoteData.payload.uuid}`, 301);
+      expect(redirectService.redirect).toHaveBeenCalledWith(
+        `${environment.ui.nameSpace}/items/${remoteData.payload.uuid}`,
+        301,
+      );
     });
     it('should navigate to entities route with the corresponding entity type', () => {
       remoteData.payload.type = 'item';
@@ -134,7 +147,10 @@ describe('DsoRedirectService', () => {
       redir.subscribe();
       scheduler.schedule(() => redir);
       scheduler.flush();
-      expect(redirectService.redirect).toHaveBeenCalledWith(`${environment.ui.nameSpace}/entities/publication/${remoteData.payload.uuid}`, 301);
+      expect(redirectService.redirect).toHaveBeenCalledWith(
+        `${environment.ui.nameSpace}/entities/publication/${remoteData.payload.uuid}`,
+        301,
+      );
     });
 
     it('should navigate to collections route', () => {
@@ -143,7 +159,10 @@ describe('DsoRedirectService', () => {
       redir.subscribe();
       scheduler.schedule(() => redir);
       scheduler.flush();
-      expect(redirectService.redirect).toHaveBeenCalledWith(`${environment.ui.nameSpace}/collections/${remoteData.payload.uuid}`, 301);
+      expect(redirectService.redirect).toHaveBeenCalledWith(
+        `${environment.ui.nameSpace}/collections/${remoteData.payload.uuid}`,
+        301,
+      );
     });
 
     it('should navigate to communities route', () => {
@@ -152,12 +171,17 @@ describe('DsoRedirectService', () => {
       redir.subscribe();
       scheduler.schedule(() => redir);
       scheduler.flush();
-      expect(redirectService.redirect).toHaveBeenCalledWith(`${environment.ui.nameSpace}/communities/${remoteData.payload.uuid}`, 301);
+      expect(redirectService.redirect).toHaveBeenCalledWith(
+        `${environment.ui.nameSpace}/communities/${remoteData.payload.uuid}`,
+        301,
+      );
     });
   });
 
-  describe('DataService', () => {  // todo: should only test the id/uuid interpolation thingy
-    describe('getIDHref', () => {  // todo: should be able to move this up to IdentifiableDataService?
+  describe('DataService', () => {
+    // todo: should only test the id/uuid interpolation thingy
+    describe('getIDHref', () => {
+      // todo: should be able to move this up to IdentifiableDataService?
       it('should return endpoint', () => {
         const result = (service as any).dataService.getIDHref(pidLink, dsoUUID);
         expect(result).toEqual(requestUUIDURL);
@@ -165,13 +189,23 @@ describe('DsoRedirectService', () => {
 
       it('should include single linksToFollow as embed', () => {
         const expected = `${requestUUIDURL}&embed=bundles`;
-        const result = (service as any).dataService.getIDHref(pidLink, dsoUUID, followLink('bundles'));
+        const result = (service as any).dataService.getIDHref(
+          pidLink,
+          dsoUUID,
+          followLink('bundles'),
+        );
         expect(result).toEqual(expected);
       });
 
       it('should include multiple linksToFollow as embed', () => {
         const expected = `${requestUUIDURL}&embed=bundles&embed=owningCollection&embed=templateItemOf`;
-        const result = (service as any).dataService.getIDHref(pidLink, dsoUUID, followLink('bundles'), followLink('owningCollection'), followLink('templateItemOf'));
+        const result = (service as any).dataService.getIDHref(
+          pidLink,
+          dsoUUID,
+          followLink('bundles'),
+          followLink('owningCollection'),
+          followLink('templateItemOf'),
+        );
         expect(result).toEqual(expected);
       });
 
@@ -195,11 +229,7 @@ describe('DsoRedirectService', () => {
           followLink(
             'owningCollection',
             {},
-            followLink(
-              'itemtemplate',
-              {},
-              followLink('relationships'),
-            ),
+            followLink('itemtemplate', {}, followLink('relationships')),
           ),
         );
         expect(result).toEqual(expected);

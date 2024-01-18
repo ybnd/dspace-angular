@@ -1,30 +1,16 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -143,7 +129,9 @@ describe('ResourcePoliciesComponent test suite', () => {
     _links: {
       self: { href: 'bundle1-selflink' },
     },
-    bitstreams: createSuccessfulRemoteDataObject$(createPaginatedList([bitstream1, bitstream2])),
+    bitstreams: createSuccessfulRemoteDataObject$(
+      createPaginatedList([bitstream1, bitstream2]),
+    ),
   });
   const bundle2 = Object.assign(new Bundle(), {
     id: 'bundle2',
@@ -151,7 +139,9 @@ describe('ResourcePoliciesComponent test suite', () => {
     _links: {
       self: { href: 'bundle2-selflink' },
     },
-    bitstreams: createSuccessfulRemoteDataObject$(createPaginatedList([bitstream3, bitstream4])),
+    bitstreams: createSuccessfulRemoteDataObject$(
+      createPaginatedList([bitstream3, bitstream4]),
+    ),
   });
 
   const item = Object.assign(new Item(), {
@@ -160,7 +150,9 @@ describe('ResourcePoliciesComponent test suite', () => {
     _links: {
       self: { href: 'item-selflink' },
     },
-    bundles: createSuccessfulRemoteDataObject$(createPaginatedList([bundle1, bundle2])),
+    bundles: createSuccessfulRemoteDataObject$(
+      createPaginatedList([bundle1, bundle2]),
+    ),
   });
 
   const routeStub = {
@@ -183,16 +175,22 @@ describe('ResourcePoliciesComponent test suite', () => {
 
   const getInitEntries = () => {
     return [
-      Object.assign({}, {
-        id: resourcePolicy.id,
-        policy: resourcePolicy,
-        checked: false,
-      }),
-      Object.assign({}, {
-        id: anotherResourcePolicy.id,
-        policy: anotherResourcePolicy,
-        checked: false,
-      }),
+      Object.assign(
+        {},
+        {
+          id: resourcePolicy.id,
+          policy: resourcePolicy,
+          checked: false,
+        },
+      ),
+      Object.assign(
+        {},
+        {
+          id: anotherResourcePolicy.id,
+          policy: anotherResourcePolicy,
+          checked: false,
+        },
+      ),
     ];
   };
 
@@ -243,9 +241,8 @@ describe('ResourcePoliciesComponent test suite', () => {
         { provide: DSONameService, useValue: dsoNameService },
         ChangeDetectorRef,
         ResourcePoliciesComponent,
-      ], schemas: [
-        NO_ERRORS_SCHEMA,
       ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 
@@ -255,13 +252,18 @@ describe('ResourcePoliciesComponent test suite', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-      resourcePolicyService.searchByResource.and.returnValue(hot('a|', {
-        a: paginatedListRD,
-      }));
+      resourcePolicyService.searchByResource.and.returnValue(
+        hot('a|', {
+          a: paginatedListRD,
+        }),
+      );
       const html = `
         <ds-resource-policies [resourceUUID]="resourceUUID" [resourceType]="resourceType"></ds-resource-policies>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -269,11 +271,12 @@ describe('ResourcePoliciesComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create ResourcePoliciesComponent', inject([ResourcePoliciesComponent], (app: ResourcePoliciesComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create ResourcePoliciesComponent', inject(
+      [ResourcePoliciesComponent],
+      (app: ResourcePoliciesComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -301,9 +304,11 @@ describe('ResourcePoliciesComponent test suite', () => {
     it('should init resource policies list properly', () => {
       const expected = getInitEntries();
       compAsAny.isActive = true;
-      resourcePolicyService.searchByResource.and.returnValue(hot('a|', {
-        a: paginatedListRD,
-      }));
+      resourcePolicyService.searchByResource.and.returnValue(
+        hot('a|', {
+          a: paginatedListRD,
+        }),
+      );
 
       scheduler = getTestScheduler();
       scheduler.schedule(() => comp.initResourcePolicyList());
@@ -349,18 +354,24 @@ describe('ResourcePoliciesComponent test suite', () => {
       });
 
       it('should return false when no row is selected', () => {
-        expect(comp.canDelete()).toBeObservable(cold('(a|)', {
-          a: false,
-        }));
+        expect(comp.canDelete()).toBeObservable(
+          cold('(a|)', {
+            a: false,
+          }),
+        );
       });
 
       it('should return true when at least one row is selected', () => {
-        const checkbox = fixture.debugElement.query(By.css('table > tbody > tr:nth-child(1) input'));
+        const checkbox = fixture.debugElement.query(
+          By.css('table > tbody > tr:nth-child(1) input'),
+        );
         const event = { target: { checked: true } };
         checkbox.triggerEventHandler('change', event);
-        expect(comp.canDelete()).toBeObservable(cold('(a|)', {
-          a: true,
-        }));
+        expect(comp.canDelete()).toBeObservable(
+          cold('(a|)', {
+            a: true,
+          }),
+        );
       });
     });
 
@@ -382,11 +393,12 @@ describe('ResourcePoliciesComponent test suite', () => {
         scheduler.flush();
 
         // only the first one is checked
-        expect(resourcePolicyService.delete).toHaveBeenCalledWith(resourcePolicy.id);
+        expect(resourcePolicyService.delete).toHaveBeenCalledWith(
+          resourcePolicy.id,
+        );
       });
 
       it('should notify success when delete is successful', () => {
-
         resourcePolicyService.delete.and.returnValue(observableOf(true));
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.deleteSelectedResourcePolicies());
@@ -397,7 +409,6 @@ describe('ResourcePoliciesComponent test suite', () => {
       });
 
       it('should notify error when delete is not successful', () => {
-
         resourcePolicyService.delete.and.returnValue(observableOf(false));
         scheduler = getTestScheduler();
         scheduler.schedule(() => comp.deleteSelectedResourcePolicies());
@@ -408,17 +419,20 @@ describe('ResourcePoliciesComponent test suite', () => {
       });
     });
 
-    it('should get the resource\'s policy list', () => {
+    it("should get the resource's policy list", () => {
       const initResourcePolicyEntries = getInitEntries();
-      expect(comp.getResourcePolicies()).toBeObservable(cold('a', {
-        a: initResourcePolicyEntries,
-      }));
-
+      expect(comp.getResourcePolicies()).toBeObservable(
+        cold('a', {
+          a: initResourcePolicyEntries,
+        }),
+      );
     });
 
     it('should select All Checkbox', () => {
       spyOn(comp, 'selectAllCheckbox').and.callThrough();
-      const checkbox = fixture.debugElement.query(By.css('table > thead > tr:nth-child(2) input'));
+      const checkbox = fixture.debugElement.query(
+        By.css('table > thead > tr:nth-child(2) input'),
+      );
 
       const event = { target: { checked: true } };
       checkbox.triggerEventHandler('change', event);
@@ -427,7 +441,9 @@ describe('ResourcePoliciesComponent test suite', () => {
 
     it('should select a Checkbox', () => {
       spyOn(comp, 'selectCheckbox').and.callThrough();
-      const checkbox = fixture.debugElement.query(By.css('table > tbody > tr:nth-child(1) input'));
+      const checkbox = fixture.debugElement.query(
+        By.css('table > tbody > tr:nth-child(1) input'),
+      );
 
       const event = { target: { checked: true } };
       checkbox.triggerEventHandler('change', event);
@@ -435,7 +451,6 @@ describe('ResourcePoliciesComponent test suite', () => {
     });
 
     it('should redirect to create resource policy page', () => {
-
       comp.redirectToResourcePolicyCreatePage();
       expect(compAsAny.router.navigate).toHaveBeenCalled();
     });
@@ -448,7 +463,6 @@ describe('ResourcePoliciesComponent test suite', () => {
   template: ``,
 })
 class TestComponent {
-
   resourceUUID = 'itemUUID';
   resourceType = 'item';
 }

@@ -1,10 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { cold } from 'jasmine-marbles';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
@@ -42,7 +39,6 @@ const communitiesEndpoint = 'https://rest.api/core/communities';
 const communityEndpoint = `${communitiesEndpoint}/${scopeID}`;
 
 class TestService extends ComColDataService<any> {
-
   constructor(
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
@@ -56,7 +52,16 @@ class TestService extends ComColDataService<any> {
     protected comparator: DSOChangeAnalyzer<Community>,
     protected linkPath: string,
   ) {
-    super('something', requestService, rdbService, objectCache, halService, comparator, notificationsService, bitstreamDataService);
+    super(
+      'something',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      notificationsService,
+      bitstreamDataService,
+    );
   }
 
   protected getFindByParentHref(parentUUID: string): Observable<string> {
@@ -64,7 +69,9 @@ class TestService extends ComColDataService<any> {
     return undefined;
   }
 
-  protected getScopeCommunityHref(options: FindListOptions): Observable<string> {
+  protected getScopeCommunityHref(
+    options: FindListOptions,
+  ): Observable<string> {
     // implementation in subclasses for communities/collections
     return observableOf(communityEndpoint);
   }
@@ -98,7 +105,7 @@ describe('ComColDataService', () => {
 
   function initRdbService(): RemoteDataBuildService {
     return jasmine.createSpyObj('rdbService', {
-      buildSingle : createFailedRemoteDataObject$('Error', 500),
+      buildSingle: createFailedRemoteDataObject$('Error', 500),
     });
   }
 
@@ -164,7 +171,20 @@ describe('ComColDataService', () => {
   });
 
   describe('composition', () => {
-    const initService = () => new TestService(null, null, null, null, null, null, null, null, null, null, null);
+    const initService = () =>
+      new TestService(
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+      );
     testCreateDataImplementation(initService);
     testFindAllDataImplementation(initService);
     testSearchDataImplementation(initService);
@@ -175,30 +195,47 @@ describe('ComColDataService', () => {
   describe('getBrowseEndpoint', () => {
     it(`should call createAndSendGetRequest with the scope Community's self link`, () => {
       testScheduler.run(({ cold, flush, expectObservable }) => {
-        (cds.getEndpoint as jasmine.Spy).and.returnValue(cold('a', { a: communitiesEndpoint }));
-        (rdbService.buildSingle as jasmine.Spy).and.returnValue(cold('a', { a: createFailedRemoteDataObject() }));
+        (cds.getEndpoint as jasmine.Spy).and.returnValue(
+          cold('a', { a: communitiesEndpoint }),
+        );
+        (rdbService.buildSingle as jasmine.Spy).and.returnValue(
+          cold('a', { a: createFailedRemoteDataObject() }),
+        );
         spyOn(service as any, 'createAndSendGetRequest');
         service.getBrowseEndpoint(options);
         flush();
-        expectObservable((service as any).createAndSendGetRequest.calls.argsFor(0)[0]).toBe('(a|)', { a: communityEndpoint });
-        expect((service as any).createAndSendGetRequest.calls.argsFor(0)[1]).toBeTrue();
+        expectObservable(
+          (service as any).createAndSendGetRequest.calls.argsFor(0)[0],
+        ).toBe('(a|)', { a: communityEndpoint });
+        expect(
+          (service as any).createAndSendGetRequest.calls.argsFor(0)[1],
+        ).toBeTrue();
       });
     });
 
-    describe('if the scope Community can\'t be found', () => {
+    describe("if the scope Community can't be found", () => {
       it('should throw an error', () => {
         testScheduler.run(({ cold, expectObservable }) => {
           // spies re-defined here to use the "cold" function from rxjs's TestScheduler
           // rather than the one imported from jasmine-marbles.
           // Mixing the two seems to lead to unpredictable results
-          (cds.getEndpoint as jasmine.Spy).and.returnValue(cold('a', { a: communitiesEndpoint }));
-          (rdbService.buildSingle as jasmine.Spy).and.returnValue(cold('a', { a: createFailedRemoteDataObject() }));
-          const expectedError = new Error(`The Community with scope ${scopeID} couldn't be retrieved`);
-          expectObservable(service.getBrowseEndpoint(options)).toBe('#', undefined, expectedError);
+          (cds.getEndpoint as jasmine.Spy).and.returnValue(
+            cold('a', { a: communitiesEndpoint }),
+          );
+          (rdbService.buildSingle as jasmine.Spy).and.returnValue(
+            cold('a', { a: createFailedRemoteDataObject() }),
+          );
+          const expectedError = new Error(
+            `The Community with scope ${scopeID} couldn't be retrieved`,
+          );
+          expectObservable(service.getBrowseEndpoint(options)).toBe(
+            '#',
+            undefined,
+            expectedError,
+          );
         });
       });
     });
-
   });
 
   describe('cache refresh', () => {
@@ -221,17 +258,27 @@ describe('ComColDataService', () => {
     describe('cache refreshed top level community', () => {
       it(`should refresh the top level community cache when the dso has a parent link that can't be resolved`, () => {
         testScheduler.run(({ flush, cold }) => {
-          spyOn(halService, 'getEndpoint').and.returnValue(cold('a', { a: topEndpoint }));
-          spyOn(service, 'findByHref').and.returnValue(cold('a', { a: createSuccessfulRemoteDataObject({}) }));
+          spyOn(halService, 'getEndpoint').and.returnValue(
+            cold('a', { a: topEndpoint }),
+          );
+          spyOn(service, 'findByHref').and.returnValue(
+            cold('a', { a: createSuccessfulRemoteDataObject({}) }),
+          );
           service.refreshCache(communityWithParentHref);
           flush();
-          expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(topEndpoint);
+          expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+            topEndpoint,
+          );
         });
       });
       it(`shouldn't do anything when the dso doesn't have a parent link`, () => {
         testScheduler.run(({ flush, cold }) => {
-          spyOn(halService, 'getEndpoint').and.returnValue(cold('a', { a: topEndpoint }));
-          spyOn(service, 'findByHref').and.returnValue(cold('a', { a: createSuccessfulRemoteDataObject({}) }));
+          spyOn(halService, 'getEndpoint').and.returnValue(
+            cold('a', { a: topEndpoint }),
+          );
+          spyOn(service, 'findByHref').and.returnValue(
+            cold('a', { a: createSuccessfulRemoteDataObject({}) }),
+          );
           service.refreshCache(communityWithoutParentHref);
           flush();
           expect(requestService.setStaleByHrefSubstring).not.toHaveBeenCalled();
@@ -245,20 +292,28 @@ describe('ComColDataService', () => {
         parentCommunity = Object.assign(new Community(), {
           uuid: 'a20da287-e174-466a-9926-f66as300d399',
           id: 'a20da287-e174-466a-9926-f66as300d399',
-          metadata: [{
-            key: 'dc.title',
-            value: 'parent community',
-          }],
+          metadata: [
+            {
+              key: 'dc.title',
+              value: 'parent community',
+            },
+          ],
           _links: {},
         });
       });
       it('should refresh a specific cached community when the parent link can be resolved', () => {
         testScheduler.run(({ flush, cold }) => {
-          spyOn(halService, 'getEndpoint').and.returnValue(cold('a', { a: topEndpoint }));
-          spyOn(service, 'findByHref').and.returnValue(cold('a', { a: createSuccessfulRemoteDataObject(parentCommunity) }));
+          spyOn(halService, 'getEndpoint').and.returnValue(
+            cold('a', { a: topEndpoint }),
+          );
+          spyOn(service, 'findByHref').and.returnValue(
+            cold('a', { a: createSuccessfulRemoteDataObject(parentCommunity) }),
+          );
           service.refreshCache(communityWithParentHref);
           flush();
-          expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('a20da287-e174-466a-9926-f66as300d399');
+          expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+            'a20da287-e174-466a-9926-f66as300d399',
+          );
         });
       });
     });
@@ -283,7 +338,7 @@ describe('ComColDataService', () => {
       });
 
       it('should return a failed RD', (done) => {
-        service.deleteLogo(dso).subscribe(rd => {
+        service.deleteLogo(dso).subscribe((rd) => {
           expect(rd.hasFailed).toBeTrue();
           expect(bitstreamDataService.deleteByHref).not.toHaveBeenCalled();
           done();
@@ -295,7 +350,7 @@ describe('ComColDataService', () => {
       let logo;
 
       beforeEach(() => {
-        logo = Object.assign(new Bitstream, {
+        logo = Object.assign(new Bitstream(), {
           id: 'logo-id',
           _links: {
             self: {
@@ -311,9 +366,11 @@ describe('ComColDataService', () => {
         });
 
         it('should call BitstreamDataService.deleteByHref', (done) => {
-          service.deleteLogo(dso).subscribe(rd => {
+          service.deleteLogo(dso).subscribe((rd) => {
             expect(rd.hasSucceeded).toBeTrue();
-            expect(bitstreamDataService.deleteByHref).toHaveBeenCalledWith('logo-href');
+            expect(bitstreamDataService.deleteByHref).toHaveBeenCalledWith(
+              'logo-href',
+            );
             done();
           });
         });
@@ -325,7 +382,7 @@ describe('ComColDataService', () => {
         });
 
         it('should not call BitstreamDataService.deleteByHref', (done) => {
-          service.deleteLogo(dso).subscribe(rd => {
+          service.deleteLogo(dso).subscribe((rd) => {
             expect(rd.hasFailed).toBeTrue();
             expect(bitstreamDataService.deleteByHref).not.toHaveBeenCalled();
             done();

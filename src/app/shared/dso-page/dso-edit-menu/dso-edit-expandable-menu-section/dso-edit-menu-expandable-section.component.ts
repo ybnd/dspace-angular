@@ -1,8 +1,4 @@
-import {
-  Component,
-  Inject,
-  Injector,
-} from '@angular/core';
+import { Component, Inject, Injector } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,7 +20,6 @@ import { MenuService } from '../../../menu/menu.service';
 })
 @rendersSectionForMenu(MenuID.DSO_EDIT, true)
 export class DsoEditMenuExpandableSectionComponent extends MenuSectionComponent {
-
   menuID: MenuID = MenuID.DSO_EDIT;
   itemModel;
 
@@ -46,7 +41,7 @@ export class DsoEditMenuExpandableSectionComponent extends MenuSectionComponent 
 
     this.renderIcons$ = this.subSections$.pipe(
       map((sections: MenuSection[]) => {
-        return sections.some(section => hasValue(section.icon));
+        return sections.some((section) => hasValue(section.icon));
       }),
     );
   }

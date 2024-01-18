@@ -1,19 +1,9 @@
-import {
-  HttpHeaders,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  find,
-  map,
-} from 'rxjs/operators';
+import { filter, find, map } from 'rxjs/operators';
 
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { HttpOptions } from '../dspace-rest/dspace-rest.service';
 import { GenericConstructor } from '../shared/generic-constructor';
@@ -23,10 +13,7 @@ import { Registration } from '../shared/registration.model';
 import { ResponseParsingService } from './parsing.service';
 import { RegistrationResponseParsingService } from './registration-response-parsing.service';
 import { RemoteData } from './remote-data';
-import {
-  GetRequest,
-  PostRequest,
-} from './request.models';
+import { GetRequest, PostRequest } from './request.models';
 import { RequestService } from './request.service';
 
 @Injectable({
@@ -36,7 +23,6 @@ import { RequestService } from './request.service';
  * Service that will register a new email address and request a token
  */
 export class EpersonRegistrationService {
-
   protected linkPath = 'registrations';
   protected searchByTokenPath = '/search/findByToken?token=';
 
@@ -44,9 +30,7 @@ export class EpersonRegistrationService {
     protected requestService: RequestService,
     protected rdbService: RemoteDataBuildService,
     protected halService: HALEndpointService,
-  ) {
-
-  }
+  ) {}
 
   /**
    * Retrieves the Registration endpoint
@@ -61,7 +45,8 @@ export class EpersonRegistrationService {
   getTokenSearchEndpoint(token: string): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => `${href}${this.searchByTokenPath}${token}`));
+      map((href: string) => `${href}${this.searchByTokenPath}${token}`),
+    );
   }
 
   /**
@@ -69,7 +54,11 @@ export class EpersonRegistrationService {
    * @param email
    * @param captchaToken the value of x-recaptcha-token header
    */
-  registerEmail(email: string, captchaToken: string = null, type?: string): Observable<RemoteData<Registration>> {
+  registerEmail(
+    email: string,
+    captchaToken: string = null,
+    type?: string,
+  ): Observable<RemoteData<Registration>> {
     const registration = new Registration();
     registration.email = email;
 
@@ -85,21 +74,29 @@ export class EpersonRegistrationService {
     options.headers = headers;
 
     if (hasValue(type)) {
-      options.params = type ?
-        new HttpParams({ fromString: 'accountRequestType=' + type }) : new HttpParams();
+      options.params = type
+        ? new HttpParams({ fromString: 'accountRequestType=' + type })
+        : new HttpParams();
     }
 
-    href$.pipe(
-      find((href: string) => hasValue(href)),
-      map((href: string) => {
-        const request = new PostRequest(requestId, href, registration, options);
-        this.requestService.send(request);
-      }),
-    ).subscribe();
+    href$
+      .pipe(
+        find((href: string) => hasValue(href)),
+        map((href: string) => {
+          const request = new PostRequest(
+            requestId,
+            href,
+            registration,
+            options,
+          );
+          this.requestService.send(request);
+        }),
+      )
+      .subscribe();
 
-    return this.rdbService.buildFromRequestUUID<Registration>(requestId).pipe(
-      getFirstCompletedRemoteData(),
-    );
+    return this.rdbService
+      .buildFromRequestUUID<Registration>(requestId)
+      .pipe(getFirstCompletedRemoteData());
   }
 
   /**
@@ -126,12 +123,13 @@ export class EpersonRegistrationService {
     return this.rdbService.buildSingle<Registration>(href$).pipe(
       map((rd) => {
         if (rd.hasSucceeded && hasValue(rd.payload)) {
-          return Object.assign(rd, { payload: Object.assign(rd.payload, { token }) });
+          return Object.assign(rd, {
+            payload: Object.assign(rd.payload, { token }),
+          });
         } else {
           return rd;
         }
       }),
     );
   }
-
 }

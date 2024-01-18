@@ -1,18 +1,10 @@
 import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  find,
-  map,
-} from 'rxjs/operators';
+import { distinctUntilChanged, filter, find, map } from 'rxjs/operators';
 
 import { RequestCopyEmail } from '../../request-copy/email-request-copy/request-copy-email.model';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { HttpOptions } from '../dspace-rest/dspace-rest.service';
@@ -22,10 +14,7 @@ import { getFirstCompletedRemoteData } from '../shared/operators';
 import { sendRequest } from '../shared/request.operators';
 import { IdentifiableDataService } from './base/identifiable-data.service';
 import { RemoteData } from './remote-data';
-import {
-  PostRequest,
-  PutRequest,
-} from './request.models';
+import { PostRequest, PutRequest } from './request.models';
 import { RequestService } from './request.service';
 
 /**
@@ -55,7 +44,8 @@ export class ItemRequestDataService extends IdentifiableDataService<ItemRequest>
   getItemRequestEndpointByToken(token: string): Observable<string> {
     return this.halService.getEndpoint(this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((href: string) => `${href}/${token}`));
+      map((href: string) => `${href}/${token}`),
+    );
   }
 
   /**
@@ -67,17 +57,19 @@ export class ItemRequestDataService extends IdentifiableDataService<ItemRequest>
 
     const href$ = this.getItemRequestEndpoint();
 
-    href$.pipe(
-      find((href: string) => hasValue(href)),
-      map((href: string) => {
-        const request = new PostRequest(requestId, href, itemRequest);
-        this.requestService.send(request);
-      }),
-    ).subscribe();
+    href$
+      .pipe(
+        find((href: string) => hasValue(href)),
+        map((href: string) => {
+          const request = new PostRequest(requestId, href, itemRequest);
+          this.requestService.send(request);
+        }),
+      )
+      .subscribe();
 
-    return this.rdbService.buildFromRequestUUID<ItemRequest>(requestId).pipe(
-      getFirstCompletedRemoteData(),
-    );
+    return this.rdbService
+      .buildFromRequestUUID<ItemRequest>(requestId)
+      .pipe(getFirstCompletedRemoteData());
   }
 
   /**
@@ -85,7 +77,10 @@ export class ItemRequestDataService extends IdentifiableDataService<ItemRequest>
    * @param token Token of the {@link ItemRequest}
    * @param email Email to send back to the user requesting the item
    */
-  deny(token: string, email: RequestCopyEmail): Observable<RemoteData<ItemRequest>> {
+  deny(
+    token: string,
+    email: RequestCopyEmail,
+  ): Observable<RemoteData<ItemRequest>> {
     return this.process(token, email, false);
   }
 
@@ -95,7 +90,11 @@ export class ItemRequestDataService extends IdentifiableDataService<ItemRequest>
    * @param email Email to send back to the user requesting the item
    * @param suggestOpenAccess Whether or not to suggest the item to become open access
    */
-  grant(token: string, email: RequestCopyEmail, suggestOpenAccess = false): Observable<RemoteData<ItemRequest>> {
+  grant(
+    token: string,
+    email: RequestCopyEmail,
+    suggestOpenAccess = false,
+  ): Observable<RemoteData<ItemRequest>> {
     return this.process(token, email, true, suggestOpenAccess);
   }
 
@@ -106,25 +105,37 @@ export class ItemRequestDataService extends IdentifiableDataService<ItemRequest>
    * @param grant Grant or deny the request (true = grant, false = deny)
    * @param suggestOpenAccess Whether or not to suggest the item to become open access
    */
-  process(token: string, email: RequestCopyEmail, grant: boolean, suggestOpenAccess = false): Observable<RemoteData<ItemRequest>> {
+  process(
+    token: string,
+    email: RequestCopyEmail,
+    grant: boolean,
+    suggestOpenAccess = false,
+  ): Observable<RemoteData<ItemRequest>> {
     const requestId = this.requestService.generateRequestId();
 
-    this.getItemRequestEndpointByToken(token).pipe(
-      distinctUntilChanged(),
-      map((endpointURL: string) => {
-        const options: HttpOptions = Object.create({});
-        let headers = new HttpHeaders();
-        headers = headers.append('Content-Type', 'application/json');
-        options.headers = headers;
-        return new PutRequest(requestId, endpointURL, JSON.stringify({
-          acceptRequest: grant,
-          responseMessage: email.message,
-          subject: email.subject,
-          suggestOpenAccess,
-        }), options);
-      }),
-      sendRequest(this.requestService),
-    ).subscribe();
+    this.getItemRequestEndpointByToken(token)
+      .pipe(
+        distinctUntilChanged(),
+        map((endpointURL: string) => {
+          const options: HttpOptions = Object.create({});
+          let headers = new HttpHeaders();
+          headers = headers.append('Content-Type', 'application/json');
+          options.headers = headers;
+          return new PutRequest(
+            requestId,
+            endpointURL,
+            JSON.stringify({
+              acceptRequest: grant,
+              responseMessage: email.message,
+              subject: email.subject,
+              suggestOpenAccess,
+            }),
+            options,
+          );
+        }),
+        sendRequest(this.requestService),
+      )
+      .subscribe();
 
     return this.rdbService.buildFromRequestUUID(requestId);
   }

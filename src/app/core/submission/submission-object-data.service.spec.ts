@@ -19,9 +19,12 @@ describe('SubmissionObjectDataService', () => {
   const wfiResult = 'wfiResult' as any;
 
   beforeEach(() => {
-    workspaceitemDataService = jasmine.createSpyObj('WorkspaceitemDataService', {
-      findById: wsiResult,
-    });
+    workspaceitemDataService = jasmine.createSpyObj(
+      'WorkspaceitemDataService',
+      {
+        findById: wsiResult,
+      },
+    );
     workflowItemDataService = jasmine.createSpyObj('WorkflowItemDataService', {
       findById: wfiResult,
     });
@@ -35,7 +38,12 @@ describe('SubmissionObjectDataService', () => {
       submissionService = jasmine.createSpyObj('SubmissionService', {
         getSubmissionScope: {},
       });
-      service = new SubmissionObjectDataService(workspaceitemDataService, workflowItemDataService, submissionService, halService);
+      service = new SubmissionObjectDataService(
+        workspaceitemDataService,
+        workflowItemDataService,
+        submissionService,
+        halService,
+      );
       service.findById(submissionId);
       expect(submissionService.getSubmissionScope).toHaveBeenCalled();
     });
@@ -45,12 +53,21 @@ describe('SubmissionObjectDataService', () => {
         submissionService = jasmine.createSpyObj('SubmissionService', {
           getSubmissionScope: SubmissionScopeType.WorkspaceItem,
         });
-        service = new SubmissionObjectDataService(workspaceitemDataService, workflowItemDataService, submissionService, halService);
+        service = new SubmissionObjectDataService(
+          workspaceitemDataService,
+          workflowItemDataService,
+          submissionService,
+          halService,
+        );
       });
 
       it('should forward the result of WorkspaceitemDataService.findByIdAndIDType()', () => {
         const result = service.findById(submissionId);
-        expect(workspaceitemDataService.findById).toHaveBeenCalledWith(submissionId, true, true);
+        expect(workspaceitemDataService.findById).toHaveBeenCalledWith(
+          submissionId,
+          true,
+          true,
+        );
         expect(result).toBe(wsiResult);
       });
     });
@@ -60,12 +77,21 @@ describe('SubmissionObjectDataService', () => {
         submissionService = jasmine.createSpyObj('SubmissionService', {
           getSubmissionScope: SubmissionScopeType.WorkflowItem,
         });
-        service = new SubmissionObjectDataService(workspaceitemDataService, workflowItemDataService, submissionService, halService);
+        service = new SubmissionObjectDataService(
+          workspaceitemDataService,
+          workflowItemDataService,
+          submissionService,
+          halService,
+        );
       });
 
       it('should forward the result of WorkflowItemDataService.findByIdAndIDType()', () => {
         const result = service.findById(submissionId);
-        expect(workflowItemDataService.findById).toHaveBeenCalledWith(submissionId, true, true);
+        expect(workflowItemDataService.findById).toHaveBeenCalledWith(
+          submissionId,
+          true,
+          true,
+        );
         expect(result).toBe(wfiResult);
       });
     });
@@ -75,10 +101,15 @@ describe('SubmissionObjectDataService', () => {
         submissionService = jasmine.createSpyObj('SubmissionService', {
           getSubmissionScope: 'Something else',
         });
-        service = new SubmissionObjectDataService(workspaceitemDataService, workflowItemDataService, submissionService, halService);
+        service = new SubmissionObjectDataService(
+          workspaceitemDataService,
+          workflowItemDataService,
+          submissionService,
+          halService,
+        );
       });
 
-      it('shouldn\'t call any data service methods', () => {
+      it("shouldn't call any data service methods", () => {
         service.findById(submissionId);
         expect(workspaceitemDataService.findById).not.toHaveBeenCalled();
         expect(workflowItemDataService.findById).not.toHaveBeenCalled();
@@ -93,6 +124,5 @@ describe('SubmissionObjectDataService', () => {
         });
       });
     });
-
   });
 });

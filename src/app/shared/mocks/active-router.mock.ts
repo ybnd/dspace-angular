@@ -2,7 +2,6 @@ import { Params } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 
 export class MockActivatedRoute {
-
   private _testParams?: any;
 
   // ActivatedRoute.params is Observable
@@ -20,7 +19,9 @@ export class MockActivatedRoute {
   }
 
   // Test parameters
-  get testParams() { return this._testParams; }
+  get testParams() {
+    return this._testParams;
+  }
   set testParams(params: any) {
     this._testParams = params;
     this.subject.next(params);

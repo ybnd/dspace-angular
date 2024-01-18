@@ -1,16 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
 
 import {
   buildPaginatedList,
@@ -76,12 +67,14 @@ export class DsDynamicLookupRelationSelectionTabComponent {
   /**
    * Send an event to deselect an object from the list
    */
-  @Output() deselectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() deselectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * Send an event to select an object from the list
    */
-  @Output() selectObject: EventEmitter<ListableObject> = new EventEmitter<ListableObject>();
+  @Output() selectObject: EventEmitter<ListableObject> =
+    new EventEmitter<ListableObject>();
 
   /**
    * The initial pagination to use
@@ -96,40 +89,46 @@ export class DsDynamicLookupRelationSelectionTabComponent {
    */
   currentPagination$: Observable<PaginationComponentOptions>;
 
-  constructor(private router: Router,
-              private searchConfigService: SearchConfigurationService,
-              private paginationService: PaginationService,
-  ) {
-  }
+  constructor(
+    private router: Router,
+    private searchConfigService: SearchConfigurationService,
+    private paginationService: PaginationService,
+  ) {}
 
   /**
    * Set up the selection and pagination on load
    */
   ngOnInit() {
     this.resetRoute();
-    this.selectionRD$ = this.searchConfigService.paginatedSearchOptions
-      .pipe(
-        map((options: PaginatedSearchOptions) => options.pagination),
-        switchMap((pagination: PaginationComponentOptions) => {
-          return this.selection$.pipe(
-            take(1),
-            map((selected) => {
-              const offset = (pagination.currentPage - 1) * pagination.pageSize;
-              const end = (offset + pagination.pageSize) > selected.length ? selected.length : offset + pagination.pageSize;
-              const selection = selected.slice(offset, end);
-              const pageInfo = new PageInfo(
-                {
-                  elementsPerPage: pagination.pageSize,
-                  totalElements: selected.length,
-                  currentPage: pagination.currentPage,
-                  totalPages: Math.ceil(selected.length / pagination.pageSize),
-                });
-              return createSuccessfulRemoteDataObject(buildPaginatedList(pageInfo, selection));
-            }),
-          );
-        }),
-      );
-    this.currentPagination$ = this.paginationService.getCurrentPagination(this.searchConfigService.paginationID, this.initialPagination);
+    this.selectionRD$ = this.searchConfigService.paginatedSearchOptions.pipe(
+      map((options: PaginatedSearchOptions) => options.pagination),
+      switchMap((pagination: PaginationComponentOptions) => {
+        return this.selection$.pipe(
+          take(1),
+          map((selected) => {
+            const offset = (pagination.currentPage - 1) * pagination.pageSize;
+            const end =
+              offset + pagination.pageSize > selected.length
+                ? selected.length
+                : offset + pagination.pageSize;
+            const selection = selected.slice(offset, end);
+            const pageInfo = new PageInfo({
+              elementsPerPage: pagination.pageSize,
+              totalElements: selected.length,
+              currentPage: pagination.currentPage,
+              totalPages: Math.ceil(selected.length / pagination.pageSize),
+            });
+            return createSuccessfulRemoteDataObject(
+              buildPaginatedList(pageInfo, selection),
+            );
+          }),
+        );
+      }),
+    );
+    this.currentPagination$ = this.paginationService.getCurrentPagination(
+      this.searchConfigService.paginationID,
+      this.initialPagination,
+    );
   }
 
   /**

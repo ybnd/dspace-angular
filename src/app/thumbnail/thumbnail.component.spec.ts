@@ -1,13 +1,5 @@
-import {
-  DebugElement,
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { DebugElement, Pipe, PipeTransform } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -53,10 +45,17 @@ describe('ThumbnailComponent', () => {
     fileService = jasmine.createSpyObj('FileService', {
       retrieveFileDownloadLink: null,
     });
-    fileService.retrieveFileDownloadLink.and.callFake((url) => observableOf(`${url}?authentication-token=fake`));
+    fileService.retrieveFileDownloadLink.and.callFake((url) =>
+      observableOf(`${url}?authentication-token=fake`),
+    );
 
     TestBed.configureTestingModule({
-      declarations: [ThumbnailComponent, SafeUrlPipe, MockTranslatePipe, VarDirective],
+      declarations: [
+        ThumbnailComponent,
+        SafeUrlPipe,
+        MockTranslatePipe,
+        VarDirective,
+      ],
       providers: [
         { provide: AuthService, useValue: authService },
         { provide: AuthorizationDataService, useValue: authorizationService },
@@ -83,7 +82,9 @@ describe('ThumbnailComponent', () => {
 
     it('should set isLoading$ to false once an image is successfully loaded', () => {
       comp.setSrc('http://bit.stream');
-      fixture.debugElement.query(By.css('img.thumbnail-content')).triggerEventHandler('load', new Event('load'));
+      fixture.debugElement
+        .query(By.css('img.thumbnail-content'))
+        .triggerEventHandler('load', new Event('load'));
       expect(comp.isLoading$.getValue()).toBeFalse();
     });
 
@@ -97,7 +98,9 @@ describe('ThumbnailComponent', () => {
 
       comp.isLoading$.next(false);
       fixture.detectChanges();
-      expect(fixture.debugElement.query(By.css('ds-themed-loading'))).toBeFalsy();
+      expect(
+        fixture.debugElement.query(By.css('ds-themed-loading')),
+      ).toBeFalsy();
     });
 
     describe('with a thumbnail image', () => {
@@ -117,7 +120,6 @@ describe('ThumbnailComponent', () => {
         expect(img).toBeTruthy();
         expect(img.classes['d-none']).toBeFalsy();
       });
-
     });
 
     describe('without a thumbnail image', () => {
@@ -127,14 +129,17 @@ describe('ThumbnailComponent', () => {
       });
 
       it('should only show the HTML placeholder once done loading', () => {
-        expect(fixture.debugElement.query(By.css('div.thumbnail-placeholder'))).toBeFalsy();
+        expect(
+          fixture.debugElement.query(By.css('div.thumbnail-placeholder')),
+        ).toBeFalsy();
 
         comp.isLoading$.next(false);
         fixture.detectChanges();
-        expect(fixture.debugElement.query(By.css('div.thumbnail-placeholder'))).toBeTruthy();
+        expect(
+          fixture.debugElement.query(By.css('div.thumbnail-placeholder')),
+        ).toBeTruthy();
       });
     });
-
   });
 
   const errorHandler = () => {
@@ -174,7 +179,9 @@ describe('ThumbnailComponent', () => {
 
         describe('and authorized to download the thumbnail', () => {
           beforeEach(() => {
-            authorizationService.isAuthorized.and.returnValue(observableOf(true));
+            authorizationService.isAuthorized.and.returnValue(
+              observableOf(true),
+            );
           });
 
           it('should add an authentication token to the thumbnail URL', () => {
@@ -184,14 +191,18 @@ describe('ThumbnailComponent', () => {
               // If we failed to retrieve the Bitstream in the first place, fall back to the default
               expect(setSrcSpy).toHaveBeenCalledWith(comp.defaultImage);
             } else {
-              expect(setSrcSpy).toHaveBeenCalledWith(CONTENT + '?authentication-token=fake');
+              expect(setSrcSpy).toHaveBeenCalledWith(
+                CONTENT + '?authentication-token=fake',
+              );
             }
           });
         });
 
         describe('but not authorized to download the thumbnail', () => {
           beforeEach(() => {
-            authorizationService.isAuthorized.and.returnValue(observableOf(false));
+            authorizationService.isAuthorized.and.returnValue(
+              observableOf(false),
+            );
           });
 
           it('should fall back to default', () => {
@@ -237,7 +248,9 @@ describe('ThumbnailComponent', () => {
         comp.errorHandler();
 
         fixture.detectChanges();
-        const image: HTMLElement = fixture.debugElement.query(By.css('img')).nativeElement;
+        const image: HTMLElement = fixture.debugElement.query(
+          By.css('img'),
+        ).nativeElement;
         expect(image.getAttribute('alt')).toBe('TRANSLATED ' + comp.alt);
       });
     });
@@ -250,8 +263,12 @@ describe('ThumbnailComponent', () => {
         expect(comp.src$.getValue()).toBe(null);
 
         fixture.detectChanges();
-        const placeholder = fixture.debugElement.query(By.css('div.thumbnail-placeholder')).nativeElement;
-        expect(placeholder.innerHTML).toContain('TRANSLATED ' + comp.placeholder);
+        const placeholder = fixture.debugElement.query(
+          By.css('div.thumbnail-placeholder'),
+        ).nativeElement;
+        expect(placeholder.innerHTML).toContain(
+          'TRANSLATED ' + comp.placeholder,
+        );
       });
     });
   });
@@ -274,19 +291,23 @@ describe('ThumbnailComponent', () => {
       it('should display an image', () => {
         comp.ngOnChanges({});
         fixture.detectChanges();
-        const image: HTMLElement = fixture.debugElement.query(By.css('img')).nativeElement;
+        const image: HTMLElement = fixture.debugElement.query(
+          By.css('img'),
+        ).nativeElement;
         expect(image.getAttribute('src')).toBe(thumbnail._links.content.href);
       });
 
       it('should include the alt text', () => {
         comp.ngOnChanges({});
         fixture.detectChanges();
-        const image: HTMLElement = fixture.debugElement.query(By.css('img')).nativeElement;
+        const image: HTMLElement = fixture.debugElement.query(
+          By.css('img'),
+        ).nativeElement;
         expect(image.getAttribute('alt')).toBe('TRANSLATED ' + comp.alt);
       });
     });
 
-    describe('if content can\'t be loaded', () => {
+    describe("if content can't be loaded", () => {
       errorHandler();
     });
   });
@@ -326,7 +347,7 @@ describe('ThumbnailComponent', () => {
         });
       });
 
-      describe('if content can\'t be loaded', () => {
+      describe("if content can't be loaded", () => {
         errorHandler();
       });
     });

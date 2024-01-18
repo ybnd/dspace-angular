@@ -7,18 +7,9 @@ import {
   OnInit,
   PLATFORM_ID,
 } from '@angular/core';
-import {
-  DomSanitizer,
-  SafeResourceUrl,
-} from '@angular/platform-browser';
-import {
-  Observable,
-  of,
-} from 'rxjs';
-import {
-  map,
-  take,
-} from 'rxjs/operators';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Observable, of } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 import { BitstreamDataService } from '../../core/data/bitstream-data.service';
@@ -35,10 +26,9 @@ import { MiradorViewerService } from './mirador-viewer.service';
   styleUrls: ['./mirador-viewer.component.scss'],
   templateUrl: './mirador-viewer.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  providers: [ MiradorViewerService ],
+  providers: [MiradorViewerService],
 })
 export class MiradorViewerComponent implements OnInit {
-
   @Input() object: Item;
 
   /**
@@ -71,15 +61,17 @@ export class MiradorViewerComponent implements OnInit {
    */
   notMobile = false;
 
-  viewerMessage = 'Sorry, the Mirador viewer is not currently available in development mode.';
+  viewerMessage =
+    'Sorry, the Mirador viewer is not currently available in development mode.';
 
-  constructor(private sanitizer: DomSanitizer,
-              private viewerService: MiradorViewerService,
-              private bitstreamDataService: BitstreamDataService,
-              private bundleDataService: BundleDataService,
-              private hostWindowService: HostWindowService,
-              @Inject(PLATFORM_ID) private platformId: any) {
-  }
+  constructor(
+    private sanitizer: DomSanitizer,
+    private viewerService: MiradorViewerService,
+    private bitstreamDataService: BitstreamDataService,
+    private bundleDataService: BundleDataService,
+    private hostWindowService: HostWindowService,
+    @Inject(PLATFORM_ID) private platformId: any,
+  ) {}
 
   /**
    * Creates the url for the Mirador iframe. Adds parameters for the displaying the search panel, query results,
@@ -87,11 +79,13 @@ export class MiradorViewerComponent implements OnInit {
    */
   setURL() {
     // The path to the REST manifest endpoint.
-    const manifestApiEndpoint = encodeURIComponent(environment.rest.baseUrl + '/iiif/'
-      + this.object.id + '/manifest');
+    const manifestApiEndpoint = encodeURIComponent(
+      environment.rest.baseUrl + '/iiif/' + this.object.id + '/manifest',
+    );
     // The Express path to Mirador viewer.
-    let viewerPath = `${environment.ui.nameSpace}${environment.ui.nameSpace.length > 1 ? '/' : ''}`
-      + `iiif/mirador/index.html?manifest=${manifestApiEndpoint}`;
+    let viewerPath =
+      `${environment.ui.nameSpace}${environment.ui.nameSpace.length > 1 ? '/' : ''}` +
+      `iiif/mirador/index.html?manifest=${manifestApiEndpoint}`;
     if (this.searchable) {
       // Tell the viewer add search to menu.
       viewerPath += '&searchable=' + this.searchable;
@@ -117,7 +111,6 @@ export class MiradorViewerComponent implements OnInit {
      * Initializes the iframe url observable.
      */
     if (isPlatformBrowser(this.platformId)) {
-
       // Viewer is not currently available in dev mode so hide it in that case.
       this.isViewerAvailable = this.viewerService.showEmbeddedViewer();
 
@@ -127,7 +120,9 @@ export class MiradorViewerComponent implements OnInit {
       this.hostWindowService.widthCategory
         .pipe(take(1))
         .subscribe((category: WidthCategory) => {
-          this.notMobile = !(category === WidthCategory.XS || category === WidthCategory.SM);
+          this.notMobile = !(
+            category === WidthCategory.XS || category === WidthCategory.SM
+          );
         });
 
       // Set the multi property. The default mirador configuration adds a right
@@ -145,17 +140,20 @@ export class MiradorViewerComponent implements OnInit {
       } else {
         // Set the multi property based on the image count in IIIF-eligible bundles.
         // Any count greater than 1 sets the value to 'true'.
-        this.iframeViewerUrl = this.viewerService.getImageCount(
-          this.object,
-          this.bitstreamDataService,
-          this.bundleDataService).pipe(
-          map(c => {
-            if (c > 1) {
-              this.multi = true;
-            }
-            return this.setURL();
-          }),
-        );
+        this.iframeViewerUrl = this.viewerService
+          .getImageCount(
+            this.object,
+            this.bitstreamDataService,
+            this.bundleDataService,
+          )
+          .pipe(
+            map((c) => {
+              if (c > 1) {
+                this.multi = true;
+              }
+              return this.setURL();
+            }),
+          );
       }
     }
   }

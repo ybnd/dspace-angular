@@ -15,16 +15,16 @@ import { BrowseByDatePageComponent } from './browse-by-date-page.component';
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
-
 @rendersBrowseBy(BrowseByDataType.Date)
-export class ThemedBrowseByDatePageComponent
-  extends ThemedComponent<BrowseByDatePageComponent> {
+export class ThemedBrowseByDatePageComponent extends ThemedComponent<BrowseByDatePageComponent> {
   protected getComponentName(): string {
     return 'BrowseByDatePageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/browse-by/browse-by-date-page/browse-by-date-page.component`);
+    return import(
+      `../../../themes/${themeName}/app/browse-by/browse-by-date-page/browse-by-date-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

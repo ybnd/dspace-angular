@@ -3,17 +3,10 @@ import {
   Injector,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { RequestService } from '../../../../core/data/request.service';
 import { SearchService } from '../../../../core/shared/search/search.service';
@@ -59,7 +52,10 @@ describe('ClaimedTaskActionsDeclineTaskComponent', () => {
       providers: [
         { provide: ClaimedTaskDataService, useValue: claimedTaskService },
         { provide: Injector, useValue: {} },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: Router, useValue: new RouterStub() },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestService },
@@ -67,9 +63,11 @@ describe('ClaimedTaskActionsDeclineTaskComponent', () => {
       ],
       declarations: [ClaimedTaskActionsDeclineTaskComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ClaimedTaskActionsDeclineTaskComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ClaimedTaskActionsDeclineTaskComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -94,9 +92,10 @@ describe('ClaimedTaskActionsDeclineTaskComponent', () => {
     component.processing$.next(true);
     fixture.detectChanges();
 
-    const span = fixture.debugElement.query(By.css('.declineTaskAction .fa-spin'));
+    const span = fixture.debugElement.query(
+      By.css('.declineTaskAction .fa-spin'),
+    );
 
     expect(span).not.toBeNull();
   });
-
 });

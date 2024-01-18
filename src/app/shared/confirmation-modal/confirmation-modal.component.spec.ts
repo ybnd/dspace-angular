@@ -1,7 +1,4 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -26,12 +23,9 @@ describe('ConfirmationModalComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [ConfirmationModalComponent],
-      providers: [
-        { provide: NgbActiveModal, useValue: modalStub },
-      ],
+      providers: [{ provide: NgbActiveModal, useValue: modalStub }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
-
   }));
 
   beforeEach(() => {
@@ -84,7 +78,8 @@ describe('ConfirmationModalComponent', () => {
     beforeEach(fakeAsync(() => {
       spyOn(component, 'close');
       debugElement.query(By.css('button.close')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
       tick();
@@ -100,7 +95,8 @@ describe('ConfirmationModalComponent', () => {
       spyOn(component, 'close');
       spyOn(component.response, 'emit');
       debugElement.query(By.css('button.cancel')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
+        preventDefault: () => {
+          /**/
         },
       });
       tick();
@@ -118,10 +114,13 @@ describe('ConfirmationModalComponent', () => {
     beforeEach(fakeAsync(() => {
       spyOn(component, 'close');
       spyOn(component.response, 'emit');
-      debugElement.query(By.css('button.confirm')).triggerEventHandler('click', {
-        preventDefault: () => {/**/
-        },
-      });
+      debugElement
+        .query(By.css('button.confirm'))
+        .triggerEventHandler('click', {
+          preventDefault: () => {
+            /**/
+          },
+        });
       tick();
       fixture.detectChanges();
     }));
@@ -132,5 +131,4 @@ describe('ConfirmationModalComponent', () => {
       expect(component.response.emit).toHaveBeenCalledWith(true);
     });
   });
-
 });

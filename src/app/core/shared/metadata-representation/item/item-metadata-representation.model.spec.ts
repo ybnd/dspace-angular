@@ -29,19 +29,28 @@ describe('ItemMetadataRepresentation', () => {
             value: itemType,
           }),
         ];
-        itemMetadataRepresentation = Object.assign(new ItemMetadataRepresentation(item.metadata[metadataField][0]), item);
+        itemMetadataRepresentation = Object.assign(
+          new ItemMetadataRepresentation(item.metadata[metadataField][0]),
+          item,
+        );
       });
 
       it('should have a representation type of item', () => {
-        expect(itemMetadataRepresentation.representationType).toEqual(MetadataRepresentationType.Item);
+        expect(itemMetadataRepresentation.representationType).toEqual(
+          MetadataRepresentationType.Item,
+        );
       });
 
       it('should return the correct value when calling getValue', () => {
-        expect(itemMetadataRepresentation.getValue()).toEqual(`${valuePrefix}${metadataField}`);
+        expect(itemMetadataRepresentation.getValue()).toEqual(
+          `${valuePrefix}${metadataField}`,
+        );
       });
 
       it('should return the correct item type', () => {
-        expect(itemMetadataRepresentation.itemType).toEqual(item.firstMetadataValue('dspace.entity.type'));
+        expect(itemMetadataRepresentation.itemType).toEqual(
+          item.firstMetadataValue('dspace.entity.type'),
+        );
       });
     });
   }

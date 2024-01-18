@@ -8,22 +8,28 @@ import { SearchResultListElementComponent } from '../search-result-list-element.
 
 @Component({
   selector: 'ds-community-search-result-list-element',
-  styleUrls: ['../search-result-list-element.component.scss', 'community-search-result-list-element.component.scss'],
+  styleUrls: [
+    '../search-result-list-element.component.scss',
+    'community-search-result-list-element.component.scss',
+  ],
   templateUrl: 'community-search-result-list-element.component.html',
 })
 /**
  * Component representing a community search result in list view
  */
 @listableObjectComponent(CommunitySearchResult, ViewMode.ListElement)
-export class CommunitySearchResultListElementComponent extends SearchResultListElementComponent<CommunitySearchResult, Community> {
+export class CommunitySearchResultListElementComponent extends SearchResultListElementComponent<
+  CommunitySearchResult,
+  Community
+> {
   /**
    * Display thumbnails if required by configuration
    */
   showThumbnails: boolean;
 
-
   ngOnInit(): void {
     super.ngOnInit();
-    this.showThumbnails = this.showThumbnails ?? this.appConfig.browseBy.showThumbnails;
+    this.showThumbnails =
+      this.showThumbnails ?? this.appConfig.browseBy.showThumbnails;
   }
 }

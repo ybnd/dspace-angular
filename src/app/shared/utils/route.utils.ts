@@ -1,7 +1,4 @@
-import {
-  ActivatedRouteSnapshot,
-  Router,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 
 import { URLCombiner } from '../../core/url-combiner/url-combiner';
 import { hasValue } from '../empty.util';
@@ -12,7 +9,9 @@ import { hasValue } from '../empty.util';
  */
 export function currentPath(router: Router) {
   const urlTree = router.parseUrl(router.url);
-  return '/' + urlTree.root.children.primary.segments.map((it) => it.path).join('/');
+  return (
+    '/' + urlTree.root.children.primary.segments.map((it) => it.path).join('/')
+  );
 }
 
 export function currentPathFromSnapshot(route: ActivatedRouteSnapshot): string {

@@ -4,10 +4,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AuthService } from '../core/auth/auth.service';
 import { AuthorizationDataService } from '../core/data/feature-authorization/authorization-data.service';
@@ -23,17 +20,22 @@ import { CollectionPageResolver } from './collection-page.resolver';
  * Guard for preventing unauthorized access to certain {@link Collection} pages requiring administrator rights
  */
 export class CollectionPageAdministratorGuard extends DsoPageSingleFeatureGuard<Collection> {
-  constructor(protected resolver: CollectionPageResolver,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected resolver: CollectionPageResolver,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 
   /**
    * Check administrator authorization rights
    */
-  getFeatureID(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FeatureID> {
+  getFeatureID(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<FeatureID> {
     return observableOf(FeatureID.AdministratorOf);
   }
 }

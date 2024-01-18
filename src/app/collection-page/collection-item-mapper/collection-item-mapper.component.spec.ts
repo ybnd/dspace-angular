@@ -1,22 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { EventEmitter } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import {
@@ -85,16 +75,19 @@ describe('CollectionItemMapperComponent', () => {
       },
     },
   });
-  const mockCollectionRD: RemoteData<Collection> = createSuccessfulRemoteDataObject(mockCollection);
-  const mockSearchOptions = observableOf(new PaginatedSearchOptions({
-    pagination: Object.assign(new PaginationComponentOptions(), {
-      id: 'search-page-configuration',
-      pageSize: 10,
-      currentPage: 1,
+  const mockCollectionRD: RemoteData<Collection> =
+    createSuccessfulRemoteDataObject(mockCollection);
+  const mockSearchOptions = observableOf(
+    new PaginatedSearchOptions({
+      pagination: Object.assign(new PaginationComponentOptions(), {
+        id: 'search-page-configuration',
+        pageSize: 10,
+        currentPage: 1,
+      }),
+      sort: new SortOptions('dc.title', SortDirection.ASC),
+      scope: mockCollection.id,
     }),
-    sort: new SortOptions('dc.title', SortDirection.ASC),
-    scope: mockCollection.id,
-  }));
+  );
   const url = 'http://test.url';
   const urlWithParam = url + '?param=value';
   const routerStub = Object.assign(new RouterStub(), {
@@ -117,13 +110,12 @@ describe('CollectionItemMapperComponent', () => {
       }),
     },
     snapshot: {
-      queryParamMap: new Map([
-        ['query', 'test'],
-      ]),
+      queryParamMap: new Map([['query', 'test']]),
     },
   };
   const translateServiceStub = {
-    get: () => observableOf('test-message of collection ' + mockCollection.name),
+    get: () =>
+      observableOf('test-message of collection ' + mockCollection.name),
     onLangChange: new EventEmitter(),
     onTranslationChange: new EventEmitter(),
     onDefaultLangChange: new EventEmitter(),
@@ -157,9 +149,12 @@ describe('CollectionItemMapperComponent', () => {
     },
   };
 
-  const authorizationDataService = jasmine.createSpyObj('authorizationDataService', {
-    isAuthorized: observableOf(true),
-  });
+  const authorizationDataService = jasmine.createSpyObj(
+    'authorizationDataService',
+    {
+      isAuthorized: observableOf(true),
+    },
+  );
 
   const linkHeadService = jasmine.createSpyObj('linkHeadService', {
     addTag: '',
@@ -171,45 +166,81 @@ describe('CollectionItemMapperComponent', () => {
     getUUIDFromString: '',
   });
 
-  const configurationDataService = jasmine.createSpyObj('configurationDataService', {
-    findByPropertyName: createSuccessfulRemoteDataObject$(Object.assign(new ConfigurationProperty(), {
-      name: 'test',
-      values: [
-        'org.dspace.ctask.general.ProfileFormats = test',
-      ],
-    })),
-  });
+  const configurationDataService = jasmine.createSpyObj(
+    'configurationDataService',
+    {
+      findByPropertyName: createSuccessfulRemoteDataObject$(
+        Object.assign(new ConfigurationProperty(), {
+          name: 'test',
+          values: ['org.dspace.ctask.general.ProfileFormats = test'],
+        }),
+      ),
+    },
+  );
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
-      declarations: [CollectionItemMapperComponent, ItemSelectComponent, SearchFormComponent, PaginationComponent, EnumKeysPipe, VarDirective, ErrorComponent, LoadingComponent],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
+      declarations: [
+        CollectionItemMapperComponent,
+        ItemSelectComponent,
+        SearchFormComponent,
+        PaginationComponent,
+        EnumKeysPipe,
+        VarDirective,
+        ErrorComponent,
+        LoadingComponent,
+      ],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
         { provide: Router, useValue: routerStub },
-        { provide: SearchConfigurationService, useValue: searchConfigServiceStub },
+        {
+          provide: SearchConfigurationService,
+          useValue: searchConfigServiceStub,
+        },
         { provide: SearchService, useValue: searchServiceStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: ItemDataService, useValue: itemDataServiceStub },
         { provide: CollectionDataService, useValue: collectionDataServiceStub },
         { provide: TranslateService, useValue: translateServiceStub },
         { provide: HostWindowService, useValue: new HostWindowServiceStub(0) },
-        { provide: ObjectSelectService, useValue: new ObjectSelectServiceStub() },
+        {
+          provide: ObjectSelectService,
+          useValue: new ObjectSelectServiceStub(),
+        },
         { provide: RouteService, useValue: routeServiceStub },
-        { provide: AuthorizationDataService, useValue: authorizationDataService },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
         { provide: GroupDataService, useValue: groupDataService },
         { provide: LinkHeadService, useValue: linkHeadService },
-        { provide: ConfigurationDataService, useValue: configurationDataService },
+        {
+          provide: ConfigurationDataService,
+          useValue: configurationDataService,
+        },
       ],
-    }).overrideComponent(CollectionItemMapperComponent, {
-      set: {
-        providers: [
-          {
-            provide: SEARCH_CONFIG_SERVICE,
-            useClass: SearchConfigurationServiceStub,
-          },
-        ] },
-    }).compileComponents();
+    })
+      .overrideComponent(CollectionItemMapperComponent, {
+        set: {
+          providers: [
+            {
+              provide: SEARCH_CONFIG_SERVICE,
+              useClass: SearchConfigurationServiceStub,
+            },
+          ],
+        },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -225,7 +256,9 @@ describe('CollectionItemMapperComponent', () => {
   });
 
   it('should display the correct collection name', () => {
-    const name: HTMLElement = fixture.debugElement.query(By.css('#collection-name')).nativeElement;
+    const name: HTMLElement = fixture.debugElement.query(
+      By.css('#collection-name'),
+    ).nativeElement;
     expect(name.innerHTML).toContain(mockCollection.name);
   });
 
@@ -239,7 +272,9 @@ describe('CollectionItemMapperComponent', () => {
     });
 
     it('should display an error message if at least one mapping was unsuccessful', () => {
-      spyOn(itemDataService, 'mapToCollection').and.returnValue(createFailedRemoteDataObject$('Not Found', 404));
+      spyOn(itemDataService, 'mapToCollection').and.returnValue(
+        createFailedRemoteDataObject$('Not Found', 404),
+      );
       comp.mapItems(ids);
       expect(notificationsService.success).not.toHaveBeenCalled();
       expect(notificationsService.error).toHaveBeenCalled();
@@ -279,8 +314,10 @@ describe('CollectionItemMapperComponent', () => {
     });
 
     it('should navigate to the collection page', () => {
-      expect(router.navigate).toHaveBeenCalledWith(['/collections/', mockCollection.id]);
+      expect(router.navigate).toHaveBeenCalledWith([
+        '/collections/',
+        mockCollection.id,
+      ]);
     });
   });
-
 });

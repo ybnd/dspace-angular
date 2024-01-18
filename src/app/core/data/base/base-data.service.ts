@@ -68,7 +68,9 @@ export const EMBED_SEPARATOR = '%2F';
  * }
  * ```
  */
-export class BaseDataService<T extends CacheableObject> implements HALDataService<T> {
+export class BaseDataService<T extends CacheableObject>
+  implements HALDataService<T>
+{
   constructor(
     protected linkPath: string,
     protected requestService: RequestService,
@@ -76,8 +78,7 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
     protected responseMsToLive?: number,
-  ) {
-  }
+  ) {}
 
   /**
    * Allows subclasses to reset the response cache time.
@@ -89,7 +90,10 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param linkPath The link path for the object
    * @returns {Observable<string>}
    */
-  getBrowseEndpoint(options: FindListOptions = {}, linkPath?: string): Observable<string> {
+  getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath?: string,
+  ): Observable<string> {
     return this.getEndpoint();
   }
 
@@ -110,10 +114,18 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    *    Return an observable that emits created HREF
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  public buildHrefFromFindOptions(href: string, options: FindListOptions, extraArgs: string[] = [], ...linksToFollow: FollowLinkConfig<T>[]): string {
+  public buildHrefFromFindOptions(
+    href: string,
+    options: FindListOptions,
+    extraArgs: string[] = [],
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): string {
     let args = [...extraArgs];
 
-    if (hasValue(options.currentPage) && typeof options.currentPage === 'number') {
+    if (
+      hasValue(options.currentPage) &&
+      typeof options.currentPage === 'number'
+    ) {
       /* TODO: this is a temporary fix for the pagination start index (0 or 1) discrepancy between the rest and the frontend respectively */
       args = this.addHrefArg(href, args, `page=${options.currentPage - 1}`);
     }
@@ -121,14 +133,22 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
       args = this.addHrefArg(href, args, `size=${options.elementsPerPage}`);
     }
     if (hasValue(options.sort)) {
-      args = this.addHrefArg(href, args, `sort=${options.sort.field},${options.sort.direction}`);
+      args = this.addHrefArg(
+        href,
+        args,
+        `sort=${options.sort.field},${options.sort.direction}`,
+      );
     }
     if (hasValue(options.startsWith)) {
       args = this.addHrefArg(href, args, `startsWith=${options.startsWith}`);
     }
     if (hasValue(options.searchParams)) {
       options.searchParams.forEach((param: RequestParam) => {
-        args = this.addHrefArg(href, args, `${param.fieldName}=${param.fieldValue}`);
+        args = this.addHrefArg(
+          href,
+          args,
+          `${param.fieldName}=${param.fieldValue}`,
+        );
       });
     }
     args = this.addEmbedParams(href, args, ...linksToFollow);
@@ -149,12 +169,19 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @return {Observable<string>}
    * Return an observable that emits created HREF
    */
-  buildHrefWithParams(href: string, params: RequestParam[], ...linksToFollow: FollowLinkConfig<T>[]): string {
-
-    let  args = [];
+  buildHrefWithParams(
+    href: string,
+    params: RequestParam[],
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): string {
+    let args = [];
     if (hasValue(params)) {
       params.forEach((param: RequestParam) => {
-        args = this.addHrefArg(href, args, `${param.fieldName}=${param.fieldValue}`);
+        args = this.addHrefArg(
+          href,
+          args,
+          `${param.fieldName}=${param.fieldValue}`,
+        );
       });
     }
 
@@ -172,18 +199,36 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param args            params for the query string
    * @param linksToFollow   links we want to embed in query string if shouldEmbed is true
    */
-  protected addEmbedParams(href: string, args: string[], ...linksToFollow: FollowLinkConfig<T>[]) {
+  protected addEmbedParams(
+    href: string,
+    args: string[],
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ) {
     linksToFollow.forEach((linkToFollow: FollowLinkConfig<T>) => {
       if (hasValue(linkToFollow) && linkToFollow.shouldEmbed) {
         const embedString = 'embed=' + String(linkToFollow.name);
         // Add the embeds size if given in the FollowLinkConfig.FindListOptions
-        if (hasValue(linkToFollow.findListOptions) && hasValue(linkToFollow.findListOptions.elementsPerPage)) {
-          args = this.addHrefArg(href, args,
-            'embed.size=' + String(linkToFollow.name) + '=' + linkToFollow.findListOptions.elementsPerPage);
+        if (
+          hasValue(linkToFollow.findListOptions) &&
+          hasValue(linkToFollow.findListOptions.elementsPerPage)
+        ) {
+          args = this.addHrefArg(
+            href,
+            args,
+            'embed.size=' +
+              String(linkToFollow.name) +
+              '=' +
+              linkToFollow.findListOptions.elementsPerPage,
+          );
         }
         // Adds the nested embeds and their size if given
         if (isNotEmpty(linkToFollow.linksToFollow)) {
-          args = this.addNestedEmbeds(embedString, href, args, ...linkToFollow.linksToFollow);
+          args = this.addNestedEmbeds(
+            embedString,
+            href,
+            args,
+            ...linkToFollow.linksToFollow,
+          );
         } else {
           args = this.addHrefArg(href, args, embedString);
         }
@@ -202,7 +247,11 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @return            The next list of arguments, with newArg included if it wasn't already.
    *                    Note this function will not modify any of the input params.
    */
-  protected addHrefArg(href: string, currentArgs: string[], newArg: string): string[] {
+  protected addHrefArg(
+    href: string,
+    currentArgs: string[],
+    newArg: string,
+  ): string[] {
     if (href.includes(newArg) || currentArgs.includes(newArg)) {
       return [...currentArgs];
     } else {
@@ -217,18 +266,38 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param args            params for the query string
    * @param linksToFollow   links we want to embed in query string if shouldEmbed is true
    */
-  protected addNestedEmbeds(embedString: string, href: string, args: string[], ...linksToFollow: FollowLinkConfig<T>[]): string[] {
+  protected addNestedEmbeds(
+    embedString: string,
+    href: string,
+    args: string[],
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): string[] {
     let nestEmbed = embedString;
     linksToFollow.forEach((linkToFollow: FollowLinkConfig<T>) => {
       if (hasValue(linkToFollow) && linkToFollow.shouldEmbed) {
         nestEmbed = nestEmbed + EMBED_SEPARATOR + String(linkToFollow.name);
         // Add the nested embeds size if given in the FollowLinkConfig.FindListOptions
-        if (hasValue(linkToFollow.findListOptions) && hasValue(linkToFollow.findListOptions.elementsPerPage)) {
-          const nestedEmbedSize = 'embed.size=' + nestEmbed.split('=')[1] + '=' + linkToFollow.findListOptions.elementsPerPage;
+        if (
+          hasValue(linkToFollow.findListOptions) &&
+          hasValue(linkToFollow.findListOptions.elementsPerPage)
+        ) {
+          const nestedEmbedSize =
+            'embed.size=' +
+            nestEmbed.split('=')[1] +
+            '=' +
+            linkToFollow.findListOptions.elementsPerPage;
           args = this.addHrefArg(href, args, nestedEmbedSize);
         }
-        if (hasValue(linkToFollow.linksToFollow) && isNotEmpty(linkToFollow.linksToFollow)) {
-          args = this.addNestedEmbeds(nestEmbed, href, args, ...linkToFollow.linksToFollow);
+        if (
+          hasValue(linkToFollow.linksToFollow) &&
+          isNotEmpty(linkToFollow.linksToFollow)
+        ) {
+          args = this.addNestedEmbeds(
+            nestEmbed,
+            href,
+            args,
+            ...linkToFollow.linksToFollow,
+          );
         } else {
           args = this.addHrefArg(href, args, nestEmbed);
         }
@@ -245,7 +314,10 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param requestFn        The function to call if the RemoteData is stale and shouldReRequest is
    *                         true
    */
-  protected reRequestStaleRemoteData<O>(shouldReRequest: boolean, requestFn: () => Observable<RemoteData<O>>) {
+  protected reRequestStaleRemoteData<O>(
+    shouldReRequest: boolean,
+    requestFn: () => Observable<RemoteData<O>>,
+  ) {
     return (source: Observable<RemoteData<O>>): Observable<RemoteData<O>> => {
       if (shouldReRequest === true) {
         return source.pipe(
@@ -273,7 +345,12 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findByHref(href$: string | Observable<string>, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<T>> {
+  findByHref(
+    href$: string | Observable<string>,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<T>> {
     if (typeof href$ === 'string') {
       href$ = observableOf(href$);
     }
@@ -281,7 +358,9 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
     const requestHref$ = href$.pipe(
       isNotEmptyOperator(),
       take(1),
-      map((href: string) => this.buildHrefFromFindOptions(href, {}, [], ...linksToFollow)),
+      map((href: string) =>
+        this.buildHrefFromFindOptions(href, {}, [], ...linksToFollow),
+      ),
     );
 
     this.createAndSendGetRequest(requestHref$, useCachedVersionIfAvailable);
@@ -291,9 +370,18 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
       // call it isn't immediately returned, but we wait until the remote data for the new request
       // is created. If useCachedVersionIfAvailable is false it also ensures you don't get a
       // cached completed object
-      skipWhile((rd: RemoteData<T>) => rd.isStale || (!useCachedVersionIfAvailable && rd.hasCompleted)),
+      skipWhile(
+        (rd: RemoteData<T>) =>
+          rd.isStale || (!useCachedVersionIfAvailable && rd.hasCompleted),
+      ),
       this.reRequestStaleRemoteData(reRequestOnStale, () =>
-        this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow)),
+        this.findByHref(
+          href$,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow,
+        ),
+      ),
     );
   }
 
@@ -307,7 +395,13 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param reRequestOnStale            Whether or not the request should automatically be re-requested after the response becomes stale
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  findListByHref(href$: string | Observable<string>, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
+  findListByHref(
+    href$: string | Observable<string>,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
     if (typeof href$ === 'string') {
       href$ = observableOf(href$);
     }
@@ -315,7 +409,9 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
     const requestHref$ = href$.pipe(
       isNotEmptyOperator(),
       take(1),
-      map((href: string) => this.buildHrefFromFindOptions(href, options, [], ...linksToFollow)),
+      map((href: string) =>
+        this.buildHrefFromFindOptions(href, options, [], ...linksToFollow),
+      ),
     );
 
     this.createAndSendGetRequest(requestHref$, useCachedVersionIfAvailable);
@@ -325,9 +421,19 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
       // call it isn't immediately returned, but we wait until the remote data for the new request
       // is created. If useCachedVersionIfAvailable is false it also ensures you don't get a
       // cached completed object
-      skipWhile((rd: RemoteData<PaginatedList<T>>) => rd.isStale || (!useCachedVersionIfAvailable && rd.hasCompleted)),
+      skipWhile(
+        (rd: RemoteData<PaginatedList<T>>) =>
+          rd.isStale || (!useCachedVersionIfAvailable && rd.hasCompleted),
+      ),
       this.reRequestStaleRemoteData(reRequestOnStale, () =>
-        this.findListByHref(href$, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow)),
+        this.findListByHref(
+          href$,
+          options,
+          useCachedVersionIfAvailable,
+          reRequestOnStale,
+          ...linksToFollow,
+        ),
+      ),
     );
   }
 
@@ -339,16 +445,16 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param useCachedVersionIfAvailable If this is true, the request will only be sent if there's
    *                                    no valid cached version. Defaults to true
    */
-  protected createAndSendGetRequest(href$: string | Observable<string>, useCachedVersionIfAvailable = true): void {
+  protected createAndSendGetRequest(
+    href$: string | Observable<string>,
+    useCachedVersionIfAvailable = true,
+  ): void {
     if (isNotEmpty(href$)) {
       if (typeof href$ === 'string') {
         href$ = observableOf(href$);
       }
 
-      href$.pipe(
-        isNotEmptyOperator(),
-        take(1),
-      ).subscribe((href: string) => {
+      href$.pipe(isNotEmptyOperator(), take(1)).subscribe((href: string) => {
         const requestId = this.requestService.generateRequestId();
         const request = new GetRequest(requestId, href);
         if (hasValue(this.responseMsToLive)) {
@@ -379,7 +485,9 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
         }),
       );
     }
-    throw new Error(`Can't check whether there is a cached response for an empty href$`);
+    throw new Error(
+      `Can't check whether there is a cached response for an empty href$`,
+    );
   }
 
   /**
@@ -387,13 +495,15 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param href$                       The url for which to check whether there is a cached ERROR response.
    *                                    Can be a string or an Observable<string>
    */
-  hasCachedErrorResponse(href$: string | Observable<string>): Observable<boolean> {
+  hasCachedErrorResponse(
+    href$: string | Observable<string>,
+  ): Observable<boolean> {
     return this.hasCachedResponse(href$).pipe(
       switchMap((hasCachedResponse) => {
         if (hasCachedResponse) {
           return this.rdbService.buildSingle(href$).pipe(
             getFirstCompletedRemoteData(),
-            map((rd => rd.hasFailed)),
+            map((rd) => rd.hasFailed),
           );
         }
         return observableOf(false);
@@ -425,7 +535,10 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
    * @param object$         the cached object
    * @param dependsOnHref$  the href of the object it should depend on
    */
-  protected addDependency(object$: Observable<RemoteData<T | PaginatedList<T>>>, dependsOnHref$: string | Observable<string>) {
+  protected addDependency(
+    object$: Observable<RemoteData<T | PaginatedList<T>>>,
+    dependsOnHref$: string | Observable<string>,
+  ) {
     this.objectCache.addDependency(
       object$.pipe(
         getFirstCompletedRemoteData(),
@@ -450,22 +563,27 @@ export class BaseDataService<T extends CacheableObject> implements HALDataServic
   invalidateByHref(href: string): Observable<boolean> {
     const done$ = new AsyncSubject<boolean>();
 
-    this.objectCache.getByHref(href).pipe(
-      take(1),
-      switchMap((oce: ObjectCacheEntry) => {
-        return observableFrom([
-          ...oce.requestUUIDs,
-          ...oce.dependentRequestUUIDs,
-        ]).pipe(
-          mergeMap((requestUUID: string) => this.requestService.setStaleByUUID(requestUUID)),
-          toArray(),
-        );
-      }),
-    ).subscribe(() => {
-      this.objectCache.removeDependents(href);
-      done$.next(true);
-      done$.complete();
-    });
+    this.objectCache
+      .getByHref(href)
+      .pipe(
+        take(1),
+        switchMap((oce: ObjectCacheEntry) => {
+          return observableFrom([
+            ...oce.requestUUIDs,
+            ...oce.dependentRequestUUIDs,
+          ]).pipe(
+            mergeMap((requestUUID: string) =>
+              this.requestService.setStaleByUUID(requestUUID),
+            ),
+            toArray(),
+          );
+        }),
+      )
+      .subscribe(() => {
+        this.objectCache.removeDependents(href);
+        done$.next(true);
+        done$.complete();
+      });
 
     return done$;
   }

@@ -13,14 +13,15 @@ import { BrowseByTaxonomyPageComponent } from './browse-by-taxonomy-page.compone
  * Themed wrapper for BrowseByTaxonomyPageComponent
  */
 @rendersBrowseBy('hierarchy')
-export class ThemedBrowseByTaxonomyPageComponent extends ThemedComponent<BrowseByTaxonomyPageComponent>{
-
+export class ThemedBrowseByTaxonomyPageComponent extends ThemedComponent<BrowseByTaxonomyPageComponent> {
   protected getComponentName(): string {
     return 'BrowseByTaxonomyPageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/browse-by/browse-by-taxonomy-page/browse-by-taxonomy-page.component`);
+    return import(
+      `../../../themes/${themeName}/app/browse-by/browse-by-taxonomy-page/browse-by-taxonomy-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

@@ -20,10 +20,13 @@ import { isEmpty } from '../../empty.util';
   styleUrls: ['./number-picker.component.scss'],
   templateUrl: './number-picker.component.html',
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: NumberPickerComponent, multi: true },
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: NumberPickerComponent,
+      multi: true,
+    },
   ],
 })
-
 export class NumberPickerComponent implements OnInit, ControlValueAccessor {
   @Input() id: string;
   @Input() step: number;
@@ -44,8 +47,10 @@ export class NumberPickerComponent implements OnInit, ControlValueAccessor {
 
   startValue: number;
 
-  constructor(private fb: UntypedFormBuilder, private cd: ChangeDetectorRef) {
-  }
+  constructor(
+    private fb: UntypedFormBuilder,
+    private cd: ChangeDetectorRef,
+  ) {}
 
   ngOnInit() {
     // this.startValue = this.value;
@@ -64,7 +69,6 @@ export class NumberPickerComponent implements OnInit, ControlValueAccessor {
         // When the user select a month with < # of days
         this.value = this.value > this.max ? this.max : this.value;
       }
-
     } else if (changes.value && changes.value.currentValue === null) {
       // When the user delete the inserted value
       this.value = null;
@@ -74,7 +78,6 @@ export class NumberPickerComponent implements OnInit, ControlValueAccessor {
   }
 
   private changeValue(reverse: boolean = false) {
-
     // First after init
     if (isEmpty(this.value)) {
       this.value = this.startValue;

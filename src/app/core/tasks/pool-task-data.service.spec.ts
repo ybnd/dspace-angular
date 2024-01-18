@@ -44,7 +44,10 @@ describe('PoolTaskDataService', () => {
     service = initTestService();
     options = Object.create({});
     let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers = headers.append(
+      'Content-Type',
+      'application/x-www-form-urlencoded',
+    );
     options.headers = headers;
   });
 
@@ -54,11 +57,14 @@ describe('PoolTaskDataService', () => {
   });
 
   describe('findByItem', () => {
-
     it('should call searchTask method', () => {
-      spyOn((service as any), 'searchTask').and.returnValue(observableOf(createSuccessfulRemoteDataObject$({})));
+      spyOn(service as any, 'searchTask').and.returnValue(
+        observableOf(createSuccessfulRemoteDataObject$({})),
+      );
 
-      scheduler.schedule(() => service.findByItem('a0db0fde-1d12-4d43-bd0d-0f43df8d823c').subscribe());
+      scheduler.schedule(() =>
+        service.findByItem('a0db0fde-1d12-4d43-bd0d-0f43df8d823c').subscribe(),
+      );
       scheduler.flush();
 
       const findListOptions = new FindListOptions();
@@ -66,20 +72,27 @@ describe('PoolTaskDataService', () => {
         new RequestParam('uuid', 'a0db0fde-1d12-4d43-bd0d-0f43df8d823c'),
       ];
 
-      expect(service.searchTask).toHaveBeenCalledWith('findByItem', findListOptions);
+      expect(service.searchTask).toHaveBeenCalledWith(
+        'findByItem',
+        findListOptions,
+      );
     });
   });
 
   describe('getPoolTaskEndpointById', () => {
-
     it('should call getEndpointById method', () => {
       spyOn(service, 'getEndpointById').and.returnValue(observableOf(null));
 
-      scheduler.schedule(() => service.getPoolTaskEndpointById('a0db0fde-1d12-4d43-bd0d-0f43df8d823c').subscribe());
+      scheduler.schedule(() =>
+        service
+          .getPoolTaskEndpointById('a0db0fde-1d12-4d43-bd0d-0f43df8d823c')
+          .subscribe(),
+      );
       scheduler.flush();
 
-      expect(service.getEndpointById).toHaveBeenCalledWith('a0db0fde-1d12-4d43-bd0d-0f43df8d823c');
-
+      expect(service.getEndpointById).toHaveBeenCalledWith(
+        'a0db0fde-1d12-4d43-bd0d-0f43df8d823c',
+      );
     });
   });
 });

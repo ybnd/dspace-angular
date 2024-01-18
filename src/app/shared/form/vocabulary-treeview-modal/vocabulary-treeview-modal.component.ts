@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { VocabularyEntryDetail } from '../../../core/submission/vocabularies/models/vocabulary-entry-detail.model';
@@ -16,7 +13,6 @@ import { VocabularyOptions } from '../../../core/submission/vocabularies/models/
  * Component that contains a modal to display a VocabularyTreeviewComponent
  */
 export class VocabularyTreeviewModalComponent {
-
   /**
    * The {@link VocabularyOptions} object
    */
@@ -42,9 +38,7 @@ export class VocabularyTreeviewModalComponent {
    *
    * @param {NgbActiveModal} activeModal
    */
-  constructor(
-    public activeModal: NgbActiveModal,
-  ) { }
+  constructor(public activeModal: NgbActiveModal) {}
 
   /**
    * Method called on entry select

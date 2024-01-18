@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -11,14 +8,8 @@ import {
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -64,11 +55,12 @@ describe('QualityAssuranceEventsComponent test suite', () => {
   let scheduler: TestScheduler;
 
   const modalStub = {
-    open: () => ( { result: new Promise((res, rej) => 'do') } ),
+    open: () => ({ result: new Promise((res, rej) => 'do') }),
     close: () => null,
     dismiss: () => null,
   };
-  const qualityAssuranceEventRestServiceStub: any = getMockQualityAssuranceEventRestService();
+  const qualityAssuranceEventRestServiceStub: any =
+    getMockQualityAssuranceEventRestService();
   const activatedRouteParams = {
     qualityAssuranceEventsParams: {
       currentPage: 0,
@@ -91,7 +83,8 @@ describe('QualityAssuranceEventsComponent test suite', () => {
       id: qualityAssuranceEventObjectMissingProjectFound.id,
       title: qualityAssuranceEventObjectMissingProjectFound.title,
       hasProject: true,
-      projectTitle: qualityAssuranceEventObjectMissingProjectFound.message.title,
+      projectTitle:
+        qualityAssuranceEventObjectMissingProjectFound.message.title,
       projectId: ItemMockPid10.id,
       handle: ItemMockPid10.handle,
       reason: null,
@@ -117,25 +110,33 @@ describe('QualityAssuranceEventsComponent test suite', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        QualityAssuranceEventsComponent,
-        TestComponent,
-      ],
+      imports: [CommonModule, TranslateModule.forRoot()],
+      declarations: [QualityAssuranceEventsComponent, TestComponent],
       providers: [
-        { provide: ActivatedRoute, useValue: new ActivatedRouteStub(activatedRouteParamsMap, activatedRouteParams) },
-        { provide: QualityAssuranceEventDataService, useValue: qualityAssuranceEventRestServiceStub },
+        {
+          provide: ActivatedRoute,
+          useValue: new ActivatedRouteStub(
+            activatedRouteParamsMap,
+            activatedRouteParams,
+          ),
+        },
+        {
+          provide: QualityAssuranceEventDataService,
+          useValue: qualityAssuranceEventRestServiceStub,
+        },
         { provide: NgbModal, useValue: modalStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: TranslateService, useValue: getMockTranslateService() },
         { provide: PaginationService, useValue: paginationService },
         QualityAssuranceEventsComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then();
+    })
+      .compileComponents()
+      .then();
     scheduler = getTestScheduler();
   }));
 
@@ -148,7 +149,10 @@ describe('QualityAssuranceEventsComponent test suite', () => {
     beforeEach(() => {
       const html = `
         <ds-quality-assurance-event></ds-quality-assurance-event>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -156,9 +160,12 @@ describe('QualityAssuranceEventsComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create QualityAssuranceEventsComponent', inject([QualityAssuranceEventsComponent], (app: QualityAssuranceEventsComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create QualityAssuranceEventsComponent', inject(
+      [QualityAssuranceEventsComponent],
+      (app: QualityAssuranceEventsComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('Main tests', () => {
@@ -178,10 +185,7 @@ describe('QualityAssuranceEventsComponent test suite', () => {
       it('should fetch events', () => {
         const result = compAsAny.fetchEvents(events);
         const expected = cold('(a|)', {
-          a: [
-            getQualityAssuranceEventData1(),
-            getQualityAssuranceEventData2(),
-          ],
+          a: [getQualityAssuranceEventData1(), getQualityAssuranceEventData2()],
         });
         expect(result).toBeObservable(expected);
       });
@@ -196,13 +200,20 @@ describe('QualityAssuranceEventsComponent test suite', () => {
       it('should call executeAction if a project is present', () => {
         const action = 'ACCEPTED';
         comp.modalChoice(action, getQualityAssuranceEventData1(), modalStub);
-        expect(comp.executeAction).toHaveBeenCalledWith(action, getQualityAssuranceEventData1());
+        expect(comp.executeAction).toHaveBeenCalledWith(
+          action,
+          getQualityAssuranceEventData1(),
+        );
       });
 
       it('should call openModal if a project is not present', () => {
         const action = 'ACCEPTED';
         comp.modalChoice(action, getQualityAssuranceEventData2(), modalStub);
-        expect(comp.openModal).toHaveBeenCalledWith(action, getQualityAssuranceEventData2(), modalStub);
+        expect(comp.openModal).toHaveBeenCalledWith(
+          action,
+          getQualityAssuranceEventData2(),
+          modalStub,
+        );
       });
     });
 
@@ -210,7 +221,9 @@ describe('QualityAssuranceEventsComponent test suite', () => {
       it('should call modalService.open', () => {
         const action = 'ACCEPTED';
         comp.selectedReason = null;
-        spyOn(compAsAny.modalService, 'open').and.returnValue({ result: new Promise((res, rej) => 'do' ) });
+        spyOn(compAsAny.modalService, 'open').and.returnValue({
+          result: new Promise((res, rej) => 'do'),
+        });
         spyOn(comp, 'executeAction');
 
         comp.openModal(action, getQualityAssuranceEventData1(), modalStub);
@@ -221,17 +234,15 @@ describe('QualityAssuranceEventsComponent test suite', () => {
     describe('openModalLookup', () => {
       it('should call modalService.open', () => {
         spyOn(comp, 'boundProject');
-        spyOn(compAsAny.modalService, 'open').and.returnValue(
-          {
-            componentInstance: {
-              externalSourceEntry: null,
-              label: null,
-              importedObject: observableOf({
-                indexableObject: NotificationsMockDspaceObject,
-              }),
-            },
+        spyOn(compAsAny.modalService, 'open').and.returnValue({
+          componentInstance: {
+            externalSourceEntry: null,
+            label: null,
+            importedObject: observableOf({
+              indexableObject: NotificationsMockDspaceObject,
+            }),
           },
-        );
+        });
         scheduler.schedule(() => {
           comp.openModalLookup(getQualityAssuranceEventData1());
         });
@@ -245,11 +256,15 @@ describe('QualityAssuranceEventsComponent test suite', () => {
     describe('executeAction', () => {
       it('should call getQualityAssuranceEvents on 200 response from REST', () => {
         const action = 'ACCEPTED';
-        spyOn(compAsAny, 'getQualityAssuranceEvents').and.returnValue(observableOf([
-          getQualityAssuranceEventData1(),
-          getQualityAssuranceEventData2(),
-        ]));
-        qualityAssuranceEventRestServiceStub.patchEvent.and.returnValue(createSuccessfulRemoteDataObject$({}));
+        spyOn(compAsAny, 'getQualityAssuranceEvents').and.returnValue(
+          observableOf([
+            getQualityAssuranceEventData1(),
+            getQualityAssuranceEventData2(),
+          ]),
+        );
+        qualityAssuranceEventRestServiceStub.patchEvent.and.returnValue(
+          createSuccessfulRemoteDataObject$({}),
+        );
 
         scheduler.schedule(() => {
           comp.executeAction(action, getQualityAssuranceEventData1());
@@ -266,7 +281,9 @@ describe('QualityAssuranceEventsComponent test suite', () => {
         const projectId = 'UUID-23943-34u43-38344';
         const projectName = 'Test Project';
         const projectHandle = '1000/1000';
-        qualityAssuranceEventRestServiceStub.boundProject.and.returnValue(createSuccessfulRemoteDataObject$({}));
+        qualityAssuranceEventRestServiceStub.boundProject.and.returnValue(
+          createSuccessfulRemoteDataObject$({}),
+        );
 
         scheduler.schedule(() => {
           comp.boundProject(eventData, projectId, projectName, projectHandle);
@@ -283,7 +300,9 @@ describe('QualityAssuranceEventsComponent test suite', () => {
     describe('removeProject', () => {
       it('should remove the project data inside "eventData"', () => {
         const eventData = getQualityAssuranceEventData1();
-        qualityAssuranceEventRestServiceStub.removeProject.and.returnValue(createNoContentRemoteDataObject$());
+        qualityAssuranceEventRestServiceStub.removeProject.and.returnValue(
+          createNoContentRemoteDataObject$(),
+        );
 
         scheduler.schedule(() => {
           comp.removeProject(eventData);
@@ -302,7 +321,10 @@ describe('QualityAssuranceEventsComponent test suite', () => {
         comp.paginationConfig = new PaginationComponentOptions();
         comp.paginationConfig.currentPage = 1;
         comp.paginationConfig.pageSize = 20;
-        comp.paginationSortConfig = new SortOptions('trust', SortDirection.DESC);
+        comp.paginationSortConfig = new SortOptions(
+          'trust',
+          SortDirection.DESC,
+        );
         comp.topic = activatedRouteParamsMap.id;
         const options: FindListOptions = Object.assign(new FindListOptions(), {
           currentPage: comp.paginationConfig.currentPage,
@@ -315,32 +337,38 @@ describe('QualityAssuranceEventsComponent test suite', () => {
           totalPages: 1,
           currentPage: comp.paginationConfig.currentPage,
         });
-        const array =  [
+        const array = [
           qualityAssuranceEventObjectMissingProjectFound,
           qualityAssuranceEventObjectMissingProjectNotFound,
         ];
         const paginatedList = buildPaginatedList(pageInfo, array);
         const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
-        qualityAssuranceEventRestServiceStub.getEventsByTopic.and.returnValue(observableOf(paginatedListRD));
-        spyOn(compAsAny, 'fetchEvents').and.returnValue(observableOf([
-          getQualityAssuranceEventData1(),
-          getQualityAssuranceEventData2(),
-        ]));
+        qualityAssuranceEventRestServiceStub.getEventsByTopic.and.returnValue(
+          observableOf(paginatedListRD),
+        );
+        spyOn(compAsAny, 'fetchEvents').and.returnValue(
+          observableOf([
+            getQualityAssuranceEventData1(),
+            getQualityAssuranceEventData2(),
+          ]),
+        );
 
         scheduler.schedule(() => {
           compAsAny.getQualityAssuranceEvents().subscribe();
         });
         scheduler.flush();
 
-        expect(compAsAny.qualityAssuranceEventRestService.getEventsByTopic).toHaveBeenCalledWith(
+        expect(
+          compAsAny.qualityAssuranceEventRestService.getEventsByTopic,
+        ).toHaveBeenCalledWith(
           activatedRouteParamsMap.id,
           options,
-          followLink('target'),followLink('related'),
+          followLink('target'),
+          followLink('related'),
         );
         expect(compAsAny.fetchEvents).toHaveBeenCalled();
       });
     });
-
   });
 });
 
@@ -349,6 +377,4 @@ describe('QualityAssuranceEventsComponent test suite', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

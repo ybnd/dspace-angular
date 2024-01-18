@@ -56,6 +56,4 @@ export class RemoveNameVariantAction extends NameVariantListAction {
 /**
  * A type to encompass all RelationshipActions
  */
-export type NameVariantAction
-  = SetNameVariantAction
-  | RemoveNameVariantAction;
+export type NameVariantAction = SetNameVariantAction | RemoveNameVariantAction;

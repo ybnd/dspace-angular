@@ -1,19 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
-import {
-  combineLatest,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -34,8 +22,9 @@ import { UsageReportDataService } from '../../core/statistics/usage-report-data.
   selector: 'ds-statistics-page',
   template: '',
 })
-export abstract class StatisticsPageComponent<T extends DSpaceObject> implements OnInit {
-
+export abstract class StatisticsPageComponent<T extends DSpaceObject>
+  implements OnInit
+{
   /**
    * The scope dso for this statistics page, as an Observable.
    */
@@ -59,16 +48,13 @@ export abstract class StatisticsPageComponent<T extends DSpaceObject> implements
     protected usageReportService: UsageReportDataService,
     protected nameService: DSONameService,
     protected authService: AuthService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.scope$ = this.getScope$();
     this.reports$ = this.getReports$();
     this.hasData$ = this.reports$.pipe(
-      map((reports) => reports.some(
-        (report) => report.points.length > 0,
-      )),
+      map((reports) => reports.some((report) => report.points.length > 0)),
     );
   }
 
@@ -91,7 +77,9 @@ export abstract class StatisticsPageComponent<T extends DSpaceObject> implements
     return this.scope$.pipe(
       switchMap((scope) =>
         combineLatest(
-          this.types.map((type) => this.usageReportService.getStatistic(scope.id, type)),
+          this.types.map((type) =>
+            this.usageReportService.getStatistic(scope.id, type),
+          ),
         ),
       ),
     );

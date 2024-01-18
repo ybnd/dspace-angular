@@ -1,13 +1,7 @@
-import {
-  DynamicFormControlLayout,
-  serializable,
-} from '@ng-dynamic-forms/core';
+import { DynamicFormControlLayout, serializable } from '@ng-dynamic-forms/core';
 
 import { FormRowModel } from '../../../../../../core/config/models/config-submission-form.model';
-import {
-  isEmpty,
-  isNull,
-} from '../../../../../empty.util';
+import { isEmpty, isNull } from '../../../../../empty.util';
 import { DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP } from '../../ds-dynamic-form-constants';
 import {
   DsDynamicInputModel,
@@ -17,7 +11,8 @@ import {
 /**
  * Dynamic Group Model configuration interface
  */
-export interface DynamicRelationGroupModelConfig extends DsDynamicInputModelConfig {
+export interface DynamicRelationGroupModelConfig
+  extends DsDynamicInputModelConfig {
   submissionId: string;
   formConfiguration: FormRowModel[];
   mandatoryField: string;
@@ -36,9 +31,13 @@ export class DynamicRelationGroupModel extends DsDynamicInputModel {
   @serializable() relationFields: string[];
   @serializable() scopeUUID: string;
   @serializable() submissionScope: string;
-  @serializable() readonly type: string = DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP;
+  @serializable() readonly type: string =
+    DYNAMIC_FORM_CONTROL_TYPE_RELATION_GROUP;
 
-  constructor(config: DynamicRelationGroupModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DynamicRelationGroupModelConfig,
+    layout?: DynamicFormControlLayout,
+  ) {
     super(config, layout);
 
     this.submissionId = config.submissionId;
@@ -57,7 +56,7 @@ export class DynamicRelationGroupModel extends DsDynamicInputModel {
 
   isEmpty() {
     const value = this.getGroupValue();
-    return (value.length === 1 && isNull(value[0][this.mandatoryField]));
+    return value.length === 1 && isNull(value[0][this.mandatoryField]);
   }
 
   getGroupValue(): any[] {
@@ -67,10 +66,9 @@ export class DynamicRelationGroupModel extends DsDynamicInputModel {
       // a remove JSON PATCH operation
       const emptyItem = Object.create({});
       emptyItem[this.mandatoryField] = null;
-      this.relationFields
-        .forEach((field) => {
-          emptyItem[field] = null;
-        });
+      this.relationFields.forEach((field) => {
+        emptyItem[field] = null;
+      });
       return [emptyItem];
     }
     return this.value as any[];

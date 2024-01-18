@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { MyDSpaceConfigurationService } from '../../../../app/my-dspace-page/my-dspace-configuration.service';
 import {
@@ -28,5 +25,4 @@ import { pushInOut } from '../../../../app/shared/animations/push';
     },
   ],
 })
-export class MyDSpacePageComponent extends BaseComponent {
-}
+export class MyDSpacePageComponent extends BaseComponent {}

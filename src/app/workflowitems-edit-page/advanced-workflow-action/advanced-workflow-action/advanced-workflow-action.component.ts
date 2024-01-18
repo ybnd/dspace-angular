@@ -1,12 +1,6 @@
 import { Location } from '@angular/common';
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -32,8 +26,10 @@ import { WorkflowItemActionPageComponent } from '../../workflow-item-action-page
   selector: 'ds-advanced-workflow-action',
   template: '',
 })
-export abstract class AdvancedWorkflowActionComponent extends WorkflowItemActionPageComponent implements OnInit {
-
+export abstract class AdvancedWorkflowActionComponent
+  extends WorkflowItemActionPageComponent
+  implements OnInit
+{
   workflowAction$: Observable<WorkflowAction>;
 
   constructor(
@@ -48,32 +44,51 @@ export abstract class AdvancedWorkflowActionComponent extends WorkflowItemAction
     protected requestService: RequestService,
     protected location: Location,
   ) {
-    super(route, workflowItemService, router, routeService, notificationsService, translationService, requestService, location);
+    super(
+      route,
+      workflowItemService,
+      router,
+      routeService,
+      notificationsService,
+      translationService,
+      requestService,
+      location,
+    );
   }
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.workflowAction$ = this.workflowActionService.findById(this.route.snapshot.queryParams.workflow).pipe(
-      getFirstSucceededRemoteDataPayload(),
-    );
+    this.workflowAction$ = this.workflowActionService
+      .findById(this.route.snapshot.queryParams.workflow)
+      .pipe(getFirstSucceededRemoteDataPayload());
   }
 
   /**
    * Performs the action and shows a notification based on the outcome of the action
    */
   performAction(): void {
-    this.sendRequest(this.route.snapshot.queryParams.claimedTask).subscribe((successful: boolean) => {
-      if (successful) {
-        const title = this.translationService.get('workflow-item.' + this.type + '.notification.success.title');
-        const content = this.translationService.get('workflow-item.' + this.type + '.notification.success.content');
-        this.notificationsService.success(title, content);
-        this.previousPage();
-      } else {
-        const title = this.translationService.get('workflow-item.' + this.type + '.notification.error.title');
-        const content = this.translationService.get('workflow-item.' + this.type + '.notification.error.content');
-        this.notificationsService.error(title, content);
-      }
-    });
+    this.sendRequest(this.route.snapshot.queryParams.claimedTask).subscribe(
+      (successful: boolean) => {
+        if (successful) {
+          const title = this.translationService.get(
+            'workflow-item.' + this.type + '.notification.success.title',
+          );
+          const content = this.translationService.get(
+            'workflow-item.' + this.type + '.notification.success.content',
+          );
+          this.notificationsService.success(title, content);
+          this.previousPage();
+        } else {
+          const title = this.translationService.get(
+            'workflow-item.' + this.type + '.notification.error.title',
+          );
+          const content = this.translationService.get(
+            'workflow-item.' + this.type + '.notification.error.content',
+          );
+          this.notificationsService.error(title, content);
+        }
+      },
+    );
   }
 
   /**
@@ -82,14 +97,18 @@ export abstract class AdvancedWorkflowActionComponent extends WorkflowItemAction
    * @param id The task id
    */
   sendRequest(id: string): Observable<boolean> {
-    return this.claimedTaskDataService.submitTask(id, this.createBody()).pipe(
-      map((processTaskResponse: ProcessTaskResponse) => processTaskResponse.hasSucceeded),
-    );
+    return this.claimedTaskDataService
+      .submitTask(id, this.createBody())
+      .pipe(
+        map(
+          (processTaskResponse: ProcessTaskResponse) =>
+            processTaskResponse.hasSucceeded,
+        ),
+      );
   }
 
   /**
    * The body that needs to be passed to the {@link ClaimedTaskDataService}.submitTask().
    */
   abstract createBody(): any;
-
 }

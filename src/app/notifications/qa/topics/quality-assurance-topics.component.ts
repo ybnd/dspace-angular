@@ -1,16 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  distinctUntilChanged,
-  take,
-} from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { distinctUntilChanged, take } from 'rxjs/operators';
 
 import { AdminQualityAssuranceTopicsPageParams } from '../../../admin/admin-notifications/admin-quality-assurance-topics-page/admin-quality-assurance-topics-page-resolver.service';
 import { SortOptions } from '../../../core/cache/models/sort-options.model';
@@ -34,11 +25,14 @@ export class QualityAssuranceTopicsComponent implements OnInit {
    * The pagination system configuration for HTML listing.
    * @type {PaginationComponentOptions}
    */
-  public paginationConfig: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'btp',
-    pageSize: 10,
-    pageSizeOptions: [5, 10, 20, 40, 60],
-  });
+  public paginationConfig: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'btp',
+      pageSize: 10,
+      pageSizeOptions: [5, 10, 20, 40, 60],
+    },
+  );
   /**
    * The Quality Assurance topic list sort options.
    * @type {SortOptions}
@@ -76,8 +70,7 @@ export class QualityAssuranceTopicsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private notificationsStateService: NotificationsStateService,
     private qualityAssuranceTopicsService: QualityAssuranceTopicsService,
-  ) {
-  }
+  ) {}
 
   /**
    * Component initialization.
@@ -86,7 +79,8 @@ export class QualityAssuranceTopicsComponent implements OnInit {
     this.sourceId = this.activatedRoute.snapshot.paramMap.get('sourceId');
     this.qualityAssuranceTopicsService.setSourceId(this.sourceId);
     this.topics$ = this.notificationsStateService.getQualityAssuranceTopics();
-    this.totalElements$ = this.notificationsStateService.getQualityAssuranceTopicsTotals();
+    this.totalElements$ =
+      this.notificationsStateService.getQualityAssuranceTopicsTotals();
   }
 
   /**
@@ -94,11 +88,12 @@ export class QualityAssuranceTopicsComponent implements OnInit {
    */
   ngAfterViewInit(): void {
     this.subs.push(
-      this.notificationsStateService.isQualityAssuranceTopicsLoaded().pipe(
-        take(1),
-      ).subscribe(() => {
-        this.getQualityAssuranceTopics();
-      }),
+      this.notificationsStateService
+        .isQualityAssuranceTopicsLoaded()
+        .pipe(take(1))
+        .subscribe(() => {
+          this.getQualityAssuranceTopics();
+        }),
     );
   }
 
@@ -126,14 +121,15 @@ export class QualityAssuranceTopicsComponent implements OnInit {
    * Dispatch the Quality Assurance topics retrival.
    */
   public getQualityAssuranceTopics(): void {
-    this.paginationService.getCurrentPagination(this.paginationConfig.id, this.paginationConfig).pipe(
-      distinctUntilChanged(),
-    ).subscribe((options: PaginationComponentOptions) => {
-      this.notificationsStateService.dispatchRetrieveQualityAssuranceTopics(
-        options.pageSize,
-        options.currentPage,
-      );
-    });
+    this.paginationService
+      .getCurrentPagination(this.paginationConfig.id, this.paginationConfig)
+      .pipe(distinctUntilChanged())
+      .subscribe((options: PaginationComponentOptions) => {
+        this.notificationsStateService.dispatchRetrieveQualityAssuranceTopics(
+          options.pageSize,
+          options.currentPage,
+        );
+      });
   }
 
   /**
@@ -141,15 +137,22 @@ export class QualityAssuranceTopicsComponent implements OnInit {
    *
    * @param eventsRouteParams
    */
-  protected updatePaginationFromRouteParams(eventsRouteParams: AdminQualityAssuranceTopicsPageParams) {
+  protected updatePaginationFromRouteParams(
+    eventsRouteParams: AdminQualityAssuranceTopicsPageParams,
+  ) {
     if (eventsRouteParams.currentPage) {
       this.paginationConfig.currentPage = eventsRouteParams.currentPage;
     }
     if (eventsRouteParams.pageSize) {
-      if (this.paginationConfig.pageSizeOptions.includes(eventsRouteParams.pageSize)) {
+      if (
+        this.paginationConfig.pageSizeOptions.includes(
+          eventsRouteParams.pageSize,
+        )
+      ) {
         this.paginationConfig.pageSize = eventsRouteParams.pageSize;
       } else {
-        this.paginationConfig.pageSize = this.paginationConfig.pageSizeOptions[0];
+        this.paginationConfig.pageSize =
+          this.paginationConfig.pageSizeOptions[0];
       }
     }
   }

@@ -3,11 +3,13 @@ import { TestBed } from '@angular/core/testing';
 import { ServerHardRedirectService } from './server-hard-redirect.service';
 
 describe('ServerHardRedirectService', () => {
-
   const mockRequest = jasmine.createSpyObj(['get']);
   const mockResponse = jasmine.createSpyObj(['redirect', 'end']);
 
-  const service: ServerHardRedirectService = new ServerHardRedirectService(mockRequest, mockResponse);
+  const service: ServerHardRedirectService = new ServerHardRedirectService(
+    mockRequest,
+    mockResponse,
+  );
   const origin = 'https://test-host.com:4000';
 
   beforeEach(() => {
@@ -45,13 +47,15 @@ describe('ServerHardRedirectService', () => {
     });
 
     it('should redirect with passed in status code', () => {
-      expect(mockResponse.redirect).toHaveBeenCalledWith(redirectStatusCode, redirect);
+      expect(mockResponse.redirect).toHaveBeenCalledWith(
+        redirectStatusCode,
+        redirect,
+      );
       expect(mockResponse.end).toHaveBeenCalled();
     });
   });
 
   describe('when requesting the current route', () => {
-
     beforeEach(() => {
       mockRequest.originalUrl = 'original/url';
     });
@@ -62,10 +66,8 @@ describe('ServerHardRedirectService', () => {
   });
 
   describe('when requesting the origin', () => {
-
     it('should return the location origin', () => {
       expect(service.getCurrentOrigin()).toEqual(origin);
     });
   });
-
 });

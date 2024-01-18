@@ -1,19 +1,12 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import {
   FormsModule,
   ReactiveFormsModule,
   UntypedFormGroup,
 } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -30,7 +23,6 @@ import { BrowserOnlyMockPipe } from '../../../testing/browser-only-mock.pipe';
 import { LogInPasswordComponent } from './log-in-password.component';
 
 describe('LogInPasswordComponent', () => {
-
   let component: LogInPasswordComponent;
   let fixture: ComponentFixture<LogInPasswordComponent>;
   let page: Page;
@@ -64,24 +56,23 @@ describe('LogInPasswordComponent', () => {
         StoreModule.forRoot({ auth: authReducer }, storeModuleConfig),
         TranslateModule.forRoot(),
       ],
-      declarations: [
-        LogInPasswordComponent,
-        BrowserOnlyMockPipe,
-      ],
+      declarations: [LogInPasswordComponent, BrowserOnlyMockPipe],
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
-        { provide: AuthorizationDataService, useClass: AuthorizationDataServiceStub },
-        { provide: 'authMethodProvider', useValue: new AuthMethod(AuthMethodType.Password, 0) },
+        {
+          provide: AuthorizationDataService,
+          useClass: AuthorizationDataServiceStub,
+        },
+        {
+          provide: 'authMethodProvider',
+          useValue: new AuthMethod(AuthMethodType.Password, 0),
+        },
         { provide: 'isStandalonePage', useValue: true },
         { provide: HardRedirectService, useValue: hardRedirectService },
         provideMockStore({ initialState }),
       ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-      ],
-    })
-      .compileComponents();
-
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(async () => {
@@ -115,9 +106,11 @@ describe('LogInPasswordComponent', () => {
     component.submit();
 
     // verify Store.dispatch() is invoked
-    expect(page.navigateSpy.calls.any()).toBe(true, 'Store.dispatch not invoked');
+    expect(page.navigateSpy.calls.any()).toBe(
+      true,
+      'Store.dispatch not invoked',
+    );
   });
-
 });
 
 /**
@@ -126,12 +119,14 @@ describe('LogInPasswordComponent', () => {
  * @class Page
  */
 class Page {
-
   public emailInput: HTMLInputElement;
   public navigateSpy: jasmine.Spy;
   public passwordInput: HTMLInputElement;
 
-  constructor(private component: LogInPasswordComponent, private fixture: ComponentFixture<LogInPasswordComponent>) {
+  constructor(
+    private component: LogInPasswordComponent,
+    private fixture: ComponentFixture<LogInPasswordComponent>,
+  ) {
     // use injector to get services
     const injector = fixture.debugElement.injector;
     const store = injector.get(Store);
@@ -141,10 +136,14 @@ class Page {
   }
 
   public addPageElements() {
-    const emailInputSelector = 'input[formcontrolname=\'email\']';
-    this.emailInput = this.fixture.debugElement.query(By.css(emailInputSelector)).nativeElement;
+    const emailInputSelector = "input[formcontrolname='email']";
+    this.emailInput = this.fixture.debugElement.query(
+      By.css(emailInputSelector),
+    ).nativeElement;
 
-    const passwordInputSelector = 'input[formcontrolname=\'password\']';
-    this.passwordInput = this.fixture.debugElement.query(By.css(passwordInputSelector)).nativeElement;
+    const passwordInputSelector = "input[formcontrolname='password']";
+    this.passwordInput = this.fixture.debugElement.query(
+      By.css(passwordInputSelector),
+    ).nativeElement;
   }
 }

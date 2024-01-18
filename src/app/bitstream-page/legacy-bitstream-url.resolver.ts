@@ -18,9 +18,10 @@ import { hasNoValue } from '../shared/empty.util';
 @Injectable({
   providedIn: 'root',
 })
-export class LegacyBitstreamUrlResolver implements Resolve<RemoteData<Bitstream>> {
-  constructor(protected bitstreamDataService: BitstreamDataService) {
-  }
+export class LegacyBitstreamUrlResolver
+  implements Resolve<RemoteData<Bitstream>>
+{
+  constructor(protected bitstreamDataService: BitstreamDataService) {}
 
   /**
    * Resolve a bitstream based on the handle of the item, and the sequence id or the filename of the
@@ -31,8 +32,10 @@ export class LegacyBitstreamUrlResolver implements Resolve<RemoteData<Bitstream>
    * @returns Observable<<RemoteData<Item>> Emits the found bitstream based on the parameters in
    * current route, or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    Observable<RemoteData<Bitstream>> {
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<Bitstream>> {
     const prefix = route.params.prefix;
     const suffix = route.params.suffix;
     const filename = route.params.filename;
@@ -42,12 +45,8 @@ export class LegacyBitstreamUrlResolver implements Resolve<RemoteData<Bitstream>
       sequenceId = route.queryParams.sequenceId;
     }
 
-    return this.bitstreamDataService.findByItemHandle(
-      `${prefix}/${suffix}`,
-      sequenceId,
-      filename,
-    ).pipe(
-      getFirstCompletedRemoteData(),
-    );
+    return this.bitstreamDataService
+      .findByItemHandle(`${prefix}/${suffix}`, sequenceId, filename)
+      .pipe(getFirstCompletedRemoteData());
   }
 }

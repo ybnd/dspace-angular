@@ -13,10 +13,14 @@ import { PatchOperationService } from './patch-operation-service/patch-operation
  */
 export const ObjectUpdatesActionTypes = {
   INITIALIZE_FIELDS: type('dspace/core/cache/object-updates/INITIALIZE_FIELDS'),
-  SET_EDITABLE_FIELD: type('dspace/core/cache/object-updates/SET_EDITABLE_FIELD'),
+  SET_EDITABLE_FIELD: type(
+    'dspace/core/cache/object-updates/SET_EDITABLE_FIELD',
+  ),
   SET_VALID_FIELD: type('dspace/core/cache/object-updates/SET_VALID_FIELD'),
   ADD_FIELD: type('dspace/core/cache/object-updates/ADD_FIELD'),
-  SELECT_VIRTUAL_METADATA: type('dspace/core/cache/object-updates/SELECT_VIRTUAL_METADATA'),
+  SELECT_VIRTUAL_METADATA: type(
+    'dspace/core/cache/object-updates/SELECT_VIRTUAL_METADATA',
+  ),
   DISCARD: type('dspace/core/cache/object-updates/DISCARD'),
   REINSTATE: type('dspace/core/cache/object-updates/REINSTATE'),
   REMOVE: type('dspace/core/cache/object-updates/REMOVE'),
@@ -24,17 +28,16 @@ export const ObjectUpdatesActionTypes = {
   REMOVE_FIELD: type('dspace/core/cache/object-updates/REMOVE_FIELD'),
 };
 
-
 /**
  * An ngrx action to initialize a new page's fields in the ObjectUpdates state
  */
 export class InitializeFieldsAction implements Action {
   type = ObjectUpdatesActionTypes.INITIALIZE_FIELDS;
   payload: {
-    url: string,
-    fields: Identifiable[],
-    lastModified: Date,
-    patchOperationService?: GenericConstructor<PatchOperationService>
+    url: string;
+    fields: Identifiable[];
+    lastModified: Date;
+    patchOperationService?: GenericConstructor<PatchOperationService>;
   };
 
   /**
@@ -62,9 +65,9 @@ export class InitializeFieldsAction implements Action {
 export class AddFieldUpdateAction implements Action {
   type = ObjectUpdatesActionTypes.ADD_FIELD;
   payload: {
-    url: string,
-    field: Identifiable,
-    changeType: FieldChangeType,
+    url: string;
+    field: Identifiable;
+    changeType: FieldChangeType;
   };
 
   /**
@@ -75,10 +78,7 @@ export class AddFieldUpdateAction implements Action {
    * @param field The identifiable field of which a new update is added
    * @param changeType The update's change type
    */
-  constructor(
-    url: string,
-    field: Identifiable,
-    changeType: FieldChangeType) {
+  constructor(url: string, field: Identifiable, changeType: FieldChangeType) {
     this.payload = { url, field, changeType };
   }
 }
@@ -87,12 +87,11 @@ export class AddFieldUpdateAction implements Action {
  * An ngrx action to select/deselect virtual metadata in the ObjectUpdates state for a certain page url
  */
 export class SelectVirtualMetadataAction implements Action {
-
   type = ObjectUpdatesActionTypes.SELECT_VIRTUAL_METADATA;
   payload: {
-    url: string,
-    source: string,
-    uuid: string,
+    url: string;
+    source: string;
+    uuid: string;
     select: boolean;
   };
 
@@ -108,12 +107,7 @@ export class SelectVirtualMetadataAction implements Action {
    * @param select
    *    whether to select or deselect the virtual metadata to be saved as real metadata
    */
-  constructor(
-    url: string,
-    source: string,
-    uuid: string,
-    select: boolean,
-  ) {
+  constructor(url: string, source: string, uuid: string, select: boolean) {
     this.payload = { url, source, uuid, select: select };
   }
 }
@@ -124,9 +118,9 @@ export class SelectVirtualMetadataAction implements Action {
 export class SetEditableFieldUpdateAction implements Action {
   type = ObjectUpdatesActionTypes.SET_EDITABLE_FIELD;
   payload: {
-    url: string,
-    uuid: string,
-    editable: boolean,
+    url: string;
+    uuid: string;
+    editable: boolean;
   };
 
   /**
@@ -137,10 +131,7 @@ export class SetEditableFieldUpdateAction implements Action {
    * @param fieldUUID The UUID of the field of which
    * @param editable The new editable value for the field
    */
-  constructor(
-    url: string,
-    fieldUUID: string,
-    editable: boolean) {
+  constructor(url: string, fieldUUID: string, editable: boolean) {
     this.payload = { url, uuid: fieldUUID, editable };
   }
 }
@@ -151,9 +142,9 @@ export class SetEditableFieldUpdateAction implements Action {
 export class SetValidFieldUpdateAction implements Action {
   type = ObjectUpdatesActionTypes.SET_VALID_FIELD;
   payload: {
-    url: string,
-    uuid: string,
-    isValid: boolean,
+    url: string;
+    uuid: string;
+    isValid: boolean;
   };
 
   /**
@@ -164,10 +155,7 @@ export class SetValidFieldUpdateAction implements Action {
    * @param fieldUUID The UUID of the field of which
    * @param isValid The new isValid value for the field
    */
-  constructor(
-    url: string,
-    fieldUUID: string,
-    isValid: boolean) {
+  constructor(url: string, fieldUUID: string, isValid: boolean) {
     this.payload = { url, uuid: fieldUUID, isValid };
   }
 }
@@ -178,8 +166,8 @@ export class SetValidFieldUpdateAction implements Action {
 export class DiscardObjectUpdatesAction implements Action {
   type = ObjectUpdatesActionTypes.DISCARD;
   payload: {
-    url: string,
-    notification: INotification,
+    url: string;
+    notification: INotification;
     discardAll: boolean;
   };
 
@@ -191,11 +179,7 @@ export class DiscardObjectUpdatesAction implements Action {
    * @param notification The notification that is raised when changes are discarded
    * @param discardAll  discard all
    */
-  constructor(
-    url: string,
-    notification: INotification,
-    discardAll = false,
-  ) {
+  constructor(url: string, notification: INotification, discardAll = false) {
     this.payload = { url, notification, discardAll };
   }
 }
@@ -206,7 +190,7 @@ export class DiscardObjectUpdatesAction implements Action {
 export class ReinstateObjectUpdatesAction implements Action {
   type = ObjectUpdatesActionTypes.REINSTATE;
   payload: {
-    url: string
+    url: string;
   };
 
   /**
@@ -215,9 +199,7 @@ export class ReinstateObjectUpdatesAction implements Action {
    * @param url
    *    the unique url of the page for which the changes should be reinstated
    */
-  constructor(
-    url: string,
-  ) {
+  constructor(url: string) {
     this.payload = { url };
   }
 }
@@ -228,7 +210,7 @@ export class ReinstateObjectUpdatesAction implements Action {
 export class RemoveObjectUpdatesAction implements Action {
   type = ObjectUpdatesActionTypes.REMOVE;
   payload: {
-    url: string
+    url: string;
   };
 
   /**
@@ -237,9 +219,7 @@ export class RemoveObjectUpdatesAction implements Action {
    * @param url
    *    the unique url of the page for which the changes should be removed
    */
-  constructor(
-    url: string,
-  ) {
+  constructor(url: string) {
     this.payload = { url };
   }
 }
@@ -257,8 +237,8 @@ export class RemoveAllObjectUpdatesAction implements Action {
 export class RemoveFieldUpdateAction implements Action {
   type = ObjectUpdatesActionTypes.REMOVE_FIELD;
   payload: {
-    url: string,
-    uuid: string
+    url: string;
+    uuid: string;
   };
 
   /**
@@ -268,20 +248,16 @@ export class RemoveFieldUpdateAction implements Action {
    *    the unique url of the page for which a field's change should be removed
    * @param uuid The UUID of the field for which the change should be removed
    */
-  constructor(
-    url: string,
-    uuid: string,
-  ) {
+  constructor(url: string, uuid: string) {
     this.payload = { url, uuid };
   }
 }
 
-
 /**
  * A type to encompass all ObjectUpdatesActions
  */
-export type ObjectUpdatesAction
-  = AddFieldUpdateAction
+export type ObjectUpdatesAction =
+  | AddFieldUpdateAction
   | InitializeFieldsAction
   | DiscardObjectUpdatesAction
   | ReinstateObjectUpdatesAction

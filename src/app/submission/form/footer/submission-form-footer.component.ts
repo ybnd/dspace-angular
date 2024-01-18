@@ -1,14 +1,6 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { SubmissionRestService } from '../../../core/submission/submission-rest.service';
@@ -25,7 +17,6 @@ import { SubmissionService } from '../../submission.service';
   templateUrl: './submission-form-footer.component.html',
 })
 export class SubmissionFormFooterComponent implements OnChanges {
-
   /**
    * The submission id
    * @type {string}
@@ -68,24 +59,35 @@ export class SubmissionFormFooterComponent implements OnChanges {
    * @param {SubmissionRestService} restService
    * @param {SubmissionService} submissionService
    */
-  constructor(private modalService: NgbModal,
-              private restService: SubmissionRestService,
-              private submissionService: SubmissionService) {
-  }
+  constructor(
+    private modalService: NgbModal,
+    private restService: SubmissionRestService,
+    private submissionService: SubmissionService,
+  ) {}
 
   /**
    * Initialize all instance variables
    */
   ngOnChanges(changes: SimpleChanges) {
     if (isNotEmpty(this.submissionId)) {
-      this.submissionIsInvalid = this.submissionService.getSubmissionStatus(this.submissionId).pipe(
-        map((isValid: boolean) => isValid === false),
-      );
+      this.submissionIsInvalid = this.submissionService
+        .getSubmissionStatus(this.submissionId)
+        .pipe(map((isValid: boolean) => isValid === false));
 
-      this.processingSaveStatus = this.submissionService.getSubmissionSaveProcessingStatus(this.submissionId);
-      this.processingDepositStatus = this.submissionService.getSubmissionDepositProcessingStatus(this.submissionId);
-      this.showDepositAndDiscard = observableOf(this.submissionService.getSubmissionScope() === SubmissionScopeType.WorkspaceItem);
-      this.hasUnsavedModification = this.submissionService.hasUnsavedModification();
+      this.processingSaveStatus =
+        this.submissionService.getSubmissionSaveProcessingStatus(
+          this.submissionId,
+        );
+      this.processingDepositStatus =
+        this.submissionService.getSubmissionDepositProcessingStatus(
+          this.submissionId,
+        );
+      this.showDepositAndDiscard = observableOf(
+        this.submissionService.getSubmissionScope() ===
+          SubmissionScopeType.WorkspaceItem,
+      );
+      this.hasUnsavedModification =
+        this.submissionService.hasUnsavedModification();
     }
   }
 
@@ -114,12 +116,10 @@ export class SubmissionFormFooterComponent implements OnChanges {
    * Dispatch a submission discard action
    */
   public confirmDiscard(content) {
-    this.modalService.open(content).result.then(
-      (result) => {
-        if (result === 'ok') {
-          this.submissionService.dispatchDiscard(this.submissionId);
-        }
-      },
-    );
+    this.modalService.open(content).result.then((result) => {
+      if (result === 'ok') {
+        this.submissionService.dispatchDiscard(this.submissionId);
+      }
+    });
   }
 }

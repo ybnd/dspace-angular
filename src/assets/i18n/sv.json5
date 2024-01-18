@@ -1,5 +1,4 @@
 {
-
   // "401.help": "You're not authorized to access this page. You can use the button below to get back to the home page.",
   "401.help": "Du saknar behörighet att se denna sida. Använd knappen nedan för att återvända till startsidan.",
 
@@ -8,7 +7,6 @@
 
   // "401.unauthorized": "unauthorized",
   "401.unauthorized": "obehörig",
-
 
   // "403.help": "You don't have permission to access this page. You can use the button below to get back to the home page.",
   "403.help": "Du saknar behörighet att nå denna sida. Använd knappen nedan för att återvända till startsidan.",
@@ -27,7 +25,6 @@
 
   // "500.link.home-page": "Take me to the home page",
   "500.link.home-page": "Till startsidan",
-
 
   // "404.help": "We can't find the page you're looking for. The page may have been moved or deleted. You can use the button below to get back to the home page. ",
   "404.help": "Sidan kan inte hittas. Den kan ha blivit flyttad eller raderad. Använd knappen nedan för att återvända till startsidan. ",
@@ -189,8 +186,6 @@
   // "admin.registries.bitstream-formats.title": "Bitstream Format Registry",
   "admin.registries.bitstream-formats.title": "Filformat registry",
 
-
-
   // "admin.registries.metadata.breadcrumbs": "Metadata registry",
   "admin.registries.metadata.breadcrumbs": "Metadata registry",
 
@@ -234,7 +229,7 @@
   "admin.registries.schema.breadcrumbs": "Metadataschema",
 
   // "admin.registries.schema.description": "This is the metadata schema for \"{{namespace}}\".",
-  "admin.registries.schema.description": "Metadatascema för \"{{namespace}}\".",
+  "admin.registries.schema.description": 'Metadatascema för "{{namespace}}".',
 
   // "admin.registries.schema.fields.head": "Schema metadata fields",
   "admin.registries.schema.fields.head": "Schema metadata fält",
@@ -273,7 +268,7 @@
   "admin.registries.schema.head": "Metadataschema",
 
   // "admin.registries.schema.notification.created": "Successfully created metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.created": "Har skapat metadataschemat \"{{prefix}}\"",
+  "admin.registries.schema.notification.created": 'Har skapat metadataschemat "{{prefix}}"',
 
   // "admin.registries.schema.notification.deleted.failure": "Failed to delete {{amount}} metadata schemas",
   "admin.registries.schema.notification.deleted.failure": "Misslyckades med att radera {{amount}} metadatascheman",
@@ -282,13 +277,13 @@
   "admin.registries.schema.notification.deleted.success": "Har raderat {{amount}} metadatascheman",
 
   // "admin.registries.schema.notification.edited": "Successfully edited metadata schema \"{{prefix}}\"",
-  "admin.registries.schema.notification.edited": "Metadataschema \"{{prefix}}\" har redigerats",
+  "admin.registries.schema.notification.edited": 'Metadataschema "{{prefix}}" har redigerats',
 
   // "admin.registries.schema.notification.failure": "Error",
   "admin.registries.schema.notification.failure": "Fel",
 
   // "admin.registries.schema.notification.field.created": "Successfully created metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.created": "Har skapat metadatafält \"{{field}}\"",
+  "admin.registries.schema.notification.field.created": 'Har skapat metadatafält "{{field}}"',
 
   // "admin.registries.schema.notification.field.deleted.failure": "Failed to delete {{amount}} metadata fields",
   "admin.registries.schema.notification.field.deleted.failure": "Misslyckades med att radera {{amount}} metadatafält",
@@ -297,7 +292,7 @@
   "admin.registries.schema.notification.field.deleted.success": "Har raderat {{amount}} metadatafält",
 
   // "admin.registries.schema.notification.field.edited": "Successfully edited metadata field \"{{field}}\"",
-  "admin.registries.schema.notification.field.edited": "Har redigerat metadatafält \"{{field}}\"",
+  "admin.registries.schema.notification.field.edited": 'Har redigerat metadatafält "{{field}}"',
 
   // "admin.registries.schema.notification.success": "Success",
   "admin.registries.schema.notification.success": "Lyckades",
@@ -308,8 +303,6 @@
   // "admin.registries.schema.title": "Metadata Schema Registry",
   // TODO New key - Add a translation
   "admin.registries.schema.title": "Metadata Schema Registry",
-
-
 
   // "admin.access-control.epeople.actions.delete": "Delete EPerson",
   "admin.access-control.epeople.actions.delete": "Radera EPerson",
@@ -366,13 +359,13 @@
   "admin.access-control.epeople.table.edit": "Redigera",
 
   // "admin.access-control.epeople.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.edit": "Redigera \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.edit": 'Redigera "{{name}}"',
 
   // "admin.access-control.epeople.table.edit.buttons.edit-disabled": "You are not authorized to edit this group",
   "admin.access-control.epeople.table.edit.buttons.edit-disabled": "Du har inte behöriget att redigera denna grupp",
 
   // "admin.access-control.epeople.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.epeople.table.edit.buttons.remove": "Radera \"{{name}}\"",
+  "admin.access-control.epeople.table.edit.buttons.remove": 'Radera "{{name}}"',
 
   // "admin.access-control.epeople.no-items": "No EPeople to show.",
   "admin.access-control.epeople.no-items": "Det finns inga Epersoner att visa.",
@@ -405,28 +398,28 @@
   "admin.access-control.epeople.form.return": "Tillbaka",
 
   // "admin.access-control.epeople.form.notification.created.success": "Successfully created EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.success": "EPerson \"{{name}}\" har skapats",
+  "admin.access-control.epeople.form.notification.created.success": 'EPerson "{{name}}" har skapats',
 
   // "admin.access-control.epeople.form.notification.created.failure": "Failed to create EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.created.failure": "Misslyckades med att skapa EPerson \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.created.failure": 'Misslyckades med att skapa EPerson "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Failed to create EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.created.failure.emailInUse": "Misslyckades med att skapa EPerson \"{{name}}\", e-postadressen \"{{email}}\" används redan.",
+  "admin.access-control.epeople.form.notification.created.failure.emailInUse": 'Misslyckades med att skapa EPerson "{{name}}", e-postadressen "{{email}}" används redan.',
 
   // "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Failed to edit EPerson \"{{name}}\", email \"{{email}}\" already in use.",
-  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": "Misslyckades med att redigera EPerson \"{{name}}\", e-postadressen \"{{email}}\" används redan.",
+  "admin.access-control.epeople.form.notification.edited.failure.emailInUse": 'Misslyckades med att redigera EPerson "{{name}}", e-postadressen "{{email}}" används redan.',
 
   // "admin.access-control.epeople.form.notification.edited.success": "Successfully edited EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.success": "EPerson \"{{name}}\" har redigerats",
+  "admin.access-control.epeople.form.notification.edited.success": 'EPerson "{{name}}" har redigerats',
 
   // "admin.access-control.epeople.form.notification.edited.failure": "Failed to edit EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.edited.failure": "Misslyckades med att redigera EPerson \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.edited.failure": 'Misslyckades med att redigera EPerson "{{name}}"',
 
   // "admin.access-control.epeople.form.notification.deleted.success": "Successfully deleted EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.success": "EPerson \"{{name}}\" har raderats",
+  "admin.access-control.epeople.form.notification.deleted.success": 'EPerson "{{name}}" har raderats',
 
   // "admin.access-control.epeople.form.notification.deleted.failure": "Failed to delete EPerson \"{{name}}\"",
-  "admin.access-control.epeople.form.notification.deleted.failure": "Misslyckades med att radera EPerson \"{{name}}\"",
+  "admin.access-control.epeople.form.notification.deleted.failure": 'Misslyckades med att radera EPerson "{{name}}"',
 
   // "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Member of these groups:",
   "admin.access-control.epeople.form.groupsEPersonIsMemberOf": "Medlem i följande grupper:",
@@ -447,12 +440,10 @@
   "admin.access-control.epeople.form.goToGroups": "Lägg till i grupper",
 
   // "admin.access-control.epeople.notification.deleted.failure": "Failed to delete EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.failure": "Misslyckades med att radera EPerson: \"{{name}}\"",
+  "admin.access-control.epeople.notification.deleted.failure": 'Misslyckades med att radera EPerson: "{{name}}"',
 
   // "admin.access-control.epeople.notification.deleted.success": "Successfully deleted EPerson: \"{{name}}\"",
-  "admin.access-control.epeople.notification.deleted.success": "EPerson: \"{{name}}\" har raderats",
-
-
+  "admin.access-control.epeople.notification.deleted.success": 'EPerson: "{{name}}" har raderats',
 
   // "admin.access-control.groups.title": "Groups",
   "admin.access-control.groups.title": "Grupper",
@@ -506,30 +497,28 @@
   "admin.access-control.groups.table.edit": "Redigera",
 
   // "admin.access-control.groups.table.edit.buttons.edit": "Edit \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.edit": "Redigera \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.edit": 'Redigera "{{name}}"',
 
   // "admin.access-control.groups.table.edit.buttons.remove": "Delete \"{{name}}\"",
-  "admin.access-control.groups.table.edit.buttons.remove": "Radera \"{{name}}\"",
+  "admin.access-control.groups.table.edit.buttons.remove": 'Radera "{{name}}"',
 
   // "admin.access-control.groups.no-items": "No groups found with this in their name or this as UUID",
   "admin.access-control.groups.no-items": "Ingan grupper kunde hittas",
 
   // "admin.access-control.groups.notification.deleted.success": "Successfully deleted group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.success": "Grupp \"{{name}}\" har raderats",
+  "admin.access-control.groups.notification.deleted.success": 'Grupp "{{name}}" har raderats',
 
   // "admin.access-control.groups.notification.deleted.failure.title": "Failed to delete group \"{{name}}\"",
-  "admin.access-control.groups.notification.deleted.failure.title": "Misslyckades med att radera grupp \"{{name}}\"",
+  "admin.access-control.groups.notification.deleted.failure.title": 'Misslyckades med att radera grupp "{{name}}"',
 
   // "admin.access-control.groups.notification.deleted.failure.content": "Cause: \"{{cause}}\"",
-  "admin.access-control.groups.notification.deleted.failure.content": "Orsak: \"{{cause}}\"",
-
-
+  "admin.access-control.groups.notification.deleted.failure.content": 'Orsak: "{{cause}}"',
 
   // "admin.access-control.groups.form.alert.permanent": "This group is permanent, so it can't be edited or deleted. You can still add and remove group members using this page.",
   "admin.access-control.groups.form.alert.permanent": "Denna grupp är permant och kan inte raderas eller redigeras. Du kan fortfarande lägga till eller ta bort medlemmar i gruppen här.",
 
   // "admin.access-control.groups.form.alert.workflowGroup": "This group can’t be modified or deleted because it corresponds to a role in the submission and workflow process in the \"{{name}}\" {{comcol}}. You can delete it from the <a href='{{comcolEditRolesRoute}}'>\"assign roles\"</a> tab on the edit {{comcol}} page. You can still add and remove group members using this page.",
-  "admin.access-control.groups.form.alert.workflowGroup": "Denna grupp kan inte raderas eller redigeras eftersom den används i submission eller workflow process i \"{{name}}\" {{comcol}}. Du kan radera den från fliken <a href='{{comcolEditRolesRoute}}'>\"tilldela roller\"</a> på sidan {{comcol}} för att redigera. Du kan fortfarande lägga till eller ta bort medlemmar i gruppen här.",
+  "admin.access-control.groups.form.alert.workflowGroup": 'Denna grupp kan inte raderas eller redigeras eftersom den används i submission eller workflow process i "{{name}}" {{comcol}}. Du kan radera den från fliken <a href=\'{{comcolEditRolesRoute}}\'>"tilldela roller"</a> på sidan {{comcol}} för att redigera. Du kan fortfarande lägga till eller ta bort medlemmar i gruppen här.',
 
   // "admin.access-control.groups.form.head.create": "Create group",
   "admin.access-control.groups.form.head.create": "Skapa grupp",
@@ -547,31 +536,31 @@
   "admin.access-control.groups.form.groupDescription": "Beskrivning",
 
   // "admin.access-control.groups.form.notification.created.success": "Successfully created Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.success": "Gruppen \"{{name}}\" har skapats",
+  "admin.access-control.groups.form.notification.created.success": 'Gruppen "{{name}}" har skapats',
 
   // "admin.access-control.groups.form.notification.created.failure": "Failed to create Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.created.failure": "Misslyckades med att skapa grupp \"{{name}}\"",
+  "admin.access-control.groups.form.notification.created.failure": 'Misslyckades med att skapa grupp "{{name}}"',
 
   // "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Failed to create Group with name: \"{{name}}\", make sure the name is not already in use.",
-  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": "Misslyckades med att skapa grupp: \"{{name}}\", kontrollera om namnet redan används.",
+  "admin.access-control.groups.form.notification.created.failure.groupNameInUse": 'Misslyckades med att skapa grupp: "{{name}}", kontrollera om namnet redan används.',
 
   // "admin.access-control.groups.form.notification.edited.failure": "Failed to edit Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.failure": "Misslyckades med att redigera grupp \"{{name}}\"",
+  "admin.access-control.groups.form.notification.edited.failure": 'Misslyckades med att redigera grupp "{{name}}"',
 
   // "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Name \"{{name}}\" already in use!",
-  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": "Namnet \"{{name}}\" används redan!",
+  "admin.access-control.groups.form.notification.edited.failure.groupNameInUse": 'Namnet "{{name}}" används redan!',
 
   // "admin.access-control.groups.form.notification.edited.success": "Successfully edited Group \"{{name}}\"",
-  "admin.access-control.groups.form.notification.edited.success": "Gruppen \"{{name}}\" har redigerats",
+  "admin.access-control.groups.form.notification.edited.success": 'Gruppen "{{name}}" har redigerats',
 
   // "admin.access-control.groups.form.actions.delete": "Delete Group",
   "admin.access-control.groups.form.actions.delete": "Radera grupp",
 
   // "admin.access-control.groups.form.delete-group.modal.header": "Delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.header": "Radera grupp \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.header": 'Radera grupp "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.info": "Are you sure you want to delete Group \"{{ dsoName }}\"",
-  "admin.access-control.groups.form.delete-group.modal.info": "Är du säker på att du vill radera gruppen \"{{ dsoName }}\"",
+  "admin.access-control.groups.form.delete-group.modal.info": 'Är du säker på att du vill radera gruppen "{{ dsoName }}"',
 
   // "admin.access-control.groups.form.delete-group.modal.cancel": "Cancel",
   "admin.access-control.groups.form.delete-group.modal.cancel": "Avbryt",
@@ -580,13 +569,13 @@
   "admin.access-control.groups.form.delete-group.modal.confirm": "Radera",
 
   // "admin.access-control.groups.form.notification.deleted.success": "Successfully deleted group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.success": "Gruppen \"{{ name }}\" har raderats",
+  "admin.access-control.groups.form.notification.deleted.success": 'Gruppen "{{ name }}" har raderats',
 
   // "admin.access-control.groups.form.notification.deleted.failure.title": "Failed to delete group \"{{ name }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.title": "Misslyckades med att radera grupp \"{{ name }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.title": 'Misslyckades med att radera grupp "{{ name }}"',
 
   // "admin.access-control.groups.form.notification.deleted.failure.content": "Cause: \"{{ cause }}\"",
-  "admin.access-control.groups.form.notification.deleted.failure.content": "Orsak: \"{{ cause }}\"",
+  "admin.access-control.groups.form.notification.deleted.failure.content": 'Orsak: "{{ cause }}"',
 
   // "admin.access-control.groups.form.members-list.head": "EPeople",
   "admin.access-control.groups.form.members-list.head": "EPersoner",
@@ -628,22 +617,22 @@
   "admin.access-control.groups.form.members-list.table.edit": "Radera / Lägg till",
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Remove member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": "Ta bort medlem \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.remove": 'Ta bort medlem "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.addMember": "Successfully added member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.addMember": "Medlem: \"{{name}}\" har lagts till",
+  "admin.access-control.groups.form.members-list.notification.success.addMember": 'Medlem: "{{name}}" har lagts till',
 
   // "admin.access-control.groups.form.members-list.notification.failure.addMember": "Failed to add member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.addMember": "Misslyckades med att lägga till medlem: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.addMember": 'Misslyckades med att lägga till medlem: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Successfully deleted member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.success.deleteMember": "Medlem: \"{{name}}\" har tagits bort",
+  "admin.access-control.groups.form.members-list.notification.success.deleteMember": 'Medlem: "{{name}}" har tagits bort',
 
   // "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Failed to delete member: \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": "Misslyckades med att ta bort medlem: \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.notification.failure.deleteMember": 'Misslyckades med att ta bort medlem: "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Add member with name \"{{name}}\"",
-  "admin.access-control.groups.form.members-list.table.edit.buttons.add": "Lägg till medlem \"{{name}}\"",
+  "admin.access-control.groups.form.members-list.table.edit.buttons.add": 'Lägg till medlem "{{name}}"',
 
   // "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.members-list.notification.failure.noActiveGroup": "Det finns ingen aktiv grupp, ange ett namn först.",
@@ -655,7 +644,7 @@
   "admin.access-control.groups.form.members-list.no-items": "Inga EPersoner hittades",
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure": "Something went wrong: \"{{cause}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure": "Något gick fel: \"{{cause}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure": 'Något gick fel: "{{cause}}"',
 
   // "admin.access-control.groups.form.subgroups-list.head": "Groups",
   "admin.access-control.groups.form.subgroups-list.head": "Grupper",
@@ -685,25 +674,25 @@
   "admin.access-control.groups.form.subgroups-list.table.edit": "Ta bort / Lägg till",
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Remove subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": "Ta bort undergrupp \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.remove": 'Ta bort undergrupp "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Add subgroup with name \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": "Lägg till undergrupp \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.table.edit.buttons.add": 'Lägg till undergrupp "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Current group",
   "admin.access-control.groups.form.subgroups-list.table.edit.currentGroup": "Nuvarande grupp",
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Successfully added subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": "Undergrupp: \"{{name}}\" har lagts till",
+  "admin.access-control.groups.form.subgroups-list.notification.success.addSubgroup": 'Undergrupp: "{{name}}" har lagts till',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Failed to add subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": "Misslyckades med att lägga till undergrupp: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.addSubgroup": 'Misslyckades med att lägga till undergrupp: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Successfully deleted subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": "Undergrupp: \"{{name}}\" har raderats",
+  "admin.access-control.groups.form.subgroups-list.notification.success.deleteSubgroup": 'Undergrupp: "{{name}}" har raderats',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Failed to delete subgroup: \"{{name}}\"",
-  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": "Misslyckades med att radera undergrupp: \"{{name}}\"",
+  "admin.access-control.groups.form.subgroups-list.notification.failure.deleteSubgroup": 'Misslyckades med att radera undergrupp: "{{name}}"',
 
   // "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "No current active group, submit a name first.",
   "admin.access-control.groups.form.subgroups-list.notification.failure.noActiveGroup": "Det finns ingen aktiv grupp, ange ett namn först.",
@@ -719,8 +708,6 @@
 
   // "admin.access-control.groups.form.return": "Back",
   "admin.access-control.groups.form.return": "Tillbaka",
-
-
 
   // "admin.search.breadcrumbs": "Administrative Search",
   "admin.search.breadcrumbs": "Admin sökning",
@@ -758,9 +745,6 @@
   // "administrativeView.search.results.head": "Administrative Search",
   "administrativeView.search.results.head": "Admin sökning",
 
-
-
-
   // "admin.workflow.breadcrumbs": "Administer Workflow",
   "admin.workflow.breadcrumbs": "Administrera arbetsflöde",
 
@@ -775,8 +759,6 @@
 
   // "admin.workflow.item.send-back": "Send back",
   "admin.workflow.item.send-back": "Skicka tillbaka",
-
-
 
   // "admin.metadata-import.breadcrumbs": "Import Metadata",
   "admin.metadata-import.breadcrumbs": "Importera metadata",
@@ -805,9 +787,6 @@
   // "admin.metadata-import.page.error.addFile": "Select file first!",
   "admin.metadata-import.page.error.addFile": "Välj fil först!",
 
-
-
-
   // "auth.errors.invalid-user": "Invalid email address or password.",
   "auth.errors.invalid-user": "Ogiltig e-postadress eller lösenord.",
 
@@ -817,14 +796,11 @@
   // "auth.messages.token-refresh-failed": "Refreshing your session token failed. Please log in again.",
   "auth.messages.token-refresh-failed": "Misslyckades med att förnya session token. Logga in igen.",
 
-
-
   // "bitstream.download.page": "Now downloading {{bitstream}}..." ,
-  "bitstream.download.page": "Laddar ner {{bitstream}}..." ,
+  "bitstream.download.page": "Laddar ner {{bitstream}}...",
 
   // "bitstream.download.page.back": "Back" ,
-  "bitstream.download.page.back": "Tillbaka" ,
-
+  "bitstream.download.page.back": "Tillbaka",
 
   // "bitstream.edit.authorizations.link": "Edit bitstream's Policies",
   "bitstream.edit.authorizations.link": "Redigera policy för fil",
@@ -839,7 +815,7 @@
   "bitstream.edit.bitstream": "Fil: ",
 
   // "bitstream.edit.form.description.hint": "Optionally, provide a brief description of the file, for example \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
-  "bitstream.edit.form.description.hint": "Du kan ange en kort beskrivning av innehållet, t ex \"<i>Main article</i>\" or \"<i>Experiment data readings</i>\".",
+  "bitstream.edit.form.description.hint": 'Du kan ange en kort beskrivning av innehållet, t ex "<i>Main article</i>" or "<i>Experiment data readings</i>".',
 
   // "bitstream.edit.form.description.label": "Beskrivning",
   "bitstream.edit.form.description.label": "Beskrivning",
@@ -860,13 +836,13 @@
   "bitstream.edit.form.newFormat.label": "Beskriv nytt format",
 
   // "bitstream.edit.form.newFormat.hint": "The application you used to create the file, and the version number (for example, \"<i>ACMESoft SuperApp version 1.5</i>\").",
-  "bitstream.edit.form.newFormat.hint": "Programmet som använts för att skapa filen, samt versionsnummer (t ex, \"<i>ACMESoft SuperApp version 1.5</i>\").",
+  "bitstream.edit.form.newFormat.hint": 'Programmet som använts för att skapa filen, samt versionsnummer (t ex, "<i>ACMESoft SuperApp version 1.5</i>").',
 
   // "bitstream.edit.form.primaryBitstream.label": "Primary bitstream",
   "bitstream.edit.form.primaryBitstream.label": "Primär fil",
 
   // "bitstream.edit.form.selectedFormat.hint": "If the format is not in the above list, <b>select \"format not in list\" above</b> and describe it under \"Describe new format\".",
-  "bitstream.edit.form.selectedFormat.hint": "Om formatet inte visas i listan ovan, <b>välj \"formatet saknas\"</b> och lägg till beskrivning under \"Beskriv nytt format\".",
+  "bitstream.edit.form.selectedFormat.hint": 'Om formatet inte visas i listan ovan, <b>välj "formatet saknas"</b> och lägg till beskrivning under "Beskriv nytt format".',
 
   // "bitstream.edit.form.selectedFormat.label": "Selected Format",
   "bitstream.edit.form.selectedFormat.label": "Välj format",
@@ -900,7 +876,6 @@
 
   // "bitstream.edit.form.iiifHeight.hint": "The canvas height should usually match the image height.",
   "bitstream.edit.form.iiifHeight.hint": "The canvas height should usually match the image height.",
-
 
   // "bitstream.edit.notifications.saved.content": "Your changes to this bitstream were saved.",
   "bitstream.edit.notifications.saved.content": "Ändringarna sparades.",
@@ -966,8 +941,6 @@
 
   // "bitstream-request-a-copy.submit.error": "Something went wrong with submitting the item request.",
   "bitstream-request-a-copy.submit.error": "Ett fel uppstod när begäran skulle skickas.",
-
-
 
   // "browse.comcol.by.author": "By Author",
   "browse.comcol.by.author": "Författare",
@@ -1086,11 +1059,8 @@
   // "browse.title": "Browsing {{ collection }} by {{ field }} {{ value }}",
   "browse.title": "Bläddrar {{ collection }} efter {{ field }} {{ value }}",
 
-
   // "chips.remove": "Remove chip",
   "chips.remove": "Radera chip",
-
-
 
   // "collection.create.head": "Create a Collection",
   "collection.create.head": "Skapa samling",
@@ -1123,9 +1093,7 @@
   "collection.delete.notification.success": "Samlingen har raderats",
 
   // "collection.delete.text": "Are you sure you want to delete collection \"{{ dso }}\"",
-  "collection.delete.text": "Är du säker på att du vill radera denna samling: \"{{ dso }}\"",
-
-
+  "collection.delete.text": 'Är du säker på att du vill radera denna samling: "{{ dso }}"',
 
   // "collection.edit.delete": "Delete this collection",
   "collection.edit.delete": "Radera denna samling",
@@ -1135,8 +1103,6 @@
 
   // "collection.edit.breadcrumbs": "Edit Collection",
   "collection.edit.breadcrumbs": "Redigera samling",
-
-
 
   // "collection.edit.tabs.mapper.head": "Item Mapper",
   "collection.edit.tabs.mapper.head": "Mappa poster",
@@ -1148,7 +1114,7 @@
   "collection.edit.item-mapper.cancel": "Avbryt",
 
   // "collection.edit.item-mapper.collection": "Collection: \"<b>{{name}}</b>\"",
-  "collection.edit.item-mapper.collection": "Samling: \"<b>{{name}}</b>\"",
+  "collection.edit.item-mapper.collection": 'Samling: "<b>{{name}}</b>"',
 
   // "collection.edit.item-mapper.confirm": "Map selected items",
   "collection.edit.item-mapper.confirm": "Mappa markerade poster",
@@ -1198,7 +1164,6 @@
   // "collection.edit.item-mapper.tabs.map": "Map new items",
   "collection.edit.item-mapper.tabs.map": "Mappa nya poster",
 
-
   // "collection.edit.logo.delete.title": "Delete logo",
   "collection.edit.logo.delete.title": "Radera logga",
 
@@ -1226,15 +1191,11 @@
   // "collection.edit.logo.upload": "Drop a Collection Logo to upload",
   "collection.edit.logo.upload": "Släpp en logga här för att ladda upp",
 
-
-
   // "collection.edit.notifications.success": "Successfully edited the Collection",
   "collection.edit.notifications.success": "Samlingen har redigerats",
 
   // "collection.edit.return": "Back",
   "collection.edit.return": "Tillbaka",
-
-
 
   // "collection.edit.tabs.curate.head": "Curate",
   "collection.edit.tabs.curate.head": "Kurera",
@@ -1314,8 +1275,6 @@
   // "collection.edit.tabs.source.title": "Collection Edit - Content Source",
   "collection.edit.tabs.source.title": "Redigera samling - Källa för innehåll",
 
-
-
   // "collection.edit.template.add-button": "Add",
   "collection.edit.template.add-button": "Lägg till",
 
@@ -1335,7 +1294,7 @@
   "collection.edit.template.error": "Ett fel uppstod när mallen hämtades",
 
   // "collection.edit.template.head": "Edit Template Item for Collection \"{{ collection }}\"",
-  "collection.edit.template.head": "Redigera postmall för samlingen \"{{ collection }}\"",
+  "collection.edit.template.head": 'Redigera postmall för samlingen "{{ collection }}"',
 
   // "collection.edit.template.label": "Template item",
   "collection.edit.template.label": "Postmall",
@@ -1351,8 +1310,6 @@
 
   // "collection.edit.template.title": "Edit Template Item",
   "collection.edit.template.title": "Redigera postmall",
-
-
 
   // "collection.form.abstract": "Short Beskrivning",
   "collection.form.abstract": "Kort beskrivning",
@@ -1381,12 +1338,8 @@
   // "collection.form.entityType": "Entity Type",
   "collection.form.entityType": "Entitetstyp",
 
-
-
   // "collection.listelement.badge": "Collection",
   "collection.listelement.badge": "Samling",
-
-
 
   // "collection.page.browse.recent.head": "Recent Submissions",
   "collection.page.browse.recent.head": "Senast publicerade",
@@ -1406,8 +1359,6 @@
   // "collection.page.news": "News",
   "collection.page.news": "Nyheter",
 
-
-
   // "collection.select.confirm": "Confirm selected",
   "collection.select.confirm": "Bekräfta val",
 
@@ -1416,7 +1367,6 @@
 
   // "collection.select.table.title": "Title",
   "collection.select.table.title": "Titel",
-
 
   // "collection.source.controls.head": "Harvest Controls",
   "collection.source.controls.head": "Inställningar för höstning",
@@ -1487,14 +1437,11 @@
   // "collection.source.controls.harvest.no-information": "N/A",
   "collection.source.controls.harvest.no-information": "saknas",
 
-
   // "collection.source.update.notifications.error.content": "The provided settings have been tested and didn't work.",
   "collection.source.update.notifications.error.content": "Inställningarna har testats och fungerade inte.",
 
   // "collection.source.update.notifications.error.title": "Server Error",
   "collection.source.update.notifications.error.title": "Serverfel",
-
-
 
   // "communityList.breadcrumbs": "Community List",
   "communityList.breadcrumbs": "Enheter",
@@ -1507,8 +1454,6 @@
 
   // "communityList.showMore": "Show More",
   "communityList.showMore": "Visa fler",
-
-
 
   // "community.create.head": "Create a Community",
   "community.create.head": "Skapa en ny enhet",
@@ -1541,7 +1486,7 @@
   "community.delete.notification.success": "Enheten har raderats",
 
   // "community.delete.text": "Are you sure you want to delete community \"{{ dso }}\"",
-  "community.delete.text": "Är du säker på att du vill radera denna enhet \"{{ dso }}\"",
+  "community.delete.text": 'Är du säker på att du vill radera denna enhet "{{ dso }}"',
 
   // "community.edit.delete": "Delete this community",
   "community.edit.delete": "Radera denna enhet",
@@ -1551,7 +1496,6 @@
 
   // "community.edit.breadcrumbs": "Edit Community",
   "community.edit.breadcrumbs": "Redigera enhet",
-
 
   // "community.edit.logo.delete.title": "Delete logo",
   "community.edit.logo.delete.title": "Radera logga",
@@ -1580,8 +1524,6 @@
   // "community.edit.logo.upload": "Drop a Community Logo to upload",
   "community.edit.logo.upload": "Släpp en logga här för att ladda upp",
 
-
-
   // "community.edit.notifications.success": "Successfully edited the Community",
   "community.edit.notifications.success": "Enheten har redigerats",
 
@@ -1593,8 +1535,6 @@
 
   // "community.edit.return": "Back",
   "community.edit.return": "Tillbaka",
-
-
 
   // "community.edit.tabs.curate.head": "Curate",
   "community.edit.tabs.curate.head": "Kurera",
@@ -1620,12 +1560,8 @@
   // "community.edit.tabs.authorizations.title": "Community Edit - Authorizations",
   "community.edit.tabs.authorizations.title": "Redigera enhet - Behörigheter",
 
-
-
   // "community.listelement.badge": "Community",
   "community.listelement.badge": "Enhet",
-
-
 
   // "comcol-role.edit.no-group": "None",
   "comcol-role.edit.no-group": "Ingen",
@@ -1639,13 +1575,11 @@
   // "comcol-role.edit.delete": "Delete",
   "comcol-role.edit.delete": "Radera",
 
-
   // "comcol-role.edit.community-admin.name": "Administrators",
   "comcol-role.edit.community-admin.name": "Administratörer",
 
   // "comcol-role.edit.collection-admin.name": "Administrators",
   "comcol-role.edit.collection-admin.name": "Administratörer",
-
 
   // "comcol-role.edit.community-admin.description": "Community administrators can create sub-communities or collections, and manage or assign management for those sub-communities or collections. In addition, they decide who can submit items to any sub-collections, edit item metadata (after submission), and add (map) existing items from other collections (subject to authorization).",
   "comcol-role.edit.community-admin.description": "Administratörer för enheter kan skapa underenheter eller samlingar och administrera dessa. De kan också avgöra vem skall ha behörighet till dessa, redigera metadata (på befintliga poster), och mappa existerande poster från andra samlingar (beroende på behörighet till dessa).",
@@ -1653,13 +1587,11 @@
   // "comcol-role.edit.collection-admin.description": "Collection administrators decide who can submit items to the collection, edit item metadata (after submission), and add (map) existing items from other collections to this collection (subject to authorization for that collection).",
   "comcol-role.edit.collection-admin.description": "Administratörer för samlingar avgör vem som kan skapa nya poster i dessa, redigera metadata (på befintliga poster) och mappa existerande poster från andra samlingar till denna (beroende på behörighet).",
 
-
   // "comcol-role.edit.submitters.name": "Submitters",
   "comcol-role.edit.submitters.name": "Submitters",
 
   // "comcol-role.edit.submitters.description": "The E-People and Groups that have permission to submit new items to this collection.",
   "comcol-role.edit.submitters.description": "EPersoner och grupper som har behörighet att skapa nya poster i denna samling.",
-
 
   // "comcol-role.edit.item_read.name": "Default item read access",
   "comcol-role.edit.item_read.name": "Default läsåtkomst till post",
@@ -1670,7 +1602,6 @@
   // "comcol-role.edit.item_read.anonymous-group": "Default read for incoming items is currently set to Anonymous.",
   "comcol-role.edit.item_read.anonymous-group": "Default läsåtkomst till nyskapade poster är för närvarande satt till Anonymous.",
 
-
   // "comcol-role.edit.bitstream_read.name": "Default bitstream read access",
   "comcol-role.edit.bitstream_read.name": "Default läsåtkomst till filer",
 
@@ -1680,13 +1611,11 @@
   // "comcol-role.edit.bitstream_read.anonymous-group": "Default read for incoming bitstreams is currently set to Anonymous.",
   "comcol-role.edit.bitstream_read.anonymous-group": "Default läsåtkomst till nyuppladdade filer är för närvarande satt till Anonymous.",
 
-
   // "comcol-role.edit.editor.name": "Editors",
   "comcol-role.edit.editor.name": "Editors",
 
   // "comcol-role.edit.editor.description": "Editors are able to edit the metadata of incoming submissions, and then accept or reject them.",
   "comcol-role.edit.editor.description": "Dessa kan redigera metadata på inkommande bidrag, samt acceptera eller neka dessa.",
-
 
   // "comcol-role.edit.finaleditor.name": "Final editors",
   "comcol-role.edit.finaleditor.name": "Final editors",
@@ -1694,14 +1623,11 @@
   // "comcol-role.edit.finaleditor.description": "Final editors are able to edit the metadata of incoming submissions, but will not be able to reject them.",
   "comcol-role.edit.finaleditor.description": "Dessa kan redigera metadata på inkommande bidrag, men har inte möjlighet att neka dem.",
 
-
   // "comcol-role.edit.reviewer.name": "Reviewers",
   "comcol-role.edit.reviewer.name": "Reviewers",
 
   // "comcol-role.edit.reviewer.description": "Reviewers are able to accept or reject incoming submissions. However, they are not able to edit the submission's metadata.",
   "comcol-role.edit.reviewer.description": "Reviewers kan acceptera eller neka inkommande bidrag. Men de kan inte redigera metadata.",
-
-
 
   // "community.form.abstract": "Short Beskrivning",
   "community.form.abstract": "Kort beskrivning",
@@ -1741,8 +1667,6 @@
 
   // "community.sub-community-list.head": "Communities of this Community",
   "community.sub-community-list.head": "Enheter under denna enhet",
-
-
 
   // "cookies.consent.accept-all": "Accept all",
   "cookies.consent.accept-all": "Acceptera alla",
@@ -1792,14 +1716,11 @@
   // "cookies.consent.content-modal.title": "Information that we collect",
   "cookies.consent.content-modal.title": "Information som vi samlar in",
 
-
-
   // "cookies.consent.app.title.authentication": "Authentication",
   "cookies.consent.app.title.authentication": "Autenticering",
 
   // "cookies.consent.app.description.authentication": "Required for signing you in",
   "cookies.consent.app.description.authentication": "Behövs för att du skall kunna logga in",
-
 
   // "cookies.consent.app.title.preferences": "Preferences",
   "cookies.consent.app.title.preferences": "Inställningar",
@@ -1807,15 +1728,11 @@
   // "cookies.consent.app.description.preferences": "Required for saving your preferences",
   "cookies.consent.app.description.preferences": "Behövs för att kunna spara dina inställningar",
 
-
-
   // "cookies.consent.app.title.acknowledgement": "Acknowledgement",
   "cookies.consent.app.title.acknowledgement": "Godkännande",
 
   // "cookies.consent.app.description.acknowledgement": "Required for saving your acknowledgements and consents",
   "cookies.consent.app.description.acknowledgement": "Behövs för att spara dina godkännanden och medgivanden",
-
-
 
   // "cookies.consent.app.title.google-analytics": "Google Analytics",
   "cookies.consent.app.title.google-analytics": "Google Analytics",
@@ -1823,14 +1740,11 @@
   // "cookies.consent.app.description.google-analytics": "Allows us to track statistical data",
   "cookies.consent.app.description.google-analytics": "Tillåt oss att spåra statistiska data",
 
-
-
   // "cookies.consent.purpose.functional": "Functional",
   "cookies.consent.purpose.functional": "Funktionella",
 
   // "cookies.consent.purpose.statistical": "Statistical",
   "cookies.consent.purpose.statistical": "Statistiska",
-
 
   // "curation-task.task.checklinks.label":  "Check Links in Metadata",
   "curation-task.task.checklinks.label": "Kontrollera länkar i metadata",
@@ -1875,10 +1789,8 @@
   // "curation.form.handle.hint": "Hint: Enter [your-handle-prefix]/0 to run a task across entire site (not all tasks may support this capability)",
   "curation.form.handle.hint": "Tips: Ange [your-handle-prefix]/0 för att köra ett jobb för hela sajten (alla jobb kanske inte stöder detta)",
 
-
-
   // "deny-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I regret to inform you that it's not possible to send you a copy of the file(s) you have requested, concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
-  "deny-request-copy.email.message": "Hej {{ recipientName }},\nDet är tyvärr inte möjligt att skicka den eller de filer som du har begärt. Angående: \"{{ itemUrl }}\" ({{ itemName }}), som jag har författat.\n\nMed vänliga hälsningar,\n{{ authorName }} <{{ authorEmail }}>",
+  "deny-request-copy.email.message": 'Hej {{ recipientName }},\nDet är tyvärr inte möjligt att skicka den eller de filer som du har begärt. Angående: "{{ itemUrl }}" ({{ itemName }}), som jag har författat.\n\nMed vänliga hälsningar,\n{{ authorName }} <{{ authorEmail }}>',
 
   // "deny-request-copy.email.subject": "Request copy of document",
   "deny-request-copy.email.subject": "Begär en kopia av dokument",
@@ -1895,12 +1807,8 @@
   // "deny-request-copy.success": "Successfully denied item request",
   "deny-request-copy.success": "Begäran nekades",
 
-
-
   // "dso.name.untitled": "Untitled",
   "dso.name.untitled": "Utan titel",
-
-
 
   // "dso-selector.create.collection.head": "New collection",
   "dso-selector.create.collection.head": "Ny samling",
@@ -1959,8 +1867,6 @@
   // "dso-selector.set-scope.community.input-header": "Search for a community or collection",
   "dso-selector.set-scope.community.input-header": "Sök efter en samling eller enhet",
 
-
-
   // "confirmation-modal.export-metadata.header": "Export metadata for {{ dsoName }}",
   "confirmation-modal.export-metadata.header": "Exportera metadata från {{ dsoName }}",
 
@@ -1974,17 +1880,16 @@
   "confirmation-modal.export-metadata.confirm": "Exportera",
 
   // "confirmation-modal.delete-eperson.header": "Delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.header": "Radera e-Person \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.header": 'Radera e-Person "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.info": "Are you sure you want to delete EPerson \"{{ dsoName }}\"",
-  "confirmation-modal.delete-eperson.info": "Vill du radera e-Person \"{{ dsoName }}\"",
+  "confirmation-modal.delete-eperson.info": 'Vill du radera e-Person "{{ dsoName }}"',
 
   // "confirmation-modal.delete-eperson.cancel": "Cancel",
   "confirmation-modal.delete-eperson.cancel": "Avbryt",
 
   // "confirmation-modal.delete-eperson.confirm": "Delete",
   "confirmation-modal.delete-eperson.confirm": "Radera",
-
 
   // "error.bitstream": "Error fetching bitstream",
   "error.bitstream": "Ett fel uppstod när felen hämtades",
@@ -2023,7 +1928,7 @@
   "error.search-results": "Ett fel uppstod när sökresultaten hämtades",
 
   // "error.invalid-search-query": "Search query is not valid. Please check <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> best practices for further information about this error.",
-  "error.invalid-search-query": "Ogiltig sökfråga. Se <a href=\"https://solr.apache.org/guide/query-syntax-and-parsing.html\" target=\"_blank\">Solr query syntax</a> för hjälp och mer information.",
+  "error.invalid-search-query": 'Ogiltig sökfråga. Se <a href="https://solr.apache.org/guide/query-syntax-and-parsing.html" target="_blank">Solr query syntax</a> för hjälp och mer information.',
 
   // "error.sub-collections": "Error fetching sub-collections",
   "error.sub-collections": "Ett fel uppstod när undersamlingar hämtades",
@@ -2060,11 +1965,8 @@
   // "error.validation.groupExists": "This group already exists",
   "error.validation.groupExists": "Denna grupp existerar redan",
 
-
   // "file-section.error.header": "Error obtaining files for this item",
   "file-section.error.header": "Det gick inte att hämta filerna till denna post",
-
-
 
   // "footer.copyright": "copyright © 2002-{{ year }}",
   "footer.copyright": "copyright © 2002-{{ year }}",
@@ -2088,8 +1990,6 @@
 
   // "footer.link.feedback":"Send Feedback",
   "footer.link.feedback": "Skicka feedback",
-
-
 
   // "forgot-email.form.header": "Forgot Password",
   "forgot-email.form.header": "Glömt lösenord",
@@ -2123,8 +2023,6 @@
 
   // "forgot-email.form.error.content": "An error occured when registering the following email address: {{ email }}",
   "forgot-email.form.error.content": "Ett fel uppstod när följande e-postadress skulle registreras: {{ email }}",
-
-
 
   // "forgot-password.title": "Forgot Password",
   "forgot-password.title": "Glömt lösenord",
@@ -2170,7 +2068,6 @@
 
   // "forgot-password.form.submit": "Submit password",
   "forgot-password.form.submit": "Spara lösenord",
-
 
   // "form.add": "Add more",
   "form.add": "Lägg till fler",
@@ -2253,8 +2150,6 @@
   // "form.repeatable.sort.tip": "Drop the item in the new position",
   "form.repeatable.sort.tip": "Släpp posten i den nya positionen",
 
-
-
   // "grant-deny-request-copy.deny": "Don't send copy",
   "grant-deny-request-copy.deny": "Skicka inte kopia",
 
@@ -2301,10 +2196,8 @@
   // "grant-deny-request-copy.processed": "This request has already been processed. You can use the button below to get back to the home page.",
   "grant-deny-request-copy.processed": "Denna begäran har redan behandlats. Använd knappen nedan för att komma till startsidan.",
 
-
-
   // "grant-request-copy.email.message": "Dear {{ recipientName }},\nIn response to your request I have the pleasure to send you in attachment a copy of the file(s) concerning the document: \"{{ itemUrl }}\" ({{ itemName }}), of which I am an author.\n\nBest regards,\n{{ authorName }} <{{ authorEmail }}>",
-  "grant-request-copy.email.message": "Hej {{ recipientName }},\nDet dokument du har begärt, och som jag är författare till, bifogas i detta mejl: \"{{ itemUrl }}\" ({{ itemName }}).\n\nMed vänliga hälsningar,\n{{ authorName }} <{{ authorEmail }}>",
+  "grant-request-copy.email.message": 'Hej {{ recipientName }},\nDet dokument du har begärt, och som jag är författare till, bifogas i detta mejl: "{{ itemUrl }}" ({{ itemName }}).\n\nMed vänliga hälsningar,\n{{ authorName }} <{{ authorEmail }}>',
 
   // "grant-request-copy.email.subject": "Request copy of document",
   "grant-request-copy.email.subject": "Begär kopia av dokument",
@@ -2320,8 +2213,6 @@
 
   // "grant-request-copy.success": "Successfully granted item request",
   "grant-request-copy.success": "Begäran beviljades.",
-
-
 
   // "home.description": "",
   "home.description": "Till startsidan",
@@ -2340,8 +2231,6 @@
 
   // "home.top-level-communities.help": "Select a community to browse its collections.",
   "home.top-level-communities.help": "Välj en enhet för att se alla samlingar.",
-
-
 
   // "info.end-user-agreement.accept": "I have read and I agree to the End User Agreement",
   "info.end-user-agreement.accept": "Jag har läst och förstått villkoren i användaravtalet",
@@ -2415,15 +2304,11 @@
   // "info.feedback.page_help" : "Tha page related to your feedback",
   "info.feedback.page_help": "Den är sidan är relaterad till din feedback",
 
-
-
   // "item.alerts.private": "This item is non-discoverable",
   "item.alerts.private": "Denna post är dold vid sökning",
 
   // "item.alerts.withdrawn": "This item has been withdrawn",
   "item.alerts.withdrawn": "Denna post har återkallats",
-
-
 
   // "item.edit.authorizations.heading": "With this editor you can view and alter the policies of an item, plus alter policies of individual item components: bundles and bitstreams. Briefly, an item is a container of bundles, and bundles are containers of bitstreams. Containers usually have ADD/REMOVE/READ/WRITE policies, while bitstreams only have READ/WRITE policies.",
   "item.edit.authorizations.heading": "Här kan du se och ändra de villkor som gäller för en post och dess ingående komponenter: buntar (bundles) och filer. En post är en container som innehåller en eller flera buntar (bundles), som i sin tur är en container med en eller flera filer. Buntar har behörigheter för att LÄGGA TILL/RADERA/LÄSA/SKRIVA, medan filer bara har behörigheter för att LÄSA och SKRIVA.",
@@ -2431,15 +2316,11 @@
   // "item.edit.authorizations.title": "Edit item's Policies",
   "item.edit.authorizations.title": "Redigera behörigheter för post",
 
-
-
   // "item.badge.private": "Non-discoverable",
   "item.badge.private": "Dold vid sökning",
 
   // "item.badge.withdrawn": "Withdrawn",
   "item.badge.withdrawn": "Återkallad",
-
-
 
   // "item.bitstreams.upload.bundle": "Bundle",
   "item.bitstreams.upload.bundle": "Bunt",
@@ -2473,8 +2354,6 @@
 
   // "item.bitstreams.upload.title": "Upload bitstream",
   "item.bitstreams.upload.title": "Ladda upp fil",
-
-
 
   // "item.edit.bitstreams.bundle.edit.buttons.upload": "Upload",
   "item.edit.bitstreams.bundle.edit.buttons.upload": "Ladda upp",
@@ -2566,8 +2445,6 @@
   // "item.edit.bitstreams.upload-button": "Upload",
   "item.edit.bitstreams.upload-button": "Ladda upp",
 
-
-
   // "item.edit.delete.cancel": "Cancel",
   "item.edit.delete.cancel": "Avbryt",
 
@@ -2595,7 +2472,6 @@
   // "item.edit.tabs.disabled.tooltip": "You're not authorized to access this tab",
   "item.edit.tabs.disabled.tooltip": "Du har inte behöriget att använda denna flik",
 
-
   // "item.edit.tabs.mapper.head": "Collection Mapper",
   "item.edit.tabs.mapper.head": "Mappa samlingar",
 
@@ -2618,7 +2494,7 @@
   "item.edit.item-mapper.head": "Mappa post till samling(ar)",
 
   // "item.edit.item-mapper.item": "Item: \"<b>{{name}}</b>\"",
-  "item.edit.item-mapper.item": "Post: \"<b>{{name}}</b>\"",
+  "item.edit.item-mapper.item": 'Post: "<b>{{name}}</b>"',
 
   // "item.edit.item-mapper.no-search": "Please enter a query to search",
   "item.edit.item-mapper.no-search": "Ange en sökfråga",
@@ -2655,8 +2531,6 @@
 
   // "item.edit.item-mapper.tabs.map": "Map new collections",
   "item.edit.item-mapper.tabs.map": "Mappa en ny samling",
-
-
 
   // "item.edit.metadata.add-button": "Add",
   "item.edit.metadata.add-button": "Lägg till",
@@ -2727,8 +2601,6 @@
   // "item.edit.metadata.save-button": "Save",
   "item.edit.metadata.save-button": "Spara",
 
-
-
   // "item.edit.modify.overview.field": "Field",
   "item.edit.modify.overview.field": "Fält",
 
@@ -2737,8 +2609,6 @@
 
   // "item.edit.modify.overview.value": "Value",
   "item.edit.modify.overview.value": "Värde",
-
-
 
   // "item.edit.move.cancel": "Back",
   "item.edit.move.cancel": "Tillbaka",
@@ -2779,8 +2649,6 @@
   // "item.edit.move.title": "Move item",
   "item.edit.move.title": "Flytta post",
 
-
-
   // "item.edit.private.cancel": "Cancel",
   "item.edit.private.cancel": "Avbryt",
 
@@ -2798,8 +2666,6 @@
 
   // "item.edit.private.success": "The item is now non-discoverable",
   "item.edit.private.success": "Denna post är nu inte längre sökbar",
-
-
 
   // "item.edit.public.cancel": "Cancel",
   "item.edit.public.cancel": "Avbryt",
@@ -2819,8 +2685,6 @@
   // "item.edit.public.success": "The item is now discoverable",
   "item.edit.public.success": "Posten är nu sökbar",
 
-
-
   // "item.edit.reinstate.cancel": "Cancel",
   "item.edit.reinstate.cancel": "Avbryt",
 
@@ -2838,9 +2702,6 @@
 
   // "item.edit.reinstate.success": "The item was reinstated successfully",
   "item.edit.reinstate.success": "Posten har nu återställts",
-
-
-
 
   // "item.edit.relationships.discard-button": "Discard",
   "item.edit.relationships.discard-button": "Kasta bort",
@@ -2889,7 +2750,6 @@
 
   // "item.edit.return": "Back",
   "item.edit.return": "Tillbaka",
-
 
   // "item.edit.tabs.bitstreams.head": "Bitstreams",
   "item.edit.tabs.bitstreams.head": "Filer",
@@ -3002,8 +2862,6 @@
   // "item.edit.tabs.view.title": "Item Edit -  View",
   "item.edit.tabs.view.title": "Redigera post -  Visa",
 
-
-
   // "item.edit.withdraw.cancel": "Cancel",
   "item.edit.withdraw.cancel": "Avbryt",
 
@@ -3021,8 +2879,6 @@
 
   // "item.edit.withdraw.success": "The item was withdrawn successfully",
   "item.edit.withdraw.success": "Posten har återkallats",
-
-
 
   // "item.listelement.badge": "Item",
   "item.listelement.badge": "Post",
@@ -3050,8 +2906,6 @@
 
   // "item.search.title": "Item Search",
   "item.search.title": "Sökresultat",
-
-
 
   // "item.page.abstract": "Abstract",
   "item.page.abstract": "Sammanfattning",
@@ -3205,8 +3059,6 @@
   // "item.preview.oaire.fundingStream": "Funding Stream:",
   "item.preview.oaire.fundingStream": "Funding Stream:",
 
-
-
   // "item.select.confirm": "Confirm selected",
   "item.select.confirm": "Bekräfta valda",
 
@@ -3221,7 +3073,6 @@
 
   // "item.select.table.title": "Title",
   "item.select.table.title": "Titel",
-
 
   // "item.version.history.empty": "There are no other versions for this item yet.",
   "item.version.history.empty": "Det finns inga andra versioner av denna post.",
@@ -3285,10 +3136,8 @@
   // TODO New key - Add a translation
   "item.version.history.table.action.hasDraft": "A new version cannot be created because there is an inprogress submission in the version history",
 
-
   // "item.version.notice": "This is not the latest version of this item. The latest version can be found <a href='{{destination}}'>here</a>.",
   "item.version.notice": "Detta är inte den senaste versionen. Senaste versionen finns <a href='{{destination}}'>här</a>.",
-
 
   // "item.version.create.modal.header": "New version",
   "item.version.create.modal.header": "Ny version",
@@ -3327,7 +3176,6 @@
   // TODO New key - Add a translation
   "item.version.create.notification.inProgress": "A new version cannot be created because there is an inprogress submission in the version history",
 
-
   // "item.version.delete.modal.header": "Delete version",
   "item.version.delete.modal.header": "Radera version",
 
@@ -3352,14 +3200,11 @@
   // "item.version.delete.notification.failure" : "Version number {{version}} has not been deleted",
   "item.version.delete.notification.failure": "Version {{version}} har inte raderats",
 
-
   // "item.version.edit.notification.success" : "The summary of version number {{version}} has been changed",
   "item.version.edit.notification.success": "Sammanfattningen av version {{version}} har ändrats",
 
   // "item.version.edit.notification.failure" : "The summary of version number {{version}} has not been changed",
   "item.version.edit.notification.failure": "Sammanfattningen av version {{version}} har inte ändrats",
-
-
 
   // "journal.listelement.badge": "Journal",
   "journal.listelement.badge": "Tidskrift",
@@ -3387,8 +3232,6 @@
 
   // "journal.search.title": "Journal Search",
   "journal.search.title": "Sök tidskrift",
-
-
 
   // "journalissue.listelement.badge": "Journal Issue",
   // TODO New key - Add a translation
@@ -3424,8 +3267,6 @@
   // TODO New key - Add a translation
   "journalissue.page.titleprefix": "Journal Issue: ",
 
-
-
   // "journalvolume.listelement.badge": "Journal Volume",
   // TODO New key - Add a translation
   "journalvolume.listelement.badge": "Journal Volume",
@@ -3448,7 +3289,6 @@
   // "journalvolume.page.volume": "Volume",
   // TODO New key - Add a translation
   "journalvolume.page.volume": "Volume",
-
 
   // "iiifsearchable.listelement.badge": "Document Media",
   // TODO New key - Add a translation
@@ -3491,7 +3331,6 @@
 
   // "iiif.page.description": "Beskrivning: ",
   "iiif.page.description": "Beskrivning: ",
-
 
   // "loading.bitstream": "Loading bitstream...",
   "loading.bitstream": "Hämtar fil...",
@@ -3547,8 +3386,6 @@
   // "loading.top-level-communities": "Loading top-level communities...",
   "loading.top-level-communities": "Hämtar enheter på toppnivå...",
 
-
-
   // "login.form.email": "Email address",
   "login.form.email": "E-postadress",
 
@@ -3582,8 +3419,6 @@
   // "login.breadcrumbs": "Login",
   "login.breadcrumbs": "Logga in",
 
-
-
   // "logout.form.header": "Log out from DSpace",
   "logout.form.header": "Logga ut",
 
@@ -3593,8 +3428,6 @@
   // "logout.title": "Logout",
   "logout.title": "Logga ut",
 
-
-
   // "menu.header.admin": "Management",
   "menu.header.admin": "Administration",
 
@@ -3603,8 +3436,6 @@
 
   // "menu.header.admin.description": "Management menu",
   "menu.header.admin.description": "Administration meny",
-
-
 
   // "menu.section.access_control": "Access Control",
   "menu.section.access_control": "Åtkomst",
@@ -3618,12 +3449,8 @@
   // "menu.section.access_control_people": "People",
   "menu.section.access_control_people": "EPersoner",
 
-
-
   // "menu.section.admin_search": "Admin Search",
   "menu.section.admin_search": "Admin sök",
-
-
 
   // "menu.section.browse_community": "This Community",
   "menu.section.browse_community": "Denna samling",
@@ -3655,15 +3482,11 @@
   // "menu.section.browse_global_communities_and_collections": "Communities & Collections",
   "menu.section.browse_global_communities_and_collections": "Enheter och samlingar",
 
-
-
   // "menu.section.control_panel": "Control Panel",
   "menu.section.control_panel": "Kontrollpanel",
 
   // "menu.section.curation_task": "Curation Task",
   "menu.section.curation_task": "Kurationsuppgift",
-
-
 
   // "menu.section.edit": "Edit",
   "menu.section.edit": "Redigera",
@@ -3676,8 +3499,6 @@
 
   // "menu.section.edit_item": "Item",
   "menu.section.edit_item": "Post",
-
-
 
   // "menu.section.export": "Export",
   "menu.section.export": "Exportera",
@@ -3693,8 +3514,6 @@
 
   // "menu.section.export_metadata": "Metadata",
   "menu.section.export_metadata": "Metadata",
-
-
 
   // "menu.section.icon.access_control": "Access Control menu section",
   "menu.section.icon.access_control": "Åtkomstkontroll - meny",
@@ -3741,8 +3560,6 @@
   // "menu.section.icon.unpin": "Unpin sidebar",
   "menu.section.icon.unpin": "Koppla loss sidomenyn",
 
-
-
   // "menu.section.import": "Import",
   "menu.section.import": "Importera",
 
@@ -3751,8 +3568,6 @@
 
   // "menu.section.import_metadata": "Metadata",
   "menu.section.import_metadata": "Metadata",
-
-
 
   // "menu.section.new": "New",
   "menu.section.new": "Ny",
@@ -3772,20 +3587,14 @@
   // "menu.section.new_process": "Process",
   "menu.section.new_process": "Process",
 
-
-
   // "menu.section.pin": "Pin sidebar",
   "menu.section.pin": "Fäst sidomenyn",
 
   // "menu.section.unpin": "Unpin sidebar",
   "menu.section.unpin": "Koppla loss sidomenyn",
 
-
-
   // "menu.section.processes": "Processes",
   "menu.section.processes": "Processer",
-
-
 
   // "menu.section.registries": "Registries",
   "menu.section.registries": "Registries",
@@ -3796,15 +3605,11 @@
   // "menu.section.registries_metadata": "Metadata",
   "menu.section.registries_metadata": "Metadata",
 
-
-
   // "menu.section.statistics": "Statistics",
   "menu.section.statistics": "Statistik",
 
   // "menu.section.statistics_task": "Statistics Task",
   "menu.section.statistics_task": "Statistik uppgift",
-
-
 
   // "menu.section.toggle.access_control": "Toggle Access Control section",
   "menu.section.toggle.access_control": "Växla till åtkomstkontroll",
@@ -3836,10 +3641,8 @@
   // "menu.section.toggle.statistics_task": "Toggle Statistics Task section",
   "menu.section.toggle.statistics_task": "Växla till statistik",
 
-
   // "menu.section.workflow": "Administer Workflow",
   "menu.section.workflow": "Administrera arbetsflöde",
-
 
   // "mydspace.breadcrumbs": "MyDSpace",
   "mydspace.breadcrumbs": "Mitt DSpace",
@@ -3970,8 +3773,6 @@
   // "mydspace.view-btn": "View",
   "mydspace.view-btn": "Visa",
 
-
-
   // "nav.browse.header": "All of DSpace",
   "nav.browse.header": "Hela DSpace",
 
@@ -4020,7 +3821,6 @@
   // TODO New key - Add a translation
   "none.listelement.badge": "Item",
 
-
   // "orgunit.listelement.badge": "Organizational Unit",
   // TODO New key - Add a translation
   "orgunit.listelement.badge": "Organizational Unit",
@@ -4065,8 +3865,6 @@
 
   // "pagination.sort-direction": "Sort Options",
   "pagination.sort-direction": "Sortera efter",
-
-
 
   // "person.listelement.badge": "Person",
   // TODO New key - Add a translation
@@ -4118,8 +3916,6 @@
   // "person.search.title": "Person Search",
   // TODO New key - Add a translation
   "person.search.title": "Person Search",
-
-
 
   // "process.new.select-parameters": "Parameters",
   // TODO New key - Add a translation
@@ -4196,8 +3992,6 @@
   // TODO New key - Add a translation
   "process.new.breadcrumbs": "Create a new process",
 
-
-
   // "process.detail.arguments" : "Arguments",
   // TODO New key - Add a translation
   "process.detail.arguments": "Arguments",
@@ -4257,8 +4051,6 @@
   // TODO New key - Add a translation
   "process.detail.create": "Create similar process",
 
-
-
   // "process.overview.table.finish" : "Finish time (UTC)",
   "process.overview.table.finish": "Sluttid (UTC)",
 
@@ -4285,7 +4077,6 @@
 
   // "process.overview.new": "New",
   "process.overview.new": "Ny",
-
 
   // "profile.breadcrumbs": "Update Profile",
   "profile.breadcrumbs": "Uppdatera profil",
@@ -4371,8 +4162,6 @@
   // "profile.title": "Update Profile",
   "profile.title": "Uppdatera profil",
 
-
-
   // "project.listelement.badge": "Research Project",
   // TODO New key - Add a translation
   "project.listelement.badge": "Research Project",
@@ -4413,8 +4202,6 @@
   // TODO New key - Add a translation
   "project.search.results.head": "Project Search Results",
 
-
-
   // "publication.listelement.badge": "Publication",
   // TODO New key - Add a translation
   "publication.listelement.badge": "Publication",
@@ -4453,7 +4240,6 @@
   // TODO New key - Add a translation
   "publication.search.title": "Publication Search",
 
-
   // "media-viewer.next": "Next",
   "media-viewer.next": "Nästa",
 
@@ -4463,7 +4249,6 @@
   // "media-viewer.playlist": "Playlist",
   // TODO New key - Add a translation
   "media-viewer.playlist": "Playlist",
-
 
   // "register-email.title": "Ny användare",
   "register-email.title": "Ny användare",
@@ -4531,7 +4316,6 @@
   // "register-page.create-profile.submit.success.head": "Registration completed",
   "register-page.create-profile.submit.success.head": "Registreringen är klar",
 
-
   // "register-page.registration.header": "Ny användare",
   "register-page.registration.header": "Ny användare",
 
@@ -4564,8 +4348,6 @@
 
   // "register-page.registration.error.content": "An error occured when registering the following email address: {{ email }}",
   "register-page.registration.error.content": "Ett fel uppstod när kontot skulle skapas för: {{ email }}",
-
-
 
   // "relationships.add.error.relationship-type.content": "No suitable match could be found for relationship type {{ type }} between the two items",
   "relationships.add.error.relationship-type.content": "Det gick inte att hitta något som matchade relationstyp {{ type }} mellan dessa poster",
@@ -4630,7 +4412,6 @@
   // "relationships.isFundingAgencyOf.OrgUnit": "Funder",
   "relationships.isFundingAgencyOf.OrgUnit": "Finansiär",
 
-
   // "repository.image.logo": "Repository logo",
   "repository.image.logo": "Repositoriets logga",
 
@@ -4639,7 +4420,6 @@
 
   // "repository.title.prefixDSpace": "DSpace Angular ::",
   "repository.title.prefixDSpace": "DSpace Angular ::",
-
 
   // "resource-policies.add.button": "Add",
   "resource-policies.add.button": "Lägg till",
@@ -4791,7 +4571,6 @@
   // "resource-policies.table.headers.title.for.collection": "Policies for Collection",
   "resource-policies.table.headers.title.for.collection": "Policies för samling",
 
-
   // "search.description": "",
   "search.description": "",
 
@@ -4806,7 +4585,6 @@
 
   // "search.search-form.placeholder": "Search the repository ...",
   "search.search-form.placeholder": "Sök i DSpace...",
-
 
   // "search.filters.applied.f.author": "Author",
   "search.filters.applied.f.author": "Författare",
@@ -4852,8 +4630,6 @@
 
   // "search.filters.applied.f.withdrawn": "Withdrawn",
   "search.filters.applied.f.withdrawn": "Återkallad",
-
-
 
   // "search.filters.filter.author.head": "Author",
   "search.filters.filter.author.head": "Författare",
@@ -5065,8 +4841,6 @@
   // "search.filters.filter.submitter.label": "Search submitter",
   "search.filters.filter.submitter.label": "Sök skapad av",
 
-
-
   // "search.filters.entityType.JournalIssue": "Journal Issue",
   "search.filters.entityType.JournalIssue": "Utgåva",
 
@@ -5094,7 +4868,6 @@
   // "search.filters.withdrawn.false": "No",
   "search.filters.withdrawn.false": "Nej",
 
-
   // "search.filters.head": "Filters",
   "search.filters.head": "Filter",
 
@@ -5105,8 +4878,6 @@
   // TODO New key - Add a translation
   "search.filters.search.submit": "Submit",
 
-
-
   // "search.form.search": "Search",
   "search.form.search": "Sök",
 
@@ -5115,8 +4886,6 @@
 
   // "search.form.scope.all": "All of DSpace",
   "search.form.scope.all": "Hela arkivet",
-
-
 
   // "search.results.head": "Search Results",
   "search.results.head": "Sökresultat",
@@ -5133,10 +4902,8 @@
   // "search.results.view-result": "View",
   "search.results.view-result": "Visa",
 
-
   // "default.search.results.head": "Search Results",
   "default.search.results.head": "Sökresultat",
-
 
   // "search.sidebar.close": "Back to results",
   "search.sidebar.close": "Tillbaka till sökresultaten",
@@ -5158,8 +4925,6 @@
 
   // "search.sidebar.settings.title": "Settings",
   "search.sidebar.settings.title": "Inställningar",
-
-
 
   // "search.view-switch.show-detail": "Show detail",
   "search.view-switch.show-detail": "Visa detaljer",
@@ -5208,7 +4973,6 @@
   // "sorting.lastModified.DESC": "Last modified Descending",
   "sorting.lastModified.DESC": "Senast ändrad (fallande)",
 
-
   // "statistics.title": "Statistics",
   "statistics.title": "Statistik",
 
@@ -5241,8 +5005,6 @@
 
   // "statistics.table.header.views": "Views",
   "statistics.table.header.views": "Visningar",
-
-
 
   // "submission.edit.breadcrumbs": "Edit Submission",
   "submission.edit.breadcrumbs": "Redigera bidrag",
@@ -5285,7 +5047,6 @@
 
   // "submission.general.save-later": "Save for later",
   "submission.general.save-later": "Spara till senare",
-
 
   // "submission.import-external.page.title": "Import metadata from an external source",
   "submission.import-external.page.title": "Importera metadata från extern källa",
@@ -5612,9 +5373,6 @@
   // "submission.sections.describe.relationship-lookup.title.isFundingAgencyOfProject": "Funder of the Project",
   "submission.sections.describe.relationship-lookup.title.isFundingAgencyOfProject": "Projektets finansiär",
 
-
-
-
   // "submission.sections.describe.relationship-lookup.selection-tab.search-form.placeholder": "Search...",
   "submission.sections.describe.relationship-lookup.selection-tab.search-form.placeholder": "Sök...",
 
@@ -5750,7 +5508,7 @@
   "submission.sections.describe.relationship-lookup.selection-tab.title.arxiv": "Sökresultat",
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Would you like to save \"{{ value }}\" as a name variant for this person so you and others can reuse it for future submissions? If you don't you can still use it for this submission.",
-  "submission.sections.describe.relationship-lookup.name-variant.notification.content": "Vill du spara \"{{ value }}\" som en namnvariation för denna person? Om inte så kan du fortfarande använda det i detta bidrag.",
+  "submission.sections.describe.relationship-lookup.name-variant.notification.content": 'Vill du spara "{{ value }}" som en namnvariation för denna person? Om inte så kan du fortfarande använda det i detta bidrag.',
 
   // "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Save a new name variant",
   "submission.sections.describe.relationship-lookup.name-variant.notification.confirm": "Spara en ny namnvariation",
@@ -5821,8 +5579,6 @@
   // "submission.sections.general.sections_not_valid": "There are incomplete sections.",
   "submission.sections.general.sections_not_valid": "Det saknas data i vissa delar.",
 
-
-
   // "submission.sections.submit.progressbar.accessCondition": "Item access conditions",
   "submission.sections.submit.progressbar.accessCondition": "Villkor för åtkomst till post",
 
@@ -5849,8 +5605,6 @@
 
   // "submission.sections.submit.progressbar.upload": "Upload files",
   "submission.sections.submit.progressbar.upload": "Ladda upp filer",
-
-
 
   // "submission.sections.status.errors.title": "Errors",
   "submission.sections.status.errors.title": "Fel",
@@ -6017,20 +5771,17 @@
   // "submission.sections.accesses.form.until-placeholder": "Until",
   "submission.sections.accesses.form.until-placeholder": "Till",
 
-
   // "submission.submit.breadcrumbs": "New submission",
   "submission.submit.breadcrumbs": "Nytt bidrag",
 
   // "submission.submit.title": "New submission",
   "submission.submit.title": "Nytt bidrag",
 
-
-
   // "submission.workflow.generic.delete": "Delete",
   "submission.workflow.generic.delete": "Radera",
 
   // "submission.workflow.generic.delete-help": "If you would to discard this item, select \"Delete\".  You will then be asked to confirm it.",
-  "submission.workflow.generic.delete-help": "Välj \"Radera\" om du vill ta bort detta bidrag.  Du kommer att få bekräfta detta.",
+  "submission.workflow.generic.delete-help": 'Välj "Radera" om du vill ta bort detta bidrag.  Du kommer att få bekräfta detta.',
 
   // "submission.workflow.generic.edit": "Edit",
   "submission.workflow.generic.edit": "Redigera",
@@ -6044,13 +5795,11 @@
   // "submission.workflow.generic.view-help": "Select this option to view the item's metadata.",
   "submission.workflow.generic.view-help": "Visa postens metadata.",
 
-
-
   // "submission.workflow.tasks.claimed.approve": "Approve",
   "submission.workflow.tasks.claimed.approve": "Godkänn",
 
   // "submission.workflow.tasks.claimed.approve_help": "If you have reviewed the item and it is suitable for inclusion in the collection, select \"Approve\".",
-  "submission.workflow.tasks.claimed.approve_help": "Om du har granskat posten och funnit att den kan ingå i samlingen, välj \"Godkänn\".",
+  "submission.workflow.tasks.claimed.approve_help": 'Om du har granskat posten och funnit att den kan ingå i samlingen, välj "Godkänn".',
 
   // "submission.workflow.tasks.claimed.edit": "Edit",
   "submission.workflow.tasks.claimed.edit": "Redigera",
@@ -6074,15 +5823,13 @@
   "submission.workflow.tasks.claimed.reject.submit": "Neka",
 
   // "submission.workflow.tasks.claimed.reject_help": "If you have reviewed the item and found it is <strong>not</strong> suitable for inclusion in the collection, select \"Reject\".  You will then be asked to enter a message indicating why the item is unsuitable, and whether the submitter should change something and resubmit.",
-  "submission.workflow.tasks.claimed.reject_help": "Om du har granskat posten och funnit att den <strong>inte</strong> uppfyller villkoren för att ingå i samlingen, välj \"Neka\".  Du kommer du att få ange orsaken till detta, samt om uppladdaren skall ändra något och försöka igen.",
+  "submission.workflow.tasks.claimed.reject_help": 'Om du har granskat posten och funnit att den <strong>inte</strong> uppfyller villkoren för att ingå i samlingen, välj "Neka".  Du kommer du att få ange orsaken till detta, samt om uppladdaren skall ändra något och försöka igen.',
 
   // "submission.workflow.tasks.claimed.return": "Return to pool",
   "submission.workflow.tasks.claimed.return": "Returnera till uppladdningspoolen",
 
   // "submission.workflow.tasks.claimed.return_help": "Return the task to the pool so that another user may perform the task.",
   "submission.workflow.tasks.claimed.return_help": "Returnera till uppladdningspoolen så att den blir tillgänglig för andra användare.",
-
-
 
   // "submission.workflow.tasks.generic.error": "Error occurred during operation...",
   "submission.workflow.tasks.generic.error": "Ett fel har uppstått...",
@@ -6096,8 +5843,6 @@
   // "submission.workflow.tasks.generic.success": "Operation successful",
   "submission.workflow.tasks.generic.success": "Operationen lyckades",
 
-
-
   // "submission.workflow.tasks.pool.claim": "Claim",
   // TODO New key - Add a translation
   "submission.workflow.tasks.pool.claim": "Claim",
@@ -6110,8 +5855,6 @@
 
   // "submission.workflow.tasks.pool.show-detail": "Show detail",
   "submission.workflow.tasks.pool.show-detail": "Visa detaljvy",
-
-
 
   // "thumbnail.default.alt": "Thumbnail Image",
   "thumbnail.default.alt": "Bild (thumbnail)",
@@ -6137,12 +5880,8 @@
   // "thumbnail.person.placeholder": "No Profile Picture Available",
   "thumbnail.person.placeholder": "Profilbild saknas",
 
-
-
   // "title": "DSpace",
-  "title": "DSpace",
-
-
+  title: "DSpace",
 
   // "vocabulary-treeview.header": "Hierarchical tree view",
   "vocabulary-treeview.header": "Hierarkisk trädvy",
@@ -6165,8 +5904,6 @@
   // "vocabulary-treeview.tree.description.srsc": "Research Subject Categories",
   // TODO New key - Add a translation
   "vocabulary-treeview.tree.description.srsc": "Research Subject Categories",
-
-
 
   // "uploader.browse": "browse",
   "uploader.browse": "sök efter filen på din dator",
@@ -6196,8 +5933,6 @@
   // "virtual-metadata.delete-relationship.modal-head": "Select the items for which you want to save the virtual metadata as real metadata",
   "virtual-metadata.delete-relationship.modal-head": "Välj poster som dessa metadata skall sparas för",
 
-
-
   // "workspace.search.results.head": "Your submissions",
   "workspace.search.results.head": "Dina registreringar",
 
@@ -6206,8 +5941,6 @@
 
   // "workflow.search.results.head": "Workflow tasks",
   "workflow.search.results.head": "Uppgifter",
-
-
 
   // "workflow-item.edit.breadcrumbs": "Edit workflowitem",
   "workflow-item.edit.breadcrumbs": "Redigera post i arbetsflöde",
@@ -6239,7 +5972,6 @@
   // "workflow-item.delete.button.confirm": "Delete",
   "workflow-item.delete.button.confirm": "Radera",
 
-
   // "workflow-item.send-back.notification.success.title": "Sent back to submitter",
   "workflow-item.send-back.notification.success.title": "Skicka tillbaka till uppladdare",
 
@@ -6267,7 +5999,6 @@
   // "workflow-item.view.breadcrumbs": "Workflow View",
   "workflow-item.view.breadcrumbs": "Arbetsflöde",
 
-
   // "idle-modal.header": "Session will expire soon",
   "idle-modal.header": "Sessionen kommer att upphöra snart",
 
@@ -6279,5 +6010,4 @@
 
   // "idle-modal.extend-session": "Extend session"
   "idle-modal.extend-session": "Fortsätt",
-
 }

@@ -5,7 +5,6 @@ import { environment } from '../../../environments/environment';
 import { MarkdownPipe } from './markdown.pipe';
 
 describe('Markdown Pipe', () => {
-
   let markdownPipe: MarkdownPipe;
 
   beforeEach(() => {
@@ -28,17 +27,11 @@ describe('Markdown Pipe', () => {
   });
 
   it('should render markdown', async () => {
-    await testTransform(
-      '# Header',
-      '<h1>Header</h1>',
-    );
+    await testTransform('# Header', '<h1>Header</h1>');
   });
 
   it('should render mathjax', async () => {
-    await testTransform(
-      '$\\sqrt{2}^2$',
-      '<svg.*?>.*</svg>',
-    );
+    await testTransform('$\\sqrt{2}^2$', '<svg.*?>.*</svg>');
   });
 
   it('should render regular links', async () => {
@@ -56,9 +49,7 @@ describe('Markdown Pipe', () => {
   });
 
   async function testTransform(input: string, output: string) {
-    expect(
-      await markdownPipe.transform(input),
-    ).toMatch(
+    expect(await markdownPipe.transform(input)).toMatch(
       new RegExp('.*' + output + '.*'),
     );
   }

@@ -36,7 +36,9 @@ describe(`BrowserReferrerService`, () => {
 
     describe(`when the history only contains the current route`, () => {
       beforeEach(() => {
-        spyOn(routeService, 'getHistory').and.returnValue(observableOf(['/current/route']));
+        spyOn(routeService, 'getHistory').and.returnValue(
+          observableOf(['/current/route']),
+        );
       });
 
       it(`should return document.referrer`, (done: DoneFn) => {
@@ -50,12 +52,14 @@ describe(`BrowserReferrerService`, () => {
     describe(`when the history contains multiple routes`, () => {
       const prevUrl = '/the/route/we/need';
       beforeEach(() => {
-        spyOn(routeService, 'getHistory').and.returnValue(observableOf([
-          '/first/route',
-          '/second/route',
-          prevUrl,
-          '/current/route',
-        ]));
+        spyOn(routeService, 'getHistory').and.returnValue(
+          observableOf([
+            '/first/route',
+            '/second/route',
+            prevUrl,
+            '/current/route',
+          ]),
+        );
       });
 
       it(`should return the last route before the current one combined with the origin from HardRedirectService`, (done: DoneFn) => {

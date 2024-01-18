@@ -6,10 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import {
-  NgbDatepicker,
-  NgbDatepickerConfig,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepicker, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicDatePickerModel,
   DynamicFormControlComponent,
@@ -23,7 +20,6 @@ import {
   templateUrl: './dynamic-date-picker-inline.component.html',
 })
 export class DsDatePickerInlineComponent extends DynamicFormControlComponent {
-
   @Input() bindId = true;
   @Input() group: UntypedFormGroup;
   @Input() layout: DynamicFormControlLayout;
@@ -35,10 +31,11 @@ export class DsDatePickerInlineComponent extends DynamicFormControlComponent {
 
   @ViewChild(NgbDatepicker) ngbDatePicker: NgbDatepicker;
 
-  constructor(protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService,
-              public config: NgbDatepickerConfig) {
-
+  constructor(
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
+    public config: NgbDatepickerConfig,
+  ) {
     super(layoutService, validationService);
   }
 }

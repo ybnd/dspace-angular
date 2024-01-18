@@ -3,17 +3,10 @@ import {
   Injector,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { RequestService } from '../../../core/data/request.service';
@@ -71,7 +64,11 @@ const item = Object.assign(new Item(), {
   },
 });
 const rd = createSuccessfulRemoteDataObject(item);
-mockObject = Object.assign(new WorkflowItem(), { item: observableOf(rd), id: '1234', uuid: '1234' });
+mockObject = Object.assign(new WorkflowItem(), {
+  item: observableOf(rd),
+  id: '1234',
+  uuid: '1234',
+});
 
 describe('WorkflowitemActionsComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -89,14 +86,19 @@ describe('WorkflowitemActionsComponent', () => {
         { provide: Injector, useValue: {} },
         { provide: Router, useValue: new RouterStub() },
         { provide: WorkflowItemDataService, useValue: mockDataService },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
         { provide: SearchService, useValue: searchService },
         { provide: RequestService, useValue: requestServce },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(WorkflowitemActionsComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(WorkflowitemActionsComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -117,9 +119,10 @@ describe('WorkflowitemActionsComponent', () => {
   });
 
   it('should display view button', () => {
-    const btn = fixture.debugElement.query(By.css('button[data-test="view-btn"]'));
+    const btn = fixture.debugElement.query(
+      By.css('button[data-test="view-btn"]'),
+    );
 
     expect(btn).not.toBeNull();
   });
-
 });

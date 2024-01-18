@@ -3,7 +3,10 @@ import { UntypedFormGroup } from '@angular/forms';
 /**
  * Validator used to confirm that the password and confirmed password value are the same
  */
-export function ConfirmedValidator(controlName: string, matchingControlName: string) {
+export function ConfirmedValidator(
+  controlName: string,
+  matchingControlName: string,
+) {
   return (formGroup: UntypedFormGroup) => {
     const control = formGroup.controls[controlName];
     const matchingControl = formGroup.controls[matchingControlName];

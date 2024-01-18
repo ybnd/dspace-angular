@@ -13,9 +13,7 @@ import { NavbarEffects } from './navbar.effects';
 import { NavbarSectionComponent } from './navbar-section/navbar-section.component';
 import { ThemedNavbarComponent } from './themed-navbar.component';
 
-const effects = [
-  NavbarEffects,
-];
+const effects = [NavbarEffects];
 
 const ENTRY_COMPONENTS = [
   // put only entry components that use custom decorator
@@ -33,11 +31,7 @@ const ENTRY_COMPONENTS = [
     EffectsModule.forFeature(effects),
     CoreModule.forRoot(),
   ],
-  declarations: [
-    ...ENTRY_COMPONENTS,
-    NavbarComponent,
-    ThemedNavbarComponent,
-  ],
+  declarations: [...ENTRY_COMPONENTS, NavbarComponent, ThemedNavbarComponent],
   providers: [],
   exports: [
     ThemedNavbarComponent,
@@ -60,5 +54,4 @@ export class NavbarModule {
       providers: ENTRY_COMPONENTS.map((component) => ({ provide: component })),
     };
   }
-
 }

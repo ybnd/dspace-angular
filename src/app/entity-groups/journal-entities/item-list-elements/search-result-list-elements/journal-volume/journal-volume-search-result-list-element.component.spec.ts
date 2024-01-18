@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -48,7 +41,8 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         ],
       },
     }),
-  });
+  },
+);
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
   {
@@ -63,7 +57,8 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         ],
       },
     }),
-  });
+  },
+);
 
 const environmentUseThumbs = {
   browseBy: {
@@ -80,7 +75,10 @@ const enviromentNoThumbs = {
 describe('JournalVolumeSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [JournalVolumeSearchResultListElementComponent, TruncatePipe],
+      declarations: [
+        JournalVolumeSearchResultListElementComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: DSONameService, useClass: DSONameServiceMock },
@@ -88,15 +86,18 @@ describe('JournalVolumeSearchResultListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(JournalVolumeSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(JournalVolumeSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(JournalVolumeSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      JournalVolumeSearchResultListElementComponent,
+    );
     journalVolumeListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('with environment.browseBy.showThumbnails set to true', () => {
@@ -109,7 +110,9 @@ describe('JournalVolumeSearchResultListElementComponent', () => {
     });
 
     it('should add thumbnail element', () => {
-      const thumbnailElement = fixture.debugElement.query(By.css('ds-thumbnail'));
+      const thumbnailElement = fixture.debugElement.query(
+        By.css('ds-thumbnail'),
+      );
       expect(thumbnailElement).toBeTruthy();
     });
   });
@@ -121,7 +124,9 @@ describe('JournalVolumeSearchResultListElementComponent', () => {
     });
 
     it('should show the journal title span', () => {
-      const journalTitleField = fixture.debugElement.query(By.css('span.item-list-journal-volumes'));
+      const journalTitleField = fixture.debugElement.query(
+        By.css('span.item-list-journal-volumes'),
+      );
       expect(journalTitleField).not.toBeNull();
     });
   });
@@ -133,7 +138,9 @@ describe('JournalVolumeSearchResultListElementComponent', () => {
     });
 
     it('should not show the journal title span', () => {
-      const journalTitleField = fixture.debugElement.query(By.css('span.item-list-journal-volumes'));
+      const journalTitleField = fixture.debugElement.query(
+        By.css('span.item-list-journal-volumes'),
+      );
       expect(journalTitleField).toBeNull();
     });
   });
@@ -145,7 +152,9 @@ describe('JournalVolumeSearchResultListElementComponent', () => {
     });
 
     it('should show the journal identifiers span', () => {
-      const journalIdentifierField = fixture.debugElement.query(By.css('span.item-list-journal-volume-identifiers'));
+      const journalIdentifierField = fixture.debugElement.query(
+        By.css('span.item-list-journal-volume-identifiers'),
+      );
       expect(journalIdentifierField).not.toBeNull();
     });
   });
@@ -157,17 +166,21 @@ describe('JournalVolumeSearchResultListElementComponent', () => {
     });
 
     it('should not show the journal identifiers span', () => {
-      const journalIdentifierField = fixture.debugElement.query(By.css('span.item-list-journal-volume-identifiers'));
+      const journalIdentifierField = fixture.debugElement.query(
+        By.css('span.item-list-journal-volume-identifiers'),
+      );
       expect(journalIdentifierField).toBeNull();
     });
   });
 });
 
 describe('JournalVolumeSearchResultListElementComponent', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [JournalVolumeSearchResultListElementComponent, TruncatePipe],
+      declarations: [
+        JournalVolumeSearchResultListElementComponent,
+        TruncatePipe,
+      ],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: DSONameService, useClass: DSONameServiceMock },
@@ -175,13 +188,17 @@ describe('JournalVolumeSearchResultListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(JournalVolumeSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(JournalVolumeSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(JournalVolumeSearchResultListElementComponent);
+    fixture = TestBed.createComponent(
+      JournalVolumeSearchResultListElementComponent,
+    );
     journalVolumeListElementComponent = fixture.componentInstance;
   }));
 
@@ -192,7 +209,9 @@ describe('JournalVolumeSearchResultListElementComponent', () => {
     });
 
     it('should not add thumbnail element', () => {
-      const thumbnailElement = fixture.debugElement.query(By.css('ds-thumbnail'));
+      const thumbnailElement = fixture.debugElement.query(
+        By.css('ds-thumbnail'),
+      );
       expect(thumbnailElement).toBeFalsy();
     });
   });

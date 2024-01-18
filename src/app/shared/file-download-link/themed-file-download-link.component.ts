@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Bitstream } from '../../core/shared/bitstream.model';
 import { Item } from '../../core/shared/item.model';
@@ -14,7 +11,6 @@ import { FileDownloadLinkComponent } from './file-download-link.component';
   templateUrl: '../theme-support/themed.component.html',
 })
 export class ThemedFileDownloadLinkComponent extends ThemedComponent<FileDownloadLinkComponent> {
-
   @Input() bitstream: Bitstream;
 
   @Input() item: Item;
@@ -25,18 +21,20 @@ export class ThemedFileDownloadLinkComponent extends ThemedComponent<FileDownloa
 
   @Input() enableRequestACopy: boolean;
 
-  protected inAndOutputNames: (keyof FileDownloadLinkComponent & keyof this)[] = ['bitstream', 'item', 'cssClasses', 'isBlank', 'enableRequestACopy'];
+  protected inAndOutputNames: (keyof FileDownloadLinkComponent & keyof this)[] =
+    ['bitstream', 'item', 'cssClasses', 'isBlank', 'enableRequestACopy'];
 
   protected getComponentName(): string {
     return 'FileDownloadLinkComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/file-download-link/file-download-link.component`);
+    return import(
+      `../../../themes/${themeName}/app/shared/file-download-link/file-download-link.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./file-download-link.component');
   }
-
 }

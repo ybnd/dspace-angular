@@ -29,9 +29,7 @@ describe('MetadataPatchOperationService', () => {
             changeType: FieldChangeType.REMOVE,
           },
         });
-        expected = [
-          { op: 'remove', path: '/metadata/dc.title/0' },
-        ] as any[];
+        expected = [{ op: 'remove', path: '/metadata/dc.title/0' }] as any[];
         result = service.fieldUpdatesToPatchOperations(fieldUpdates);
       });
 
@@ -53,7 +51,11 @@ describe('MetadataPatchOperationService', () => {
           },
         });
         expected = [
-          { op: 'add', path: '/metadata/dc.title/-', value: [{ value: 'Added title', language: undefined }] },
+          {
+            op: 'add',
+            path: '/metadata/dc.title/-',
+            value: [{ value: 'Added title', language: undefined }],
+          },
         ] as any[];
         result = service.fieldUpdatesToPatchOperations(fieldUpdates);
       });
@@ -76,7 +78,11 @@ describe('MetadataPatchOperationService', () => {
           },
         });
         expected = [
-          { op: 'replace', path: '/metadata/dc.title/0', value: { value: 'Changed title', language: undefined } },
+          {
+            op: 'replace',
+            path: '/metadata/dc.title/0',
+            value: { value: 'Changed title', language: undefined },
+          },
         ] as any[];
         result = service.fieldUpdatesToPatchOperations(fieldUpdates);
       });
@@ -239,7 +245,11 @@ describe('MetadataPatchOperationService', () => {
         });
         expected = [
           { op: 'remove', path: '/metadata/dc.title/1' },
-          { op: 'replace', path: '/metadata/dc.title/1', value: { value: 'Third changed title', language: undefined } },
+          {
+            op: 'replace',
+            path: '/metadata/dc.title/1',
+            value: { value: 'Third changed title', language: undefined },
+          },
           { op: 'remove', path: '/metadata/dc.title/0' },
         ] as any[];
         result = service.fieldUpdatesToPatchOperations(fieldUpdates);

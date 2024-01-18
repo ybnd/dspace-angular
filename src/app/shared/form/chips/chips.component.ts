@@ -22,7 +22,6 @@ import { ChipsItem } from './models/chips-item.model';
   styleUrls: ['./chips.component.scss'],
   templateUrl: './chips.component.html',
 })
-
 export class ChipsComponent implements OnChanges {
   @Input() chips: Chips;
   @Input() wrapperClass: string;
@@ -41,8 +40,8 @@ export class ChipsComponent implements OnChanges {
   constructor(
     private cdr: ChangeDetectorRef,
     private dragService: DragService,
-    private translate: TranslateService) {
-
+    private translate: TranslateService,
+  ) {
     this.options = {
       animation: 300,
       chosenClass: 'm-0',
@@ -103,13 +102,19 @@ export class ChipsComponent implements OnChanges {
         if (isObject(chipsItem.item[field])) {
           textToDisplay.push(chipsItem.item[field].display);
           if (chipsItem.item[field].hasOtherInformation()) {
-            Object.keys(chipsItem.item[field].otherInformation)
-              .forEach((otherField) => {
-                this.translate.get('form.other-information.' + otherField)
+            Object.keys(chipsItem.item[field].otherInformation).forEach(
+              (otherField) => {
+                this.translate
+                  .get('form.other-information.' + otherField)
                   .subscribe((label) => {
-                    textToDisplay.push(label + ': ' + chipsItem.item[field].otherInformation[otherField]);
+                    textToDisplay.push(
+                      label +
+                        ': ' +
+                        chipsItem.item[field].otherInformation[otherField],
+                    );
                   });
-              });
+              },
+            );
           }
         } else {
           textToDisplay.push(chipsItem.item[field]);
@@ -123,8 +128,6 @@ export class ChipsComponent implements OnChanges {
         this.tipText = textToDisplay;
         tooltip.open();
       }
-
     }
   }
-
 }

@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -35,9 +31,7 @@ describe('ItemVersionHistoryComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ItemVersionHistoryComponent, VarDirective],
       imports: [TranslateModule.forRoot(), RouterTestingModule.withRoutes([])],
-      providers: [
-        { provide: ActivatedRoute, useValue: activatedRoute },
-      ],
+      providers: [{ provide: ActivatedRoute, useValue: activatedRoute }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
@@ -48,7 +42,7 @@ describe('ItemVersionHistoryComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should initialize the itemRD$ from the route\'s data', (done) => {
+  it("should initialize the itemRD$ from the route's data", (done) => {
     component.itemRD$.subscribe((itemRD) => {
       expect(itemRD.payload).toBe(item);
       done();

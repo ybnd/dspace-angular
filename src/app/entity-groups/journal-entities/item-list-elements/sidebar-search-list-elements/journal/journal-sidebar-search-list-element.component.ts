@@ -8,17 +8,29 @@ import { ItemSearchResult } from '../../../../../shared/object-collection/shared
 import { listableObjectComponent } from '../../../../../shared/object-collection/shared/listable-object/listable-object.decorator';
 import { SidebarSearchListElementComponent } from '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component';
 
-@listableObjectComponent('JournalSearchResult', ViewMode.ListElement, Context.SideBarSearchModal)
-@listableObjectComponent('JournalSearchResult', ViewMode.ListElement, Context.SideBarSearchModalCurrent)
+@listableObjectComponent(
+  'JournalSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModal,
+)
+@listableObjectComponent(
+  'JournalSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModalCurrent,
+)
 @Component({
   selector: 'ds-journal-sidebar-search-list-element',
-  templateUrl: '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
+  templateUrl:
+    '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
 })
 /**
  * Component displaying a list element for a {@link ItemSearchResult} of type "Journal" within the context of
  * a sidebar search modal
  */
-export class JournalSidebarSearchListElementComponent extends SidebarSearchListElementComponent<ItemSearchResult, Item> {
+export class JournalSidebarSearchListElementComponent extends SidebarSearchListElementComponent<
+  ItemSearchResult,
+  Item
+> {
   /**
    * Get the description of the Journal by returning its ISSN(s)
    */

@@ -22,7 +22,7 @@ describe('TokenResponseParsingService', () => {
       expect(service.parse(undefined, data)).toEqual(expected);
     });
 
-    it('should return an empty TokenResponse when payload doesn\'t contain a token', () => {
+    it("should return an empty TokenResponse when payload doesn't contain a token", () => {
       const data = {
         payload: {},
         statusCode: 200,

@@ -6,10 +6,8 @@ import { Observable } from 'rxjs';
  */
 @Injectable()
 export abstract class ReferrerService {
-
   /**
    * Return the referrer
    */
   abstract getReferrer(): Observable<string>;
-
 }

@@ -1,12 +1,5 @@
-import {
-  Component,
-  Inject,
-  OnInit,
-} from '@angular/core';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { Component, Inject, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
@@ -24,10 +17,7 @@ import {
   NativeWindowService,
 } from '../../../../core/services/window.service';
 import { URLCombiner } from '../../../../core/url-combiner/url-combiner';
-import {
-  isEmpty,
-  isNotNull,
-} from '../../../empty.util';
+import { isEmpty, isNotNull } from '../../../empty.util';
 import { renderAuthMethodFor } from '../log-in.methods-decorator';
 
 @Component({
@@ -39,7 +29,6 @@ import { renderAuthMethodFor } from '../log-in.methods-decorator';
 @renderAuthMethodFor(AuthMethodType.Shibboleth)
 @renderAuthMethodFor(AuthMethodType.Orcid)
 export class LogInExternalProviderComponent implements OnInit {
-
   /**
    * The authentication method data.
    * @type {AuthMethod}
@@ -93,37 +82,47 @@ export class LogInExternalProviderComponent implements OnInit {
 
     // set location
     this.location = decodeURIComponent(this.injectedAuthMethodModel.location);
-
   }
 
   /**
    * Redirect to the external provider url for login
    */
   redirectToExternalProvider() {
-    this.authService.getRedirectUrl().pipe(take(1)).subscribe((redirectRoute) => {
-      if (!this.isStandalonePage) {
-        redirectRoute = this.hardRedirectService.getCurrentRoute();
-      } else if (isEmpty(redirectRoute)) {
-        redirectRoute = '/';
-      }
-      const correctRedirectUrl = new URLCombiner(this._window.nativeWindow.origin, redirectRoute).toString();
+    this.authService
+      .getRedirectUrl()
+      .pipe(take(1))
+      .subscribe((redirectRoute) => {
+        if (!this.isStandalonePage) {
+          redirectRoute = this.hardRedirectService.getCurrentRoute();
+        } else if (isEmpty(redirectRoute)) {
+          redirectRoute = '/';
+        }
+        const correctRedirectUrl = new URLCombiner(
+          this._window.nativeWindow.origin,
+          redirectRoute,
+        ).toString();
 
-      let externalServerUrl = this.location;
-      const myRegexp = /\?redirectUrl=(.*)/g;
-      const match = myRegexp.exec(this.location);
-      const redirectUrlFromServer = (match && match[1]) ? match[1] : null;
+        let externalServerUrl = this.location;
+        const myRegexp = /\?redirectUrl=(.*)/g;
+        const match = myRegexp.exec(this.location);
+        const redirectUrlFromServer = match && match[1] ? match[1] : null;
 
-      // Check whether the current page is different from the redirect url received from rest
-      if (isNotNull(redirectUrlFromServer) && redirectUrlFromServer !== correctRedirectUrl) {
-        // change the redirect url with the current page url
-        const newRedirectUrl = `?redirectUrl=${correctRedirectUrl}`;
-        externalServerUrl = this.location.replace(/\?redirectUrl=(.*)/g, newRedirectUrl);
-      }
+        // Check whether the current page is different from the redirect url received from rest
+        if (
+          isNotNull(redirectUrlFromServer) &&
+          redirectUrlFromServer !== correctRedirectUrl
+        ) {
+          // change the redirect url with the current page url
+          const newRedirectUrl = `?redirectUrl=${correctRedirectUrl}`;
+          externalServerUrl = this.location.replace(
+            /\?redirectUrl=(.*)/g,
+            newRedirectUrl,
+          );
+        }
 
-      // redirect to shibboleth authentication url
-      this.hardRedirectService.redirect(externalServerUrl);
-    });
-
+        // redirect to shibboleth authentication url
+        this.hardRedirectService.redirect(externalServerUrl);
+      });
   }
 
   getButtonLabel() {

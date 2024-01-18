@@ -7,19 +7,9 @@ import {
   Optional,
   Output,
 } from '@angular/core';
-import {
-  ControlContainer,
-  NgForm,
-} from '@angular/forms';
-import {
-  ActivatedRoute,
-  Params,
-  Router,
-} from '@angular/router';
-import {
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { ControlContainer, NgForm } from '@angular/forms';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -34,10 +24,7 @@ import {
   getFirstSucceededRemoteData,
   getRemoteDataPayload,
 } from '../../../core/shared/operators';
-import {
-  hasNoValue,
-  hasValue,
-} from '../../../shared/empty.util';
+import { hasNoValue, hasValue } from '../../../shared/empty.util';
 import { Script } from '../../scripts/script.model';
 import { controlContainerFactory } from '../process-form.component';
 
@@ -50,9 +37,13 @@ const SCRIPT_QUERY_PARAMETER = 'script';
   selector: 'ds-scripts-select',
   templateUrl: './scripts-select.component.html',
   styleUrls: ['./scripts-select.component.scss'],
-  viewProviders: [ { provide: ControlContainer,
-    useFactory: controlContainerFactory,
-    deps: [[new Optional(), NgForm]] } ],
+  viewProviders: [
+    {
+      provide: ControlContainer,
+      useFactory: controlContainerFactory,
+      deps: [[new Optional(), NgForm]],
+    },
+  ],
 })
 export class ScriptsSelectComponent implements OnInit, OnDestroy {
   /**
@@ -70,20 +61,18 @@ export class ScriptsSelectComponent implements OnInit, OnDestroy {
     private scriptService: ScriptDataService,
     private router: Router,
     private route: ActivatedRoute,
-  ) {
-  }
+  ) {}
 
   /**
    * Sets all available scripts
    * Checks if the route contains a script ID and auto selects this scripts
    */
   ngOnInit() {
-    this.scripts$ = this.scriptService.findAll({ elementsPerPage: 9999 })
-      .pipe(
-        getFirstSucceededRemoteData(),
-        getRemoteDataPayload(),
-        map((paginatedList: PaginatedList<Script>) => paginatedList.page),
-      );
+    this.scripts$ = this.scriptService.findAll({ elementsPerPage: 9999 }).pipe(
+      getFirstSucceededRemoteData(),
+      getRemoteDataPayload(),
+      map((paginatedList: PaginatedList<Script>) => paginatedList.page),
+    );
 
     this.routeSub = this.route.queryParams
       .pipe(
@@ -91,15 +80,13 @@ export class ScriptsSelectComponent implements OnInit, OnDestroy {
         map((params: Params) => params[SCRIPT_QUERY_PARAMETER]),
         distinctUntilChanged(),
         switchMap((id: string) =>
-          this.scripts$
-            .pipe(
-              take(1),
-              map((scripts) =>
-                scripts.find((script) => script.id === id),
-              ),
-            ),
+          this.scripts$.pipe(
+            take(1),
+            map((scripts) => scripts.find((script) => script.id === id)),
+          ),
         ),
-      ).subscribe((script: Script) => {
+      )
+      .subscribe((script: Script) => {
         this._selectedScript = script;
         this.select.emit(script);
       });
@@ -117,11 +104,9 @@ export class ScriptsSelectComponent implements OnInit, OnDestroy {
    * @param value The identifier of the script
    */
   set selectedScript(value: string) {
-    this.router.navigate([],
-      {
-        queryParams: { [SCRIPT_QUERY_PARAMETER]: value },
-      },
-    );
+    this.router.navigate([], {
+      queryParams: { [SCRIPT_QUERY_PARAMETER]: value },
+    });
   }
 
   @Input()

@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { SortOptions } from '../../../core/cache/models/sort-options.model';
 import { PaginatedList } from '../../../core/data/paginated-list.model';
@@ -30,8 +25,24 @@ import {
   templateUrl: '../../theme-support/themed.component.html',
 })
 export class ThemedSearchResultsComponent extends ThemedComponent<SearchResultsComponent> {
-
-  protected inAndOutputNames: (keyof SearchResultsComponent & keyof this)[] = ['linkType', 'searchResults', 'searchConfig', 'showCsvExport', 'showThumbnails', 'sortConfig', 'viewMode', 'configuration', 'disableHeader', 'selectable', 'context', 'hidePaginationDetail', 'selectionConfig', 'contentChange', 'deselectObject', 'selectObject'];
+  protected inAndOutputNames: (keyof SearchResultsComponent & keyof this)[] = [
+    'linkType',
+    'searchResults',
+    'searchConfig',
+    'showCsvExport',
+    'showThumbnails',
+    'sortConfig',
+    'viewMode',
+    'configuration',
+    'disableHeader',
+    'selectable',
+    'context',
+    'hidePaginationDetail',
+    'selectionConfig',
+    'contentChange',
+    'deselectObject',
+    'selectObject',
+  ];
 
   @Input() linkType: CollectionElementLinkType;
 
@@ -70,11 +81,12 @@ export class ThemedSearchResultsComponent extends ThemedComponent<SearchResultsC
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../themes/${themeName}/app/shared/search/search-results/search-results.component`);
+    return import(
+      `../../../../themes/${themeName}/app/shared/search/search-results/search-results.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./search-results.component');
   }
-
 }

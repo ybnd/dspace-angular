@@ -1,25 +1,8 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  NgbModal,
-  NgbModalRef,
-} from '@ng-bootstrap/ng-bootstrap';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Subscription,
-} from 'rxjs';
-import {
-  filter,
-  mergeMap,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
+import { filter, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 import { AlertType } from 'src/app/shared/alert/alert-type';
 
 import { ExternalSourceDataService } from '../../core/data/external-source-data.service';
@@ -36,10 +19,7 @@ import { getFinishedRemoteData } from '../../core/shared/operators';
 import { PageInfo } from '../../core/shared/page-info.model';
 import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
 import { fadeIn } from '../../shared/animations/fade';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { PaginationComponentOptions } from '../../shared/pagination/pagination-component-options.model';
 import { createSuccessfulRemoteDataObject } from '../../shared/remote-data.utils';
 import { SubmissionImportExternalPreviewComponent } from './import-external-preview/submission-import-external-preview.component';
@@ -55,7 +35,6 @@ import { ExternalSourceData } from './import-external-searchbar/submission-impor
   animations: [fadeIn],
 })
 export class SubmissionImportExternalComponent implements OnInit, OnDestroy {
-
   /**
    * The external source search data from the routing service.
    */
@@ -63,17 +42,22 @@ export class SubmissionImportExternalComponent implements OnInit, OnDestroy {
   /**
    * The displayed list of entries
    */
-  public entriesRD$: BehaviorSubject<RemoteData<PaginatedList<ExternalSourceEntry>>> = new BehaviorSubject<RemoteData<PaginatedList<ExternalSourceEntry>>>(null);
+  public entriesRD$: BehaviorSubject<
+    RemoteData<PaginatedList<ExternalSourceEntry>>
+  > = new BehaviorSubject<RemoteData<PaginatedList<ExternalSourceEntry>>>(null);
   /**
    * TRUE if the REST service is called to retrieve the external source items
    */
-  public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public isLoading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
 
-  public reload$: BehaviorSubject<ExternalSourceData> = new BehaviorSubject<ExternalSourceData>({
-    entity: '',
-    query: '',
-    sourceId: '',
-  });
+  public reload$: BehaviorSubject<ExternalSourceData> =
+    new BehaviorSubject<ExternalSourceData>({
+      entity: '',
+      query: '',
+      sourceId: '',
+    });
   /**
    * Configuration to use for the import buttons
    */
@@ -129,8 +113,7 @@ export class SubmissionImportExternalComponent implements OnInit, OnDestroy {
     private routeService: RouteService,
     private router: Router,
     private modalService: NgbModal,
-  ) {
-  }
+  ) {}
 
   /**
    * Get the entries for the selected external source and set initial configuration.
@@ -141,38 +124,46 @@ export class SubmissionImportExternalComponent implements OnInit, OnDestroy {
     this.repeatable = false;
     this.routeData = { entity: '', sourceId: '', query: '' };
     this.importConfig = {
-      buttonLabel: 'submission.sections.describe.relationship-lookup.external-source.import-button-title.' + this.label,
+      buttonLabel:
+        'submission.sections.describe.relationship-lookup.external-source.import-button-title.' +
+        this.label,
     };
-    this.entriesRD$ = new BehaviorSubject(createSuccessfulRemoteDataObject(buildPaginatedList(new PageInfo(), [])));
+    this.entriesRD$ = new BehaviorSubject(
+      createSuccessfulRemoteDataObject(buildPaginatedList(new PageInfo(), [])),
+    );
     this.isLoading$ = new BehaviorSubject(false);
-    this.subs.push(combineLatest(
-      [
+    this.subs.push(
+      combineLatest([
         this.routeService.getQueryParameterValue('entity'),
         this.routeService.getQueryParameterValue('sourceId'),
         this.routeService.getQueryParameterValue('query'),
-      ]).pipe(
-      take(1),
-    ).subscribe(([entity, sourceId, query]: [string, string, string]) => {
-      this.reload$.next({ entity: entity || NONE_ENTITY_TYPE, query: query, sourceId: sourceId });
-      this.selectLabel(entity);
-      this.retrieveExternalSources();
-    }));
+      ])
+        .pipe(take(1))
+        .subscribe(([entity, sourceId, query]: [string, string, string]) => {
+          this.reload$.next({
+            entity: entity || NONE_ENTITY_TYPE,
+            query: query,
+            sourceId: sourceId,
+          });
+          this.selectLabel(entity);
+          this.retrieveExternalSources();
+        }),
+    );
   }
 
   /**
    * Get the data from the searchbar and changes the router data.
    */
   public getExternalSourceData(event: ExternalSourceData): void {
-    this.router.navigate(
-      [],
-      {
+    this.router
+      .navigate([], {
         queryParams: event,
         replaceUrl: true,
-      },
-    ).then(() => {
-      this.reload$.next(event);
-      this.retrieveExternalSources();
-    });
+      })
+      .then(() => {
+        this.reload$.next(event);
+        this.retrieveExternalSources();
+      });
   }
 
   /**
@@ -180,9 +171,12 @@ export class SubmissionImportExternalComponent implements OnInit, OnDestroy {
    * @param entry The entry to import
    */
   public import(entry): void {
-    this.modalRef = this.modalService.open(SubmissionImportExternalPreviewComponent, {
-      size: 'lg',
-    });
+    this.modalRef = this.modalService.open(
+      SubmissionImportExternalPreviewComponent,
+      {
+        size: 'lg',
+      },
+    );
     const modalComp = this.modalRef.componentInstance;
     modalComp.externalSourceEntry = entry;
     modalComp.labelPrefix = this.label;
@@ -198,7 +192,6 @@ export class SubmissionImportExternalComponent implements OnInit, OnDestroy {
     if (hasValue(this.retrieveExternalSourcesSub)) {
       this.retrieveExternalSourcesSub.unsubscribe();
     }
-
   }
 
   /**
@@ -208,24 +201,34 @@ export class SubmissionImportExternalComponent implements OnInit, OnDestroy {
     if (hasValue(this.retrieveExternalSourcesSub)) {
       this.retrieveExternalSourcesSub.unsubscribe();
     }
-    this.retrieveExternalSourcesSub = this.reload$.pipe(
-      filter((sourceQueryObject: ExternalSourceData) => isNotEmpty(sourceQueryObject.sourceId) && isNotEmpty(sourceQueryObject.query)),
-      switchMap((sourceQueryObject: ExternalSourceData) => {
-        const query = sourceQueryObject.query;
-        this.routeData = sourceQueryObject;
-        return this.searchConfigService.paginatedSearchOptions.pipe(
-          tap(() => this.isLoading$.next(true)),
-          filter((searchOptions) => searchOptions.query === query),
-          mergeMap((searchOptions) => this.externalService.getExternalSourceEntries(this.routeData.sourceId, searchOptions).pipe(
-            getFinishedRemoteData(),
-          )),
-        );
-      },
-      ),
-    ).subscribe((rdData) => {
-      this.entriesRD$.next(rdData);
-      this.isLoading$.next(false);
-    });
+    this.retrieveExternalSourcesSub = this.reload$
+      .pipe(
+        filter(
+          (sourceQueryObject: ExternalSourceData) =>
+            isNotEmpty(sourceQueryObject.sourceId) &&
+            isNotEmpty(sourceQueryObject.query),
+        ),
+        switchMap((sourceQueryObject: ExternalSourceData) => {
+          const query = sourceQueryObject.query;
+          this.routeData = sourceQueryObject;
+          return this.searchConfigService.paginatedSearchOptions.pipe(
+            tap(() => this.isLoading$.next(true)),
+            filter((searchOptions) => searchOptions.query === query),
+            mergeMap((searchOptions) =>
+              this.externalService
+                .getExternalSourceEntries(
+                  this.routeData.sourceId,
+                  searchOptions,
+                )
+                .pipe(getFinishedRemoteData()),
+            ),
+          );
+        }),
+      )
+      .subscribe((rdData) => {
+        this.entriesRD$.next(rdData);
+        this.isLoading$.next(false);
+      });
   }
 
   /**
@@ -236,8 +239,9 @@ export class SubmissionImportExternalComponent implements OnInit, OnDestroy {
   private selectLabel(entity: string): void {
     this.label = entity;
     this.importConfig = {
-      buttonLabel: 'submission.sections.describe.relationship-lookup.external-source.import-button-title.' + this.label,
+      buttonLabel:
+        'submission.sections.describe.relationship-lookup.external-source.import-button-title.' +
+        this.label,
     };
   }
-
 }

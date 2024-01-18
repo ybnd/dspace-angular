@@ -11,12 +11,7 @@ import {
 } from '@angular/core';
 import { UntypedFormControl } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  Observable,
-  of,
-  Subscription,
-} from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -48,7 +43,9 @@ import { followLink } from '../../../shared/utils/follow-link-config.model';
 /**
  * Component displaying a searchable input for metadata-fields
  */
-export class MetadataFieldSelectorComponent implements OnInit, OnDestroy, AfterViewInit {
+export class MetadataFieldSelectorComponent
+  implements OnInit, OnDestroy, AfterViewInit
+{
   /**
    * Type of the DSpaceObject
    * Used to resolve i18n messages
@@ -115,10 +112,11 @@ export class MetadataFieldSelectorComponent implements OnInit, OnDestroy, AfterV
    */
   subs: Subscription[] = [];
 
-  constructor(protected registryService: RegistryService,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService) {
-  }
+  constructor(
+    protected registryService: RegistryService,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+  ) {}
 
   /**
    * Subscribe to any changes made to the input, with a debounce and fire a query, as well as emit the change from this component
@@ -126,26 +124,34 @@ export class MetadataFieldSelectorComponent implements OnInit, OnDestroy, AfterV
    */
   ngOnInit(): void {
     this.subs.push(
-      this.input.valueChanges.pipe(
-        debounceTime(this.debounceTime),
-      ).subscribe((valueChange) => {
-        if (!this.selectedValueLoading) {
-          this.query$.next(valueChange);
-        }
-        this.selectedValueLoading = false;
-        this.mdField = valueChange;
-        this.mdFieldChange.emit(this.mdField);
-      }),
+      this.input.valueChanges
+        .pipe(debounceTime(this.debounceTime))
+        .subscribe((valueChange) => {
+          if (!this.selectedValueLoading) {
+            this.query$.next(valueChange);
+          }
+          this.selectedValueLoading = false;
+          this.mdField = valueChange;
+          this.mdFieldChange.emit(this.mdField);
+        }),
     );
     this.mdFieldOptions$ = this.query$.pipe(
       distinctUntilChanged(),
       switchMap((query: string) => {
         this.showInvalid = false;
         if (query !== null) {
-          return this.registryService.queryMetadataFields(query, { elementsPerPage: 10, sort: new SortOptions('fieldName', SortDirection.ASC) }, true, false, followLink('schema')).pipe(
-            getAllSucceededRemoteData(),
-            metadataFieldsToString(),
-          );
+          return this.registryService
+            .queryMetadataFields(
+              query,
+              {
+                elementsPerPage: 10,
+                sort: new SortOptions('fieldName', SortDirection.ASC),
+              },
+              true,
+              false,
+              followLink('schema'),
+            )
+            .pipe(getAllSucceededRemoteData(), metadataFieldsToString());
         } else {
           return [[]];
         }
@@ -167,22 +173,35 @@ export class MetadataFieldSelectorComponent implements OnInit, OnDestroy, AfterV
    * Upon subscribing to the returned observable, the showInvalid flag is updated accordingly to show the feedback under the input
    */
   validate(): Observable<boolean> {
-    return this.registryService.queryMetadataFields(this.mdField, null, true, false, followLink('schema')).pipe(
-      getFirstCompletedRemoteData(),
-      switchMap((rd) => {
-        if (rd.hasSucceeded) {
-          return of(rd).pipe(
-            metadataFieldsToString(),
-            take(1),
-            map((fields: string[]) => fields.indexOf(this.mdField) > -1),
-            tap((exists: boolean) => this.showInvalid = !exists),
-          );
-        } else {
-          this.notificationsService.error(this.translate.instant(`${this.dsoType}.edit.metadata.metadatafield.error`), rd.errorMessage);
-          return [false];
-        }
-      }),
-    );
+    return this.registryService
+      .queryMetadataFields(
+        this.mdField,
+        null,
+        true,
+        false,
+        followLink('schema'),
+      )
+      .pipe(
+        getFirstCompletedRemoteData(),
+        switchMap((rd) => {
+          if (rd.hasSucceeded) {
+            return of(rd).pipe(
+              metadataFieldsToString(),
+              take(1),
+              map((fields: string[]) => fields.indexOf(this.mdField) > -1),
+              tap((exists: boolean) => (this.showInvalid = !exists)),
+            );
+          } else {
+            this.notificationsService.error(
+              this.translate.instant(
+                `${this.dsoType}.edit.metadata.metadatafield.error`,
+              ),
+              rd.errorMessage,
+            );
+            return [false];
+          }
+        }),
+      );
   }
 
   /**
@@ -198,6 +217,8 @@ export class MetadataFieldSelectorComponent implements OnInit, OnDestroy, AfterV
    * Unsubscribe from any open subscriptions
    */
   ngOnDestroy(): void {
-    this.subs.filter((sub: Subscription) => hasValue(sub)).forEach((sub: Subscription) => sub.unsubscribe());
+    this.subs
+      .filter((sub: Subscription) => hasValue(sub))
+      .forEach((sub: Subscription) => sub.unsubscribe());
   }
 }

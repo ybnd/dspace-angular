@@ -1,10 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -47,7 +43,6 @@ describe('CollectionSourceControlsComponent', () => {
   let bitstreamService: BitstreamDataService;
   let scheduler: TestScheduler;
 
-
   beforeEach(waitForAsync(() => {
     scheduler = getTestScheduler();
     contentSource = Object.assign(new ContentSource(), {
@@ -74,11 +69,14 @@ describe('CollectionSourceControlsComponent', () => {
       _links: { self: { href: 'contentsource-selflink' } },
     });
     process = Object.assign(new Process(), {
-      processId: 'process-id', processStatus: 'COMPLETED',
+      processId: 'process-id',
+      processStatus: 'COMPLETED',
       _links: { output: { href: 'output-href' } },
     });
 
-    bitstream = Object.assign(new Bitstream(), { _links: { content: { href: 'content-href' } } });
+    bitstream = Object.assign(new Bitstream(), {
+      _links: { content: { href: 'content-href' } },
+    });
 
     collection = Object.assign(new Collection(), {
       uuid: 'fake-collection-id',
@@ -101,7 +99,10 @@ describe('CollectionSourceControlsComponent', () => {
     httpClient = jasmine.createSpyObj('httpClient', {
       get: observableOf('Script text'),
     });
-    requestService = jasmine.createSpyObj('requestService', ['removeByHrefSubstring', 'setStaleByHrefSubstring']);
+    requestService = jasmine.createSpyObj('requestService', [
+      'removeByHrefSubstring',
+      'setStaleByHrefSubstring',
+    ]);
 
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), RouterTestingModule],
@@ -136,15 +137,32 @@ describe('CollectionSourceControlsComponent', () => {
       comp.testConfiguration(contentSource);
       scheduler.flush();
 
-      expect(scriptDataService.invoke).toHaveBeenCalledWith('harvest', [
-        { name: '-g', value: null },
-        { name: '-a', value: contentSource.oaiSource },
-        { name: '-i', value: new ContentSourceSetSerializer().Serialize(contentSource.oaiSetId) },
-      ], []);
+      expect(scriptDataService.invoke).toHaveBeenCalledWith(
+        'harvest',
+        [
+          { name: '-g', value: null },
+          { name: '-a', value: contentSource.oaiSource },
+          {
+            name: '-i',
+            value: new ContentSourceSetSerializer().Serialize(
+              contentSource.oaiSetId,
+            ),
+          },
+        ],
+        [],
+      );
 
-      expect(processDataService.findById).toHaveBeenCalledWith(process.processId, false);
-      expect(bitstreamService.findByHref).toHaveBeenCalledWith(process._links.output.href);
-      expect(notificationsService.info).toHaveBeenCalledWith(jasmine.anything() as any, 'Script text');
+      expect(processDataService.findById).toHaveBeenCalledWith(
+        process.processId,
+        false,
+      );
+      expect(bitstreamService.findByHref).toHaveBeenCalledWith(
+        process._links.output.href,
+      );
+      expect(notificationsService.info).toHaveBeenCalledWith(
+        jasmine.anything() as any,
+        'Script text',
+      );
     });
   });
   describe('importNow', () => {
@@ -152,11 +170,18 @@ describe('CollectionSourceControlsComponent', () => {
       comp.importNow();
       scheduler.flush();
 
-      expect(scriptDataService.invoke).toHaveBeenCalledWith('harvest', [
-        { name: '-r', value: null },
-        { name: '-c', value: collection.uuid },
-      ], []);
-      expect(processDataService.findById).toHaveBeenCalledWith(process.processId, false);
+      expect(scriptDataService.invoke).toHaveBeenCalledWith(
+        'harvest',
+        [
+          { name: '-r', value: null },
+          { name: '-c', value: collection.uuid },
+        ],
+        [],
+      );
+      expect(processDataService.findById).toHaveBeenCalledWith(
+        process.processId,
+        false,
+      );
       expect(notificationsService.success).toHaveBeenCalled();
     });
   });
@@ -165,11 +190,18 @@ describe('CollectionSourceControlsComponent', () => {
       comp.resetAndReimport();
       scheduler.flush();
 
-      expect(scriptDataService.invoke).toHaveBeenCalledWith('harvest', [
-        { name: '-o', value: null },
-        { name: '-c', value: collection.uuid },
-      ], []);
-      expect(processDataService.findById).toHaveBeenCalledWith(process.processId, false);
+      expect(scriptDataService.invoke).toHaveBeenCalledWith(
+        'harvest',
+        [
+          { name: '-o', value: null },
+          { name: '-c', value: collection.uuid },
+        ],
+        [],
+      );
+      expect(processDataService.findById).toHaveBeenCalledWith(
+        process.processId,
+        false,
+      );
       expect(notificationsService.success).toHaveBeenCalled();
     });
   });
@@ -232,6 +264,4 @@ describe('CollectionSourceControlsComponent', () => {
       expect(comp.resetAndReimport).toHaveBeenCalled();
     });
   });
-
-
 });

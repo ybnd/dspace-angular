@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { FilterType } from '../../../models/filter-type.model';
 import {
@@ -16,10 +13,10 @@ import { renderFacetFor } from '../search-filter-type-decorator';
   templateUrl: './search-authority-filter.component.html',
   animations: [facetLoad],
 })
-
 /**
  * Component that represents an authority facet for a specific filter configuration
  */
 @renderFacetFor(FilterType.authority)
-export class SearchAuthorityFilterComponent extends SearchFacetFilterComponent implements OnInit {
-}
+export class SearchAuthorityFilterComponent
+  extends SearchFacetFilterComponent
+  implements OnInit {}

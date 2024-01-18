@@ -1,8 +1,4 @@
-import {
-  Component,
-  Injector,
-  OnDestroy,
-} from '@angular/core';
+import { Component, Injector, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
@@ -32,8 +28,13 @@ import { MyDSpaceReloadableActionsComponent } from '../../mydspace-reloadable-ac
   selector: 'ds-claimed-task-action-abstract',
   template: '',
 })
-export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReloadableActionsComponent<ClaimedTask, ClaimedTaskDataService> implements OnDestroy {
-
+export abstract class ClaimedTaskActionsAbstractComponent
+  extends MyDSpaceReloadableActionsComponent<
+    ClaimedTask,
+    ClaimedTaskDataService
+  >
+  implements OnDestroy
+{
   /**
    * The workflow task option the child component represents
    */
@@ -58,13 +59,23 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
    */
   workflowitem: WorkflowItem;
 
-  protected constructor(protected injector: Injector,
-                        protected router: Router,
-                        protected notificationsService: NotificationsService,
-                        protected translate: TranslateService,
-                        protected searchService: SearchService,
-                        protected requestService: RequestService) {
-    super(CLAIMED_TASK, injector, router, notificationsService, translate, searchService, requestService);
+  protected constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+  ) {
+    super(
+      CLAIMED_TASK,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService,
+    );
   }
 
   /**
@@ -109,5 +120,4 @@ export abstract class ClaimedTaskActionsAbstractComponent extends MyDSpaceReload
   ngOnDestroy() {
     this.subs.forEach((sub) => sub.unsubscribe());
   }
-
 }

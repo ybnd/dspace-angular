@@ -24,13 +24,14 @@ export class Notification implements INotification {
   public options: INotificationOptions;
   public html: boolean;
 
-  constructor(id: string,
+  constructor(
+    id: string,
     type: NotificationType,
     title?: Observable<string> | string,
     content?: Observable<string> | string,
     options?: NotificationOptions,
-    html?: boolean) {
-
+    html?: boolean,
+  ) {
     this.id = id;
     this.type = type;
     this.title = title;
@@ -38,5 +39,4 @@ export class Notification implements INotification {
     this.options = isEmpty(options) ? new NotificationOptions() : options;
     this.html = html;
   }
-
 }

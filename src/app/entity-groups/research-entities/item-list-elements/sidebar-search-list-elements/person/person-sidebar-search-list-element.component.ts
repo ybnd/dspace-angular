@@ -12,21 +12,34 @@ import { listableObjectComponent } from '../../../../../shared/object-collection
 import { SidebarSearchListElementComponent } from '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component';
 import { TruncatableService } from '../../../../../shared/truncatable/truncatable.service';
 
-@listableObjectComponent('PersonSearchResult', ViewMode.ListElement, Context.SideBarSearchModal)
-@listableObjectComponent('PersonSearchResult', ViewMode.ListElement, Context.SideBarSearchModalCurrent)
+@listableObjectComponent(
+  'PersonSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModal,
+)
+@listableObjectComponent(
+  'PersonSearchResult',
+  ViewMode.ListElement,
+  Context.SideBarSearchModalCurrent,
+)
 @Component({
   selector: 'ds-person-sidebar-search-list-element',
-  templateUrl: '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
+  templateUrl:
+    '../../../../../shared/object-list/sidebar-search-list-element/sidebar-search-list-element.component.html',
 })
 /**
  * Component displaying a list element for a {@link ItemSearchResult} of type "Person" within the context of
  * a sidebar search modal
  */
-export class PersonSidebarSearchListElementComponent extends SidebarSearchListElementComponent<ItemSearchResult, Item> {
-  constructor(protected truncatableService: TruncatableService,
-              protected linkService: LinkService,
-              protected translateService: TranslateService,
-              public dsoNameService: DSONameService,
+export class PersonSidebarSearchListElementComponent extends SidebarSearchListElementComponent<
+  ItemSearchResult,
+  Item
+> {
+  constructor(
+    protected truncatableService: TruncatableService,
+    protected linkService: LinkService,
+    protected translateService: TranslateService,
+    public dsoNameService: DSONameService,
   ) {
     super(truncatableService, linkService, dsoNameService);
   }

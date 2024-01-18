@@ -1,17 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { APP_CONFIG } from '../../../../../../config/app-config.interface';
@@ -47,7 +37,8 @@ const mockItemWithMetadata: ItemSearchResult = Object.assign(
         ],
       },
     }),
-  });
+  },
+);
 const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
   new ItemSearchResult(),
   {
@@ -62,7 +53,8 @@ const mockItemWithoutMetadata: ItemSearchResult = Object.assign(
         ],
       },
     }),
-  });
+  },
+);
 
 const environmentUseThumbs = {
   browseBy: {
@@ -79,30 +71,32 @@ const enviromentNoThumbs = {
 describe('OrgUnitSearchResultListElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      },
-      )],
-      declarations: [ OrgUnitSearchResultListElementComponent , TruncatePipe],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
+      declarations: [OrgUnitSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: {} },
         { provide: DSONameService, useClass: DSONameServiceMock },
         { provide: APP_CONFIG, useValue: environmentUseThumbs },
       ],
 
-      schemas: [ NO_ERRORS_SCHEMA ],
-    }).overrideComponent(OrgUnitSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+      schemas: [NO_ERRORS_SCHEMA],
+    })
+      .overrideComponent(OrgUnitSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
     fixture = TestBed.createComponent(OrgUnitSearchResultListElementComponent);
     orgUnitListElementComponent = fixture.componentInstance;
-
   }));
 
   describe('with environment.browseBy.showThumbnails set to true', () => {
@@ -115,7 +109,9 @@ describe('OrgUnitSearchResultListElementComponent', () => {
     });
 
     it('should add thumbnail element', () => {
-      const thumbnailElement = fixture.debugElement.query(By.css('ds-thumbnail'));
+      const thumbnailElement = fixture.debugElement.query(
+        By.css('ds-thumbnail'),
+      );
       expect(thumbnailElement).toBeTruthy();
     });
   });
@@ -127,7 +123,9 @@ describe('OrgUnitSearchResultListElementComponent', () => {
     });
 
     it('should show the description span', () => {
-      const orgUnitDescriptionField = fixture.debugElement.query(By.css('span.item-list-org-unit-description'));
+      const orgUnitDescriptionField = fixture.debugElement.query(
+        By.css('span.item-list-org-unit-description'),
+      );
       expect(orgUnitDescriptionField).not.toBeNull();
     });
   });
@@ -139,23 +137,25 @@ describe('OrgUnitSearchResultListElementComponent', () => {
     });
 
     it('should not show the description span', () => {
-      const orgUnitDescriptionField = fixture.debugElement.query(By.css('span.item-list-org-unit-description'));
+      const orgUnitDescriptionField = fixture.debugElement.query(
+        By.css('span.item-list-org-unit-description'),
+      );
       expect(orgUnitDescriptionField).toBeNull();
     });
   });
 });
 
 describe('OrgUnitSearchResultListElementComponent', () => {
-
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      },
-      )],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [OrgUnitSearchResultListElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: {} },
@@ -164,9 +164,11 @@ describe('OrgUnitSearchResultListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(OrgUnitSearchResultListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(OrgUnitSearchResultListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -176,13 +178,14 @@ describe('OrgUnitSearchResultListElementComponent', () => {
 
   describe('with environment.browseBy.showThumbnails set to false', () => {
     beforeEach(() => {
-
       orgUnitListElementComponent.object = mockItemWithMetadata;
       fixture.detectChanges();
     });
 
     it('should not add thumbnail element', () => {
-      const thumbnailElement = fixture.debugElement.query(By.css('ds-thumbnail'));
+      const thumbnailElement = fixture.debugElement.query(
+        By.css('ds-thumbnail'),
+      );
       expect(thumbnailElement).toBeNull();
     });
   });

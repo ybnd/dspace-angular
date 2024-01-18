@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -17,11 +14,17 @@ describe('BitstreamListItemComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BitstreamListItemComponent ],
-      imports: [ CommonModule, SharedModule, TranslateModule, RouterTestingModule ],
-      providers: [{ provide: DSONameService, useValue: new DSONameServiceMock() }],
-    })
-      .compileComponents();
+      declarations: [BitstreamListItemComponent],
+      imports: [
+        CommonModule,
+        SharedModule,
+        TranslateModule,
+        RouterTestingModule,
+      ],
+      providers: [
+        { provide: DSONameService, useValue: new DSONameServiceMock() },
+      ],
+    }).compileComponents();
   });
 
   beforeEach(() => {

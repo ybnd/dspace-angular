@@ -1,7 +1,4 @@
-import {
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'dsCapitalize',
@@ -21,5 +18,4 @@ export class CapitalizePipe implements PipeTransform {
     }
     return value;
   }
-
 }

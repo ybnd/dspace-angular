@@ -1,7 +1,4 @@
-import {
-  autoserialize,
-  deserialize,
-} from 'cerialize';
+import { autoserialize, deserialize } from 'cerialize';
 import { typedObject } from 'src/app/core/cache/builders/build-decorators';
 import { CacheableObject } from 'src/app/core/cache/cacheable-object.model';
 import { HALLink } from 'src/app/core/shared/hal-link.model';
@@ -19,19 +16,19 @@ export class AccessStatusObject implements CacheableObject {
    */
   @excludeFromEquals
   @autoserialize
-    type: ResourceType;
+  type: ResourceType;
 
   /**
    * The access status value
    */
   @autoserialize
-    status: string;
+  status: string;
 
   /**
    * The {@link HALLink}s for this AccessStatusObject
    */
-   @deserialize
-     _links: {
-     self: HALLink;
-   };
+  @deserialize
+  _links: {
+    self: HALLink;
+  };
 }

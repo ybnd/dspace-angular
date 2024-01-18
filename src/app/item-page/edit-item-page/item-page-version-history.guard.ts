@@ -4,10 +4,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
@@ -23,17 +20,22 @@ import { ItemPageResolver } from '../item-page.resolver';
  * Guard for preventing unauthorized access to certain {@link Item} pages requiring manage versions rights
  */
 export class ItemPageVersionHistoryGuard extends DsoPageSingleFeatureGuard<Item> {
-  constructor(protected resolver: ItemPageResolver,
-              protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService) {
+  constructor(
+    protected resolver: ItemPageResolver,
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+  ) {
     super(resolver, authorizationService, router, authService);
   }
 
   /**
    * Check manage versions authorization rights
    */
-  getFeatureID(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FeatureID> {
+  getFeatureID(
+    next: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<FeatureID> {
     return observableOf(FeatureID.CanManageVersions);
   }
 }

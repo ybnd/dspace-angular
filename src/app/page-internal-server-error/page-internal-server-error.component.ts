@@ -1,7 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { ServerResponseService } from '../core/services/server-response.service';
 
@@ -15,7 +12,6 @@ import { ServerResponseService } from '../core/services/server-response.service'
   changeDetection: ChangeDetectionStrategy.Default,
 })
 export class PageInternalServerErrorComponent {
-
   /**
    * Initialize instance variables
    *

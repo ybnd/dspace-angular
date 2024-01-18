@@ -1,26 +1,13 @@
 /* eslint-disable max-classes-per-file */
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
-import {
-  createSelector,
-  Store,
-} from '@ngrx/store';
+import { Inject, Injectable } from '@angular/core';
+import { createSelector, Store } from '@ngrx/store';
 import {
   combineLatest as observableCombineLatest,
   Observable,
   of as observableOf,
 } from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-} from 'rxjs/operators';
-import {
-  APP_CONFIG,
-  AppConfig,
-} from 'src/config/app-config.interface';
+import { filter, map, switchMap } from 'rxjs/operators';
+import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
 import { v4 as uuidv4 } from 'uuid';
 
 import { AppState } from '../app.reducer';
@@ -41,10 +28,7 @@ import {
   getFirstSucceededRemoteData,
 } from '../core/shared/operators';
 import { PageInfo } from '../core/shared/page-info.model';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../shared/empty.util';
+import { hasValue, isNotEmpty } from '../shared/empty.util';
 import { followLink } from '../shared/utils/follow-link-config.model';
 import { CommunityListSaveAction } from './community-list.actions';
 import { CommunityListState } from './community-list.reducer';
@@ -52,7 +36,9 @@ import { FlatNode } from './flat-node.model';
 import { ShowMoreFlatNode } from './show-more-flat-node.model';
 
 // Helper method to combine and flatten an array of observables of flatNode arrays
-export const combineAndFlatten = (obsList: Observable<FlatNode[]>[]): Observable<FlatNode[]> =>
+export const combineAndFlatten = (
+  obsList: Observable<FlatNode[]>[],
+): Observable<FlatNode[]> =>
   observableCombineLatest([...obsList]).pipe(
     map((matrix: any[][]) => [].concat(...matrix)),
     filter((arr: any[]) => arr.every((e) => hasValue(e))),
@@ -81,7 +67,10 @@ export const toFlatNode = (
   parent,
   payload: c,
   isShowMoreNode: false,
-  route: c instanceof Community ? getCommunityPageRoute(c.id) : getCollectionPageRoute(c.id),
+  route:
+    c instanceof Community
+      ? getCommunityPageRoute(c.id)
+      : getCollectionPageRoute(c.id),
 });
 
 /**
@@ -104,8 +93,14 @@ export const showMoreFlatNode = (
 
 // Selectors the get the communityList data out of the store
 const communityListStateSelector = (state: AppState) => state.communityList;
-const expandedNodesSelector = createSelector(communityListStateSelector, (communityList: CommunityListState) => communityList.expandedNodes);
-const loadingNodeSelector = createSelector(communityListStateSelector, (communityList: CommunityListState) => communityList.loadingNode);
+const expandedNodesSelector = createSelector(
+  communityListStateSelector,
+  (communityList: CommunityListState) => communityList.expandedNodes,
+);
+const loadingNodeSelector = createSelector(
+  communityListStateSelector,
+  (communityList: CommunityListState) => communityList.loadingNode,
+);
 
 /**
  * Service class for the community list, responsible for the creating of the flat list used by communityList dataSource
@@ -113,7 +108,6 @@ const loadingNodeSelector = createSelector(communityListStateSelector, (communit
  */
 @Injectable()
 export class CommunityListService {
-
   private pageSize: number;
 
   constructor(
@@ -125,12 +119,20 @@ export class CommunityListService {
     this.pageSize = appConfig.communityList.pageSize;
   }
 
-  private configOnePage: FindListOptions = Object.assign(new FindListOptions(), {
-    elementsPerPage: 1,
-  });
+  private configOnePage: FindListOptions = Object.assign(
+    new FindListOptions(),
+    {
+      elementsPerPage: 1,
+    },
+  );
 
-  saveCommunityListStateToStore(expandedNodes: FlatNode[], loadingNode: FlatNode): void {
-    this.store.dispatch(new CommunityListSaveAction(expandedNodes, loadingNode));
+  saveCommunityListStateToStore(
+    expandedNodes: FlatNode[],
+    loadingNode: FlatNode,
+  ): void {
+    this.store.dispatch(
+      new CommunityListSaveAction(expandedNodes, loadingNode),
+    );
   }
 
   getExpandedNodesFromStore(): Observable<FlatNode[]> {
@@ -147,16 +149,23 @@ export class CommunityListService {
    * @param expandedNodes     List of expanded nodes; if a node is not expanded its subCommunities and collections need
    *                            not be added to the list
    */
-  loadCommunities(findOptions: FindListOptions, expandedNodes: FlatNode[]): Observable<FlatNode[]> {
+  loadCommunities(
+    findOptions: FindListOptions,
+    expandedNodes: FlatNode[],
+  ): Observable<FlatNode[]> {
     const currentPage = findOptions.currentPage;
     const topCommunities = [];
     for (let i = 1; i <= currentPage; i++) {
-      const pagination: FindListOptions = Object.assign({}, findOptions, { currentPage: i });
+      const pagination: FindListOptions = Object.assign({}, findOptions, {
+        currentPage: i,
+      });
       topCommunities.push(this.getTopCommunities(pagination));
     }
     const topComs$ = observableCombineLatest([...topCommunities]).pipe(
       map((coms: PaginatedList<Community>[]) => {
-        const newPages: Community[][] = coms.map((unit: PaginatedList<Community>) => unit.page);
+        const newPages: Community[][] = coms.map(
+          (unit: PaginatedList<Community>) => unit.page,
+        );
         const newPage: Community[] = [].concat(...newPages);
         let newPageInfo = new PageInfo();
         if (coms && coms.length > 0) {
@@ -166,7 +175,9 @@ export class CommunityListService {
       }),
     );
     return topComs$.pipe(
-      switchMap((topComs: PaginatedList<Community>) => this.transformListOfCommunities(topComs, 0, null, expandedNodes)),
+      switchMap((topComs: PaginatedList<Community>) =>
+        this.transformListOfCommunities(topComs, 0, null, expandedNodes),
+      ),
       // distinctUntilChanged((a: FlatNode[], b: FlatNode[]) => a.length === b.length)
     );
   }
@@ -174,17 +185,22 @@ export class CommunityListService {
   /**
    * Puts the initial top level communities in a list to be called upon
    */
-  private getTopCommunities(options: FindListOptions): Observable<PaginatedList<Community>> {
-    return this.communityDataService.findTop({
-      currentPage: options.currentPage,
-      elementsPerPage: this.pageSize,
-      sort: {
-        field: options.sort.field,
-        direction: options.sort.direction,
-      },
-    },
-    followLink('subcommunities', { findListOptions: this.configOnePage }),
-    followLink('collections', { findListOptions: this.configOnePage }))
+  private getTopCommunities(
+    options: FindListOptions,
+  ): Observable<PaginatedList<Community>> {
+    return this.communityDataService
+      .findTop(
+        {
+          currentPage: options.currentPage,
+          elementsPerPage: this.pageSize,
+          sort: {
+            field: options.sort.field,
+            direction: options.sort.direction,
+          },
+        },
+        followLink('subcommunities', { findListOptions: this.configOnePage }),
+        followLink('collections', { findListOptions: this.configOnePage }),
+      )
       .pipe(
         getFirstSucceededRemoteData(),
         map((results) => results.payload),
@@ -198,21 +214,39 @@ export class CommunityListService {
    * @param parent                        FlatNode of the parent of this list of communities
    * @param expandedNodes                 List of expanded nodes; if a node is not expanded its subcommunities and collections need not be added to the list
    */
-  public transformListOfCommunities(listOfPaginatedCommunities: PaginatedList<Community>,
+  public transformListOfCommunities(
+    listOfPaginatedCommunities: PaginatedList<Community>,
     level: number,
     parent: FlatNode,
-    expandedNodes: FlatNode[]): Observable<FlatNode[]> {
+    expandedNodes: FlatNode[],
+  ): Observable<FlatNode[]> {
     if (isNotEmpty(listOfPaginatedCommunities.page)) {
       let currentPage = listOfPaginatedCommunities.currentPage;
       if (isNotEmpty(parent)) {
-        currentPage = expandedNodes.find((node: FlatNode) => node.id === parent.id).currentCommunityPage;
+        currentPage = expandedNodes.find(
+          (node: FlatNode) => node.id === parent.id,
+        ).currentCommunityPage;
       }
-      let obsList = listOfPaginatedCommunities.page
-        .map((community: Community) => {
-          return this.transformCommunity(community, level, parent, expandedNodes);
-        });
-      if (currentPage < listOfPaginatedCommunities.totalPages && currentPage === listOfPaginatedCommunities.currentPage) {
-        obsList = [...obsList, observableOf([showMoreFlatNode(`community-${uuidv4()}`, level, parent)])];
+      let obsList = listOfPaginatedCommunities.page.map(
+        (community: Community) => {
+          return this.transformCommunity(
+            community,
+            level,
+            parent,
+            expandedNodes,
+          );
+        },
+      );
+      if (
+        currentPage < listOfPaginatedCommunities.totalPages &&
+        currentPage === listOfPaginatedCommunities.currentPage
+      ) {
+        obsList = [
+          ...obsList,
+          observableOf([
+            showMoreFlatNode(`community-${uuidv4()}`, level, parent),
+          ]),
+        ];
       }
 
       return combineAndFlatten(obsList);
@@ -231,33 +265,59 @@ export class CommunityListService {
    * @param parent            Flatnode of the parent community
    * @param expandedNodes     List of nodes which are expanded, if node is not expanded, it need not add its page-limited subcommunities or collections
    */
-  public transformCommunity(community: Community, level: number, parent: FlatNode, expandedNodes: FlatNode[]): Observable<FlatNode[]> {
+  public transformCommunity(
+    community: Community,
+    level: number,
+    parent: FlatNode,
+    expandedNodes: FlatNode[],
+  ): Observable<FlatNode[]> {
     let isExpanded = false;
     if (isNotEmpty(expandedNodes)) {
-      isExpanded = hasValue(expandedNodes.find((node) => (node.id === community.id)));
+      isExpanded = hasValue(
+        expandedNodes.find((node) => node.id === community.id),
+      );
     }
 
     const isExpandable$ = this.getIsExpandable(community);
 
-    const communityFlatNode = toFlatNode(community, isExpandable$, level, isExpanded, parent);
+    const communityFlatNode = toFlatNode(
+      community,
+      isExpandable$,
+      level,
+      isExpanded,
+      parent,
+    );
 
     let obsList = [observableOf([communityFlatNode])];
 
     if (isExpanded) {
-      const currentCommunityPage = expandedNodes.find((node: FlatNode) => node.id === community.id).currentCommunityPage;
+      const currentCommunityPage = expandedNodes.find(
+        (node: FlatNode) => node.id === community.id,
+      ).currentCommunityPage;
       let subcoms = [];
       for (let i = 1; i <= currentCommunityPage; i++) {
-        const nextSetOfSubcommunitiesPage = this.communityDataService.findByParent(community.uuid, {
-          elementsPerPage: this.pageSize,
-          currentPage: i,
-        },
-        followLink('subcommunities', { findListOptions: this.configOnePage }),
-        followLink('collections', { findListOptions: this.configOnePage }))
+        const nextSetOfSubcommunitiesPage = this.communityDataService
+          .findByParent(
+            community.uuid,
+            {
+              elementsPerPage: this.pageSize,
+              currentPage: i,
+            },
+            followLink('subcommunities', {
+              findListOptions: this.configOnePage,
+            }),
+            followLink('collections', { findListOptions: this.configOnePage }),
+          )
           .pipe(
             getFirstCompletedRemoteData(),
             switchMap((rd: RemoteData<PaginatedList<Community>>) => {
               if (hasValue(rd) && hasValue(rd.payload)) {
-                return this.transformListOfCommunities(rd.payload, level + 1, communityFlatNode, expandedNodes);
+                return this.transformListOfCommunities(
+                  rd.payload,
+                  level + 1,
+                  communityFlatNode,
+                  expandedNodes,
+                );
               } else {
                 return observableOf([]);
               }
@@ -269,21 +329,41 @@ export class CommunityListService {
 
       obsList = [...obsList, combineAndFlatten(subcoms)];
 
-      const currentCollectionPage = expandedNodes.find((node: FlatNode) => node.id === community.id).currentCollectionPage;
+      const currentCollectionPage = expandedNodes.find(
+        (node: FlatNode) => node.id === community.id,
+      ).currentCollectionPage;
       let collections = [];
       for (let i = 1; i <= currentCollectionPage; i++) {
-        const nextSetOfCollectionsPage = this.collectionDataService.findByParent(community.uuid, {
-          elementsPerPage: this.pageSize,
-          currentPage: i,
-        })
+        const nextSetOfCollectionsPage = this.collectionDataService
+          .findByParent(community.uuid, {
+            elementsPerPage: this.pageSize,
+            currentPage: i,
+          })
           .pipe(
             getFirstCompletedRemoteData(),
             map((rd: RemoteData<PaginatedList<Collection>>) => {
               if (hasValue(rd) && hasValue(rd.payload)) {
-                let nodes = rd.payload.page
-                  .map((collection: Collection) => toFlatNode(collection, observableOf(false), level + 1, false, communityFlatNode));
-                if (currentCollectionPage < rd.payload.totalPages && currentCollectionPage === rd.payload.currentPage) {
-                  nodes = [...nodes, showMoreFlatNode(`collection-${uuidv4()}`, level + 1, communityFlatNode)];
+                let nodes = rd.payload.page.map((collection: Collection) =>
+                  toFlatNode(
+                    collection,
+                    observableOf(false),
+                    level + 1,
+                    false,
+                    communityFlatNode,
+                  ),
+                );
+                if (
+                  currentCollectionPage < rd.payload.totalPages &&
+                  currentCollectionPage === rd.payload.currentPage
+                ) {
+                  nodes = [
+                    ...nodes,
+                    showMoreFlatNode(
+                      `collection-${uuidv4()}`,
+                      level + 1,
+                      communityFlatNode,
+                    ),
+                  ];
                 }
                 return nodes;
               } else {
@@ -306,7 +386,8 @@ export class CommunityListService {
    * @param community     Community being checked whether it is expandable (if it has subcommunities or collections)
    */
   public getIsExpandable(community: Community): Observable<boolean> {
-    const hasSubcoms$ = this.communityDataService.findByParent(community.uuid, this.configOnePage)
+    const hasSubcoms$ = this.communityDataService
+      .findByParent(community.uuid, this.configOnePage)
       .pipe(
         map((rd: RemoteData<PaginatedList<Community>>) => {
           if (hasValue(rd) && hasValue(rd.payload)) {
@@ -317,7 +398,8 @@ export class CommunityListService {
         }),
       );
 
-    const hasColls$ = this.collectionDataService.findByParent(community.uuid, this.configOnePage)
+    const hasColls$ = this.collectionDataService
+      .findByParent(community.uuid, this.configOnePage)
       .pipe(
         map((rd: RemoteData<PaginatedList<Collection>>) => {
           if (hasValue(rd) && hasValue(rd.payload)) {
@@ -329,8 +411,9 @@ export class CommunityListService {
       );
 
     return observableCombineLatest(hasSubcoms$, hasColls$).pipe(
-      map(([hasSubcoms, hasColls]: [boolean, boolean]) => hasSubcoms || hasColls),
+      map(
+        ([hasSubcoms, hasColls]: [boolean, boolean]) => hasSubcoms || hasColls,
+      ),
     );
   }
-
 }

@@ -6,7 +6,6 @@ import { AppState } from '../../app.reducer';
 
 @Injectable()
 export class NotificationsEffects {
-
   /**
    * Authenticate user.
    * @method authenticate
@@ -27,7 +26,8 @@ export class NotificationsEffects {
    * @param {Actions} actions$
    * @param {Store} store
    */
-  constructor(private actions$: Actions,
-              private store: Store<AppState>) {
-  }
+  constructor(
+    private actions$: Actions,
+    private store: Store<AppState>,
+  ) {}
 }

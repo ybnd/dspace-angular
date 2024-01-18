@@ -4,12 +4,7 @@ import {
   Injector,
   OnInit,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  CanActivate,
-  Route,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, CanActivate, Route, Router } from '@angular/router';
 import {
   combineLatest as observableCombineLatest,
   Observable,
@@ -20,10 +15,7 @@ import { map } from 'rxjs/operators';
 import { RemoteData } from '../../core/data/remote-data';
 import { GenericConstructor } from '../../core/shared/generic-constructor';
 import { Item } from '../../core/shared/item.model';
-import {
-  fadeIn,
-  fadeInOut,
-} from '../../shared/animations/fade';
+import { fadeIn, fadeInOut } from '../../shared/animations/fade';
 import { isNotEmpty } from '../../shared/empty.util';
 import { getItemPageRoute } from '../item-page-routing-paths';
 
@@ -31,16 +23,12 @@ import { getItemPageRoute } from '../item-page-routing-paths';
   selector: 'ds-edit-item-page',
   templateUrl: './edit-item-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    fadeIn,
-    fadeInOut,
-  ],
+  animations: [fadeIn, fadeInOut],
 })
 /**
  * Page component for editing an item
  */
 export class EditItemPageComponent implements OnInit {
-
   /**
    * The item to edit
    */
@@ -54,9 +42,13 @@ export class EditItemPageComponent implements OnInit {
   /**
    * All possible page outlet strings
    */
-  pages: { page: string, enabled: Observable<boolean> }[];
+  pages: { page: string; enabled: Observable<boolean> }[];
 
-  constructor(private route: ActivatedRoute, private router: Router, private injector: Injector) {
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private injector: Injector,
+  ) {
     this.router.events.subscribe(() => this.initPageParamsByRoute());
   }
 
@@ -67,12 +59,21 @@ export class EditItemPageComponent implements OnInit {
       .map((child: Route) => {
         let enabled = observableOf(true);
         if (isNotEmpty(child.canActivate)) {
-          enabled = observableCombineLatest(child.canActivate.map((guardConstructor: GenericConstructor<CanActivate>) => {
-            const guard: CanActivate = this.injector.get<CanActivate>(guardConstructor);
-            return guard.canActivate(this.route.snapshot, this.router.routerState.snapshot);
-          }),
+          enabled = observableCombineLatest(
+            child.canActivate.map(
+              (guardConstructor: GenericConstructor<CanActivate>) => {
+                const guard: CanActivate =
+                  this.injector.get<CanActivate>(guardConstructor);
+                return guard.canActivate(
+                  this.route.snapshot,
+                  this.router.routerState.snapshot,
+                );
+              },
+            ),
           ).pipe(
-            map((canActivateOutcomes: any[]) => canActivateOutcomes.every((e) => e === true)),
+            map((canActivateOutcomes: any[]) =>
+              canActivateOutcomes.every((e) => e === true),
+            ),
           );
         }
         return { page: child.path, enabled: enabled };

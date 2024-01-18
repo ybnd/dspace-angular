@@ -1,17 +1,11 @@
 import { Injectable } from '@angular/core';
-import {
-  map,
-  take,
-} from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { RequestService } from '../core/data/request.service';
 import { RestRequest } from '../core/data/rest-request.model';
 import { DSpaceObject } from '../core/shared/dspace-object.model';
 import { HALEndpointService } from '../core/shared/hal-endpoint.service';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../shared/empty.util';
+import { hasValue, isNotEmpty } from '../shared/empty.util';
 import { SearchOptions } from '../shared/search/models/search-options.model';
 import { TrackRequest } from './track-request.model';
 
@@ -20,19 +14,23 @@ import { TrackRequest } from './track-request.model';
  */
 @Injectable({ providedIn: 'root' })
 export class StatisticsService {
-
   constructor(
     protected requestService: RequestService,
     protected halService: HALEndpointService,
-  ) {
-  }
+  ) {}
 
   private sendEvent(linkPath: string, body: any) {
     const requestId = this.requestService.generateRequestId();
-    this.halService.getEndpoint(linkPath).pipe(
-      map((endpoint: string) => new TrackRequest(requestId, endpoint, JSON.stringify(body))),
-      take(1), // otherwise the previous events will fire again
-    ).subscribe((request: RestRequest) => this.requestService.send(request));
+    this.halService
+      .getEndpoint(linkPath)
+      .pipe(
+        map(
+          (endpoint: string) =>
+            new TrackRequest(requestId, endpoint, JSON.stringify(body)),
+        ),
+        take(1), // otherwise the previous events will fire again
+      )
+      .subscribe((request: RestRequest) => this.requestService.send(request));
   }
 
   /**
@@ -40,10 +38,7 @@ export class StatisticsService {
    * @param dso: The dso which was viewed
    * @param referrer: The referrer used by the client to reach the dso page
    */
-  trackViewEvent(
-    dso: DSpaceObject,
-    referrer: string,
-  ) {
+  trackViewEvent(dso: DSpaceObject, referrer: string) {
     this.sendEvent('/statistics/viewevents', {
       targetId: dso.uuid,
       targetType: (dso as any).type,
@@ -61,9 +56,19 @@ export class StatisticsService {
    */
   trackSearchEvent(
     searchOptions: SearchOptions,
-    page: { size: number, totalElements: number, totalPages: number, number: number },
-    sort: { by: string, order: string },
-    filters?: { filter: string, operator: string, value: string, label: string }[],
+    page: {
+      size: number;
+      totalElements: number;
+      totalPages: number;
+      number: number;
+    },
+    sort: { by: string; order: string },
+    filters?: {
+      filter: string;
+      operator: string;
+      value: string;
+      label: string;
+    }[],
     clickedObject?: string,
   ) {
     const body = {
@@ -83,7 +88,7 @@ export class StatisticsService {
       Object.assign(body, { configuration: searchOptions.configuration });
     }
     if (isNotEmpty(searchOptions.dsoTypes)) {
-      Object.assign(body, { dsoType: searchOptions.dsoTypes[0].toLowerCase()  });
+      Object.assign(body, { dsoType: searchOptions.dsoTypes[0].toLowerCase() });
     }
     if (hasValue(searchOptions.scope)) {
       Object.assign(body, { scope: searchOptions.scope });
@@ -106,5 +111,4 @@ export class StatisticsService {
     }
     this.sendEvent('/statistics/searchevents', body);
   }
-
 }

@@ -14,15 +14,15 @@ import { metaTagReducer } from './metadata/meta-tag.reducer';
 import { routeReducer } from './services/route.reducer';
 
 export const coreReducers: ActionReducerMap<CoreState> = {
-  'bitstreamFormats': bitstreamFormatReducer,
+  bitstreamFormats: bitstreamFormatReducer,
   'cache/object': objectCacheReducer,
   'cache/syncbuffer': serverSyncBufferReducer,
   'cache/object-updates': objectUpdatesReducer,
   'data/request': requestReducer,
-  'history': historyReducer,
-  'index': indexReducer,
-  'auth': authReducer,
+  history: historyReducer,
+  index: indexReducer,
+  auth: authReducer,
   'json/patch': jsonPatchOperationsReducer,
-  'metaTag': metaTagReducer,
-  'route': routeReducer,
+  metaTag: metaTagReducer,
+  route: routeReducer,
 };

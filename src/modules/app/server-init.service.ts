@@ -5,10 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -99,6 +96,9 @@ export class ServerInitService extends InitService {
   }
 
   private saveAppConfigForCSR(): void {
-    this.transferState.set<AppConfig>(APP_CONFIG_STATE, environment as AppConfig);
+    this.transferState.set<AppConfig>(
+      APP_CONFIG_STATE,
+      environment as AppConfig,
+    );
   }
 }

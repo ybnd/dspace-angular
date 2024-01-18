@@ -1,8 +1,5 @@
 // Load the implementations that should be tested
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -30,36 +27,38 @@ import { SubmissionSectionContainerComponent } from './section-container.compone
 
 const sectionState = {
   header: 'submit.progressbar.describe.stepone',
-  config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/traditionalpageone',
+  config:
+    'https://rest.api/dspace-spring-rest/api/config/submissionforms/traditionalpageone',
   mandatory: true,
   sectionType: SectionsType.SubmissionForm,
   collapsed: false,
   enabled: true,
   data: {},
-  errorsToShow:	[],
-  serverValidationErrors:	[],
+  errorsToShow: [],
+  serverValidationErrors: [],
   isLoading: false,
   isValid: false,
 } as any;
 
 const sectionObject: SectionDataObject = {
-  config:	'https://dspace7.4science.it/or2018/api/config/submissionforms/traditionalpageone',
-  mandatory:	true,
-  data:		{},
-  errorsToShow:		[],
-  serverValidationErrors:		[],
-  header:	'submit.progressbar.describe.stepone',
-  id:	'traditionalpageone',
-  sectionType:	SectionsType.SubmissionForm,
+  config:
+    'https://dspace7.4science.it/or2018/api/config/submissionforms/traditionalpageone',
+  mandatory: true,
+  data: {},
+  errorsToShow: [],
+  serverValidationErrors: [],
+  header: 'submit.progressbar.describe.stepone',
+  id: 'traditionalpageone',
+  sectionType: SectionsType.SubmissionForm,
 };
 
 describe('SubmissionSectionContainerComponent test suite', () => {
-
   let comp: SubmissionSectionContainerComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionSectionContainerComponent>;
 
-  const submissionServiceStub: SubmissionServiceStub = new SubmissionServiceStub();
+  const submissionServiceStub: SubmissionServiceStub =
+    new SubmissionServiceStub();
   const sectionsServiceStub: SectionsServiceStub = new SectionsServiceStub();
 
   const submissionId = mockSubmissionId;
@@ -67,19 +66,19 @@ describe('SubmissionSectionContainerComponent test suite', () => {
 
   function init() {
     sectionsServiceStub.isSectionValid.and.returnValue(observableOf(true));
-    sectionsServiceStub.getSectionState.and.returnValue(observableOf(sectionState));
+    sectionsServiceStub.getSectionState.and.returnValue(
+      observableOf(sectionState),
+    );
     sectionsServiceStub.getShownSectionErrors.and.returnValue(observableOf([]));
-    submissionServiceStub.getActiveSectionId.and.returnValue(observableOf('traditionalpageone'));
+    submissionServiceStub.getActiveSectionId.and.returnValue(
+      observableOf('traditionalpageone'),
+    );
   }
 
   // waitForAsync beforeEach
   beforeEach(waitForAsync(() => {
-
     TestBed.configureTestingModule({
-      imports: [
-        NgbModule,
-        TranslateModule.forRoot(),
-      ],
+      imports: [NgbModule, TranslateModule.forRoot()],
       declarations: [
         SubmissionSectionContainerComponent,
         SectionsDirective,
@@ -92,7 +91,6 @@ describe('SubmissionSectionContainerComponent test suite', () => {
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
-
   }));
 
   describe('', () => {
@@ -108,14 +106,19 @@ describe('SubmissionSectionContainerComponent test suite', () => {
                                          [submissionId]="submissionId"
                                          [sectionData]="object"></ds-submission-section-container>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
-
     });
 
-    it('should create SubmissionSectionContainerComponent', inject([SubmissionSectionContainerComponent], (app: SubmissionSectionContainerComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create SubmissionSectionContainerComponent', inject(
+      [SubmissionSectionContainerComponent],
+      (app: SubmissionSectionContainerComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -145,13 +148,14 @@ describe('SubmissionSectionContainerComponent test suite', () => {
       comp.ngOnInit();
       fixture.detectChanges();
 
-      const section = fixture.debugElement.query(By.css('[id^=\'sectionContent_\']'));
+      const section = fixture.debugElement.query(
+        By.css("[id^='sectionContent_']"),
+      );
       expect(comp.getSectionContent).toHaveBeenCalled();
       expect(section).not.toBeNull();
     });
 
     it('should call removeSection properly', () => {
-
       const mockEvent = jasmine.createSpyObj('event', {
         preventDefault: jasmine.createSpy('preventDefault'),
         stopPropagation: jasmine.createSpy('stopPropagation'),
@@ -161,11 +165,16 @@ describe('SubmissionSectionContainerComponent test suite', () => {
 
       expect(mockEvent.preventDefault).toHaveBeenCalled();
       expect(mockEvent.stopPropagation).toHaveBeenCalled();
-      expect(comp.sectionRef.removeSection).toHaveBeenCalledWith(submissionId, 'traditionalpageone');
+      expect(comp.sectionRef.removeSection).toHaveBeenCalledWith(
+        submissionId,
+        'traditionalpageone',
+      );
     });
 
     it('should display generic section errors div', () => {
-      let sectionErrorsDiv = fixture.debugElement.query(By.css('[id^=\'sectionGenericError_\']'));
+      let sectionErrorsDiv = fixture.debugElement.query(
+        By.css("[id^='sectionGenericError_']"),
+      );
       expect(sectionErrorsDiv).toBeNull();
 
       spyOn(comp.sectionRef, 'isEnabled').and.returnValue(observableOf(true));
@@ -174,12 +183,13 @@ describe('SubmissionSectionContainerComponent test suite', () => {
       comp.ngOnInit();
       fixture.detectChanges();
 
-      sectionErrorsDiv = fixture.debugElement.query(By.css('[id^=\'sectionGenericError_\']'));
+      sectionErrorsDiv = fixture.debugElement.query(
+        By.css("[id^='sectionGenericError_']"),
+      );
       expect(sectionErrorsDiv).not.toBeNull();
     });
 
     it('should display warning icon', () => {
-
       spyOn(comp.sectionRef, 'isEnabled').and.returnValue(observableOf(true));
       spyOn(comp.sectionRef, 'isValid').and.returnValue(observableOf(false));
       spyOn(comp.sectionRef, 'hasErrors').and.returnValue(false);
@@ -196,7 +206,6 @@ describe('SubmissionSectionContainerComponent test suite', () => {
     });
 
     it('should display error icon', () => {
-
       spyOn(comp.sectionRef, 'isEnabled').and.returnValue(observableOf(true));
       spyOn(comp.sectionRef, 'isValid').and.returnValue(observableOf(false));
       spyOn(comp.sectionRef, 'hasErrors').and.returnValue(true);
@@ -213,7 +222,6 @@ describe('SubmissionSectionContainerComponent test suite', () => {
     });
 
     it('should display success icon', () => {
-
       spyOn(comp.sectionRef, 'isEnabled').and.returnValue(observableOf(true));
       spyOn(comp.sectionRef, 'isValid').and.returnValue(observableOf(true));
       spyOn(comp.sectionRef, 'hasErrors').and.returnValue(false);
@@ -228,7 +236,6 @@ describe('SubmissionSectionContainerComponent test suite', () => {
       expect(iconErr).toBeNull();
       expect(iconSuccess).not.toBeNull();
     });
-
   });
 });
 
@@ -239,7 +246,6 @@ describe('SubmissionSectionContainerComponent test suite', () => {
   template: ``,
 })
 class TestComponent {
-
   public collectionId = '1c11f3f1-ba1f-4f36-908a-3f1ea9a557eb';
   public submissionId = mockSubmissionId;
   public object = sectionObject;

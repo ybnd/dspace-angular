@@ -1,23 +1,13 @@
-import {
-  Component,
-  Injector,
-  OnInit,
-} from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  NgbModal,
-  NgbModalRef,
-} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  Observable,
-  of,
-} from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { RemoteData } from '../../../../core/data/remote-data';
 import { RequestService } from '../../../../core/data/request.service';
@@ -39,7 +29,10 @@ export const WORKFLOW_TASK_OPTION_REJECT = 'submit_reject';
 /**
  * Component for displaying and processing the reject action on a workflow task item
  */
-export class ClaimedTaskActionsRejectComponent extends ClaimedTaskActionsAbstractComponent implements OnInit {
+export class ClaimedTaskActionsRejectComponent
+  extends ClaimedTaskActionsAbstractComponent
+  implements OnInit
+{
   /**
    * This component represents the reject option
    */
@@ -55,15 +48,24 @@ export class ClaimedTaskActionsRejectComponent extends ClaimedTaskActionsAbstrac
    */
   public modalRef: NgbModalRef;
 
-  constructor(protected injector: Injector,
-              protected router: Router,
-              protected notificationsService: NotificationsService,
-              protected translate: TranslateService,
-              protected searchService: SearchService,
-              protected requestService: RequestService,
-              private formBuilder: UntypedFormBuilder,
-              private modalService: NgbModal) {
-    super(injector, router, notificationsService, translate, searchService, requestService);
+  constructor(
+    protected injector: Injector,
+    protected router: Router,
+    protected notificationsService: NotificationsService,
+    protected translate: TranslateService,
+    protected searchService: SearchService,
+    protected requestService: RequestService,
+    private formBuilder: UntypedFormBuilder,
+    private modalService: NgbModal,
+  ) {
+    super(
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService,
+    );
   }
 
   /**
@@ -107,9 +109,13 @@ export class ClaimedTaskActionsRejectComponent extends ClaimedTaskActionsAbstrac
   }
 
   convertReloadedObject(dso: DSpaceObject): DSpaceObject {
-    const reloadedObject = Object.assign(new ClaimedDeclinedTaskSearchResult(), dso, {
-      indexableObject: dso,
-    });
+    const reloadedObject = Object.assign(
+      new ClaimedDeclinedTaskSearchResult(),
+      dso,
+      {
+        indexableObject: dso,
+      },
+    );
     return reloadedObject;
   }
 }

@@ -5,15 +5,9 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { AppState } from '../../app.reducer';
@@ -25,7 +19,6 @@ import { RouterStub } from '../testing/router.stub';
 import { LogOutComponent } from './log-out.component';
 
 describe('LogOutComponent', () => {
-
   let component: LogOutComponent;
   let fixture: ComponentFixture<LogOutComponent>;
   let page: Page;
@@ -56,27 +49,17 @@ describe('LogOutComponent', () => {
         }),
         TranslateModule.forRoot(),
       ],
-      declarations: [
-        LogOutComponent,
-        BrowserOnlyMockPipe,
-      ],
-      providers: [
-        { provide: Router, useValue: routerStub },
-      ],
-      schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
-      ],
-    })
-      .compileComponents();
-
+      declarations: [LogOutComponent, BrowserOnlyMockPipe],
+      providers: [{ provide: Router, useValue: routerStub }],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    }).compileComponents();
   }));
 
   beforeEach(inject([Store], (store: Store<AppState>) => {
-    store
-      .subscribe((state) => {
-        (state as any).core = Object.create({});
-        (state as any).core.auth = authState;
-      });
+    store.subscribe((state) => {
+      (state as any).core = Object.create({});
+      (state as any).core.auth = authState;
+    });
 
     // create component and test fixture
     fixture = TestBed.createComponent(LogOutComponent);
@@ -86,7 +69,6 @@ describe('LogOutComponent', () => {
 
     // create page
     page = new Page(component, fixture);
-
   }));
 
   it('should create an instance', () => {
@@ -100,7 +82,10 @@ describe('LogOutComponent', () => {
     component.logOut();
 
     // verify Store.dispatch() is invoked
-    expect(page.navigateSpy.calls.any()).toBe(true, 'Store.dispatch not invoked');
+    expect(page.navigateSpy.calls.any()).toBe(
+      true,
+      'Store.dispatch not invoked',
+    );
   });
 });
 
@@ -110,10 +95,12 @@ describe('LogOutComponent', () => {
  * @class Page
  */
 class Page {
-
   public navigateSpy: jasmine.Spy;
 
-  constructor(private component: LogOutComponent, private fixture: ComponentFixture<LogOutComponent>) {
+  constructor(
+    private component: LogOutComponent,
+    private fixture: ComponentFixture<LogOutComponent>,
+  ) {
     // use injector to get services
     const injector = fixture.debugElement.injector;
     const store = injector.get(Store);
@@ -121,5 +108,4 @@ class Page {
     // add spies
     this.navigateSpy = spyOn(store, 'dispatch');
   }
-
 }

@@ -15,16 +15,16 @@ import { BrowseByTitlePageComponent } from './browse-by-title-page.component';
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
-
 @rendersBrowseBy(BrowseByDataType.Title)
-export class ThemedBrowseByTitlePageComponent
-  extends ThemedComponent<BrowseByTitlePageComponent> {
+export class ThemedBrowseByTitlePageComponent extends ThemedComponent<BrowseByTitlePageComponent> {
   protected getComponentName(): string {
     return 'BrowseByTitlePageComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/browse-by/browse-by-title-page/browse-by-title-page.component`);
+    return import(
+      `../../../themes/${themeName}/app/browse-by/browse-by-title-page/browse-by-title-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

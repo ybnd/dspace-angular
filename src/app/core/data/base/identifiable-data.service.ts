@@ -20,12 +20,16 @@ import { BaseDataService } from './base-data.service';
 /**
  * Shorthand type for the method to construct an ID endpoint.
  */
-export type ConstructIdEndpoint = (endpoint: string, resourceID: string) => string;
+export type ConstructIdEndpoint = (
+  endpoint: string,
+  resourceID: string,
+) => string;
 
 /**
  * The default method to construct an ID endpoint
  */
-export const constructIdEndpointDefault = (endpoint, resourceID) => `${endpoint}/${resourceID}`;
+export const constructIdEndpointDefault = (endpoint, resourceID) =>
+  `${endpoint}/${resourceID}`;
 
 /**
  * A type of data service that deals with objects that have an ID.
@@ -33,7 +37,9 @@ export const constructIdEndpointDefault = (endpoint, resourceID) => `${endpoint}
  * The effective endpoint to use for the ID can be adjusted by providing a different {@link ConstructIdEndpoint} method.
  * This method is passed as an argument so that it can be set on data service features without having to override them.
  */
-export class IdentifiableDataService<T extends CacheableObject> extends BaseDataService<T> {
+export class IdentifiableDataService<
+  T extends CacheableObject,
+> extends BaseDataService<T> {
   constructor(
     protected linkPath: string,
     protected requestService: RequestService,
@@ -43,7 +49,14 @@ export class IdentifiableDataService<T extends CacheableObject> extends BaseData
     protected responseMsToLive?: number,
     protected constructIdEndpoint: ConstructIdEndpoint = constructIdEndpointDefault,
   ) {
-    super(linkPath, requestService, rdbService, objectCache, halService, responseMsToLive);
+    super(
+      linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      responseMsToLive,
+    );
   }
 
   /**
@@ -57,9 +70,19 @@ export class IdentifiableDataService<T extends CacheableObject> extends BaseData
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findById(id: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<T>> {
+  findById(
+    id: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<T>> {
     const href$ = this.getIDHrefObs(encodeURIComponent(id), ...linksToFollow);
-    return this.findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.findByHref(
+      href$,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -68,8 +91,17 @@ export class IdentifiableDataService<T extends CacheableObject> extends BaseData
    * @param resourceID The identifier for the object
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  getIDHref(endpoint, resourceID, ...linksToFollow: FollowLinkConfig<T>[]): string {
-    return this.buildHrefFromFindOptions(this.constructIdEndpoint(endpoint, resourceID), {}, [], ...linksToFollow);
+  getIDHref(
+    endpoint,
+    resourceID,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): string {
+    return this.buildHrefFromFindOptions(
+      this.constructIdEndpoint(endpoint, resourceID),
+      {},
+      [],
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -77,8 +109,14 @@ export class IdentifiableDataService<T extends CacheableObject> extends BaseData
    * @param resourceID The identifier for the object
    * @param linksToFollow   List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  getIDHrefObs(resourceID: string, ...linksToFollow: FollowLinkConfig<T>[]): Observable<string> {
+  getIDHrefObs(
+    resourceID: string,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<string> {
     return this.getEndpoint().pipe(
-      map((endpoint: string) => this.getIDHref(endpoint, resourceID, ...linksToFollow)));
+      map((endpoint: string) =>
+        this.getIDHref(endpoint, resourceID, ...linksToFollow),
+      ),
+    );
   }
 }

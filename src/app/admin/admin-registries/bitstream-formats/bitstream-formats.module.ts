@@ -25,6 +25,4 @@ import { FormatFormComponent } from './format-form/format-form.component';
     FormatFormComponent,
   ],
 })
-export class BitstreamFormatsModule {
-
-}
+export class BitstreamFormatsModule {}

@@ -1,19 +1,12 @@
 import { Location } from '@angular/common';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   UntypedFormBuilder,
   UntypedFormControl,
   UntypedFormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
   combineLatest as observableCombineLatest,
@@ -21,12 +14,7 @@ import {
   of as observableOf,
   Subscription,
 } from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 
 import {
   getBitstreamDownloadRoute,
@@ -46,10 +34,7 @@ import {
   getFirstCompletedRemoteData,
   getFirstSucceededRemoteDataPayload,
 } from '../../../core/shared/operators';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../../shared/empty.util';
 import { NotificationsService } from '../../../shared/notifications/notifications.service';
 import { getItemPageRoute } from '../../item-page-routing-paths';
 
@@ -61,7 +46,6 @@ import { getItemPageRoute } from '../../item-page-routing-paths';
  * Page component for requesting a copy for a bitstream
  */
 export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
-
   item$: Observable<Item>;
 
   canDownload$: Observable<boolean>;
@@ -75,19 +59,19 @@ export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
   bitstream: Bitstream;
   bitstreamName: string;
 
-  constructor(private location: Location,
-              private translateService: TranslateService,
-              private route: ActivatedRoute,
-              protected router: Router,
-              private authorizationService: AuthorizationDataService,
-              private auth: AuthService,
-              private formBuilder: UntypedFormBuilder,
-              private itemRequestDataService: ItemRequestDataService,
-              private notificationsService: NotificationsService,
-              private dsoNameService: DSONameService,
-              private bitstreamService: BitstreamDataService,
-  ) {
-  }
+  constructor(
+    private location: Location,
+    private translateService: TranslateService,
+    private route: ActivatedRoute,
+    protected router: Router,
+    private authorizationService: AuthorizationDataService,
+    private auth: AuthService,
+    private formBuilder: UntypedFormBuilder,
+    private itemRequestDataService: ItemRequestDataService,
+    private notificationsService: NotificationsService,
+    private dsoNameService: DSONameService,
+    private bitstreamService: BitstreamDataService,
+  ) {}
 
   ngOnInit(): void {
     this.requestCopyForm = this.formBuilder.group({
@@ -95,23 +79,26 @@ export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
         validators: [Validators.required],
       }),
       email: new UntypedFormControl('', {
-        validators: [Validators.required,
-          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')],
+        validators: [
+          Validators.required,
+          Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
+        ],
       }),
       allfiles: new UntypedFormControl(''),
       message: new UntypedFormControl(''),
     });
-
 
     this.item$ = this.route.data.pipe(
       map((data) => data.dso),
       getFirstSucceededRemoteDataPayload(),
     );
 
-    this.subs.push(this.item$.subscribe((item) => {
-      this.item = item;
-      this.itemName = this.dsoNameService.getName(item);
-    }));
+    this.subs.push(
+      this.item$.subscribe((item) => {
+        this.item = item;
+        this.itemName = this.dsoNameService.getName(item);
+      }),
+    );
 
     this.bitstream$ = this.route.queryParams.pipe(
       filter((params) => hasValue(params) && hasValue(params.bitstream)),
@@ -119,23 +106,41 @@ export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
       getFirstSucceededRemoteDataPayload(),
     );
 
-    this.subs.push(this.bitstream$.subscribe((bitstream) => {
-      this.bitstream = bitstream;
-      this.bitstreamName = this.dsoNameService.getName(bitstream);
-    }));
+    this.subs.push(
+      this.bitstream$.subscribe((bitstream) => {
+        this.bitstream = bitstream;
+        this.bitstreamName = this.dsoNameService.getName(bitstream);
+      }),
+    );
 
     this.canDownload$ = this.bitstream$.pipe(
-      switchMap((bitstream) => this.authorizationService.isAuthorized(FeatureID.CanDownload, isNotEmpty(bitstream) ? bitstream.self : undefined)),
+      switchMap((bitstream) =>
+        this.authorizationService.isAuthorized(
+          FeatureID.CanDownload,
+          isNotEmpty(bitstream) ? bitstream.self : undefined,
+        ),
+      ),
     );
     const canRequestCopy$ = this.bitstream$.pipe(
-      switchMap((bitstream) => this.authorizationService.isAuthorized(FeatureID.CanRequestACopy, isNotEmpty(bitstream) ? bitstream.self : undefined)),
+      switchMap((bitstream) =>
+        this.authorizationService.isAuthorized(
+          FeatureID.CanRequestACopy,
+          isNotEmpty(bitstream) ? bitstream.self : undefined,
+        ),
+      ),
     );
 
-    this.subs.push(observableCombineLatest([this.canDownload$, canRequestCopy$]).subscribe(([canDownload, canRequestCopy]) => {
-      if (!canDownload && !canRequestCopy) {
-        this.router.navigateByUrl(getForbiddenRoute(), { skipLocationChange: true });
-      }
-    }));
+    this.subs.push(
+      observableCombineLatest([this.canDownload$, canRequestCopy$]).subscribe(
+        ([canDownload, canRequestCopy]) => {
+          if (!canDownload && !canRequestCopy) {
+            this.router.navigateByUrl(getForbiddenRoute(), {
+              skipLocationChange: true,
+            });
+          }
+        },
+      ),
+    );
     this.initValues();
   }
 
@@ -159,12 +164,17 @@ export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
    * Initialise the form values based on the current user.
    */
   private initValues() {
-    this.getCurrentUser().pipe(take(1)).subscribe((user) => {
-      this.requestCopyForm.patchValue({ allfiles: 'true' });
-      if (hasValue(user)) {
-        this.requestCopyForm.patchValue({ name: user.name, email: user.email });
-      }
-    });
+    this.getCurrentUser()
+      .pipe(take(1))
+      .subscribe((user) => {
+        this.requestCopyForm.patchValue({ allfiles: 'true' });
+        if (hasValue(user)) {
+          this.requestCopyForm.patchValue({
+            name: user.name,
+            email: user.email,
+          });
+        }
+      });
     this.bitstream$.pipe(take(1)).subscribe((bitstream) => {
       this.requestCopyForm.patchValue({ allfiles: 'false' });
     });
@@ -183,7 +193,6 @@ export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
         }
       }),
     );
-
   }
 
   /**
@@ -202,16 +211,23 @@ export class BitstreamRequestACopyPageComponent implements OnInit, OnDestroy {
     itemRequest.requestName = this.name.value;
     itemRequest.requestMessage = this.message.value;
 
-    this.itemRequestDataService.requestACopy(itemRequest).pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((rd) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get('bitstream-request-a-copy.submit.success'));
-        this.navigateBack();
-      } else {
-        this.notificationsService.error(this.translateService.get('bitstream-request-a-copy.submit.error'));
-      }
-    });
+    this.itemRequestDataService
+      .requestACopy(itemRequest)
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((rd) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get(
+              'bitstream-request-a-copy.submit.success',
+            ),
+          );
+          this.navigateBack();
+        } else {
+          this.notificationsService.error(
+            this.translateService.get('bitstream-request-a-copy.submit.error'),
+          );
+        }
+      });
   }
 
   ngOnDestroy(): void {

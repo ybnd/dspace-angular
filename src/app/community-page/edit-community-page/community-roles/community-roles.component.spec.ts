@@ -1,11 +1,5 @@
-import {
-  DebugElement,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
@@ -29,13 +23,11 @@ import { NotificationsServiceStub } from '../../../shared/testing/notifications-
 import { CommunityRolesComponent } from './community-roles.component';
 
 describe('CommunityRolesComponent', () => {
-
   let fixture: ComponentFixture<CommunityRolesComponent>;
   let comp: CommunityRolesComponent;
   let de: DebugElement;
 
   beforeEach(() => {
-
     const route = {
       parent: {
         data: observableOf({
@@ -71,9 +63,7 @@ describe('CommunityRolesComponent', () => {
         TranslateModule.forRoot(),
         NoopAnimationsModule,
       ],
-      declarations: [
-        CommunityRolesComponent,
-      ],
+      declarations: [CommunityRolesComponent],
       providers: [
         { provide: DSONameService, useValue: new DSONameServiceMock() },
         { provide: ActivatedRoute, useValue: route },
@@ -92,8 +82,7 @@ describe('CommunityRolesComponent', () => {
   });
 
   it('should display a community admin role component', (done) => {
-    expect(de.query(By.css('ds-comcol-role .community-admin')))
-      .toBeTruthy();
+    expect(de.query(By.css('ds-comcol-role .community-admin'))).toBeTruthy();
     done();
   });
 });

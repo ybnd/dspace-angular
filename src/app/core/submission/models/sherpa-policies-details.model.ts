@@ -2,7 +2,6 @@
  * An interface to represent an access condition.
  */
 export class SherpaPoliciesDetailsObject {
-
   /**
    * The sherpa policies error
    */
@@ -22,9 +21,7 @@ export class SherpaPoliciesDetailsObject {
    * The sherpa policies metadata
    */
   metadata: Metadata;
-
 }
-
 
 export interface Metadata {
   id: number;
@@ -34,7 +31,6 @@ export interface Metadata {
   inDOAJ: boolean;
   publiclyVisible: boolean;
 }
-
 
 export interface Journal {
   titles: string[];

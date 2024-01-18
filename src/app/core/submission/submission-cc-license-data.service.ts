@@ -6,10 +6,7 @@ import { RemoteDataBuildService } from '../cache/builders/remote-data-build.serv
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { BaseDataService } from '../data/base/base-data.service';
 import { dataService } from '../data/base/data-service.decorator';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from '../data/base/find-all-data';
+import { FindAllData, FindAllDataImpl } from '../data/base/find-all-data';
 import { FindListOptions } from '../data/find-list-options.model';
 import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
@@ -20,8 +17,10 @@ import { SubmissionCcLicence } from './models/submission-cc-license.model';
 
 @Injectable()
 @dataService(SUBMISSION_CC_LICENSE)
-export class SubmissionCcLicenseDataService extends BaseDataService<SubmissionCcLicence> implements FindAllData<SubmissionCcLicence> {
-
+export class SubmissionCcLicenseDataService
+  extends BaseDataService<SubmissionCcLicence>
+  implements FindAllData<SubmissionCcLicence>
+{
   protected linkPath = 'submissioncclicenses';
   private findAllData: FindAllData<SubmissionCcLicence>;
 
@@ -31,9 +30,22 @@ export class SubmissionCcLicenseDataService extends BaseDataService<SubmissionCc
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('submissioncclicenses', requestService, rdbService, objectCache, halService);
+    super(
+      'submissioncclicenses',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -50,7 +62,17 @@ export class SubmissionCcLicenseDataService extends BaseDataService<SubmissionCc
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  public findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<SubmissionCcLicence>[]): Observable<RemoteData<PaginatedList<SubmissionCcLicence>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<SubmissionCcLicence>[]
+  ): Observable<RemoteData<PaginatedList<SubmissionCcLicence>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

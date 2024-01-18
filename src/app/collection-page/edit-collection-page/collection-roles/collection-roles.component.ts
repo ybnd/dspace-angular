@@ -1,13 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  first,
-  map,
-} from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { RemoteData } from '../../../core/data/remote-data';
 import { Collection } from '../../../core/shared/collection.model';
@@ -26,7 +20,6 @@ import { hasValue } from '../../../shared/empty.util';
   templateUrl: './collection-roles.component.html',
 })
 export class CollectionRolesComponent implements OnInit {
-
   dsoRD$: Observable<RemoteData<Collection>>;
 
   /**
@@ -39,10 +32,7 @@ export class CollectionRolesComponent implements OnInit {
    */
   collection$: Observable<Collection>;
 
-  constructor(
-    protected route: ActivatedRoute,
-  ) {
-  }
+  constructor(protected route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.dsoRD$ = this.route.parent.data.pipe(
@@ -57,7 +47,11 @@ export class CollectionRolesComponent implements OnInit {
 
     this.comcolRoles$ = this.collection$.pipe(
       map((collection) => {
-        let workflowGroups: HALLink[] | HALLink = hasValue(collection._links.workflowGroups) ? collection._links.workflowGroups : [];
+        let workflowGroups: HALLink[] | HALLink = hasValue(
+          collection._links.workflowGroups,
+        )
+          ? collection._links.workflowGroups
+          : [];
         if (!Array.isArray(workflowGroups)) {
           workflowGroups = [workflowGroups];
         }

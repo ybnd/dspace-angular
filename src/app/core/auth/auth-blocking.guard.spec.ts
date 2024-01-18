@@ -1,21 +1,9 @@
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
-import {
-  MockStore,
-  provideMockStore,
-} from '@ngrx/store/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
+import { Store, StoreModule } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { cold } from 'jasmine-marbles';
 
-import {
-  AppState,
-  storeModuleConfig,
-} from '../../app.reducer';
+import { AppState, storeModuleConfig } from '../../app.reducer';
 import { authReducer } from './auth.reducer';
 import { AuthBlockingGuard } from './auth-blocking.guard';
 
@@ -39,9 +27,7 @@ describe('AuthBlockingGuard', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        StoreModule.forRoot(authReducer, storeModuleConfig),
-      ],
+      imports: [StoreModule.forRoot(authReducer, storeModuleConfig)],
       providers: [
         provideMockStore({ initialState }),
         { provide: AuthBlockingGuard, useValue: guard },
@@ -56,7 +42,6 @@ describe('AuthBlockingGuard', () => {
   });
 
   describe(`canActivate`, () => {
-
     describe(`when authState.blocking is undefined`, () => {
       it(`should not emit anything`, (done) => {
         expect(guard.canActivate()).toBeObservable(cold('-'));
@@ -68,7 +53,7 @@ describe('AuthBlockingGuard', () => {
       beforeEach(() => {
         const state = Object.assign({}, initialState, {
           core: Object.assign({}, initialState.core, {
-            'auth': {
+            auth: {
               blocking: true,
             },
           }),
@@ -86,7 +71,7 @@ describe('AuthBlockingGuard', () => {
       beforeEach(() => {
         const state = Object.assign({}, initialState, {
           core: Object.assign({}, initialState.core, {
-            'auth': {
+            auth: {
               blocking: false,
             },
           }),
@@ -100,5 +85,4 @@ describe('AuthBlockingGuard', () => {
       });
     });
   });
-
 });

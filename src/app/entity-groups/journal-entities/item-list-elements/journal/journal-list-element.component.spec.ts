@@ -1,11 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -50,9 +44,11 @@ describe('JournalListElementComponent', () => {
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(JournalListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(JournalListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -67,7 +63,9 @@ describe('JournalListElementComponent', () => {
     });
 
     it(`should contain a JournalListElementComponent`, () => {
-      const journalListElement = fixture.debugElement.query(By.css(`ds-journal-search-result-list-element`));
+      const journalListElement = fixture.debugElement.query(
+        By.css(`ds-journal-search-result-list-element`),
+      );
       expect(journalListElement).not.toBeNull();
     });
   });

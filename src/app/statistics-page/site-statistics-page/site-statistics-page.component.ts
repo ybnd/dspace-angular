@@ -1,8 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 import { AuthService } from '../../core/auth/auth.service';
@@ -21,13 +18,10 @@ import { StatisticsPageComponent } from '../statistics-page/statistics-page.comp
   styleUrls: ['./site-statistics-page.component.scss'],
 })
 export class SiteStatisticsPageComponent extends StatisticsPageComponent<Site> {
-
   /**
    * The report types to show on this statistics page.
    */
-  types: string[] = [
-    'TotalVisits',
-  ];
+  types: string[] = ['TotalVisits'];
 
   constructor(
     protected route: ActivatedRoute,
@@ -37,13 +31,7 @@ export class SiteStatisticsPageComponent extends StatisticsPageComponent<Site> {
     protected siteService: SiteDataService,
     protected authService: AuthService,
   ) {
-    super(
-      route,
-      router,
-      usageReportService,
-      nameService,
-      authService,
-    );
+    super(route, router, usageReportService, nameService, authService);
   }
 
   protected getScope$() {

@@ -14,21 +14,24 @@ describe('ItemTemplatePageResolver', () => {
 
     beforeEach(() => {
       itemTemplateService = {
-        findByCollectionID: (id: string) => createSuccessfulRemoteDataObject$({ id }),
+        findByCollectionID: (id: string) =>
+          createSuccessfulRemoteDataObject$({ id }),
       };
       dsoNameService = new DSONameServiceMock();
-      resolver = new ItemTemplatePageResolver(dsoNameService as DSONameService, itemTemplateService);
+      resolver = new ItemTemplatePageResolver(
+        dsoNameService as DSONameService,
+        itemTemplateService,
+      );
     });
 
     it('should resolve an item template with the correct id', (done) => {
-      resolver.resolve({ params: { id: uuid } } as any, undefined)
+      resolver
+        .resolve({ params: { id: uuid } } as any, undefined)
         .pipe(first())
-        .subscribe(
-          (resolved) => {
-            expect(resolved.payload.id).toEqual(uuid);
-            done();
-          },
-        );
+        .subscribe((resolved) => {
+          expect(resolved.payload.id).toEqual(uuid);
+          done();
+        });
     });
   });
 });

@@ -10,10 +10,7 @@ import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { AuthRequestService } from './auth-request.service';
 import { ShortLivedToken } from './models/short-lived-token.model';
 import objectContaining = jasmine.objectContaining;
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { RestRequestMethod } from '../data/rest-request-method';
 import { AuthStatus } from './models/auth-status.model';
@@ -40,8 +37,12 @@ describe(`AuthRequestService`, () => {
       super(hes, rs, rdbs);
     }
 
-    protected createShortLivedTokenRequest(href: string): Observable<PostRequest> {
-      return observableOf(new PostRequest(this.requestService.generateRequestId(), href));
+    protected createShortLivedTokenRequest(
+      href: string,
+    ): Observable<PostRequest> {
+      return observableOf(
+        new PostRequest(this.requestService.generateRequestId(), href),
+      );
     }
   }
 
@@ -54,19 +55,25 @@ describe(`AuthRequestService`, () => {
     shortLivedTokenRD = createSuccessfulRemoteDataObject(shortLivedToken);
 
     halService = jasmine.createSpyObj('halService', {
-      'getEndpoint': cold('a', { a: endpointURL }),
+      getEndpoint: cold('a', { a: endpointURL }),
     });
     requestService = jasmine.createSpyObj('requestService', {
-      'generateRequestId': requestID,
-      'send': null,
+      generateRequestId: requestID,
+      send: null,
     });
     rdbService = jasmine.createSpyObj('rdbService', {
-      'buildFromRequestUUID': cold('a', { a: shortLivedTokenRD }),
+      buildFromRequestUUID: cold('a', { a: shortLivedTokenRD }),
     });
 
-    service = new TestAuthRequestService(halService, requestService, rdbService);
+    service = new TestAuthRequestService(
+      halService,
+      requestService,
+      rdbService,
+    );
 
-    spyOn(service as any, 'fetchRequest').and.returnValue(cold('a', { a: createSuccessfulRemoteDataObject(status) }));
+    spyOn(service as any, 'fetchRequest').and.returnValue(
+      cold('a', { a: createSuccessfulRemoteDataObject(status) }),
+    );
   };
 
   beforeEach(() => {
@@ -92,31 +99,35 @@ describe(`AuthRequestService`, () => {
           });
           flush();
 
-          expect(requestService.send).toHaveBeenCalledWith(objectContaining({
-            uuid: requestID,
-            href: endpointURL + '/method',
-            method: RestRequestMethod.GET,
-            body: undefined,
-            options,
-          }));
+          expect(requestService.send).toHaveBeenCalledWith(
+            objectContaining({
+              uuid: requestID,
+              href: endpointURL + '/method',
+              method: RestRequestMethod.GET,
+              body: undefined,
+              options,
+            }),
+          );
           expect((service as any).fetchRequest).toHaveBeenCalledWith(requestID);
         });
       });
 
-      it('should send the request even if caller doesn\'t subscribe to the response', () => {
+      it("should send the request even if caller doesn't subscribe to the response", () => {
         testScheduler.run(({ cold, flush }) => {
           init(cold);
 
           service.getRequest('method', options);
           flush();
 
-          expect(requestService.send).toHaveBeenCalledWith(objectContaining({
-            uuid: requestID,
-            href: endpointURL + '/method',
-            method: RestRequestMethod.GET,
-            body: undefined,
-            options,
-          }));
+          expect(requestService.send).toHaveBeenCalledWith(
+            objectContaining({
+              uuid: requestID,
+              href: endpointURL + '/method',
+              method: RestRequestMethod.GET,
+              body: undefined,
+              options,
+            }),
+          );
         });
       });
     });
@@ -126,36 +137,42 @@ describe(`AuthRequestService`, () => {
         testScheduler.run(({ cold, expectObservable, flush }) => {
           init(cold);
 
-          expectObservable(service.postToEndpoint('method', { content: 'something' }, options)).toBe('a', {
+          expectObservable(
+            service.postToEndpoint('method', { content: 'something' }, options),
+          ).toBe('a', {
             a: objectContaining({ payload: status }),
           });
           flush();
 
-          expect(requestService.send).toHaveBeenCalledWith(objectContaining({
-            uuid: requestID,
-            href: endpointURL + '/method',
-            method: RestRequestMethod.POST,
-            body: { content: 'something' },
-            options,
-          }));
+          expect(requestService.send).toHaveBeenCalledWith(
+            objectContaining({
+              uuid: requestID,
+              href: endpointURL + '/method',
+              method: RestRequestMethod.POST,
+              body: { content: 'something' },
+              options,
+            }),
+          );
           expect((service as any).fetchRequest).toHaveBeenCalledWith(requestID);
         });
       });
 
-      it('should send the request even if caller doesn\'t subscribe to the response', () => {
+      it("should send the request even if caller doesn't subscribe to the response", () => {
         testScheduler.run(({ cold, flush }) => {
           init(cold);
 
           service.postToEndpoint('method', { content: 'something' }, options);
           flush();
 
-          expect(requestService.send).toHaveBeenCalledWith(objectContaining({
-            uuid: requestID,
-            href: endpointURL + '/method',
-            method: RestRequestMethod.POST,
-            body: { content: 'something' },
-            options,
-          }));
+          expect(requestService.send).toHaveBeenCalledWith(
+            objectContaining({
+              uuid: requestID,
+              href: endpointURL + '/method',
+              method: RestRequestMethod.POST,
+              body: { content: 'something' },
+              options,
+            }),
+          );
         });
       });
     });
@@ -170,7 +187,9 @@ describe(`AuthRequestService`, () => {
         // we're not testing the outcome in this test, a .toBe(…) isn't necessary
         expectObservable(service.getShortlivedToken());
         flush();
-        expect((service as any).createShortLivedTokenRequest).toHaveBeenCalledWith(`${endpointURL}/shortlivedtokens`);
+        expect(
+          (service as any).createShortLivedTokenRequest,
+        ).toHaveBeenCalledWith(`${endpointURL}/shortlivedtokens`);
       });
     });
   });

@@ -38,9 +38,11 @@ export interface FormState {
 
 const initialState: FormState = Object.create(null);
 
-export function formReducer(state = initialState, action: FormAction): FormState {
+export function formReducer(
+  state = initialState,
+  action: FormAction,
+): FormState {
   switch (action.type) {
-
     case FormActionTypes.FORM_INIT: {
       return initForm(state, action as FormInitAction);
     }
@@ -95,7 +97,9 @@ function addFormErrors(state: FormState, action: FormAddError) {
       [formId]: {
         data: state[formId].data,
         valid: state[formId].valid,
-        errors: state[formId].errors ? uniqWith(state[formId].errors.concat(error), isEqual) : [].concat(error),
+        errors: state[formId].errors
+          ? uniqWith(state[formId].errors.concat(error), isEqual)
+          : [].concat(error),
         touched,
       },
     });
@@ -109,7 +113,9 @@ function removeFormError(state: FormState, action: FormRemoveErrorAction) {
   const fieldId = action.payload.fieldId;
   const fieldIndex = action.payload.fieldIndex;
   if (hasValue(state[formId])) {
-    const errors = state[formId].errors.filter((error) => error.fieldId !== fieldId || error.fieldIndex !== fieldIndex);
+    const errors = state[formId].errors.filter(
+      (error) => error.fieldId !== fieldId || error.fieldIndex !== fieldIndex,
+    );
     const newState = Object.assign({}, state);
     newState[formId] = Object.assign({}, state[formId], { errors });
     return newState;
@@ -153,7 +159,11 @@ function initForm(state: FormState, action: FormInitAction): FormState {
     });
   } else {
     const newState = Object.assign({}, state);
-    newState[action.payload.formId] = Object.assign({}, newState[action.payload.formId], formState);
+    newState[action.payload.formId] = Object.assign(
+      {},
+      newState[action.payload.formId],
+      formState,
+    );
     return newState;
   }
 }
@@ -171,10 +181,13 @@ function initForm(state: FormState, action: FormInitAction): FormState {
 function changeDataForm(state: FormState, action: FormChangeAction): FormState {
   if (hasValue(state[action.payload.formId])) {
     const newState = Object.assign({}, state);
-    newState[action.payload.formId] = Object.assign({}, newState[action.payload.formId], {
-      data: action.payload.formData,
-      valid: state[action.payload.formId].valid,
-    },
+    newState[action.payload.formId] = Object.assign(
+      {},
+      newState[action.payload.formId],
+      {
+        data: action.payload.formData,
+        valid: state[action.payload.formId].valid,
+      },
     );
     return newState;
   } else {
@@ -192,7 +205,10 @@ function changeDataForm(state: FormState, action: FormChangeAction): FormState {
  * @return FormState
  *    the new state, with the status changed.
  */
-function changeStatusForm(state: FormState, action: FormStatusChangeAction): FormState {
+function changeStatusForm(
+  state: FormState,
+  action: FormStatusChangeAction,
+): FormState {
   if (!hasValue(state[action.payload.formId])) {
     return Object.assign({}, state, {
       [action.payload.formId]: {
@@ -202,10 +218,13 @@ function changeStatusForm(state: FormState, action: FormStatusChangeAction): For
     });
   } else {
     const newState = Object.assign({}, state);
-    newState[action.payload.formId] = Object.assign({}, newState[action.payload.formId], {
-      data: state[action.payload.formId].data,
-      valid: action.payload.valid,
-    },
+    newState[action.payload.formId] = Object.assign(
+      {},
+      newState[action.payload.formId],
+      {
+        data: state[action.payload.formId].data,
+        valid: action.payload.valid,
+      },
     );
     return newState;
   }
@@ -236,15 +255,18 @@ function removeForm(state: FormState, action: FormRemoveAction): FormState {
  * @param state
  * @param action
  */
-function changeTouchedState(state: FormState, action: FormAddTouchedAction): FormState {
+function changeTouchedState(
+  state: FormState,
+  action: FormAddTouchedAction,
+): FormState {
   if (hasValue(state[action.payload.formId])) {
     const newState = Object.assign({}, state);
 
     const newForm = Object.assign({}, newState[action.payload.formId]);
     newState[action.payload.formId] = newForm;
 
-    newForm.touched = { ... newForm.touched };
-    action.payload.touched.forEach((field) => newForm.touched[field] = true);
+    newForm.touched = { ...newForm.touched };
+    action.payload.touched.forEach((field) => (newForm.touched[field] = true));
 
     return newState;
   } else {

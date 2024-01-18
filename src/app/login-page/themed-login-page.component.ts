@@ -17,7 +17,9 @@ export class ThemedLoginPageComponent extends ThemedComponent<LoginPageComponent
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/login-page/login-page.component`);
+    return import(
+      `../../themes/${themeName}/app/login-page/login-page.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

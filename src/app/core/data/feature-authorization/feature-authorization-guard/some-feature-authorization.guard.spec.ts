@@ -3,10 +3,7 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { AuthService } from '../../../auth/auth.service';
 import { AuthorizationDataService } from '../authorization-data.service';
@@ -18,24 +15,35 @@ import { SomeFeatureAuthorizationGuard } from './some-feature-authorization.guar
  * Provide the return values of the overwritten getters as constructor arguments
  */
 class SomeFeatureAuthorizationGuardImpl extends SomeFeatureAuthorizationGuard {
-  constructor(protected authorizationService: AuthorizationDataService,
-              protected router: Router,
-              protected authService: AuthService,
-              protected featureIds: FeatureID[],
-              protected objectUrl: string,
-              protected ePersonUuid: string) {
+  constructor(
+    protected authorizationService: AuthorizationDataService,
+    protected router: Router,
+    protected authService: AuthService,
+    protected featureIds: FeatureID[],
+    protected objectUrl: string,
+    protected ePersonUuid: string,
+  ) {
     super(authorizationService, router, authService);
   }
 
-  getFeatureIDs(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FeatureID[]> {
+  getFeatureIDs(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<FeatureID[]> {
     return observableOf(this.featureIds);
   }
 
-  getObjectUrl(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string> {
+  getObjectUrl(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<string> {
     return observableOf(this.objectUrl);
   }
 
-  getEPersonUuid(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<string> {
+  getEPersonUuid(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<string> {
     return observableOf(this.ePersonUuid);
   }
 }
@@ -68,7 +76,14 @@ describe('SomeFeatureAuthorizationGuard', () => {
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
     });
-    guard = new SomeFeatureAuthorizationGuardImpl(authorizationService, router, authService, featureIds, objectUrl, ePersonUuid);
+    guard = new SomeFeatureAuthorizationGuardImpl(
+      authorizationService,
+      router,
+      authService,
+      featureIds,
+      objectUrl,
+      ePersonUuid,
+    );
   }
 
   beforeEach(() => {
@@ -76,42 +91,48 @@ describe('SomeFeatureAuthorizationGuard', () => {
   });
 
   describe('canActivate', () => {
-    describe('when the user isn\'t authorized', () => {
+    describe("when the user isn't authorized", () => {
       beforeEach(() => {
         authorizedFeatureIds = [];
       });
 
       it('should not return true', (done) => {
-        guard.canActivate(undefined, { url: 'current-url' } as any).subscribe((result) => {
-          expect(result).not.toEqual(true);
-          done();
-        });
+        guard
+          .canActivate(undefined, { url: 'current-url' } as any)
+          .subscribe((result) => {
+            expect(result).not.toEqual(true);
+            done();
+          });
       });
     });
 
-    describe('when the user is authorized for at least one of the guard\'s features', () => {
+    describe("when the user is authorized for at least one of the guard's features", () => {
       beforeEach(() => {
         authorizedFeatureIds = [featureIds[0]];
       });
 
       it('should return true', (done) => {
-        guard.canActivate(undefined, { url: 'current-url' } as any).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        guard
+          .canActivate(undefined, { url: 'current-url' } as any)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
 
-    describe('when the user is authorized for all of the guard\'s features', () => {
+    describe("when the user is authorized for all of the guard's features", () => {
       beforeEach(() => {
         authorizedFeatureIds = featureIds;
       });
 
       it('should return true', (done) => {
-        guard.canActivate(undefined, { url: 'current-url' } as any).subscribe((result) => {
-          expect(result).toEqual(true);
-          done();
-        });
+        guard
+          .canActivate(undefined, { url: 'current-url' } as any)
+          .subscribe((result) => {
+            expect(result).toEqual(true);
+            done();
+          });
       });
     });
   });

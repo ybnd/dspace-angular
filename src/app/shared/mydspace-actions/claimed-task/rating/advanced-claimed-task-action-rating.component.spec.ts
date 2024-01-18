@@ -1,14 +1,8 @@
 import { Location } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
@@ -32,9 +26,11 @@ const workflowId = 'workflow-1';
 describe('AdvancedClaimedTaskActionRatingComponent', () => {
   const object = Object.assign(new ClaimedTask(), {
     id: taskId,
-    workflowitem: observableOf(Object.assign(new WorkflowItem(), {
-      id: workflowId,
-    })),
+    workflowitem: observableOf(
+      Object.assign(new WorkflowItem(), {
+        id: workflowId,
+      }),
+    ),
   });
   let component: AdvancedClaimedTaskActionRatingComponent;
   let fixture: ComponentFixture<AdvancedClaimedTaskActionRatingComponent>;
@@ -53,12 +49,8 @@ describe('AdvancedClaimedTaskActionRatingComponent', () => {
     searchService = new SearchServiceStub();
 
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        AdvancedClaimedTaskActionRatingComponent,
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [AdvancedClaimedTaskActionRatingComponent],
       providers: [
         { provide: ActivatedRoute, useValue: route },
         { provide: ClaimedTaskDataService, useValue: claimedTaskDataService },
@@ -91,13 +83,18 @@ describe('AdvancedClaimedTaskActionRatingComponent', () => {
 
   it('should navigate to the advanced workflow page when clicked', () => {
     component.workflowTaskPageRoute = `/workflowitems/${workflowId}/advanced`;
-    fixture.debugElement.query(By.css('.ratingReviewerAction')).nativeElement.click();
+    fixture.debugElement
+      .query(By.css('.ratingReviewerAction'))
+      .nativeElement.click();
 
-    expect(router.navigate).toHaveBeenCalledWith([`/workflowitems/${workflowId}/advanced`], {
-      queryParams: {
-        workflow: ADVANCED_WORKFLOW_ACTION_RATING,
-        claimedTask: taskId,
+    expect(router.navigate).toHaveBeenCalledWith(
+      [`/workflowitems/${workflowId}/advanced`],
+      {
+        queryParams: {
+          workflow: ADVANCED_WORKFLOW_ACTION_RATING,
+          claimedTask: taskId,
+        },
       },
-    });
+    );
   });
 });

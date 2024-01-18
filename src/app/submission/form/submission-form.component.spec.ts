@@ -10,10 +10,7 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -40,14 +37,14 @@ import { SubmissionService } from '../submission.service';
 import { SubmissionFormComponent } from './submission-form.component';
 
 describe('SubmissionFormComponent Component', () => {
-
   let comp: SubmissionFormComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionFormComponent>;
   let authServiceStub: AuthServiceStub;
   let scheduler: TestScheduler;
 
-  const submissionServiceStub: SubmissionServiceStub = new SubmissionServiceStub();
+  const submissionServiceStub: SubmissionServiceStub =
+    new SubmissionServiceStub();
   const submissionId = mockSubmissionId;
   const collectionId = mockSubmissionCollectionId;
   const submissionObjectNew: any = mockSubmissionObjectNew;
@@ -60,15 +57,18 @@ describe('SubmissionFormComponent Component', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [],
-      declarations: [
-        SubmissionFormComponent,
-        TestComponent,
-      ],
+      declarations: [SubmissionFormComponent, TestComponent],
       providers: [
         { provide: AuthService, useClass: AuthServiceStub },
-        { provide: HALEndpointService, useValue: new HALEndpointServiceStub('workspaceitems') },
+        {
+          provide: HALEndpointService,
+          useValue: new HALEndpointServiceStub('workspaceitems'),
+        },
         { provide: SubmissionService, useValue: submissionServiceStub },
-        { provide: SectionsService, useValue: { isSectionTypeAvailable: () => observableOf(true) } },
+        {
+          provide: SectionsService,
+          useValue: { isSectionTypeAvailable: () => observableOf(true) },
+        },
         ChangeDetectorRef,
         SubmissionFormComponent,
       ],
@@ -82,14 +82,19 @@ describe('SubmissionFormComponent Component', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-      submissionServiceStub.getSubmissionObject.and.returnValue(observableOf(submissionState));
+      submissionServiceStub.getSubmissionObject.and.returnValue(
+        observableOf(submissionState),
+      );
       const html = `
         <ds-submission-form [collectionId]="collectionId"
                                    [selfUrl]="selfUrl"
                                    [submissionDefinition]="submissionDefinition"
                                    [submissionId]="submissionId" [item]="item"></ds-submission-form>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -97,9 +102,12 @@ describe('SubmissionFormComponent Component', () => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionFormComponent', inject([SubmissionFormComponent], (app: SubmissionFormComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create SubmissionFormComponent', inject(
+      [SubmissionFormComponent],
+      (app: SubmissionFormComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -121,7 +129,6 @@ describe('SubmissionFormComponent Component', () => {
     });
 
     it('should not has effect when collectionId and submissionId are undefined', (done) => {
-
       scheduler.schedule(() => fixture.detectChanges());
       scheduler.flush();
 
@@ -142,8 +149,12 @@ describe('SubmissionFormComponent Component', () => {
       comp.submissionErrors = null;
       comp.item = new Item();
 
-      submissionServiceStub.getSubmissionObject.and.returnValue(observableOf(submissionState));
-      submissionServiceStub.getSubmissionSections.and.returnValue(observableOf(sectionsList));
+      submissionServiceStub.getSubmissionObject.and.returnValue(
+        observableOf(submissionState),
+      );
+      submissionServiceStub.getSubmissionSections.and.returnValue(
+        observableOf(sectionsList),
+      );
       spyOn(authServiceStub, 'buildAuthHeader').and.returnValue('token');
 
       scheduler.schedule(() => {
@@ -155,7 +166,9 @@ describe('SubmissionFormComponent Component', () => {
       });
       scheduler.flush();
 
-      expect(comp.submissionSections).toBeObservable(cold('(a|)', { a: sectionsList }));
+      expect(comp.submissionSections).toBeObservable(
+        cold('(a|)', { a: sectionsList }),
+      );
 
       expect(submissionServiceStub.dispatchInit).toHaveBeenCalledWith(
         collectionId,
@@ -164,7 +177,8 @@ describe('SubmissionFormComponent Component', () => {
         submissionDefinition,
         sectionsData,
         comp.item,
-        null);
+        null,
+      );
       expect(submissionServiceStub.startAutoSave).toHaveBeenCalled();
       done();
     });
@@ -190,7 +204,9 @@ describe('SubmissionFormComponent Component', () => {
         main: VisibilityType.READONLY,
         other: VisibilityType.READONLY,
       };
-      comp.submissionDefinition = Object.assign({}, submissionDefinition, { visibility: visibility });
+      comp.submissionDefinition = Object.assign({}, submissionDefinition, {
+        visibility: visibility,
+      });
       fixture.detectChanges();
       expect(comp.isSectionReadonly).toBe(false);
     });
@@ -210,8 +226,12 @@ describe('SubmissionFormComponent Component', () => {
       scheduler.flush();
 
       expect(comp.collectionId).toEqual(submissionObjectNew.collection.id);
-      expect(comp.submissionDefinition).toEqual(submissionObjectNew.submissionDefinition);
-      expect(comp.definitionId).toEqual(submissionObjectNew.submissionDefinition.name);
+      expect(comp.submissionDefinition).toEqual(
+        submissionObjectNew.submissionDefinition,
+      );
+      expect(comp.definitionId).toEqual(
+        submissionObjectNew.submissionDefinition.name,
+      );
       expect(comp.sections).toEqual(submissionObjectNew.sections);
 
       expect(submissionServiceStub.resetSubmissionObject).toHaveBeenCalledWith(
@@ -248,10 +268,11 @@ describe('SubmissionFormComponent Component', () => {
       scheduler.flush();
 
       expect(comp.collectionId).toEqual('45f2f3f1-ba1f-4f36-908a-3f1ea9a557eb');
-      expect(submissionServiceStub.resetSubmissionObject).not.toHaveBeenCalled();
+      expect(
+        submissionServiceStub.resetSubmissionObject,
+      ).not.toHaveBeenCalled();
       done();
     });
-
   });
 });
 
@@ -261,10 +282,8 @@ describe('SubmissionFormComponent Component', () => {
   template: ``,
 })
 class TestComponent {
-
   collectionId = mockSubmissionCollectionId;
   selfUrl = mockSubmissionSelfUrl;
   submissionDefinition = mockSubmissionDefinition;
   submissionId = mockSubmissionId;
-
 }

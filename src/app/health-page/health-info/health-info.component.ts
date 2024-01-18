@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 import { HealthInfoResponse } from '../models/health-component.model';
@@ -19,8 +15,7 @@ import { HealthInfoResponse } from '../models/health-component.model';
   templateUrl: './health-info.component.html',
   styleUrls: ['./health-info.component.scss'],
 })
-export class HealthInfoComponent implements OnInit  {
-
+export class HealthInfoComponent implements OnInit {
   @Input() healthInfoResponse: HealthInfoResponse;
 
   /**
@@ -28,8 +23,7 @@ export class HealthInfoComponent implements OnInit  {
    */
   activeId: string;
 
-  constructor(private translate: TranslateService) {
-  }
+  constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
     this.activeId = Object.keys(this.healthInfoResponse)[0];
@@ -44,6 +38,6 @@ export class HealthInfoComponent implements OnInit  {
     const translationKey = `health-page.section-info.${panelKey}.title`;
     const translation = this.translate.instant(translationKey);
 
-    return (translation === translationKey) ? panelKey : translation;
+    return translation === translationKey ? panelKey : translation;
   }
 }

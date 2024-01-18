@@ -1,8 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
@@ -40,33 +37,52 @@ describe('QualityAssuranceSourceComponent test suite', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        QualityAssuranceSourceComponent,
-        TestComponent,
-      ],
+      imports: [CommonModule, TranslateModule.forRoot()],
+      declarations: [QualityAssuranceSourceComponent, TestComponent],
       providers: [
-        { provide: NotificationsStateService, useValue: mockNotificationsStateService },
-        { provide: ActivatedRoute, useValue: { data: observableOf(activatedRouteParams), params: observableOf({}) } },
+        {
+          provide: NotificationsStateService,
+          useValue: mockNotificationsStateService,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            data: observableOf(activatedRouteParams),
+            params: observableOf({}),
+          },
+        },
         { provide: PaginationService, useValue: paginationService },
         QualityAssuranceSourceComponent,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then(() => {
-      mockNotificationsStateService.getQualityAssuranceSource.and.returnValue(observableOf([
-        qualityAssuranceSourceObjectMorePid,
-        qualityAssuranceSourceObjectMoreAbstract,
-      ]));
-      mockNotificationsStateService.getQualityAssuranceSourceTotalPages.and.returnValue(observableOf(1));
-      mockNotificationsStateService.getQualityAssuranceSourceCurrentPage.and.returnValue(observableOf(0));
-      mockNotificationsStateService.getQualityAssuranceSourceTotals.and.returnValue(observableOf(2));
-      mockNotificationsStateService.isQualityAssuranceSourceLoaded.and.returnValue(observableOf(true));
-      mockNotificationsStateService.isQualityAssuranceSourceLoading.and.returnValue(observableOf(false));
-      mockNotificationsStateService.isQualityAssuranceSourceProcessing.and.returnValue(observableOf(false));
-    });
+    })
+      .compileComponents()
+      .then(() => {
+        mockNotificationsStateService.getQualityAssuranceSource.and.returnValue(
+          observableOf([
+            qualityAssuranceSourceObjectMorePid,
+            qualityAssuranceSourceObjectMoreAbstract,
+          ]),
+        );
+        mockNotificationsStateService.getQualityAssuranceSourceTotalPages.and.returnValue(
+          observableOf(1),
+        );
+        mockNotificationsStateService.getQualityAssuranceSourceCurrentPage.and.returnValue(
+          observableOf(0),
+        );
+        mockNotificationsStateService.getQualityAssuranceSourceTotals.and.returnValue(
+          observableOf(2),
+        );
+        mockNotificationsStateService.isQualityAssuranceSourceLoaded.and.returnValue(
+          observableOf(true),
+        );
+        mockNotificationsStateService.isQualityAssuranceSourceLoading.and.returnValue(
+          observableOf(false),
+        );
+        mockNotificationsStateService.isQualityAssuranceSourceProcessing.and.returnValue(
+          observableOf(false),
+        );
+      });
   }));
 
   // First test to check the correct component creation
@@ -78,7 +94,10 @@ describe('QualityAssuranceSourceComponent test suite', () => {
     beforeEach(() => {
       const html = `
         <ds-quality-assurance-source></ds-quality-assurance-source>`;
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
     });
 
@@ -86,9 +105,12 @@ describe('QualityAssuranceSourceComponent test suite', () => {
       testFixture.destroy();
     });
 
-    it('should create QualityAssuranceSourceComponent', inject([QualityAssuranceSourceComponent], (app: QualityAssuranceSourceComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create QualityAssuranceSourceComponent', inject(
+      [QualityAssuranceSourceComponent],
+      (app: QualityAssuranceSourceComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('Main tests running with two Source', () => {
@@ -96,7 +118,6 @@ describe('QualityAssuranceSourceComponent test suite', () => {
       fixture = TestBed.createComponent(QualityAssuranceSourceComponent);
       comp = fixture.componentInstance;
       compAsAny = comp;
-
     });
 
     afterEach(() => {
@@ -105,22 +126,26 @@ describe('QualityAssuranceSourceComponent test suite', () => {
       compAsAny = null;
     });
 
-    it(('Should init component properly'), () => {
+    it('Should init component properly', () => {
       comp.ngOnInit();
       fixture.detectChanges();
 
-      expect(comp.sources$).toBeObservable(cold('(a|)', {
-        a: [
-          qualityAssuranceSourceObjectMorePid,
-          qualityAssuranceSourceObjectMoreAbstract,
-        ],
-      }));
-      expect(comp.totalElements$).toBeObservable(cold('(a|)', {
-        a: 2,
-      }));
+      expect(comp.sources$).toBeObservable(
+        cold('(a|)', {
+          a: [
+            qualityAssuranceSourceObjectMorePid,
+            qualityAssuranceSourceObjectMoreAbstract,
+          ],
+        }),
+      );
+      expect(comp.totalElements$).toBeObservable(
+        cold('(a|)', {
+          a: 2,
+        }),
+      );
     });
 
-    it(('Should set data properly after the view init'), () => {
+    it('Should set data properly after the view init', () => {
       spyOn(compAsAny, 'getQualityAssuranceSource');
 
       comp.ngAfterViewInit();
@@ -129,24 +154,39 @@ describe('QualityAssuranceSourceComponent test suite', () => {
       expect(compAsAny.getQualityAssuranceSource).toHaveBeenCalled();
     });
 
-    it(('isSourceLoading should return FALSE'), () => {
-      expect(comp.isSourceLoading()).toBeObservable(cold('(a|)', {
-        a: false,
-      }));
+    it('isSourceLoading should return FALSE', () => {
+      expect(comp.isSourceLoading()).toBeObservable(
+        cold('(a|)', {
+          a: false,
+        }),
+      );
     });
 
-    it(('isSourceProcessing should return FALSE'), () => {
-      expect(comp.isSourceProcessing()).toBeObservable(cold('(a|)', {
-        a: false,
-      }));
+    it('isSourceProcessing should return FALSE', () => {
+      expect(comp.isSourceProcessing()).toBeObservable(
+        cold('(a|)', {
+          a: false,
+        }),
+      );
     });
 
-    it(('getQualityAssuranceSource should call the service to dispatch a STATE change'), () => {
+    it('getQualityAssuranceSource should call the service to dispatch a STATE change', () => {
       comp.ngOnInit();
       fixture.detectChanges();
 
-      compAsAny.notificationsStateService.dispatchRetrieveQualityAssuranceSource(comp.paginationConfig.pageSize, comp.paginationConfig.currentPage).and.callThrough();
-      expect(compAsAny.notificationsStateService.dispatchRetrieveQualityAssuranceSource).toHaveBeenCalledWith(comp.paginationConfig.pageSize, comp.paginationConfig.currentPage);
+      compAsAny.notificationsStateService
+        .dispatchRetrieveQualityAssuranceSource(
+          comp.paginationConfig.pageSize,
+          comp.paginationConfig.currentPage,
+        )
+        .and.callThrough();
+      expect(
+        compAsAny.notificationsStateService
+          .dispatchRetrieveQualityAssuranceSource,
+      ).toHaveBeenCalledWith(
+        comp.paginationConfig.pageSize,
+        comp.paginationConfig.currentPage,
+      );
     });
   });
 });
@@ -156,6 +196,4 @@ describe('QualityAssuranceSourceComponent test suite', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-
-}
+class TestComponent {}

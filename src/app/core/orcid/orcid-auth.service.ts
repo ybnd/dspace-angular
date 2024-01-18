@@ -1,20 +1,8 @@
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  AddOperation,
-  RemoveOperation,
-} from 'fast-json-patch';
-import {
-  combineLatest,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { AddOperation, RemoveOperation } from 'fast-json-patch';
+import { combineLatest, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 
 import { isNotEmpty } from '../../shared/empty.util';
 import { ConfigurationDataService } from '../data/configuration-data.service';
@@ -35,13 +23,12 @@ import { URLCombiner } from '../url-combiner/url-combiner';
 
 @Injectable()
 export class OrcidAuthService {
-
   constructor(
     @Inject(NativeWindowService) protected _window: NativeWindowRef,
     private configurationService: ConfigurationDataService,
     private researcherProfileService: ResearcherProfileDataService,
-    private router: Router) {
-  }
+    private router: Router,
+  ) {}
 
   /**
    * Check if the given item is linked to an ORCID profile.
@@ -61,7 +48,12 @@ export class OrcidAuthService {
   public onlyAdminCanDisconnectProfileFromOrcid(): Observable<boolean> {
     return this.getOrcidDisconnectionAllowedUsersConfiguration().pipe(
       map((propertyRD: RemoteData<ConfigurationProperty>) => {
-        return propertyRD.hasSucceeded && propertyRD.payload.values.map((value) => value.toLowerCase()).includes('only_admin');
+        return (
+          propertyRD.hasSucceeded &&
+          propertyRD.payload.values
+            .map((value) => value.toLowerCase())
+            .includes('only_admin')
+        );
       }),
     );
   }
@@ -74,7 +66,12 @@ export class OrcidAuthService {
   public ownerCanDisconnectProfileFromOrcid(): Observable<boolean> {
     return this.getOrcidDisconnectionAllowedUsersConfiguration().pipe(
       map((propertyRD: RemoteData<ConfigurationProperty>) => {
-        return propertyRD.hasSucceeded && propertyRD.payload.values.map( (value) => value.toLowerCase()).includes('admin_and_owner');
+        return (
+          propertyRD.hasSucceeded &&
+          propertyRD.payload.values
+            .map((value) => value.toLowerCase())
+            .includes('admin_and_owner')
+        );
       }),
     );
   }
@@ -85,17 +82,26 @@ export class OrcidAuthService {
    * @param person The person item related to the researcher profile
    * @param code The auth-code received from orcid
    */
-  public linkOrcidByItem(person: Item, code: string): Observable<RemoteData<ResearcherProfile>> {
-    const operations: AddOperation<string>[] = [{
-      path: '/orcid',
-      op: 'add',
-      value: code,
-    }];
+  public linkOrcidByItem(
+    person: Item,
+    code: string,
+  ): Observable<RemoteData<ResearcherProfile>> {
+    const operations: AddOperation<string>[] = [
+      {
+        path: '/orcid',
+        op: 'add',
+        value: code,
+      },
+    ];
 
-    return this.researcherProfileService.findById(person.firstMetadata('dspace.object.owner').authority).pipe(
-      getFirstCompletedRemoteData(),
-      switchMap((profileRD) => this.researcherProfileService.patch(profileRD.payload, operations)),
-    );
+    return this.researcherProfileService
+      .findById(person.firstMetadata('dspace.object.owner').authority)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        switchMap((profileRD) =>
+          this.researcherProfileService.patch(profileRD.payload, operations),
+        ),
+      );
   }
 
   /**
@@ -103,16 +109,24 @@ export class OrcidAuthService {
    *
    * @param person The person item related to the researcher profile
    */
-  public unlinkOrcidByItem(person: Item): Observable<RemoteData<ResearcherProfile>> {
-    const operations: RemoveOperation[] = [{
-      path:'/orcid',
-      op:'remove',
-    }];
+  public unlinkOrcidByItem(
+    person: Item,
+  ): Observable<RemoteData<ResearcherProfile>> {
+    const operations: RemoveOperation[] = [
+      {
+        path: '/orcid',
+        op: 'remove',
+      },
+    ];
 
-    return this.researcherProfileService.findById(person.firstMetadata('dspace.object.owner').authority).pipe(
-      getFirstCompletedRemoteData(),
-      switchMap((profileRD) => this.researcherProfileService.patch(profileRD.payload, operations)),
-    );
+    return this.researcherProfileService
+      .findById(person.firstMetadata('dspace.object.owner').authority)
+      .pipe(
+        getFirstCompletedRemoteData(),
+        switchMap((profileRD) =>
+          this.researcherProfileService.patch(profileRD.payload, operations),
+        ),
+      );
   }
 
   /**
@@ -122,15 +136,32 @@ export class OrcidAuthService {
    */
   public getOrcidAuthorizeUrl(profile: Item): Observable<string> {
     return combineLatest([
-      this.configurationService.findByPropertyName('orcid.authorize-url').pipe(getFirstSucceededRemoteDataPayload()),
-      this.configurationService.findByPropertyName('orcid.application-client-id').pipe(getFirstSucceededRemoteDataPayload()),
-      this.configurationService.findByPropertyName('orcid.scope').pipe(getFirstSucceededRemoteDataPayload())],
-    ).pipe(
+      this.configurationService
+        .findByPropertyName('orcid.authorize-url')
+        .pipe(getFirstSucceededRemoteDataPayload()),
+      this.configurationService
+        .findByPropertyName('orcid.application-client-id')
+        .pipe(getFirstSucceededRemoteDataPayload()),
+      this.configurationService
+        .findByPropertyName('orcid.scope')
+        .pipe(getFirstSucceededRemoteDataPayload()),
+    ]).pipe(
       map(([authorizeUrl, clientId, scopes]) => {
-        const redirectUri = new URLCombiner(this._window.nativeWindow.origin, encodeURIComponent(this.router.url.split('?')[0]));
-        return authorizeUrl.values[0] + '?client_id=' + clientId.values[0]   + '&redirect_uri=' + redirectUri + '&response_type=code&scope='
-          + scopes.values.join(' ');
-      }));
+        const redirectUri = new URLCombiner(
+          this._window.nativeWindow.origin,
+          encodeURIComponent(this.router.url.split('?')[0]),
+        );
+        return (
+          authorizeUrl.values[0] +
+          '?client_id=' +
+          clientId.values[0] +
+          '&redirect_uri=' +
+          redirectUri +
+          '&response_type=code&scope=' +
+          scopes.values.join(' ')
+        );
+      }),
+    );
   }
 
   /**
@@ -148,14 +179,17 @@ export class OrcidAuthService {
   public getOrcidAuthorizationScopes(): Observable<string[]> {
     return this.configurationService.findByPropertyName('orcid.scope').pipe(
       getFirstCompletedRemoteData(),
-      map((propertyRD: RemoteData<ConfigurationProperty>) => propertyRD.hasSucceeded ? propertyRD.payload.values : []),
+      map((propertyRD: RemoteData<ConfigurationProperty>) =>
+        propertyRD.hasSucceeded ? propertyRD.payload.values : [],
+      ),
     );
   }
 
-  private getOrcidDisconnectionAllowedUsersConfiguration(): Observable<RemoteData<ConfigurationProperty>> {
-    return this.configurationService.findByPropertyName('orcid.disconnection.allowed-users').pipe(
-      getFirstCompletedRemoteData(),
-    );
+  private getOrcidDisconnectionAllowedUsersConfiguration(): Observable<
+    RemoteData<ConfigurationProperty>
+  > {
+    return this.configurationService
+      .findByPropertyName('orcid.disconnection.allowed-users')
+      .pipe(getFirstCompletedRemoteData());
   }
-
 }

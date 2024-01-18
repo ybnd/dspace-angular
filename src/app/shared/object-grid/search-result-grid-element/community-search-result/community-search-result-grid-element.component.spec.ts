@@ -1,13 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { TranslateModule } from '@ngx-translate/core';
@@ -37,7 +30,8 @@ const truncatableServiceStub: any = {
   isCollapsed: (id: number) => observableOf(true),
 };
 
-const mockCommunityWithAbstract: CommunitySearchResult = new CommunitySearchResult();
+const mockCommunityWithAbstract: CommunitySearchResult =
+  new CommunitySearchResult();
 mockCommunityWithAbstract.hitHighlights = {};
 mockCommunityWithAbstract.indexableObject = Object.assign(new Community(), {
   metadata: {
@@ -50,7 +44,8 @@ mockCommunityWithAbstract.indexableObject = Object.assign(new Community(), {
   },
 });
 
-const mockCommunityWithoutAbstract: CommunitySearchResult = new CommunitySearchResult();
+const mockCommunityWithoutAbstract: CommunitySearchResult =
+  new CommunitySearchResult();
 mockCommunityWithoutAbstract.hitHighlights = {};
 mockCommunityWithoutAbstract.indexableObject = Object.assign(new Community(), {
   metadata: {
@@ -69,13 +64,14 @@ const linkService = jasmine.createSpyObj('linkService', {
 describe('CommunitySearchResultGridElementComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [CommunitySearchResultGridElementComponent, TruncatePipe],
       providers: [
         { provide: TruncatableService, useValue: truncatableServiceStub },
-        { provide: 'objectElementProvider', useValue: (mockCommunityWithAbstract) },
+        {
+          provide: 'objectElementProvider',
+          useValue: mockCommunityWithAbstract,
+        },
         { provide: ObjectCacheService, useValue: {} },
         { provide: UUIDService, useValue: {} },
         { provide: Store, useValue: {} },
@@ -92,36 +88,46 @@ describe('CommunitySearchResultGridElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(CommunitySearchResultGridElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(CommunitySearchResultGridElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
-    fixture = TestBed.createComponent(CommunitySearchResultGridElementComponent);
+    fixture = TestBed.createComponent(
+      CommunitySearchResultGridElementComponent,
+    );
     communitySearchResultGridElementComponent = fixture.componentInstance;
   }));
 
   describe('When the community has an abstract', () => {
     beforeEach(() => {
-      communitySearchResultGridElementComponent.dso = mockCommunityWithAbstract.indexableObject;
+      communitySearchResultGridElementComponent.dso =
+        mockCommunityWithAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('p.card-text'),
+      );
       expect(communityAbstractField).not.toBeNull();
     });
   });
 
   describe('When the community has no abstract', () => {
     beforeEach(() => {
-      communitySearchResultGridElementComponent.dso = mockCommunityWithoutAbstract.indexableObject;
+      communitySearchResultGridElementComponent.dso =
+        mockCommunityWithoutAbstract.indexableObject;
       fixture.detectChanges();
     });
 
     it('should not show the description paragraph', () => {
-      const communityAbstractField = fixture.debugElement.query(By.css('p.card-text'));
+      const communityAbstractField = fixture.debugElement.query(
+        By.css('p.card-text'),
+      );
       expect(communityAbstractField).toBeNull();
     });
   });

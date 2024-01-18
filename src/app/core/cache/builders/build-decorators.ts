@@ -1,20 +1,26 @@
 import { InjectionToken } from '@angular/core';
 
-import {
-  hasNoValue,
-  hasValue,
-} from '../../../shared/empty.util';
+import { hasNoValue, hasValue } from '../../../shared/empty.util';
 import { GenericConstructor } from '../../shared/generic-constructor';
 import { HALResource } from '../../shared/hal-resource.model';
 import { ResourceType } from '../../shared/resource-type';
 import { getResourceTypeValueFor } from '../object-cache.reducer';
 import { TypedObject } from '../typed-object.model';
 
-export const LINK_DEFINITION_FACTORY = new InjectionToken<<T extends HALResource>(source: GenericConstructor<T>, linkName: keyof T['_links']) => LinkDefinition<T>>('getLinkDefinition', {
+export const LINK_DEFINITION_FACTORY = new InjectionToken<
+  <T extends HALResource>(
+    source: GenericConstructor<T>,
+    linkName: keyof T['_links'],
+  ) => LinkDefinition<T>
+>('getLinkDefinition', {
   providedIn: 'root',
   factory: () => getLinkDefinition,
 });
-export const LINK_DEFINITION_MAP_FACTORY = new InjectionToken<<T extends HALResource>(source: GenericConstructor<T>) => Map<keyof T['_links'], LinkDefinition<T>>>('getLinkDefinitions', {
+export const LINK_DEFINITION_MAP_FACTORY = new InjectionToken<
+  <T extends HALResource>(
+    source: GenericConstructor<T>,
+  ) => Map<keyof T['_links'], LinkDefinition<T>>
+>('getLinkDefinitions', {
   providedIn: 'root',
   factory: () => getLinkDefinitions,
 });
@@ -95,7 +101,9 @@ export const link = <T extends HALResource>(
  * Returns all LinkDefinitions for a model class
  * @param source
  */
-export const getLinkDefinitions = <T extends HALResource>(source: GenericConstructor<T>): Map<keyof T['_links'], LinkDefinition<T>> => {
+export const getLinkDefinitions = <T extends HALResource>(
+  source: GenericConstructor<T>,
+): Map<keyof T['_links'], LinkDefinition<T>> => {
   return linkMap.get(source);
 };
 
@@ -105,7 +113,10 @@ export const getLinkDefinitions = <T extends HALResource>(source: GenericConstru
  * @param source the model class
  * @param linkName the name of the link
  */
-export const getLinkDefinition = <T extends HALResource>(source: GenericConstructor<T>, linkName: keyof T['_links']): LinkDefinition<T> => {
+export const getLinkDefinition = <T extends HALResource>(
+  source: GenericConstructor<T>,
+  linkName: keyof T['_links'],
+): LinkDefinition<T> => {
   const sourceMap = linkMap.get(source);
   if (hasValue(sourceMap)) {
     return sourceMap.get(linkName);
@@ -122,8 +133,10 @@ export const getLinkDefinition = <T extends HALResource>(source: GenericConstruc
  */
 export function inheritLinkAnnotations(parent: any): any {
   return (child: any) => {
-    const parentMap: Map<string, LinkDefinition<any>> = linkMap.get(parent) || new Map();
-    const childMap: Map<string, LinkDefinition<any>> = linkMap.get(child) || new Map();
+    const parentMap: Map<string, LinkDefinition<any>> = linkMap.get(parent) ||
+    new Map();
+    const childMap: Map<string, LinkDefinition<any>> = linkMap.get(child) ||
+    new Map();
 
     parentMap.forEach((value, key) => {
       if (!childMap.has(key)) {

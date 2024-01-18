@@ -3,16 +3,9 @@ import {
   DebugElement,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { APP_CONFIG } from '../../../../config/app-config.interface';
 import { environment } from '../../../../environments/environment';
@@ -41,20 +34,22 @@ const mockLinkText = 'fake link text';
 describe('MetadataUriValuesComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      })],
-      providers: [
-        { provide: APP_CONFIG, useValue: environment },
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
       ],
+      providers: [{ provide: APP_CONFIG, useValue: environment }],
       declarations: [MetadataUriValuesComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(MetadataUriValuesComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(MetadataUriValuesComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -86,7 +81,6 @@ describe('MetadataUriValuesComponent', () => {
   });
 
   describe('when linktext is defined', () => {
-
     beforeEach(() => {
       comp.linktext = mockLinkText;
       fixture.detectChanges();
@@ -96,9 +90,7 @@ describe('MetadataUriValuesComponent', () => {
       const link = fixture.debugElement.query(By.css('a'));
       expect(link.nativeElement.textContent).toContain(mockLinkText);
     });
-
   });
-
 });
 
 function containsHref(links: DebugElement[], href: string): boolean {

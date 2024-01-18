@@ -1,12 +1,5 @@
-import {
-  Injector,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { Injector, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
@@ -45,12 +38,13 @@ describe('DsoEditMenuComponent', () => {
     index: 1,
   };
 
-
   beforeEach(waitForAsync(() => {
     authorizationService = jasmine.createSpyObj('authorizationService', {
       isAuthorized: observableOf(true),
     });
-    spyOn(menuService, 'getMenuTopSections').and.returnValue(observableOf([section]));
+    spyOn(menuService, 'getMenuTopSections').and.returnValue(
+      observableOf([section]),
+    );
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), RouterTestingModule, DsoPageModule],
       declarations: [DsoEditMenuComponent],
@@ -79,4 +73,3 @@ describe('DsoEditMenuComponent', () => {
     });
   });
 });
-

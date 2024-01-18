@@ -1,8 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { CollectionListEntry } from '../../../shared/collection-dropdown/collection-dropdown.component';
@@ -35,9 +31,7 @@ export class SubmissionImportExternalCollectionComponent {
    * Initialize the component variables.
    * @param {NgbActiveModal} activeModal
    */
-  constructor(
-    private activeModal: NgbActiveModal,
-  ) { }
+  constructor(private activeModal: NgbActiveModal) {}
 
   /**
    * This method emits the selected Collection from the 'selectedEvent' variable.
@@ -76,5 +70,4 @@ export class SubmissionImportExternalCollectionComponent {
   public isLoading(): boolean {
     return !!this.loading;
   }
-
 }

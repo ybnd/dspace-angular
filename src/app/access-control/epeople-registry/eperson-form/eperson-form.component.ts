@@ -7,10 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   DynamicCheckboxModel,
@@ -25,13 +22,7 @@ import {
   of as observableOf,
   Subscription,
 } from 'rxjs';
-import {
-  debounceTime,
-  finalize,
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { debounceTime, finalize, map, switchMap, take } from 'rxjs/operators';
 
 import { AuthService } from '../../../core/auth/auth.service';
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
@@ -72,7 +63,6 @@ import { ValidateEmailNotTaken } from './validators/email-taken.validator';
  * A form used for creating and editing EPeople
  */
 export class EPersonFormComponent implements OnInit, OnDestroy {
-
   labelPrefix = 'admin.access-control.epeople.form.';
 
   /**
@@ -180,11 +170,14 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
   /**
    * Pagination config used to display the list of groups
    */
-  config: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'gem',
-    pageSize: 5,
-    currentPage: 1,
-  });
+  config: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'gem',
+      pageSize: 5,
+      currentPage: 1,
+    },
+  );
 
   /**
    * Try to retrieve initial active eperson, to fill in checkboxes at component creation
@@ -227,14 +220,18 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
     protected route: ActivatedRoute,
     protected router: Router,
   ) {
-    this.subs.push(this.epersonService.getActiveEPerson().subscribe((eperson: EPerson) => {
-      this.epersonInitial = eperson;
-      if (hasValue(eperson)) {
-        this.isImpersonated = this.authService.isImpersonatingUser(eperson.id);
-        this.displayResetPassword = true;
-        this.submitLabel = 'form.submit';
-      }
-    }));
+    this.subs.push(
+      this.epersonService.getActiveEPerson().subscribe((eperson: EPerson) => {
+        this.epersonInitial = eperson;
+        if (hasValue(eperson)) {
+          this.isImpersonated = this.authService.isImpersonatingUser(
+            eperson.id,
+          );
+          this.displayResetPassword = true;
+          this.submitLabel = 'form.submit';
+        }
+      }),
+    );
   }
 
   ngOnInit() {
@@ -245,9 +242,13 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
    * This method will initialise the page
    */
   initialisePage() {
-    this.subs.push(this.epersonService.findById(this.route.snapshot.params.id).subscribe((ePersonRD: RemoteData<EPerson>) => {
-      this.epersonService.editEPerson(ePersonRD.payload);
-    }));
+    this.subs.push(
+      this.epersonService
+        .findById(this.route.snapshot.params.id)
+        .subscribe((ePersonRD: RemoteData<EPerson>) => {
+          this.epersonService.editEPerson(ePersonRD.payload);
+        }),
+    );
     observableCombineLatest([
       this.translateService.get(`${this.messagePrefix}.firstName`),
       this.translateService.get(`${this.messagePrefix}.lastName`),
@@ -255,120 +256,168 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
       this.translateService.get(`${this.messagePrefix}.canLogIn`),
       this.translateService.get(`${this.messagePrefix}.requireCertificate`),
       this.translateService.get(`${this.messagePrefix}.emailHint`),
-    ]).subscribe(([firstName, lastName, email, canLogIn, requireCertificate, emailHint]) => {
-      this.firstName = new DynamicInputModel({
-        id: 'firstName',
-        label: firstName,
-        name: 'firstName',
-        validators: {
-          required: null,
-        },
-        required: true,
-      });
-      this.lastName = new DynamicInputModel({
-        id: 'lastName',
-        label: lastName,
-        name: 'lastName',
-        validators: {
-          required: null,
-        },
-        required: true,
-      });
-      this.email = new DynamicInputModel({
-        id: 'email',
-        label: email,
-        name: 'email',
-        validators: {
-          required: null,
-          pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
-        },
-        required: true,
-        errorMessages: {
-          emailTaken: 'error.validation.emailTaken',
-          pattern: 'error.validation.NotValidEmail',
-        },
-        hint: emailHint,
-      });
-      this.canLogIn = new DynamicCheckboxModel(
-        {
+    ]).subscribe(
+      ([
+        firstName,
+        lastName,
+        email,
+        canLogIn,
+        requireCertificate,
+        emailHint,
+      ]) => {
+        this.firstName = new DynamicInputModel({
+          id: 'firstName',
+          label: firstName,
+          name: 'firstName',
+          validators: {
+            required: null,
+          },
+          required: true,
+        });
+        this.lastName = new DynamicInputModel({
+          id: 'lastName',
+          label: lastName,
+          name: 'lastName',
+          validators: {
+            required: null,
+          },
+          required: true,
+        });
+        this.email = new DynamicInputModel({
+          id: 'email',
+          label: email,
+          name: 'email',
+          validators: {
+            required: null,
+            pattern: '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$',
+          },
+          required: true,
+          errorMessages: {
+            emailTaken: 'error.validation.emailTaken',
+            pattern: 'error.validation.NotValidEmail',
+          },
+          hint: emailHint,
+        });
+        this.canLogIn = new DynamicCheckboxModel({
           id: 'canLogIn',
           label: canLogIn,
           name: 'canLogIn',
-          value: (this.epersonInitial != null ? this.epersonInitial.canLogIn : true),
+          value:
+            this.epersonInitial != null ? this.epersonInitial.canLogIn : true,
         });
-      this.requireCertificate = new DynamicCheckboxModel(
-        {
+        this.requireCertificate = new DynamicCheckboxModel({
           id: 'requireCertificate',
           label: requireCertificate,
           name: 'requireCertificate',
-          value: (this.epersonInitial != null ? this.epersonInitial.requireCertificate : false),
+          value:
+            this.epersonInitial != null
+              ? this.epersonInitial.requireCertificate
+              : false,
         });
-      this.formModel = [
-        this.firstName,
-        this.lastName,
-        this.email,
-        this.canLogIn,
-        this.requireCertificate,
-      ];
-      this.formGroup = this.formBuilderService.createFormGroup(this.formModel);
-      this.subs.push(this.epersonService.getActiveEPerson().subscribe((eperson: EPerson) => {
-        if (eperson != null) {
-          this.groups$ = this.groupsDataService.findListByHref(eperson._links.groups.href, {
-            currentPage: 1,
-            elementsPerPage: this.config.pageSize,
-          });
-        }
-        this.formGroup.patchValue({
-          firstName: eperson != null ? eperson.firstMetadataValue('eperson.firstname') : '',
-          lastName: eperson != null ? eperson.firstMetadataValue('eperson.lastname') : '',
-          email: eperson != null ? eperson.email : '',
-          canLogIn: eperson != null ? eperson.canLogIn : true,
-          requireCertificate: eperson != null ? eperson.requireCertificate : false,
-        });
+        this.formModel = [
+          this.firstName,
+          this.lastName,
+          this.email,
+          this.canLogIn,
+          this.requireCertificate,
+        ];
+        this.formGroup = this.formBuilderService.createFormGroup(
+          this.formModel,
+        );
+        this.subs.push(
+          this.epersonService
+            .getActiveEPerson()
+            .subscribe((eperson: EPerson) => {
+              if (eperson != null) {
+                this.groups$ = this.groupsDataService.findListByHref(
+                  eperson._links.groups.href,
+                  {
+                    currentPage: 1,
+                    elementsPerPage: this.config.pageSize,
+                  },
+                );
+              }
+              this.formGroup.patchValue({
+                firstName:
+                  eperson != null
+                    ? eperson.firstMetadataValue('eperson.firstname')
+                    : '',
+                lastName:
+                  eperson != null
+                    ? eperson.firstMetadataValue('eperson.lastname')
+                    : '',
+                email: eperson != null ? eperson.email : '',
+                canLogIn: eperson != null ? eperson.canLogIn : true,
+                requireCertificate:
+                  eperson != null ? eperson.requireCertificate : false,
+              });
 
-        if (eperson === null && !!this.formGroup.controls.email) {
-          this.formGroup.controls.email.setAsyncValidators(ValidateEmailNotTaken.createValidator(this.epersonService));
-          this.emailValueChangeSubscribe = this.email.valueChanges.pipe(debounceTime(300)).subscribe(() => {
-            this.changeDetectorRef.detectChanges();
-          });
-        }
-      }));
+              if (eperson === null && !!this.formGroup.controls.email) {
+                this.formGroup.controls.email.setAsyncValidators(
+                  ValidateEmailNotTaken.createValidator(this.epersonService),
+                );
+                this.emailValueChangeSubscribe = this.email.valueChanges
+                  .pipe(debounceTime(300))
+                  .subscribe(() => {
+                    this.changeDetectorRef.detectChanges();
+                  });
+              }
+            }),
+        );
 
-      const activeEPerson$ = this.epersonService.getActiveEPerson();
+        const activeEPerson$ = this.epersonService.getActiveEPerson();
 
-      this.groups$ = activeEPerson$.pipe(
-        switchMap((eperson) => {
-          return observableCombineLatest([observableOf(eperson), this.paginationService.getFindListOptions(this.config.id, {
-            currentPage: 1,
-            elementsPerPage: this.config.pageSize,
-          })]);
-        }),
-        switchMap(([eperson, findListOptions]) => {
-          if (eperson != null) {
-            return this.groupsDataService.findListByHref(eperson._links.groups.href, findListOptions, true, true, followLink('object'));
-          }
-          return observableOf(undefined);
-        }),
-      );
+        this.groups$ = activeEPerson$.pipe(
+          switchMap((eperson) => {
+            return observableCombineLatest([
+              observableOf(eperson),
+              this.paginationService.getFindListOptions(this.config.id, {
+                currentPage: 1,
+                elementsPerPage: this.config.pageSize,
+              }),
+            ]);
+          }),
+          switchMap(([eperson, findListOptions]) => {
+            if (eperson != null) {
+              return this.groupsDataService.findListByHref(
+                eperson._links.groups.href,
+                findListOptions,
+                true,
+                true,
+                followLink('object'),
+              );
+            }
+            return observableOf(undefined);
+          }),
+        );
 
-      this.groupsPageInfoState$ = this.groups$.pipe(
-        map(groupsRD => groupsRD.payload.pageInfo),
-      );
+        this.groupsPageInfoState$ = this.groups$.pipe(
+          map((groupsRD) => groupsRD.payload.pageInfo),
+        );
 
-      this.canImpersonate$ = activeEPerson$.pipe(
-        switchMap((eperson) => {
-          if (hasValue(eperson)) {
-            return this.authorizationService.isAuthorized(FeatureID.LoginOnBehalfOf, eperson.self);
-          } else {
-            return observableOf(false);
-          }
-        }),
-      );
-      this.canDelete$ = activeEPerson$.pipe(
-        switchMap((eperson) => this.authorizationService.isAuthorized(FeatureID.CanDelete, hasValue(eperson) ? eperson.self : undefined)),
-      );
-      this.canReset$ = observableOf(true);
-    });
+        this.canImpersonate$ = activeEPerson$.pipe(
+          switchMap((eperson) => {
+            if (hasValue(eperson)) {
+              return this.authorizationService.isAuthorized(
+                FeatureID.LoginOnBehalfOf,
+                eperson.self,
+              );
+            } else {
+              return observableOf(false);
+            }
+          }),
+        );
+        this.canDelete$ = activeEPerson$.pipe(
+          switchMap((eperson) =>
+            this.authorizationService.isAuthorized(
+              FeatureID.CanDelete,
+              hasValue(eperson) ? eperson.self : undefined,
+            ),
+          ),
+        );
+        this.canReset$ = observableOf(true);
+      },
+    );
   }
 
   /**
@@ -387,8 +436,10 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
    * Emit the updated/created eperson using the EventEmitter submitForm
    */
   onSubmit() {
-    this.epersonService.getActiveEPerson().pipe(take(1)).subscribe(
-      (ePerson: EPerson) => {
+    this.epersonService
+      .getActiveEPerson()
+      .pipe(take(1))
+      .subscribe((ePerson: EPerson) => {
         const values = {
           metadata: {
             'eperson.firstname': [
@@ -411,8 +462,7 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
         } else {
           this.editEPerson(ePerson, values);
         }
-      },
-    );
+      });
   }
 
   /**
@@ -423,19 +473,29 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
     const ePersonToCreate = Object.assign(new EPerson(), values);
 
     const response = this.epersonService.create(ePersonToCreate);
-    response.pipe(
-      getFirstCompletedRemoteData(),
-    ).subscribe((rd: RemoteData<EPerson>) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get(this.labelPrefix + 'notification.created.success', { name: this.dsoNameService.getName(ePersonToCreate) }));
-        this.submitForm.emit(ePersonToCreate);
-        this.epersonService.clearEPersonRequests();
-        void this.router.navigateByUrl(getEPersonsRoute());
-      } else {
-        this.notificationsService.error(this.translateService.get(this.labelPrefix + 'notification.created.failure', { name: this.dsoNameService.getName(ePersonToCreate) }));
-        this.cancelForm.emit();
-      }
-    });
+    response
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((rd: RemoteData<EPerson>) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get(
+              this.labelPrefix + 'notification.created.success',
+              { name: this.dsoNameService.getName(ePersonToCreate) },
+            ),
+          );
+          this.submitForm.emit(ePersonToCreate);
+          this.epersonService.clearEPersonRequests();
+          void this.router.navigateByUrl(getEPersonsRoute());
+        } else {
+          this.notificationsService.error(
+            this.translateService.get(
+              this.labelPrefix + 'notification.created.failure',
+              { name: this.dsoNameService.getName(ePersonToCreate) },
+            ),
+          );
+          this.cancelForm.emit();
+        }
+      });
     this.showNotificationIfEmailInUse(ePersonToCreate, 'created');
   }
 
@@ -450,32 +510,50 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
       metadata: {
         'eperson.firstname': [
           {
-            value: (this.firstName.value ? this.firstName.value : ePerson.firstMetadataValue('eperson.firstname')),
+            value: this.firstName.value
+              ? this.firstName.value
+              : ePerson.firstMetadataValue('eperson.firstname'),
           },
         ],
         'eperson.lastname': [
           {
-            value: (this.lastName.value ? this.lastName.value : ePerson.firstMetadataValue('eperson.lastname')),
+            value: this.lastName.value
+              ? this.lastName.value
+              : ePerson.firstMetadataValue('eperson.lastname'),
           },
         ],
       },
-      email: (hasValue(values.email) ? values.email : ePerson.email),
-      canLogIn: (hasValue(values.canLogIn) ? values.canLogIn : ePerson.canLogIn),
-      requireCertificate: (hasValue(values.requireCertificate) ? values.requireCertificate : ePerson.requireCertificate),
+      email: hasValue(values.email) ? values.email : ePerson.email,
+      canLogIn: hasValue(values.canLogIn) ? values.canLogIn : ePerson.canLogIn,
+      requireCertificate: hasValue(values.requireCertificate)
+        ? values.requireCertificate
+        : ePerson.requireCertificate,
       _links: ePerson._links,
     });
 
     const response = this.epersonService.updateEPerson(editedEperson);
-    response.pipe(getFirstCompletedRemoteData()).subscribe((rd: RemoteData<EPerson>) => {
-      if (rd.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get(this.labelPrefix + 'notification.edited.success', { name: this.dsoNameService.getName(editedEperson) }));
-        this.submitForm.emit(editedEperson);
-        void this.router.navigateByUrl(getEPersonsRoute());
-      } else {
-        this.notificationsService.error(this.translateService.get(this.labelPrefix + 'notification.edited.failure', { name: this.dsoNameService.getName(editedEperson) }));
-        this.cancelForm.emit();
-      }
-    });
+    response
+      .pipe(getFirstCompletedRemoteData())
+      .subscribe((rd: RemoteData<EPerson>) => {
+        if (rd.hasSucceeded) {
+          this.notificationsService.success(
+            this.translateService.get(
+              this.labelPrefix + 'notification.edited.success',
+              { name: this.dsoNameService.getName(editedEperson) },
+            ),
+          );
+          this.submitForm.emit(editedEperson);
+          void this.router.navigateByUrl(getEPersonsRoute());
+        } else {
+          this.notificationsService.error(
+            this.translateService.get(
+              this.labelPrefix + 'notification.edited.failure',
+              { name: this.dsoNameService.getName(editedEperson) },
+            ),
+          );
+          this.cancelForm.emit();
+        }
+      });
 
     if (values.email != null && values.email !== ePerson.email) {
       this.showNotificationIfEmailInUse(editedEperson, 'edited');
@@ -506,43 +584,68 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
    * It'll either show a success or error message depending on whether the delete was successful or not.
    */
   delete(): void {
-    this.epersonService.getActiveEPerson().pipe(
-      take(1),
-      switchMap((eperson: EPerson) => {
-        const modalRef = this.modalService.open(ConfirmationModalComponent);
-        modalRef.componentInstance.dso = eperson;
-        modalRef.componentInstance.headerLabel = 'confirmation-modal.delete-eperson.header';
-        modalRef.componentInstance.infoLabel = 'confirmation-modal.delete-eperson.info';
-        modalRef.componentInstance.cancelLabel = 'confirmation-modal.delete-eperson.cancel';
-        modalRef.componentInstance.confirmLabel = 'confirmation-modal.delete-eperson.confirm';
-        modalRef.componentInstance.brandColor = 'danger';
-        modalRef.componentInstance.confirmIcon = 'fas fa-trash';
+    this.epersonService
+      .getActiveEPerson()
+      .pipe(
+        take(1),
+        switchMap((eperson: EPerson) => {
+          const modalRef = this.modalService.open(ConfirmationModalComponent);
+          modalRef.componentInstance.dso = eperson;
+          modalRef.componentInstance.headerLabel =
+            'confirmation-modal.delete-eperson.header';
+          modalRef.componentInstance.infoLabel =
+            'confirmation-modal.delete-eperson.info';
+          modalRef.componentInstance.cancelLabel =
+            'confirmation-modal.delete-eperson.cancel';
+          modalRef.componentInstance.confirmLabel =
+            'confirmation-modal.delete-eperson.confirm';
+          modalRef.componentInstance.brandColor = 'danger';
+          modalRef.componentInstance.confirmIcon = 'fas fa-trash';
 
-        return modalRef.componentInstance.response.pipe(
-          take(1),
-          switchMap((confirm: boolean) => {
-            if (confirm && hasValue(eperson.id)) {
-              this.canDelete$ = observableOf(false);
-              return this.epersonService.deleteEPerson(eperson).pipe(
-                getFirstCompletedRemoteData(),
-                map((restResponse: RemoteData<NoContent>) => ({ restResponse, eperson })),
-              );
-            } else {
-              return observableOf(null);
-            }
-          }),
-          finalize(() => this.canDelete$ = observableOf(true)),
-        );
-      }),
-    ).subscribe(({ restResponse, eperson }: { restResponse: RemoteData<NoContent> | null, eperson: EPerson }) => {
-      if (restResponse?.hasSucceeded) {
-        this.notificationsService.success(this.translateService.get(this.labelPrefix + 'notification.deleted.success', { name: this.dsoNameService.getName(eperson) }));
-        void this.router.navigate([getEPersonsRoute()]);
-      } else {
-        this.notificationsService.error(`Error occurred when trying to delete EPerson with id: ${eperson?.id} with code: ${restResponse?.statusCode} and message: ${restResponse?.errorMessage}`);
-      }
-      this.cancelForm.emit();
-    });
+          return modalRef.componentInstance.response.pipe(
+            take(1),
+            switchMap((confirm: boolean) => {
+              if (confirm && hasValue(eperson.id)) {
+                this.canDelete$ = observableOf(false);
+                return this.epersonService.deleteEPerson(eperson).pipe(
+                  getFirstCompletedRemoteData(),
+                  map((restResponse: RemoteData<NoContent>) => ({
+                    restResponse,
+                    eperson,
+                  })),
+                );
+              } else {
+                return observableOf(null);
+              }
+            }),
+            finalize(() => (this.canDelete$ = observableOf(true))),
+          );
+        }),
+      )
+      .subscribe(
+        ({
+          restResponse,
+          eperson,
+        }: {
+          restResponse: RemoteData<NoContent> | null;
+          eperson: EPerson;
+        }) => {
+          if (restResponse?.hasSucceeded) {
+            this.notificationsService.success(
+              this.translateService.get(
+                this.labelPrefix + 'notification.deleted.success',
+                { name: this.dsoNameService.getName(eperson) },
+              ),
+            );
+            void this.router.navigate([getEPersonsRoute()]);
+          } else {
+            this.notificationsService.error(
+              `Error occurred when trying to delete EPerson with id: ${eperson?.id} with code: ${restResponse?.statusCode} and message: ${restResponse?.errorMessage}`,
+            );
+          }
+          this.cancelForm.emit();
+        },
+      );
   }
 
   /**
@@ -559,17 +662,28 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
    */
   resetPassword() {
     if (hasValue(this.epersonInitial.email)) {
-      this.epersonRegistrationService.registerEmail(this.epersonInitial.email, null, TYPE_REQUEST_FORGOT).pipe(getFirstCompletedRemoteData())
+      this.epersonRegistrationService
+        .registerEmail(this.epersonInitial.email, null, TYPE_REQUEST_FORGOT)
+        .pipe(getFirstCompletedRemoteData())
         .subscribe((response: RemoteData<Registration>) => {
           if (response.hasSucceeded) {
-            this.notificationsService.success(this.translateService.get('admin.access-control.epeople.actions.reset'),
-              this.translateService.get('forgot-email.form.success.content', { email: this.epersonInitial.email }));
+            this.notificationsService.success(
+              this.translateService.get(
+                'admin.access-control.epeople.actions.reset',
+              ),
+              this.translateService.get('forgot-email.form.success.content', {
+                email: this.epersonInitial.email,
+              }),
+            );
           } else {
-            this.notificationsService.error(this.translateService.get('forgot-email.form.error.head'),
-              this.translateService.get('forgot-email.form.error.content', { email: this.epersonInitial.email }));
+            this.notificationsService.error(
+              this.translateService.get('forgot-email.form.error.head'),
+              this.translateService.get('forgot-email.form.error.content', {
+                email: this.epersonInitial.email,
+              }),
+            );
           }
-        },
-        );
+        });
     }
   }
 
@@ -577,7 +691,9 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
    * Cancel the current edit when component is destroyed & unsub all subscriptions
    */
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
     this.paginationService.clearPagination(this.config.id);
     if (hasValue(this.emailValueChangeSubscribe)) {
       this.emailValueChangeSubscribe.unsubscribe();
@@ -590,28 +706,48 @@ export class EPersonFormComponent implements OnInit, OnDestroy {
    * @param ePerson               ePerson values to check
    * @param notificationSection   whether in create or edit
    */
-  private showNotificationIfEmailInUse(ePerson: EPerson, notificationSection: string) {
+  private showNotificationIfEmailInUse(
+    ePerson: EPerson,
+    notificationSection: string,
+  ) {
     // Relevant message for email in use
-    this.subs.push(this.epersonService.searchByScope('email', ePerson.email, {
-      currentPage: 1,
-      elementsPerPage: 0,
-    }).pipe(getFirstSucceededRemoteData(), getRemoteDataPayload())
-      .subscribe((list: PaginatedList<EPerson>) => {
-        if (list.totalElements > 0) {
-          this.notificationsService.error(this.translateService.get(this.labelPrefix + 'notification.' + notificationSection + '.failure.emailInUse', {
-            name: this.dsoNameService.getName(ePerson),
-            email: ePerson.email,
-          }));
-        }
-      }));
+    this.subs.push(
+      this.epersonService
+        .searchByScope('email', ePerson.email, {
+          currentPage: 1,
+          elementsPerPage: 0,
+        })
+        .pipe(getFirstSucceededRemoteData(), getRemoteDataPayload())
+        .subscribe((list: PaginatedList<EPerson>) => {
+          if (list.totalElements > 0) {
+            this.notificationsService.error(
+              this.translateService.get(
+                this.labelPrefix +
+                  'notification.' +
+                  notificationSection +
+                  '.failure.emailInUse',
+                {
+                  name: this.dsoNameService.getName(ePerson),
+                  email: ePerson.email,
+                },
+              ),
+            );
+          }
+        }),
+    );
   }
 
   /**
    * Update the list of groups by fetching it from the rest api or cache
    */
   private updateGroups(options) {
-    this.subs.push(this.epersonService.getActiveEPerson().subscribe((eperson: EPerson) => {
-      this.groups$ = this.groupsDataService.findListByHref(eperson._links.groups.href, options);
-    }));
+    this.subs.push(
+      this.epersonService.getActiveEPerson().subscribe((eperson: EPerson) => {
+        this.groups$ = this.groupsDataService.findListByHref(
+          eperson._links.groups.href,
+          options,
+        );
+      }),
+    );
   }
 }

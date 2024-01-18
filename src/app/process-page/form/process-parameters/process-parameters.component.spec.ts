@@ -1,15 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderMock } from '../../../shared/mocks/translate-loader.mock';
 import { ProcessParameter } from '../../processes/process-parameter.model';
@@ -44,11 +37,11 @@ describe('ProcessParametersComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
+        }),
+      ],
       declarations: [ProcessParametersComponent, ParameterSelectComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -61,7 +54,6 @@ describe('ProcessParametersComponent', () => {
   });
 
   describe('when parameter values and script are initialized', () => {
-
     beforeEach(() => {
       initParametersAndScriptMockValues();
       component.parameterValues = mockParameterValues;
@@ -71,16 +63,20 @@ describe('ProcessParametersComponent', () => {
     });
 
     it(`should render a ${ParameterSelectComponent.name} for each parameter value`, () => {
-      const selectComponents = fixture.debugElement.queryAll(By.directive(ParameterSelectComponent));
+      const selectComponents = fixture.debugElement.queryAll(
+        By.directive(ParameterSelectComponent),
+      );
       expect(selectComponents.length).toBe(mockParameterValues.length);
     });
 
-    it('should not render a selector box if the parameter array is empty',() => {
+    it('should not render a selector box if the parameter array is empty', () => {
       fixture.componentInstance.script.parameters = [];
 
       fixture.detectChanges();
 
-      const formGroupComponent = fixture.debugElement.query(By.css('[data-testID=parameters-select-container]'));
+      const formGroupComponent = fixture.debugElement.query(
+        By.css('[data-testID=parameters-select-container]'),
+      );
       expect(formGroupComponent).toBeFalsy();
     });
   });

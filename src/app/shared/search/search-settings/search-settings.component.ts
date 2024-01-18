@@ -1,12 +1,5 @@
-import {
-  Component,
-  Inject,
-  Input,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { Component, Inject, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import {
   SortDirection,
@@ -37,12 +30,14 @@ export class SearchSettingsComponent {
    */
   @Input() sortOptionsList: SortOptions[];
 
-  constructor(private service: SearchService,
-              private route: ActivatedRoute,
-              private router: Router,
-              private paginationService: PaginationService,
-              @Inject(SEARCH_CONFIG_SERVICE) public searchConfigurationService: SearchConfigurationService) {
-  }
+  constructor(
+    private service: SearchService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private paginationService: PaginationService,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    public searchConfigurationService: SearchConfigurationService,
+  ) {}
 
   /**
    * Method to change the current sort field and direction
@@ -50,10 +45,13 @@ export class SearchSettingsComponent {
    */
   reloadOrder(event: Event) {
     const values = (event.target as HTMLInputElement).value.split(',');
-    this.paginationService.updateRoute(this.searchConfigurationService.paginationID, {
-      sortField: values[0],
-      sortDirection: values[1] as SortDirection,
-      page: 1,
-    });
+    this.paginationService.updateRoute(
+      this.searchConfigurationService.paginationID,
+      {
+        sortField: values[0],
+        sortDirection: values[1] as SortDirection,
+        page: 1,
+      },
+    );
   }
 }

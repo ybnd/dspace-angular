@@ -1,9 +1,5 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  async,
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AdminQualityAssuranceTopicsPageComponent } from './admin-quality-assurance-topics-page.component';
 
@@ -13,10 +9,9 @@ describe('AdminQualityAssuranceTopicsPageComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AdminQualityAssuranceTopicsPageComponent ],
+      declarations: [AdminQualityAssuranceTopicsPageComponent],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

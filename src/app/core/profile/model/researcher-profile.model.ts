@@ -1,14 +1,7 @@
-import {
-  autoserialize,
-  deserialize,
-  deserializeAs,
-} from 'cerialize';
+import { autoserialize, deserialize, deserializeAs } from 'cerialize';
 import { Observable } from 'rxjs';
 
-import {
-  link,
-  typedObject,
-} from '../../cache/builders/build-decorators';
+import { link, typedObject } from '../../cache/builders/build-decorators';
 import { CacheableObject } from '../../cache/cacheable-object.model';
 import { RemoteData } from '../../data/remote-data';
 import { HALLink } from '../../shared/hal-link.model';
@@ -23,7 +16,6 @@ import { RESEARCHER_PROFILE } from './researcher-profile.resource-type';
  */
 @typedObject
 export class ResearcherProfile extends CacheableObject {
-
   static type = RESEARCHER_PROFILE;
 
   /**
@@ -31,31 +23,31 @@ export class ResearcherProfile extends CacheableObject {
    */
   @excludeFromEquals
   @autoserialize
-    type: ResourceType;
+  type: ResourceType;
 
   /**
    * The identifier of this Researcher Profile
    */
   @autoserialize
-    id: string;
+  id: string;
 
   @deserializeAs('id')
-    uuid: string;
+  uuid: string;
 
   /**
    * The visibility of this Researcher Profile
    */
   @autoserialize
-    visible: boolean;
+  visible: boolean;
 
   /**
    * The {@link HALLink}s for this Researcher Profile
    */
   @deserialize
-    _links: {
-    self: HALLink,
-    item: HALLink,
-    eperson: HALLink
+  _links: {
+    self: HALLink;
+    item: HALLink;
+    eperson: HALLink;
   };
 
   /**
@@ -63,6 +55,5 @@ export class ResearcherProfile extends CacheableObject {
    * Will be undefined unless the item {@link HALLink} has been resolved.
    */
   @link(ITEM)
-    item?: Observable<RemoteData<Item>>;
-
+  item?: Observable<RemoteData<Item>>;
 }

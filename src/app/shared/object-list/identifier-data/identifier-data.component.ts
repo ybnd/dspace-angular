@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Item } from 'src/app/core/shared/item.model';
@@ -18,7 +15,6 @@ import { IdentifierData } from './identifier-data.model';
  * Component rendering an identifier, eg. DOI or handle
  */
 export class IdentifierDataComponent {
-
   @Input() item: Item;
   identifiers$: Observable<IdentifierData>;
 
@@ -27,7 +23,7 @@ export class IdentifierDataComponent {
    *
    * @param {IdentifierDataService} identifierDataService
    */
-  constructor(private identifierDataService: IdentifierDataService) { }
+  constructor(private identifierDataService: IdentifierDataService) {}
 
   ngOnInit(): void {
     if (this.item == null) {
@@ -36,7 +32,9 @@ export class IdentifierDataComponent {
     }
     if (this.item.identifiers == null) {
       // In case the identifier has not been loaded, do it individually.
-      this.item.identifiers = this.identifierDataService.getIdentifierDataFor(this.item);
+      this.item.identifiers = this.identifierDataService.getIdentifierDataFor(
+        this.item,
+      );
     }
     this.identifiers$ = this.item.identifiers.pipe(
       map((identifierRD) => {

@@ -1,7 +1,11 @@
 <div>
   <fieldset class="d-flex">
-    <legend *ngIf="!model.repeatable" [id]="'legend_' + model.id" [ngClass]="[getClass('element', 'label'), getClass('grid', 'label')]">
-      {{model.placeholder}} <span *ngIf="model.required">*</span>
+    <legend
+      *ngIf="!model.repeatable"
+      [id]="'legend_' + model.id"
+      [ngClass]="[getClass('element', 'label'), getClass('grid', 'label')]"
+    >
+      {{ model.placeholder }} <span *ngIf="model.required">*</span>
     </legend>
     <ds-number-picker
       tabindex="1"
@@ -14,7 +18,7 @@
       [(ngModel)]="initialYear"
       [value]="year"
       [invalid]="showErrorMessages"
-      [placeholder]='yearPlaceholder'
+      [placeholder]="yearPlaceholder"
       (blur)="onBlur($event)"
       (change)="onChange($event)"
       (focus)="onFocus($event)"

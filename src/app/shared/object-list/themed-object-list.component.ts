@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import {
   SortDirection,
@@ -27,7 +22,6 @@ import { ObjectListComponent } from './object-list.component';
   templateUrl: '../theme-support/themed.component.html',
 })
 export class ThemedObjectListComponent extends ThemedComponent<ObjectListComponent> {
-
   /**
    * The current pagination configuration
    */
@@ -55,7 +49,7 @@ export class ThemedObjectListComponent extends ThemedComponent<ObjectListCompone
 
   @Input() selectable: boolean;
 
-  @Input() selectionConfig: { repeatable: boolean, listId: string };
+  @Input() selectionConfig: { repeatable: boolean; listId: string };
 
   /**
    * The link type of the listable elements
@@ -114,8 +108,8 @@ export class ThemedObjectListComponent extends ThemedComponent<ObjectListCompone
    * Event's payload equals to the newly selected page.
    */
   @Output() change: EventEmitter<{
-    pagination: PaginationComponentOptions,
-    sort: SortOptions
+    pagination: PaginationComponentOptions;
+    sort: SortOptions;
   }> = new EventEmitter();
 
   /**
@@ -134,7 +128,8 @@ export class ThemedObjectListComponent extends ThemedComponent<ObjectListCompone
    * An event fired when the sort direction is changed.
    * Event's payload equals to the newly selected sort direction.
    */
-  @Output() sortDirectionChange: EventEmitter<SortDirection> = new EventEmitter();
+  @Output() sortDirectionChange: EventEmitter<SortDirection> =
+    new EventEmitter();
 
   /**
    * An event fired when on of the pagination parameters changes
@@ -191,7 +186,9 @@ export class ThemedObjectListComponent extends ThemedComponent<ObjectListCompone
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/object-list/object-list.component`);
+    return import(
+      `../../../themes/${themeName}/app/shared/object-list/object-list.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

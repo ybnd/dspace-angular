@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import {
-  cold,
-  getTestScheduler,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 import { HALEndpointServiceStub } from 'src/app/shared/testing/hal-endpoint-service.stub';
@@ -21,10 +18,7 @@ import { testDeleteDataImplementation } from './base/delete-data.spec';
 import { testPatchDataImplementation } from './base/patch-data.spec';
 import { FindListOptions } from './find-list-options.model';
 import { ItemDataService } from './item-data.service';
-import {
-  DeleteRequest,
-  PostRequest,
-} from './request.models';
+import { DeleteRequest, PostRequest } from './request.models';
 import { RequestService } from './request.service';
 import { RequestEntry } from './request-entry.model';
 
@@ -76,9 +70,9 @@ describe('ItemDataService', () => {
   const ScopedItemEndpoint = `https://rest.api/core/items/${scopeID}`;
 
   function initMockBrowseService(isSuccessful: boolean) {
-    const obs = isSuccessful ?
-      cold('--a-', { a: itemBrowseEndpoint }) :
-      cold('--#-', undefined, browseError);
+    const obs = isSuccessful
+      ? cold('--a-', { a: itemBrowseEndpoint })
+      : cold('--#-', undefined, browseError);
     return jasmine.createSpyObj('bs', {
       getBrowseURLFor: obs,
     });
@@ -98,7 +92,8 @@ describe('ItemDataService', () => {
   }
 
   describe('composition', () => {
-    const initService = () => new ItemDataService(null, null, null, null, null, null, null, null);
+    const initService = () =>
+      new ItemDataService(null, null, null, null, null, null, null, null);
     testCreateDataImplementation(initService);
     testPatchDataImplementation(initService);
     testDeleteDataImplementation(initService);
@@ -119,7 +114,7 @@ describe('ItemDataService', () => {
       expect(result).toBeObservable(expected);
     });
 
-    describe('if the dc.date.issue browse isn\'t configured for items', () => {
+    describe("if the dc.date.issue browse isn't configured for items", () => {
       beforeEach(() => {
         browseService = initMockBrowseService(false);
         service = initTestService();
@@ -142,7 +137,11 @@ describe('ItemDataService', () => {
     });
 
     it('should send a DELETE request', () => {
-      result.subscribe(() => expect(requestService.send).toHaveBeenCalledWith(jasmine.any(DeleteRequest)));
+      result.subscribe(() =>
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(DeleteRequest),
+        ),
+      );
     });
   });
 
@@ -155,7 +154,11 @@ describe('ItemDataService', () => {
     });
 
     it('should send a POST request', () => {
-      result.subscribe(() => expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PostRequest)));
+      result.subscribe(() =>
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(PostRequest),
+        ),
+      );
     });
   });
 
@@ -165,17 +168,26 @@ describe('ItemDataService', () => {
     const externalSourceEntry = Object.assign(new ExternalSourceEntry(), {
       display: 'John, Doe',
       value: 'John, Doe',
-      _links: { self: { href: 'http://test-rest.com/server/api/integration/externalSources/orcidV2/entryValues/0000-0003-4851-8004' } },
+      _links: {
+        self: {
+          href: 'http://test-rest.com/server/api/integration/externalSources/orcidV2/entryValues/0000-0003-4851-8004',
+        },
+      },
     });
 
     beforeEach(() => {
       service = initTestService();
-      result = service.importExternalSourceEntry(externalSourceEntry, 'collection-id');
+      result = service.importExternalSourceEntry(
+        externalSourceEntry,
+        'collection-id',
+      );
     });
 
     it('should send a POST request', (done) => {
       result.subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PostRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(PostRequest),
+        );
         done();
       });
     });
@@ -193,7 +205,9 @@ describe('ItemDataService', () => {
 
     it('should send a POST request', (done) => {
       result.subscribe(() => {
-        expect(requestService.send).toHaveBeenCalledWith(jasmine.any(PostRequest));
+        expect(requestService.send).toHaveBeenCalledWith(
+          jasmine.any(PostRequest),
+        );
         done();
       });
     });
@@ -205,8 +219,9 @@ describe('ItemDataService', () => {
     });
     it('should call setStaleByHrefSubstring', () => {
       service.invalidateItemCache('uuid');
-      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith('item/uuid');
+      expect(requestService.setStaleByHrefSubstring).toHaveBeenCalledWith(
+        'item/uuid',
+      );
     });
   });
-
 });

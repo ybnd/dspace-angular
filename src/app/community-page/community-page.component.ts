@@ -1,18 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnInit,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-  mergeMap,
-} from 'rxjs/operators';
+import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { AuthService } from '../core/auth/auth.service';
 import { DSONameService } from '../core/breadcrumbs/dso-name.service';
@@ -68,9 +57,7 @@ export class CommunityPageComponent implements OnInit {
     private authService: AuthService,
     private authorizationDataService: AuthorizationDataService,
     public dsoNameService: DSONameService,
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
     this.communityRD$ = this.route.data.pipe(
@@ -80,11 +67,14 @@ export class CommunityPageComponent implements OnInit {
     this.logoRD$ = this.communityRD$.pipe(
       map((rd: RemoteData<Community>) => rd.payload),
       filter((community: Community) => hasValue(community)),
-      mergeMap((community: Community) => community.logo));
+      mergeMap((community: Community) => community.logo),
+    );
     this.communityPageRoute$ = this.communityRD$.pipe(
       getAllSucceededRemoteDataPayload(),
       map((community) => getCommunityPageRoute(community.id)),
     );
-    this.isCommunityAdmin$ = this.authorizationDataService.isAuthorized(FeatureID.IsCommunityAdmin);
+    this.isCommunityAdmin$ = this.authorizationDataService.isAuthorized(
+      FeatureID.IsCommunityAdmin,
+    );
   }
 }

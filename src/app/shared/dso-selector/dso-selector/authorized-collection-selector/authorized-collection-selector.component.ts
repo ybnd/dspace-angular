@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -62,28 +59,50 @@ export class AuthorizedCollectionSelectorComponent extends DSOSelectorComponent 
    * @param page  Page to retrieve
    * @param useCache Whether or not to use the cache
    */
-  search(query: string, page: number, useCache: boolean = true): Observable<RemoteData<PaginatedList<SearchResult<DSpaceObject>>>> {
-    let searchListService$: Observable<RemoteData<PaginatedList<Collection>>> = null;
+  search(
+    query: string,
+    page: number,
+    useCache: boolean = true,
+  ): Observable<RemoteData<PaginatedList<SearchResult<DSpaceObject>>>> {
+    let searchListService$: Observable<RemoteData<PaginatedList<Collection>>> =
+      null;
     const findOptions: FindListOptions = {
       currentPage: page,
       elementsPerPage: this.defaultPagination.pageSize,
     };
 
     if (this.entityType) {
-      searchListService$ = this.collectionDataService
-        .getAuthorizedCollectionByEntityType(
+      searchListService$ =
+        this.collectionDataService.getAuthorizedCollectionByEntityType(
           query,
           this.entityType,
-          findOptions);
+          findOptions,
+        );
     } else {
-      searchListService$ = this.collectionDataService
-        .getAuthorizedCollection(query, findOptions, useCache, false, followLink('parentCommunity'));
+      searchListService$ = this.collectionDataService.getAuthorizedCollection(
+        query,
+        findOptions,
+        useCache,
+        false,
+        followLink('parentCommunity'),
+      );
     }
     return searchListService$.pipe(
       getFirstCompletedRemoteData(),
-      map((rd) => Object.assign(new RemoteData(null, null, null, null), rd, {
-        payload: hasValue(rd.payload) ? buildPaginatedList(rd.payload.pageInfo, rd.payload.page.map((col) => Object.assign(new CollectionSearchResult(), { indexableObject: col }))) : null,
-      })),
+      map((rd) =>
+        Object.assign(new RemoteData(null, null, null, null), rd, {
+          payload: hasValue(rd.payload)
+            ? buildPaginatedList(
+                rd.payload.pageInfo,
+                rd.payload.page.map((col) =>
+                  Object.assign(new CollectionSearchResult(), {
+                    indexableObject: col,
+                  }),
+                ),
+              )
+            : null,
+        }),
+      ),
     );
   }
 }

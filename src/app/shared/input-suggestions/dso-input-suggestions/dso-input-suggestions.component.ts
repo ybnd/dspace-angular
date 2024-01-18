@@ -1,8 +1,4 @@
-import {
-  Component,
-  forwardRef,
-  Input,
-} from '@angular/core';
+import { Component, forwardRef, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
@@ -48,9 +44,7 @@ export class DsoInputSuggestionsComponent extends InputSuggestionsComponent {
 
   currentObject: DSpaceObject;
 
-  constructor(
-    protected dsoNameService: DSONameService,
-  ) {
+  constructor(protected dsoNameService: DSONameService) {
     super();
   }
 

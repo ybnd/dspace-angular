@@ -37,7 +37,10 @@ export interface PutData<T extends CacheableObject> {
  * Concrete data services can use this feature by implementing {@link PutData}
  * and delegating its method to an inner instance of this class.
  */
-export class PutDataImpl<T extends CacheableObject> extends BaseDataService<T> implements PutData<T> {
+export class PutDataImpl<T extends CacheableObject>
+  extends BaseDataService<T>
+  implements PutData<T>
+{
   constructor(
     protected linkPath: string,
     protected requestService: RequestService,
@@ -46,7 +49,14 @@ export class PutDataImpl<T extends CacheableObject> extends BaseDataService<T> i
     protected halService: HALEndpointService,
     protected responseMsToLive: number,
   ) {
-    super(linkPath, requestService, rdbService, objectCache, halService, responseMsToLive);
+    super(
+      linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      responseMsToLive,
+    );
   }
 
   /**
@@ -56,8 +66,14 @@ export class PutDataImpl<T extends CacheableObject> extends BaseDataService<T> i
    */
   put(object: T): Observable<RemoteData<T>> {
     const requestId = this.requestService.generateRequestId();
-    const serializedObject = new DSpaceSerializer(object.constructor as GenericConstructor<unknown>).serialize(object);
-    const request = new PutRequest(requestId, object._links.self.href, serializedObject);
+    const serializedObject = new DSpaceSerializer(
+      object.constructor as GenericConstructor<unknown>,
+    ).serialize(object);
+    const request = new PutRequest(
+      requestId,
+      object._links.self.href,
+      serializedObject,
+    );
 
     if (hasValue(this.responseMsToLive)) {
       request.responseMsToLive = this.responseMsToLive;

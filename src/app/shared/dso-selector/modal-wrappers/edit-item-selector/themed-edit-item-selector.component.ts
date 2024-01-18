@@ -11,18 +11,18 @@ import { EditItemSelectorComponent } from './edit-item-selector.component';
   styleUrls: [],
   templateUrl: '../../../theme-support/themed.component.html',
 })
-export class ThemedEditItemSelectorComponent
-  extends ThemedComponent<EditItemSelectorComponent> {
+export class ThemedEditItemSelectorComponent extends ThemedComponent<EditItemSelectorComponent> {
   protected getComponentName(): string {
     return 'EditItemSelectorComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../themes/${themeName}/app/shared/dso-selector/modal-wrappers/edit-item-selector/edit-item-selector.component`);
+    return import(
+      `../../../../../themes/${themeName}/app/shared/dso-selector/modal-wrappers/edit-item-selector/edit-item-selector.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./edit-item-selector.component');
   }
-
 }

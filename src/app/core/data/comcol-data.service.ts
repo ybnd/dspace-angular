@@ -1,8 +1,5 @@
 import { Operation } from 'fast-json-patch';
-import {
-  combineLatest as observableCombineLatest,
-  Observable,
-} from 'rxjs';
+import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -11,11 +8,7 @@ import {
   take,
 } from 'rxjs/operators';
 
-import {
-  hasValue,
-  isEmpty,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isEmpty, isNotEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { createFailedRemoteDataObject$ } from '../../shared/remote-data.utils';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
@@ -30,27 +23,12 @@ import { HALLink } from '../shared/hal-link.model';
 import { NoContent } from '../shared/NoContent.model';
 import { getFirstCompletedRemoteData } from '../shared/operators';
 import { URLCombiner } from '../url-combiner/url-combiner';
-import {
-  CreateData,
-  CreateDataImpl,
-} from './base/create-data';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from './base/delete-data';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from './base/find-all-data';
+import { CreateData, CreateDataImpl } from './base/create-data';
+import { DeleteData, DeleteDataImpl } from './base/delete-data';
+import { FindAllData, FindAllDataImpl } from './base/find-all-data';
 import { IdentifiableDataService } from './base/identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from './base/patch-data';
-import {
-  SearchData,
-  SearchDataImpl,
-} from './base/search-data';
+import { PatchData, PatchDataImpl } from './base/patch-data';
+import { SearchData, SearchDataImpl } from './base/search-data';
 import { BitstreamDataService } from './bitstream-data.service';
 import { DSOChangeAnalyzer } from './dso-change-analyzer.service';
 import { FindListOptions } from './find-list-options.model';
@@ -59,7 +37,15 @@ import { RemoteData } from './remote-data';
 import { RequestService } from './request.service';
 import { RestRequestMethod } from './rest-request-method';
 
-export abstract class ComColDataService<T extends Community | Collection> extends IdentifiableDataService<T> implements CreateData<T>, FindAllData<T>, SearchData<T>, PatchData<T>, DeleteData<T> {
+export abstract class ComColDataService<T extends Community | Collection>
+  extends IdentifiableDataService<T>
+  implements
+    CreateData<T>,
+    FindAllData<T>,
+    SearchData<T>,
+    PatchData<T>,
+    DeleteData<T>
+{
   private createData: CreateData<T>;
   private findAllData: FindAllData<T>;
   private searchData: SearchData<T>;
@@ -78,11 +64,51 @@ export abstract class ComColDataService<T extends Community | Collection> extend
   ) {
     super(linkPath, requestService, rdbService, objectCache, halService);
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.searchData = new SearchDataImpl<T>(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.patchData = new PatchDataImpl<T>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.searchData = new SearchDataImpl<T>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.patchData = new PatchDataImpl<T>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -95,7 +121,10 @@ export abstract class ComColDataService<T extends Community | Collection> extend
    * @return { Observable<string> }
    *    an Observable<string> containing the scoped URL
    */
-  public getBrowseEndpoint(options: FindListOptions = {}, linkPath: string = this.linkPath): Observable<string> {
+  public getBrowseEndpoint(
+    options: FindListOptions = {},
+    linkPath: string = this.linkPath,
+  ): Observable<string> {
     if (isEmpty(options.scopeID)) {
       return this.halService.getEndpoint(linkPath);
     } else {
@@ -104,11 +133,15 @@ export abstract class ComColDataService<T extends Community | Collection> extend
       this.createAndSendGetRequest(scopeCommunityHrefObs, true);
 
       return scopeCommunityHrefObs.pipe(
-        switchMap((href: string) => this.rdbService.buildSingle<Community>(href)),
+        switchMap((href: string) =>
+          this.rdbService.buildSingle<Community>(href),
+        ),
         getFirstCompletedRemoteData(),
         map((response: RemoteData<Community>) => {
           if (response.hasFailed) {
-            throw new Error(`The Community with scope ${options.scopeID} couldn't be retrieved`);
+            throw new Error(
+              `The Community with scope ${options.scopeID} couldn't be retrieved`,
+            );
           } else {
             return response.payload._links[linkPath];
           }
@@ -120,11 +153,19 @@ export abstract class ComColDataService<T extends Community | Collection> extend
     }
   }
 
-  protected abstract getScopeCommunityHref(options: FindListOptions): Observable<string>;
+  protected abstract getScopeCommunityHref(
+    options: FindListOptions,
+  ): Observable<string>;
 
-  protected abstract getFindByParentHref(parentUUID: string): Observable<string>;
+  protected abstract getFindByParentHref(
+    parentUUID: string,
+  ): Observable<string>;
 
-  public findByParent(parentUUID: string, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
+  public findByParent(
+    parentUUID: string,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
     const href$ = this.getFindByParentHref(parentUUID).pipe(
       map((href: string) => this.buildHrefFromFindOptions(href, options)),
     );
@@ -156,15 +197,22 @@ export abstract class ComColDataService<T extends Community | Collection> extend
         getFirstCompletedRemoteData(),
         switchMap((logoRd: RemoteData<Bitstream>) => {
           if (logoRd.hasFailed) {
-            console.error(`Couldn't retrieve the logo '${dso._links.logo.href}' in order to delete it.`);
+            console.error(
+              `Couldn't retrieve the logo '${dso._links.logo.href}' in order to delete it.`,
+            );
             return [logoRd];
           } else {
-            return this.bitstreamDataService.deleteByHref(logoRd.payload._links.self.href);
+            return this.bitstreamDataService.deleteByHref(
+              logoRd.payload._links.self.href,
+            );
           }
         }),
       );
     } else {
-      return createFailedRemoteDataObject$(`The given object doesn't have a logo`, 400);
+      return createFailedRemoteDataObject$(
+        `The given object doesn't have a logo`,
+        400,
+      );
     }
   }
 
@@ -174,12 +222,14 @@ export abstract class ComColDataService<T extends Community | Collection> extend
       return;
     }
     observableCombineLatest([
-      this.findByHref(parentCommunityUrl).pipe(
-        getFirstCompletedRemoteData(),
-      ),
+      this.findByHref(parentCommunityUrl).pipe(getFirstCompletedRemoteData()),
       this.halService.getEndpoint('communities/search/top').pipe(take(1)),
     ]).subscribe(([rd, topHref]: [RemoteData<any>, string]) => {
-      if (rd.hasSucceeded && isNotEmpty(rd.payload) && isNotEmpty(rd.payload.id)) {
+      if (
+        rd.hasSucceeded &&
+        isNotEmpty(rd.payload) &&
+        isNotEmpty(rd.payload.id)
+      ) {
         this.requestService.setStaleByHrefSubstring(rd.payload.id);
       } else {
         this.requestService.setStaleByHrefSubstring(topHref);
@@ -191,7 +241,6 @@ export abstract class ComColDataService<T extends Community | Collection> extend
     const parentCommunity = dso._links.parentCommunity;
     return isNotEmpty(parentCommunity) ? parentCommunity.href : null;
   }
-
 
   /**
    * Create a new object on the server, and store the response in the object cache
@@ -217,8 +266,18 @@ export abstract class ComColDataService<T extends Community | Collection> extend
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  public findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -235,8 +294,20 @@ export abstract class ComColDataService<T extends Community | Collection> extend
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  public searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -281,7 +352,10 @@ export abstract class ComColDataService<T extends Community | Collection> extend
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  public delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
@@ -294,7 +368,10 @@ export abstract class ComColDataService<T extends Community | Collection> extend
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
 }

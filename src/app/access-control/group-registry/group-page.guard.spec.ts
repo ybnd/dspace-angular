@@ -1,7 +1,4 @@
-import {
-  ActivatedRouteSnapshot,
-  Router,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, Router } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
@@ -28,7 +25,9 @@ describe('GroupPageGuard', () => {
 
   beforeEach(() => {
     halEndpointService = jasmine.createSpyObj(['getEndpoint']);
-    (halEndpointService as any).getEndpoint.and.returnValue(observableOf(groupsEndpointUrl));
+    (halEndpointService as any).getEndpoint.and.returnValue(
+      observableOf(groupsEndpointUrl),
+    );
 
     authorizationService = jasmine.createSpyObj(['isAuthorized']);
     // NOTE: value is set in beforeEach
@@ -39,7 +38,12 @@ describe('GroupPageGuard', () => {
     authService = jasmine.createSpyObj(['isAuthenticated']);
     (authService as any).isAuthenticated.and.returnValue(observableOf(true));
 
-    guard = new GroupPageGuard(halEndpointService, authorizationService, router, authService);
+    guard = new GroupPageGuard(
+      halEndpointService,
+      authorizationService,
+      router,
+      authService,
+    );
   });
 
   it('should be created', () => {
@@ -49,39 +53,46 @@ describe('GroupPageGuard', () => {
   describe('canActivate', () => {
     describe('when the current user can manage the group', () => {
       beforeEach(() => {
-        (authorizationService as any).isAuthorized.and.returnValue(observableOf(true));
+        (authorizationService as any).isAuthorized.and.returnValue(
+          observableOf(true),
+        );
       });
 
       it('should return true', (done) => {
-        guard.canActivate(
-          routeSnapshotWithGroupId, { url: 'current-url' } as any,
-        ).subscribe((result) => {
-          expect(authorizationService.isAuthorized).toHaveBeenCalledWith(
-            FeatureID.CanManageGroup, groupEndpointUrl, undefined,
-          );
-          expect(result).toBeTrue();
-          done();
-        });
+        guard
+          .canActivate(routeSnapshotWithGroupId, { url: 'current-url' } as any)
+          .subscribe((result) => {
+            expect(authorizationService.isAuthorized).toHaveBeenCalledWith(
+              FeatureID.CanManageGroup,
+              groupEndpointUrl,
+              undefined,
+            );
+            expect(result).toBeTrue();
+            done();
+          });
       });
     });
 
     describe('when the current user can not manage the group', () => {
       beforeEach(() => {
-        (authorizationService as any).isAuthorized.and.returnValue(observableOf(false));
+        (authorizationService as any).isAuthorized.and.returnValue(
+          observableOf(false),
+        );
       });
 
       it('should not return true', (done) => {
-        guard.canActivate(
-          routeSnapshotWithGroupId, { url: 'current-url' } as any,
-        ).subscribe((result) => {
-          expect(authorizationService.isAuthorized).toHaveBeenCalledWith(
-            FeatureID.CanManageGroup, groupEndpointUrl, undefined,
-          );
-          expect(result).not.toBeTrue();
-          done();
-        });
+        guard
+          .canActivate(routeSnapshotWithGroupId, { url: 'current-url' } as any)
+          .subscribe((result) => {
+            expect(authorizationService.isAuthorized).toHaveBeenCalledWith(
+              FeatureID.CanManageGroup,
+              groupEndpointUrl,
+              undefined,
+            );
+            expect(result).not.toBeTrue();
+            done();
+          });
       });
     });
   });
-
 });

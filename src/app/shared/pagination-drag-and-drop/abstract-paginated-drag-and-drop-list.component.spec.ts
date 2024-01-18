@@ -1,12 +1,5 @@
-import {
-  Component,
-  ElementRef,
-} from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Component, ElementRef } from '@angular/core';
+import { BehaviorSubject, Observable, of as observableOf } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 import { FieldUpdates } from '../../core/data/object-updates/field-updates.model';
@@ -27,13 +20,16 @@ import { AbstractPaginatedDragAndDropListComponent } from './abstract-paginated-
   template: '',
 })
 class MockAbstractPaginatedDragAndDropListComponent extends AbstractPaginatedDragAndDropListComponent<DSpaceObject> {
-
-  constructor(protected objectUpdatesService: ObjectUpdatesService,
-              protected elRef: ElementRef,
-              protected objectValuesPipe: ObjectValuesPipe,
-              protected mockUrl: string,
-              protected paginationService: PaginationService,
-  protected mockObjectsRD$: Observable<RemoteData<PaginatedList<DSpaceObject>>>) {
+  constructor(
+    protected objectUpdatesService: ObjectUpdatesService,
+    protected elRef: ElementRef,
+    protected objectValuesPipe: ObjectValuesPipe,
+    protected mockUrl: string,
+    protected paginationService: PaginationService,
+    protected mockObjectsRD$: Observable<
+      RemoteData<PaginatedList<DSpaceObject>>
+    >,
+  ) {
     super(objectUpdatesService, elRef, objectValuesPipe, paginationService);
   }
 
@@ -54,10 +50,11 @@ describe('AbstractPaginatedDragAndDropListComponent', () => {
 
   const url = 'mock-abstract-paginated-drag-and-drop-list-component';
 
-
   const object1 = Object.assign(new DSpaceObject(), { uuid: 'object-1' });
   const object2 = Object.assign(new DSpaceObject(), { uuid: 'object-2' });
-  const objectsRD = createSuccessfulRemoteDataObject(createPaginatedList([object1, object2]));
+  const objectsRD = createSuccessfulRemoteDataObject(
+    createPaginatedList([object1, object2]),
+  );
   let objectsRD$: BehaviorSubject<RemoteData<PaginatedList<DSpaceObject>>>;
   let paginationService;
 
@@ -84,7 +81,14 @@ describe('AbstractPaginatedDragAndDropListComponent', () => {
     });
     paginationService = new PaginationServiceStub();
     objectsRD$ = new BehaviorSubject(objectsRD);
-    component = new MockAbstractPaginatedDragAndDropListComponent(objectUpdatesService, elRef, objectValuesPipe, url, paginationService, objectsRD$);
+    component = new MockAbstractPaginatedDragAndDropListComponent(
+      objectUpdatesService,
+      elRef,
+      objectValuesPipe,
+      url,
+      paginationService,
+      objectsRD$,
+    );
     component.paginationComponent = paginationComponent;
     component.ngOnInit();
   });
@@ -118,11 +122,16 @@ describe('AbstractPaginatedDragAndDropListComponent', () => {
       });
 
       it('should send out a dropObject event with the expected processed paginated indexes', () => {
-        expect(component.dropObject.emit).toHaveBeenCalledWith(Object.assign({
-          fromIndex: ((component.currentPage$.value.currentPage - 1) * component.pageSize) + event.previousIndex,
-          toIndex: ((hoverPage - 1) * component.pageSize),
-          finish: jasmine.anything(),
-        }));
+        expect(component.dropObject.emit).toHaveBeenCalledWith(
+          Object.assign({
+            fromIndex:
+              (component.currentPage$.value.currentPage - 1) *
+                component.pageSize +
+              event.previousIndex,
+            toIndex: (hoverPage - 1) * component.pageSize,
+            finish: jasmine.anything(),
+          }),
+        );
       });
     });
 
@@ -133,11 +142,13 @@ describe('AbstractPaginatedDragAndDropListComponent', () => {
       });
 
       it('should send out a dropObject event with the expected properties', () => {
-        expect(component.dropObject.emit).toHaveBeenCalledWith(Object.assign({
-          fromIndex: event.previousIndex,
-          toIndex: event.currentIndex,
-          finish: jasmine.anything(),
-        }));
+        expect(component.dropObject.emit).toHaveBeenCalledWith(
+          Object.assign({
+            fromIndex: event.previousIndex,
+            toIndex: event.currentIndex,
+            finish: jasmine.anything(),
+          }),
+        );
       });
     });
   });

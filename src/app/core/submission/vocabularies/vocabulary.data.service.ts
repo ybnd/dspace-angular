@@ -12,10 +12,7 @@ import { FollowLinkConfig } from '../../../shared/utils/follow-link-config.model
 import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../../cache/object-cache.service';
 import { dataService } from '../../data/base/data-service.decorator';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from '../../data/base/find-all-data';
+import { FindAllData, FindAllDataImpl } from '../../data/base/find-all-data';
 import { IdentifiableDataService } from '../../data/base/identifiable-data.service';
 import { FindListOptions } from '../../data/find-list-options.model';
 import { PaginatedList } from '../../data/paginated-list.model';
@@ -30,7 +27,10 @@ import { Vocabulary } from './models/vocabulary.model';
  */
 @Injectable()
 @dataService(VOCABULARY)
-export class VocabularyDataService extends IdentifiableDataService<Vocabulary> implements FindAllData<Vocabulary> {
+export class VocabularyDataService
+  extends IdentifiableDataService<Vocabulary>
+  implements FindAllData<Vocabulary>
+{
   private findAllData: FindAllData<Vocabulary>;
 
   constructor(
@@ -41,7 +41,14 @@ export class VocabularyDataService extends IdentifiableDataService<Vocabulary> i
   ) {
     super('vocabularies', requestService, rdbService, objectCache, halService);
 
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -58,7 +65,17 @@ export class VocabularyDataService extends IdentifiableDataService<Vocabulary> i
    * @return {Observable<RemoteData<PaginatedList<T>>>}
    *    Return an observable that emits object list
    */
-  public findAll(options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<Vocabulary>[]): Observable<RemoteData<PaginatedList<Vocabulary>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public findAll(
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<Vocabulary>[]
+  ): Observable<RemoteData<PaginatedList<Vocabulary>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

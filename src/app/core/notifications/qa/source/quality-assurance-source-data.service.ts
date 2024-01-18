@@ -6,10 +6,7 @@ import { FollowLinkConfig } from '../../../../shared/utils/follow-link-config.mo
 import { RemoteDataBuildService } from '../../../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../../../cache/object-cache.service';
 import { dataService } from '../../../data/base/data-service.decorator';
-import {
-  FindAllData,
-  FindAllDataImpl,
-} from '../../../data/base/find-all-data';
+import { FindAllData, FindAllDataImpl } from '../../../data/base/find-all-data';
 import { IdentifiableDataService } from '../../../data/base/identifiable-data.service';
 import { FindListOptions } from '../../../data/find-list-options.model';
 import { PaginatedList } from '../../../data/paginated-list.model';
@@ -25,7 +22,6 @@ import { QUALITY_ASSURANCE_SOURCE_OBJECT } from '../models/quality-assurance-sou
 @Injectable()
 @dataService(QUALITY_ASSURANCE_SOURCE_OBJECT)
 export class QualityAssuranceSourceDataService extends IdentifiableDataService<QualityAssuranceSourceObject> {
-
   private findAllData: FindAllData<QualityAssuranceSourceObject>;
 
   /**
@@ -43,8 +39,21 @@ export class QualityAssuranceSourceDataService extends IdentifiableDataService<Q
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
   ) {
-    super('qualityassurancesources', requestService, rdbService, objectCache, halService);
-    this.findAllData = new FindAllDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    super(
+      'qualityassurancesources',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
+    this.findAllData = new FindAllDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -60,8 +69,18 @@ export class QualityAssuranceSourceDataService extends IdentifiableDataService<Q
    * @return Observable<RemoteData<PaginatedList<QualityAssuranceSourceObject>>>
    *    The list of Quality Assurance source.
    */
-  public getSources(options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<QualityAssuranceSourceObject>[]): Observable<RemoteData<PaginatedList<QualityAssuranceSourceObject>>> {
-    return this.findAllData.findAll(options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public getSources(
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<QualityAssuranceSourceObject>[]
+  ): Observable<RemoteData<PaginatedList<QualityAssuranceSourceObject>>> {
+    return this.findAllData.findAll(
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -83,7 +102,17 @@ export class QualityAssuranceSourceDataService extends IdentifiableDataService<Q
    *
    * @return Observable<RemoteData<QualityAssuranceSourceObject>>    The Quality Assurance source.
    */
-  public getSource(id: string, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<QualityAssuranceSourceObject>[]): Observable<RemoteData<QualityAssuranceSourceObject>> {
-    return this.findById(id, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public getSource(
+    id: string,
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<QualityAssuranceSourceObject>[]
+  ): Observable<RemoteData<QualityAssuranceSourceObject>> {
+    return this.findById(
+      id,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

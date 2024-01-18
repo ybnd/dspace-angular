@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Item } from '../../../../../core/shared/item.model';
 import { Metadata } from '../../../../../core/shared/metadata.utils';
@@ -15,7 +12,6 @@ import { SearchResult } from '../../../../search/models/search-result.model';
   templateUrl: './item-detail-preview-field.component.html',
 })
 export class ItemDetailPreviewFieldComponent {
-
   /**
    * The item to display
    */
@@ -53,6 +49,9 @@ export class ItemDetailPreviewFieldComponent {
    * @returns {string[]} the matching string values or an empty array.
    */
   allMetadataValues(keyOrKeys: string | string[]): string[] {
-    return Metadata.allValues([this.object.hitHighlights, this.item.metadata], keyOrKeys);
+    return Metadata.allValues(
+      [this.object.hitHighlights, this.item.metadata],
+      keyOrKeys,
+    );
   }
 }

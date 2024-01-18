@@ -1,13 +1,7 @@
 import { Location } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
@@ -66,12 +60,8 @@ describe('AdvancedWorkflowActionSelectReviewerComponent', () => {
     workflowItemDataService = new WorkflowItemDataServiceStub();
 
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        AdvancedWorkflowActionSelectReviewerComponent,
-      ],
+      imports: [TranslateModule.forRoot()],
+      declarations: [AdvancedWorkflowActionSelectReviewerComponent],
       providers: [
         {
           provide: ActivatedRoute,
@@ -94,7 +84,10 @@ describe('AdvancedWorkflowActionSelectReviewerComponent', () => {
         { provide: NotificationsService, useValue: notificationService },
         { provide: Router, useValue: router },
         { provide: RouteService, useValue: routeServiceStub },
-        { provide: WorkflowActionDataService, useValue: workflowActionDataService },
+        {
+          provide: WorkflowActionDataService,
+          useValue: workflowActionDataService,
+        },
         { provide: WorkflowItemDataService, useValue: workflowItemDataService },
         { provide: RequestService, useClass: RequestServiceStub },
       ],
@@ -103,7 +96,9 @@ describe('AdvancedWorkflowActionSelectReviewerComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdvancedWorkflowActionSelectReviewerComponent);
+    fixture = TestBed.createComponent(
+      AdvancedWorkflowActionSelectReviewerComponent,
+    );
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -139,21 +134,28 @@ describe('AdvancedWorkflowActionSelectReviewerComponent', () => {
     });
 
     it('should call the claimedTaskDataService with the list of selected ePersons', () => {
-      spyOn(claimedTaskDataService, 'submitTask').and.returnValue(observableOf(new ProcessTaskResponse(true)));
+      spyOn(claimedTaskDataService, 'submitTask').and.returnValue(
+        observableOf(new ProcessTaskResponse(true)),
+      );
       component.selectedReviewers = [EPersonMock, EPersonMock2];
 
       component.performAction();
 
-      expect(claimedTaskDataService.submitTask).toHaveBeenCalledWith(claimedTaskId, {
-        [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_REVIEWER]: true,
-        eperson: [EPersonMock.id, EPersonMock2.id],
-      });
+      expect(claimedTaskDataService.submitTask).toHaveBeenCalledWith(
+        claimedTaskId,
+        {
+          [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_REVIEWER]: true,
+          eperson: [EPersonMock.id, EPersonMock2.id],
+        },
+      );
       expect(notificationService.success).toHaveBeenCalled();
       expect(component.previousPage).toHaveBeenCalled();
     });
 
-    it('should not call the claimedTaskDataService with the list of selected ePersons when it\'s empty', () => {
-      spyOn(claimedTaskDataService, 'submitTask').and.returnValue(observableOf(new ProcessTaskResponse(true)));
+    it("should not call the claimedTaskDataService with the list of selected ePersons when it's empty", () => {
+      spyOn(claimedTaskDataService, 'submitTask').and.returnValue(
+        observableOf(new ProcessTaskResponse(true)),
+      );
       component.selectedReviewers = [];
 
       component.performAction();
@@ -162,15 +164,20 @@ describe('AdvancedWorkflowActionSelectReviewerComponent', () => {
     });
 
     it('should not call the return to mydspace page when the request failed', () => {
-      spyOn(claimedTaskDataService, 'submitTask').and.returnValue(observableOf(new ProcessTaskResponse(false)));
+      spyOn(claimedTaskDataService, 'submitTask').and.returnValue(
+        observableOf(new ProcessTaskResponse(false)),
+      );
       component.selectedReviewers = [EPersonMock, EPersonMock2];
 
       component.performAction();
 
-      expect(claimedTaskDataService.submitTask).toHaveBeenCalledWith(claimedTaskId, {
-        [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_REVIEWER]: true,
-        eperson: [EPersonMock.id, EPersonMock2.id],
-      });
+      expect(claimedTaskDataService.submitTask).toHaveBeenCalledWith(
+        claimedTaskId,
+        {
+          [ADVANCED_WORKFLOW_TASK_OPTION_SELECT_REVIEWER]: true,
+          eperson: [EPersonMock.id, EPersonMock2.id],
+        },
+      );
       expect(notificationService.error).toHaveBeenCalled();
       expect(component.previousPage).not.toHaveBeenCalled();
     });

@@ -1,7 +1,4 @@
-import {
-  Directive,
-  ViewContainerRef,
-} from '@angular/core';
+import { Directive, ViewContainerRef } from '@angular/core';
 
 @Directive({
   selector: '[dsMetadataRepresentation]',
@@ -10,5 +7,5 @@ import {
  * Directive used as a hook to know where to inject the dynamic metadata representation component
  */
 export class MetadataRepresentationDirective {
-  constructor(public viewContainerRef: ViewContainerRef) { }
+  constructor(public viewContainerRef: ViewContainerRef) {}
 }

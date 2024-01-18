@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "buildOnSave": false,
   "atom": {
-    "rewriteTsconfig": false
+    "rewriteTsconfig": false,
   },
   "compilerOptions": {
     "baseUrl": "./",
@@ -22,10 +22,7 @@
     "pretty": true,
     "allowSyntheticDefaultImports": true,
     "target": "ES2022",
-    "typeRoots": [
-      "node_modules/@types",
-      "src/typings.d.ts"
-    ],
+    "typeRoots": ["node_modules/@types", "src/typings.d.ts"],
     "lib": [
       "dom",
       "dom.iterable",
@@ -34,21 +31,16 @@
       "es2015",
       "es2016",
       "es2017",
-      "es2018"
+      "es2018",
     ],
-    "types": [
-      "node",
-      "jasmine"
-    ],
+    "types": ["node", "jasmine"],
     "useDefineForClassFields": false,
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
-    "strictInputAccessModifiers": true
+    "strictInputAccessModifiers": true,
   },
-  "exclude": [
-    "cypress.config.ts"
-  ]
+  "exclude": ["cypress.config.ts"],
 }

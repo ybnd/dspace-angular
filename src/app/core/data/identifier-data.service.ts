@@ -1,15 +1,8 @@
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpParams,
-} from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { IdentifierData } from '../../shared/object-list/identifier-data/identifier-data.model';
@@ -40,7 +33,6 @@ import { RestRequest } from './rest-request.model';
 @Injectable()
 @dataService(IDENTIFIERS)
 export class IdentifierDataService extends BaseDataService<IdentifierData> {
-
   constructor(
     protected comparator: DefaultChangeAnalyzer<IdentifierData>,
     protected halService: HALEndpointService,
@@ -67,13 +59,20 @@ export class IdentifierDataService extends BaseDataService<IdentifierData> {
    * Should we allow registration of new DOIs via the item status page?
    */
   public getIdentifierRegistrationConfiguration(): Observable<string[]> {
-    return this.configurationService.findByPropertyName('identifiers.item-status.register-doi').pipe(
-      getFirstCompletedRemoteData(),
-      map((propertyRD: RemoteData<ConfigurationProperty>) => propertyRD.hasSucceeded ? propertyRD.payload.values : []),
-    );
+    return this.configurationService
+      .findByPropertyName('identifiers.item-status.register-doi')
+      .pipe(
+        getFirstCompletedRemoteData(),
+        map((propertyRD: RemoteData<ConfigurationProperty>) =>
+          propertyRD.hasSucceeded ? propertyRD.payload.values : [],
+        ),
+      );
   }
 
-  public registerIdentifier(item: Item, type: string): Observable<RemoteData<any>> {
+  public registerIdentifier(
+    item: Item,
+    type: string,
+  ): Observable<RemoteData<any>> {
     const requestId = this.requestService.generateRequestId();
     return this.getEndpoint().pipe(
       map((endpointURL: string) => {
@@ -84,10 +83,20 @@ export class IdentifierDataService extends BaseDataService<IdentifierData> {
         let params = new HttpParams();
         params = params.append('type', type);
         options.params = params;
-        return new PostRequest(requestId, endpointURL, item._links.self.href, options);
+        return new PostRequest(
+          requestId,
+          endpointURL,
+          item._links.self.href,
+          options,
+        );
       }),
       sendRequest(this.requestService),
-      switchMap((request: RestRequest) => this.rdbService.buildFromRequestUUID(request.uuid) as Observable<RemoteData<any>>),
+      switchMap(
+        (request: RestRequest) =>
+          this.rdbService.buildFromRequestUUID(request.uuid) as Observable<
+            RemoteData<any>
+          >,
+      ),
     );
   }
 }

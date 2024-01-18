@@ -11,11 +11,12 @@ import { SortOptions } from '../cache/models/sort-options.model';
  * - fetchThumbnail       An optional boolean to request thumbnail for items
  */
 export class BrowseEntrySearchOptions {
-  constructor(public metadataDefinition: string,
-              public pagination?: PaginationComponentOptions,
-              public sort?: SortOptions,
-              public startsWith?: string,
-              public scope?: string,
-              public fetchThumbnail?: boolean) {
-  }
+  constructor(
+    public metadataDefinition: string,
+    public pagination?: PaginationComponentOptions,
+    public sort?: SortOptions,
+    public startsWith?: string,
+    public scope?: string,
+    public fetchThumbnail?: boolean,
+  ) {}
 }

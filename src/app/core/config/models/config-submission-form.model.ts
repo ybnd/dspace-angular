@@ -1,7 +1,4 @@
-import {
-  autoserialize,
-  inheritSerialization,
-} from 'cerialize';
+import { autoserialize, inheritSerialization } from 'cerialize';
 
 import { FormFieldModel } from '../../../shared/form/builder/models/form-field.model';
 import { typedObject } from '../../cache/builders/build-decorators';
@@ -27,5 +24,5 @@ export class SubmissionFormModel extends ConfigObject {
    * An array of [FormRowModel] that are present in this form
    */
   @autoserialize
-    rows: FormRowModel[];
+  rows: FormRowModel[];
 }

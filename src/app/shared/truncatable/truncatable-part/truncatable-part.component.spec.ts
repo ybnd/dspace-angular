@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -46,7 +39,8 @@ describe('TruncatablePartComponent', () => {
   beforeEach(waitForAsync(() => {
     translateService = getMockTranslateService();
     void TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule,
+      imports: [
+        NoopAnimationsModule,
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -60,9 +54,11 @@ describe('TruncatablePartComponent', () => {
         { provide: TruncatableService, useValue: truncatableServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(TruncatablePartComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(TruncatablePartComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
   beforeEach(() => {
     fixture = TestBed.createComponent(TruncatablePartComponent);
@@ -77,8 +73,7 @@ describe('TruncatablePartComponent', () => {
       comp.minLines = 5;
       (comp as any).setLines();
       fixture.detectChanges();
-    })
-    ;
+    });
 
     it('lines should equal minlines', () => {
       expect((comp as any).lines).toEqual(comp.minLines.toString());
@@ -93,8 +88,7 @@ describe('TruncatablePartComponent', () => {
   describe('When the item is expanded', () => {
     beforeEach(() => {
       comp.id = id2;
-    })
-    ;
+    });
 
     it('lines should equal maxlines when maxlines has a value', () => {
       comp.maxLines = 5;
@@ -103,7 +97,7 @@ describe('TruncatablePartComponent', () => {
       expect((comp as any).lines).toEqual(comp.maxLines.toString());
     });
 
-    it('lines should equal \'none\' when maxlines has no value', () => {
+    it("lines should equal 'none' when maxlines has no value", () => {
       (comp as any).setLines();
       fixture.detectChanges();
       expect((comp as any).lines).toEqual('none');
@@ -143,9 +137,11 @@ describe('TruncatablePartComponent', () => {
         { provide: TruncatableService, useValue: mockTruncatableService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(TruncatablePartComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(TruncatablePartComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -166,5 +162,4 @@ describe('TruncatablePartComponent', () => {
       expect(truncatableService.toggle).toHaveBeenCalledWith(identifier);
     });
   });
-
 });

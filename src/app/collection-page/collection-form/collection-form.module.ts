@@ -6,18 +6,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { CollectionFormComponent } from './collection-form.component';
 
 @NgModule({
-  imports: [
-    ComcolModule,
-    FormModule,
-    SharedModule,
-  ],
-  declarations: [
-    CollectionFormComponent,
-  ],
-  exports: [
-    CollectionFormComponent,
-  ],
+  imports: [ComcolModule, FormModule, SharedModule],
+  declarations: [CollectionFormComponent],
+  exports: [CollectionFormComponent],
 })
-export class CollectionFormModule {
-
-}
+export class CollectionFormModule {}

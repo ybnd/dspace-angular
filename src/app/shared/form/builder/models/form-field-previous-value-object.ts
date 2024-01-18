@@ -1,7 +1,6 @@
 import isEqual from 'lodash/isEqual';
 
 export class FormFieldPreviousValueObject {
-
   private _path;
   private _value;
 

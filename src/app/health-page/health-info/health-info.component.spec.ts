@@ -1,14 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { HealthInfoResponseObj } from '../../shared/mocks/health-endpoint.mocks';
 import { TranslateLoaderMock } from '../../shared/mocks/translate-loader.mock';
@@ -30,13 +24,9 @@ describe('HealthInfoComponent', () => {
           },
         }),
       ],
-      declarations: [
-        HealthInfoComponent,
-        ObjNgFor,
-      ],
+      declarations: [HealthInfoComponent, ObjNgFor],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -51,7 +41,9 @@ describe('HealthInfoComponent', () => {
   });
 
   it('should create info component properly', () => {
-    const components = fixture.debugElement.queryAll(By.css('[data-test="info-component"]'));
+    const components = fixture.debugElement.queryAll(
+      By.css('[data-test="info-component"]'),
+    );
     expect(components.length).toBe(3);
   });
 });

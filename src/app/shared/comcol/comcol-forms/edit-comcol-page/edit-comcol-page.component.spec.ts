@@ -1,14 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -30,10 +23,12 @@ describe('EditComColPageComponent', () => {
   function initializeVars() {
     community = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66b9300d347',
-      metadata: [{
-        key: 'dc.title',
-        value: 'test community',
-      }],
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'test community',
+        },
+      ],
     });
 
     routerStub = {
@@ -64,13 +59,17 @@ describe('EditComColPageComponent', () => {
         },
       },
     };
-
   }
 
   beforeEach(waitForAsync(() => {
     initializeVars();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       providers: [
         { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: routeStub },

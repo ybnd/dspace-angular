@@ -1,17 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ChangeDetectorRef, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -73,9 +63,15 @@ describe('BrowseByDatePageComponent', () => {
   });
 
   const mockBrowseService = {
-    getBrowseEntriesFor: (options: BrowseEntrySearchOptions) => toRemoteData([]),
-    getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) => toRemoteData([firstItem]),
-    getFirstItemFor: (definition: string, scope?: string, sortDirection?: SortDirection) => null,
+    getBrowseEntriesFor: (options: BrowseEntrySearchOptions) =>
+      toRemoteData([]),
+    getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) =>
+      toRemoteData([firstItem]),
+    getFirstItemFor: (
+      definition: string,
+      scope?: string,
+      sortDirection?: SortDirection,
+    ) => null,
   };
 
   const mockDsoService = {
@@ -85,7 +81,10 @@ describe('BrowseByDatePageComponent', () => {
   const activatedRouteStub = Object.assign(new ActivatedRouteStub(), {
     params: observableOf({}),
     queryParams: observableOf({}),
-    data: observableOf({ metadata: 'dateissued', metadataField: 'dc.date.issued' }),
+    data: observableOf({
+      metadata: 'dateissued',
+      metadataField: 'dc.date.issued',
+    }),
   });
 
   const mockCdRef = Object.assign({
@@ -96,7 +95,12 @@ describe('BrowseByDatePageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [BrowseByDatePageComponent, EnumKeysPipe, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
@@ -116,8 +120,10 @@ describe('BrowseByDatePageComponent', () => {
     const browseService = fixture.debugElement.injector.get(BrowseService);
     spyOn(browseService, 'getFirstItemFor')
       // ok to expect the default browse as first param since we just need the mock items obtained via sort direction.
-      .withArgs('author', undefined, SortDirection.ASC).and.returnValue(createSuccessfulRemoteDataObject$(firstItem))
-      .withArgs('author', undefined, SortDirection.DESC).and.returnValue(createSuccessfulRemoteDataObject$(lastItem));
+      .withArgs('author', undefined, SortDirection.ASC)
+      .and.returnValue(createSuccessfulRemoteDataObject$(firstItem))
+      .withArgs('author', undefined, SortDirection.DESC)
+      .and.returnValue(createSuccessfulRemoteDataObject$(lastItem));
     comp = fixture.componentInstance;
     route = (comp as any).route;
     fixture.detectChanges();
@@ -130,7 +136,9 @@ describe('BrowseByDatePageComponent', () => {
   });
 
   it('should create a list of startsWith options with the earliest year at the end (rounded down by 10)', () => {
-    expect(comp.startsWithOptions[comp.startsWithOptions.length - 1]).toEqual(1950);
+    expect(comp.startsWithOptions[comp.startsWithOptions.length - 1]).toEqual(
+      1950,
+    );
   });
 
   it('should create a list of startsWith options with the current year first', () => {

@@ -1,19 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { BaseDataService } from '../data/base/base-data.service';
 import { dataService } from '../data/base/data-service.decorator';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../data/base/search-data';
+import { SearchData, SearchDataImpl } from '../data/base/search-data';
 import { FindListOptions } from '../data/find-list-options.model';
 import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
@@ -33,7 +27,10 @@ import { SubmissionCcLicenceUrl } from './models/submission-cc-license-url.model
 
 @Injectable()
 @dataService(SUBMISSION_CC_LICENSE_URL)
-export class SubmissionCcLicenseUrlDataService extends BaseDataService<SubmissionCcLicenceUrl> implements SearchData<SubmissionCcLicenceUrl> {
+export class SubmissionCcLicenseUrlDataService
+  extends BaseDataService<SubmissionCcLicenceUrl>
+  implements SearchData<SubmissionCcLicenceUrl>
+{
   private searchData: SearchDataImpl<SubmissionCcLicenceUrl>;
 
   constructor(
@@ -42,9 +39,23 @@ export class SubmissionCcLicenseUrlDataService extends BaseDataService<Submissio
     protected objectCache: ObjectCacheService,
     protected halService: HALEndpointService,
   ) {
-    super('submissioncclicenseUrls-search', requestService, rdbService, objectCache, halService);
+    super(
+      'submissioncclicenseUrls-search',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive, (href, searchMethod) => `${href}/${searchMethod}`);
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+      (href, searchMethod) => `${href}/${searchMethod}`,
+    );
   }
 
   /**
@@ -52,30 +63,31 @@ export class SubmissionCcLicenseUrlDataService extends BaseDataService<Submissio
    * @param ccLicense   the Creative Commons license type
    * @param options     the selected options of the license fields
    */
-  getCcLicenseLink(ccLicense: SubmissionCcLicence, options: Map<Field, Option>): Observable<string> {
-
-    return this.searchData.getSearchByHref(
-      'rightsByQuestions',{
+  getCcLicenseLink(
+    ccLicense: SubmissionCcLicence,
+    options: Map<Field, Option>,
+  ): Observable<string> {
+    return this.searchData
+      .getSearchByHref('rightsByQuestions', {
         searchParams: [
           {
             fieldName: 'license',
             fieldValue: ccLicense.id,
           },
-          ...ccLicense.fields.map(
-            (field) => {
-              return {
-                fieldName: `answer_${field.id}`,
-                fieldValue: options.get(field).id,
-              };
-            }),
+          ...ccLicense.fields.map((field) => {
+            return {
+              fieldName: `answer_${field.id}`,
+              fieldValue: options.get(field).id,
+            };
+          }),
         ],
-      },
-    ).pipe(
-      switchMap((href) => this.findByHref(href)),
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-      map((response) => response.url),
-    );
+      })
+      .pipe(
+        switchMap((href) => this.findByHref(href)),
+        getFirstSucceededRemoteData(),
+        getRemoteDataPayload(),
+        map((response) => response.url),
+      );
   }
 
   /**
@@ -92,7 +104,19 @@ export class SubmissionCcLicenseUrlDataService extends BaseDataService<Submissio
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  public searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<SubmissionCcLicenceUrl>[]): Observable<RemoteData<PaginatedList<SubmissionCcLicenceUrl>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<SubmissionCcLicenceUrl>[]
+  ): Observable<RemoteData<PaginatedList<SubmissionCcLicenceUrl>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 }

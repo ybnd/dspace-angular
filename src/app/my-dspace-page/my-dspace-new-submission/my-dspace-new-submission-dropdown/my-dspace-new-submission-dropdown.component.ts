@@ -1,19 +1,7 @@
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import {
-  Observable,
-  of as observableOf,
-  Subscription,
-} from 'rxjs';
-import {
-  map,
-  mergeMap,
-  take,
-} from 'rxjs/operators';
+import { Observable, of as observableOf, Subscription } from 'rxjs';
+import { map, mergeMap, take } from 'rxjs/operators';
 
 import { EntityTypeDataService } from '../../../core/data/entity-type-data.service';
 import { FindListOptions } from '../../../core/data/find-list-options.model';
@@ -31,8 +19,9 @@ import { hasValue } from '../../../shared/empty.util';
   styleUrls: ['./my-dspace-new-submission-dropdown.component.scss'],
   templateUrl: './my-dspace-new-submission-dropdown.component.html',
 })
-export class MyDSpaceNewSubmissionDropdownComponent implements OnInit, OnDestroy {
-
+export class MyDSpaceNewSubmissionDropdownComponent
+  implements OnInit, OnDestroy
+{
   /**
    * Used to verify if there are one or more entities available
    */
@@ -65,8 +54,10 @@ export class MyDSpaceNewSubmissionDropdownComponent implements OnInit, OnDestroy
    * @param {EntityTypeDataService} entityTypeService
    * @param {NgbModal} modalService
    */
-  constructor(private entityTypeService: EntityTypeDataService,
-              private modalService: NgbModal) { }
+  constructor(
+    private entityTypeService: EntityTypeDataService,
+    private modalService: NgbModal,
+  ) {}
 
   /**
    * Initialize entity type list
@@ -81,13 +72,15 @@ export class MyDSpaceNewSubmissionDropdownComponent implements OnInit, OnDestroy
             elementsPerPage: 1,
             currentPage: 1,
           };
-          return this.entityTypeService.getAllAuthorizedRelationshipType(findListOptions).pipe(
-            map((entities: RemoteData<PaginatedList<ItemType>>) => {
-              this.initialized$ = observableOf(true);
-              return entities.payload.page[0];
-            }),
-            take(1),
-          );
+          return this.entityTypeService
+            .getAllAuthorizedRelationshipType(findListOptions)
+            .pipe(
+              map((entities: RemoteData<PaginatedList<ItemType>>) => {
+                this.initialized$ = observableOf(true);
+                return entities.payload.page[0];
+              }),
+              take(1),
+            );
         } else {
           this.initialized$ = observableOf(true);
           return observableOf(null);
@@ -96,7 +89,7 @@ export class MyDSpaceNewSubmissionDropdownComponent implements OnInit, OnDestroy
       take(1),
     );
     this.subs.push(
-      this.singleEntity$.subscribe((result) => this.singleEntity = result ),
+      this.singleEntity$.subscribe((result) => (this.singleEntity = result)),
     );
   }
 

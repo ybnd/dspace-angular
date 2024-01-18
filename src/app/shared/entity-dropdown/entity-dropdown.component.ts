@@ -9,16 +9,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  BehaviorSubject,
-  Observable,
-  Subscription,
-} from 'rxjs';
-import {
-  reduce,
-  startWith,
-  switchMap,
-} from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { reduce, startWith, switchMap } from 'rxjs/operators';
 
 import { EntityTypeDataService } from '../../core/data/entity-type-data.service';
 import { FindListOptions } from '../../core/data/find-list-options.model';
@@ -99,7 +91,7 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
     private changeDetectorRef: ChangeDetectorRef,
     private entityTypeService: EntityTypeDataService,
     private el: ElementRef,
-  ) { }
+  ) {}
 
   /**
    * Method called on mousewheel event, it prevent the page scroll
@@ -131,15 +123,17 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
    * @param event
    */
   public onScroll(event) {
-    this.scrollableBottom = (event.target.scrollTop + event.target.clientHeight === event.target.scrollHeight);
-    this.scrollableTop = (event.target.scrollTop === 0);
+    this.scrollableBottom =
+      event.target.scrollTop + event.target.clientHeight ===
+      event.target.scrollHeight;
+    this.scrollableTop = event.target.scrollTop === 0;
   }
 
   /**
    * Method used from infitity scroll for retrive more data on scroll down
    */
   public onScrollDown() {
-    if ( this.hasNextPage ) {
+    if (this.hasNextPage) {
       this.populateEntityList(++this.currentPage);
     }
   }
@@ -167,14 +161,21 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
     };
     let searchListEntity$;
     if (this.isSubmission) {
-      searchListEntity$ = this.entityTypeService.getAllAuthorizedRelationshipType(findOptions);
+      searchListEntity$ =
+        this.entityTypeService.getAllAuthorizedRelationshipType(findOptions);
     } else {
-      searchListEntity$ = this.entityTypeService.getAllAuthorizedRelationshipTypeImport(findOptions);
+      searchListEntity$ =
+        this.entityTypeService.getAllAuthorizedRelationshipTypeImport(
+          findOptions,
+        );
     }
     this.searchListEntity$ = searchListEntity$.pipe(
       getFirstSucceededRemoteWithNotEmptyData(),
       switchMap((entityType: RemoteData<PaginatedList<ItemType>>) => {
-        if ( (this.searchListEntity.length + findOptions.elementsPerPage) >= entityType.payload.totalElements ) {
+        if (
+          this.searchListEntity.length + findOptions.elementsPerPage >=
+          entityType.payload.totalElements
+        ) {
           this.hasNextPage = false;
         }
         return entityType.payload.page;
@@ -184,8 +185,14 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
     );
     this.subs.push(
       this.searchListEntity$.subscribe(
-        (next) => { this.searchListEntity.push(...next); }, undefined,
-        () => { this.hideShowLoader(false); this.changeDetectorRef.detectChanges(); },
+        (next) => {
+          this.searchListEntity.push(...next);
+        },
+        undefined,
+        () => {
+          this.hideShowLoader(false);
+          this.changeDetectorRef.detectChanges();
+        },
       ),
     );
   }
@@ -211,6 +218,8 @@ export class EntityDropdownComponent implements OnInit, OnDestroy {
    * Unsubscribe from all subscriptions
    */
   ngOnDestroy(): void {
-    this.subs.filter((sub) => hasValue(sub)).forEach((sub) => sub.unsubscribe());
+    this.subs
+      .filter((sub) => hasValue(sub))
+      .forEach((sub) => sub.unsubscribe());
   }
 }

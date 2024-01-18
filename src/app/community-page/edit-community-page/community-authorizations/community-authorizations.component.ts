@@ -1,13 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  first,
-  map,
-} from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 import { RemoteData } from '../../../core/data/remote-data';
 import { DSpaceObject } from '../../../core/shared/dspace-object.model';
@@ -19,8 +13,9 @@ import { DSpaceObject } from '../../../core/shared/dspace-object.model';
 /**
  * Component that handles the community Authorizations
  */
-export class CommunityAuthorizationsComponent<TDomain extends DSpaceObject> implements OnInit {
-
+export class CommunityAuthorizationsComponent<TDomain extends DSpaceObject>
+  implements OnInit
+{
   /**
    * The initial DSO object
    */
@@ -31,15 +26,15 @@ export class CommunityAuthorizationsComponent<TDomain extends DSpaceObject> impl
    *
    * @param {ActivatedRoute} route
    */
-  constructor(
-    private route: ActivatedRoute,
-  ) {
-  }
+  constructor(private route: ActivatedRoute) {}
 
   /**
    * Initialize the component, setting up the community
    */
   ngOnInit(): void {
-    this.dsoRD$ = this.route.parent.parent.data.pipe(first(), map((data) => data.dso));
+    this.dsoRD$ = this.route.parent.parent.data.pipe(
+      first(),
+      map((data) => data.dso),
+    );
   }
 }

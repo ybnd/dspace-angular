@@ -33,37 +33,51 @@ describe('ArrayMoveChangeAnalyzer', () => {
       ];
     });
 
-    testMove([
-      { op: 'move', from: '/2', path: '/4' },
-    ], new MoveTest(2, 4));
+    testMove([{ op: 'move', from: '/2', path: '/4' }], new MoveTest(2, 4));
 
-    testMove([
-      { op: 'move', from: '/0', path: '/3' },
-    ], new MoveTest(0, 3));
+    testMove([{ op: 'move', from: '/0', path: '/3' }], new MoveTest(0, 3));
 
-    testMove([
-      { op: 'move', from: '/2', path: '/3' },
-      { op: 'move', from: '/0', path: '/3' },
-    ], new MoveTest(0, 3), new MoveTest(1, 2));
+    testMove(
+      [
+        { op: 'move', from: '/2', path: '/3' },
+        { op: 'move', from: '/0', path: '/3' },
+      ],
+      new MoveTest(0, 3),
+      new MoveTest(1, 2),
+    );
 
-    testMove([
-      { op: 'move', from: '/3', path: '/4' },
-      { op: 'move', from: '/0', path: '/1' },
-    ], new MoveTest(0, 1), new MoveTest(3, 4));
+    testMove(
+      [
+        { op: 'move', from: '/3', path: '/4' },
+        { op: 'move', from: '/0', path: '/1' },
+      ],
+      new MoveTest(0, 1),
+      new MoveTest(3, 4),
+    );
 
     testMove([], new MoveTest(0, 4), new MoveTest(4, 0));
 
-    testMove([
-      { op: 'move', from: '/2', path: '/3' },
-      { op: 'move', from: '/0', path: '/3' },
-    ], new MoveTest(0, 4), new MoveTest(1, 3), new MoveTest(2, 4));
+    testMove(
+      [
+        { op: 'move', from: '/2', path: '/3' },
+        { op: 'move', from: '/0', path: '/3' },
+      ],
+      new MoveTest(0, 4),
+      new MoveTest(1, 3),
+      new MoveTest(2, 4),
+    );
 
-    testMove([
-      { op: 'move', from: '/3', path: '/4' },
-      { op: 'move', from: '/2', path: '/4' },
-      { op: 'move', from: '/1', path: '/3' },
-      { op: 'move', from: '/0', path: '/3' },
-    ], new MoveTest(4, 1), new MoveTest(4, 2), new MoveTest(0, 3));
+    testMove(
+      [
+        { op: 'move', from: '/3', path: '/4' },
+        { op: 'move', from: '/2', path: '/4' },
+        { op: 'move', from: '/1', path: '/3' },
+        { op: 'move', from: '/0', path: '/3' },
+      ],
+      new MoveTest(4, 1),
+      new MoveTest(4, 2),
+      new MoveTest(0, 3),
+    );
   });
 
   describe('when some values are undefined (index 2 and 3)', () => {
@@ -78,14 +92,10 @@ describe('ArrayMoveChangeAnalyzer', () => {
     });
 
     // It can't create a move operation for undefined values, so it should create move operations for the defined values instead
-    testMove([
-      { op: 'move', from: '/4', path: '/3' },
-    ], new MoveTest(2, 4));
+    testMove([{ op: 'move', from: '/4', path: '/3' }], new MoveTest(2, 4));
 
     // Moving a defined value should result in the same operations
-    testMove([
-      { op: 'move', from: '/0', path: '/3' },
-    ], new MoveTest(0, 3));
+    testMove([{ op: 'move', from: '/0', path: '/3' }], new MoveTest(0, 3));
   });
 
   /**

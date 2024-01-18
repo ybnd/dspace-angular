@@ -9,7 +9,6 @@ import { NotificationsServiceStub } from '../../shared/testing/notifications-ser
 import { ProcessBulkDeleteService } from './process-bulk-delete.service';
 
 describe('ProcessBulkDeleteService', () => {
-
   let service: ProcessBulkDeleteService;
   let processDataService;
   let notificationsService;
@@ -21,7 +20,11 @@ describe('ProcessBulkDeleteService', () => {
     });
     notificationsService = new NotificationsServiceStub();
     mockTranslateService = getMockTranslateService();
-    service = new ProcessBulkDeleteService(processDataService, notificationsService, mockTranslateService);
+    service = new ProcessBulkDeleteService(
+      processDataService,
+      notificationsService,
+      mockTranslateService,
+    );
   }));
 
   describe('toggleDelete', () => {
@@ -97,13 +100,15 @@ describe('ProcessBulkDeleteService', () => {
   });
   describe('deleteSelectedProcesses', () => {
     it('should delete all selected processes, show an error for each failed one and a notification at the end with the amount of succeeded deletions', () => {
-      (processDataService.delete as jasmine.Spy).and.callFake((processId: string) => {
-        if (processId.includes('error')) {
-          return createFailedRemoteDataObject$();
-        } else {
-          return createSuccessfulRemoteDataObject$(null);
-        }
-      });
+      (processDataService.delete as jasmine.Spy).and.callFake(
+        (processId: string) => {
+          if (processId.includes('error')) {
+            return createFailedRemoteDataObject$();
+          } else {
+            return createSuccessfulRemoteDataObject$(null);
+          }
+        },
+      );
 
       service.toggleDelete('test-id-1');
       service.toggleDelete('test-id-2');
@@ -113,41 +118,48 @@ describe('ProcessBulkDeleteService', () => {
       service.toggleDelete('error-id-6');
       service.toggleDelete('test-id-7');
 
-
       service.deleteSelectedProcesses();
 
       expect(processDataService.delete).toHaveBeenCalledWith('test-id-1');
 
-
       expect(processDataService.delete).toHaveBeenCalledWith('test-id-2');
-
 
       expect(processDataService.delete).toHaveBeenCalledWith('error-id-3');
       expect(notificationsService.error).toHaveBeenCalled();
-      expect(mockTranslateService.get).toHaveBeenCalledWith('process.bulk.delete.error.body', { processId: 'error-id-3' });
-
+      expect(mockTranslateService.get).toHaveBeenCalledWith(
+        'process.bulk.delete.error.body',
+        { processId: 'error-id-3' },
+      );
 
       expect(processDataService.delete).toHaveBeenCalledWith('test-id-4');
 
-
       expect(processDataService.delete).toHaveBeenCalledWith('error-id-5');
       expect(notificationsService.error).toHaveBeenCalled();
-      expect(mockTranslateService.get).toHaveBeenCalledWith('process.bulk.delete.error.body', { processId: 'error-id-5' });
-
+      expect(mockTranslateService.get).toHaveBeenCalledWith(
+        'process.bulk.delete.error.body',
+        { processId: 'error-id-5' },
+      );
 
       expect(processDataService.delete).toHaveBeenCalledWith('error-id-6');
       expect(notificationsService.error).toHaveBeenCalled();
-      expect(mockTranslateService.get).toHaveBeenCalledWith('process.bulk.delete.error.body', { processId: 'error-id-6' });
-
+      expect(mockTranslateService.get).toHaveBeenCalledWith(
+        'process.bulk.delete.error.body',
+        { processId: 'error-id-6' },
+      );
 
       expect(processDataService.delete).toHaveBeenCalledWith('test-id-7');
 
       expect(notificationsService.success).toHaveBeenCalled();
-      expect(mockTranslateService.get).toHaveBeenCalledWith('process.bulk.delete.success', { count: 4 });
+      expect(mockTranslateService.get).toHaveBeenCalledWith(
+        'process.bulk.delete.success',
+        { count: 4 },
+      );
 
-      expect(service.processesToDelete).toEqual(['error-id-3', 'error-id-5', 'error-id-6']);
-
-
+      expect(service.processesToDelete).toEqual([
+        'error-id-3',
+        'error-id-5',
+        'error-id-6',
+      ]);
     });
   });
 });

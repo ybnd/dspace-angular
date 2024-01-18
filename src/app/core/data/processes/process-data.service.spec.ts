@@ -12,7 +12,8 @@ import { ProcessDataService } from './process-data.service';
 
 describe('ProcessDataService', () => {
   describe('composition', () => {
-    const initService = () => new ProcessDataService(null, null, null, null, null, null);
+    const initService = () =>
+      new ProcessDataService(null, null, null, null, null, null);
     testFindAllDataImplementation(initService);
     testDeleteDataImplementation(initService);
   });

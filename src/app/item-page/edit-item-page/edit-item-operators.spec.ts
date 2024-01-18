@@ -21,7 +21,8 @@ describe('findSuccessfulAccordingTo', () => {
     mockItem2 = new Item();
     mockItem1.isWithdrawn = false;
 
-    predicate = (rd: RemoteData<Item>) => isNotEmpty(rd.payload) ? rd.payload.isWithdrawn : false;
+    predicate = (rd: RemoteData<Item>) =>
+      isNotEmpty(rd.payload) ? rd.payload.isWithdrawn : false;
   });
   it('should return first successful RemoteData Observable that complies to predicate', () => {
     const testRD = {
@@ -37,5 +38,4 @@ describe('findSuccessfulAccordingTo', () => {
 
     result.subscribe((value) => expect(value).toEqual(testRD.d));
   });
-
 });

@@ -13,14 +13,8 @@ import { By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  of as observableOf,
-} from 'rxjs';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
 import { AuthorizationDataService } from '../../core/data/feature-authorization/authorization-data.service';
@@ -64,8 +58,7 @@ const mockWithdrawnItem: Item = Object.assign(new Item(), {
 
 const metadataServiceStub = {
   /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-  processRemoteData: () => {
-  },
+  processRemoteData: () => {},
   /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
 };
 
@@ -107,9 +100,12 @@ describe('FullItemPageComponent', () => {
       data: observableOf(routeData),
     });
 
-    authorizationDataService = jasmine.createSpyObj('authorizationDataService', {
-      isAuthorized: observableOf(false),
-    });
+    authorizationDataService = jasmine.createSpyObj(
+      'authorizationDataService',
+      {
+        isAuthorized: observableOf(false),
+      },
+    );
 
     serverResponseService = jasmine.createSpyObj('ServerResponseService', {
       setHeader: jasmine.createSpy('setHeader'),
@@ -125,28 +121,37 @@ describe('FullItemPageComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      }), RouterTestingModule.withRoutes([]), BrowserAnimationsModule],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+        RouterTestingModule.withRoutes([]),
+        BrowserAnimationsModule,
+      ],
       declarations: [FullItemPageComponent, TruncatePipe, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
         { provide: ItemDataService, useValue: {} },
         { provide: MetadataService, useValue: metadataServiceStub },
         { provide: AuthService, useValue: authService },
-        { provide: AuthorizationDataService, useValue: authorizationDataService },
+        {
+          provide: AuthorizationDataService,
+          useValue: authorizationDataService,
+        },
         { provide: ServerResponseService, useValue: serverResponseService },
         { provide: SignpostingDataService, useValue: signpostingDataService },
         { provide: LinkHeadService, useValue: linkHeadService },
         { provide: PLATFORM_ID, useValue: 'server' },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(FullItemPageComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(FullItemPageComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -159,16 +164,20 @@ describe('FullItemPageComponent', () => {
     fixture.debugElement.nativeElement.remove();
   });
 
-  it('should display the item\'s metadata', () => {
+  it("should display the item's metadata", () => {
     const table = fixture.debugElement.query(By.css('table'));
-    for (const metadatum of mockItem.allMetadata(Object.keys(mockItem.metadata))) {
+    for (const metadatum of mockItem.allMetadata(
+      Object.keys(mockItem.metadata),
+    )) {
       expect(table.nativeElement.innerHTML).toContain(metadatum.value);
     }
   });
 
   it('should show simple view button when not originated from workflow item', () => {
     expect(comp.fromSubmissionObject).toBe(false);
-    const simpleViewBtn = fixture.debugElement.query(By.css('.simple-view-link'));
+    const simpleViewBtn = fixture.debugElement.query(
+      By.css('.simple-view-link'),
+    );
     expect(simpleViewBtn).toBeTruthy();
   });
 
@@ -178,7 +187,9 @@ describe('FullItemPageComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       expect(comp.fromSubmissionObject).toBe(true);
-      const simpleViewBtn = fixture.debugElement.query(By.css('.simple-view-link'));
+      const simpleViewBtn = fixture.debugElement.query(
+        By.css('.simple-view-link'),
+      );
       expect(simpleViewBtn).toBeFalsy();
     });
   }));
@@ -186,12 +197,16 @@ describe('FullItemPageComponent', () => {
   describe('when the item is withdrawn and the user is an admin', () => {
     beforeEach(() => {
       comp.isAdmin$ = observableOf(true);
-      comp.itemRD$ = new BehaviorSubject<RemoteData<Item>>(createSuccessfulRemoteDataObject(mockWithdrawnItem));
+      comp.itemRD$ = new BehaviorSubject<RemoteData<Item>>(
+        createSuccessfulRemoteDataObject(mockWithdrawnItem),
+      );
       fixture.detectChanges();
     });
 
     it('should display the item', () => {
-      const objectLoader = fixture.debugElement.query(By.css('.full-item-info'));
+      const objectLoader = fixture.debugElement.query(
+        By.css('.full-item-info'),
+      );
       expect(objectLoader.nativeElement).not.toBeNull();
     });
 
@@ -202,12 +217,16 @@ describe('FullItemPageComponent', () => {
   });
   describe('when the item is withdrawn and the user is not an admin', () => {
     beforeEach(() => {
-      comp.itemRD$ = new BehaviorSubject<RemoteData<Item>>(createSuccessfulRemoteDataObject(mockWithdrawnItem));
+      comp.itemRD$ = new BehaviorSubject<RemoteData<Item>>(
+        createSuccessfulRemoteDataObject(mockWithdrawnItem),
+      );
       fixture.detectChanges();
     });
 
     it('should not display the item', () => {
-      const objectLoader = fixture.debugElement.query(By.css('.full-item-info'));
+      const objectLoader = fixture.debugElement.query(
+        By.css('.full-item-info'),
+      );
       expect(objectLoader).toBeNull();
     });
   });
@@ -215,12 +234,16 @@ describe('FullItemPageComponent', () => {
   describe('when the item is not withdrawn and the user is an admin', () => {
     beforeEach(() => {
       comp.isAdmin$ = observableOf(true);
-      comp.itemRD$ = new BehaviorSubject<RemoteData<Item>>(createSuccessfulRemoteDataObject(mockItem));
+      comp.itemRD$ = new BehaviorSubject<RemoteData<Item>>(
+        createSuccessfulRemoteDataObject(mockItem),
+      );
       fixture.detectChanges();
     });
 
     it('should display the item', () => {
-      const objectLoader = fixture.debugElement.query(By.css('.full-item-info'));
+      const objectLoader = fixture.debugElement.query(
+        By.css('.full-item-info'),
+      );
       expect(objectLoader).not.toBeNull();
     });
 
@@ -232,12 +255,16 @@ describe('FullItemPageComponent', () => {
 
   describe('when the item is not withdrawn and the user is not an admin', () => {
     beforeEach(() => {
-      comp.itemRD$ = new BehaviorSubject<RemoteData<Item>>(createSuccessfulRemoteDataObject(mockItem));
+      comp.itemRD$ = new BehaviorSubject<RemoteData<Item>>(
+        createSuccessfulRemoteDataObject(mockItem),
+      );
       fixture.detectChanges();
     });
 
     it('should display the item', () => {
-      const objectLoader = fixture.debugElement.query(By.css('.full-item-info'));
+      const objectLoader = fixture.debugElement.query(
+        By.css('.full-item-info'),
+      );
       expect(objectLoader).not.toBeNull();
     });
 

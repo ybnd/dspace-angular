@@ -1,14 +1,7 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import {
-  first,
-  map,
-  switchMap,
-} from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import { ItemTemplateDataService } from '../../core/data/item-template-data.service';
@@ -27,7 +20,6 @@ import { getCollectionEditRoute } from '../collection-page-routing-paths';
  * Component for editing the item template of a collection
  */
 export class EditItemTemplatePageComponent implements OnInit {
-
   /**
    * The collection to edit the item template for
    */
@@ -48,14 +40,18 @@ export class EditItemTemplatePageComponent implements OnInit {
     protected route: ActivatedRoute,
     public itemTemplateService: ItemTemplateDataService,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.collectionRD$ = this.route.parent.data.pipe(first(), map((data) => data.dso));
+    this.collectionRD$ = this.route.parent.data.pipe(
+      first(),
+      map((data) => data.dso),
+    );
     this.itemRD$ = this.collectionRD$.pipe(
       getFirstSucceededRemoteDataPayload(),
-      switchMap((collection) => this.itemTemplateService.findByCollectionID(collection.id)),
+      switchMap((collection) =>
+        this.itemTemplateService.findByCollectionID(collection.id),
+      ),
     );
   }
 
@@ -70,5 +66,4 @@ export class EditItemTemplatePageComponent implements OnInit {
       return '';
     }
   }
-
 }

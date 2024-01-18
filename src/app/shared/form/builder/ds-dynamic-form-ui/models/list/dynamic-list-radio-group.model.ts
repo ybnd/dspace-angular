@@ -9,7 +9,8 @@ import { VocabularyEntry } from '../../../../../../core/submission/vocabularies/
 import { VocabularyOptions } from '../../../../../../core/submission/vocabularies/models/vocabulary-options.model';
 import { hasValue } from '../../../../../empty.util';
 
-export interface DynamicListModelConfig extends DynamicRadioGroupModelConfig<any> {
+export interface DynamicListModelConfig
+  extends DynamicRadioGroupModelConfig<any> {
   vocabularyOptions: VocabularyOptions;
   groupLength?: number;
   repeatable: boolean;
@@ -19,7 +20,6 @@ export interface DynamicListModelConfig extends DynamicRadioGroupModelConfig<any
 }
 
 export class DynamicListRadioGroupModel extends DynamicRadioGroupModel<any> {
-
   @serializable() vocabularyOptions: VocabularyOptions;
   @serializable() repeatable: boolean;
   @serializable() groupLength: number;
@@ -27,7 +27,10 @@ export class DynamicListRadioGroupModel extends DynamicRadioGroupModel<any> {
   @serializable() hint: string;
   isListGroup = true;
 
-  constructor(config: DynamicListModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DynamicListModelConfig,
+    layout?: DynamicFormControlLayout,
+  ) {
     super(config, layout);
 
     this.vocabularyOptions = config.vocabularyOptions;

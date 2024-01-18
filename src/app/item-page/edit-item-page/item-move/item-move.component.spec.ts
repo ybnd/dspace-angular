@@ -1,14 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -64,32 +58,42 @@ describe('ItemMoveComponent', () => {
   });
 
   const mockItemDataServiceFail = jasmine.createSpyObj({
-    moveToCollection: createFailedRemoteDataObject$('Internal server error', 500),
+    moveToCollection: createFailedRemoteDataObject$(
+      'Internal server error',
+      500,
+    ),
     findById: createSuccessfulRemoteDataObject$(mockItem),
   });
 
   const routeStub = {
     data: observableOf({
-      dso: createSuccessfulRemoteDataObject(Object.assign(new Item(), {
-        id: 'item1',
-        owningCollection: createSuccessfulRemoteDataObject$(Object.assign(new Collection(), {
-          id: 'originalOwningCollection',
-        })),
-      })),
+      dso: createSuccessfulRemoteDataObject(
+        Object.assign(new Item(), {
+          id: 'item1',
+          owningCollection: createSuccessfulRemoteDataObject$(
+            Object.assign(new Collection(), {
+              id: 'originalOwningCollection',
+            }),
+          ),
+        }),
+      ),
     }),
   };
 
   const mockSearchService = {
     search: () => {
-      return createSuccessfulRemoteDataObject$(createPaginatedList([
-        {
-          indexableObject: collection1,
-          hitHighlights: {},
-        }, {
-          indexableObject: collection2,
-          hitHighlights: {},
-        },
-      ]));
+      return createSuccessfulRemoteDataObject$(
+        createPaginatedList([
+          {
+            indexableObject: collection1,
+            hitHighlights: {},
+          },
+          {
+            indexableObject: collection2,
+            hitHighlights: {},
+          },
+        ]),
+      );
     },
   };
 
@@ -99,7 +103,13 @@ describe('ItemMoveComponent', () => {
     itemDataService = mockItemDataService;
 
     TestBed.configureTestingModule({
-      imports: [CommonModule, FormsModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        FormsModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [ItemMoveComponent],
       providers: [
         { provide: ActivatedRoute, useValue: routeStub },
@@ -108,9 +118,8 @@ describe('ItemMoveComponent', () => {
         { provide: NotificationsService, useValue: notificationsServiceStub },
         { provide: SearchService, useValue: mockSearchService },
         { provide: RequestService, useValue: getMockRequestService() },
-      ], schemas: [
-        CUSTOM_ELEMENTS_SCHEMA,
       ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
     }).compileComponents();
     fixture = TestBed.createComponent(ItemMoveComponent);
     comp = fixture.componentInstance;
@@ -144,7 +153,11 @@ describe('ItemMoveComponent', () => {
         comp.inheritPolicies = false;
         comp.moveToCollection();
 
-        expect(itemDataService.moveToCollection).toHaveBeenCalledWith('item-id', collection1, false);
+        expect(itemDataService.moveToCollection).toHaveBeenCalledWith(
+          'item-id',
+          collection1,
+          false,
+        );
       });
       it('should call notificationsService success message on success', () => {
         comp.moveToCollection();

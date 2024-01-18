@@ -14,7 +14,6 @@ import { RequestService } from '../data/request.service';
 import { RequestEntryState } from '../data/request-entry-state.model';
 import { HALEndpointService } from './hal-endpoint.service';
 
-
 describe('HALEndpointService', () => {
   let service: HALEndpointService;
   let requestService: RequestService;
@@ -86,13 +85,69 @@ describe('HALEndpointService', () => {
   const statusCodeError = 404;
   const errorMessage = 'not found';
   remoteDataMocks = {
-    RequestPending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.RequestPending, undefined, undefined, undefined),
-    ResponsePending: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.ResponsePending, undefined, undefined, undefined),
-    ResponsePendingStale: new RemoteData(undefined, msToLive, timeStamp, RequestEntryState.ResponsePendingStale, undefined, undefined, undefined),
-    Success: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Success, undefined, payload, statusCodeSuccess),
-    SuccessStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.SuccessStale, undefined, payload, statusCodeSuccess),
-    Error: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.Error, errorMessage, undefined, statusCodeError),
-    ErrorStale: new RemoteData(timeStamp, msToLive, timeStamp, RequestEntryState.ErrorStale, errorMessage, undefined, statusCodeError),
+    RequestPending: new RemoteData(
+      undefined,
+      msToLive,
+      timeStamp,
+      RequestEntryState.RequestPending,
+      undefined,
+      undefined,
+      undefined,
+    ),
+    ResponsePending: new RemoteData(
+      undefined,
+      msToLive,
+      timeStamp,
+      RequestEntryState.ResponsePending,
+      undefined,
+      undefined,
+      undefined,
+    ),
+    ResponsePendingStale: new RemoteData(
+      undefined,
+      msToLive,
+      timeStamp,
+      RequestEntryState.ResponsePendingStale,
+      undefined,
+      undefined,
+      undefined,
+    ),
+    Success: new RemoteData(
+      timeStamp,
+      msToLive,
+      timeStamp,
+      RequestEntryState.Success,
+      undefined,
+      payload,
+      statusCodeSuccess,
+    ),
+    SuccessStale: new RemoteData(
+      timeStamp,
+      msToLive,
+      timeStamp,
+      RequestEntryState.SuccessStale,
+      undefined,
+      payload,
+      statusCodeSuccess,
+    ),
+    Error: new RemoteData(
+      timeStamp,
+      msToLive,
+      timeStamp,
+      RequestEntryState.Error,
+      errorMessage,
+      undefined,
+      statusCodeError,
+    ),
+    ErrorStale: new RemoteData(
+      timeStamp,
+      msToLive,
+      timeStamp,
+      RequestEntryState.ErrorStale,
+      errorMessage,
+      undefined,
+      statusCodeError,
+    ),
   };
 
   beforeEach(() => {
@@ -112,16 +167,16 @@ describe('HALEndpointService', () => {
       rest: { baseUrl: 'https://rest.api/' },
     } as any;
 
-    service = new HALEndpointService(
-      requestService,
-      rdbService,
-    );
+    service = new HALEndpointService(requestService, rdbService);
   });
 
   describe('getRootEndpointMap', () => {
     it('should send a new EndpointMapRequest', () => {
       (service as any).getRootEndpointMap();
-      const expected = new EndpointMapRequest(requestService.generateRequestId(), `${environment.rest.baseUrl}/api`);
+      const expected = new EndpointMapRequest(
+        requestService.generateRequestId(),
+        `${environment.rest.baseUrl}/api`,
+      );
       expect(requestService.send).toHaveBeenCalledWith(expected, true);
     });
 
@@ -131,11 +186,9 @@ describe('HALEndpointService', () => {
         done();
       });
     });
-
   });
 
   describe('getEndpoint', () => {
-
     beforeEach(() => {
       envConfig = {
         rest: { baseUrl: 'https://rest.api/' },
@@ -144,8 +197,9 @@ describe('HALEndpointService', () => {
 
     it(`should return the endpoint URL for the service's linkPath`, () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        spyOn(service as any, 'getEndpointAt').and
-          .returnValue(cold('a-', { a: 'https://rest.api/test' }));
+        spyOn(service as any, 'getEndpointAt').and.returnValue(
+          cold('a-', { a: 'https://rest.api/test' }),
+        );
         const result = service.getEndpoint(linkPath);
 
         const expected = '(b|)';
@@ -156,10 +210,11 @@ describe('HALEndpointService', () => {
       });
     });
 
-    it('should return undefined for a linkPath that isn\'t in the endpoint map', () => {
+    it("should return undefined for a linkPath that isn't in the endpoint map", () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        spyOn(service as any, 'getEndpointAt').and
-          .returnValue(cold('a-', { a: undefined }));
+        spyOn(service as any, 'getEndpointAt').and.returnValue(
+          cold('a-', { a: undefined }),
+        );
         const result = service.getEndpoint('unknown');
         const expected = '(b|)';
         const values = { b: undefined };
@@ -177,8 +232,10 @@ describe('HALEndpointService', () => {
     });
 
     it('should be at least called as many times as the length of halNames', () => {
-      spyOn(service as any, 'getEndpointMapAt').and.returnValue(observableOf(endpointMap));
-      spyOn((service as any), 'getEndpointAt').and.callThrough();
+      spyOn(service as any, 'getEndpointMapAt').and.returnValue(
+        observableOf(endpointMap),
+      );
+      spyOn(service as any, 'getEndpointAt').and.callThrough();
 
       (service as any).getEndpointAt('', 'endpoint').subscribe();
 
@@ -188,13 +245,19 @@ describe('HALEndpointService', () => {
 
       (service as any).getEndpointAt('', 'endpoint', 'another').subscribe();
 
-      expect((service as any).getEndpointAt.calls.count()).toBeGreaterThanOrEqual(2);
+      expect(
+        (service as any).getEndpointAt.calls.count(),
+      ).toBeGreaterThanOrEqual(2);
 
       (service as any).getEndpointAt.calls.reset();
 
-      (service as any).getEndpointAt('', 'endpoint', 'another', 'foo', 'bar', 'test').subscribe();
+      (service as any)
+        .getEndpointAt('', 'endpoint', 'another', 'foo', 'bar', 'test')
+        .subscribe();
 
-      expect((service as any).getEndpointAt.calls.count()).toBeGreaterThanOrEqual(5);
+      expect(
+        (service as any).getEndpointAt.calls.count(),
+      ).toBeGreaterThanOrEqual(5);
     });
 
     it('should return the correct endpoint', (done) => {
@@ -215,17 +278,14 @@ describe('HALEndpointService', () => {
 
   describe('isEnabledOnRestApi', () => {
     beforeEach(() => {
-      service = new HALEndpointService(
-        requestService,
-        rdbService,
-      );
-
+      service = new HALEndpointService(requestService, rdbService);
     });
 
-    it('should return undefined as long as getRootEndpointMap hasn\'t fired', () => {
+    it("should return undefined as long as getRootEndpointMap hasn't fired", () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        spyOn(service as any, 'getRootEndpointMap').and
-          .returnValue(cold('----'));
+        spyOn(service as any, 'getRootEndpointMap').and.returnValue(
+          cold('----'),
+        );
 
         const result = service.isEnabledOnRestApi(linkPath);
         const expected = 'b---';
@@ -234,10 +294,11 @@ describe('HALEndpointService', () => {
       });
     });
 
-    it('should return true if the service\'s linkPath is in the endpoint map', () => {
+    it("should return true if the service's linkPath is in the endpoint map", () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        spyOn(service as any, 'getRootEndpointMap').and
-          .returnValue(cold('--a-', { a: endpointMap }));
+        spyOn(service as any, 'getRootEndpointMap').and.returnValue(
+          cold('--a-', { a: endpointMap }),
+        );
         const result = service.isEnabledOnRestApi(linkPath);
         const expected = 'b-c-';
         const values = { b: undefined, c: true };
@@ -245,10 +306,11 @@ describe('HALEndpointService', () => {
       });
     });
 
-    it('should return false if the service\'s linkPath isn\'t in the endpoint map', () => {
+    it("should return false if the service's linkPath isn't in the endpoint map", () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        spyOn(service as any, 'getRootEndpointMap').and
-          .returnValue(cold('--a-',  { a: endpointMap }));
+        spyOn(service as any, 'getRootEndpointMap').and.returnValue(
+          cold('--a-', { a: endpointMap }),
+        );
 
         const result = service.isEnabledOnRestApi('unknown');
         const expected = 'b-c-';
@@ -256,7 +318,6 @@ describe('HALEndpointService', () => {
         expectObservable(result).toBe(expected, values);
       });
     });
-
   });
 
   describe(`getEndpointMapAt`, () => {
@@ -266,7 +327,10 @@ describe('HALEndpointService', () => {
       testScheduler.run(() => {
         (service as any).getEndpointMapAt(href);
       });
-      const expected = new EndpointMapRequest(requestService.generateRequestId(), href);
+      const expected = new EndpointMapRequest(
+        requestService.generateRequestId(),
+        href,
+      );
       expect(requestService.send).toHaveBeenCalledWith(expected, true);
     });
 
@@ -281,7 +345,9 @@ describe('HALEndpointService', () => {
       it(`should re-request it`, () => {
         spyOn(service as any, 'getEndpointMapAt').and.callThrough();
         testScheduler.run(({ cold }) => {
-          (rdbService.buildFromHref as jasmine.Spy).and.returnValue(cold('a', { a: remoteDataMocks.ResponsePendingStale }));
+          (rdbService.buildFromHref as jasmine.Spy).and.returnValue(
+            cold('a', { a: remoteDataMocks.ResponsePendingStale }),
+          );
           // we need to subscribe to the result, to ensure the "tap" that does the re-request can fire
           (service as any).getEndpointMapAt(href).subscribe();
         });
@@ -293,7 +359,9 @@ describe('HALEndpointService', () => {
       it(`should not re-request it`, () => {
         spyOn(service as any, 'getEndpointMapAt').and.callThrough();
         testScheduler.run(({ cold }) => {
-          (rdbService.buildFromHref as jasmine.Spy).and.returnValue(cold('a', { a: remoteDataMocks.ResponsePending }));
+          (rdbService.buildFromHref as jasmine.Spy).and.returnValue(
+            cold('a', { a: remoteDataMocks.ResponsePending }),
+          );
           // we need to subscribe to the result, to ensure the "tap" that does the re-request can fire
           (service as any).getEndpointMapAt(href).subscribe();
         });
@@ -303,40 +371,48 @@ describe('HALEndpointService', () => {
 
     it(`should emit exactly once, returning the endpoint map in the response, when the RemoteData completes`, () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        (rdbService.buildFromHref as jasmine.Spy).and.returnValue(cold('a-b-c-d-e-f-g-h-i-j-k-l', {
-          a: remoteDataMocks.RequestPending,
-          b: remoteDataMocks.ResponsePending,
-          c: remoteDataMocks.ResponsePendingStale,
-          d: remoteDataMocks.SuccessStale,
-          e: remoteDataMocks.RequestPending,
-          f: remoteDataMocks.ResponsePending,
-          g: remoteDataMocks.Success,
-          h: remoteDataMocks.SuccessStale,
-          i: remoteDataMocks.RequestPending,
-          k: remoteDataMocks.ResponsePending,
-          l: remoteDataMocks.Error,
-        }));
+        (rdbService.buildFromHref as jasmine.Spy).and.returnValue(
+          cold('a-b-c-d-e-f-g-h-i-j-k-l', {
+            a: remoteDataMocks.RequestPending,
+            b: remoteDataMocks.ResponsePending,
+            c: remoteDataMocks.ResponsePendingStale,
+            d: remoteDataMocks.SuccessStale,
+            e: remoteDataMocks.RequestPending,
+            f: remoteDataMocks.ResponsePending,
+            g: remoteDataMocks.Success,
+            h: remoteDataMocks.SuccessStale,
+            i: remoteDataMocks.RequestPending,
+            k: remoteDataMocks.ResponsePending,
+            l: remoteDataMocks.Error,
+          }),
+        );
         const expected = '------------(g|)';
         const values = {
           g: endpointMaps[one],
         };
-        expectObservable((service as any).getEndpointMapAt(one)).toBe(expected, values);
+        expectObservable((service as any).getEndpointMapAt(one)).toBe(
+          expected,
+          values,
+        );
       });
     });
 
     it(`should emit undefined when the response doesn't have a payload`, () => {
       testScheduler.run(({ cold, expectObservable }) => {
-        (rdbService.buildFromHref as jasmine.Spy).and.returnValue(cold('a', {
-          a: remoteDataMocks.Error,
-        }));
+        (rdbService.buildFromHref as jasmine.Spy).and.returnValue(
+          cold('a', {
+            a: remoteDataMocks.Error,
+          }),
+        );
         const expected = '(a|)';
         const values = {
           g: undefined,
         };
-        expectObservable((service as any).getEndpointMapAt(href)).toBe(expected, values);
+        expectObservable((service as any).getEndpointMapAt(href)).toBe(
+          expected,
+          values,
+        );
       });
     });
-
   });
-
 });

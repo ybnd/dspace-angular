@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UntypedFormGroup } from '@angular/forms';
 import {
   DynamicFormControlModel,
@@ -17,10 +11,7 @@ import { map } from 'rxjs/operators';
 
 import { EPersonDataService } from '../../core/eperson/eperson-data.service';
 import { debounceTimeWorkaround as debounceTime } from '../../core/shared/operators';
-import {
-  hasValue,
-  isEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 
 @Component({
@@ -32,7 +23,6 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
  * Displays a form containing a password field and a confirmation of the password
  */
 export class ProfilePageSecurityFormComponent implements OnInit {
-
   /**
    * Emits the validity of the password
    */
@@ -71,70 +61,78 @@ export class ProfilePageSecurityFormComponent implements OnInit {
    * Indicates whether the "checkPasswordEmpty" needs to be added or not
    */
   @Input()
-    passwordCanBeEmpty = true;
+  passwordCanBeEmpty = true;
 
   /**
    * Prefix for the form's label messages of this component
    */
   @Input()
-    FORM_PREFIX: string;
+  FORM_PREFIX: string;
 
   private subs: Subscription[] = [];
 
-  constructor(protected formService: DynamicFormService,
-              protected translate: TranslateService,
-              protected epersonService: EPersonDataService,
-              protected notificationsService: NotificationsService) {
-  }
+  constructor(
+    protected formService: DynamicFormService,
+    protected translate: TranslateService,
+    protected epersonService: EPersonDataService,
+    protected notificationsService: NotificationsService,
+  ) {}
 
   ngOnInit(): void {
     if (this.FORM_PREFIX === 'profile.security.form.') {
-      this.formModel.unshift(new DynamicInputModel({
-        id: 'current-password',
-        name: 'current-password',
-        inputType: 'password',
-        required: true,
-      }));
+      this.formModel.unshift(
+        new DynamicInputModel({
+          id: 'current-password',
+          name: 'current-password',
+          inputType: 'password',
+          required: true,
+        }),
+      );
     }
     if (this.passwordCanBeEmpty) {
-      this.formGroup = this.formService.createFormGroup(this.formModel,
-        { validators: [this.checkPasswordsEqual] });
+      this.formGroup = this.formService.createFormGroup(this.formModel, {
+        validators: [this.checkPasswordsEqual],
+      });
     } else {
-      this.formGroup = this.formService.createFormGroup(this.formModel,
-        { validators: [this.checkPasswordsEqual, this.checkPasswordEmpty] });
+      this.formGroup = this.formService.createFormGroup(this.formModel, {
+        validators: [this.checkPasswordsEqual, this.checkPasswordEmpty],
+      });
     }
     this.updateFieldTranslations();
-    this.translate.onLangChange
-      .subscribe(() => {
-        this.updateFieldTranslations();
-      });
+    this.translate.onLangChange.subscribe(() => {
+      this.updateFieldTranslations();
+    });
 
     this.subs.push(
-      this.formGroup.statusChanges.pipe(
-        debounceTime(300),
-        map((status: string) => status !== 'VALID'),
-      ).subscribe((status) => this.isInvalid.emit(status)),
+      this.formGroup.statusChanges
+        .pipe(
+          debounceTime(300),
+          map((status: string) => status !== 'VALID'),
+        )
+        .subscribe((status) => this.isInvalid.emit(status)),
     );
 
-    this.subs.push(this.formGroup.valueChanges.pipe(
-      debounceTime(300),
-    ).subscribe((valueChange) => {
-      this.passwordValue.emit(valueChange.password);
-      if (this.FORM_PREFIX === 'profile.security.form.') {
-        this.currentPasswordValue.emit(valueChange['current-password']);
-      }
-    }));
+    this.subs.push(
+      this.formGroup.valueChanges
+        .pipe(debounceTime(300))
+        .subscribe((valueChange) => {
+          this.passwordValue.emit(valueChange.password);
+          if (this.FORM_PREFIX === 'profile.security.form.') {
+            this.currentPasswordValue.emit(valueChange['current-password']);
+          }
+        }),
+    );
   }
 
   /**
    * Update the translations of the field labels
    */
   updateFieldTranslations() {
-    this.formModel.forEach(
-      (fieldModel: DynamicInputModel) => {
-        fieldModel.label = this.translate.instant(this.FORM_PREFIX + 'label.' + fieldModel.id);
-      },
-    );
+    this.formModel.forEach((fieldModel: DynamicInputModel) => {
+      fieldModel.label = this.translate.instant(
+        this.FORM_PREFIX + 'label.' + fieldModel.id,
+      );
+    });
   }
 
   /**

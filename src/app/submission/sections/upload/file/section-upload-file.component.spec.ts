@@ -1,28 +1,15 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectorRef,
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import {
   ComponentFixture,
   inject,
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
-import {
-  NgbModal,
-  NgbModule,
-} from '@ng-bootstrap/ng-bootstrap';
+import { BrowserModule, By } from '@angular/platform-browser';
+import { NgbModal, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  of as observableOf,
-  of,
-} from 'rxjs';
+import { of as observableOf, of } from 'rxjs';
 
 import { JsonPatchOperationPathCombiner } from '../../../../core/json-patch/builder/json-patch-operation-path-combiner';
 import { JsonPatchOperationsBuilder } from '../../../../core/json-patch/builder/json-patch-operations-builder';
@@ -50,18 +37,21 @@ import { SubmissionSectionUploadFileEditComponent } from './edit/section-upload-
 import { SubmissionSectionUploadFileComponent } from './section-upload-file.component';
 
 const configMetadataFormMock = {
-  rows: [{
-    fields: [{
-      selectableMetadata: [
-        { metadata: 'dc.title', label: null, closed: false },
-        { metadata: 'dc.description', label: null, closed: false },
+  rows: [
+    {
+      fields: [
+        {
+          selectableMetadata: [
+            { metadata: 'dc.title', label: null, closed: false },
+            { metadata: 'dc.description', label: null, closed: false },
+          ],
+        },
       ],
-    }],
-  }],
+    },
+  ],
 };
 
 describe('SubmissionSectionUploadFileComponent test suite', () => {
-
   let comp: SubmissionSectionUploadFileComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionSectionUploadFileComponent>;
@@ -72,17 +62,24 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
   let operationsBuilder: any;
   let operationsService: any;
 
-  const submissionJsonPatchOperationsServiceStub = new SubmissionJsonPatchOperationsServiceStub();
+  const submissionJsonPatchOperationsServiceStub =
+    new SubmissionJsonPatchOperationsServiceStub();
   const submissionId = mockSubmissionId;
   const sectionId = 'upload';
   const collectionId = mockSubmissionCollectionId;
-  const availableAccessConditionOptions = mockUploadConfigResponse.accessConditionOptions;
+  const availableAccessConditionOptions =
+    mockUploadConfigResponse.accessConditionOptions;
   const collectionPolicyType = POLICY_DEFAULT_WITH_LIST;
   const fileIndex = '0';
   const fileName = '123456-test-upload.jpg';
   const fileId = '123456-test-upload';
   const fileData: any = mockUploadFiles[0];
-  const pathCombiner = new JsonPatchOperationPathCombiner('sections', sectionId, 'files', fileIndex);
+  const pathCombiner = new JsonPatchOperationPathCombiner(
+    'sections',
+    sectionId,
+    'files',
+    fileIndex,
+  );
 
   const jsonPatchOpBuilder: any = jasmine.createSpyObj('jsonPatchOpBuilder', {
     add: jasmine.createSpy('add'),
@@ -105,11 +102,20 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
       ],
       providers: [
         { provide: FormService, useValue: getMockFormService() },
-        { provide: HALEndpointService, useValue: new HALEndpointServiceStub('workspaceitems') },
+        {
+          provide: HALEndpointService,
+          useValue: new HALEndpointServiceStub('workspaceitems'),
+        },
         { provide: JsonPatchOperationsBuilder, useValue: jsonPatchOpBuilder },
-        { provide: SubmissionJsonPatchOperationsService, useValue: submissionJsonPatchOperationsServiceStub },
+        {
+          provide: SubmissionJsonPatchOperationsService,
+          useValue: submissionJsonPatchOperationsServiceStub,
+        },
         { provide: SubmissionService, useClass: SubmissionServiceStub },
-        { provide: SectionUploadService, useValue: getMockSectionUploadService() },
+        {
+          provide: SectionUploadService,
+          useValue: getMockSectionUploadService(),
+        },
         ChangeDetectorRef,
         NgbModal,
         SubmissionSectionUploadFileComponent,
@@ -117,7 +123,9 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
         FormBuilderService,
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).compileComponents().then();
+    })
+      .compileComponents()
+      .then();
   }));
 
   describe('', () => {
@@ -138,18 +146,23 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
                                            [sectionId]='sectionId'
                                            [submissionId]='submissionId'></ds-submission-upload-section-file>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
-
     });
 
     afterEach(() => {
       testFixture.destroy();
     });
 
-    it('should create SubmissionSectionUploadFileComponent', inject([SubmissionSectionUploadFileComponent], (app: SubmissionSectionUploadFileComponent) => {
-      expect(app).toBeDefined();
-    }));
+    it('should create SubmissionSectionUploadFileComponent', inject(
+      [SubmissionSectionUploadFileComponent],
+      (app: SubmissionSectionUploadFileComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -207,7 +220,9 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
       modalBtn.nativeElement.click();
       fixture.detectChanges();
 
-      const confirmBtn: any = ((document as any).querySelector('.btn-danger:nth-child(2)'));
+      const confirmBtn: any = (document as any).querySelector(
+        '.btn-danger:nth-child(2)',
+      );
       confirmBtn.click();
 
       fixture.detectChanges();
@@ -220,17 +235,26 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
     it('should delete file properly', () => {
       compAsAny.pathCombiner = pathCombiner;
       operationsService.jsonPatchByResourceID.and.returnValue(observableOf({}));
-      submissionServiceStub.getSubmissionObjectLinkName.and.returnValue('workspaceitems');
+      submissionServiceStub.getSubmissionObjectLinkName.and.returnValue(
+        'workspaceitems',
+      );
 
       compAsAny.deleteFile();
 
-      expect(uploadService.removeUploadedFile).toHaveBeenCalledWith(submissionId, sectionId, fileId);
-      expect(operationsBuilder.remove).toHaveBeenCalledWith(pathCombiner.getPath());
+      expect(uploadService.removeUploadedFile).toHaveBeenCalledWith(
+        submissionId,
+        sectionId,
+        fileId,
+      );
+      expect(operationsBuilder.remove).toHaveBeenCalledWith(
+        pathCombiner.getPath(),
+      );
       expect(operationsService.jsonPatchByResourceID).toHaveBeenCalledWith(
         'workspaceitems',
         submissionId,
         pathCombiner.rootElement,
-        pathCombiner.subRootElement);
+        pathCombiner.subRootElement,
+      );
     });
 
     it('should open edit modal when edit button is clicked', () => {
@@ -246,7 +270,6 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
 
       expect(compAsAny.editBitstreamData).toHaveBeenCalled();
     });
-
   });
 });
 
@@ -256,7 +279,6 @@ describe('SubmissionSectionUploadFileComponent test suite', () => {
   template: ``,
 })
 class TestComponent {
-
   availableGroups;
   availableAccessConditionOptions;
   collectionId = mockSubmissionCollectionId;

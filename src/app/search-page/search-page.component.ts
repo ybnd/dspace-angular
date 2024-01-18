@@ -17,5 +17,4 @@ import { SEARCH_CONFIG_SERVICE } from '../my-dspace-page/my-dspace-page.componen
  * This component represents the whole search page
  * It renders search results depending on the current search options
  */
-export class SearchPageComponent {
-}
+export class SearchPageComponent {}

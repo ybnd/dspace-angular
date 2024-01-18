@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CanActivate } from '@angular/router';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  take,
-} from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, take } from 'rxjs/operators';
 
 import { AppState } from '../../app.reducer';
 import { isAuthenticationBlocking } from './selectors';
@@ -24,9 +16,7 @@ import { isAuthenticationBlocking } from './selectors';
   providedIn: 'root',
 })
 export class AuthBlockingGuard implements CanActivate {
-
-  constructor(private store: Store<AppState>) {
-  }
+  constructor(private store: Store<AppState>) {}
 
   /**
    * True when the authentication isn't blocking everything
@@ -39,5 +29,4 @@ export class AuthBlockingGuard implements CanActivate {
       take(1),
     );
   }
-
 }

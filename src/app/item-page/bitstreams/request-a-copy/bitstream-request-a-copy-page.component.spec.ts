@@ -1,21 +1,8 @@
-import {
-  CommonModule,
-  Location,
-} from '@angular/common';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { CommonModule, Location } from '@angular/common';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
@@ -38,7 +25,6 @@ import {
 import { NotificationsServiceStub } from '../../../shared/testing/notifications-service.stub';
 import { RouterStub } from '../../../shared/testing/router.stub';
 import { BitstreamRequestACopyPageComponent } from './bitstream-request-a-copy-page.component';
-
 
 describe('BitstreamRequestACopyPageComponent', () => {
   let component: BitstreamRequestACopyPageComponent;
@@ -95,12 +81,10 @@ describe('BitstreamRequestACopyPageComponent', () => {
 
     activatedRoute = {
       data: observableOf({
-        dso: createSuccessfulRemoteDataObject(
-          item,
-        ),
+        dso: createSuccessfulRemoteDataObject(item),
       }),
       queryParams: observableOf({
-        bitstream : bitstream.uuid,
+        bitstream: bitstream.uuid,
       }),
     };
 
@@ -113,7 +97,12 @@ describe('BitstreamRequestACopyPageComponent', () => {
 
   function initTestbed() {
     TestBed.configureTestingModule({
-      imports: [CommonModule, TranslateModule.forRoot(), FormsModule, ReactiveFormsModule],
+      imports: [
+        CommonModule,
+        TranslateModule.forRoot(),
+        FormsModule,
+        ReactiveFormsModule,
+      ],
       declarations: [BitstreamRequestACopyPageComponent],
       providers: [
         { provide: Location, useValue: location },
@@ -126,8 +115,7 @@ describe('BitstreamRequestACopyPageComponent', () => {
         { provide: DSONameService, useValue: new DSONameServiceMock() },
         { provide: BitstreamDataService, useValue: bitstreamDataService },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }
 
   describe('init', () => {
@@ -167,7 +155,9 @@ describe('BitstreamRequestACopyPageComponent', () => {
     describe('when the user is logged in', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(true));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(true),
+        );
         initTestbed();
       }));
       beforeEach(() => {
@@ -188,12 +178,9 @@ describe('BitstreamRequestACopyPageComponent', () => {
         init();
         activatedRoute = {
           data: observableOf({
-            dso: createSuccessfulRemoteDataObject(
-              item,
-            ),
+            dso: createSuccessfulRemoteDataObject(item),
           }),
-          queryParams: observableOf({
-          }),
+          queryParams: observableOf({}),
         };
         initTestbed();
       }));
@@ -208,15 +195,18 @@ describe('BitstreamRequestACopyPageComponent', () => {
         expect(component.allfiles.value).toEqual('true');
         expect(component.message.value).toEqual('');
 
-        const allFilesFalse = fixture.debugElement.query(By.css('#allfiles-false')).nativeElement;
+        const allFilesFalse = fixture.debugElement.query(
+          By.css('#allfiles-false'),
+        ).nativeElement;
         expect(allFilesFalse.getAttribute('disabled')).toBeTruthy();
-
       });
     });
     describe('when the user has authorization to download the file', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (authService.isAuthenticated as jasmine.Spy).and.returnValue(observableOf(true));
+        (authService.isAuthenticated as jasmine.Spy).and.returnValue(
+          observableOf(true),
+        );
         initTestbed();
       }));
       beforeEach(() => {
@@ -225,8 +215,12 @@ describe('BitstreamRequestACopyPageComponent', () => {
         fixture.detectChanges();
       });
       it('should show an alert indicating the user can download the file', () => {
-        const alert = fixture.debugElement.query(By.css('.alert')).nativeElement;
-        expect(alert.innerHTML).toContain('bitstream-request-a-copy.alert.canDownload');
+        const alert = fixture.debugElement.query(
+          By.css('.alert'),
+        ).nativeElement;
+        expect(alert.innerHTML).toContain(
+          'bitstream-request-a-copy.alert.canDownload',
+        );
       });
     });
   });
@@ -249,17 +243,18 @@ describe('BitstreamRequestACopyPageComponent', () => {
         component.message.patchValue('I would like to request a copy');
 
         component.onSubmit();
-        const itemRequest = Object.assign(new ItemRequest(),
-          {
-            itemId: item.uuid,
-            bitstreamId: bitstream.uuid,
-            allfiles: 'false',
-            requestEmail: 'user@name.org',
-            requestName: 'User Name',
-            requestMessage: 'I would like to request a copy',
-          });
+        const itemRequest = Object.assign(new ItemRequest(), {
+          itemId: item.uuid,
+          bitstreamId: bitstream.uuid,
+          allfiles: 'false',
+          requestEmail: 'user@name.org',
+          requestName: 'User Name',
+          requestMessage: 'I would like to request a copy',
+        });
 
-        expect(itemRequestDataService.requestACopy).toHaveBeenCalledWith(itemRequest);
+        expect(itemRequestDataService.requestACopy).toHaveBeenCalledWith(
+          itemRequest,
+        );
         expect(notificationsService.success).toHaveBeenCalled();
         expect(location.back).toHaveBeenCalled();
       });
@@ -268,7 +263,9 @@ describe('BitstreamRequestACopyPageComponent', () => {
     describe('onFail', () => {
       beforeEach(waitForAsync(() => {
         init();
-        (itemRequestDataService.requestACopy as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$());
+        (itemRequestDataService.requestACopy as jasmine.Spy).and.returnValue(
+          createFailedRemoteDataObject$(),
+        );
         initTestbed();
       }));
       beforeEach(() => {
@@ -283,17 +280,18 @@ describe('BitstreamRequestACopyPageComponent', () => {
         component.message.patchValue('I would like to request a copy');
 
         component.onSubmit();
-        const itemRequest = Object.assign(new ItemRequest(),
-          {
-            itemId: item.uuid,
-            bitstreamId: bitstream.uuid,
-            allfiles: 'false',
-            requestEmail: 'user@name.org',
-            requestName: 'User Name',
-            requestMessage: 'I would like to request a copy',
-          });
+        const itemRequest = Object.assign(new ItemRequest(), {
+          itemId: item.uuid,
+          bitstreamId: bitstream.uuid,
+          allfiles: 'false',
+          requestEmail: 'user@name.org',
+          requestName: 'User Name',
+          requestMessage: 'I would like to request a copy',
+        });
 
-        expect(itemRequestDataService.requestACopy).toHaveBeenCalledWith(itemRequest);
+        expect(itemRequestDataService.requestACopy).toHaveBeenCalledWith(
+          itemRequest,
+        );
         expect(notificationsService.error).toHaveBeenCalled();
         expect(location.back).not.toHaveBeenCalled();
       });

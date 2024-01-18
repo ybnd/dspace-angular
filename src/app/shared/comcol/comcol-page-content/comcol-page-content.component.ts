@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 /**
  * This component renders any content inside of this component.
@@ -15,7 +12,6 @@ import {
   templateUrl: './comcol-page-content.component.html',
 })
 export class ComcolPageContentComponent {
-
   // Optional title
   @Input() title: string;
 
@@ -24,5 +20,4 @@ export class ComcolPageContentComponent {
 
   // flag whether the content contains html syntax or not
   @Input() hasInnerHtml: boolean;
-
 }

@@ -24,6 +24,9 @@ import { ItemAccessControlSelectBitstreamsModalComponent } from './item-access-c
     ItemAccessControlSelectBitstreamsModalComponent,
     ToDatePipe,
   ],
-  exports: [ AccessControlFormContainerComponent, AccessControlArrayFormComponent ],
+  exports: [
+    AccessControlFormContainerComponent,
+    AccessControlArrayFormComponent,
+  ],
 })
 export class AccessControlFormModule {}

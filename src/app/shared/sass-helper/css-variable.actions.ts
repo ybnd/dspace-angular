@@ -21,8 +21,8 @@ export const CSSVariableActionTypes = {
 export class AddCSSVariableAction implements Action {
   type = CSSVariableActionTypes.ADD;
   payload: {
-    name: string,
-    value: string
+    name: string;
+    value: string;
   };
 
   constructor(name: string, value: string) {
@@ -42,4 +42,7 @@ export class ClearCSSVariablesAction implements Action {
   type = CSSVariableActionTypes.CLEAR;
 }
 
-export type CSSVariableAction = AddCSSVariableAction | AddAllCSSVariablesAction | ClearCSSVariablesAction;
+export type CSSVariableAction =
+  | AddCSSVariableAction
+  | AddAllCSSVariablesAction
+  | ClearCSSVariablesAction;

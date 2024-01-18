@@ -44,9 +44,10 @@ export class SearchFormComponent implements OnChanges {
    * The currently selected scope object's UUID
    */
   @Input()
-    scope = '';
+  scope = '';
 
-  selectedScope: BehaviorSubject<DSpaceObject> = new BehaviorSubject<DSpaceObject>(undefined);
+  selectedScope: BehaviorSubject<DSpaceObject> =
+    new BehaviorSubject<DSpaceObject>(undefined);
 
   @Input() currentUrl: string;
 
@@ -83,15 +84,16 @@ export class SearchFormComponent implements OnChanges {
     protected modalService: NgbModal,
     protected dsoService: DSpaceObjectDataService,
     public dsoNameService: DSONameService,
-  ) {
-  }
+  ) {}
 
   /**
    * Retrieve the scope object from the URL so we can show its name
    */
   ngOnChanges(): void {
     if (isNotEmpty(this.scope)) {
-      this.dsoService.findById(this.scope).pipe(getFirstSucceededRemoteDataPayload())
+      this.dsoService
+        .findById(this.scope)
+        .pipe(getFirstSucceededRemoteDataPayload())
         .subscribe((scope: DSpaceObject) => this.selectedScope.next(scope));
     }
   }
@@ -161,9 +163,11 @@ export class SearchFormComponent implements OnChanges {
    */
   openScopeModal() {
     const ref = this.modalService.open(ScopeSelectorModalComponent);
-    ref.componentInstance.scopeChange.pipe(take(1)).subscribe((scope: DSpaceObject) => {
-      this.selectedScope.next(scope);
-      this.onScopeChange(scope);
-    });
+    ref.componentInstance.scopeChange
+      .pipe(take(1))
+      .subscribe((scope: DSpaceObject) => {
+        this.selectedScope.next(scope);
+        this.onScopeChange(scope);
+      });
   }
 }

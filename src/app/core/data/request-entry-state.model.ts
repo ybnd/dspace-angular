@@ -88,14 +88,11 @@ export const hasSucceeded = (state: RequestEntryState) => {
 /**
  * Returns true if the given state is not loading, false otherwise
  */
-export const hasCompleted = (state: RequestEntryState) =>
-  !isLoading(state);
+export const hasCompleted = (state: RequestEntryState) => !isLoading(state);
 
 /**
  * Returns true if the given state is isRequestPendingStale, isResponsePendingStale, SuccessStale or
  * ErrorStale, false otherwise
  */
 export const isStale = (state: RequestEntryState) =>
-  isResponsePendingStale(state) ||
-  isSuccessStale(state) ||
-  isErrorStale(state);
+  isResponsePendingStale(state) || isSuccessStale(state) || isErrorStale(state);

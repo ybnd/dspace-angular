@@ -5,22 +5,12 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  Inject,
-  Injectable,
-} from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { TransferState } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  firstValueFrom,
-  Subscription,
-} from 'rxjs';
-import {
-  filter,
-  find,
-  map,
-} from 'rxjs/operators';
+import { firstValueFrom, Subscription } from 'rxjs';
+import { filter, find, map } from 'rxjs/operators';
 
 import { logStartupMessage } from '../../../startup-message';
 import { AppState } from '../../app/app.reducer';
@@ -39,10 +29,7 @@ import { MenuService } from '../../app/shared/menu/menu.service';
 import { ThemeService } from '../../app/shared/theme-support/theme.service';
 import { Angulartics2DSpace } from '../../app/statistics/angulartics/dspace-provider';
 import { GoogleAnalyticsService } from '../../app/statistics/google-analytics.service';
-import {
-  StoreAction,
-  StoreActionTypes,
-} from '../../app/store.actions';
+import { StoreAction, StoreActionTypes } from '../../app/store.actions';
 import {
   APP_CONFIG,
   APP_CONFIG_STATE,
@@ -57,7 +44,6 @@ import { environment } from '../../environments/environment';
  */
 @Injectable()
 export class BrowserInitService extends InitService {
-
   sub: Subscription;
 
   constructor(
@@ -92,11 +78,12 @@ export class BrowserInitService extends InitService {
     );
   }
 
-  protected static resolveAppConfig(
-    transferState: TransferState,
-  ) {
+  protected static resolveAppConfig(transferState: TransferState) {
     if (transferState.hasKey<AppConfig>(APP_CONFIG_STATE)) {
-      const appConfig = transferState.get<AppConfig>(APP_CONFIG_STATE, new DefaultAppConfig());
+      const appConfig = transferState.get<AppConfig>(
+        APP_CONFIG_STATE,
+        new DefaultAppConfig(),
+      );
       // extend environment with app config for browser
       extendEnvironmentWithAppConfig(environment, appConfig);
     }
@@ -138,10 +125,13 @@ export class BrowserInitService extends InitService {
     const state = this.transferState.get<any>(InitService.NGRX_STATE, null);
     this.transferState.remove(InitService.NGRX_STATE);
     this.store.dispatch(new StoreAction(StoreActionTypes.REHYDRATE, state));
-    return this.store.select(coreSelector).pipe(
-      find((core: any) => isNotEmpty(core)),
-      map(() => true),
-    ).toPromise();
+    return this.store
+      .select(coreSelector)
+      .pipe(
+        find((core: any) => isNotEmpty(core)),
+        map(() => true),
+      )
+      .toPromise();
   }
 
   private trackAuthTokenExpiration(): void {
@@ -168,15 +158,14 @@ export class BrowserInitService extends InitService {
    * @private
    */
   private externalAuthCheck() {
-
-    this.sub = this.authService.isExternalAuthentication().pipe(
-      filter((externalAuth: boolean) => externalAuth),
-    ).subscribe(() => {
-      // Clear the transferState data.
-      this.rootDataService.invalidateRootCache();
-      this.authService.setExternalAuthStatus(false);
-    },
-    );
+    this.sub = this.authService
+      .isExternalAuthentication()
+      .pipe(filter((externalAuth: boolean) => externalAuth))
+      .subscribe(() => {
+        // Clear the transferState data.
+        this.rootDataService.invalidateRootCache();
+        this.authService.setExternalAuthStatus(false);
+      });
 
     this.closeAuthCheckSubscription();
   }
@@ -200,5 +189,4 @@ export class BrowserInitService extends InitService {
     super.initRouteListeners();
     this.serverCheckGuard.listenForRouteChanges();
   }
-
 }

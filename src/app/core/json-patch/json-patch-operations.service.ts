@@ -1,8 +1,5 @@
 import { Store } from '@ngrx/store';
-import {
-  merge as observableMerge,
-  Observable,
-} from 'rxjs';
+import { merge as observableMerge, Observable } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -41,8 +38,10 @@ import { jsonPatchOperationsByResourceType } from './selectors';
 /**
  * An abstract class that provides methods to make JSON Patch requests.
  */
-export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, PatchRequestDefinition extends PatchRequest> {
-
+export abstract class JsonPatchOperationsService<
+  ResponseDefinitionDomain,
+  PatchRequestDefinition extends PatchRequest,
+> {
   protected abstract requestService: RequestService;
   protected abstract store: Store<CoreState>;
   protected abstract linkPath: string;
@@ -62,65 +61,110 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
    * @return Observable<ResponseDefinitionDomain>
    *    observable of response
    */
-  protected submitJsonPatchOperations(hrefObs: Observable<string>, resourceType: string, resourceId?: string): Observable<ResponseDefinitionDomain> {
+  protected submitJsonPatchOperations(
+    hrefObs: Observable<string>,
+    resourceType: string,
+    resourceId?: string,
+  ): Observable<ResponseDefinitionDomain> {
     const requestId = this.requestService.generateRequestId();
     let startTransactionTime = null;
-    const [patchRequest$, emptyRequest$] = partition((request: PatchRequestDefinition) => isNotEmpty(request.body))(hrefObs.pipe(
-      mergeMap((endpointURL: string) => {
-        return this.store.select(jsonPatchOperationsByResourceType(resourceType)).pipe(
-          take(1),
-          filter((operationsList: JsonPatchOperationsResourceEntry) => isUndefined(operationsList) || !(operationsList.commitPending)),
-          tap(() => startTransactionTime = new Date().getTime()),
-          map((operationsList: JsonPatchOperationsResourceEntry) => {
-            const body: JsonPatchOperationModel[] = [];
-            if (isNotEmpty(operationsList)) {
-              if (isNotEmpty(resourceId)) {
-                if (isNotUndefined(operationsList.children[resourceId]) && isNotEmpty(operationsList.children[resourceId].body)) {
-                  operationsList.children[resourceId].body.forEach((entry) => {
-                    body.push(entry.operation);
-                  });
+    const [patchRequest$, emptyRequest$] = partition(
+      (request: PatchRequestDefinition) => isNotEmpty(request.body),
+    )(
+      hrefObs.pipe(
+        mergeMap((endpointURL: string) => {
+          return this.store
+            .select(jsonPatchOperationsByResourceType(resourceType))
+            .pipe(
+              take(1),
+              filter(
+                (operationsList: JsonPatchOperationsResourceEntry) =>
+                  isUndefined(operationsList) || !operationsList.commitPending,
+              ),
+              tap(() => (startTransactionTime = new Date().getTime())),
+              map((operationsList: JsonPatchOperationsResourceEntry) => {
+                const body: JsonPatchOperationModel[] = [];
+                if (isNotEmpty(operationsList)) {
+                  if (isNotEmpty(resourceId)) {
+                    if (
+                      isNotUndefined(operationsList.children[resourceId]) &&
+                      isNotEmpty(operationsList.children[resourceId].body)
+                    ) {
+                      operationsList.children[resourceId].body.forEach(
+                        (entry) => {
+                          body.push(entry.operation);
+                        },
+                      );
+                    }
+                  } else {
+                    Object.keys(operationsList.children)
+                      .filter((key) =>
+                        operationsList.children.hasOwnProperty(key),
+                      )
+                      .filter((key) => hasValue(operationsList.children[key]))
+                      .filter((key) =>
+                        hasValue(operationsList.children[key].body),
+                      )
+                      .forEach((key) => {
+                        operationsList.children[key].body.forEach((entry) => {
+                          body.push(entry.operation);
+                        });
+                      });
+                  }
                 }
-              } else {
-                Object.keys(operationsList.children)
-                  .filter((key) => operationsList.children.hasOwnProperty(key))
-                  .filter((key) => hasValue(operationsList.children[key]))
-                  .filter((key) => hasValue(operationsList.children[key].body))
-                  .forEach((key) => {
-                    operationsList.children[key].body.forEach((entry) => {
-                      body.push(entry.operation);
-                    });
-                  });
-              }
-            }
-            return this.getRequestInstance(requestId, endpointURL, body);
-          }));
-      })));
+                return this.getRequestInstance(requestId, endpointURL, body);
+              }),
+            );
+        }),
+      ),
+    );
 
     return observableMerge(
       emptyRequest$.pipe(
         filter((request: PatchRequestDefinition) => isEmpty(request.body)),
-        tap(() => startTransactionTime = null),
-        map(() => null)),
+        tap(() => (startTransactionTime = null)),
+        map(() => null),
+      ),
       patchRequest$.pipe(
         filter((request: PatchRequestDefinition) => isNotEmpty(request.body)),
-        tap(() => this.store.dispatch(new StartTransactionPatchOperationsAction(resourceType, resourceId, startTransactionTime))),
-        tap((request: PatchRequestDefinition) => this.requestService.send(request)),
+        tap(() =>
+          this.store.dispatch(
+            new StartTransactionPatchOperationsAction(
+              resourceType,
+              resourceId,
+              startTransactionTime,
+            ),
+          ),
+        ),
+        tap((request: PatchRequestDefinition) =>
+          this.requestService.send(request),
+        ),
         mergeMap(() => {
           return this.rdbService.buildFromRequestUUID(requestId).pipe(
             getFirstCompletedRemoteData(),
-            find((rd: RemoteData<any>) => startTransactionTime < rd.timeCompleted),
+            find(
+              (rd: RemoteData<any>) => startTransactionTime < rd.timeCompleted,
+            ),
             map((rd: RemoteData<any>) => {
               if (rd.hasFailed) {
-                this.store.dispatch(new RollbacktPatchOperationsAction(resourceType, resourceId));
+                this.store.dispatch(
+                  new RollbacktPatchOperationsAction(resourceType, resourceId),
+                );
                 throw new Error(rd.errorMessage);
-              } else if (hasValue(rd.payload) && isNotEmpty(rd.payload.dataDefinition)) {
-                this.store.dispatch(new CommitPatchOperationsAction(resourceType, resourceId));
+              } else if (
+                hasValue(rd.payload) &&
+                isNotEmpty(rd.payload.dataDefinition)
+              ) {
+                this.store.dispatch(
+                  new CommitPatchOperationsAction(resourceType, resourceId),
+                );
                 return rd.payload.dataDefinition;
               }
             }),
             distinctUntilChanged(),
           );
-        })),
+        }),
+      ),
     );
   }
 
@@ -143,7 +187,11 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
    * @return Object<PatchRequestDefinition>
    *    instance of PatchRequestDefinition
    */
-  protected getRequestInstance(uuid: string, href: string, body?: any): PatchRequestDefinition {
+  protected getRequestInstance(
+    uuid: string,
+    href: string,
+    body?: any,
+  ): PatchRequestDefinition {
     return new this.patchRequestConstructor(uuid, href, body);
   }
 
@@ -163,11 +211,18 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
    * @return Observable<ResponseDefinitionDomain>
    *    observable of response
    */
-  public jsonPatchByResourceType(linkPath: string, scopeId: string, resourceType: string): Observable<ResponseDefinitionDomain> {
+  public jsonPatchByResourceType(
+    linkPath: string,
+    scopeId: string,
+    resourceType: string,
+  ): Observable<ResponseDefinitionDomain> {
     const href$ = this.halService.getEndpoint(linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)));
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId),
+      ),
+    );
 
     return this.submitJsonPatchOperations(href$, resourceType);
   }
@@ -177,11 +232,18 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
    * @param resourceType
    */
   public hasPendingOperations(resourceType: string): Observable<boolean> {
-    return this.store.select(jsonPatchOperationsByResourceType(resourceType)).pipe(
-      map((val) =>  !isEmpty(val) && Object.values(val.children)
-        .filter((section) => !isEmpty((section as any).body)).length > 0),
-      distinctUntilChanged(),
-    );
+    return this.store
+      .select(jsonPatchOperationsByResourceType(resourceType))
+      .pipe(
+        map(
+          (val) =>
+            !isEmpty(val) &&
+            Object.values(val.children).filter(
+              (section) => !isEmpty((section as any).body),
+            ).length > 0,
+        ),
+        distinctUntilChanged(),
+      );
   }
 
   /**
@@ -198,11 +260,19 @@ export abstract class JsonPatchOperationsService<ResponseDefinitionDomain, Patch
    * @return Observable<ResponseDefinitionDomain>
    *    observable of response
    */
-  public jsonPatchByResourceID(linkPath: string, scopeId: string, resourceType: string, resourceId: string): Observable<ResponseDefinitionDomain> {
+  public jsonPatchByResourceID(
+    linkPath: string,
+    scopeId: string,
+    resourceType: string,
+    resourceId: string,
+  ): Observable<ResponseDefinitionDomain> {
     const hrefObs = this.halService.getEndpoint(linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)));
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId),
+      ),
+    );
 
     return this.submitJsonPatchOperations(hrefObs, resourceType, resourceId);
   }

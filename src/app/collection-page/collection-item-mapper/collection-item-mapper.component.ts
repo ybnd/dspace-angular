@@ -5,22 +5,14 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import {
   BehaviorSubject,
   combineLatest as observableCombineLatest,
   Observable,
 } from 'rxjs';
-import {
-  map,
-  startWith,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { map, startWith, switchMap, take } from 'rxjs/operators';
 
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
 import {
@@ -46,10 +38,7 @@ import {
 import { SearchService } from '../../core/shared/search/search.service';
 import { SearchConfigurationService } from '../../core/shared/search/search-configuration.service';
 import { SEARCH_CONFIG_SERVICE } from '../../my-dspace-page/my-dspace-page.component';
-import {
-  fadeIn,
-  fadeInOut,
-} from '../../shared/animations/fade';
+import { fadeIn, fadeInOut } from '../../shared/animations/fade';
 import { isNotEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
 import { PaginatedSearchOptions } from '../../shared/search/models/paginated-search-options.model';
@@ -60,10 +49,7 @@ import { followLink } from '../../shared/utils/follow-link-config.model';
   styleUrls: ['./collection-item-mapper.component.scss'],
   templateUrl: './collection-item-mapper.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  animations: [
-    fadeIn,
-    fadeInOut,
-  ],
+  animations: [fadeIn, fadeInOut],
   providers: [
     {
       provide: SEARCH_CONFIG_SERVICE,
@@ -75,7 +61,6 @@ import { followLink } from '../../shared/utils/follow-link-config.model';
  * Component used to map items to a collection
  */
 export class CollectionItemMapperComponent implements OnInit {
-
   FeatureIds = FeatureID;
 
   /**
@@ -111,7 +96,10 @@ export class CollectionItemMapperComponent implements OnInit {
    * Sort on title ASC by default
    * @type {SortOptions}
    */
-  defaultSortOptions: SortOptions = new SortOptions('dc.title', SortDirection.ASC);
+  defaultSortOptions: SortOptions = new SortOptions(
+    'dc.title',
+    SortDirection.ASC,
+  );
 
   /**
    * Firing this observable (shouldUpdate$.next(true)) forces the two lists to reload themselves
@@ -125,16 +113,18 @@ export class CollectionItemMapperComponent implements OnInit {
    */
   performedSearch = false;
 
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              @Inject(SEARCH_CONFIG_SERVICE) private searchConfigService: SearchConfigurationService,
-              private searchService: SearchService,
-              private notificationsService: NotificationsService,
-              private itemDataService: ItemDataService,
-              private collectionDataService: CollectionDataService,
-              private translateService: TranslateService,
-              private dsoNameService: DSONameService) {
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    @Inject(SEARCH_CONFIG_SERVICE)
+    private searchConfigService: SearchConfigurationService,
+    private searchService: SearchService,
+    private notificationsService: NotificationsService,
+    private itemDataService: ItemDataService,
+    private collectionDataService: CollectionDataService,
+    private translateService: TranslateService,
+    private dsoNameService: DSONameService,
+  ) {}
 
   ngOnInit(): void {
     this.collectionRD$ = this.route.parent.data.pipe(
@@ -167,24 +157,35 @@ export class CollectionItemMapperComponent implements OnInit {
         if (shouldUpdate === true) {
           this.shouldUpdate$.next(false);
         }
-        return this.itemDataService.findListByHref(collectionRD.payload._links.mappedItems.href, Object.assign(options, {
-          sort: this.defaultSortOptions,
-        }),!shouldUpdate, false, followLink('owningCollection')).pipe(
-          getAllSucceededRemoteData(),
-        );
+        return this.itemDataService
+          .findListByHref(
+            collectionRD.payload._links.mappedItems.href,
+            Object.assign(options, {
+              sort: this.defaultSortOptions,
+            }),
+            !shouldUpdate,
+            false,
+            followLink('owningCollection'),
+          )
+          .pipe(getAllSucceededRemoteData());
       }),
     );
     this.mappedItemsRD$ = collectionAndOptions$.pipe(
       switchMap(([collectionRD, options, shouldUpdate]) => {
-        return this.searchService.search(Object.assign(new PaginatedSearchOptions(options), {
-          query: this.buildQuery(collectionRD.payload.id, options.query),
-          scope: undefined,
-          dsoTypes: [DSpaceObjectType.ITEM],
-          sort: this.defaultSortOptions,
-        }), 10000, undefined, undefined, followLink('owningCollection')).pipe(
-          toDSpaceObjectListRD(),
-          startWith(undefined),
-        );
+        return this.searchService
+          .search(
+            Object.assign(new PaginatedSearchOptions(options), {
+              query: this.buildQuery(collectionRD.payload.id, options.query),
+              scope: undefined,
+              dsoTypes: [DSpaceObjectType.ITEM],
+              sort: this.defaultSortOptions,
+            }),
+            10000,
+            undefined,
+            undefined,
+            followLink('owningCollection'),
+          )
+          .pipe(toDSpaceObjectListRD(), startWith(undefined));
       }),
     );
   }
@@ -199,18 +200,19 @@ export class CollectionItemMapperComponent implements OnInit {
       getFirstSucceededRemoteData(),
       map((collectionRD: RemoteData<Collection>) => collectionRD.payload),
       switchMap((collection: Collection) =>
-        observableCombineLatest(ids.map((id: string) => {
-          if (remove) {
-            return this.itemDataService.removeMappingFromCollection(id, collection.id).pipe(
-              getFirstCompletedRemoteData(),
-            );
-          } else {
-            return this.itemDataService.mapToCollection(id, collection._links.self.href).pipe(
-              getFirstCompletedRemoteData(),
-            );
-          }
-        },
-        )),
+        observableCombineLatest(
+          ids.map((id: string) => {
+            if (remove) {
+              return this.itemDataService
+                .removeMappingFromCollection(id, collection.id)
+                .pipe(getFirstCompletedRemoteData());
+            } else {
+              return this.itemDataService
+                .mapToCollection(id, collection._links.self.href)
+                .pipe(getFirstCompletedRemoteData());
+            }
+          }),
+        ),
       ),
     );
 
@@ -222,16 +224,28 @@ export class CollectionItemMapperComponent implements OnInit {
    * @param {Observable<RestResponse[]>} responses$   The responses after adding/removing a mapping
    * @param {boolean} remove                          Whether or not the goal was to remove mappings
    */
-  private showNotifications(responses$: Observable<RemoteData<NoContent>[]>, remove?: boolean) {
+  private showNotifications(
+    responses$: Observable<RemoteData<NoContent>[]>,
+    remove?: boolean,
+  ) {
     const messageInsertion = remove ? 'unmap' : 'map';
 
     responses$.subscribe((responses: RemoteData<NoContent>[]) => {
-      const successful = responses.filter((response: RemoteData<any>) => response.hasSucceeded);
-      const unsuccessful = responses.filter((response: RemoteData<any>) => response.hasFailed);
+      const successful = responses.filter(
+        (response: RemoteData<any>) => response.hasSucceeded,
+      );
+      const unsuccessful = responses.filter(
+        (response: RemoteData<any>) => response.hasFailed,
+      );
       if (successful.length > 0) {
         const successMessages = observableCombineLatest(
-          this.translateService.get(`collection.edit.item-mapper.notifications.${messageInsertion}.success.head`),
-          this.translateService.get(`collection.edit.item-mapper.notifications.${messageInsertion}.success.content`, { amount: successful.length }),
+          this.translateService.get(
+            `collection.edit.item-mapper.notifications.${messageInsertion}.success.head`,
+          ),
+          this.translateService.get(
+            `collection.edit.item-mapper.notifications.${messageInsertion}.success.content`,
+            { amount: successful.length },
+          ),
         );
 
         successMessages.subscribe(([head, content]) => {
@@ -241,8 +255,13 @@ export class CollectionItemMapperComponent implements OnInit {
       }
       if (unsuccessful.length > 0) {
         const unsuccessMessages = observableCombineLatest(
-          this.translateService.get(`collection.edit.item-mapper.notifications.${messageInsertion}.error.head`),
-          this.translateService.get(`collection.edit.item-mapper.notifications.${messageInsertion}.error.content`, { amount: unsuccessful.length }),
+          this.translateService.get(
+            `collection.edit.item-mapper.notifications.${messageInsertion}.error.head`,
+          ),
+          this.translateService.get(
+            `collection.edit.item-mapper.notifications.${messageInsertion}.error.content`,
+            { amount: unsuccessful.length },
+          ),
         );
 
         unsuccessMessages.subscribe(([head, content]) => {
@@ -298,13 +317,10 @@ export class CollectionItemMapperComponent implements OnInit {
    * When a cancel event is fired, return to the collection page
    */
   onCancel() {
-    this.collectionRD$.pipe(
-      getFirstSucceededRemoteData(),
-      getRemoteDataPayload(),
-      take(1),
-    ).subscribe((collection: Collection) => {
-      this.router.navigate(['/collections/', collection.id]);
-    });
+    this.collectionRD$
+      .pipe(getFirstSucceededRemoteData(), getRemoteDataPayload(), take(1))
+      .subscribe((collection: Collection) => {
+        this.router.navigate(['/collections/', collection.id]);
+      });
   }
-
 }

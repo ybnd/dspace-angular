@@ -1,7 +1,4 @@
-import {
-  ChangeDetectorRef,
-  DebugElement,
-} from '@angular/core';
+import { ChangeDetectorRef, DebugElement } from '@angular/core';
 import {
   ComponentFixture,
   fakeAsync,
@@ -9,15 +6,9 @@ import {
   tick,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  BrowserModule,
-  By,
-} from '@angular/platform-browser';
+import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {
-  Store,
-  StoreModule,
-} from '@ngrx/store';
+import { Store, StoreModule } from '@ngrx/store';
 import {
   TranslateLoader,
   TranslateModule,
@@ -35,7 +26,6 @@ import { NotificationsService } from '../notifications.service';
 import { NotificationComponent } from './notification.component';
 
 describe('NotificationComponent', () => {
-
   let comp: NotificationComponent;
   let fixture: ComponentFixture<NotificationComponent>;
   let deTitle: DebugElement;
@@ -60,7 +50,8 @@ describe('NotificationComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
+        }),
+      ],
       declarations: [NotificationComponent], // declare the test component
       providers: [
         { provide: Store, useValue: store },
@@ -68,8 +59,7 @@ describe('NotificationComponent', () => {
         NotificationsService,
         TranslateService,
       ],
-    }).compileComponents();  // compile template and css
-
+    }).compileComponents(); // compile template and css
   }));
 
   beforeEach(() => {
@@ -89,7 +79,9 @@ describe('NotificationComponent', () => {
     elTitle = deTitle.nativeElement;
     deContent = fixture.debugElement.query(By.css('.notification-content'));
     elContent = deContent.nativeElement;
-    elType = fixture.debugElement.query(By.css('.notification-icon')).nativeElement;
+    elType = fixture.debugElement.query(
+      By.css('.notification-icon'),
+    ).nativeElement;
 
     spyOn(comp, 'remove');
   });
@@ -116,7 +108,8 @@ describe('NotificationComponent', () => {
   it('should have html content', () => {
     fixture = TestBed.createComponent(NotificationComponent);
     comp = fixture.componentInstance;
-    const htmlContent = '<a class="btn btn-link p-0 m-0 pb-1" href="test"><strong>test</strong></a>';
+    const htmlContent =
+      '<a class="btn btn-link p-0 m-0 pb-1" href="test"><strong>test</strong></a>';
     comp.notification = {
       id: '1',
       type: NotificationType.Info,
@@ -145,10 +138,7 @@ describe('NotificationComponent', () => {
         type: NotificationType.Info,
         title: 'Notif. title',
         content: 'test',
-        options: Object.assign(
-          new NotificationOptions(),
-          { timeout: TIMEOUT },
-        ),
+        options: Object.assign(new NotificationOptions(), { timeout: TIMEOUT }),
         html: true,
       };
     });
@@ -179,5 +169,4 @@ describe('NotificationComponent', () => {
       }));
     });
   });
-
 });

@@ -13,24 +13,12 @@ import { METADATA_FIELD } from '../metadata/metadata-field.resource-type';
 import { MetadataSchema } from '../metadata/metadata-schema.model';
 import { HALEndpointService } from '../shared/hal-endpoint.service';
 import { NoContent } from '../shared/NoContent.model';
-import {
-  CreateData,
-  CreateDataImpl,
-} from './base/create-data';
+import { CreateData, CreateDataImpl } from './base/create-data';
 import { dataService } from './base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from './base/delete-data';
+import { DeleteData, DeleteDataImpl } from './base/delete-data';
 import { IdentifiableDataService } from './base/identifiable-data.service';
-import {
-  PutData,
-  PutDataImpl,
-} from './base/put-data';
-import {
-  SearchData,
-  SearchDataImpl,
-} from './base/search-data';
+import { PutData, PutDataImpl } from './base/put-data';
+import { SearchData, SearchDataImpl } from './base/search-data';
 import { FindListOptions } from './find-list-options.model';
 import { PaginatedList } from './paginated-list.model';
 import { RemoteData } from './remote-data';
@@ -41,7 +29,14 @@ import { RequestService } from './request.service';
  */
 @Injectable()
 @dataService(METADATA_FIELD)
-export class MetadataFieldDataService extends IdentifiableDataService<MetadataField> implements CreateData<MetadataField>, PutData<MetadataField>, DeleteData<MetadataField>, SearchData<MetadataField> {
+export class MetadataFieldDataService
+  extends IdentifiableDataService<MetadataField>
+  implements
+    CreateData<MetadataField>,
+    PutData<MetadataField>,
+    DeleteData<MetadataField>,
+    SearchData<MetadataField>
+{
   private createData: CreateData<MetadataField>;
   private searchData: SearchData<MetadataField>;
   private putData: PutData<MetadataField>;
@@ -57,12 +52,49 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
     protected halService: HALEndpointService,
     protected notificationsService: NotificationsService,
   ) {
-    super('metadatafields', requestService, rdbService, objectCache, halService);
+    super(
+      'metadatafields',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.putData = new PutDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.putData = new PutDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
   }
 
   /**
@@ -76,11 +108,23 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
    * @param linksToFollow               List of {@link FollowLinkConfig} that indicate which
    *                                    {@link HALLink}s should be automatically resolved
    */
-  findBySchema(schema: MetadataSchema, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<MetadataField>[]) {
+  findBySchema(
+    schema: MetadataSchema,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<MetadataField>[]
+  ) {
     const optionsWithSchema = Object.assign(new FindListOptions(), options, {
       searchParams: [new RequestParam('schema', schema.prefix)],
     });
-    return this.searchBy(this.searchBySchemaLinkPath, optionsWithSchema, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchBy(
+      this.searchBySchemaLinkPath,
+      optionsWithSchema,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -99,7 +143,17 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
    * @param reRequestOnStale  Whether or not the request should automatically be re-requested after the response becomes stale
    * @param linksToFollow List of {@link FollowLinkConfig} that indicate which {@link HALLink}s should be automatically resolved
    */
-  searchByFieldNameParams(schema: string, element: string, qualifier: string, query: string, exactName: string, options: FindListOptions = {}, useCachedVersionIfAvailable = true, reRequestOnStale = true, ...linksToFollow: FollowLinkConfig<MetadataField>[]): Observable<RemoteData<PaginatedList<MetadataField>>> {
+  searchByFieldNameParams(
+    schema: string,
+    element: string,
+    qualifier: string,
+    query: string,
+    exactName: string,
+    options: FindListOptions = {},
+    useCachedVersionIfAvailable = true,
+    reRequestOnStale = true,
+    ...linksToFollow: FollowLinkConfig<MetadataField>[]
+  ): Observable<RemoteData<PaginatedList<MetadataField>>> {
     const optionParams = Object.assign(new FindListOptions(), options, {
       searchParams: [
         new RequestParam('schema', hasValue(schema) ? schema : ''),
@@ -109,7 +163,13 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
         new RequestParam('exactName', hasValue(exactName) ? exactName : ''),
       ],
     });
-    return this.searchBy(this.searchByFieldNameLinkPath, optionParams, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+    return this.searchBy(
+      this.searchByFieldNameLinkPath,
+      optionParams,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -118,8 +178,17 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
    * schema.element if no qualifier exists (e.g. "dc.title", "dc.contributor.author"). It will only return one value
    * if there's an exact match, empty list if there is no exact match.
    */
-  findByExactFieldName(exactFieldName: string): Observable<RemoteData<PaginatedList<MetadataField>>> {
-    return this.searchByFieldNameParams(null, null, null, null, exactFieldName, null);
+  findByExactFieldName(
+    exactFieldName: string,
+  ): Observable<RemoteData<PaginatedList<MetadataField>>> {
+    return this.searchByFieldNameParams(
+      null,
+      null,
+      null,
+      null,
+      exactFieldName,
+      null,
+    );
   }
 
   /**
@@ -127,12 +196,12 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
    * Used for refreshing lists after adding/updating/removing a metadata field from a metadata schema
    */
   clearRequests(): void {
-    this.getBrowseEndpoint().pipe(take(1)).subscribe((href: string) => {
-      this.requestService.setStaleByHrefSubstring(href);
-    });
-
+    this.getBrowseEndpoint()
+      .pipe(take(1))
+      .subscribe((href: string) => {
+        this.requestService.setStaleByHrefSubstring(href);
+      });
   }
-
 
   /**
    * Delete an existing object on the server
@@ -142,7 +211,10 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
    * @return  A RemoteData observable with an empty payload, but still representing the state of the request: statusCode,
    *          errorMessage, timeCompleted, etc
    */
-  delete(objectId: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  delete(
+    objectId: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.delete(objectId, copyVirtualMetadata);
   }
 
@@ -155,7 +227,10 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
    *          errorMessage, timeCompleted, etc
    *          Only emits once all request related to the DSO has been invalidated.
    */
-  public deleteByHref(href: string, copyVirtualMetadata?: string[]): Observable<RemoteData<NoContent>> {
+  public deleteByHref(
+    href: string,
+    copyVirtualMetadata?: string[],
+  ): Observable<RemoteData<NoContent>> {
     return this.deleteData.deleteByHref(href, copyVirtualMetadata);
   }
 
@@ -174,7 +249,10 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
    * @param object    The object to create
    * @param params    Array with additional params to combine with query string
    */
-  create(object: MetadataField, ...params: RequestParam[]): Observable<RemoteData<MetadataField>> {
+  create(
+    object: MetadataField,
+    ...params: RequestParam[]
+  ): Observable<RemoteData<MetadataField>> {
     return this.createData.create(object, ...params);
   }
 
@@ -192,8 +270,19 @@ export class MetadataFieldDataService extends IdentifiableDataService<MetadataFi
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  public searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<MetadataField>[]): Observable<RemoteData<PaginatedList<MetadataField>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<MetadataField>[]
+  ): Observable<RemoteData<PaginatedList<MetadataField>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
-
 }

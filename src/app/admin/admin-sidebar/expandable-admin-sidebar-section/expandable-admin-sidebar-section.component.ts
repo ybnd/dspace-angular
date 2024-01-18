@@ -1,14 +1,6 @@
-import {
-  Component,
-  Inject,
-  Injector,
-  OnInit,
-} from '@angular/core';
+import { Component, Inject, Injector, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-  combineLatest as combineLatestObservable,
-  Observable,
-} from 'rxjs';
+import { combineLatest as combineLatestObservable, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { bgColor } from '../../../shared/animations/bgColor';
@@ -29,9 +21,11 @@ import { AdminSidebarSectionComponent } from '../admin-sidebar-section/admin-sid
   styleUrls: ['./expandable-admin-sidebar-section.component.scss'],
   animations: [rotate, slide, bgColor],
 })
-
 @rendersSectionForMenu(MenuID.ADMIN, true)
-export class ExpandableAdminSidebarSectionComponent extends AdminSidebarSectionComponent implements OnInit {
+export class ExpandableAdminSidebarSectionComponent
+  extends AdminSidebarSectionComponent
+  implements OnInit
+{
   /**
    * This section resides in the Admin Sidebar
    */
@@ -73,12 +67,22 @@ export class ExpandableAdminSidebarSectionComponent extends AdminSidebarSectionC
    */
   ngOnInit(): void {
     super.ngOnInit();
-    this.sidebarActiveBg = this.variableService.getVariable('--ds-admin-sidebar-active-bg');
+    this.sidebarActiveBg = this.variableService.getVariable(
+      '--ds-admin-sidebar-active-bg',
+    );
     this.sidebarCollapsed = this.menuService.isMenuCollapsed(this.menuID);
-    this.sidebarPreviewCollapsed = this.menuService.isMenuPreviewCollapsed(this.menuID);
-    this.expanded = combineLatestObservable(this.active, this.sidebarCollapsed, this.sidebarPreviewCollapsed)
-      .pipe(
-        map(([active, sidebarCollapsed, sidebarPreviewCollapsed]) => (active && (!sidebarCollapsed || !sidebarPreviewCollapsed))),
-      );
+    this.sidebarPreviewCollapsed = this.menuService.isMenuPreviewCollapsed(
+      this.menuID,
+    );
+    this.expanded = combineLatestObservable(
+      this.active,
+      this.sidebarCollapsed,
+      this.sidebarPreviewCollapsed,
+    ).pipe(
+      map(
+        ([active, sidebarCollapsed, sidebarPreviewCollapsed]) =>
+          active && (!sidebarCollapsed || !sidebarPreviewCollapsed),
+      ),
+    );
   }
 }

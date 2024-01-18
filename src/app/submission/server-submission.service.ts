@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { RemoteData } from '../core/data/remote-data';
 import { SubmissionObject } from '../core/submission/models/submission-object.model';
@@ -13,7 +10,6 @@ import { SubmissionService } from './submission.service';
  */
 @Injectable()
 export class ServerSubmissionService extends SubmissionService {
-
   /**
    * Override createSubmission parent method to return an empty observable
    *

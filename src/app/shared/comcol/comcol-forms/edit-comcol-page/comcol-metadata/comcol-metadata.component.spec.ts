@@ -1,14 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -42,18 +35,22 @@ describe('ComColMetadataComponent', () => {
   function initializeVars() {
     community = Object.assign(new Community(), {
       uuid: 'a20da287-e174-466a-9926-f66b9300d347',
-      metadata: [{
-        key: 'dc.title',
-        value: 'test community',
-      }],
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'test community',
+        },
+      ],
     });
 
     newCommunity = Object.assign(new Community(), {
       uuid: '1ff59938-a69a-4e62-b9a4-718569c55d48',
-      metadata: [{
-        key: 'dc.title',
-        value: 'new community',
-      }],
+      metadata: [
+        {
+          key: 'dc.title',
+          value: 'new community',
+        },
+      ],
     });
 
     communityDataServiceStub = {
@@ -73,18 +70,25 @@ describe('ComColMetadataComponent', () => {
         }),
       },
     };
-
   }
 
   beforeEach(waitForAsync(() => {
     initializeVars();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot(), SharedModule, CommonModule, RouterTestingModule],
+      imports: [
+        TranslateModule.forRoot(),
+        SharedModule,
+        CommonModule,
+        RouterTestingModule,
+      ],
       providers: [
         { provide: ComColDataService, useValue: communityDataServiceStub },
         { provide: Router, useValue: routerStub },
         { provide: ActivatedRoute, useValue: routeStub },
-        { provide: NotificationsService, useValue: new NotificationsServiceStub() },
+        {
+          provide: NotificationsService,
+          useValue: new NotificationsServiceStub(),
+        },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
@@ -122,8 +126,7 @@ describe('ComColMetadataComponent', () => {
             },
             queue: [],
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            uploadAll: () => {
-            },
+            uploadAll: () => {},
             /* eslint-enable no-empty,@typescript-eslint/no-empty-function */
           },
           deleteLogo: false,
@@ -132,9 +135,10 @@ describe('ComColMetadataComponent', () => {
       });
 
       describe('when successful', () => {
-
         beforeEach(() => {
-          spyOn(dsoDataService, 'patch').and.returnValue(createSuccessfulRemoteDataObject$({}));
+          spyOn(dsoDataService, 'patch').and.returnValue(
+            createSuccessfulRemoteDataObject$({}),
+          );
         });
 
         it('should navigate', () => {
@@ -145,9 +149,10 @@ describe('ComColMetadataComponent', () => {
       });
 
       describe('on failure', () => {
-
         beforeEach(() => {
-          spyOn(dsoDataService, 'patch').and.returnValue(createFailedRemoteDataObject$('Error', 500));
+          spyOn(dsoDataService, 'patch').and.returnValue(
+            createFailedRemoteDataObject$('Error', 500),
+          );
         });
 
         it('should not navigate', () => {
@@ -158,25 +163,24 @@ describe('ComColMetadataComponent', () => {
       });
     });
 
-    describe('with at least one item in the uploader\'s queue', () => {
+    describe("with at least one item in the uploader's queue", () => {
       beforeEach(() => {
         data = {
           dso: Object.assign(new Community(), {
-            metadata: [{
-              key: 'dc.title',
-              value: 'test',
-            }],
+            metadata: [
+              {
+                key: 'dc.title',
+                value: 'test',
+              },
+            ],
           }),
           uploader: {
             options: {
               url: '',
             },
-            queue: [
-              {},
-            ],
+            queue: [{}],
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            uploadAll: () => {
-            },
+            uploadAll: () => {},
             /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
           },
         };
@@ -189,13 +193,13 @@ describe('ComColMetadataComponent', () => {
         expect(router.navigate).not.toHaveBeenCalled();
       });
 
-      it('should set the uploader\'s url to the logo\'s endpoint', () => {
+      it("should set the uploader's url to the logo's endpoint", () => {
         comp.onSubmit(data);
         fixture.detectChanges();
         expect(data.uploader.options.url).toEqual(logoEndpoint);
       });
 
-      it('should call the uploader\'s uploadAll', () => {
+      it("should call the uploader's uploadAll", () => {
         spyOn(data.uploader, 'uploadAll');
         comp.onSubmit(data);
         fixture.detectChanges();
@@ -214,5 +218,4 @@ describe('ComColMetadataComponent', () => {
       expect(router.navigate).toHaveBeenCalled();
     });
   });
-
 });

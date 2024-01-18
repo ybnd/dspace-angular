@@ -1,18 +1,8 @@
 import { Location } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { RequestService } from '../../core/data/request.service';
@@ -54,15 +44,23 @@ describe('WorkflowItemDeleteComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [WorkflowItemDeleteComponent, VarDirective],
       providers: [
-        { provide: ActivatedRoute, useValue: new ActivatedRouteStub({}, { wfi: createSuccessfulRemoteDataObject(wfi) }) },
+        {
+          provide: ActivatedRoute,
+          useValue: new ActivatedRouteStub(
+            {},
+            { wfi: createSuccessfulRemoteDataObject(wfi) },
+          ),
+        },
         { provide: Router, useClass: RouterStub },
         { provide: RouteService, useValue: {} },
         { provide: Location, useValue: new LocationStub() },
@@ -71,8 +69,7 @@ describe('WorkflowItemDeleteComponent', () => {
         { provide: RequestService, useValue: getMockRequestService() },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

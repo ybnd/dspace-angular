@@ -1,12 +1,5 @@
-import {
-  CUSTOM_ELEMENTS_SCHEMA,
-  DebugElement,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -25,7 +18,10 @@ describe('CommunityCurateComponent', () => {
   let dsoNameService;
 
   const community = Object.assign(new Community(), {
-    metadata: { 'dc.title': ['Community Name'], 'dc.identifier.uri': [ { value: '123456789/1' }] },
+    metadata: {
+      'dc.title': ['Community Name'],
+      'dc.identifier.uri': [{ value: '123456789/1' }],
+    },
   });
 
   beforeEach(waitForAsync(() => {
@@ -66,8 +62,7 @@ describe('CommunityCurateComponent', () => {
     });
     it('should contain the community information provided in the route', () => {
       comp.dsoRD$.subscribe((value) => {
-        expect(value.payload.handle,
-        ).toEqual('123456789/1');
+        expect(value.payload.handle).toEqual('123456789/1');
       });
       comp.communityName$.subscribe((value) => {
         expect(value).toEqual('Community Name');

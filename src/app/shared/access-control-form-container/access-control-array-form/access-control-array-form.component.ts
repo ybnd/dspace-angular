@@ -1,9 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { AccessesConditionOption } from '../../../core/config/models/config-accesses-conditions-options.model';
@@ -33,12 +28,15 @@ export class AccessControlArrayFormComponent implements OnInit {
   }
 
   get allControlsAreEmpty() {
-    return this.form.accessControls
-      .every(x => x.itemName === null || x.itemName === '');
+    return this.form.accessControls.every(
+      (x) => x.itemName === null || x.itemName === '',
+    );
   }
 
   get showWarning() {
-    return this.mode === 'replace' && this.allControlsAreEmpty && !this.formDisabled;
+    return (
+      this.mode === 'replace' && this.allControlsAreEmpty && !this.formDisabled
+    );
   }
 
   /**
@@ -59,7 +57,9 @@ export class AccessControlArrayFormComponent implements OnInit {
    * @param index
    */
   removeAccessControlItem(id: number) {
-    this.form.accessControls = this.form.accessControls.filter(item => item.id !== id);
+    this.form.accessControls = this.form.accessControls.filter(
+      (item) => item.id !== id,
+    );
   }
 
   /**
@@ -69,11 +69,11 @@ export class AccessControlArrayFormComponent implements OnInit {
    */
   getValue() {
     return this.form.accessControls
-      .filter(x => x.itemName !== null && x.itemName !== '')
-      .map(x => ({
+      .filter((x) => x.itemName !== null && x.itemName !== '')
+      .map((x) => ({
         name: x.itemName,
-        startDate: (x.startDate ? dateToISOFormat(x.startDate) : null),
-        endDate: (x.endDate ? dateToISOFormat(x.endDate) : null),
+        startDate: x.startDate ? dateToISOFormat(x.startDate) : null,
+        endDate: x.endDate ? dateToISOFormat(x.endDate) : null,
       }));
   }
 
@@ -108,8 +108,7 @@ export class AccessControlArrayFormComponent implements OnInit {
   };
 
   accessControlChanged(control: AccessControlItem, selectedItem: string) {
-    const item = this.dropdownOptions
-      .find((x) => x.name === selectedItem);
+    const item = this.dropdownOptions.find((x) => x.name === selectedItem);
 
     control.startDate = null;
     control.endDate = null;
@@ -124,9 +123,7 @@ export class AccessControlArrayFormComponent implements OnInit {
   trackById(index: number, item: AccessControlItem) {
     return item.id;
   }
-
 }
-
 
 export interface AccessControlItem {
   id: number; // will be used only locally

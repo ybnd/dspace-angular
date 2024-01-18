@@ -9,8 +9,11 @@ describe('LookupGuard', () => {
 
   beforeEach(() => {
     dsoService = {
-      findByIdAndIDType: jasmine.createSpy('findByIdAndIDType').and.returnValue(observableOf({ hasFailed: false,
-        hasSucceeded: true })),
+      findByIdAndIDType: jasmine
+        .createSpy('findByIdAndIDType')
+        .and.returnValue(
+          observableOf({ hasFailed: false, hasSucceeded: true }),
+        ),
     };
     guard = new LookupGuard(dsoService);
   });
@@ -23,7 +26,10 @@ describe('LookupGuard', () => {
       },
     };
     guard.canActivate(scopedRoute as any, undefined);
-    expect(dsoService.findByIdAndIDType).toHaveBeenCalledWith('hdl:123456789/1234', IdentifierType.HANDLE);
+    expect(dsoService.findByIdAndIDType).toHaveBeenCalledWith(
+      'hdl:123456789/1234',
+      IdentifierType.HANDLE,
+    );
   });
 
   it('should call findByIdAndIDType with handle params', () => {
@@ -34,7 +40,10 @@ describe('LookupGuard', () => {
       },
     };
     guard.canActivate(scopedRoute as any, undefined);
-    expect(dsoService.findByIdAndIDType).toHaveBeenCalledWith('hdl:123456789%2F1234', IdentifierType.HANDLE);
+    expect(dsoService.findByIdAndIDType).toHaveBeenCalledWith(
+      'hdl:123456789%2F1234',
+      IdentifierType.HANDLE,
+    );
   });
 
   it('should call findByIdAndIDType with UUID params', () => {
@@ -45,7 +54,9 @@ describe('LookupGuard', () => {
       },
     };
     guard.canActivate(scopedRoute as any, undefined);
-    expect(dsoService.findByIdAndIDType).toHaveBeenCalledWith('34cfed7c-f597-49ef-9cbe-ea351f0023c2', IdentifierType.UUID);
+    expect(dsoService.findByIdAndIDType).toHaveBeenCalledWith(
+      '34cfed7c-f597-49ef-9cbe-ea351f0023c2',
+      IdentifierType.UUID,
+    );
   });
-
 });

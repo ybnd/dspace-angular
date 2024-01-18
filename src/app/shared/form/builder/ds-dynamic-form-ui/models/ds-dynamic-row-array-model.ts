@@ -9,7 +9,8 @@ import {
 import { hasValue } from '../../../../empty.util';
 import { RelationshipOptions } from '../../models/relationship-options.model';
 
-export interface DynamicRowArrayModelConfig extends DynamicFormArrayModelConfig {
+export interface DynamicRowArrayModelConfig
+  extends DynamicFormArrayModelConfig {
   notRepeatable: boolean;
   required: boolean;
   submissionId: string;
@@ -37,7 +38,10 @@ export class DynamicRowArrayModel extends DynamicFormArrayModel {
   isRowArray = true;
   isInlineGroupArray = false;
 
-  constructor(config: DynamicRowArrayModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DynamicRowArrayModelConfig,
+    layout?: DynamicFormControlLayout,
+  ) {
     super(config, layout);
     if (hasValue(config.notRepeatable)) {
       this.notRepeatable = config.notRepeatable;
@@ -54,7 +58,11 @@ export class DynamicRowArrayModel extends DynamicFormArrayModel {
     this.metadataFields = config.metadataFields;
     this.hasSelectableMetadata = config.hasSelectableMetadata;
     this.isDraggable = config.isDraggable;
-    this.typeBindRelations = config.typeBindRelations ? config.typeBindRelations : [];
-    this.isInlineGroupArray = config.isInlineGroupArray ? config.isInlineGroupArray : false;
+    this.typeBindRelations = config.typeBindRelations
+      ? config.typeBindRelations
+      : [];
+    this.isInlineGroupArray = config.isInlineGroupArray
+      ? config.isInlineGroupArray
+      : false;
   }
 }

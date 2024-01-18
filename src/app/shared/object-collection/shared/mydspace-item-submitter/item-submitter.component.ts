@@ -1,16 +1,6 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
-import {
-  EMPTY,
-  Observable,
-} from 'rxjs';
-import {
-  map,
-  mergeMap,
-} from 'rxjs/operators';
+import { Component, Input, OnInit } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
 import { LinkService } from '../../../../core/cache/builders/link.service';
@@ -30,7 +20,6 @@ import { followLink } from '../../../utils/follow-link-config.model';
   templateUrl: './item-submitter.component.html',
 })
 export class ItemSubmitterComponent implements OnInit {
-
   /**
    * The target object
    */
@@ -44,17 +33,19 @@ export class ItemSubmitterComponent implements OnInit {
   public constructor(
     public dsoNameService: DSONameService,
     protected linkService: LinkService,
-  ) {
-  }
+  ) {}
 
   /**
    * Initialize submitter object
    */
   ngOnInit() {
-    this.linkService.resolveLinks(this.object, followLink('workflowitem', {},
-      followLink('submitter',{}),
-    ));
-    this.submitter$ = (this.object.workflowitem as Observable<RemoteData<WorkflowItem>>).pipe(
+    this.linkService.resolveLinks(
+      this.object,
+      followLink('workflowitem', {}, followLink('submitter', {})),
+    );
+    this.submitter$ = (
+      this.object.workflowitem as Observable<RemoteData<WorkflowItem>>
+    ).pipe(
       getFirstCompletedRemoteData(),
       mergeMap((rd: RemoteData<WorkflowItem>) => {
         if (rd.hasSucceeded && isNotEmpty(rd.payload)) {
@@ -71,6 +62,7 @@ export class ItemSubmitterComponent implements OnInit {
         } else {
           return EMPTY;
         }
-      }));
+      }),
+    );
   }
 }

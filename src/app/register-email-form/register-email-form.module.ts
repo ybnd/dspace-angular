@@ -11,22 +11,13 @@ const DECLARATIONS = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    SharedModule,
-  ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
+  imports: [CommonModule, SharedModule],
+  declarations: [...DECLARATIONS],
   providers: [],
-  exports: [
-    ...DECLARATIONS,
-  ],
+  exports: [...DECLARATIONS],
 })
 
 /**
  * The module that contains the components related to the email registration
  */
-export class RegisterEmailFormModule {
-
-}
+export class RegisterEmailFormModule {}

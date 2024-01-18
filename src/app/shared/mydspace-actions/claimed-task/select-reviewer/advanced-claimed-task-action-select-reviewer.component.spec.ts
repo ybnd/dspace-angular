@@ -1,14 +1,8 @@
 import { Location } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbTooltip } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
@@ -33,9 +27,11 @@ const workflowId = 'workflow-1';
 describe('AdvancedClaimedTaskActionSelectReviewerComponent', () => {
   const object = Object.assign(new ClaimedTask(), {
     id: taskId,
-    workflowitem: observableOf(Object.assign(new WorkflowItem(), {
-      id: workflowId,
-    })),
+    workflowitem: observableOf(
+      Object.assign(new WorkflowItem(), {
+        id: workflowId,
+      }),
+    ),
   });
   let component: AdvancedClaimedTaskActionSelectReviewerComponent;
   let fixture: ComponentFixture<AdvancedClaimedTaskActionSelectReviewerComponent>;
@@ -54,9 +50,7 @@ describe('AdvancedClaimedTaskActionSelectReviewerComponent', () => {
     searchService = new SearchServiceStub();
 
     await TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-      ],
+      imports: [TranslateModule.forRoot()],
       declarations: [
         AdvancedClaimedTaskActionSelectReviewerComponent,
         NgbTooltip,
@@ -75,7 +69,9 @@ describe('AdvancedClaimedTaskActionSelectReviewerComponent', () => {
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdvancedClaimedTaskActionSelectReviewerComponent);
+    fixture = TestBed.createComponent(
+      AdvancedClaimedTaskActionSelectReviewerComponent,
+    );
     component = fixture.componentInstance;
     component.object = object;
     fixture.detectChanges();
@@ -93,13 +89,18 @@ describe('AdvancedClaimedTaskActionSelectReviewerComponent', () => {
 
   it('should navigate to the advanced workflow page when clicked', () => {
     component.workflowTaskPageRoute = `/workflowitems/${workflowId}/advanced`;
-    fixture.debugElement.query(By.css('.selectReviewerAction')).nativeElement.click();
+    fixture.debugElement
+      .query(By.css('.selectReviewerAction'))
+      .nativeElement.click();
 
-    expect(router.navigate).toHaveBeenCalledWith([`/workflowitems/${workflowId}/advanced`], {
-      queryParams: {
-        workflow: ADVANCED_WORKFLOW_ACTION_SELECT_REVIEWER,
-        claimedTask: taskId,
+    expect(router.navigate).toHaveBeenCalledWith(
+      [`/workflowitems/${workflowId}/advanced`],
+      {
+        queryParams: {
+          workflow: ADVANCED_WORKFLOW_ACTION_SELECT_REVIEWER,
+          claimedTask: taskId,
+        },
       },
-    });
+    );
   });
 });

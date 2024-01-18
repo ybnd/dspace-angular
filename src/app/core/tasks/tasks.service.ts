@@ -9,19 +9,13 @@ import {
   tap,
 } from 'rxjs/operators';
 
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../shared/empty.util';
+import { hasValue, isNotEmpty } from '../../shared/empty.util';
 import { FollowLinkConfig } from '../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { CacheableObject } from '../cache/cacheable-object.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
 import { IdentifiableDataService } from '../data/base/identifiable-data.service';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../data/base/search-data';
+import { SearchData, SearchDataImpl } from '../data/base/search-data';
 import { FindListOptions } from '../data/find-list-options.model';
 import { PaginatedList } from '../data/paginated-list.model';
 import { RemoteData } from '../data/remote-data';
@@ -43,7 +37,10 @@ import { ProcessTaskResponse } from './models/process-task-response';
 /**
  * An abstract class that provides methods to handle task requests.  todo: data in name
  */
-export abstract class TasksService<T extends CacheableObject> extends IdentifiableDataService<T> implements SearchData<T> {
+export abstract class TasksService<T extends CacheableObject>
+  extends IdentifiableDataService<T>
+  implements SearchData<T>
+{
   private searchData: SearchDataImpl<T>;
 
   protected constructor(
@@ -56,7 +53,14 @@ export abstract class TasksService<T extends CacheableObject> extends Identifiab
   ) {
     super(linkPath, requestService, rdbService, objectCache, halService);
 
-    this.searchData = new SearchDataImpl<T>(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    this.searchData = new SearchDataImpl<T>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -85,16 +89,27 @@ export abstract class TasksService<T extends CacheableObject> extends Identifiab
    * @return Observable<SubmitDataResponseDefinitionObject>
    *     server response
    */
-  public postToEndpoint(linkPath: string, body: any, scopeId?: string, options?: HttpOptions): Observable<ProcessTaskResponse> {
+  public postToEndpoint(
+    linkPath: string,
+    body: any,
+    scopeId?: string,
+    options?: HttpOptions,
+  ): Observable<ProcessTaskResponse> {
     const requestId = this.requestService.generateRequestId();
     return this.halService.getEndpoint(linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)),
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId),
+      ),
       distinctUntilChanged(),
-      map((endpointURL: string) => new TaskPostRequest(requestId, endpointURL, body, options)),
+      map(
+        (endpointURL: string) =>
+          new TaskPostRequest(requestId, endpointURL, body, options),
+      ),
       tap((request: PostRequest) => this.requestService.send(request)),
       mergeMap((request: PostRequest) => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged(),
+    );
   }
 
   /**
@@ -109,13 +124,21 @@ export abstract class TasksService<T extends CacheableObject> extends Identifiab
    * @return Observable<SubmitDataResponseDefinitionObject>
    *     server response
    */
-  public deleteById(linkPath: string, scopeId: string, options?: HttpOptions): Observable<ProcessTaskResponse> {
+  public deleteById(
+    linkPath: string,
+    scopeId: string,
+    options?: HttpOptions,
+  ): Observable<ProcessTaskResponse> {
     const requestId = this.requestService.generateRequestId();
     return this.getEndpointById(scopeId, linkPath).pipe(
-      map((endpointURL: string) => new TaskDeleteRequest(requestId, endpointURL, null, options)),
+      map(
+        (endpointURL: string) =>
+          new TaskDeleteRequest(requestId, endpointURL, null, options),
+      ),
       tap((request: DeleteRequest) => this.requestService.send(request)),
       mergeMap((request: DeleteRequest) => this.fetchRequest(requestId)),
-      distinctUntilChanged());
+      distinctUntilChanged(),
+    );
   }
 
   /**
@@ -123,11 +146,17 @@ export abstract class TasksService<T extends CacheableObject> extends Identifiab
    * @param linkPath
    * @param scopeId
    */
-  public getEndpointById(scopeId: string, linkPath?: string): Observable<string> {
+  public getEndpointById(
+    scopeId: string,
+    linkPath?: string,
+  ): Observable<string> {
     return this.halService.getEndpoint(linkPath || this.linkPath).pipe(
       filter((href: string) => isNotEmpty(href)),
       distinctUntilChanged(),
-      map((endpointURL: string) => this.getEndpointByIDHref(endpointURL, scopeId)));
+      map((endpointURL: string) =>
+        this.getEndpointByIDHref(endpointURL, scopeId),
+      ),
+    );
   }
 
   /**
@@ -139,13 +168,23 @@ export abstract class TasksService<T extends CacheableObject> extends Identifiab
    * @param linksToFollow
    *   links to follow
    */
-  public searchTask(searchMethod: string, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<T>> {
-    const hrefObs = this.searchData.getSearchByHref(searchMethod, options, ...linksToFollow);
+  public searchTask(
+    searchMethod: string,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<T>> {
+    const hrefObs = this.searchData.getSearchByHref(
+      searchMethod,
+      options,
+      ...linksToFollow,
+    );
     return hrefObs.pipe(
       find((href: string) => hasValue(href)),
-      mergeMap((href) => this.findByHref(href, false, true).pipe(
-        getAllCompletedRemoteData(),
-        tap(() => this.requestService.setStaleByHrefSubstring(href))),
+      mergeMap((href) =>
+        this.findByHref(href, false, true).pipe(
+          getAllCompletedRemoteData(),
+          tap(() => this.requestService.setStaleByHrefSubstring(href)),
+        ),
       ),
     );
   }
@@ -163,7 +202,11 @@ export abstract class TasksService<T extends CacheableObject> extends Identifiab
       getFirstCompletedRemoteData(),
       map((response: RemoteData<any>) => {
         if (response.hasFailed) {
-          return new ProcessTaskResponse(false, response.statusCode, response.errorMessage);
+          return new ProcessTaskResponse(
+            false,
+            response.statusCode,
+            response.errorMessage,
+          );
         } else {
           return new ProcessTaskResponse(true, response.statusCode);
         }
@@ -177,7 +220,10 @@ export abstract class TasksService<T extends CacheableObject> extends Identifiab
   protected makeHttpOptions() {
     const options: HttpOptions = Object.create({});
     let headers = new HttpHeaders();
-    headers = headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    headers = headers.append(
+      'Content-Type',
+      'application/x-www-form-urlencoded',
+    );
     options.headers = headers;
     return options;
   }
@@ -196,8 +242,19 @@ export abstract class TasksService<T extends CacheableObject> extends Identifiab
    * @return {Observable<RemoteData<PaginatedList<T>>}
    *    Return an observable that emits response from the server
    */
-  public searchBy(searchMethod: string, options?: FindListOptions, useCachedVersionIfAvailable?: boolean, reRequestOnStale?: boolean, ...linksToFollow: FollowLinkConfig<T>[]): Observable<RemoteData<PaginatedList<T>>> {
-    return this.searchData.searchBy(searchMethod, options, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow);
+  public searchBy(
+    searchMethod: string,
+    options?: FindListOptions,
+    useCachedVersionIfAvailable?: boolean,
+    reRequestOnStale?: boolean,
+    ...linksToFollow: FollowLinkConfig<T>[]
+  ): Observable<RemoteData<PaginatedList<T>>> {
+    return this.searchData.searchBy(
+      searchMethod,
+      options,
+      useCachedVersionIfAvailable,
+      reRequestOnStale,
+      ...linksToFollow,
+    );
   }
-
 }

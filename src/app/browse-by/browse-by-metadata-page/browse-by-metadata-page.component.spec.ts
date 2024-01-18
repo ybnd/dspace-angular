@@ -1,21 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { APP_CONFIG } from '../../../config/app-config.interface';
 import { BrowseService } from '../../core/browse/browse.service';
@@ -100,8 +90,10 @@ describe('BrowseByMetadataPageComponent', () => {
   ];
 
   const mockBrowseService = {
-    getBrowseEntriesFor: (options: BrowseEntrySearchOptions) => toRemoteData(mockEntries),
-    getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) => toRemoteData(mockItems),
+    getBrowseEntriesFor: (options: BrowseEntrySearchOptions) =>
+      toRemoteData(mockEntries),
+    getBrowseItemsFor: (value: string, options: BrowseEntrySearchOptions) =>
+      toRemoteData(mockItems),
   };
 
   const mockDsoService = {
@@ -116,7 +108,12 @@ describe('BrowseByMetadataPageComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [CommonModule, RouterTestingModule.withRoutes([]), TranslateModule.forRoot(), NgbModule],
+      imports: [
+        CommonModule,
+        RouterTestingModule.withRoutes([]),
+        TranslateModule.forRoot(),
+        NgbModule,
+      ],
       declarations: [BrowseByMetadataPageComponent, EnumKeysPipe, VarDirective],
       providers: [
         { provide: ActivatedRoute, useValue: activatedRouteStub },
@@ -181,20 +178,28 @@ describe('BrowseByMetadataPageComponent', () => {
       const paramsScope = {
         scope: 'fake-scope',
       };
-      const paginationOptions = Object.assign(new PaginationComponentOptions(), {
-        currentPage: 5,
-        pageSize: comp.appConfig.browseBy.pageSize,
-      });
+      const paginationOptions = Object.assign(
+        new PaginationComponentOptions(),
+        {
+          currentPage: 5,
+          pageSize: comp.appConfig.browseBy.pageSize,
+        },
+      );
       const sortOptions = {
         direction: SortDirection.ASC,
         field: 'fake-field',
       };
 
-      result = browseParamsToOptions(paramsScope, paginationOptions, sortOptions, 'author', comp.fetchThumbnails);
+      result = browseParamsToOptions(
+        paramsScope,
+        paginationOptions,
+        sortOptions,
+        'author',
+        comp.fetchThumbnails,
+      );
     });
 
     it('should return BrowseEntrySearchOptions with the correct properties', () => {
-
       expect(result.metadataDefinition).toEqual('author');
       expect(result.pagination.currentPage).toEqual(5);
       expect(result.pagination.pageSize).toEqual(10);
@@ -212,19 +217,26 @@ describe('BrowseByMetadataPageComponent', () => {
       const paramsScope = {
         scope: 'fake-scope',
       };
-      const paginationOptions = Object.assign(new PaginationComponentOptions(), {
-        currentPage: 5,
-        pageSize: comp.appConfig.browseBy.pageSize,
-      });
+      const paginationOptions = Object.assign(
+        new PaginationComponentOptions(),
+        {
+          currentPage: 5,
+          pageSize: comp.appConfig.browseBy.pageSize,
+        },
+      );
       const sortOptions = {
         direction: SortDirection.ASC,
         field: 'fake-field',
       };
 
-      result = getBrowseSearchOptions('title', paginationOptions, sortOptions, comp.fetchThumbnails);
+      result = getBrowseSearchOptions(
+        'title',
+        paginationOptions,
+        sortOptions,
+        comp.fetchThumbnails,
+      );
     });
     it('should return BrowseEntrySearchOptions with the correct properties', () => {
-
       expect(result.metadataDefinition).toEqual('title');
       expect(result.pagination.currentPage).toEqual(5);
       expect(result.pagination.pageSize).toEqual(10);
@@ -235,6 +247,10 @@ describe('BrowseByMetadataPageComponent', () => {
   });
 });
 
-export function toRemoteData(objects: any[]): Observable<RemoteData<PaginatedList<any>>> {
-  return createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), objects));
+export function toRemoteData(
+  objects: any[],
+): Observable<RemoteData<PaginatedList<any>>> {
+  return createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), objects),
+  );
 }

@@ -1,21 +1,10 @@
-import {
-  Component,
-  DebugElement,
-  Input,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { Component, DebugElement, Input } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { PlacementArray } from '@ng-bootstrap/ng-bootstrap/util/positioning';
 import { TranslateService } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  of as observableOf,
-} from 'rxjs';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
 
 import { ContextHelp } from '../context-help.model';
 import { ContextHelpService } from '../context-help.service';
@@ -47,7 +36,8 @@ class TemplateComponent {
 
 const messages = {
   lorem: 'lorem ipsum dolor sit amet',
-  linkTest: 'This is text, [this](https://dspace.lyrasis.org/) is a link, and [so is this](https://google.com/)',
+  linkTest:
+    'This is text, [this](https://dspace.lyrasis.org/) is a link, and [so is this](https://google.com/)',
 };
 const exampleContextHelp: ContextHelp = {
   id: 'test-tooltip',
@@ -70,7 +60,7 @@ describe('ContextHelpWrapperComponent', () => {
     return wrapped;
   }
 
-  beforeEach(waitForAsync( () => {
+  beforeEach(waitForAsync(() => {
     translateService = jasmine.createSpyObj('translateService', ['get']);
     contextHelpService = jasmine.createSpyObj('contextHelpService', [
       'shouldShowIcons$',
@@ -84,12 +74,12 @@ describe('ContextHelpWrapperComponent', () => {
     ]);
 
     TestBed.configureTestingModule({
-      imports: [ NgbTooltipModule ],
+      imports: [NgbTooltipModule],
       providers: [
         { provide: TranslateService, useValue: translateService },
         { provide: ContextHelpService, useValue: contextHelpService },
       ],
-      declarations: [ TemplateComponent, ContextHelpWrapperComponent ],
+      declarations: [TemplateComponent, ContextHelpWrapperComponent],
     }).compileComponents();
   }));
 
@@ -99,7 +89,9 @@ describe('ContextHelpWrapperComponent', () => {
     shouldShowIcons$ = new BehaviorSubject<boolean>(false);
     contextHelpService.getContextHelp$.and.returnValue(getContextHelp$);
     contextHelpService.shouldShowIcons$.and.returnValue(shouldShowIcons$);
-    translateService.get.and.callFake((content) => observableOf(messages[content]));
+    translateService.get.and.callFake((content) =>
+      observableOf(messages[content]),
+    );
 
     getContextHelp$.next(exampleContextHelp);
     shouldShowIcons$.next(false);
@@ -112,7 +104,9 @@ describe('ContextHelpWrapperComponent', () => {
     templateComponent.id = 'test-tooltip';
     templateComponent.tooltipPlacement = ['bottom'];
     templateComponent.iconPlacement = 'left';
-    wrapperComponent = el.query(By.css('ds-context-help-wrapper')).componentInstance;
+    wrapperComponent = el.query(
+      By.css('ds-context-help-wrapper'),
+    ).componentInstance;
     fixture.detectChanges();
   });
 
@@ -139,7 +133,9 @@ describe('ContextHelpWrapperComponent', () => {
 
     it('should show the context help button', (done) => {
       fixture.whenStable().then(() => {
-        const wrapper = el.query(By.css('ds-context-help-wrapper')).nativeElement;
+        const wrapper = el.query(
+          By.css('ds-context-help-wrapper'),
+        ).nativeElement;
         expect(wrapper.children.length).toBe(1);
         const [i] = wrapper.children;
         expect(i.tagName).toBe('I');
@@ -156,23 +152,29 @@ describe('ContextHelpWrapperComponent', () => {
       });
 
       it('should display the tooltip', () => {
-        expect(contextHelpService.toggleTooltip).toHaveBeenCalledWith('test-tooltip');
+        expect(contextHelpService.toggleTooltip).toHaveBeenCalledWith(
+          'test-tooltip',
+        );
         getContextHelp$.next({ ...exampleContextHelp, isTooltipVisible: true });
         fixture.detectChanges();
         expect(wrapperComponent.tooltip.open).toHaveBeenCalled();
         expect(wrapperComponent.tooltip.close).toHaveBeenCalledTimes(0);
-        expect(fixture.debugElement.query(By.css('.ds-context-help-content')).nativeElement.textContent)
-          .toMatch(/\s*lorem ipsum dolor sit amet\s*/);
+        expect(
+          fixture.debugElement.query(By.css('.ds-context-help-content'))
+            .nativeElement.textContent,
+        ).toMatch(/\s*lorem ipsum dolor sit amet\s*/);
       });
 
       it('should correctly display links', () => {
         templateComponent.content = 'linkTest';
         getContextHelp$.next({ ...exampleContextHelp, isTooltipVisible: true });
         fixture.detectChanges();
-        const nodeList: NodeList = fixture.debugElement.query(By.css('.ds-context-help-content'))
-          .nativeElement
-          .childNodes;
-        const relevantNodes = Array.from(nodeList).filter(node => node.nodeType !== Node.COMMENT_NODE);
+        const nodeList: NodeList = fixture.debugElement.query(
+          By.css('.ds-context-help-content'),
+        ).nativeElement.childNodes;
+        const relevantNodes = Array.from(nodeList).filter(
+          (node) => node.nodeType !== Node.COMMENT_NODE,
+        );
         expect(relevantNodes.length).toBe(4);
 
         const [text1, link1, text2, link2] = relevantNodes;
@@ -198,18 +200,20 @@ describe('ContextHelpWrapperComponent', () => {
         getContextHelp$.next({ ...exampleContextHelp, isTooltipVisible: true });
         fixture.detectChanges();
 
-
-        const nodeList: NodeList = fixture.debugElement.query(By.css('.ds-context-help-content'))
-          .nativeElement
-          .childNodes;
-        const relevantNodes = Array.from(nodeList).filter(node => node.nodeType !== Node.COMMENT_NODE);
+        const nodeList: NodeList = fixture.debugElement.query(
+          By.css('.ds-context-help-content'),
+        ).nativeElement.childNodes;
+        const relevantNodes = Array.from(nodeList).filter(
+          (node) => node.nodeType !== Node.COMMENT_NODE,
+        );
         expect(relevantNodes.length).toBe(1);
 
         const [text] = relevantNodes;
 
         expect(text.nodeType).toBe(Node.TEXT_NODE);
         expect(text.nodeValue).toMatch(
-          /\s* This is text, \[this\]\(https:\/\/dspace.lyrasis.org\/\) is a link, and \[so is this\]\(https:\/\/google.com\/\) \s*/);
+          /\s* This is text, \[this\]\(https:\/\/dspace.lyrasis.org\/\) is a link, and \[so is this\]\(https:\/\/google.com\/\) \s*/,
+        );
       });
 
       describe('after the icon is clicked again', () => {
@@ -220,8 +224,13 @@ describe('ContextHelpWrapperComponent', () => {
         });
 
         it('should close the tooltip', () => {
-          expect(contextHelpService.toggleTooltip).toHaveBeenCalledWith('test-tooltip');
-          getContextHelp$.next({ ...exampleContextHelp, isTooltipVisible: false });
+          expect(contextHelpService.toggleTooltip).toHaveBeenCalledWith(
+            'test-tooltip',
+          );
+          getContextHelp$.next({
+            ...exampleContextHelp,
+            isTooltipVisible: false,
+          });
           fixture.detectChanges();
           expect(wrapperComponent.tooltip.close).toHaveBeenCalled();
         });

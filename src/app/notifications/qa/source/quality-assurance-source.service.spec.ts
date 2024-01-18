@@ -25,7 +25,10 @@ describe('QualityAssuranceSourceService', () => {
   let restServiceAsAny: any;
 
   const pageInfo = new PageInfo();
-  const array = [ qualityAssuranceSourceObjectMorePid, qualityAssuranceSourceObjectMoreAbstract ];
+  const array = [
+    qualityAssuranceSourceObjectMorePid,
+    qualityAssuranceSourceObjectMoreAbstract,
+  ];
   const paginatedList = buildPaginatedList(pageInfo, array);
   const paginatedListRD = createSuccessfulRemoteDataObject(paginatedList);
   const elementsPerPage = 3;
@@ -34,7 +37,10 @@ describe('QualityAssuranceSourceService', () => {
   beforeEach(async () => {
     TestBed.configureTestingModule({
       providers: [
-        { provide: QualityAssuranceSourceDataService, useClass: getMockQualityAssuranceSourceRestService },
+        {
+          provide: QualityAssuranceSourceDataService,
+          useClass: getMockQualityAssuranceSourceRestService,
+        },
         { provide: QualityAssuranceSourceService, useValue: service },
       ],
     }).compileComponents();
@@ -57,7 +63,9 @@ describe('QualityAssuranceSourceService', () => {
         sort: sortOptions,
       };
       const result = service.getSources(elementsPerPage, currentPage);
-      expect((service as any).qualityAssuranceSourceRestService.getSources).toHaveBeenCalledWith(findListOptions);
+      expect(
+        (service as any).qualityAssuranceSourceRestService.getSources,
+      ).toHaveBeenCalledWith(findListOptions);
     });
 
     it('Should return a paginated list of Quality Assurance Source', () => {

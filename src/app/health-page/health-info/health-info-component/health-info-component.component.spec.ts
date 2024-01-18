@@ -1,15 +1,9 @@
 import { CommonModule } from '@angular/common';
-import {
-  ComponentFixture,
-  TestBed,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import {
   HealthInfoComponentOne,
@@ -36,12 +30,8 @@ describe('HealthInfoComponentComponent', () => {
           },
         }),
       ],
-      declarations: [
-        HealthInfoComponentComponent,
-        ObjNgFor,
-      ],
-    })
-      .compileComponents();
+      declarations: [HealthInfoComponentComponent, ObjNgFor],
+    }).compileComponents();
   });
 
   beforeEach(() => {
@@ -62,12 +52,15 @@ describe('HealthInfoComponentComponent', () => {
     });
 
     it('should display property', () => {
-      const properties = fixture.debugElement.queryAll(By.css('[data-test="property"]'));
+      const properties = fixture.debugElement.queryAll(
+        By.css('[data-test="property"]'),
+      );
       expect(properties.length).toBe(14);
-      const components = fixture.debugElement.queryAll(By.css('[data-test="info-component"]'));
+      const components = fixture.debugElement.queryAll(
+        By.css('[data-test="info-component"]'),
+      );
       expect(components.length).toBe(4);
     });
-
   });
 
   describe('when has plain properties', () => {
@@ -82,9 +75,10 @@ describe('HealthInfoComponentComponent', () => {
     });
 
     it('should display property', () => {
-      const property = fixture.debugElement.queryAll(By.css('[data-test="property"]'));
+      const property = fixture.debugElement.queryAll(
+        By.css('[data-test="property"]'),
+      );
       expect(property.length).toBe(1);
     });
-
   });
 });

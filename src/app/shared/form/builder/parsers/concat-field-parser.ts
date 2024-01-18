@@ -1,10 +1,6 @@
 import { Inject } from '@angular/core';
 
-import {
-  hasNoValue,
-  hasValue,
-  isNotEmpty,
-} from '../../../empty.util';
+import { hasNoValue, hasValue, isNotEmpty } from '../../../empty.util';
 import {
   CONCAT_FIRST_INPUT_SUFFIX,
   CONCAT_GROUP_SUFFIX,
@@ -28,7 +24,6 @@ import {
 import { ParserOptions } from './parser-options';
 
 export class ConcatFieldParser extends FieldParser {
-
   constructor(
     @Inject(SUBMISSION_ID) submissionId: string,
     @Inject(CONFIG_DATA) configData: FormFieldModel,
@@ -36,7 +31,8 @@ export class ConcatFieldParser extends FieldParser {
     @Inject(PARSER_OPTIONS) parserOptions: ParserOptions,
     protected separator: string,
     protected firstPlaceholder: string = null,
-    protected secondPlaceholder: string = null) {
+    protected secondPlaceholder: string = null,
+  ) {
     super(submissionId, configData, initFormValues, parserOptions);
 
     this.separator = separator;
@@ -44,7 +40,10 @@ export class ConcatFieldParser extends FieldParser {
     this.secondPlaceholder = secondPlaceholder;
   }
 
-  public modelFactory(fieldValue?: FormFieldMetadataValueObject | any, label?: boolean): any {
+  public modelFactory(
+    fieldValue?: FormFieldMetadataValueObject | any,
+    label?: boolean,
+  ): any {
     const id: string = this.configData.selectableMetadata[0].metadata;
 
     const clsInput = {
@@ -54,7 +53,12 @@ export class ConcatFieldParser extends FieldParser {
     };
 
     const groupId = id.replace(/\./g, '_') + CONCAT_GROUP_SUFFIX;
-    const concatGroup: DynamicConcatModelConfig = this.initModel(groupId, label, false, true);
+    const concatGroup: DynamicConcatModelConfig = this.initModel(
+      groupId,
+      label,
+      false,
+      true,
+    );
 
     concatGroup.group = [];
     concatGroup.separator = this.separator;
@@ -77,7 +81,11 @@ export class ConcatFieldParser extends FieldParser {
     input1ModelConfig.hideErrorMessages = true;
     input2ModelConfig.hideErrorMessages = true;
 
-    if (hasNoValue(concatGroup.hint) && hasValue(input1ModelConfig.hint) && hasNoValue(input2ModelConfig.hint)) {
+    if (
+      hasNoValue(concatGroup.hint) &&
+      hasValue(input1ModelConfig.hint) &&
+      hasNoValue(input2ModelConfig.hint)
+    ) {
       concatGroup.hint = input1ModelConfig.hint;
       input1ModelConfig.hint = undefined;
     }
@@ -124,5 +132,4 @@ export class ConcatFieldParser extends FieldParser {
 
     return concatModel;
   }
-
 }

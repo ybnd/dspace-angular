@@ -1,12 +1,5 @@
-import {
-  APP_BASE_HREF,
-  CommonModule,
-  DOCUMENT,
-} from '@angular/common';
-import {
-  HTTP_INTERCEPTORS,
-  HttpClientModule,
-} from '@angular/common/http';
+import { APP_BASE_HREF, CommonModule, DOCUMENT } from '@angular/common';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -24,24 +17,14 @@ import {
 import { TranslateModule } from '@ngx-translate/core';
 import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 
-import {
-  APP_CONFIG,
-  AppConfig,
-} from '../config/app-config.interface';
+import { APP_CONFIG, AppConfig } from '../config/app-config.interface';
 import { StoreDevModules } from '../config/store/devtools';
 import { environment } from '../environments/environment';
 import { EagerThemesModule } from '../themes/eager-themes.module';
 import { AppComponent } from './app.component';
 import { appEffects } from './app.effects';
-import {
-  appMetaReducers,
-  debugMetaReducers,
-} from './app.metareducers';
-import {
-  appReducers,
-  AppState,
-  storeModuleConfig,
-} from './app.reducer';
+import { appMetaReducers, debugMetaReducers } from './app.metareducers';
+import { appReducers, AppState, storeModuleConfig } from './app.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthInterceptor } from './core/auth/auth.interceptor';
 import { CoreModule } from './core/core.module';
@@ -60,12 +43,17 @@ export function getConfig() {
 
 const getBaseHref = (document: Document, appConfig: AppConfig): string => {
   const baseTag = document.querySelector('head > base');
-  baseTag.setAttribute('href', `${appConfig.ui.nameSpace}${appConfig.ui.nameSpace.endsWith('/') ? '' : '/'}`);
+  baseTag.setAttribute(
+    'href',
+    `${appConfig.ui.nameSpace}${appConfig.ui.nameSpace.endsWith('/') ? '' : '/'}`,
+  );
   return baseTag.getAttribute('href');
 };
 
 export function getMetaReducers(appConfig: AppConfig): MetaReducer<AppState>[] {
-  return appConfig.debug ? [...appMetaReducers, ...debugMetaReducers] : appMetaReducers;
+  return appConfig.debug
+    ? [...appMetaReducers, ...debugMetaReducers]
+    : appMetaReducers;
 }
 
 const IMPORTS = [
@@ -130,29 +118,17 @@ const PROVIDERS = [
   ...DYNAMIC_MATCHER_PROVIDERS,
 ];
 
-const DECLARATIONS = [
-  AppComponent,
-];
+const DECLARATIONS = [AppComponent];
 
-const EXPORTS = [
-];
+const EXPORTS = [];
 
 @NgModule({
   imports: [
     BrowserModule.withServerTransition({ appId: 'dspace-angular' }),
     ...IMPORTS,
   ],
-  providers: [
-    ...PROVIDERS,
-  ],
-  declarations: [
-    ...DECLARATIONS,
-  ],
-  exports: [
-    ...EXPORTS,
-    ...DECLARATIONS,
-  ],
+  providers: [...PROVIDERS],
+  declarations: [...DECLARATIONS],
+  exports: [...EXPORTS, ...DECLARATIONS],
 })
-export class AppModule {
-
-}
+export class AppModule {}

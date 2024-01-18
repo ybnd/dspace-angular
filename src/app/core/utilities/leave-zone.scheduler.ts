@@ -1,14 +1,14 @@
 import { NgZone } from '@angular/core';
-import {
-  SchedulerLike,
-  Subscription,
-} from 'rxjs';
+import { SchedulerLike, Subscription } from 'rxjs';
 
 /**
  * An RXJS scheduler that will run what's scheduled outside of the Angular zone
  */
 export class LeaveZoneScheduler implements SchedulerLike {
-  constructor(private zone: NgZone, private scheduler: SchedulerLike) { }
+  constructor(
+    private zone: NgZone,
+    private scheduler: SchedulerLike,
+  ) {}
 
   schedule(...args: any[]): Subscription {
     return this.zone.runOutsideAngular(() =>
@@ -16,7 +16,7 @@ export class LeaveZoneScheduler implements SchedulerLike {
     );
   }
 
-  now (): number {
+  now(): number {
     return this.scheduler.now();
   }
 }

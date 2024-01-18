@@ -6,14 +6,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import {
-  Observable,
-  of,
-} from 'rxjs';
-import {
-  startWith,
-  take,
-} from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { startWith, take } from 'rxjs/operators';
 
 import { SortOptions } from '../../../core/cache/models/sort-options.model';
 import { AuthorizationDataService } from '../../../core/data/feature-authorization/authorization-data.service';
@@ -31,80 +25,82 @@ import { ObjectSelectService } from '../object-select.service';
   selector: 'ds-object-select-abstract',
   template: '',
 })
-export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestroy {
-
+export abstract class ObjectSelectComponent<TDomain>
+  implements OnInit, OnDestroy
+{
   /**
    * A unique key used for the object select service
    */
   @Input()
-    key: string;
+  key: string;
 
   /**
    * The list of DSpaceObjects to display
    */
   @Input()
-    dsoRD$: Observable<RemoteData<PaginatedList<TDomain>>>;
+  dsoRD$: Observable<RemoteData<PaginatedList<TDomain>>>;
 
   /**
    * The pagination options used to display the DSpaceObjects
    */
   @Input()
-    paginationOptions: PaginationComponentOptions;
+  paginationOptions: PaginationComponentOptions;
 
   /**
    * The sorting options used to display the DSpaceObjects
    */
   @Input()
-    sortOptions: SortOptions;
+  sortOptions: SortOptions;
 
   /**
    * The message key used for the confirm button
    * @type {string}
    */
   @Input()
-    confirmButton: string;
+  confirmButton: string;
 
   /**
    * Authorize check to enable the selection when present.
    */
   @Input()
-    featureId: FeatureID;
+  featureId: FeatureID;
 
   /**
    * The message key used for the cancel button
    * @type {string}
    */
   @Input()
-    cancelButton: string;
+  cancelButton: string;
 
   /**
    * An event fired when the cancel button is clicked
    */
   @Output()
-    cancel = new EventEmitter<any>();
+  cancel = new EventEmitter<any>();
 
   /**
    * EventEmitter to return the selected UUIDs when the confirm button is pressed
    * @type {EventEmitter<string[]>}
    */
   @Output()
-    confirm: EventEmitter<string[]> = new EventEmitter<string[]>();
+  confirm: EventEmitter<string[]> = new EventEmitter<string[]>();
 
   /**
    * Whether or not to render the confirm button as danger (for example if confirm deletes objects)
    * Defaults to false
    */
   @Input()
-    dangerConfirm = false;
+  dangerConfirm = false;
 
   /**
    * The list of selected UUIDs
    */
   selectedIds$: Observable<string[]>;
 
-  constructor(protected objectSelectService: ObjectSelectService,
-              protected authorizationService: AuthorizationDataService) {
-  }
+  constructor(
+    protected objectSelectService: ObjectSelectService,
+    protected authorizationService: AuthorizationDataService,
+  ) {}
 
   ngOnInit(): void {
     this.selectedIds$ = this.objectSelectService.getAllSelected(this.key);
@@ -138,7 +134,9 @@ export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestro
     if (!this.featureId) {
       return of(true);
     }
-    return this.authorizationService.isAuthorized(this.featureId, item.self).pipe(startWith(false));
+    return this.authorizationService
+      .isAuthorized(this.featureId, item.self)
+      .pipe(startWith(false));
   }
 
   /**
@@ -146,9 +144,7 @@ export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestro
    * Sends the selected UUIDs to the parent component
    */
   confirmSelected() {
-    this.selectedIds$.pipe(
-      take(1),
-    ).subscribe((ids: string[]) => {
+    this.selectedIds$.pipe(take(1)).subscribe((ids: string[]) => {
       this.confirm.emit(ids);
       this.objectSelectService.reset(this.key);
     });
@@ -160,5 +156,4 @@ export abstract class ObjectSelectComponent<TDomain> implements OnInit, OnDestro
   onCancel() {
     this.cancel.emit();
   }
-
 }

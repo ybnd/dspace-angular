@@ -19,7 +19,6 @@ import { ItemVersionsSummaryModalComponent } from './versions/item-versions-summ
 const ENTRY_COMPONENTS = [
   ItemVersionsDeleteModalComponent,
   ItemVersionsSummaryModalComponent,
-
 ];
 
 const COMPONENTS = [
@@ -34,18 +33,9 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS,
-  ],
-  imports: [
-    CommonModule,
-    SearchModule,
-    SharedModule,
-    TranslateModule,
-  ],
-  exports: [
-    ...COMPONENTS,
-  ],
+  declarations: [...COMPONENTS],
+  imports: [CommonModule, SearchModule, SharedModule, TranslateModule],
+  exports: [...COMPONENTS],
   providers: [
     {
       provide: DYNAMIC_FORM_CONTROL_MAP_FN,
@@ -54,4 +44,4 @@ const COMPONENTS = [
     ...ENTRY_COMPONENTS,
   ],
 })
-export class ItemSharedModule { }
+export class ItemSharedModule {}

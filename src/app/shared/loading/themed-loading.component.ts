@@ -18,12 +18,15 @@ import { LoadingComponent } from './loading.component';
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
 export class ThemedLoadingComponent extends ThemedComponent<LoadingComponent> {
-
   @Input() message: string;
   @Input() showMessage: boolean;
   @Input() spinner: boolean;
 
-  protected inAndOutputNames: (keyof LoadingComponent & keyof this)[] = ['message', 'showMessage', 'spinner'];
+  protected inAndOutputNames: (keyof LoadingComponent & keyof this)[] = [
+    'message',
+    'showMessage',
+    'spinner',
+  ];
 
   constructor(
     protected resolver: ComponentFactoryResolver,
@@ -38,7 +41,9 @@ export class ThemedLoadingComponent extends ThemedComponent<LoadingComponent> {
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../themes/${themeName}/app/shared/loading/loading.component`);
+    return import(
+      `../../../themes/${themeName}/app/shared/loading/loading.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

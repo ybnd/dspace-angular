@@ -41,13 +41,12 @@ describe('DsoEditMetadataForm', () => {
     form = new DsoEditMetadataForm(dso.metadata);
   });
 
-
   describe('adding a new value', () => {
     beforeEach(() => {
       form.add();
     });
 
-    it('should add an empty value to \"newValue\" with no place yet and editing set to true', () => {
+    it('should add an empty value to "newValue" with no place yet and editing set to true', () => {
       expect(form.newValue).toBeDefined();
       expect(form.newValue.originalValue.place).toBeUndefined();
       expect(form.newValue.newValue.place).toBeUndefined();
@@ -72,7 +71,9 @@ describe('DsoEditMetadataForm', () => {
       });
 
       it('should add the new value to the values of the relevant field', () => {
-        expect(form.fields[mdField][expectedPlace].newValue.value).toEqual(value);
+        expect(form.fields[mdField][expectedPlace].newValue.value).toEqual(
+          value,
+        );
       });
 
       it('should set its editing flag to false', () => {
@@ -80,11 +81,15 @@ describe('DsoEditMetadataForm', () => {
       });
 
       it('should set both its original and new place to match its position in the value array', () => {
-        expect(form.fields[mdField][expectedPlace].newValue.place).toEqual(expectedPlace);
-        expect(form.fields[mdField][expectedPlace].originalValue.place).toEqual(expectedPlace);
+        expect(form.fields[mdField][expectedPlace].newValue.place).toEqual(
+          expectedPlace,
+        );
+        expect(form.fields[mdField][expectedPlace].originalValue.place).toEqual(
+          expectedPlace,
+        );
       });
 
-      it('should clear \"newValue\"', () => {
+      it('should clear "newValue"', () => {
         expect(form.newValue).toBeUndefined();
       });
 
@@ -111,7 +116,9 @@ describe('DsoEditMetadataForm', () => {
           });
 
           it('should re-add the new value', () => {
-            expect(form.fields[mdField][expectedPlace].newValue.value).toEqual(value);
+            expect(form.fields[mdField][expectedPlace].newValue.value).toEqual(
+              value,
+            );
           });
 
           it('should mark the form as changed once again', () => {
@@ -126,15 +133,21 @@ describe('DsoEditMetadataForm', () => {
     it('should remove the value on the correct index', () => {
       form.remove('dc.subject', 1);
       expect(form.fields['dc.subject'].length).toEqual(2);
-      expect(form.fields['dc.subject'][0].newValue.value).toEqual('Subject One');
-      expect(form.fields['dc.subject'][1].newValue.value).toEqual('Subject Three');
+      expect(form.fields['dc.subject'][0].newValue.value).toEqual(
+        'Subject One',
+      );
+      expect(form.fields['dc.subject'][1].newValue.value).toEqual(
+        'Subject Three',
+      );
     });
   });
 
   describe('moving a value', () => {
     beforeEach(() => {
-      form.fields['dc.subject'][0].newValue.place = form.fields['dc.subject'][1].originalValue.place;
-      form.fields['dc.subject'][1].newValue.place = form.fields['dc.subject'][0].originalValue.place;
+      form.fields['dc.subject'][0].newValue.place =
+        form.fields['dc.subject'][1].originalValue.place;
+      form.fields['dc.subject'][1].newValue.place =
+        form.fields['dc.subject'][0].originalValue.place;
       form.fields['dc.subject'][0].confirmChanges();
       form.fields['dc.subject'][1].confirmChanges();
     });
@@ -154,8 +167,12 @@ describe('DsoEditMetadataForm', () => {
       });
 
       it('should reset the moved values their places to their original values', () => {
-        expect(form.fields['dc.subject'][0].newValue.place).toEqual(form.fields['dc.subject'][0].originalValue.place);
-        expect(form.fields['dc.subject'][1].newValue.place).toEqual(form.fields['dc.subject'][1].originalValue.place);
+        expect(form.fields['dc.subject'][0].newValue.place).toEqual(
+          form.fields['dc.subject'][0].originalValue.place,
+        );
+        expect(form.fields['dc.subject'][1].newValue.place).toEqual(
+          form.fields['dc.subject'][1].originalValue.place,
+        );
       });
 
       it('should mark the form as unchanged again', () => {
@@ -168,8 +185,12 @@ describe('DsoEditMetadataForm', () => {
         });
 
         it('should move the values to their new places again', () => {
-          expect(form.fields['dc.subject'][0].newValue.place).toEqual(form.fields['dc.subject'][1].originalValue.place);
-          expect(form.fields['dc.subject'][1].newValue.place).toEqual(form.fields['dc.subject'][0].originalValue.place);
+          expect(form.fields['dc.subject'][0].newValue.place).toEqual(
+            form.fields['dc.subject'][1].originalValue.place,
+          );
+          expect(form.fields['dc.subject'][1].newValue.place).toEqual(
+            form.fields['dc.subject'][0].originalValue.place,
+          );
         });
 
         it('should mark the form as changed once again', () => {
@@ -211,7 +232,9 @@ describe('DsoEditMetadataForm', () => {
         });
 
         it('should re-mark the value as deleted', () => {
-          expect(form.fields['dc.title'][0].change).toEqual(DsoEditMetadataChangeType.REMOVE);
+          expect(form.fields['dc.title'][0].change).toEqual(
+            DsoEditMetadataChangeType.REMOVE,
+          );
         });
 
         it('should mark the form as changed once again', () => {
@@ -252,7 +275,9 @@ describe('DsoEditMetadataForm', () => {
         });
 
         it('should reset the changed value to its original value', () => {
-          expect(form.fields['dc.title'][0].newValue.value).toEqual(form.fields['dc.title'][0].originalValue.value);
+          expect(form.fields['dc.title'][0].newValue.value).toEqual(
+            form.fields['dc.title'][0].originalValue.value,
+          );
         });
 
         it('should mark the form as unchanged again', () => {

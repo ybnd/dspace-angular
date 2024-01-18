@@ -4,8 +4,12 @@ import { RegistrationResponseParsingService } from './registration-response-pars
 
 describe('RegistrationResponseParsingService', () => {
   describe('parse', () => {
-    const registration = Object.assign(new Registration(), { email: 'test@email.org', token: 'test-token' });
-    const registrationResponseParsingService = new RegistrationResponseParsingService();
+    const registration = Object.assign(new Registration(), {
+      email: 'test@email.org',
+      token: 'test-token',
+    });
+    const registrationResponseParsingService =
+      new RegistrationResponseParsingService();
 
     const data = {
       payload: { email: 'test@email.org', token: 'test-token' },
@@ -14,9 +18,14 @@ describe('RegistrationResponseParsingService', () => {
     };
 
     it('should parse a registration response', () => {
-      const expected = registrationResponseParsingService.parse({} as any, data);
+      const expected = registrationResponseParsingService.parse(
+        {} as any,
+        data,
+      );
 
-      expect(expected).toEqual(new ParsedResponse(200, undefined, registration));
+      expect(expected).toEqual(
+        new ParsedResponse(200, undefined, registration),
+      );
     });
   });
 });

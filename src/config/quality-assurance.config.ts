@@ -5,11 +5,10 @@ import { Config } from './config.interface';
  * It's created mainly to sort by metadata community and collection edition and creation
  */
 export class QualityAssuranceConfig implements Config {
-
   /**
    * Url for project search on quality assurance resource
    */
-  public sourceUrlMapForProjectSearch: {[key: string]: string};
+  public sourceUrlMapForProjectSearch: { [key: string]: string };
   /**
    * default count of QA sources to load
    */

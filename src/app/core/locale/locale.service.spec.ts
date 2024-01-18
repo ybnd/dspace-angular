@@ -1,7 +1,4 @@
-import {
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { TestBed, waitForAsync } from '@angular/core/testing';
 import {
   TranslateLoader,
   TranslateModule,
@@ -15,11 +12,7 @@ import { AuthService } from '../auth/auth.service';
 import { CookieService } from '../services/cookie.service';
 import { RouteService } from '../services/route.service';
 import { NativeWindowRef } from '../services/window.service';
-import {
-  LANG_COOKIE,
-  LANG_ORIGIN,
-  LocaleService,
-} from './locale.service';
+import { LANG_COOKIE, LANG_ORIGIN, LocaleService } from './locale.service';
 
 describe('LocaleService test suite', () => {
   let service: LocaleService;
@@ -65,7 +58,14 @@ describe('LocaleService test suite', () => {
     routeService = TestBed.inject(RouteService);
     window = new NativeWindowRef();
     document = { documentElement: { lang: 'en' } };
-    service = new LocaleService(window, cookieService, translateService, authService, routeService, document);
+    service = new LocaleService(
+      window,
+      cookieService,
+      translateService,
+      authService,
+      routeService,
+      document,
+    );
     serviceAsAny = service;
     spyOnGet = spyOn(cookieService, 'get');
     spyOnSet = spyOn(cookieService, 'set');
@@ -76,7 +76,7 @@ describe('LocaleService test suite', () => {
       spyOn(translateService, 'getLangs').and.returnValue(langList);
     });
 
-    it('should return the language saved on cookie if it\'s a valid & active language', () => {
+    it("should return the language saved on cookie if it's a valid & active language", () => {
       spyOnGet.and.returnValue('de');
       expect(service.getCurrentLanguageCode()).toBe('de');
     });
@@ -107,7 +107,6 @@ describe('LocaleService test suite', () => {
       spyOnGet.and.returnValue('de');
       expect(service.getLanguageCodeFromCookie()).toBe('de');
     });
-
   });
 
   describe('saveLanguageCodeToCookie', () => {
@@ -148,7 +147,11 @@ describe('LocaleService test suite', () => {
       const langListWithQuality = ['en;q=1', 'xx;q=0.9', 'de;q=0.8'];
       spyOn(service, 'setQuality').and.returnValue(langListWithQuality);
       service.setQuality(langList, LANG_ORIGIN.BROWSER, false);
-      expect(service.setQuality).toHaveBeenCalledWith(langList, LANG_ORIGIN.BROWSER, false);
+      expect(service.setQuality).toHaveBeenCalledWith(
+        langList,
+        LANG_ORIGIN.BROWSER,
+        false,
+      );
     });
 
     it('should return the list of language with quality factor', () => {

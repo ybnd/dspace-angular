@@ -1,8 +1,5 @@
 /* eslint-disable no-empty, @typescript-eslint/no-empty-function */
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 export class AuthServiceMock {
   public checksAuthenticationToken() {
@@ -20,11 +17,9 @@ export class AuthServiceMock {
     return observableOf(true);
   }
 
-  public setRedirectUrl(url: string) {
-  }
+  public setRedirectUrl(url: string) {}
 
-  public trackTokenExpiration(): void {
-  }
+  public trackTokenExpiration(): void {}
 
   public isUserIdle(): Observable<boolean> {
     return observableOf(false);

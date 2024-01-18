@@ -7,12 +7,7 @@ import {
   Observable,
   zip,
 } from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 
 import { PaginatedList } from '../../../core/data/paginated-list.model';
 import { RemoteData } from '../../../core/data/remote-data';
@@ -36,7 +31,6 @@ import { PaginationComponentOptions } from '../../../shared/pagination/paginatio
  * The admin can create, edit or delete metadata schemas here.
  */
 export class MetadataRegistryComponent {
-
   /**
    * A list of all the current metadata schemas within the repository
    */
@@ -45,21 +39,26 @@ export class MetadataRegistryComponent {
   /**
    * Pagination config used to display the list of metadata schemas
    */
-  config: PaginationComponentOptions = Object.assign(new PaginationComponentOptions(), {
-    id: 'rm',
-    pageSize: 25,
-  });
+  config: PaginationComponentOptions = Object.assign(
+    new PaginationComponentOptions(),
+    {
+      id: 'rm',
+      pageSize: 25,
+    },
+  );
 
   /**
    * Whether or not the list of MetadataSchemas needs an update
    */
   needsUpdate$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
 
-  constructor(private registryService: RegistryService,
-              private notificationsService: NotificationsService,
-              private router: Router,
-              private paginationService: PaginationService,
-              private translateService: TranslateService) {
+  constructor(
+    private registryService: RegistryService,
+    private notificationsService: NotificationsService,
+    private router: Router,
+    private paginationService: PaginationService,
+    private translateService: TranslateService,
+  ) {
     this.updateSchemas();
   }
 
@@ -67,11 +66,19 @@ export class MetadataRegistryComponent {
    * Update the list of schemas by fetching it from the rest api or cache
    */
   private updateSchemas() {
-
     this.metadataSchemas = this.needsUpdate$.pipe(
       filter((update) => update === true),
-      switchMap(() => this.paginationService.getCurrentPagination(this.config.id, this.config)),
-      switchMap((currentPagination) => this.registryService.getMetadataSchemas(toFindListOptions(currentPagination))),
+      switchMap(() =>
+        this.paginationService.getCurrentPagination(
+          this.config.id,
+          this.config,
+        ),
+      ),
+      switchMap((currentPagination) =>
+        this.registryService.getMetadataSchemas(
+          toFindListOptions(currentPagination),
+        ),
+      ),
     );
   }
 
@@ -88,13 +95,15 @@ export class MetadataRegistryComponent {
    * @param schema
    */
   editSchema(schema: MetadataSchema) {
-    this.getActiveSchema().pipe(take(1)).subscribe((activeSchema) => {
-      if (schema === activeSchema) {
-        this.registryService.cancelEditMetadataSchema();
-      } else {
-        this.registryService.editMetadataSchema(schema);
-      }
-    });
+    this.getActiveSchema()
+      .pipe(take(1))
+      .subscribe((activeSchema) => {
+        if (schema === activeSchema) {
+          this.registryService.cancelEditMetadataSchema();
+        } else {
+          this.registryService.editMetadataSchema(schema);
+        }
+      });
   }
 
   /**
@@ -120,9 +129,9 @@ export class MetadataRegistryComponent {
    * @param event
    */
   selectMetadataSchema(schema: MetadataSchema, event) {
-    event.target.checked ?
-      this.registryService.selectMetadataSchema(schema) :
-      this.registryService.deselectMetadataSchema(schema);
+    event.target.checked
+      ? this.registryService.selectMetadataSchema(schema)
+      : this.registryService.deselectMetadataSchema(schema);
   }
 
   /**
@@ -130,26 +139,41 @@ export class MetadataRegistryComponent {
    * @param schema
    */
   isSelected(schema: MetadataSchema): Observable<boolean> {
-    return this.registryService.getSelectedMetadataSchemas().pipe(
-      map((schemas) => schemas.find((selectedSchema) => selectedSchema === schema) != null),
-    );
+    return this.registryService
+      .getSelectedMetadataSchemas()
+      .pipe(
+        map(
+          (schemas) =>
+            schemas.find((selectedSchema) => selectedSchema === schema) != null,
+        ),
+      );
   }
 
   /**
    * Delete all the selected metadata schemas
    */
   deleteSchemas() {
-    this.registryService.getSelectedMetadataSchemas().pipe(take(1)).subscribe(
-      (schemas) => {
+    this.registryService
+      .getSelectedMetadataSchemas()
+      .pipe(take(1))
+      .subscribe((schemas) => {
         const tasks$ = [];
         for (const schema of schemas) {
           if (hasValue(schema.id)) {
-            tasks$.push(this.registryService.deleteMetadataSchema(schema.id).pipe(getFirstCompletedRemoteData()));
+            tasks$.push(
+              this.registryService
+                .deleteMetadataSchema(schema.id)
+                .pipe(getFirstCompletedRemoteData()),
+            );
           }
         }
         zip(...tasks$).subscribe((responses: RemoteData<NoContent>[]) => {
-          const successResponses = responses.filter((response: RemoteData<NoContent>) => response.hasSucceeded);
-          const failedResponses = responses.filter((response: RemoteData<NoContent>) => response.hasFailed);
+          const successResponses = responses.filter(
+            (response: RemoteData<NoContent>) => response.hasSucceeded,
+          );
+          const failedResponses = responses.filter(
+            (response: RemoteData<NoContent>) => response.hasFailed,
+          );
           if (successResponses.length > 0) {
             this.showNotification(true, successResponses.length);
           }
@@ -159,8 +183,7 @@ export class MetadataRegistryComponent {
           this.registryService.deselectAllMetadataSchema();
           this.registryService.cancelEditMetadataSchema();
         });
-      },
-    );
+      });
   }
 
   /**
@@ -172,8 +195,12 @@ export class MetadataRegistryComponent {
     const prefix = 'admin.registries.schema.notification';
     const suffix = success ? 'success' : 'failure';
     const messages = observableCombineLatest(
-      this.translateService.get(success ? `${prefix}.${suffix}` : `${prefix}.${suffix}`),
-      this.translateService.get(`${prefix}.deleted.${suffix}`, { amount: amount }),
+      this.translateService.get(
+        success ? `${prefix}.${suffix}` : `${prefix}.${suffix}`,
+      ),
+      this.translateService.get(`${prefix}.deleted.${suffix}`, {
+        amount: amount,
+      }),
     );
     messages.subscribe(([head, content]) => {
       if (success) {
@@ -186,5 +213,4 @@ export class MetadataRegistryComponent {
   ngOnDestroy(): void {
     this.paginationService.clearPagination(this.config.id);
   }
-
 }

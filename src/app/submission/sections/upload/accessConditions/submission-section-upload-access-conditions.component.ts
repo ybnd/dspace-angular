@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { find } from 'rxjs/operators';
 
 import { DSONameService } from '../../../../core/breadcrumbs/dso-name.service';
@@ -19,8 +15,9 @@ import { isEmpty } from '../../../../shared/empty.util';
   selector: 'ds-submission-section-upload-access-conditions',
   templateUrl: './submission-section-upload-access-conditions.component.html',
 })
-export class SubmissionSectionUploadAccessConditionsComponent implements OnInit {
-
+export class SubmissionSectionUploadAccessConditionsComponent
+  implements OnInit
+{
   /**
    * The list of resource policy
    * @type {Array}
@@ -36,8 +33,7 @@ export class SubmissionSectionUploadAccessConditionsComponent implements OnInit 
   constructor(
     public dsoNameService: DSONameService,
     protected groupService: GroupDataService,
-  ) {
-  }
+  ) {}
 
   /**
    * Retrieve access conditions list
@@ -45,8 +41,14 @@ export class SubmissionSectionUploadAccessConditionsComponent implements OnInit 
   ngOnInit() {
     this.accessConditions.forEach((accessCondition: ResourcePolicy) => {
       if (isEmpty(accessCondition.name)) {
-        this.groupService.findByHref(accessCondition._links.group.href).pipe(
-          find((rd: RemoteData<Group>) => !rd.isResponsePending && rd.hasSucceeded))
+        this.groupService
+          .findByHref(accessCondition._links.group.href)
+          .pipe(
+            find(
+              (rd: RemoteData<Group>) =>
+                !rd.isResponsePending && rd.hasSucceeded,
+            ),
+          )
           .subscribe((rd: RemoteData<Group>) => {
             const group: Group = rd.payload;
             const accessConditionEntry = Object.assign({}, accessCondition);

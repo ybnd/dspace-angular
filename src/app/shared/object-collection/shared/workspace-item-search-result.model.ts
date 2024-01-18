@@ -6,5 +6,4 @@ import { searchResultFor } from '../../search/search-result-element-decorator';
  * Represents a search result object of a WorkspaceItem object
  */
 @searchResultFor(WorkspaceItem)
-export class WorkspaceItemSearchResult extends SearchResult<WorkspaceItem> {
-}
+export class WorkspaceItemSearchResult extends SearchResult<WorkspaceItem> {}

@@ -5,10 +5,7 @@ import {
   TestBed,
   waitForAsync,
 } from '@angular/core/testing';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 
 import { TranslateLoaderMock } from '../shared/mocks/translate-loader.mock';
 import { CommunityListPageComponent } from './community-list-page.component';
@@ -28,12 +25,9 @@ describe('CommunityListPageComponent', () => {
         }),
       ],
       declarations: [CommunityListPageComponent],
-      providers: [
-        CommunityListPageComponent,
-      ],
+      providers: [CommunityListPageComponent],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -42,8 +36,10 @@ describe('CommunityListPageComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', inject([CommunityListPageComponent], (comp: CommunityListPageComponent) => {
-    expect(comp).toBeTruthy();
-  }));
-
+  it('should create', inject(
+    [CommunityListPageComponent],
+    (comp: CommunityListPageComponent) => {
+      expect(comp).toBeTruthy();
+    },
+  ));
 });

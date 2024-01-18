@@ -39,13 +39,8 @@ import { ProcessPageResolver } from './process-page.resolver';
           },
         ],
       },
-
     ]),
   ],
-  providers: [
-    ProcessPageResolver,
-  ],
+  providers: [ProcessPageResolver],
 })
-export class ProcessPageRoutingModule {
-
-}
+export class ProcessPageRoutingModule {}

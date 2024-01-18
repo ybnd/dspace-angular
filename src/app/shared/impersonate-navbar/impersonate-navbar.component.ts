@@ -1,16 +1,6 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-} from '@angular/core';
-import {
-  select,
-  Store,
-} from '@ngrx/store';
-import {
-  Observable,
-  Subscription,
-} from 'rxjs';
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { select, Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AppState } from '../../app.reducer';
@@ -25,7 +15,6 @@ import { isAuthenticated } from '../../core/auth/selectors';
  * Navbar component for actions to take concerning impersonating users
  */
 export class ImpersonateNavbarComponent implements OnInit {
-
   /**
    * Is the user currently impersonating another user?
    */
@@ -37,20 +26,26 @@ export class ImpersonateNavbarComponent implements OnInit {
     protected elRef: ElementRef,
     protected store: Store<AppState>,
     protected authService: AuthService,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.isImpersonating$ = this.store.pipe(select(isAuthenticated)).pipe(
-      map((isUserAuthenticated: boolean) => isUserAuthenticated && this.authService.isImpersonating()),
+    this.isImpersonating$ = this.store
+      .pipe(select(isAuthenticated))
+      .pipe(
+        map(
+          (isUserAuthenticated: boolean) =>
+            isUserAuthenticated && this.authService.isImpersonating(),
+        ),
+      );
+    this.subscriptions.push(
+      this.isImpersonating$.subscribe((isImpersonating: boolean) => {
+        if (isImpersonating) {
+          this.elRef.nativeElement.classList.remove('d-none');
+        } else {
+          this.elRef.nativeElement.classList.add('d-none');
+        }
+      }),
     );
-    this.subscriptions.push(this.isImpersonating$.subscribe((isImpersonating: boolean) => {
-      if (isImpersonating) {
-        this.elRef.nativeElement.classList.remove('d-none');
-      } else {
-        this.elRef.nativeElement.classList.add('d-none');
-      }
-    }));
   }
 
   /**

@@ -16,17 +16,19 @@ import { ThemedHomePageComponent } from './themed-home-page.component';
         data: {
           title: 'home.title',
           menu: {
-            public: [{
-              id: 'statistics_site',
-              active: true,
-              visible: true,
-              index: 2,
-              model: {
-                type: MenuItemType.LINK,
-                text: 'menu.section.statistics',
-                link: 'statistics',
-              } as LinkMenuItemModel,
-            }],
+            public: [
+              {
+                id: 'statistics_site',
+                active: true,
+                visible: true,
+                index: 2,
+                model: {
+                  type: MenuItemType.LINK,
+                  text: 'menu.section.statistics',
+                  link: 'statistics',
+                } as LinkMenuItemModel,
+              },
+            ],
           },
         },
         resolve: {
@@ -35,9 +37,6 @@ import { ThemedHomePageComponent } from './themed-home-page.component';
       },
     ]),
   ],
-  providers: [
-    HomePageResolver,
-  ],
+  providers: [HomePageResolver],
 })
-export class HomePageRoutingModule {
-}
+export class HomePageRoutingModule {}

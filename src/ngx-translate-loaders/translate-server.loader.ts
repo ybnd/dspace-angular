@@ -1,28 +1,20 @@
 import { TransferState } from '@angular/platform-browser';
 import { TranslateLoader } from '@ngx-translate/core';
 import { readFileSync } from 'fs';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
-import {
-  NGX_TRANSLATE_STATE,
-  NgxTranslateState,
-} from './ngx-translate-state';
+import { NGX_TRANSLATE_STATE, NgxTranslateState } from './ngx-translate-state';
 
 /**
  * A TranslateLoader for ngx-translate to parse json5 files server-side, and store them in the
  * TransferState
  */
 export class TranslateServerLoader implements TranslateLoader {
-
   constructor(
     protected transferState: TransferState,
     protected prefix: string = 'dist/assets/i18n/',
     protected suffix: string = '.json',
-  ) {
-  }
+  ) {}
 
   /**
    * Return the i18n messages for a given language, and store them in the TransferState
@@ -30,9 +22,16 @@ export class TranslateServerLoader implements TranslateLoader {
    * @param lang the language code
    */
   public getTranslation(lang: string): Observable<any> {
-    const translationHash: string = (process.env.languageHashes as any)[lang + '.json5'];
+    const translationHash: string = (process.env.languageHashes as any)[
+      lang + '.json5'
+    ];
     // Retrieve the file for the given language, and parse it
-    const messages = JSON.parse(readFileSync(`${this.prefix}${lang}.${translationHash}${this.suffix}`, 'utf8'));
+    const messages = JSON.parse(
+      readFileSync(
+        `${this.prefix}${lang}.${translationHash}${this.suffix}`,
+        'utf8',
+      ),
+    );
     // Store the parsed messages in the transfer state so they'll be available immediately when the
     // app loads on the client
     this.storeInTransferState(lang, messages);
@@ -49,7 +48,10 @@ export class TranslateServerLoader implements TranslateLoader {
    * @protected
    */
   protected storeInTransferState(lang: string, messages) {
-    const prevState = this.transferState.get<NgxTranslateState>(NGX_TRANSLATE_STATE, {});
+    const prevState = this.transferState.get<NgxTranslateState>(
+      NGX_TRANSLATE_STATE,
+      {},
+    );
     const nextState = Object.assign({}, prevState, {
       [lang]: messages,
     });

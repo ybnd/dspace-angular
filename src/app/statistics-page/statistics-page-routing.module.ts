@@ -73,8 +73,7 @@ import { StatisticsPageModule } from './statistics-page.module';
         component: ThemedCommunityStatisticsPageComponent,
         canActivate: [StatisticsAdministratorGuard],
       },
-    ],
-    ),
+    ]),
   ],
   providers: [
     I18nBreadcrumbResolver,
@@ -84,5 +83,4 @@ import { StatisticsPageModule } from './statistics-page.module';
     ItemResolver,
   ],
 })
-export class StatisticsPageRoutingModule {
-}
+export class StatisticsPageRoutingModule {}

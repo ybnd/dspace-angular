@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { ThemedComponent } from '../shared/theme-support/themed.component';
 import { RootComponent } from './root.component';
@@ -22,7 +19,10 @@ export class ThemedRootComponent extends ThemedComponent<RootComponent> {
    */
   @Input() shouldShowRouteLoader: boolean;
 
-  protected inAndOutputNames: (keyof RootComponent & keyof this)[] = ['shouldShowRouteLoader', 'shouldShowFullscreenLoader'];
+  protected inAndOutputNames: (keyof RootComponent & keyof this)[] = [
+    'shouldShowRouteLoader',
+    'shouldShowFullscreenLoader',
+  ];
 
   protected getComponentName(): string {
     return 'RootComponent';
@@ -35,5 +35,4 @@ export class ThemedRootComponent extends ThemedComponent<RootComponent> {
   protected importUnthemedComponent(): Promise<any> {
     return import(`./root.component`);
   }
-
 }

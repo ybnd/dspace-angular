@@ -9,13 +9,9 @@ import { SearchResultsComponent as BaseComponent } from '../../../../../../app/s
 @Component({
   selector: 'ds-search-results',
   // templateUrl: './search-results.component.html',
-  templateUrl: '../../../../../../app/shared/search/search-results/search-results.component.html',
+  templateUrl:
+    '../../../../../../app/shared/search/search-results/search-results.component.html',
   // styleUrls: ['./search-results.component.scss'],
-  animations: [
-    fadeIn,
-    fadeInOut,
-  ],
+  animations: [fadeIn, fadeInOut],
 })
-export class SearchResultsComponent extends BaseComponent {
-
-}
+export class SearchResultsComponent extends BaseComponent {}

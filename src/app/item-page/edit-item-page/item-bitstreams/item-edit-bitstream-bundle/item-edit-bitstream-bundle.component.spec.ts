@@ -1,12 +1,5 @@
-import {
-  NO_ERRORS_SCHEMA,
-  ViewContainerRef,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA, ViewContainerRef } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { Bundle } from '../../../../core/shared/bundle.model';
@@ -43,9 +36,7 @@ describe('ItemEditBitstreamBundleComponent', () => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
       declarations: [ItemEditBitstreamBundleComponent],
-      schemas: [
-        NO_ERRORS_SCHEMA,
-      ],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

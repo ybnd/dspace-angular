@@ -18,10 +18,7 @@ import {
   ContextHelpToggleTooltipAction,
 } from './context-help.actions';
 import { ContextHelp } from './context-help.model';
-import {
-  ContextHelpModels,
-  ContextHelpState,
-} from './context-help.reducer';
+import { ContextHelpModels, ContextHelpState } from './context-help.reducer';
 
 const contextHelpStateSelector =
   createFeatureSelector<ContextHelpState>('contextHelp');
@@ -29,21 +26,23 @@ const allIconsVisibleSelector = createSelector(
   contextHelpStateSelector,
   (state: ContextHelpState): boolean => state.allIconsVisible,
 );
-const contextHelpSelector =
-  (id: string): MemoizedSelector<ContextHelpState, ContextHelp> => createSelector(
+const contextHelpSelector = (
+  id: string,
+): MemoizedSelector<ContextHelpState, ContextHelp> =>
+  createSelector(
     contextHelpStateSelector,
     (state: ContextHelpState) => state.models[id],
   );
 const allContextHelpSelector = createSelector(
   contextHelpStateSelector,
-  ((state: ContextHelpState) => state.models),
+  (state: ContextHelpState) => state.models,
 );
 
 @Injectable({
   providedIn: 'root',
 })
 export class ContextHelpService {
-  constructor(private store: Store<ContextHelpState>) { }
+  constructor(private store: Store<ContextHelpState>) {}
 
   /**
    * Observable keeping track of whether context help icons should be visible globally.
@@ -65,7 +64,8 @@ export class ContextHelpService {
    * Observable that yields true iff there are currently no context help entries in the store.
    */
   tooltipCount$(): Observable<number> {
-    return this.store.pipe(select(allContextHelpSelector))
+    return this.store
+      .pipe(select(allContextHelpSelector))
       .pipe(map((models: ContextHelpModels) => Object.keys(models).length));
   }
 

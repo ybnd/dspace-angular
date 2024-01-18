@@ -3,16 +3,9 @@ import {
   DebugElement,
   NO_ERRORS_SCHEMA,
 } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 
@@ -30,9 +23,13 @@ let fixture: ComponentFixture<ItemSubmitterComponent>;
 let mockResultObject: PoolTask;
 
 const rdSumbitter = createSuccessfulRemoteDataObject(EPersonMock);
-const workflowitem = Object.assign(new WorkflowItem(), { submitter: observableOf(rdSumbitter) });
+const workflowitem = Object.assign(new WorkflowItem(), {
+  submitter: observableOf(rdSumbitter),
+});
 const rdWorkflowitem = createSuccessfulRemoteDataObject(workflowitem);
-mockResultObject = Object.assign(new PoolTask(), { workflowitem: observableOf(rdWorkflowitem) });
+mockResultObject = Object.assign(new PoolTask(), {
+  workflowitem: observableOf(rdWorkflowitem),
+});
 
 describe('ItemSubmitterComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -46,13 +43,13 @@ describe('ItemSubmitterComponent', () => {
         }),
       ],
       declarations: [ItemSubmitterComponent],
-      providers: [
-        { provide: LinkService, useValue: getMockLinkService() },
-      ],
+      providers: [{ provide: LinkService, useValue: getMockLinkService() }],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(ItemSubmitterComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(ItemSubmitterComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -66,9 +63,11 @@ describe('ItemSubmitterComponent', () => {
   });
 
   it('should init submitter properly', () => {
-    expect(component.submitter$).toBeObservable(cold('(b|)', {
-      b: EPersonMock,
-    }));
+    expect(component.submitter$).toBeObservable(
+      cold('(b|)', {
+        b: EPersonMock,
+      }),
+    );
   });
 
   it('should show N/A when submitter is null', () => {

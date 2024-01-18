@@ -6,10 +6,7 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { RemoteDataBuildService } from '../cache/builders/remote-data-build.service';
 import { RequestParam } from '../cache/models/request-param.model';
 import { ObjectCacheService } from '../cache/object-cache.service';
-import {
-  CreateData,
-  CreateDataImpl,
-} from '../data/base/create-data';
+import { CreateData, CreateDataImpl } from '../data/base/create-data';
 import { dataService } from '../data/base/data-service.decorator';
 import { IdentifiableDataService } from '../data/base/identifiable-data.service';
 import { RemoteData } from '../data/remote-data';
@@ -27,7 +24,10 @@ import { FEEDBACK } from './models/feedback.resource-type';
  */
 @Injectable()
 @dataService(FEEDBACK)
-export class FeedbackDataService extends IdentifiableDataService<Feedback> implements CreateData<Feedback> {
+export class FeedbackDataService
+  extends IdentifiableDataService<Feedback>
+  implements CreateData<Feedback>
+{
   private createData: CreateDataImpl<Feedback>;
 
   constructor(
@@ -40,7 +40,15 @@ export class FeedbackDataService extends IdentifiableDataService<Feedback> imple
   ) {
     super('feedbacks', requestService, rdbService, objectCache, halService);
 
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -54,14 +62,16 @@ export class FeedbackDataService extends IdentifiableDataService<Feedback> imple
     );
   }
 
-
   /**
    * Create a new object on the server, and store the response in the object cache
    *
    * @param object    The object to create
    * @param params    Array with additional params to combine with query string
    */
-  public create(object: Feedback, ...params: RequestParam[]): Observable<RemoteData<Feedback>> {
+  public create(
+    object: Feedback,
+    ...params: RequestParam[]
+  ): Observable<RemoteData<Feedback>> {
     return this.createData.create(object, ...params);
   }
 }

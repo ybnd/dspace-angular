@@ -1,8 +1,4 @@
-import {
-  cold,
-  getTestScheduler,
-  hot,
-} from 'jasmine-marbles';
+import { cold, getTestScheduler, hot } from 'jasmine-marbles';
 import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
@@ -165,30 +161,42 @@ describe('ResourcePolicyService', () => {
     spyOn((service as any).deleteData, 'delete').and.callThrough();
     spyOn((service as any).patchData, 'update').and.callThrough();
     spyOn((service as any).searchData, 'searchBy').and.callThrough();
-    spyOn((service as any).searchData, 'getSearchByHref').and.returnValue(observableOf(requestURL));
+    spyOn((service as any).searchData, 'getSearchByHref').and.returnValue(
+      observableOf(requestURL),
+    );
   });
 
   describe('create', () => {
     it('should proxy the call to createData.create with eperson UUID', () => {
-      scheduler.schedule(() => service.create(resourcePolicy, resourceUUID, epersonUUID));
+      scheduler.schedule(() =>
+        service.create(resourcePolicy, resourceUUID, epersonUUID),
+      );
       const params = [
         new RequestParam('resource', resourceUUID),
         new RequestParam('eperson', epersonUUID),
       ];
       scheduler.flush();
 
-      expect((service as any).createData.create).toHaveBeenCalledWith(resourcePolicy, ...params);
+      expect((service as any).createData.create).toHaveBeenCalledWith(
+        resourcePolicy,
+        ...params,
+      );
     });
 
     it('should proxy the call to createData.create with group UUID', () => {
-      scheduler.schedule(() => service.create(resourcePolicy, resourceUUID, null, groupUUID));
+      scheduler.schedule(() =>
+        service.create(resourcePolicy, resourceUUID, null, groupUUID),
+      );
       const params = [
         new RequestParam('resource', resourceUUID),
         new RequestParam('group', groupUUID),
       ];
       scheduler.flush();
 
-      expect((service as any).createData.create).toHaveBeenCalledWith(resourcePolicy, ...params);
+      expect((service as any).createData.create).toHaveBeenCalledWith(
+        resourcePolicy,
+        ...params,
+      );
     });
 
     it('should return a RemoteData<ResourcePolicy> for the object with the given id', () => {
@@ -205,7 +213,9 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.delete(resourcePolicyId));
       scheduler.flush();
 
-      expect((service as any).deleteData.delete).toHaveBeenCalledWith(resourcePolicyId);
+      expect((service as any).deleteData.delete).toHaveBeenCalledWith(
+        resourcePolicyId,
+      );
     });
   });
 
@@ -214,7 +224,9 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.update(resourcePolicy));
       scheduler.flush();
 
-      expect((service as any).patchData.update).toHaveBeenCalledWith(resourcePolicy);
+      expect((service as any).patchData.update).toHaveBeenCalledWith(
+        resourcePolicy,
+      );
     });
   });
 
@@ -245,7 +257,12 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByEPerson(epersonUUID));
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByEPersonMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByEPersonMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should proxy the call to searchData.searchBy with additional search param', () => {
@@ -254,10 +271,17 @@ describe('ResourcePolicyService', () => {
         new RequestParam('uuid', epersonUUID),
         new RequestParam('resource', resourceUUID),
       ];
-      scheduler.schedule(() => service.searchByEPerson(epersonUUID, resourceUUID));
+      scheduler.schedule(() =>
+        service.searchByEPerson(epersonUUID, resourceUUID),
+      );
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByEPersonMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByEPersonMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should return a RemoteData<PaginatedList<ResourcePolicy>) for the search', () => {
@@ -267,7 +291,6 @@ describe('ResourcePolicyService', () => {
       });
       expect(result).toBeObservable(expected);
     });
-
   });
 
   describe('searchByGroup', () => {
@@ -277,7 +300,12 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByGroup(groupUUID));
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByGroupMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByGroupMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should proxy the call to searchData.searchBy with additional search param', () => {
@@ -289,7 +317,12 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByGroup(groupUUID, resourceUUID));
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByGroupMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByGroupMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should return a RemoteData<PaginatedList<ResourcePolicy>) for the search', () => {
@@ -299,7 +332,6 @@ describe('ResourcePolicyService', () => {
       });
       expect(result).toBeObservable(expected);
     });
-
   });
 
   describe('searchByResource', () => {
@@ -309,7 +341,12 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByResource(resourceUUID));
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByResourceMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByResourceMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should proxy the call to searchData.searchBy with additional search param', () => {
@@ -322,7 +359,12 @@ describe('ResourcePolicyService', () => {
       scheduler.schedule(() => service.searchByResource(resourceUUID, action));
       scheduler.flush();
 
-      expect((service as any).searchData.searchBy).toHaveBeenCalledWith((service as any).searchByResourceMethod, options, true, true);
+      expect((service as any).searchData.searchBy).toHaveBeenCalledWith(
+        (service as any).searchByResourceMethod,
+        options,
+        true,
+        true,
+      );
     });
 
     it('should return a RemoteData<PaginatedList<ResourcePolicy>) for the search', () => {
@@ -336,32 +378,53 @@ describe('ResourcePolicyService', () => {
 
   describe('updateTarget', () => {
     beforeEach(() => {
-      scheduler.schedule(() => service.create(resourcePolicy, resourceUUID, epersonUUID));
+      scheduler.schedule(() =>
+        service.create(resourcePolicy, resourceUUID, epersonUUID),
+      );
     });
 
     it('should send a PUT request to update the EPerson', () => {
-      service.updateTarget(resourcePolicyId, requestURL, epersonUUID, 'eperson');
+      service.updateTarget(
+        resourcePolicyId,
+        requestURL,
+        epersonUUID,
+        'eperson',
+      );
       scheduler.flush();
 
-      expect(requestService.send).toHaveBeenCalledWith(jasmine.objectContaining({
-        method: RestRequestMethod.PUT,
-        uuid: requestUUID,
-        href: `${resourcePolicy._links.self.href}/eperson`,
-        body: 'https://rest.api/rest/api/eperson/epersons/' + epersonUUID,
-      }));
+      expect(requestService.send).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          method: RestRequestMethod.PUT,
+          uuid: requestUUID,
+          href: `${resourcePolicy._links.self.href}/eperson`,
+          body: 'https://rest.api/rest/api/eperson/epersons/' + epersonUUID,
+        }),
+      );
     });
 
     it('should invalidate the ResourcePolicy', () => {
-      service.updateTarget(resourcePolicyId, requestURL, epersonUUID, 'eperson');
+      service.updateTarget(
+        resourcePolicyId,
+        requestURL,
+        epersonUUID,
+        'eperson',
+      );
       scheduler.flush();
 
       expect(rdbService.buildFromRequestUUIDAndAwait).toHaveBeenCalled();
-      expect((rdbService.buildFromRequestUUIDAndAwait as jasmine.Spy).calls.argsFor(0)[0]).toBe(requestService.generateRequestId());
-      const callback = (rdbService.buildFromRequestUUIDAndAwait as jasmine.Spy).calls.argsFor(0)[1];
+      expect(
+        (rdbService.buildFromRequestUUIDAndAwait as jasmine.Spy).calls.argsFor(
+          0,
+        )[0],
+      ).toBe(requestService.generateRequestId());
+      const callback = (
+        rdbService.buildFromRequestUUIDAndAwait as jasmine.Spy
+      ).calls.argsFor(0)[1];
       callback();
 
-      expect(service.invalidateByHref).toHaveBeenCalledWith(resourcePolicy._links.self.href);
+      expect(service.invalidateByHref).toHaveBeenCalledWith(
+        resourcePolicy._links.self.href,
+      );
     });
   });
-
 });

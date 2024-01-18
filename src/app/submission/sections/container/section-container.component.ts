@@ -1,10 +1,4 @@
-import {
-  Component,
-  Injector,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Injector, Input, OnInit, ViewChild } from '@angular/core';
 
 import { AlertType } from '../../../shared/alert/alert-type';
 import { SectionDataObject } from '../models/section-data.model';
@@ -20,7 +14,6 @@ import { rendersSectionType } from '../sections-decorator';
   styleUrls: ['./section-container.component.scss'],
 })
 export class SubmissionSectionContainerComponent implements OnInit {
-
   /**
    * The collection id this submission belonging to
    * @type {string}
@@ -61,8 +54,7 @@ export class SubmissionSectionContainerComponent implements OnInit {
    *
    * @param {Injector} injector
    */
-  constructor(private injector: Injector) {
-  }
+  constructor(private injector: Injector) {}
 
   /**
    * Initialize all instance variables
@@ -70,9 +62,21 @@ export class SubmissionSectionContainerComponent implements OnInit {
   ngOnInit() {
     this.objectInjector = Injector.create({
       providers: [
-        { provide: 'collectionIdProvider', useFactory: () => (this.collectionId), deps: [] },
-        { provide: 'sectionDataProvider', useFactory: () => (this.sectionData), deps: [] },
-        { provide: 'submissionIdProvider', useFactory: () => (this.submissionId), deps: [] },
+        {
+          provide: 'collectionIdProvider',
+          useFactory: () => this.collectionId,
+          deps: [],
+        },
+        {
+          provide: 'sectionDataProvider',
+          useFactory: () => this.sectionData,
+          deps: [],
+        },
+        {
+          provide: 'submissionIdProvider',
+          useFactory: () => this.submissionId,
+          deps: [],
+        },
       ],
       parent: this.injector,
     });

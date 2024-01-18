@@ -15,7 +15,6 @@ export const CommunityListActionTypes = {
  * Community list SAVE action
  */
 export class CommunityListSaveAction implements Action {
-
   type = CommunityListActionTypes.SAVE;
 
   payload: {

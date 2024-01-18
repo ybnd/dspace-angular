@@ -1,20 +1,10 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import {
-  BehaviorSubject,
-  of as observableOf,
-} from 'rxjs';
+import { BehaviorSubject, of as observableOf } from 'rxjs';
 
 import { RemoteDataBuildService } from '../../../../../core/cache/builders/remote-data-build.service';
 import { buildPaginatedList } from '../../../../../core/data/paginated-list.model';
@@ -46,15 +36,18 @@ describe('SearchRangeFilterComponent', () => {
   const value1 = '2000 - 2012';
   const value2 = '1992 - 2000';
   const value3 = '1990 - 1992';
-  const mockFilterConfig: SearchFilterConfig = Object.assign(new SearchFilterConfig(), {
-    name: filterName1,
-    filterType: FilterType.range,
-    hasFacets: false,
-    isOpenByDefault: false,
-    pageSize: 2,
-    minValue: 200,
-    maxValue: 3000,
-  });
+  const mockFilterConfig: SearchFilterConfig = Object.assign(
+    new SearchFilterConfig(),
+    {
+      name: filterName1,
+      filterType: FilterType.range,
+      hasFacets: false,
+      isOpenByDefault: false,
+      pageSize: 2,
+      minValue: 200,
+      maxValue: 3000,
+    },
+  );
   const values: FacetValue[] = [
     {
       label: value1,
@@ -68,7 +61,8 @@ describe('SearchRangeFilterComponent', () => {
           href: '',
         },
       },
-    }, {
+    },
+    {
       label: value2,
       value: value2,
       count: 20,
@@ -80,7 +74,8 @@ describe('SearchRangeFilterComponent', () => {
           href: '',
         },
       },
-    }, {
+    },
+    {
       label: value3,
       value: value3,
       count: 5,
@@ -102,7 +97,9 @@ describe('SearchRangeFilterComponent', () => {
   let router;
   const page = observableOf(0);
 
-  const mockValues = createSuccessfulRemoteDataObject$(buildPaginatedList(new PageInfo(), values));
+  const mockValues = createSuccessfulRemoteDataObject$(
+    buildPaginatedList(new PageInfo(), values),
+  );
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot(), NoopAnimationsModule, FormsModule],
@@ -111,29 +108,43 @@ describe('SearchRangeFilterComponent', () => {
         { provide: SearchService, useValue: new SearchServiceStub(searchLink) },
         { provide: Router, useValue: new RouterStub() },
         { provide: FILTER_CONFIG, useValue: mockFilterConfig },
-        { provide: RemoteDataBuildService, useValue: { aggregate: () => observableOf({}) } },
-        { provide: RouteService, useValue: { getQueryParameterValue: () => observableOf({}) } },
-        { provide: SEARCH_CONFIG_SERVICE, useValue: new SearchConfigurationServiceStub() },
-        { provide: IN_PLACE_SEARCH, useValue: false },
-        { provide: REFRESH_FILTER, useValue: new BehaviorSubject<boolean>(false) },
         {
-          provide: SearchFilterService, useValue: {
+          provide: RemoteDataBuildService,
+          useValue: { aggregate: () => observableOf({}) },
+        },
+        {
+          provide: RouteService,
+          useValue: { getQueryParameterValue: () => observableOf({}) },
+        },
+        {
+          provide: SEARCH_CONFIG_SERVICE,
+          useValue: new SearchConfigurationServiceStub(),
+        },
+        { provide: IN_PLACE_SEARCH, useValue: false },
+        {
+          provide: REFRESH_FILTER,
+          useValue: new BehaviorSubject<boolean>(false),
+        },
+        {
+          provide: SearchFilterService,
+          useValue: {
             getSelectedValuesForFilter: () => selectedValues,
-            isFilterActiveWithValue: (paramName: string, filterValue: string) => true,
+            isFilterActiveWithValue: (paramName: string, filterValue: string) =>
+              true,
             getPage: (paramName: string) => page,
             /* eslint-disable no-empty,@typescript-eslint/no-empty-function */
-            incrementPage: (filterName: string) => {
-            },
-            resetPage: (filterName: string) => {
-            },
+            incrementPage: (filterName: string) => {},
+            resetPage: (filterName: string) => {},
             /* eslint-enable no-empty, @typescript-eslint/no-empty-function */
           },
         },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(SearchRangeFilterComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(SearchRangeFilterComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(() => {

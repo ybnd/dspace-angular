@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -45,19 +41,24 @@ describe('DsoEditMenuExpandableSectionComponent', () => {
         { provide: CSSVariableService, useClass: CSSVariableServiceStub },
         { provide: Router, useValue: new RouterStub() },
       ],
-    }).overrideComponent(DsoEditMenuExpandableSectionComponent, {
-      set: {
-        entryComponents: [TestComponent],
-      },
     })
+      .overrideComponent(DsoEditMenuExpandableSectionComponent, {
+        set: {
+          entryComponents: [TestComponent],
+        },
+      })
       .compileComponents();
   }));
 
   beforeEach(() => {
-    spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(observableOf([]));
+    spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(
+      observableOf([]),
+    );
     fixture = TestBed.createComponent(DsoEditMenuExpandableSectionComponent);
     component = fixture.componentInstance;
-    spyOn(component as any, 'getMenuItemComponent').and.returnValue(TestComponent);
+    spyOn(component as any, 'getMenuItemComponent').and.returnValue(
+      TestComponent,
+    );
     fixture.detectChanges();
   });
 
@@ -76,5 +77,4 @@ describe('DsoEditMenuExpandableSectionComponent', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-}
+class TestComponent {}

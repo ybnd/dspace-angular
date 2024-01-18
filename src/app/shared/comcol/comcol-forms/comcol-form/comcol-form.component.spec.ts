@@ -1,14 +1,7 @@
 import { Location } from '@angular/common';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  UntypedFormControl,
-  UntypedFormGroup,
-} from '@angular/forms';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
@@ -45,7 +38,9 @@ describe('ComColFormComponent', () => {
       const controls = {};
       if (hasValue(fModel)) {
         fModel.forEach((controlModel) => {
-          controls[controlModel.id] = new UntypedFormControl((controlModel as any).value);
+          controls[controlModel.id] = new UntypedFormControl(
+            (controlModel as any).value,
+          );
         });
         return new UntypedFormGroup(controls);
       }
@@ -55,8 +50,12 @@ describe('ComColFormComponent', () => {
   const dcTitle = 'dc.title';
   const dcAbstract = 'dc.description.abstract';
 
-  const abstractMD = { [dcAbstract]: [{ value: 'Community description', language: null }] };
-  const newTitleMD = { [dcTitle]: [{ value: 'New Community Title', language: null }] };
+  const abstractMD = {
+    [dcAbstract]: [{ value: 'Community description', language: null }],
+  };
+  const newTitleMD = {
+    [dcTitle]: [{ value: 'New Community Title', language: null }],
+  };
   const formModel = [
     new DynamicInputModel({
       id: 'title',
@@ -107,11 +106,13 @@ describe('ComColFormComponent', () => {
     }).compileComponents();
   }));
 
-  describe('when the dso doesn\'t contain an ID (newly created)', () => {
+  describe("when the dso doesn't contain an ID (newly created)", () => {
     beforeEach(() => {
-      initComponent(Object.assign(new Community(), {
-        _links: { self: { href: 'community-self' } },
-      }));
+      initComponent(
+        Object.assign(new Community(), {
+          _links: { self: { href: 'community-self' } },
+        }),
+      );
     });
 
     it('should initialize the uploadFilesOptions with a placeholder url', () => {
@@ -147,27 +148,28 @@ describe('ComColFormComponent', () => {
           },
         ];
 
-        expect(comp.submitForm.emit).toHaveBeenCalledWith(
-          {
-            dso: Object.assign({}, comp.dso, {
-              metadata: {
-                'dc.title': [{
+        expect(comp.submitForm.emit).toHaveBeenCalledWith({
+          dso: Object.assign({}, comp.dso, {
+            metadata: {
+              'dc.title': [
+                {
                   value: 'New Community Title',
                   language: null,
-                }],
-                'dc.description.abstract': [{
+                },
+              ],
+              'dc.description.abstract': [
+                {
                   value: 'Community description',
                   language: null,
-                }],
-              },
-              type: Community.type,
+                },
+              ],
             },
-            ),
-            uploader: undefined,
-            deleteLogo: false,
-            operations: operations,
-          },
-        );
+            type: Community.type,
+          }),
+          uploader: undefined,
+          deleteLogo: false,
+          operations: operations,
+        });
       });
     });
 
@@ -203,16 +205,18 @@ describe('ComColFormComponent', () => {
   });
 
   describe('when the dso contains an ID (being edited)', () => {
-    describe('and the dso doesn\'t contain a logo', () => {
+    describe("and the dso doesn't contain a logo", () => {
       beforeEach(() => {
-        initComponent(Object.assign(new Community(), {
-          id: 'community-id',
-          logo: createSuccessfulRemoteDataObject$(undefined),
-          _links: { self: { href: 'community-self' } },
-        }));
+        initComponent(
+          Object.assign(new Community(), {
+            id: 'community-id',
+            logo: createSuccessfulRemoteDataObject$(undefined),
+            _links: { self: { href: 'community-self' } },
+          }),
+        );
       });
 
-      it('should initialize the uploadFilesOptions with the logo\'s endpoint url', () => {
+      it("should initialize the uploadFilesOptions with the logo's endpoint url", () => {
         expect(comp.uploadFilesOptions.url).toEqual(logoEndpoint);
       });
 
@@ -223,17 +227,19 @@ describe('ComColFormComponent', () => {
 
     describe('and the dso contains a logo', () => {
       beforeEach(() => {
-        initComponent(Object.assign(new Community(), {
-          id: 'community-id',
-          logo: createSuccessfulRemoteDataObject$(logo),
-          _links: {
-            self: { href: 'community-self' },
-            logo: { href: 'community-logo' },
-          },
-        }));
+        initComponent(
+          Object.assign(new Community(), {
+            id: 'community-id',
+            logo: createSuccessfulRemoteDataObject$(logo),
+            _links: {
+              self: { href: 'community-self' },
+              logo: { href: 'community-logo' },
+            },
+          }),
+        );
       });
 
-      it('should initialize the uploadFilesOptions with the logo\'s endpoint url', () => {
+      it("should initialize the uploadFilesOptions with the logo's endpoint url", () => {
         expect(comp.uploadFilesOptions.url).toEqual(logoEndpoint);
       });
 
@@ -256,7 +262,9 @@ describe('ComColFormComponent', () => {
 
         describe('when dsoService.deleteLogo returns a successful response', () => {
           beforeEach(() => {
-            dsoService.deleteLogo.and.returnValue(createSuccessfulRemoteDataObject$({}));
+            dsoService.deleteLogo.and.returnValue(
+              createSuccessfulRemoteDataObject$({}),
+            );
             comp.onSubmit();
           });
 
@@ -267,7 +275,9 @@ describe('ComColFormComponent', () => {
 
         describe('when dsoService.deleteLogo returns an error response', () => {
           beforeEach(() => {
-            dsoService.deleteLogo.and.returnValue(createFailedRemoteDataObject$('Error', 500));
+            dsoService.deleteLogo.and.returnValue(
+              createFailedRemoteDataObject$('Error', 500),
+            );
             comp.onSubmit();
           });
 
@@ -288,17 +298,23 @@ describe('ComColFormComponent', () => {
         });
 
         it('should mark the logo section with a danger alert', () => {
-          const logoSection = fixture.debugElement.query(By.css('#logo-section.alert-danger'));
+          const logoSection = fixture.debugElement.query(
+            By.css('#logo-section.alert-danger'),
+          );
           expect(logoSection).toBeTruthy();
         });
 
         it('should hide the delete button', () => {
-          const button = fixture.debugElement.query(By.css('#logo-section .btn-danger'));
+          const button = fixture.debugElement.query(
+            By.css('#logo-section .btn-danger'),
+          );
           expect(button).not.toBeTruthy();
         });
 
         it('should show the undo button', () => {
-          const button = fixture.debugElement.query(By.css('#logo-section .btn-warning'));
+          const button = fixture.debugElement.query(
+            By.css('#logo-section .btn-warning'),
+          );
           expect(button).toBeTruthy();
         });
       });
@@ -315,17 +331,23 @@ describe('ComColFormComponent', () => {
         });
 
         it('should disable the danger alert on the logo section', () => {
-          const logoSection = fixture.debugElement.query(By.css('#logo-section.alert-danger'));
+          const logoSection = fixture.debugElement.query(
+            By.css('#logo-section.alert-danger'),
+          );
           expect(logoSection).not.toBeTruthy();
         });
 
         it('should show the delete button', () => {
-          const button = fixture.debugElement.query(By.css('#logo-section .btn-danger'));
+          const button = fixture.debugElement.query(
+            By.css('#logo-section .btn-danger'),
+          );
           expect(button).toBeTruthy();
         });
 
         it('should hide the undo button', () => {
-          const button = fixture.debugElement.query(By.css('#logo-section .btn-warning'));
+          const button = fixture.debugElement.query(
+            By.css('#logo-section .btn-warning'),
+          );
           expect(button).not.toBeTruthy();
         });
       });

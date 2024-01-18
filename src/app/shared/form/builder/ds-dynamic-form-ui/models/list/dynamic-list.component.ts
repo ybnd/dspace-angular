@@ -25,10 +25,7 @@ import { getFirstSucceededRemoteDataPayload } from '../../../../../../core/share
 import { PageInfo } from '../../../../../../core/shared/page-info.model';
 import { VocabularyEntry } from '../../../../../../core/submission/vocabularies/models/vocabulary-entry.model';
 import { VocabularyService } from '../../../../../../core/submission/vocabularies/vocabulary.service';
-import {
-  hasValue,
-  isNotEmpty,
-} from '../../../../../empty.util';
+import { hasValue, isNotEmpty } from '../../../../../empty.util';
 import { FormBuilderService } from '../../../form-builder.service';
 import { DynamicListCheckboxGroupModel } from './dynamic-list-checkbox-group.model';
 import { DynamicListRadioGroupModel } from './dynamic-list-radio-group.model';
@@ -48,8 +45,10 @@ export interface ListItem {
   styleUrls: ['./dynamic-list.component.scss'],
   templateUrl: './dynamic-list.component.html',
 })
-export class DsDynamicListComponent extends DynamicFormControlComponent implements OnInit {
-
+export class DsDynamicListComponent
+  extends DynamicFormControlComponent
+  implements OnInit
+{
   @Input() group: UntypedFormGroup;
   @Input() model: any;
 
@@ -60,11 +59,12 @@ export class DsDynamicListComponent extends DynamicFormControlComponent implemen
   public items: ListItem[][] = [];
   protected optionsList: VocabularyEntry[];
 
-  constructor(private vocabularyService: VocabularyService,
-              private cdr: ChangeDetectorRef,
-              private formBuilderService: FormBuilderService,
-              protected layoutService: DynamicFormLayoutService,
-              protected validationService: DynamicFormValidationService,
+  constructor(
+    private vocabularyService: VocabularyService,
+    private cdr: ChangeDetectorRef,
+    private formBuilderService: FormBuilderService,
+    protected layoutService: DynamicFormLayoutService,
+    protected validationService: DynamicFormValidationService,
   ) {
     super(layoutService, validationService);
   }
@@ -73,7 +73,10 @@ export class DsDynamicListComponent extends DynamicFormControlComponent implemen
    * Initialize the component, setting up the field options
    */
   ngOnInit() {
-    if (this.model.vocabularyOptions && hasValue(this.model.vocabularyOptions.name)) {
+    if (
+      this.model.vocabularyOptions &&
+      hasValue(this.model.vocabularyOptions.name)
+    ) {
       this.setOptionsFromVocabulary();
     }
   }
@@ -113,7 +116,8 @@ export class DsDynamicListComponent extends DynamicFormControlComponent implemen
         this.model.valueUpdates.next(newValue);
       }
     } else {
-      (this.model as DynamicListRadioGroupModel).value = this.optionsList[target.value];
+      (this.model as DynamicListRadioGroupModel).value =
+        this.optionsList[target.value];
     }
     this.change.emit(event);
   }
@@ -122,54 +126,62 @@ export class DsDynamicListComponent extends DynamicFormControlComponent implemen
    * Setting up the field options from vocabulary
    */
   protected setOptionsFromVocabulary() {
-    if (this.model.vocabularyOptions.name && this.model.vocabularyOptions.name.length > 0) {
+    if (
+      this.model.vocabularyOptions.name &&
+      this.model.vocabularyOptions.name.length > 0
+    ) {
       const listGroup = this.group.controls[this.model.id] as UntypedFormGroup;
       if (this.model.repeatable && this.model.required) {
         listGroup.addValidators(this.hasAtLeastOneVocabularyEntry());
       }
       const pageInfo: PageInfo = new PageInfo({
-        elementsPerPage: 9999, currentPage: 1,
+        elementsPerPage: 9999,
+        currentPage: 1,
       } as PageInfo);
-      this.vocabularyService.getVocabularyEntries(this.model.vocabularyOptions, pageInfo).pipe(
-        getFirstSucceededRemoteDataPayload(),
-      ).subscribe((entries: PaginatedList<VocabularyEntry>) => {
-        let groupCounter = 0;
-        let itemsPerGroup = 0;
-        let tempList: ListItem[] = [];
-        this.optionsList = entries.page;
-        // Make a list of available options (checkbox/radio) and split in groups of 'model.groupLength'
-        entries.page.forEach((option: VocabularyEntry, key: number) => {
-          const value = option.authority || option.value;
-          const checked: boolean = isNotEmpty(findKey(
-            this.model.value,
-            (v) => v.value === option.value));
+      this.vocabularyService
+        .getVocabularyEntries(this.model.vocabularyOptions, pageInfo)
+        .pipe(getFirstSucceededRemoteDataPayload())
+        .subscribe((entries: PaginatedList<VocabularyEntry>) => {
+          let groupCounter = 0;
+          let itemsPerGroup = 0;
+          let tempList: ListItem[] = [];
+          this.optionsList = entries.page;
+          // Make a list of available options (checkbox/radio) and split in groups of 'model.groupLength'
+          entries.page.forEach((option: VocabularyEntry, key: number) => {
+            const value = option.authority || option.value;
+            const checked: boolean = isNotEmpty(
+              findKey(this.model.value, (v) => v.value === option.value),
+            );
 
-          const item: ListItem = {
-            id: `${this.model.id}_${value}`,
-            label: option.display,
-            value: checked,
-            index: key,
-          };
-          if (this.model.repeatable) {
-            this.formBuilderService.addFormGroupControl(listGroup, (this.model as DynamicListCheckboxGroupModel), new DynamicCheckboxModel(item));
-          } else {
-            (this.model as DynamicListRadioGroupModel).options.push({
-              label: item.label,
-              value: option,
-            });
-          }
-          tempList.push(item);
-          itemsPerGroup++;
-          this.items[groupCounter] = tempList;
-          if (itemsPerGroup === this.model.groupLength) {
-            groupCounter++;
-            itemsPerGroup = 0;
-            tempList = [];
-          }
+            const item: ListItem = {
+              id: `${this.model.id}_${value}`,
+              label: option.display,
+              value: checked,
+              index: key,
+            };
+            if (this.model.repeatable) {
+              this.formBuilderService.addFormGroupControl(
+                listGroup,
+                this.model as DynamicListCheckboxGroupModel,
+                new DynamicCheckboxModel(item),
+              );
+            } else {
+              (this.model as DynamicListRadioGroupModel).options.push({
+                label: item.label,
+                value: option,
+              });
+            }
+            tempList.push(item);
+            itemsPerGroup++;
+            this.items[groupCounter] = tempList;
+            if (itemsPerGroup === this.model.groupLength) {
+              groupCounter++;
+              itemsPerGroup = 0;
+              tempList = [];
+            }
+          });
+          this.cdr.markForCheck();
         });
-        this.cdr.markForCheck();
-      });
-
     }
   }
 
@@ -178,8 +190,13 @@ export class DsDynamicListComponent extends DynamicFormControlComponent implemen
    */
   hasAtLeastOneVocabularyEntry(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      return control && control.value && Object.values(control.value).find((checked: boolean) => checked === true) ? null : this.model.errorMessages;
+      return control &&
+        control.value &&
+        Object.values(control.value).find(
+          (checked: boolean) => checked === true,
+        )
+        ? null
+        : this.model.errorMessages;
     };
   }
-
 }

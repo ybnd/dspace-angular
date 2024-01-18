@@ -1,15 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { DebugElement } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
@@ -25,13 +18,11 @@ import { StatisticsTableComponent } from '../statistics-table/statistics-table.c
 import { CollectionStatisticsPageComponent } from './collection-statistics-page.component';
 
 describe('CollectionStatisticsPageComponent', () => {
-
   let component: CollectionStatisticsPageComponent;
   let de: DebugElement;
   let fixture: ComponentFixture<CollectionStatisticsPageComponent>;
 
   beforeEach(waitForAsync(() => {
-
     const activatedRoute = {
       data: observableOf({
         scope: createSuccessfulRemoteDataObject(
@@ -42,21 +33,18 @@ describe('CollectionStatisticsPageComponent', () => {
       }),
     };
 
-    const router = {
-    };
+    const router = {};
 
     const usageReportService = {
       getStatistic: (scope, type) => undefined,
     };
 
-    spyOn(usageReportService, 'getStatistic').and.callFake(
-      (scope, type) => observableOf(
-        Object.assign(
-          new UsageReport(), {
-            id: `${scope}-${type}-report`,
-            points: [],
-          },
-        ),
+    spyOn(usageReportService, 'getStatistic').and.callFake((scope, type) =>
+      observableOf(
+        Object.assign(new UsageReport(), {
+          id: `${scope}-${type}-report`,
+          points: [],
+        }),
       ),
     );
 
@@ -70,11 +58,7 @@ describe('CollectionStatisticsPageComponent', () => {
     });
 
     TestBed.configureTestingModule({
-      imports: [
-        TranslateModule.forRoot(),
-        CommonModule,
-        SharedModule,
-      ],
+      imports: [TranslateModule.forRoot(), CommonModule, SharedModule],
       declarations: [
         CollectionStatisticsPageComponent,
         StatisticsTableComponent,
@@ -87,8 +71,7 @@ describe('CollectionStatisticsPageComponent', () => {
         { provide: DSONameService, useValue: nameService },
         { provide: AuthService, useValue: authService },
       ],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -103,18 +86,28 @@ describe('CollectionStatisticsPageComponent', () => {
   });
 
   it('should resolve to the correct collection', () => {
-    expect(de.query(By.css('.header')).nativeElement.id)
-      .toEqual('collection_id');
+    expect(de.query(By.css('.header')).nativeElement.id).toEqual(
+      'collection_id',
+    );
   });
 
   it('should show a statistics table for each usage report', () => {
-    expect(de.query(By.css('ds-statistics-table.collection_id-TotalVisits-report')).nativeElement)
-      .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.collection_id-TotalVisitsPerMonth-report')).nativeElement)
-      .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.collection_id-TopCountries-report')).nativeElement)
-      .toBeTruthy();
-    expect(de.query(By.css('ds-statistics-table.collection_id-TopCities-report')).nativeElement)
-      .toBeTruthy();
+    expect(
+      de.query(By.css('ds-statistics-table.collection_id-TotalVisits-report'))
+        .nativeElement,
+    ).toBeTruthy();
+    expect(
+      de.query(
+        By.css('ds-statistics-table.collection_id-TotalVisitsPerMonth-report'),
+      ).nativeElement,
+    ).toBeTruthy();
+    expect(
+      de.query(By.css('ds-statistics-table.collection_id-TopCountries-report'))
+        .nativeElement,
+    ).toBeTruthy();
+    expect(
+      de.query(By.css('ds-statistics-table.collection_id-TopCities-report'))
+        .nativeElement,
+    ).toBeTruthy();
   });
 });

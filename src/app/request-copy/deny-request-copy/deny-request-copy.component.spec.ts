@@ -1,18 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import {
-  TranslateModule,
-  TranslateService,
-} from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { AuthService } from '../../core/auth/auth.service';
@@ -92,11 +82,15 @@ describe('DenyRequestCopyComponent', () => {
     router = jasmine.createSpyObj('router', {
       navigateByUrl: jasmine.createSpy('navigateByUrl'),
     });
-    route = jasmine.createSpyObj('route', {}, {
-      data: observableOf({
-        request: createSuccessfulRemoteDataObject(itemRequest),
-      }),
-    });
+    route = jasmine.createSpyObj(
+      'route',
+      {},
+      {
+        data: observableOf({
+          request: createSuccessfulRemoteDataObject(itemRequest),
+        }),
+      },
+    );
     authService = jasmine.createSpyObj('authService', {
       isAuthenticated: observableOf(true),
       getAuthenticatedUserFromStore: observableOf(user),
@@ -107,7 +101,10 @@ describe('DenyRequestCopyComponent', () => {
     itemRequestService = jasmine.createSpyObj('itemRequestService', {
       deny: createSuccessfulRemoteDataObject$(itemRequest),
     });
-    notificationsService = jasmine.createSpyObj('notificationsService', ['success', 'error']);
+    notificationsService = jasmine.createSpyObj('notificationsService', [
+      'success',
+      'error',
+    ]);
 
     return TestBed.configureTestingModule({
       declarations: [DenyRequestCopyComponent, VarDirective],
@@ -131,18 +128,23 @@ describe('DenyRequestCopyComponent', () => {
     fixture.detectChanges();
 
     translateService = (component as any).translateService;
-    spyOn(translateService, 'get').and.returnValue(observableOf('translated-message'));
+    spyOn(translateService, 'get').and.returnValue(
+      observableOf('translated-message'),
+    );
   });
 
   it('message$ should be parameterized correctly', (done) => {
     component.message$.subscribe(() => {
-      expect(translateService.get).toHaveBeenCalledWith(jasmine.anything(), Object.assign({
-        recipientName: itemRequest.requestName,
-        itemUrl: itemUrl,
-        itemName: itemName,
-        authorName: user.name,
-        authorEmail: user.email,
-      }));
+      expect(translateService.get).toHaveBeenCalledWith(
+        jasmine.anything(),
+        Object.assign({
+          recipientName: itemRequest.requestName,
+          itemUrl: itemUrl,
+          itemName: itemName,
+          authorName: user.name,
+          authorEmail: user.email,
+        }),
+      );
       done();
     });
   });
@@ -153,7 +155,9 @@ describe('DenyRequestCopyComponent', () => {
     describe('when the request is successful', () => {
       beforeEach(() => {
         email = new RequestCopyEmail('subject', 'message');
-        (itemRequestService.deny as jasmine.Spy).and.returnValue(createSuccessfulRemoteDataObject$(itemRequest));
+        (itemRequestService.deny as jasmine.Spy).and.returnValue(
+          createSuccessfulRemoteDataObject$(itemRequest),
+        );
         component.deny(email);
       });
 
@@ -169,7 +173,9 @@ describe('DenyRequestCopyComponent', () => {
     describe('when the request is unsuccessful', () => {
       beforeEach(() => {
         email = new RequestCopyEmail('subject', 'message');
-        (itemRequestService.deny as jasmine.Spy).and.returnValue(createFailedRemoteDataObject$());
+        (itemRequestService.deny as jasmine.Spy).and.returnValue(
+          createFailedRemoteDataObject$(),
+        );
         component.deny(email);
       });
 

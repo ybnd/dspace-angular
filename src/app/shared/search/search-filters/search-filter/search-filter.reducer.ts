@@ -27,12 +27,13 @@ const initialState: SearchFiltersState = Object.create(null);
  * @param {SearchFilterAction} action The action that should be performed
  * @returns {SearchFiltersState} The state after the action is performed
  */
-export function filterReducer(state = initialState, action: SearchFilterAction): SearchFiltersState {
-
+export function filterReducer(
+  state = initialState,
+  action: SearchFilterAction,
+): SearchFiltersState {
   switch (action.type) {
-
     case SearchFilterActionTypes.INITIALIZE: {
-      const initAction = (action as SearchFilterInitializeAction);
+      const initAction = action as SearchFilterInitializeAction;
       return Object.assign({}, state, {
         [action.filterName]: {
           filterCollapsed: !initAction.initiallyExpanded,
@@ -58,7 +59,6 @@ export function filterReducer(state = initialState, action: SearchFilterAction):
           page: state[action.filterName].page,
         },
       });
-
     }
 
     case SearchFilterActionTypes.DECREMENT_PAGE: {
@@ -66,7 +66,7 @@ export function filterReducer(state = initialState, action: SearchFilterAction):
       return Object.assign({}, state, {
         [action.filterName]: {
           filterCollapsed: state[action.filterName].filterCollapsed,
-          page: (page >= 1 ? page : 1),
+          page: page >= 1 ? page : 1,
         },
       });
     }
@@ -78,7 +78,6 @@ export function filterReducer(state = initialState, action: SearchFilterAction):
           page: state[action.filterName].page + 1,
         },
       });
-
     }
     case SearchFilterActionTypes.RESET_PAGE: {
       return Object.assign({}, state, {
@@ -87,7 +86,6 @@ export function filterReducer(state = initialState, action: SearchFilterAction):
           page: 1,
         },
       });
-
     }
 
     case SearchFilterActionTypes.TOGGLE: {
@@ -97,7 +95,6 @@ export function filterReducer(state = initialState, action: SearchFilterAction):
           page: state[action.filterName].page,
         },
       });
-
     }
 
     default: {

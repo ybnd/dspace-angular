@@ -1,15 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {
-  TranslateLoader,
-  TranslateModule,
-} from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { of as observableOf } from 'rxjs';
 
 import { LinkService } from '../../core/cache/builders/link.service';
@@ -41,17 +34,13 @@ describe('NewProcessComponent', () => {
       Object.assign(new ProcessParameter(), { name: '-b', value: '123' }),
       Object.assign(new ProcessParameter(), { name: '-c', value: 'value' }),
     ];
-    scriptService = jasmine.createSpyObj(
-      'scriptService',
-      {
-        invoke: observableOf({
-          response:
-            {
-              isSuccessful: true,
-            },
-        }),
-      },
-    );
+    scriptService = jasmine.createSpyObj('scriptService', {
+      invoke: observableOf({
+        response: {
+          isSuccessful: true,
+        },
+      }),
+    });
   }
 
   beforeEach(waitForAsync(() => {
@@ -64,19 +53,22 @@ describe('NewProcessComponent', () => {
             provide: TranslateLoader,
             useClass: TranslateLoaderMock,
           },
-        })],
+        }),
+      ],
       declarations: [NewProcessComponent, VarDirective],
       providers: [
         { provide: ScriptDataService, useValue: scriptService },
         { provide: NotificationsService, useClass: NotificationsServiceStub },
         { provide: RequestService, useValue: {} },
-        { provide: ActivatedRoute, useValue: { snapshot: { queryParams: {} } } },
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { queryParams: {} } },
+        },
         { provide: LinkService, useValue: {} },
         { provide: ProcessDataService, useValue: {} },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

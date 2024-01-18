@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import {
-  filter,
-  map,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { filter, map, switchMap, take } from 'rxjs/operators';
 
 import { isNotEmpty } from '../../shared/empty.util';
 import { NotificationsService } from '../../shared/notifications/notifications.service';
@@ -38,7 +33,16 @@ export class CommunityDataService extends ComColDataService<Community> {
     protected notificationsService: NotificationsService,
     protected bitstreamDataService: BitstreamDataService,
   ) {
-    super('communities', requestService, rdbService, objectCache, halService, comparator, notificationsService, bitstreamDataService);
+    super(
+      'communities',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      notificationsService,
+      bitstreamDataService,
+    );
   }
 
   // this method is overridden in order to make it public
@@ -46,18 +50,29 @@ export class CommunityDataService extends ComColDataService<Community> {
     return this.halService.getEndpoint(this.linkPath);
   }
 
-  findTop(options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<Community>[]): Observable<RemoteData<PaginatedList<Community>>> {
+  findTop(
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<Community>[]
+  ): Observable<RemoteData<PaginatedList<Community>>> {
     return this.getEndpoint().pipe(
-      map(href => `${href}/search/top`),
-      switchMap(href => this.findListByHref(href, options, true, true, ...linksToFollow)),
+      map((href) => `${href}/search/top`),
+      switchMap((href) =>
+        this.findListByHref(href, options, true, true, ...linksToFollow),
+      ),
     );
   }
 
   protected getFindByParentHref(parentUUID: string): Observable<string> {
-    return this.halService.getEndpoint(this.linkPath).pipe(
-      switchMap((communityEndpointHref: string) =>
-        this.halService.getEndpoint('subcommunities', `${communityEndpointHref}/${parentUUID}`)),
-    );
+    return this.halService
+      .getEndpoint(this.linkPath)
+      .pipe(
+        switchMap((communityEndpointHref: string) =>
+          this.halService.getEndpoint(
+            'subcommunities',
+            `${communityEndpointHref}/${parentUUID}`,
+          ),
+        ),
+      );
   }
 
   protected getScopeCommunityHref(options: FindListOptions) {

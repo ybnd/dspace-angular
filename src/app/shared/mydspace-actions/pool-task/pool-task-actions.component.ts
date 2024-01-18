@@ -1,16 +1,8 @@
-import {
-  Component,
-  Injector,
-  Input,
-  OnDestroy,
-} from '@angular/core';
+import { Component, Injector, Input, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
-import {
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 
 import { RemoteData } from '../../../core/data/remote-data';
 import { RequestService } from '../../../core/data/request.service';
@@ -34,8 +26,10 @@ import { MyDSpaceReloadableActionsComponent } from '../mydspace-reloadable-actio
   styleUrls: ['./pool-task-actions.component.scss'],
   templateUrl: './pool-task-actions.component.html',
 })
-export class PoolTaskActionsComponent extends MyDSpaceReloadableActionsComponent<PoolTask, PoolTaskDataService> implements OnDestroy {
-
+export class PoolTaskActionsComponent
+  extends MyDSpaceReloadableActionsComponent<PoolTask, PoolTaskDataService>
+  implements OnDestroy
+{
   /**
    * The PoolTask object
    */
@@ -69,14 +63,24 @@ export class PoolTaskActionsComponent extends MyDSpaceReloadableActionsComponent
    * @param {SearchService} searchService
    * @param {RequestService} requestService
    */
-  constructor(protected injector: Injector,
+  constructor(
+    protected injector: Injector,
     protected router: Router,
     protected notificationsService: NotificationsService,
     protected claimedTaskService: ClaimedTaskDataService,
     protected translate: TranslateService,
     protected searchService: SearchService,
-    protected requestService: RequestService) {
-    super(PoolTask.type, injector, router, notificationsService, translate, searchService, requestService);
+    protected requestService: RequestService,
+  ) {
+    super(
+      PoolTask.type,
+      injector,
+      router,
+      notificationsService,
+      translate,
+      searchService,
+      requestService,
+    );
   }
 
   /**
@@ -96,10 +100,11 @@ export class PoolTaskActionsComponent extends MyDSpaceReloadableActionsComponent
   }
 
   actionExecution(): Observable<ProcessTaskResponse> {
-    return this.objectDataService.getPoolTaskEndpointById(this.object.id)
-      .pipe(switchMap((poolTaskHref) => {
+    return this.objectDataService.getPoolTaskEndpointById(this.object.id).pipe(
+      switchMap((poolTaskHref) => {
         return this.claimedTaskService.claimTask(this.object.id, poolTaskHref);
-      }));
+      }),
+    );
   }
 
   reloadObjectExecution(): Observable<RemoteData<DSpaceObject> | DSpaceObject> {
@@ -123,5 +128,4 @@ export class PoolTaskActionsComponent extends MyDSpaceReloadableActionsComponent
   getWorkflowItemViewRoute(workflowitem: WorkflowItem): string {
     return getWorkflowItemViewRoute(workflowitem?.id);
   }
-
 }

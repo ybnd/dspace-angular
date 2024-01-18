@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { RemoteData } from '../core/data/remote-data';
 import { Bitstream } from '../core/shared/bitstream.model';
@@ -14,7 +11,6 @@ import { ThumbnailComponent } from './thumbnail.component';
   templateUrl: '../shared/theme-support/themed.component.html',
 })
 export class ThemedThumbnailComponent extends ThemedComponent<ThumbnailComponent> {
-
   @Input() thumbnail: Bitstream | RemoteData<Bitstream>;
 
   @Input() defaultImage?: string | null;
@@ -38,11 +34,12 @@ export class ThemedThumbnailComponent extends ThemedComponent<ThumbnailComponent
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../themes/${themeName}/app/thumbnail/thumbnail.component`);
+    return import(
+      `../../themes/${themeName}/app/thumbnail/thumbnail.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {
     return import('./thumbnail.component');
   }
-
 }

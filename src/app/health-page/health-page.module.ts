@@ -12,7 +12,6 @@ import { HealthComponentComponent } from './health-panel/health-component/health
 import { HealthPanelComponent } from './health-panel/health-panel.component';
 import { HealthStatusComponent } from './health-panel/health-status/health-status.component';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -30,5 +29,4 @@ import { HealthStatusComponent } from './health-panel/health-status/health-statu
     HealthInfoComponentComponent,
   ],
 })
-export class HealthPageModule {
-}
+export class HealthPageModule {}

@@ -21,7 +21,9 @@ describe(`isRequestPending`, () => {
     expect(isRequestPending(RequestEntryState.ResponsePending)).toBeFalse();
     expect(isRequestPending(RequestEntryState.Error)).toBeFalse();
     expect(isRequestPending(RequestEntryState.Success)).toBeFalse();
-    expect(isRequestPending(RequestEntryState.ResponsePendingStale)).toBeFalse();
+    expect(
+      isRequestPending(RequestEntryState.ResponsePendingStale),
+    ).toBeFalse();
     expect(isRequestPending(RequestEntryState.ErrorStale)).toBeFalse();
     expect(isRequestPending(RequestEntryState.SuccessStale)).toBeFalse();
   });
@@ -86,7 +88,9 @@ describe(`isResponsePending`, () => {
     expect(isResponsePending(RequestEntryState.RequestPending)).toBeFalse();
     expect(isResponsePending(RequestEntryState.Error)).toBeFalse();
     expect(isResponsePending(RequestEntryState.Success)).toBeFalse();
-    expect(isResponsePending(RequestEntryState.ResponsePendingStale)).toBeFalse();
+    expect(
+      isResponsePending(RequestEntryState.ResponsePendingStale),
+    ).toBeFalse();
     expect(isResponsePending(RequestEntryState.ErrorStale)).toBeFalse();
     expect(isResponsePending(RequestEntryState.SuccessStale)).toBeFalse();
   });
@@ -94,10 +98,16 @@ describe(`isResponsePending`, () => {
 
 describe(`isResponsePendingStale`, () => {
   it(`should only return true if the given state is requestPending`, () => {
-    expect(isResponsePendingStale(RequestEntryState.ResponsePendingStale)).toBeTrue();
+    expect(
+      isResponsePendingStale(RequestEntryState.ResponsePendingStale),
+    ).toBeTrue();
 
-    expect(isResponsePendingStale(RequestEntryState.RequestPending)).toBeFalse();
-    expect(isResponsePendingStale(RequestEntryState.ResponsePending)).toBeFalse();
+    expect(
+      isResponsePendingStale(RequestEntryState.RequestPending),
+    ).toBeFalse();
+    expect(
+      isResponsePendingStale(RequestEntryState.ResponsePending),
+    ).toBeFalse();
     expect(isResponsePendingStale(RequestEntryState.Error)).toBeFalse();
     expect(isResponsePendingStale(RequestEntryState.Success)).toBeFalse();
     expect(isResponsePendingStale(RequestEntryState.ErrorStale)).toBeFalse();
@@ -143,7 +153,9 @@ describe(`hasSucceeded`, () => {
     it(`should return undefined`, () => {
       expect(hasSucceeded(RequestEntryState.RequestPending)).toBeUndefined();
       expect(hasSucceeded(RequestEntryState.ResponsePending)).toBeUndefined();
-      expect(hasSucceeded(RequestEntryState.ResponsePendingStale)).toBeUndefined();
+      expect(
+        hasSucceeded(RequestEntryState.ResponsePendingStale),
+      ).toBeUndefined();
     });
   });
 
@@ -157,7 +169,6 @@ describe(`hasSucceeded`, () => {
     });
   });
 });
-
 
 describe(`hasCompleted`, () => {
   it(`should only return true if the given state is Error, Success, ErrorStale or SuccessStale`, () => {

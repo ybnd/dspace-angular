@@ -16,9 +16,10 @@ import { followLink } from '../shared/utils/follow-link-config.model';
  * This class represents a resolver that requests a specific workflow item before the route is activated
  */
 @Injectable()
-export class WorkflowItemPageResolver implements Resolve<RemoteData<WorkflowItem>> {
-  constructor(private workflowItemService: WorkflowItemDataService) {
-  }
+export class WorkflowItemPageResolver
+  implements Resolve<RemoteData<WorkflowItem>>
+{
+  constructor(private workflowItemService: WorkflowItemDataService) {}
 
   /**
    * Method for resolving a workflow item based on the parameters in the current route
@@ -27,13 +28,12 @@ export class WorkflowItemPageResolver implements Resolve<RemoteData<WorkflowItem
    * @returns Observable<<RemoteData<Item>> Emits the found workflow item based on the parameters in the current route,
    * or an error if something went wrong
    */
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<RemoteData<WorkflowItem>> {
-    return this.workflowItemService.findById(route.params.id,
-      true,
-      false,
-      followLink('item'),
-    ).pipe(
-      getFirstCompletedRemoteData(),
-    );
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<RemoteData<WorkflowItem>> {
+    return this.workflowItemService
+      .findById(route.params.id, true, false, followLink('item'))
+      .pipe(getFirstCompletedRemoteData());
   }
 }

@@ -1,7 +1,4 @@
-import {
-  Component,
-  OnInit,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { FilterType } from '../../../models/filter-type.model';
 import {
@@ -16,10 +13,10 @@ import { renderFacetFor } from '../search-filter-type-decorator';
   templateUrl: './search-boolean-filter.component.html',
   animations: [facetLoad],
 })
-
 /**
  * Component that represents a boolean facet for a specific filter configuration
  */
 @renderFacetFor(FilterType.boolean)
-export class SearchBooleanFilterComponent extends SearchFacetFilterComponent implements OnInit {
-}
+export class SearchBooleanFilterComponent
+  extends SearchFacetFilterComponent
+  implements OnInit {}

@@ -29,7 +29,6 @@ describe('FeedbackDataService', () => {
     page: '/home',
   });
 
-
   function initTestService(): FeedbackDataService {
     bundleLink = '/items/0fdc0cd7-ff8c-433d-b33c-9b56108abc07/bundles';
     bundleHALLink = new HALLink();
@@ -43,7 +42,6 @@ describe('FeedbackDataService', () => {
     rdbService = {} as RemoteDataBuildService;
     notificationsService = {} as NotificationsService;
     objectCache = {
-
       addPatch: () => {
         /* empty */
       },
@@ -62,13 +60,13 @@ describe('FeedbackDataService', () => {
     );
   }
 
-
   beforeEach(() => {
     service = initTestService();
   });
 
   describe('composition', () => {
-    const initService = () => new FeedbackDataService(null, null, null, null, null, null);
+    const initService = () =>
+      new FeedbackDataService(null, null, null, null, null, null);
     testCreateDataImplementation(initService);
   });
 
@@ -82,5 +80,4 @@ describe('FeedbackDataService', () => {
       expect(service.getFeedback).toHaveBeenCalledWith('3');
     });
   });
-
 });

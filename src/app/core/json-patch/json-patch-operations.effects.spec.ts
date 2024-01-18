@@ -1,14 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Store } from '@ngrx/store';
-import {
-  cold,
-  hot,
-} from 'jasmine-marbles';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { cold, hot } from 'jasmine-marbles';
+import { Observable, of as observableOf } from 'rxjs';
 
 import {
   FlushPatchOperationsAction,
@@ -47,12 +41,18 @@ describe('JsonPatchOperationsEffects test suite', () => {
       actions = hot('--a-', {
         a: {
           type: JsonPatchOperationsActionTypes.COMMIT_JSON_PATCH_OPERATIONS,
-          payload: { resourceType: testJsonPatchResourceType, resourceId: testJsonPatchResourceId },
+          payload: {
+            resourceType: testJsonPatchResourceType,
+            resourceId: testJsonPatchResourceId,
+          },
         },
       });
 
       const expected = cold('--b-', {
-        b: new FlushPatchOperationsAction(testJsonPatchResourceType, testJsonPatchResourceId),
+        b: new FlushPatchOperationsAction(
+          testJsonPatchResourceType,
+          testJsonPatchResourceId,
+        ),
       });
 
       expect(jsonPatchOperationsEffects.commit$).toBeObservable(expected);

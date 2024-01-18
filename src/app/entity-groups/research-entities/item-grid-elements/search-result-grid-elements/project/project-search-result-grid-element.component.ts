@@ -15,5 +15,4 @@ import { ItemSearchResultGridElementComponent } from '../../../../../shared/obje
 /**
  * The component for displaying a grid element for an item search result of the type Project
  */
-export class ProjectSearchResultGridElementComponent extends ItemSearchResultGridElementComponent {
-}
+export class ProjectSearchResultGridElementComponent extends ItemSearchResultGridElementComponent {}

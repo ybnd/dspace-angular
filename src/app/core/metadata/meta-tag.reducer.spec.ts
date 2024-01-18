@@ -6,10 +6,7 @@
  * http://www.dspace.org/license/
  */
 
-import {
-  AddMetaTagAction,
-  ClearMetaTagAction,
-} from './meta-tag.actions';
+import { AddMetaTagAction, ClearMetaTagAction } from './meta-tag.actions';
 import { metaTagReducer } from './meta-tag.reducer';
 
 const nullAction = { type: null };

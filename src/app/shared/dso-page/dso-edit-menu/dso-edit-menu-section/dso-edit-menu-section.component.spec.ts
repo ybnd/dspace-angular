@@ -1,9 +1,5 @@
 import { Component } from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
@@ -18,7 +14,16 @@ import { MenuServiceStub } from '../../../testing/menu-service.stub';
 import { RouterStub } from '../../../testing/router.stub';
 import { DsoEditMenuSectionComponent } from './dso-edit-menu-section.component';
 
-function initAsync(dummySectionText: { visible: boolean; icon: string; active: boolean; model: { disabled: boolean; text: string; type: MenuItemType }; id: string }, menuService: MenuServiceStub) {
+function initAsync(
+  dummySectionText: {
+    visible: boolean;
+    icon: string;
+    active: boolean;
+    model: { disabled: boolean; text: string; type: MenuItemType };
+    id: string;
+  },
+  menuService: MenuServiceStub,
+) {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       imports: [TranslateModule.forRoot()],
@@ -29,11 +34,12 @@ function initAsync(dummySectionText: { visible: boolean; icon: string; active: b
         { provide: CSSVariableService, useClass: CSSVariableServiceStub },
         { provide: Router, useValue: new RouterStub() },
       ],
-    }).overrideComponent(DsoEditMenuSectionComponent, {
-      set: {
-        entryComponents: [TestComponent],
-      },
     })
+      .overrideComponent(DsoEditMenuSectionComponent, {
+        set: {
+          entryComponents: [TestComponent],
+        },
+      })
       .compileComponents();
   }));
 }
@@ -84,10 +90,14 @@ describe('DsoEditMenuSectionComponent', () => {
   describe('text model', () => {
     initAsync(dummySectionText, menuService);
     beforeEach(() => {
-      spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(observableOf([]));
+      spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(
+        observableOf([]),
+      );
       fixture = TestBed.createComponent(DsoEditMenuSectionComponent);
       component = fixture.componentInstance;
-      spyOn(component as any, 'getMenuItemComponent').and.returnValue(TestComponent);
+      spyOn(component as any, 'getMenuItemComponent').and.returnValue(
+        TestComponent,
+      );
       fixture.detectChanges();
     });
 
@@ -102,17 +112,23 @@ describe('DsoEditMenuSectionComponent', () => {
     describe('when the section model in a disabled link or text', () => {
       it('should show just the button', () => {
         const textButton = fixture.debugElement.query(By.css('div div button'));
-        expect(textButton.nativeElement.innerHTML).toContain('fa-' + iconString);
+        expect(textButton.nativeElement.innerHTML).toContain(
+          'fa-' + iconString,
+        );
       });
     });
   });
   describe('on click model', () => {
     initAsync(dummySectionClick, menuService);
     beforeEach(() => {
-      spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(observableOf([]));
+      spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(
+        observableOf([]),
+      );
       fixture = TestBed.createComponent(DsoEditMenuSectionComponent);
       component = fixture.componentInstance;
-      spyOn(component as any, 'getMenuItemComponent').and.returnValue(TestComponent);
+      spyOn(component as any, 'getMenuItemComponent').and.returnValue(
+        TestComponent,
+      );
       fixture.detectChanges();
     });
 
@@ -135,27 +151,34 @@ describe('DsoEditMenuSectionComponent', () => {
         spyOn(component.section.model as OnClickMenuItemModel, 'function');
         component.activate(mockEvent);
 
-        expect((component.section.model as OnClickMenuItemModel).function).toHaveBeenCalled();
+        expect(
+          (component.section.model as OnClickMenuItemModel).function,
+        ).toHaveBeenCalled();
       });
       it('should call not the item model function when disabled', () => {
         spyOn(component.section.model as OnClickMenuItemModel, 'function');
         component.itemModel.disabled = true;
         component.activate(mockEvent);
 
-        expect((component.section.model as OnClickMenuItemModel).function).not.toHaveBeenCalled();
+        expect(
+          (component.section.model as OnClickMenuItemModel).function,
+        ).not.toHaveBeenCalled();
         component.itemModel.disabled = false;
       });
     });
-
   });
 
   describe('link model', () => {
     initAsync(dummySectionLink, menuService);
     beforeEach(() => {
-      spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(observableOf([]));
+      spyOn(menuService, 'getSubSectionsByParentID').and.returnValue(
+        observableOf([]),
+      );
       fixture = TestBed.createComponent(DsoEditMenuSectionComponent);
       component = fixture.componentInstance;
-      spyOn(component as any, 'getMenuItemComponent').and.returnValue(TestComponent);
+      spyOn(component as any, 'getMenuItemComponent').and.returnValue(
+        TestComponent,
+      );
       fixture.detectChanges();
     });
 
@@ -165,7 +188,6 @@ describe('DsoEditMenuSectionComponent', () => {
         expect(link.nativeElement.innerHTML).toContain('button');
       });
     });
-
   });
 });
 
@@ -174,5 +196,4 @@ describe('DsoEditMenuSectionComponent', () => {
   selector: 'ds-test-cmp',
   template: ``,
 })
-class TestComponent {
-}
+class TestComponent {}

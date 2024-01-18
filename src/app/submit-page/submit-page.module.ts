@@ -18,6 +18,4 @@ import { SubmitPageRoutingModule } from './submit-page-routing.module';
 /**
  * This module handles all modules that need to access the submit page.
  */
-export class SubmitPageModule {
-
-}
+export class SubmitPageModule {}

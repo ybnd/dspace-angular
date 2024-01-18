@@ -7,6 +7,4 @@ import { Component } from '@angular/core';
   selector: 'ds-notification-qa-page',
   templateUrl: './admin-quality-assurance-topics-page.component.html',
 })
-export class AdminQualityAssuranceTopicsPageComponent {
-
-}
+export class AdminQualityAssuranceTopicsPageComponent {}

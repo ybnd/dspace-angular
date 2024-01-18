@@ -11,14 +11,8 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
-import {
-  filter,
-  first,
-} from 'rxjs/operators';
+import { Observable, of as observableOf } from 'rxjs';
+import { filter, first } from 'rxjs/operators';
 
 import {
   fadeInEnter,
@@ -72,22 +66,41 @@ import { NotificationsService } from '../notifications.service';
   encapsulation: ViewEncapsulation.None,
   animations: [
     trigger('enterLeave', [
-      fadeInEnter, fadeInState, fadeOutLeave, fadeOutState,
-      fromBottomEnter, fromBottomInState, fromBottomLeave, fromBottomOutState,
-      fromRightEnter, fromRightInState, fromRightLeave, fromRightOutState,
-      fromLeftEnter, fromLeftInState, fromLeftLeave, fromLeftOutState,
-      fromTopEnter, fromTopInState, fromTopLeave, fromTopOutState,
-      rotateInState, rotateEnter, rotateOutState, rotateLeave,
-      scaleInState, scaleEnter, scaleOutState, scaleLeave,
+      fadeInEnter,
+      fadeInState,
+      fadeOutLeave,
+      fadeOutState,
+      fromBottomEnter,
+      fromBottomInState,
+      fromBottomLeave,
+      fromBottomOutState,
+      fromRightEnter,
+      fromRightInState,
+      fromRightLeave,
+      fromRightOutState,
+      fromLeftEnter,
+      fromLeftInState,
+      fromLeftLeave,
+      fromLeftOutState,
+      fromTopEnter,
+      fromTopInState,
+      fromTopLeave,
+      fromTopOutState,
+      rotateInState,
+      rotateEnter,
+      rotateOutState,
+      rotateLeave,
+      scaleInState,
+      scaleEnter,
+      scaleOutState,
+      scaleLeave,
     ]),
   ],
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-
 export class NotificationComponent implements OnInit, OnDestroy {
-
   @Input() public notification = null as INotification;
 
   /**
@@ -115,14 +128,16 @@ export class NotificationComponent implements OnInit, OnDestroy {
   private diff: any;
   public animate: string;
 
-  constructor(private notificationService: NotificationsService,
-              private domSanitizer: DomSanitizer,
-              private cdr: ChangeDetectorRef,
-              private zone: NgZone) {
-  }
+  constructor(
+    private notificationService: NotificationsService,
+    private domSanitizer: DomSanitizer,
+    private cdr: ChangeDetectorRef,
+    private zone: NgZone,
+  ) {}
 
   ngOnInit(): void {
-    this.animate = this.notification.options.animate + NotificationAnimationsStatus.In;
+    this.animate =
+      this.notification.options.animate + NotificationAnimationsStatus.In;
 
     if (this.notification.options.timeOut !== 0) {
       this.startTimeOut();
@@ -137,7 +152,9 @@ export class NotificationComponent implements OnInit, OnDestroy {
     this.steps = this.notification.options.timeOut / 10;
     this.speed = this.notification.options.timeOut / this.steps;
     this.start = new Date().getTime();
-    this.zone.runOutsideAngular(() => this.timer = setTimeout(this.instance, this.speed));
+    this.zone.runOutsideAngular(
+      () => (this.timer = setTimeout(this.instance, this.speed)),
+    );
   }
 
   ngOnDestroy(): void {
@@ -145,23 +162,25 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   private instance = () => {
-    this.diff = (new Date().getTime() - this.start) - (this.count * this.speed);
+    this.diff = new Date().getTime() - this.start - this.count * this.speed;
 
-    this.isPaused$.pipe(
-      filter(paused => !paused),
-      first(),
-    ).subscribe(() => {
-      if (this.count++ === this.steps) {
-        this.remove();
-      } else if (!this.stopTime) {
-        if (this.showProgressBar) {
-          this.progressWidth += 100 / this.steps;
+    this.isPaused$
+      .pipe(
+        filter((paused) => !paused),
+        first(),
+      )
+      .subscribe(() => {
+        if (this.count++ === this.steps) {
+          this.remove();
+        } else if (!this.stopTime) {
+          if (this.showProgressBar) {
+            this.progressWidth += 100 / this.steps;
+          }
+
+          this.timer = setTimeout(this.instance, this.speed - this.diff);
         }
-
-        this.timer = setTimeout(this.instance, (this.speed - this.diff));
-      }
-      this.zone.run(() => this.cdr.detectChanges());
-    });
+        this.zone.run(() => this.cdr.detectChanges());
+      });
   };
 
   public remove() {
@@ -201,7 +220,8 @@ export class NotificationComponent implements OnInit, OnDestroy {
   }
 
   private setAnimationOut() {
-    this.animate = this.notification.options.animate + NotificationAnimationsStatus.Out;
+    this.animate =
+      this.notification.options.animate + NotificationAnimationsStatus.Out;
     this.cdr.detectChanges();
   }
 }

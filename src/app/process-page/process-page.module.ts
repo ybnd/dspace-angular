@@ -5,17 +5,8 @@ import { ProcessPageRoutingModule } from './process-page-routing.module';
 import { ProcessPageSharedModule } from './process-page-shared.module';
 
 @NgModule({
-  imports: [
-    ProcessPageRoutingModule,
-    SharedModule,
-    ProcessPageSharedModule,
-  ],
-  declarations: [
-  ],
-  providers: [
-  ],
+  imports: [ProcessPageRoutingModule, SharedModule, ProcessPageSharedModule],
+  declarations: [],
+  providers: [],
 })
-
-export class ProcessPageModule {
-
-}
+export class ProcessPageModule {}

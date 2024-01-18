@@ -1,11 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-} from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ChangeDetectorRef, Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import {
@@ -14,12 +8,7 @@ import {
   of as observableOf,
   zip as observableZip,
 } from 'rxjs';
-import {
-  map,
-  startWith,
-  switchMap,
-  take,
-} from 'rxjs/operators';
+import { map, startWith, switchMap, take } from 'rxjs/operators';
 
 import { ObjectCacheService } from '../../../core/cache/object-cache.service';
 import { EntityTypeDataService } from '../../../core/data/entity-type-data.service';
@@ -60,8 +49,6 @@ import { AbstractItemUpdateComponent } from '../abstract-item-update/abstract-it
  * Component for displaying an item's relationships edit page
  */
 export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
-
-
   /**
    * The allowed relationship types for this type of item as an observable list
    */
@@ -87,26 +74,39 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
     public cdr: ChangeDetectorRef,
     protected modalService: NgbModal,
   ) {
-    super(itemService, objectUpdatesService, router, notificationsService, translateService, route);
+    super(
+      itemService,
+      objectUpdatesService,
+      router,
+      notificationsService,
+      translateService,
+      route,
+    );
   }
 
   /**
    * Initialize the values and updates of the current item's relationship fields
    */
   public initializeUpdates(): void {
-
     const label = this.item.firstMetadataValue('dspace.entity.type');
     if (label !== undefined) {
-      this.relationshipTypes$ = this.relationshipTypeService.searchByEntityType(label, true, true, ...this.getRelationshipTypeFollowLinks())
+      this.relationshipTypes$ = this.relationshipTypeService
+        .searchByEntityType(
+          label,
+          true,
+          true,
+          ...this.getRelationshipTypeFollowLinks(),
+        )
         .pipe(
-          map((relationshipTypes: PaginatedList<RelationshipType>) => relationshipTypes.page),
+          map(
+            (relationshipTypes: PaginatedList<RelationshipType>) =>
+              relationshipTypes.page,
+          ),
         );
 
-      this.entityType$ = this.entityTypeService.getEntityTypeByLabel(label).pipe(
-        getFirstSucceededRemoteData(),
-        getRemoteDataPayload(),
-      );
-
+      this.entityType$ = this.entityTypeService
+        .getEntityTypeByLabel(label)
+        .pipe(getFirstSucceededRemoteData(), getRemoteDataPayload());
     } else {
       this.entityType$ = observableOf(undefined);
     }
@@ -124,96 +124,134 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
    * Make sure the lists are refreshed afterwards and notifications are sent for success and errors
    */
   public submit(): void {
-
     // Get all the relationships that should be removed
-    const removedRelationshipIDs$: Observable<DeleteRelationship[]> = this.relationshipService.getItemRelationshipsArray(this.item).pipe(
-      startWith([]),
-      map((relationships: Relationship[]) => relationships.map((relationship) =>
-        Object.assign(new Relationship(), relationship, { uuid: relationship.id }),
-      )),
-      switchMap((relationships: Relationship[]) => {
-        return this.objectUpdatesService.getFieldUpdatesExclusive(this.url, relationships) as Observable<FieldUpdates>;
-      }),
-      map((fieldUpdates: FieldUpdates) =>
-        Object.values(fieldUpdates)
-          .filter((fieldUpdate: FieldUpdate) => fieldUpdate.changeType === FieldChangeType.REMOVE)
-          .map((fieldUpdate: FieldUpdate) => fieldUpdate.field as DeleteRelationship),
-      ),
-    );
-
-    const addRelatedItems$: Observable<RelationshipIdentifiable[]> = this.objectUpdatesService.getFieldUpdates(this.url, []).pipe(
-      map((fieldUpdates: FieldUpdates) =>
-        Object.values(fieldUpdates)
-          .filter((fieldUpdate: FieldUpdate) => hasValue(fieldUpdate))
-          .filter((fieldUpdate: FieldUpdate) => fieldUpdate.changeType === FieldChangeType.ADD)
-          .map((fieldUpdate: FieldUpdate) => fieldUpdate.field as RelationshipIdentifiable),
-      ),
-    );
-
-    observableCombineLatest(
-      removedRelationshipIDs$,
-      addRelatedItems$,
-    ).pipe(
-      take(1),
-    ).subscribe(([removeRelationshipIDs, addRelatedItems]) => {
-      const actions = [
-        this.deleteRelationships(removeRelationshipIDs),
-        this.addRelationships(addRelatedItems),
-      ];
-      actions.forEach((action) =>
-        action.subscribe((response) => {
-          if (response.length > 0) {
-            this.initializeOriginalFields();
-            this.cdr.detectChanges();
-            this.displayNotifications(response);
-            this.modalService.dismissAll();
-          }
+    const removedRelationshipIDs$: Observable<DeleteRelationship[]> =
+      this.relationshipService.getItemRelationshipsArray(this.item).pipe(
+        startWith([]),
+        map((relationships: Relationship[]) =>
+          relationships.map((relationship) =>
+            Object.assign(new Relationship(), relationship, {
+              uuid: relationship.id,
+            }),
+          ),
+        ),
+        switchMap((relationships: Relationship[]) => {
+          return this.objectUpdatesService.getFieldUpdatesExclusive(
+            this.url,
+            relationships,
+          ) as Observable<FieldUpdates>;
         }),
+        map((fieldUpdates: FieldUpdates) =>
+          Object.values(fieldUpdates)
+            .filter(
+              (fieldUpdate: FieldUpdate) =>
+                fieldUpdate.changeType === FieldChangeType.REMOVE,
+            )
+            .map(
+              (fieldUpdate: FieldUpdate) =>
+                fieldUpdate.field as DeleteRelationship,
+            ),
+        ),
       );
-    });
+
+    const addRelatedItems$: Observable<RelationshipIdentifiable[]> =
+      this.objectUpdatesService.getFieldUpdates(this.url, []).pipe(
+        map((fieldUpdates: FieldUpdates) =>
+          Object.values(fieldUpdates)
+            .filter((fieldUpdate: FieldUpdate) => hasValue(fieldUpdate))
+            .filter(
+              (fieldUpdate: FieldUpdate) =>
+                fieldUpdate.changeType === FieldChangeType.ADD,
+            )
+            .map(
+              (fieldUpdate: FieldUpdate) =>
+                fieldUpdate.field as RelationshipIdentifiable,
+            ),
+        ),
+      );
+
+    observableCombineLatest(removedRelationshipIDs$, addRelatedItems$)
+      .pipe(take(1))
+      .subscribe(([removeRelationshipIDs, addRelatedItems]) => {
+        const actions = [
+          this.deleteRelationships(removeRelationshipIDs),
+          this.addRelationships(addRelatedItems),
+        ];
+        actions.forEach((action) =>
+          action.subscribe((response) => {
+            if (response.length > 0) {
+              this.initializeOriginalFields();
+              this.cdr.detectChanges();
+              this.displayNotifications(response);
+              this.modalService.dismissAll();
+            }
+          }),
+        );
+      });
   }
 
-  deleteRelationships(deleteRelationshipIDs: DeleteRelationship[]): Observable<RemoteData<NoContent>[]> {
-    return observableZip(...deleteRelationshipIDs.map((deleteRelationship) => {
-      let copyVirtualMetadata: string;
-      if (deleteRelationship.keepLeftVirtualMetadata && deleteRelationship.keepRightVirtualMetadata) {
-        copyVirtualMetadata = 'all';
-      } else if (deleteRelationship.keepLeftVirtualMetadata) {
-        copyVirtualMetadata = 'left';
-      } else if (deleteRelationship.keepRightVirtualMetadata) {
-        copyVirtualMetadata = 'right';
-      } else {
-        copyVirtualMetadata = 'none';
-      }
-      return this.relationshipService.deleteRelationship(deleteRelationship.uuid, copyVirtualMetadata);
-    },
-    ));
+  deleteRelationships(
+    deleteRelationshipIDs: DeleteRelationship[],
+  ): Observable<RemoteData<NoContent>[]> {
+    return observableZip(
+      ...deleteRelationshipIDs.map((deleteRelationship) => {
+        let copyVirtualMetadata: string;
+        if (
+          deleteRelationship.keepLeftVirtualMetadata &&
+          deleteRelationship.keepRightVirtualMetadata
+        ) {
+          copyVirtualMetadata = 'all';
+        } else if (deleteRelationship.keepLeftVirtualMetadata) {
+          copyVirtualMetadata = 'left';
+        } else if (deleteRelationship.keepRightVirtualMetadata) {
+          copyVirtualMetadata = 'right';
+        } else {
+          copyVirtualMetadata = 'none';
+        }
+        return this.relationshipService.deleteRelationship(
+          deleteRelationship.uuid,
+          copyVirtualMetadata,
+        );
+      }),
+    );
   }
 
-  addRelationships(addRelatedItems: RelationshipIdentifiable[]): Observable<RemoteData<Relationship>[]> {
-    return observableZip(...addRelatedItems.map((addRelationship) =>
-      this.entityType$.pipe(
-        switchMap((entityType) => this.entityTypeService.isLeftType(addRelationship.type, entityType)),
-        switchMap((isLeftType) => {
-          let leftItem: Item;
-          let rightItem: Item;
-          let leftwardValue: string;
-          let rightwardValue: string;
-          if (isLeftType) {
-            leftItem = this.item;
-            rightItem = addRelationship.relatedItem;
-            leftwardValue = null;
-            rightwardValue = addRelationship.nameVariant;
-          } else {
-            leftItem = addRelationship.relatedItem;
-            rightItem = this.item;
-            leftwardValue = addRelationship.nameVariant;
-            rightwardValue = null;
-          }
-          return this.relationshipService.addRelationship(addRelationship.type.id, leftItem, rightItem, leftwardValue, rightwardValue);
-        }),
+  addRelationships(
+    addRelatedItems: RelationshipIdentifiable[],
+  ): Observable<RemoteData<Relationship>[]> {
+    return observableZip(
+      ...addRelatedItems.map((addRelationship) =>
+        this.entityType$.pipe(
+          switchMap((entityType) =>
+            this.entityTypeService.isLeftType(addRelationship.type, entityType),
+          ),
+          switchMap((isLeftType) => {
+            let leftItem: Item;
+            let rightItem: Item;
+            let leftwardValue: string;
+            let rightwardValue: string;
+            if (isLeftType) {
+              leftItem = this.item;
+              rightItem = addRelationship.relatedItem;
+              leftwardValue = null;
+              rightwardValue = addRelationship.nameVariant;
+            } else {
+              leftItem = addRelationship.relatedItem;
+              rightItem = this.item;
+              leftwardValue = addRelationship.nameVariant;
+              rightwardValue = null;
+            }
+            return this.relationshipService.addRelationship(
+              addRelationship.type.id,
+              leftItem,
+              rightItem,
+              leftwardValue,
+              rightwardValue,
+            );
+          }),
+        ),
       ),
-    ));
+    );
   }
 
   /**
@@ -223,33 +261,43 @@ export class ItemRelationshipsComponent extends AbstractItemUpdateComponent {
    * @param responses
    */
   displayNotifications(responses: RemoteData<NoContent>[]) {
-    const failedResponses = responses.filter((response: RemoteData<NoContent>) => response.hasFailed);
-    const successfulResponses = responses.filter((response: RemoteData<NoContent>) => response.hasSucceeded);
+    const failedResponses = responses.filter(
+      (response: RemoteData<NoContent>) => response.hasFailed,
+    );
+    const successfulResponses = responses.filter(
+      (response: RemoteData<NoContent>) => response.hasSucceeded,
+    );
 
     failedResponses.forEach((response: RemoteData<NoContent>) => {
-      this.notificationsService.error(this.getNotificationTitle('failed'), response.errorMessage);
+      this.notificationsService.error(
+        this.getNotificationTitle('failed'),
+        response.errorMessage,
+      );
     });
     if (successfulResponses.length > 0) {
-      this.notificationsService.success(this.getNotificationTitle('saved'), this.getNotificationContent('saved'));
+      this.notificationsService.success(
+        this.getNotificationTitle('saved'),
+        this.getNotificationContent('saved'),
+      );
     }
   }
   /**
    * Sends all initial values of this item to the object updates service
    */
   public initializeOriginalFields() {
-    return this.relationshipService.getRelatedItems(this.item).pipe(
-      take(1),
-    ).subscribe((items: Item[]) => {
-      this.objectUpdatesService.initialize(this.url, items, this.item.lastModified);
-    });
+    return this.relationshipService
+      .getRelatedItems(this.item)
+      .pipe(take(1))
+      .subscribe((items: Item[]) => {
+        this.objectUpdatesService.initialize(
+          this.url,
+          items,
+          this.item.lastModified,
+        );
+      });
   }
-
 
   getRelationshipTypeFollowLinks() {
-    return [
-      followLink('leftType'),
-      followLink('rightType'),
-    ];
+    return [followLink('leftType'), followLink('rightType')];
   }
-
 }

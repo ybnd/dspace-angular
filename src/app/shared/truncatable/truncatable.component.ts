@@ -12,7 +12,6 @@ import { TruncatableService } from './truncatable.service';
   selector: 'ds-truncatable',
   templateUrl: './truncatable.component.html',
   styleUrls: ['./truncatable.component.scss'],
-
 })
 
 /**
@@ -40,8 +39,10 @@ export class TruncatableComponent implements OnInit, AfterViewChecked {
    */
   @Input() showToggle = true;
 
-  public constructor(private service: TruncatableService, private el: ElementRef) {
-  }
+  public constructor(
+    private service: TruncatableService,
+    private el: ElementRef,
+  ) {}
 
   /**
    * Set the initial state
@@ -74,16 +75,19 @@ export class TruncatableComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked() {
     if (this.showToggle) {
-      const truncatedElements = this.el.nativeElement.querySelectorAll('.truncated');
+      const truncatedElements =
+        this.el.nativeElement.querySelectorAll('.truncated');
       if (truncatedElements?.length > 0) {
-        const truncateElements = this.el.nativeElement.querySelectorAll('.dont-break-out');
-        for (let i = 0; i < (truncateElements.length - 1); i++) {
+        const truncateElements =
+          this.el.nativeElement.querySelectorAll('.dont-break-out');
+        for (let i = 0; i < truncateElements.length - 1; i++) {
           truncateElements[i].classList.remove('truncated');
           truncateElements[i].classList.add('notruncatable');
         }
-        truncateElements[truncateElements.length - 1].classList.add('truncated');
+        truncateElements[truncateElements.length - 1].classList.add(
+          'truncated',
+        );
       }
     }
   }
-
 }

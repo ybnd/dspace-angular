@@ -9,7 +9,8 @@ import {
   DsDynamicInputModelConfig,
 } from './ds-dynamic-input.model';
 
-export interface DsDynamicTextAreaModelConfig extends DsDynamicInputModelConfig {
+export interface DsDynamicTextAreaModelConfig
+  extends DsDynamicInputModelConfig {
   cols?: number;
   rows?: number;
   wrap?: string;
@@ -21,12 +22,14 @@ export class DsDynamicTextAreaModel extends DsDynamicInputModel {
   @serializable() wrap: string;
   @serializable() type = DYNAMIC_FORM_CONTROL_TYPE_TEXTAREA;
 
-  constructor(config: DsDynamicTextAreaModelConfig, layout?: DynamicFormControlLayout) {
+  constructor(
+    config: DsDynamicTextAreaModelConfig,
+    layout?: DynamicFormControlLayout,
+  ) {
     super(config, layout);
 
     this.cols = config.cols;
     this.rows = config.rows;
     this.wrap = config.wrap;
   }
-
 }

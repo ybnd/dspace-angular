@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 import { Item } from '../../../core/shared/item.model';
 import { ThemedComponent } from '../../../shared/theme-support/themed.component';
@@ -13,7 +10,14 @@ import { MetadataRepresentationListComponent } from './metadata-representation-l
   templateUrl: '../../../shared/theme-support/themed.component.html',
 })
 export class ThemedMetadataRepresentationListComponent extends ThemedComponent<MetadataRepresentationListComponent> {
-  protected inAndOutputNames: (keyof MetadataRepresentationListComponent & keyof this)[] = ['parentItem', 'itemType', 'metadataFields', 'label', 'incrementBy'];
+  protected inAndOutputNames: (keyof MetadataRepresentationListComponent &
+    keyof this)[] = [
+    'parentItem',
+    'itemType',
+    'metadataFields',
+    'label',
+    'incrementBy',
+  ];
 
   @Input() parentItem: Item;
 
@@ -30,7 +34,9 @@ export class ThemedMetadataRepresentationListComponent extends ThemedComponent<M
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../themes/${themeName}/app/item-page/simple/metadata-representation-list/metadata-representation-list.component`);
+    return import(
+      `../../../../themes/${themeName}/app/item-page/simple/metadata-representation-list/metadata-representation-list.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

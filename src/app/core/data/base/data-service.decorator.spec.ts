@@ -10,21 +10,28 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { ResourceType } from '../../shared/resource-type';
 import { BaseDataService } from './base-data.service';
-import {
-  dataService,
-  getDataServiceFor,
-} from './data-service.decorator';
+import { dataService, getDataServiceFor } from './data-service.decorator';
 import { HALDataService } from './hal-data-service.interface';
 
-class TestService extends BaseDataService<any> {
-}
+class TestService extends BaseDataService<any> {}
 
 class AnotherTestService implements HALDataService<any> {
-  public findListByHref(href$, findListOptions, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow): any {
+  public findListByHref(
+    href$,
+    findListOptions,
+    useCachedVersionIfAvailable,
+    reRequestOnStale,
+    ...linksToFollow
+  ): any {
     return undefined;
   }
 
-  public findByHref(href$, useCachedVersionIfAvailable, reRequestOnStale, ...linksToFollow): any {
+  public findByHref(
+    href$,
+    useCachedVersionIfAvailable,
+    reRequestOnStale,
+    ...linksToFollow
+  ): any {
     return undefined;
   }
 }

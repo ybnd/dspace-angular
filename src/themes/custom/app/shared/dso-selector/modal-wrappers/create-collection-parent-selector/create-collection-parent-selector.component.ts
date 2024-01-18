@@ -6,7 +6,7 @@ import { CreateCollectionParentSelectorComponent as BaseComponent } from '../../
   selector: 'ds-create-collection-parent-selector',
   // styleUrls: ['./create-collection-parent-selector.component.scss'],
   // templateUrl: './create-collection-parent-selector.component.html',
-  templateUrl: '../../../../../../../app/shared/dso-selector/modal-wrappers/dso-selector-modal-wrapper.component.html',
+  templateUrl:
+    '../../../../../../../app/shared/dso-selector/modal-wrappers/dso-selector-modal-wrapper.component.html',
 })
-export class CreateCollectionParentSelectorComponent extends BaseComponent {
-}
+export class CreateCollectionParentSelectorComponent extends BaseComponent {}

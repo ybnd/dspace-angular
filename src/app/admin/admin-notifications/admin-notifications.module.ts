@@ -27,6 +27,4 @@ import { AdminQualityAssuranceTopicsPageComponent } from './admin-quality-assura
 /**
  * This module handles all components related to the notifications pages
  */
-export class AdminNotificationsModule {
-
-}
+export class AdminNotificationsModule {}

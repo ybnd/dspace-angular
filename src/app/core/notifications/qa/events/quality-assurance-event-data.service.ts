@@ -1,42 +1,24 @@
 import { Injectable } from '@angular/core';
 import { ReplaceOperation } from 'fast-json-patch';
 import { Observable } from 'rxjs';
-import {
-  find,
-  take,
-} from 'rxjs/operators';
+import { find, take } from 'rxjs/operators';
 
 import { hasValue } from '../../../../shared/empty.util';
 import { NotificationsService } from '../../../../shared/notifications/notifications.service';
 import { FollowLinkConfig } from '../../../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../../../cache/builders/remote-data-build.service';
 import { ObjectCacheService } from '../../../cache/object-cache.service';
-import {
-  CreateData,
-  CreateDataImpl,
-} from '../../../data/base/create-data';
+import { CreateData, CreateDataImpl } from '../../../data/base/create-data';
 import { dataService } from '../../../data/base/data-service.decorator';
-import {
-  DeleteData,
-  DeleteDataImpl,
-} from '../../../data/base/delete-data';
+import { DeleteData, DeleteDataImpl } from '../../../data/base/delete-data';
 import { IdentifiableDataService } from '../../../data/base/identifiable-data.service';
-import {
-  PatchData,
-  PatchDataImpl,
-} from '../../../data/base/patch-data';
-import {
-  SearchData,
-  SearchDataImpl,
-} from '../../../data/base/search-data';
+import { PatchData, PatchDataImpl } from '../../../data/base/patch-data';
+import { SearchData, SearchDataImpl } from '../../../data/base/search-data';
 import { DefaultChangeAnalyzer } from '../../../data/default-change-analyzer.service';
 import { FindListOptions } from '../../../data/find-list-options.model';
 import { PaginatedList } from '../../../data/paginated-list.model';
 import { RemoteData } from '../../../data/remote-data';
-import {
-  DeleteByIDRequest,
-  PostRequest,
-} from '../../../data/request.models';
+import { DeleteByIDRequest, PostRequest } from '../../../data/request.models';
 import { RequestService } from '../../../data/request.service';
 import { HALEndpointService } from '../../../shared/hal-endpoint.service';
 import { NoContent } from '../../../shared/NoContent.model';
@@ -49,7 +31,6 @@ import { QUALITY_ASSURANCE_EVENT_OBJECT } from '../models/quality-assurance-even
 @Injectable()
 @dataService(QUALITY_ASSURANCE_EVENT_OBJECT)
 export class QualityAssuranceEventDataService extends IdentifiableDataService<QualityAssuranceEventObject> {
-
   private createData: CreateData<QualityAssuranceEventObject>;
   private searchData: SearchData<QualityAssuranceEventObject>;
   private patchData: PatchData<QualityAssuranceEventObject>;
@@ -72,11 +53,50 @@ export class QualityAssuranceEventDataService extends IdentifiableDataService<Qu
     protected notificationsService: NotificationsService,
     protected comparator: DefaultChangeAnalyzer<QualityAssuranceEventObject>,
   ) {
-    super('qualityassuranceevents', requestService, rdbService, objectCache, halService);
-    this.createData = new CreateDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive);
-    this.deleteData = new DeleteDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, notificationsService, this.responseMsToLive, this.constructIdEndpoint);
-    this.patchData = new PatchDataImpl<QualityAssuranceEventObject>(this.linkPath, requestService, rdbService, objectCache, halService, comparator, this.responseMsToLive, this.constructIdEndpoint);
-    this.searchData = new SearchDataImpl(this.linkPath, requestService, rdbService, objectCache, halService, this.responseMsToLive);
+    super(
+      'qualityassuranceevents',
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+    );
+    this.createData = new CreateDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+    );
+    this.deleteData = new DeleteDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      notificationsService,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.patchData = new PatchDataImpl<QualityAssuranceEventObject>(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      comparator,
+      this.responseMsToLive,
+      this.constructIdEndpoint,
+    );
+    this.searchData = new SearchDataImpl(
+      this.linkPath,
+      requestService,
+      rdbService,
+      objectCache,
+      halService,
+      this.responseMsToLive,
+    );
   }
 
   /**
@@ -91,14 +111,24 @@ export class QualityAssuranceEventDataService extends IdentifiableDataService<Qu
    * @return Observable<RemoteData<PaginatedList<QualityAssuranceEventObject>>>
    *    The list of Quality Assurance events.
    */
-  public getEventsByTopic(topic: string, options: FindListOptions = {}, ...linksToFollow: FollowLinkConfig<QualityAssuranceEventObject>[]): Observable<RemoteData<PaginatedList<QualityAssuranceEventObject>>> {
+  public getEventsByTopic(
+    topic: string,
+    options: FindListOptions = {},
+    ...linksToFollow: FollowLinkConfig<QualityAssuranceEventObject>[]
+  ): Observable<RemoteData<PaginatedList<QualityAssuranceEventObject>>> {
     options.searchParams = [
       {
         fieldName: 'topic',
         fieldValue: topic,
       },
     ];
-    return this.searchData.searchBy('findByTopic', options, true, true, ...linksToFollow);
+    return this.searchData.searchBy(
+      'findByTopic',
+      options,
+      true,
+      true,
+      ...linksToFollow,
+    );
   }
 
   /**
@@ -118,7 +148,10 @@ export class QualityAssuranceEventDataService extends IdentifiableDataService<Qu
    * @return Observable<RemoteData<QualityAssuranceEventObject>>
    *    The Quality Assurance event.
    */
-  public getEvent(id: string, ...linksToFollow: FollowLinkConfig<QualityAssuranceEventObject>[]): Observable<RemoteData<QualityAssuranceEventObject>> {
+  public getEvent(
+    id: string,
+    ...linksToFollow: FollowLinkConfig<QualityAssuranceEventObject>[]
+  ): Observable<RemoteData<QualityAssuranceEventObject>> {
     return this.findById(id, true, true, ...linksToFollow);
   }
 
@@ -134,7 +167,11 @@ export class QualityAssuranceEventDataService extends IdentifiableDataService<Qu
    * @return Observable<RestResponse>
    *    The REST response.
    */
-  public patchEvent(status, dso, reason?: string): Observable<RemoteData<QualityAssuranceEventObject>> {
+  public patchEvent(
+    status,
+    dso,
+    reason?: string,
+  ): Observable<RemoteData<QualityAssuranceEventObject>> {
     const operation: ReplaceOperation<string>[] = [
       {
         path: '/status',
@@ -155,7 +192,10 @@ export class QualityAssuranceEventDataService extends IdentifiableDataService<Qu
    * @return Observable<RestResponse>
    *    The REST response.
    */
-  public boundProject(itemId: string, projectId: string): Observable<RemoteData<QualityAssuranceEventObject>> {
+  public boundProject(
+    itemId: string,
+    projectId: string,
+  ): Observable<RemoteData<QualityAssuranceEventObject>> {
     return this.postOnRelated(itemId, projectId);
   }
 
@@ -181,17 +221,23 @@ export class QualityAssuranceEventDataService extends IdentifiableDataService<Qu
 
     const hrefObs = this.getIDHrefObs(objectId);
 
-    hrefObs.pipe(
-      find((href: string) => hasValue(href)),
-    ).subscribe((href: string) => {
-      const request = new DeleteByIDRequest(requestId, href + '/related', objectId);
-      if (hasValue(this.responseMsToLive)) {
-        request.responseMsToLive = this.responseMsToLive;
-      }
-      this.requestService.send(request);
-    });
+    hrefObs
+      .pipe(find((href: string) => hasValue(href)))
+      .subscribe((href: string) => {
+        const request = new DeleteByIDRequest(
+          requestId,
+          href + '/related',
+          objectId,
+        );
+        if (hasValue(this.responseMsToLive)) {
+          request.responseMsToLive = this.responseMsToLive;
+        }
+        this.requestService.send(request);
+      });
 
-    return this.rdbService.buildFromRequestUUID<QualityAssuranceEventObject>(requestId);
+    return this.rdbService.buildFromRequestUUID<QualityAssuranceEventObject>(
+      requestId,
+    );
   }
 
   /**
@@ -205,16 +251,20 @@ export class QualityAssuranceEventDataService extends IdentifiableDataService<Qu
     const requestId = this.requestService.generateRequestId();
     const hrefObs = this.getIDHrefObs(objectId);
 
-    hrefObs.pipe(
-      take(1),
-    ).subscribe((href: string) => {
-      const request = new PostRequest(requestId, href + '/related?item=' + relatedItemId, body);
+    hrefObs.pipe(take(1)).subscribe((href: string) => {
+      const request = new PostRequest(
+        requestId,
+        href + '/related?item=' + relatedItemId,
+        body,
+      );
       if (hasValue(this.responseMsToLive)) {
         request.responseMsToLive = this.responseMsToLive;
       }
       this.requestService.send(request);
     });
 
-    return this.rdbService.buildFromRequestUUID<QualityAssuranceEventObject>(requestId);
+    return this.rdbService.buildFromRequestUUID<QualityAssuranceEventObject>(
+      requestId,
+    );
   }
 }

@@ -33,7 +33,8 @@ import { SubmissionFormSectionAddComponent } from './submission-form-section-add
 
 const mockAvailableSections: any = [
   {
-    config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/newsectionone',
+    config:
+      'https://rest.api/dspace-spring-rest/api/config/submissionforms/newsectionone',
     mandatory: true,
     data: {},
     errors: [],
@@ -42,7 +43,8 @@ const mockAvailableSections: any = [
     sectionType: 'submission-form',
   },
   {
-    config: 'https://rest.api/dspace-spring-rest/api/config/submissionforms/newsectiontwo',
+    config:
+      'https://rest.api/dspace-spring-rest/api/config/submissionforms/newsectiontwo',
     mandatory: true,
     data: {},
     errors: [],
@@ -53,7 +55,6 @@ const mockAvailableSections: any = [
 ];
 
 describe('SubmissionFormSectionAddComponent Component', () => {
-
   let comp: SubmissionFormSectionAddComponent;
   let compAsAny: any;
   let fixture: ComponentFixture<SubmissionFormSectionAddComponent>;
@@ -61,7 +62,8 @@ describe('SubmissionFormSectionAddComponent Component', () => {
 
   const submissionId = mockSubmissionId;
   const collectionId = mockSubmissionCollectionId;
-  const submissionServiceStub: SubmissionServiceStub = new SubmissionServiceStub();
+  const submissionServiceStub: SubmissionServiceStub =
+    new SubmissionServiceStub();
   const store: any = jasmine.createSpyObj('store', {
     dispatch: jasmine.createSpy('dispatch'),
     select: jasmine.createSpy('select'),
@@ -71,14 +73,8 @@ describe('SubmissionFormSectionAddComponent Component', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [
-        NgbModule,
-        TranslateModule.forRoot(),
-      ],
-      declarations: [
-        SubmissionFormSectionAddComponent,
-        TestComponent,
-      ],
+      imports: [NgbModule, TranslateModule.forRoot()],
+      declarations: [SubmissionFormSectionAddComponent, TestComponent],
       providers: [
         { provide: HostWindowService, useValue: window },
         { provide: SubmissionService, useValue: submissionServiceStub },
@@ -97,13 +93,18 @@ describe('SubmissionFormSectionAddComponent Component', () => {
 
     // synchronous beforeEach
     beforeEach(() => {
-      submissionServiceStub.getDisabledSectionsList.and.returnValue(observableOf([]));
+      submissionServiceStub.getDisabledSectionsList.and.returnValue(
+        observableOf([]),
+      );
       const html = `
         <ds-submission-form-section-add [collectionId]="collectionId"
                                         [submissionId]="submissionId">
         </ds-submission-form-section-add>`;
 
-      testFixture = createTestComponent(html, TestComponent) as ComponentFixture<TestComponent>;
+      testFixture = createTestComponent(
+        html,
+        TestComponent,
+      ) as ComponentFixture<TestComponent>;
       testComp = testFixture.componentInstance;
       testFixture.detectChanges();
     });
@@ -113,11 +114,12 @@ describe('SubmissionFormSectionAddComponent Component', () => {
       testFixture.debugElement.nativeElement.remove();
     });
 
-    it('should create SubmissionFormSectionAddComponent', inject([SubmissionFormSectionAddComponent], (app: SubmissionFormSectionAddComponent) => {
-
-      expect(app).toBeDefined();
-
-    }));
+    it('should create SubmissionFormSectionAddComponent', inject(
+      [SubmissionFormSectionAddComponent],
+      (app: SubmissionFormSectionAddComponent) => {
+        expect(app).toBeDefined();
+      },
+    ));
   });
 
   describe('', () => {
@@ -128,7 +130,6 @@ describe('SubmissionFormSectionAddComponent Component', () => {
       sectionsServiceStub = TestBed.inject(SectionsService as any);
       comp.submissionId = submissionId;
       comp.collectionId = collectionId;
-
     });
 
     afterEach(() => {
@@ -139,7 +140,9 @@ describe('SubmissionFormSectionAddComponent Component', () => {
     });
 
     it('should init sectionList properly', () => {
-      submissionServiceStub.getDisabledSectionsList.and.returnValue(observableOf(mockAvailableSections));
+      submissionServiceStub.getDisabledSectionsList.and.returnValue(
+        observableOf(mockAvailableSections),
+      );
 
       fixture.detectChanges();
 
@@ -153,14 +156,18 @@ describe('SubmissionFormSectionAddComponent Component', () => {
     });
 
     it('should call addSection', () => {
-      submissionServiceStub.getDisabledSectionsList.and.returnValue(observableOf(mockAvailableSections));
+      submissionServiceStub.getDisabledSectionsList.and.returnValue(
+        observableOf(mockAvailableSections),
+      );
 
       comp.addSection(mockAvailableSections[1].id);
 
       fixture.detectChanges();
 
-      expect(sectionsServiceStub.addSection).toHaveBeenCalledWith(submissionId, mockAvailableSections[1].id);
-
+      expect(sectionsServiceStub.addSection).toHaveBeenCalledWith(
+        submissionId,
+        mockAvailableSections[1].id,
+      );
     });
 
     describe('', () => {
@@ -168,23 +175,23 @@ describe('SubmissionFormSectionAddComponent Component', () => {
       let dropdownMenu: DebugElement;
 
       beforeEach(() => {
-
-        submissionServiceStub.getDisabledSectionsList.and.returnValue(observableOf(mockAvailableSections));
+        submissionServiceStub.getDisabledSectionsList.and.returnValue(
+          observableOf(mockAvailableSections),
+        );
         comp.ngOnInit();
         fixture.detectChanges();
         dropdowBtn = fixture.debugElement.query(By.css('#sectionControls'));
-        dropdownMenu = fixture.debugElement.query(By.css('.sections-dropdown-menu'));
+        dropdownMenu = fixture.debugElement.query(
+          By.css('.sections-dropdown-menu'),
+        );
       });
 
       it('should have dropdown menu closed', () => {
-
         expect(dropdowBtn).not.toBeNull();
         expect(dropdownMenu.nativeElement.classList).not.toContain('show');
-
       });
 
       it('should display dropdown menu when click on dropdown button', fakeAsync(() => {
-
         dropdowBtn.triggerEventHandler('click', null);
         tick();
         fixture.detectChanges();
@@ -192,9 +199,10 @@ describe('SubmissionFormSectionAddComponent Component', () => {
         fixture.whenStable().then(() => {
           expect(dropdownMenu.nativeElement.classList).toContain('show');
 
-          expect(dropdownMenu.queryAll(By.css('.dropdown-item')).length).toBe(2);
+          expect(dropdownMenu.queryAll(By.css('.dropdown-item')).length).toBe(
+            2,
+          );
         });
-
       }));
 
       it('should trigger onSelect method when select a new collection from dropdown menu', fakeAsync(() => {
@@ -203,19 +211,18 @@ describe('SubmissionFormSectionAddComponent Component', () => {
         tick();
         fixture.detectChanges();
 
-        const secondLink: DebugElement = dropdownMenu.query(By.css('.dropdown-item:nth-child(2)'));
+        const secondLink: DebugElement = dropdownMenu.query(
+          By.css('.dropdown-item:nth-child(2)'),
+        );
         secondLink.triggerEventHandler('click', null);
         tick();
         fixture.detectChanges();
 
         fixture.whenStable().then(() => {
-
           expect(comp.addSection).toHaveBeenCalled();
         });
-
       }));
     });
-
   });
 });
 
@@ -225,8 +232,6 @@ describe('SubmissionFormSectionAddComponent Component', () => {
   template: ``,
 })
 class TestComponent {
-
   collectionId = mockSubmissionCollectionId;
   submissionId = mockSubmissionId;
-
 }

@@ -1,7 +1,4 @@
-import {
-  Component,
-  Input,
-} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Context } from 'src/app/core/shared/context.model';
 
 import { ThemedComponent } from '../../../../theme-support/themed.component';
@@ -18,14 +15,17 @@ import { MyDSpaceStatusBadgeComponent } from './my-dspace-status-badge.component
 export class ThemedMyDSpaceStatusBadgeComponent extends ThemedComponent<MyDSpaceStatusBadgeComponent> {
   @Input() context: Context;
 
-  protected inAndOutputNames: (keyof MyDSpaceStatusBadgeComponent & keyof this)[] = ['context'];
+  protected inAndOutputNames: (keyof MyDSpaceStatusBadgeComponent &
+    keyof this)[] = ['context'];
 
   protected getComponentName(): string {
     return 'MyDSpaceStatusBadgeComponent';
   }
 
   protected importThemedComponent(themeName: string): Promise<any> {
-    return import(`../../../../../../themes/${themeName}/app/shared/object-collection/shared/badges/my-dspace-status-badge/my-dspace-status-badge.component`);
+    return import(
+      `../../../../../../themes/${themeName}/app/shared/object-collection/shared/badges/my-dspace-status-badge/my-dspace-status-badge.component`
+    );
   }
 
   protected importUnthemedComponent(): Promise<any> {

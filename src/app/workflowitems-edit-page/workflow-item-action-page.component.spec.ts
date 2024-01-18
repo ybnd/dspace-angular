@@ -1,27 +1,14 @@
 import { Location } from '@angular/common';
-import {
-  Component,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   TranslateLoader,
   TranslateModule,
   TranslateService,
 } from '@ngx-translate/core';
-import {
-  Observable,
-  of as observableOf,
-} from 'rxjs';
+import { Observable, of as observableOf } from 'rxjs';
 
 import { RequestService } from '../core/data/request.service';
 import { RouteService } from '../core/services/route.service';
@@ -63,15 +50,23 @@ describe('WorkflowItemActionPageComponent', () => {
   beforeEach(waitForAsync(() => {
     init();
     TestBed.configureTestingModule({
-      imports: [TranslateModule.forRoot({
-        loader: {
-          provide: TranslateLoader,
-          useClass: TranslateLoaderMock,
-        },
-      })],
+      imports: [
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateLoaderMock,
+          },
+        }),
+      ],
       declarations: [TestComponent, VarDirective],
       providers: [
-        { provide: ActivatedRoute, useValue: new ActivatedRouteStub({}, { wfi: createSuccessfulRemoteDataObject(wfi) }) },
+        {
+          provide: ActivatedRoute,
+          useValue: new ActivatedRouteStub(
+            {},
+            { wfi: createSuccessfulRemoteDataObject(wfi) },
+          ),
+        },
         { provide: Router, useClass: RouterStub },
         { provide: RouteService, useValue: {} },
         { provide: Location, useValue: new LocationStub() },
@@ -80,8 +75,7 @@ describe('WorkflowItemActionPageComponent', () => {
         { provide: RequestService, useClass: RequestServiceStub },
       ],
       schemas: [NO_ERRORS_SCHEMA],
-    })
-      .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -104,7 +98,9 @@ describe('WorkflowItemActionPageComponent', () => {
     });
 
     it('should call performAction on clicking the btn-danger', () => {
-      const button = fixture.debugElement.query(By.css('.btn-danger')).nativeElement;
+      const button = fixture.debugElement.query(
+        By.css('.btn-danger'),
+      ).nativeElement;
       button.click();
       fixture.detectChanges();
       expect(component.performAction).toHaveBeenCalled();
@@ -117,7 +113,9 @@ describe('WorkflowItemActionPageComponent', () => {
     });
 
     it('should call performAction on clicking the btn-default', () => {
-      const button = fixture.debugElement.query(By.css('.btn-default')).nativeElement;
+      const button = fixture.debugElement.query(
+        By.css('.btn-default'),
+      ).nativeElement;
       button.click();
       fixture.detectChanges();
       expect(component.previousPage).toHaveBeenCalled();
@@ -128,19 +126,28 @@ describe('WorkflowItemActionPageComponent', () => {
 @Component({
   selector: 'ds-workflow-item-test-action-page',
   templateUrl: 'workflow-item-action-page.component.html',
-},
-)
+})
 class TestComponent extends WorkflowItemActionPageComponent {
-  constructor(protected route: ActivatedRoute,
-              protected workflowItemService: WorkflowItemDataService,
-              protected router: Router,
-              protected routeService: RouteService,
-              protected notificationsService: NotificationsService,
-              protected translationService: TranslateService,
-              protected requestService: RequestService,
-              protected location: Location,
+  constructor(
+    protected route: ActivatedRoute,
+    protected workflowItemService: WorkflowItemDataService,
+    protected router: Router,
+    protected routeService: RouteService,
+    protected notificationsService: NotificationsService,
+    protected translationService: TranslateService,
+    protected requestService: RequestService,
+    protected location: Location,
   ) {
-    super(route, workflowItemService, router, routeService, notificationsService, translationService, requestService, location);
+    super(
+      route,
+      workflowItemService,
+      router,
+      routeService,
+      notificationsService,
+      translationService,
+      requestService,
+      location,
+    );
   }
 
   getType(): string {

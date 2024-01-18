@@ -1,9 +1,5 @@
 import { FlatTreeControl } from '@angular/cdk/tree';
-import {
-  Component,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { take } from 'rxjs/operators';
 
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -29,12 +25,12 @@ import { FlatNode } from '../flat-node.model';
   templateUrl: './community-list.component.html',
 })
 export class CommunityListComponent implements OnInit, OnDestroy {
-
   private expandedNodes: FlatNode[] = [];
   public loadingNode: FlatNode;
 
   treeControl = new FlatTreeControl<FlatNode>(
-    (node: FlatNode) => node.level, (node: FlatNode) => true,
+    (node: FlatNode) => node.level,
+    (node: FlatNode) => true,
   );
   dataSource: CommunityListDatasource;
   paginationConfig: FindListOptions;
@@ -52,17 +48,29 @@ export class CommunityListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.dataSource = new CommunityListDatasource(this.communityListService);
-    this.communityListService.getLoadingNodeFromStore().pipe(take(1)).subscribe((result) => {
-      this.loadingNode = result;
-    });
-    this.communityListService.getExpandedNodesFromStore().pipe(take(1)).subscribe((result) => {
-      this.expandedNodes = [...result];
-      this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
-    });
+    this.communityListService
+      .getLoadingNodeFromStore()
+      .pipe(take(1))
+      .subscribe((result) => {
+        this.loadingNode = result;
+      });
+    this.communityListService
+      .getExpandedNodesFromStore()
+      .pipe(take(1))
+      .subscribe((result) => {
+        this.expandedNodes = [...result];
+        this.dataSource.loadCommunities(
+          this.paginationConfig,
+          this.expandedNodes,
+        );
+      });
   }
 
   ngOnDestroy(): void {
-    this.communityListService.saveCommunityListStateToStore(this.expandedNodes, this.loadingNode);
+    this.communityListService.saveCommunityListStateToStore(
+      this.expandedNodes,
+      this.loadingNode,
+    );
   }
 
   /**
@@ -92,7 +100,9 @@ export class CommunityListComponent implements OnInit, OnDestroy {
   toggleExpanded(node: FlatNode) {
     this.loadingNode = node;
     if (node.isExpanded) {
-      this.expandedNodes = this.expandedNodes.filter((node2) => node2.id !== node.id);
+      this.expandedNodes = this.expandedNodes.filter(
+        (node2) => node2.id !== node.id,
+      );
       node.isExpanded = false;
     } else {
       this.expandedNodes.push(node);
@@ -120,11 +130,15 @@ export class CommunityListComponent implements OnInit, OnDestroy {
     this.loadingNode = node;
     if (node.parent != null) {
       if (node.id.startsWith('collection')) {
-        const parentNodeInExpandedNodes = this.expandedNodes.find((node2: FlatNode) => node.parent.id === node2.id);
+        const parentNodeInExpandedNodes = this.expandedNodes.find(
+          (node2: FlatNode) => node.parent.id === node2.id,
+        );
         parentNodeInExpandedNodes.currentCollectionPage++;
       }
       if (node.id.startsWith('community')) {
-        const parentNodeInExpandedNodes = this.expandedNodes.find((node2: FlatNode) => node.parent.id === node2.id);
+        const parentNodeInExpandedNodes = this.expandedNodes.find(
+          (node2: FlatNode) => node.parent.id === node2.id,
+        );
         parentNodeInExpandedNodes.currentCommunityPage++;
       }
     } else {
@@ -132,5 +146,4 @@ export class CommunityListComponent implements OnInit, OnDestroy {
     }
     this.dataSource.loadCommunities(this.paginationConfig, this.expandedNodes);
   }
-
 }

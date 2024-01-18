@@ -1,12 +1,5 @@
-import {
-  ChangeDetectionStrategy,
-  NO_ERRORS_SCHEMA,
-} from '@angular/core';
-import {
-  ComponentFixture,
-  TestBed,
-  waitForAsync,
-} from '@angular/core/testing';
+import { ChangeDetectionStrategy, NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { of as observableOf } from 'rxjs';
 
@@ -52,9 +45,11 @@ describe('BrowseEntryListElementComponent', () => {
       ],
 
       schemas: [NO_ERRORS_SCHEMA],
-    }).overrideComponent(BrowseEntryListElementComponent, {
-      set: { changeDetection: ChangeDetectionStrategy.Default },
-    }).compileComponents();
+    })
+      .overrideComponent(BrowseEntryListElementComponent, {
+        set: { changeDetection: ChangeDetectionStrategy.Default },
+      })
+      .compileComponents();
   }));
 
   beforeEach(waitForAsync(() => {
@@ -70,7 +65,9 @@ describe('BrowseEntryListElementComponent', () => {
 
     it('should show the value as a link', () => {
       const browseEntryLink = fixture.debugElement.query(By.css('a.lead'));
-      expect(browseEntryLink.nativeElement.textContent.trim()).toBe(mockValue.value);
+      expect(browseEntryLink.nativeElement.textContent.trim()).toBe(
+        mockValue.value,
+      );
     });
   });
 });
