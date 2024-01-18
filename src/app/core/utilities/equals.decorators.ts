@@ -117,8 +117,11 @@ export function fieldsForEquals(...fields: string[]): any {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export function getFieldsForEquals(constructor: Function, field: string): string[] {
+export function getFieldsForEquals(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  constructor: Function,
+  field: string,
+): string[] {
   const fieldMap = fieldsForEqualsMap.get(constructor) || new Map();
   return fieldMap.get(field);
 }

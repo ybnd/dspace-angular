@@ -25,8 +25,11 @@ export const SelectableListActionTypes = {
  * Abstract action class for actions on selectable lists
  */
 export abstract class SelectableListAction implements Action {
-  // eslint-disable-next-line @typescript-eslint/no-shadow
-  constructor(public type, public id: string) {
+  constructor(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    public type,
+    public id: string,
+  ) {
   }
 }
 
