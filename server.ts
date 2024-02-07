@@ -225,7 +225,7 @@ export function app() {
    * Default sending all incoming requests to ngApp() function, after first checking for a cached
    * copy of the page (see cacheCheck())
    */
-  router.get('*', skipSSRForActiveSessions, cacheCheck, ngApp);
+  router.get('*', cacheCheck, ngApp);
 
   server.use(environment.ui.nameSpace, router);
 
@@ -235,26 +235,17 @@ export function app() {
 /*
  * The callback function to serve server side angular
  */
-function ngApp(req, res) {
-  if (environment.universal.preboot) {
+function ngApp(req, res, next) {
+  if (environment.universal.preboot && !hasActiveCsrSession(req)) {
     // Render the page to user via SSR (server side rendering)
     serverSideRender(req, res);
   } else {
     // If preboot is disabled, just serve the client
-    console.log('Universal off, serving for direct client-side rendering (CSR)');
+    console.log('Serving for direct client-side rendering (CSR)');
     clientSideRender(req, res);
   }
 }
 
-function skipSSRForActiveSessions(req, res, next) {
-  const csrHeartbeat = req.cookies.DSPACE_CSR_SESSION_HEARTBEAT;
-  if (hasValue(csrHeartbeat) && (Date.now() - Number.parseInt(csrHeartbeat, 10)) < CSR_SESSION_ACTIVITY_WINDOW) {
-    console.log('Active session, serving for direct client-side rendering (CSR)');
-    clientSideRender(req, res);
-  } else {
-    next(req, res);
-  }
-}
 
 /**
  * The lifetime of an active CSR session in milliseconds.

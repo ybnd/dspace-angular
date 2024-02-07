@@ -46,13 +46,14 @@ export class CrossTabStateEffects {
         console.log('Request cross-tab state'); // todo: remove this
         const key = this.getRequestKey(action.payload.requestId);
         this.localStorage.setItem(key, 'pls');
-        return new NoOpAction();
       }),
       delay(50),
       withLatestFrom(this.store$),
       map(([_, store]) => {
         if (store.core.crosstab.status === CrossTabStateStatus.PENDING) {
           console.log('Timed out!'); // todo: remove this
+          const key = this.getRequestKey(store.core.crosstab.requestId);
+          this.localStorage.removeItem(key);
           return new CrossTabStateTimeout();
         } else {
           return new NoOpAction();
