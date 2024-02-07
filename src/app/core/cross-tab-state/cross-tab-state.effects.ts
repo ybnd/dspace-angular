@@ -8,7 +8,7 @@
 import { filter, fromEvent, NEVER, Observable, of } from 'rxjs';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { catchError, delay, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { catchError, delay, map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 import { hasValue } from '../../shared/empty.util';
 import { CrossTabStateStatus } from './cross-tab-state.reducer';
 import { StoreAction, StoreActionTypes } from '../../store.actions';
@@ -40,6 +40,7 @@ export class CrossTabStateEffects {
 
   public sendStateRequest$ = createEffect(() => {
     return this.actions$.pipe(
+      // todo: could make more sense to keep track of a shared entry that each tab updates once in a while
       ofType(CrossTabStateActionTypes.REQUEST),
       map((action: CrossTabStateRequest) => {
         console.log('Request cross-tab state'); // todo: remove this
@@ -68,12 +69,19 @@ export class CrossTabStateEffects {
       filter(([event, _]) => event.key.startsWith(this.REQUEST_KEY_PREFIX)),
       // filter(([event, store]) => store.core.crosstab.status !== CrossTabStateStatus.PENDING
       //   && !event.key.endsWith(store.core.crosstab.status.requestId)),
-      map(([event, store]) => {
+      tap(([event, store]) => {
         console.log('Got cross-tab state request:', event.newValue); // todo: remove this
         const requestId = this.getRequestId(event.key);
         const newKey = this.getResponseKey(requestId);
         this.localStorage.setItem(newKey, JSON.stringify(this.shareableState(store)));
       }),
+      delay(1000),
+      map(([event, _]) => {
+        console.log('Cleaning up after handled state request: ', event.newValue); // todo: remove this
+        const requestId = this.getRequestId(event.key);
+        const newKey = this.getResponseKey(requestId);
+        this.localStorage.removeItem(newKey);
+      })
     );
   }, { dispatch: false });
 
@@ -88,7 +96,6 @@ export class CrossTabStateEffects {
         console.log('Got cross-tab state response:', event.newValue);
 
         this.localStorage.removeItem(this.getRequestKey(store.core.crosstab.requestId));
-        this.localStorage.removeItem(event.key);
 
         return of(
           new StoreAction(StoreActionTypes.REHYDRATE, JSON.parse(event.newValue) as unknown as AppState),
