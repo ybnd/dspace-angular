@@ -1,0 +1,151 @@
+/**
+ * The contents of this file are subject to the license and copyright
+ * detailed in the LICENSE and NOTICE files at the root of the source
+ * tree and available online at
+ *
+ * http://www.dspace.org/license/
+ */
+import { filter, fromEvent, NEVER, Observable, of } from 'rxjs';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { catchError, delay, map, switchMap, withLatestFrom } from 'rxjs/operators';
+import { hasValue } from '../../shared/empty.util';
+import { CrossTabStateStatus } from './cross-tab-state.reducer';
+import { StoreAction, StoreActionTypes } from '../../store.actions';
+import { AppState } from '../../app.reducer';
+import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { CrossTabStateActionTypes, CrossTabStateCancel, CrossTabStateReceive, CrossTabStateRequest, CrossTabStateTimeout } from './cross-tab-state.actions';
+import { isPlatformBrowser } from '@angular/common';
+import { NoOpAction } from '../../shared/ngrx/no-op.action';
+
+function ifWindowAvailable<T>(somethingSomethingWindow: T): T | undefined {
+  if (typeof window !== 'undefined') {
+    return somethingSomethingWindow;
+  } else {
+    return undefined;
+  }
+}
+
+@Injectable()
+export class CrossTabStateEffects {
+  REQUEST_KEY_PREFIX = '__DSpace_cross_tab_state_request_';  // todo: need to specify host as well
+  RESPONSE_KEY_PREFIX = '__DSpace_cross_tab_state_response_';
+
+  constructor(
+    protected actions$: Actions,
+    protected store$: Store<any>,
+    @Inject(PLATFORM_ID) private platformID: any,
+  ) {
+  }
+
+  public sendStateRequest$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(CrossTabStateActionTypes.REQUEST),
+      map((action: CrossTabStateRequest) => {
+        console.log('Request cross-tab state'); // todo: remove this
+        const key = this.getRequestKey(action.payload.requestId);
+        this.localStorage.setItem(key, 'pls');
+        return new NoOpAction();
+      }),
+      delay(50),
+      withLatestFrom(this.store$),
+      map(([_, store]) => {
+        if (store.core.crosstab.status === CrossTabStateStatus.PENDING) {
+          console.log('Timed out!'); // todo: remove this
+          return new CrossTabStateTimeout();
+        } else {
+          return new NoOpAction();
+        }
+      }),
+      catchError(() => of(new CrossTabStateCancel())),
+    );
+  });
+
+  public handleStateRequest$ = createEffect(() => {
+    return this.localStorageEvents$.pipe(  // todo: this won't fly in the server!
+      withLatestFrom(this.store$),
+      filter(([event, _]) => hasValue(event)),  // don't care about removed items
+      filter(([event, _]) => event.key.startsWith(this.REQUEST_KEY_PREFIX)),
+      // filter(([event, store]) => store.core.crosstab.status !== CrossTabStateStatus.PENDING
+      //   && !event.key.endsWith(store.core.crosstab.status.requestId)),
+      map(([event, store]) => {
+        console.log('Got cross-tab state request:', event.newValue); // todo: remove this
+        const requestId = this.getRequestId(event.key);
+        const newKey = this.getResponseKey(requestId);
+        this.localStorage.setItem(newKey, JSON.stringify(this.shareableState(store)));
+      }),
+    );
+  }, { dispatch: false });
+
+  public handleStateResponse$ = createEffect(() => {
+    return this.localStorageEvents$.pipe(
+      withLatestFrom(this.store$),
+      filter(([event, _]) => hasValue(event)),  // don't care about removed items
+      filter(([event, state]) => state.core.crosstab.status === CrossTabStateStatus.PENDING
+        && event.key === this.getResponseKey(state.core.crosstab.requestId),
+      ),
+      switchMap(([event, store]) => {
+        console.log('Got cross-tab state response:', event.newValue);
+
+        this.localStorage.removeItem(this.getRequestKey(store.core.crosstab.requestId));
+        this.localStorage.removeItem(event.key);
+
+        return of(
+          new StoreAction(StoreActionTypes.REHYDRATE, JSON.parse(event.newValue) as unknown as AppState),
+          new CrossTabStateReceive(),
+        );
+      }),
+    );
+  });
+
+  private get localStorageEvents$(): Observable<StorageEvent> {
+    if (isPlatformBrowser(this.platformID)) {
+      return fromEvent<StorageEvent>(window, 'storage');
+    } else {
+      return NEVER;
+    }
+  }
+
+  private get localStorage(): Storage {
+    if (isPlatformBrowser(this.platformID)) {
+      return window.localStorage;
+    } else {
+      throw new Error('No localStore API on the server, why are we trying to use it?');
+    }
+  }
+
+  private getRequestId(key: string) {
+    if (key.startsWith(this.REQUEST_KEY_PREFIX)) {
+      return key.split(this.REQUEST_KEY_PREFIX)[1];
+    } else {
+      return undefined;
+    }
+  }
+
+  private getRequestKey(requestId: string) {
+    return this.REQUEST_KEY_PREFIX + requestId;
+  }
+
+  private getResponseKey(requestId: string) {
+    return this.RESPONSE_KEY_PREFIX + requestId;
+  }
+
+  private shareableState(state: any): any {
+    return {
+      core: {
+        'cache/object': {
+          ...state.core['cache/object'],
+          // todo: limit this to "safe" data somehow? don't imagine this matters since we already have a shared authorization cookie 🤷‍
+        },
+        'data/request': {
+          ...state.core['data/request'],
+          // todo: determine what to retain based on the previous thing
+        },
+        'index': {
+          ...state.core.index,
+          // todo: determine what to retain based on the previous things
+        },
+      },
+    };
+  }
+}

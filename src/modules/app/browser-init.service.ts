@@ -33,6 +33,9 @@ import { MenuService } from '../../app/shared/menu/menu.service';
 import { RootDataService } from '../../app/core/data/root-data.service';
 import { firstValueFrom, Subscription } from 'rxjs';
 import { CookieService } from '../../app/core/services/cookie.service';
+import { CrossTabStateRequest } from '../../app/core/cross-tab-state/cross-tab-state.actions';
+import { UUIDService } from '../../app/core/shared/uuid.service';
+import { CrossTabStateStatus } from '../../app/core/cross-tab-state/cross-tab-state.reducer';
 
 /**
  * Performs client-side initialization.
@@ -59,6 +62,7 @@ export class BrowserInitService extends InitService {
     protected menuService: MenuService,
     protected rootDataService: RootDataService,
     protected cookieService: CookieService,
+    protected uuidService: UUIDService,
   ) {
     super(
       store,
@@ -124,12 +128,26 @@ export class BrowserInitService extends InitService {
    */
   private async loadAppState(): Promise<boolean> {
     const state = this.transferState.get<any>(InitService.NGRX_STATE, null);
-    this.transferState.remove(InitService.NGRX_STATE);
-    this.store.dispatch(new StoreAction(StoreActionTypes.REHYDRATE, state));
-    return this.store.select(coreSelector).pipe(
-      find((core: any) => isNotEmpty(core)),
-      map(() => true)
-    ).toPromise();
+
+    if (state != null) {
+      this.transferState.remove(InitService.NGRX_STATE);
+      this.store.dispatch(new StoreAction(StoreActionTypes.REHYDRATE, state));
+
+      return this.store.select(coreSelector).pipe(
+        find((core: any) => isNotEmpty(core)),
+        map(() => true)
+      ).toPromise();
+    } else {
+      console.log('Retrieving state from '); // todo: remove this
+      this.store.dispatch(new CrossTabStateRequest(this.uuidService.generate()));  // todo: should have some sort of timeout though
+
+      return this.store.select(coreSelector).pipe(
+        find((core: any) => core.crosstab.status === CrossTabStateStatus.SYNCED || core.crosstab.status === CrossTabStateStatus.TIMED_OUT),
+        map(() => true)
+      ).toPromise();
+    }
+
+
   }
 
   private trackAuthTokenExpiration(): void {

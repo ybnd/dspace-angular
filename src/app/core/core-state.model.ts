@@ -11,6 +11,7 @@ import { JsonPatchOperationsState } from './json-patch/json-patch-operations.red
 import { MetaTagState } from './metadata/meta-tag.reducer';
 import { RouteState } from './services/route.reducer';
 import { RequestState } from './data/request-state.model';
+import { CrossTabState } from './cross-tab-state/cross-tab-state.reducer';
 
 /**
  * The core sub-state in the NgRx store
@@ -27,4 +28,5 @@ export interface CoreState {
     'json/patch': JsonPatchOperationsState;
     'metaTag': MetaTagState;
     'route': RouteState;
+    'crosstab': CrossTabState;
 }

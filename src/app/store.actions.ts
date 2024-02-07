@@ -4,6 +4,7 @@ import { AppState } from './app.reducer';
 
 export const StoreActionTypes = {
   REHYDRATE: type('dspace/ngrx/REHYDRATE'),
+  REHYDRATE_PARTIAL: type('dspace/ngrx/REHYDRATE_PARTIAL'),
   REPLAY: type('dspace/ngrx/REPLAY'),
 };
 
