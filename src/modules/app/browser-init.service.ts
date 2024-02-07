@@ -32,6 +32,7 @@ import { logStartupMessage } from '../../../startup-message';
 import { MenuService } from '../../app/shared/menu/menu.service';
 import { RootDataService } from '../../app/core/data/root-data.service';
 import { firstValueFrom, Subscription } from 'rxjs';
+import { CookieService } from '../../app/core/services/cookie.service';
 
 /**
  * Performs client-side initialization.
@@ -56,7 +57,8 @@ export class BrowserInitService extends InitService {
     protected authService: AuthService,
     protected themeService: ThemeService,
     protected menuService: MenuService,
-    private rootDataService: RootDataService
+    protected rootDataService: RootDataService,
+    protected cookieService: CookieService,
   ) {
     super(
       store,
@@ -100,6 +102,12 @@ export class BrowserInitService extends InitService {
       this.trackAuthTokenExpiration();
 
       this.initKlaro();
+
+      // As long as this tab is open, mark all requests as "coming from a browser session"
+      // todo: should probably be an effect?
+      setInterval(() => {
+        this.cookieService.set('DSPACE_CSR_SESSION_HEARTBEAT', Date.now());
+      }, 1000);
 
       await this.authenticationReady$().toPromise();
 

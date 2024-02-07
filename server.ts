@@ -225,7 +225,7 @@ export function app() {
    * Default sending all incoming requests to ngApp() function, after first checking for a cached
    * copy of the page (see cacheCheck())
    */
-  router.get('*', cacheCheck, ngApp);
+  router.get('*', skipSSRForActiveSessions, cacheCheck, ngApp);
 
   server.use(environment.ui.nameSpace, router);
 
@@ -244,6 +244,28 @@ function ngApp(req, res) {
     console.log('Universal off, serving for direct client-side rendering (CSR)');
     clientSideRender(req, res);
   }
+}
+
+function skipSSRForActiveSessions(req, res, next) {
+  const csrHeartbeat = req.cookies.DSPACE_CSR_SESSION_HEARTBEAT;
+  if (hasValue(csrHeartbeat) && (Date.now() - Number.parseInt(csrHeartbeat, 10)) < CSR_SESSION_ACTIVITY_WINDOW) {
+    console.log('Active session, serving for direct client-side rendering (CSR)');
+    clientSideRender(req, res);
+  } else {
+    next(req, res);
+  }
+}
+
+/**
+ * The lifetime of an active CSR session in milliseconds.
+ * Requests coming from active sessions will not trigger SSR to reduce CPU load on the server.
+ * Active sessions will have cached most of the necessary resources already, reducing their TTI.
+ */
+const CSR_SESSION_ACTIVITY_WINDOW = 10000;
+
+function hasActiveCsrSession(req): boolean {
+  const csrHeartbeat = req.cookies.DSPACE_CSR_SESSION_HEARTBEAT;
+  return hasValue(csrHeartbeat) && (Date.now() - Number.parseInt(csrHeartbeat, 10)) < CSR_SESSION_ACTIVITY_WINDOW;
 }
 
 /**
