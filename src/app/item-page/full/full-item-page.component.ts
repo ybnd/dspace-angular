@@ -27,7 +27,7 @@ import { NotifyInfoService } from '../../core/coar-notify/notify-info/notify-inf
  */
 
 @Component({
-  selector: 'ds-full-item-page',
+  selector: 'ds-unthemed-full-item-page',
   styleUrls: ['./full-item-page.component.scss'],
   templateUrl: './full-item-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -7,7 +7,7 @@ import { SortOptions } from '../../../core/cache/models/sort-options.model';
  * Themed wrapper for SearchSettingsComponent
  */
 @Component({
-  selector: 'ds-themed-search-settings',
+  selector: 'ds-search-settings',
   styleUrls: [],
   templateUrl: '../../theme-support/themed.component.html',
 })

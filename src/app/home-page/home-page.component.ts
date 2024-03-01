@@ -12,7 +12,7 @@ import { isNotEmpty } from '../shared/empty.util';
 
 import { APP_CONFIG, AppConfig } from 'src/config/app-config.interface';
 @Component({
-  selector: 'ds-home-page',
+  selector: 'ds-unthemed-home-page',
   styleUrls: ['./home-page.component.scss'],
   templateUrl: './home-page.component.html'
 })

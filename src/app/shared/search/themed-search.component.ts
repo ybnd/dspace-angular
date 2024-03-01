@@ -14,7 +14,7 @@ import { ListableObject } from '../object-collection/shared/listable-object.mode
  * Themed wrapper for {@link SearchComponent}
  */
 @Component({
-  selector: 'ds-themed-search',
+  selector: 'ds-search',
   templateUrl: '../theme-support/themed.component.html',
 })
 export class ThemedSearchComponent extends ThemedComponent<SearchComponent> {

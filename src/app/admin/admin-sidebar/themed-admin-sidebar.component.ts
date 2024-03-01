@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
  * Themed wrapper for AdminSidebarComponent
  */
 @Component({
-  selector: 'ds-themed-admin-sidebar',
+  selector: 'ds-admin-sidebar',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

@@ -6,7 +6,7 @@ import { HeaderNavbarWrapperComponent } from './header-navbar-wrapper.component'
  * Themed wrapper for {@link HeaderNavbarWrapperComponent}
  */
 @Component({
-  selector: 'ds-themed-header-navbar-wrapper',
+  selector: 'ds-header-navbar-wrapper',
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })

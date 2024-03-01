@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'ds-results-back-button',
+  selector: 'ds-unthemed-results-back-button',
   styleUrls: ['./results-back-button.component.scss'],
   templateUrl: './results-back-button.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

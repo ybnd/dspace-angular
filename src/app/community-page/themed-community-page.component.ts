@@ -6,7 +6,7 @@ import { CommunityPageComponent } from './community-page.component';
  * Themed wrapper for CommunityPageComponent
  */
 @Component({
-  selector: 'ds-themed-community-page',
+  selector: 'ds-community-page',
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })

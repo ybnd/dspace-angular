@@ -10,7 +10,7 @@ import { RequestService } from '../../core/data/request.service';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'ds-workflow-item-send-back',
+  selector: 'ds-unthemed-workflow-item-send-back',
   templateUrl: '../workflow-item-action-page.component.html'
 })
 /**

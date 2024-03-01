@@ -14,7 +14,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DSpaceObject } from '../../core/shared/dspace-object.model';
 
 @Component({
-  selector: 'ds-workspaceitems-delete-page',
+  selector: 'ds-unthemed-workspaceitems-delete-page',
   templateUrl: './workspaceitems-delete-page.component.html',
   styleUrls: ['./workspaceitems-delete-page.component.scss']
 })

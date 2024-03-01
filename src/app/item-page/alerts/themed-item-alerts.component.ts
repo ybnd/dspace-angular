@@ -7,7 +7,7 @@ import { ThemedComponent } from '../../shared/theme-support/themed.component';
  * Themed wrapper for {@link ItemAlertsComponent}
  */
 @Component({
-  selector: 'ds-themed-item-alerts',
+  selector: 'ds-item-alerts',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

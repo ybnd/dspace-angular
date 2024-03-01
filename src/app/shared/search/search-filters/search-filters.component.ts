@@ -15,7 +15,7 @@ import { hasValue } from '../../empty.util';
 import { PaginatedSearchOptions } from '../models/paginated-search-options.model';
 
 @Component({
-  selector: 'ds-search-filters',
+  selector: 'ds-unthemed-search-filters',
   styleUrls: ['./search-filters.component.scss'],
   templateUrl: './search-filters.component.html',
 

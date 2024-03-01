@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
  * Represents the header with the logo and simple navigation
  */
 @Component({
-  selector: 'ds-header',
+  selector: 'ds-dspace-header',
   styleUrls: ['header.component.scss'],
   templateUrl: 'header.component.html',
 })

@@ -4,7 +4,7 @@ import { ResultsBackButtonComponent } from './results-back-button.component';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'ds-themed-results-back-button',
+  selector: 'ds-results-back-button',
   styleUrls: [],
   templateUrl: '../theme-support/themed.component.html',
 })

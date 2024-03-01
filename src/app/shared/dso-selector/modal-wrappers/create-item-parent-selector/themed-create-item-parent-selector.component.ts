@@ -6,7 +6,7 @@ import {ThemedComponent} from 'src/app/shared/theme-support/themed.component';
  * Themed wrapper for CreateItemParentSelectorComponent
  */
 @Component({
-    selector: 'ds-themed-create-item-parent-selector',
+    selector: 'ds-create-item-parent-selector',
     styleUrls: [],
     templateUrl: '../../../theme-support/themed.component.html'
 })

@@ -13,7 +13,7 @@ import { ListableObject } from '../object-collection/shared/listable-object.mode
  * Themed wrapper for ObjectListComponent
  */
 @Component({
-  selector: 'ds-themed-object-list',
+  selector: 'ds-object-list',
   styleUrls: [],
   templateUrl: '../theme-support/themed.component.html',
 })

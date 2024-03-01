@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FooterComponent as BaseComponent } from '../../../../app/footer/footer.component';
 
 @Component({
-  selector: 'ds-footer',
+  selector: 'ds-custom-footer',
   // styleUrls: ['./footer.component.scss'],
   styleUrls: ['../../../../app/footer/footer.component.scss'],
   // templateUrl: './footer.component.html'

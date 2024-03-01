@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RegisterEmailComponent as BaseComponent } from '../../../../../app/register-page/register-email/register-email.component';
 
 @Component({
-  selector: 'ds-register-email',
+  selector: 'ds-custom-register-email',
   // styleUrls: ['./register-email.component.scss'],
   styleUrls: ['../../../../../app/register-page/register-email/register-email.component.scss'],
   // templateUrl: './register-email.component.html'

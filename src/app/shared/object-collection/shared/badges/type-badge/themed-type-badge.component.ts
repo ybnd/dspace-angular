@@ -7,7 +7,7 @@ import { DSpaceObject } from '../../../../../core/shared/dspace-object.model';
  * Themed wrapper for TypeBadgeComponent
  */
 @Component({
-  selector: 'ds-themed-type-badge',
+  selector: 'ds-type-badge',
   styleUrls: [],
   templateUrl: '../../../../theme-support/themed.component.html',
 })

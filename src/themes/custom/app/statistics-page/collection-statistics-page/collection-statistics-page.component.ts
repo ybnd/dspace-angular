@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CollectionStatisticsPageComponent as BaseComponent } from '../../../../../app/statistics-page/collection-statistics-page/collection-statistics-page.component';
 
 @Component({
-  selector: 'ds-collection-statistics-page',
+  selector: 'ds-custom-collection-statistics-page',
   // styleUrls: ['./collection-statistics-page.component.scss'],
   styleUrls: ['../../../../../app/statistics-page/collection-statistics-page/collection-statistics-page.component.scss'],
   // templateUrl: './collection-statistics-page.component.html',

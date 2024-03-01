@@ -19,7 +19,7 @@ import { IdentifierData } from '../../../shared/object-list/identifier-data/iden
 import { OrcidAuthService } from '../../../core/orcid/orcid-auth.service';
 
 @Component({
-  selector: 'ds-item-status',
+  selector: 'ds-unthemed-item-status',
   templateUrl: './item-status.component.html',
   changeDetection: ChangeDetectionStrategy.Default,
   animations: [

@@ -6,7 +6,7 @@ import { Subscription } from 'rxjs';
 import { hasValue } from '../empty.util';
 
 @Component({
-  selector: 'ds-loading',
+  selector: 'ds-unthemed-loading',
   styleUrls: ['./loading.component.scss'],
   templateUrl: './loading.component.html'
 })

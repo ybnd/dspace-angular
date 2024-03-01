@@ -26,7 +26,7 @@ import { DSpaceObject } from '../../../../../../core/shared/dspace-object.model'
 
 
 @Component({
-  selector: 'ds-dynamic-lookup-relation-search-tab',
+  selector: 'ds-unthemed-dynamic-lookup-relation-search-tab',
   styleUrls: ['./dynamic-lookup-relation-search-tab.component.scss'],
   templateUrl: './dynamic-lookup-relation-search-tab.component.html',
   providers: [

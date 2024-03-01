@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { BadgesComponent as BaseComponent } from 'src/app/shared/object-collection/shared/badges/badges.component';
 
 @Component({
-  selector: 'ds-badges',
+  selector: 'ds-custom-badges',
   // styleUrls: ['./badges.component.scss'],
   styleUrls: ['../../../../../../../app/shared/object-collection/shared/badges/badges.component.scss'],
   // templateUrl: './badges.component.html',

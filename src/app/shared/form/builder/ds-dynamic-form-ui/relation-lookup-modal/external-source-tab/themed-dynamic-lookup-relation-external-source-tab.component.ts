@@ -9,7 +9,7 @@ import { ExternalSource } from '../../../../../../core/shared/external-source.mo
 import { DsDynamicLookupRelationExternalSourceTabComponent } from './dynamic-lookup-relation-external-source-tab.component';
 
 @Component({
-  selector: 'ds-themed-dynamic-lookup-relation-external-source-tab',
+  selector: 'ds-dynamic-lookup-relation-external-source-tab',
   styleUrls: [],
   templateUrl: '../../../../../theme-support/themed.component.html',
 })

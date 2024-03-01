@@ -15,7 +15,7 @@ import { hasValue } from '../empty.util';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
-  selector: 'ds-browse-by',
+  selector: 'ds-unthemed-browse-by',
   styleUrls: ['./browse-by.component.scss'],
   templateUrl: './browse-by.component.html',
   animations: [

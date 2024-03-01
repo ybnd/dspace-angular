@@ -8,7 +8,7 @@ import { AuthorizationDataService } from '../core/data/feature-authorization/aut
 import { FeatureID } from '../core/data/feature-authorization/feature-id';
 
 @Component({
-  selector: 'ds-footer',
+  selector: 'ds-unthemed-footer',
   styleUrls: ['footer.component.scss'],
   templateUrl: 'footer.component.html'
 })

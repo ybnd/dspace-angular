@@ -10,7 +10,7 @@ import { Item } from '../../../../../core/shared/item.model';
 import { ITEM } from '../../../../../core/shared/item.resource-type';
 
 @Component({
-  selector: 'ds-access-status-badge',
+  selector: 'ds-unthemed-access-status-badge',
   templateUrl: './access-status-badge.component.html',
   styleUrls: ['./access-status-badge.component.scss']
 })

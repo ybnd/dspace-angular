@@ -3,7 +3,7 @@ import { fadeIn, fadeInOut } from '../../../../../app/shared/animations/fade';
 import { BrowseByComponent as BaseComponent } from '../../../../../app/shared/browse-by/browse-by.component';
 
 @Component({
-  selector: 'ds-browse-by',
+  selector: 'ds-custom-browse-by',
   // styleUrls: ['./browse-by.component.scss'],
   styleUrls: ['../../../../../app/shared/browse-by/browse-by.component.scss'],
   // templateUrl: './browse-by.component.html',

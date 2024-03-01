@@ -40,7 +40,7 @@ import { COMMUNITY_MODULE_PATH } from '../../community-page/community-page-routi
 import { AppConfig, APP_CONFIG } from '../../../config/app-config.interface';
 
 @Component({
-  selector: 'ds-search',
+  selector: 'ds-unthemed-search',
   styleUrls: ['./search.component.scss'],
   templateUrl: './search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

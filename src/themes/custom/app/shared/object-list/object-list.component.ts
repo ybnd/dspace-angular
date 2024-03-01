@@ -6,7 +6,7 @@ import { ObjectListComponent as BaseComponent} from '../../../../../app/shared/o
  * It expects the ID of the Community or Collection as input to be passed on as a scope
  */
 @Component({
-  selector: 'ds-object-list',
+  selector: 'ds-custom-object-list',
   // styleUrls: ['./object-list.component.scss'],
   styleUrls: ['../../../../../app/shared/object-list/object-list.component.scss'],
   // templateUrl: './object-list.component.html'

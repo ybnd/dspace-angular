@@ -8,7 +8,7 @@ import { MenuID } from '../../shared/menu/menu-id.model';
  * Themed wrapper for ExpandableNavbarSectionComponent
  */
 @Component({
-  selector: 'ds-themed-expandable-navbar-section',
+  selector: 'ds-expandable-navbar-section',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

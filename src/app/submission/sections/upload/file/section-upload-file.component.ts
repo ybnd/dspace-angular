@@ -30,7 +30,7 @@ import { NgbModalOptions } from '@ng-bootstrap/ng-bootstrap/modal/modal-config';
  * This component represents a single bitstream contained in the submission
  */
 @Component({
-  selector: 'ds-submission-upload-section-file',
+  selector: 'ds-unthemed-submission-upload-section-file',
   styleUrls: ['./section-upload-file.component.scss'],
   templateUrl: './section-upload-file.component.html',
 })

@@ -3,7 +3,7 @@ import { EditBitstreamPageComponent } from './edit-bitstream-page.component';
 import { ThemedComponent } from '../../shared/theme-support/themed.component';
 
 @Component({
-  selector: 'ds-themed-edit-bitstream-page',
+  selector: 'ds-edit-bitstream-page',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

@@ -13,7 +13,7 @@ import { SearchFilterConfig } from '../models/search-filter-config.model';
  * Themed wrapper for SearchSidebarComponent
  */
 @Component({
-  selector: 'ds-themed-search-sidebar',
+  selector: 'ds-search-sidebar',
   styleUrls: [],
   templateUrl: '../../theme-support/themed.component.html',
 })

@@ -12,7 +12,7 @@ import { WorkflowItem } from 'src/app/core/submission/models/workflowitem.model'
  * This component show metadata for the given item object in the list view.
  */
 @Component({
-  selector: 'ds-item-list-preview',
+  selector: 'ds-unthemed-item-list-preview',
   styleUrls: ['item-list-preview.component.scss'],
   templateUrl: 'item-list-preview.component.html',
   animations: [fadeInOut]

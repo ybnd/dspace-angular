@@ -5,7 +5,7 @@ import { Bitstream } from '../../core/shared/bitstream.model';
 import { Item } from '../../core/shared/item.model';
 
 @Component({
-  selector: 'ds-themed-file-download-link',
+  selector: 'ds-file-download-link',
   styleUrls: [],
   templateUrl: '../theme-support/themed.component.html',
 })

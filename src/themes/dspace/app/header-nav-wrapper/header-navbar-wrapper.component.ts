@@ -6,7 +6,7 @@ import { slideMobileNav } from '../../../../app/shared/animations/slide';
  * This component represents a wrapper for the horizontal navbar and the header
  */
 @Component({
-  selector: 'ds-header-navbar-wrapper',
+  selector: 'ds-dspace-header-navbar-wrapper',
   styleUrls: ['header-navbar-wrapper.component.scss'],
   templateUrl: 'header-navbar-wrapper.component.html',
   animations: [slideMobileNav],

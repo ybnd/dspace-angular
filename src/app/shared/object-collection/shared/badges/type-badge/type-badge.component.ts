@@ -4,7 +4,7 @@ import { hasValue, isEmpty } from '../../../../empty.util';
 import { getResourceTypeValueFor } from '../../../../../core/cache/object-cache.reducer';
 
 @Component({
-  selector: 'ds-type-badge',
+  selector: 'ds-unthemed-type-badge',
   templateUrl: './type-badge.component.html'
 })
 /**

@@ -5,7 +5,7 @@ import { Context } from 'src/app/core/shared/context.model';
  * This component represents a badge with mydspace item status
  */
 @Component({
-  selector: 'ds-my-dspace-status-badge',
+  selector: 'ds-unthemed-my-dspace-status-badge',
   styleUrls: ['./my-dspace-status-badge.component.scss'],
   templateUrl: './my-dspace-status-badge.component.html'
 })

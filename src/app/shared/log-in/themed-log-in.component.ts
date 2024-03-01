@@ -6,7 +6,7 @@ import { LogInComponent } from './log-in.component';
  * Themed wrapper for {@link LogInComponent}
  */
 @Component({
-  selector: 'ds-themed-log-in',
+  selector: 'ds-log-in',
   styleUrls: [],
   templateUrl: './../theme-support/themed.component.html'
 })

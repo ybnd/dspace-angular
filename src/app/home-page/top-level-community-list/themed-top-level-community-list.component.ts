@@ -3,7 +3,7 @@ import { TopLevelCommunityListComponent } from './top-level-community-list.compo
 import { ThemedComponent } from '../../shared/theme-support/themed.component';
 
 @Component({
-  selector: 'ds-themed-top-level-community-list',
+  selector: 'ds-top-level-community-list',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })

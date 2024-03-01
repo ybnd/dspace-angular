@@ -5,7 +5,7 @@ import { SubmissionEditComponent as BaseComponent } from '../../../../../app/sub
  * This component allows to edit an existing workspaceitem/workflowitem.
  */
 @Component({
-  selector: 'ds-submission-edit',
+  selector: 'ds-custom-submission-edit',
   // styleUrls: ['./submission-edit.component.scss'],
   styleUrls: ['../../../../../app/submission/edit/submission-edit.component.scss'],
   // templateUrl: './submission-edit.component.html'

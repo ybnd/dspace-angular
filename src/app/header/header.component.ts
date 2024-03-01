@@ -8,7 +8,7 @@ import { HostWindowService, WidthCategory } from '../shared/host-window.service'
  * Represents the header with the logo and simple navigation
  */
 @Component({
-  selector: 'ds-header',
+  selector: 'ds-unthemed-header',
   styleUrls: ['header.component.scss'],
   templateUrl: 'header.component.html',
 })

@@ -38,7 +38,7 @@ export enum ImportType {
 }
 
 @Component({
-  selector: 'ds-external-source-entry-import-modal',
+  selector: 'ds-unthemed-external-source-entry-import-modal',
   styleUrls: ['./external-source-entry-import-modal.component.scss'],
   templateUrl: './external-source-entry-import-modal.component.html'
 })

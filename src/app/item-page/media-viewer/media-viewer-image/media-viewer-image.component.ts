@@ -9,7 +9,7 @@ import { AuthService } from '../../../core/auth/auth.service';
  * This componenet render an image gallery for the image viewer
  */
 @Component({
-  selector: 'ds-media-viewer-image',
+  selector: 'ds-unthemed-media-viewer-image',
   templateUrl: './media-viewer-image.component.html',
   styleUrls: ['./media-viewer-image.component.scss'],
 })

@@ -7,7 +7,7 @@ import { Item } from '../../../../../core/shared/item.model';
  * Themed wrapper for {@link ItemPageTitleFieldComponent}
  */
 @Component({
-  selector: 'ds-themed-item-page-title-field',
+  selector: 'ds-item-page-title-field',
   styleUrls: [],
   templateUrl: '../../../../../shared/theme-support/themed.component.html',
 })

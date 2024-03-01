@@ -25,7 +25,7 @@ import { CoreState } from '../../core/core-state.model';
  * Component that renders the create profile page to be used by a user registering through a token
  */
 @Component({
-  selector: 'ds-create-profile',
+  selector: 'ds-unthemed-create-profile',
   styleUrls: ['./create-profile.component.scss'],
   templateUrl: './create-profile.component.html'
 })

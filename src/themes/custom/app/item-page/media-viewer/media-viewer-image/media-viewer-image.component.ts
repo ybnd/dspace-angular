@@ -4,7 +4,7 @@ import {
 } from '../../../../../../app/item-page/media-viewer/media-viewer-image/media-viewer-image.component';
 
 @Component({
-  selector: 'ds-media-viewer-image',
+  selector: 'ds-custom-media-viewer-image',
   // templateUrl: './media-viewer-image.component.html',
   templateUrl: '../../../../../../app/item-page/media-viewer/media-viewer-image/media-viewer-image.component.html',
   // styleUrls: ['./media-viewer-image.component.scss'],

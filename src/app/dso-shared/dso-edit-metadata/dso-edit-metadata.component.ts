@@ -24,7 +24,7 @@ import { HALDataService } from '../../core/data/base/hal-data-service.interface'
 import { UpdateDataService } from '../../core/data/update-data.service';
 
 @Component({
-  selector: 'ds-dso-edit-metadata',
+  selector: 'ds-unthemed-dso-edit-metadata',
   styleUrls: ['./dso-edit-metadata.component.scss'],
   templateUrl: './dso-edit-metadata.component.html',
 })

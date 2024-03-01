@@ -4,7 +4,7 @@ import { Component, Input } from '@angular/core';
 import { Community } from '../../../../core/shared/community.model';
 
 @Component({
-  selector: 'ds-themed-community-page-sub-collection-list',
+  selector: 'ds-community-page-sub-collection-list',
   styleUrls: [],
   templateUrl: '../../../../shared/theme-support/themed.component.html',
 })

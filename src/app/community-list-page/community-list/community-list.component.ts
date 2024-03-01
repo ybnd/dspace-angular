@@ -17,7 +17,7 @@ import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
  * Which nodes were expanded is kept in the store, so this persists across pages.
  */
 @Component({
-  selector: 'ds-community-list',
+  selector: 'ds-unthemed-community-list',
   templateUrl: './community-list.component.html',
   styleUrls: ['./community-list.component.scss'],
 })

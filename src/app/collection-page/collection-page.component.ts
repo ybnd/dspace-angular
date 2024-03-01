@@ -18,7 +18,7 @@ import { redirectOn4xx } from '../core/shared/authorized.operators';
 import { DSONameService } from '../core/breadcrumbs/dso-name.service';
 
 @Component({
-  selector: 'ds-collection-page',
+  selector: 'ds-unthemed-collection-page',
   styleUrls: ['./collection-page.component.scss'],
   templateUrl: './collection-page.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

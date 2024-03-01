@@ -8,7 +8,7 @@ import { Context } from 'src/app/core/shared/context.model';
  * Themed wrapper for BadgesComponent
  */
 @Component({
-  selector: 'ds-themed-badges',
+  selector: 'ds-badges',
   styleUrls: [],
   templateUrl: '../../../theme-support/themed.component.html',
 })

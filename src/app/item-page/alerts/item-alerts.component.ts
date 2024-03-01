@@ -9,7 +9,7 @@ import { CorrectionTypeDataService } from '../../core/submission/correctiontype-
 import { getFirstCompletedRemoteData, getPaginatedListPayload, getRemoteDataPayload } from 'src/app/core/shared/operators';
 
 @Component({
-  selector: 'ds-item-alerts',
+  selector: 'ds-unthemed-item-alerts',
   templateUrl: './item-alerts.component.html',
   styleUrls: ['./item-alerts.component.scss']
 })

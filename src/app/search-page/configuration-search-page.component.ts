@@ -14,7 +14,7 @@ import { APP_CONFIG, AppConfig } from '../../config/app-config.interface';
  * This component renders a search page using a configuration as input.
  */
 @Component({
-  selector: 'ds-configuration-search-page',
+  selector: 'ds-unthemed-configuration-search-page',
   styleUrls: ['../shared/search/search.component.scss'],
   templateUrl: '../shared/search/search.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,

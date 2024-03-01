@@ -6,7 +6,7 @@ import { slideMobileNav } from '../../../../app/shared/animations/slide';
  * Component representing the public navbar
  */
 @Component({
-  selector: 'ds-navbar',
+  selector: 'ds-dspace-navbar',
   styleUrls: ['./navbar.component.scss'],
   templateUrl: './navbar.component.html',
   animations: [slideMobileNav]

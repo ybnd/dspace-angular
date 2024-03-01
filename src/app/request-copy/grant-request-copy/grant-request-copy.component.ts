@@ -15,7 +15,7 @@ import { NotificationsService } from '../../shared/notifications/notifications.s
 import { redirectOn4xx } from '../../core/shared/authorized.operators';
 
 @Component({
-  selector: 'ds-grant-request-copy',
+  selector: 'ds-unthemed-grant-request-copy',
   styleUrls: ['./grant-request-copy.component.scss'],
   templateUrl: './grant-request-copy.component.html'
 })

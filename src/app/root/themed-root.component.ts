@@ -3,7 +3,7 @@ import { RootComponent } from './root.component';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'ds-themed-root',
+  selector: 'ds-root',
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })

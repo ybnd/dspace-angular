@@ -6,7 +6,7 @@ import { GrantRequestCopyComponent } from './grant-request-copy.component';
  * Themed wrapper for grant-request-copy.component
  */
 @Component({
-  selector: 'ds-themed-grant-request-copy',
+  selector: 'ds-grant-request-copy',
   styleUrls: [],
   templateUrl: './../../shared/theme-support/themed.component.html',
 })

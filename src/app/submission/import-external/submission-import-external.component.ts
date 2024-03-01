@@ -29,7 +29,7 @@ import { AlertType } from 'src/app/shared/alert/alert-type';
  * This component allows to submit a new workspaceitem importing the data from an external source.
  */
 @Component({
-  selector: 'ds-submission-import-external',
+  selector: 'ds-unthemed-submission-import-external',
   styleUrls: ['./submission-import-external.component.scss'],
   templateUrl: './submission-import-external.component.html',
   animations: [fadeIn]

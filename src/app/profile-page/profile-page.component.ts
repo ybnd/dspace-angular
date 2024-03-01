@@ -21,7 +21,7 @@ import { ConfigurationProperty } from '../core/shared/configuration-property.mod
 import { DSONameService } from '../core/breadcrumbs/dso-name.service';
 
 @Component({
-  selector: 'ds-profile-page',
+  selector: 'ds-unthemed-profile-page',
   styleUrls: ['./profile-page.component.scss'],
   templateUrl: './profile-page.component.html'
 })

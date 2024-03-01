@@ -16,7 +16,7 @@ import { environment } from '../../../../../environments/environment';
  */
 
 @Component({
-  selector: 'ds-create-collection-parent-selector',
+  selector: 'ds-unthemed-create-collection-parent-selector',
   templateUrl: '../dso-selector-modal-wrapper.component.html',
 })
 export class CreateCollectionParentSelectorComponent extends DSOSelectorModalWrapperComponent implements OnInit {

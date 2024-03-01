@@ -3,7 +3,7 @@ import { SEARCH_CONFIG_SERVICE } from '../my-dspace-page/my-dspace-page.componen
 import { SearchConfigurationService } from '../core/shared/search/search-configuration.service';
 
 @Component({
-  selector: 'ds-search-page',
+  selector: 'ds-unthemed-search-page',
   templateUrl: './search-page.component.html',
   providers: [
     {

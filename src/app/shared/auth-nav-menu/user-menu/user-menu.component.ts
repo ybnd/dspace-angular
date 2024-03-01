@@ -15,7 +15,7 @@ import { DSONameService } from '../../../core/breadcrumbs/dso-name.service';
  * This component represents the user nav menu.
  */
 @Component({
-  selector: 'ds-user-menu',
+  selector: 'ds-unthemed-user-menu',
   templateUrl: './user-menu.component.html',
   styleUrls: ['./user-menu.component.scss']
 })

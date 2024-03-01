@@ -13,7 +13,7 @@ import { StartsWithType } from '../starts-with/starts-with-decorator';
  * Themed wrapper for {@link BrowseByComponent}
  */
 @Component({
-  selector: 'ds-themed-browse-by',
+  selector: 'ds-browse-by',
   styleUrls: [],
   templateUrl: '../theme-support/themed.component.html',
 })

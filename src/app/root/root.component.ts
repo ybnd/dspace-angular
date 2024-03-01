@@ -14,7 +14,7 @@ import { getPageInternalServerErrorRoute } from '../app-routing-paths';
 import { INotificationBoardOptions } from 'src/config/notifications-config.interfaces';
 
 @Component({
-  selector: 'ds-root',
+  selector: 'ds-unthemed-root',
   templateUrl: './root.component.html',
   styleUrls: ['./root.component.scss'],
   animations: [slideSidebarPadding],

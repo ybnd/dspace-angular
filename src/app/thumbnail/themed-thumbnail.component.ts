@@ -5,7 +5,7 @@ import { Bitstream } from '../core/shared/bitstream.model';
 import { RemoteData } from '../core/data/remote-data';
 
 @Component({
-  selector: 'ds-themed-thumbnail',
+  selector: 'ds-thumbnail',
   styleUrls: [],
   templateUrl: '../shared/theme-support/themed.component.html',
 })

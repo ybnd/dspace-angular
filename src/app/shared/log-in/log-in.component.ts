@@ -14,7 +14,7 @@ import { CoreState } from '../../core/core-state.model';
 import { rendersAuthMethodType } from './methods/log-in.methods-decorator';
 
 @Component({
-  selector: 'ds-log-in',
+  selector: 'ds-unthemed-log-in',
   templateUrl: './log-in.component.html',
   styleUrls: ['./log-in.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

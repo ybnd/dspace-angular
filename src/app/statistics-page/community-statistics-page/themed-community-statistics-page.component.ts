@@ -6,7 +6,7 @@ import { CommunityStatisticsPageComponent } from './community-statistics-page.co
  * Themed wrapper for CommunityStatisticsPageComponent
  */
 @Component({
-  selector: 'ds-themed-collection-statistics-page',
+  selector: 'ds-collection-statistics-page',
   styleUrls: [],
   templateUrl: '../../shared/theme-support/themed.component.html',
 })
