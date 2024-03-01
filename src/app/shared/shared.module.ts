@@ -276,7 +276,7 @@ import { EpersonSearchBoxComponent } from './eperson-group-list/eperson-search-b
 import { GroupSearchBoxComponent } from './eperson-group-list/group-search-box/group-search-box.component';
 import {
   ThemedItemPageTitleFieldComponent
-} from '../item-page/simple/field-components/specific-field/title/themed-item-page-field.component';
+} from '../item-page/simple/field-components/specific-field/title/themed-item-page-title-field.component';
 import { BitstreamListItemComponent } from './object-list/bitstream-list-item/bitstream-list-item.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SplitPipe } from './utils/split.pipe';
