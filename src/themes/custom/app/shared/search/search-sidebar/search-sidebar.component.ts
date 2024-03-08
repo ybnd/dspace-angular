@@ -14,7 +14,7 @@ import { SearchConfigurationService } from '../../../../../../app/core/shared/se
 
 
 @Component({
-  selector: 'ds-custom-search-sidebar',
+  selector: 'ds-themed-search-sidebar',
   // styleUrls: ['./search-sidebar.component.scss'],
   styleUrls: ['../../../../../../app/shared/search/search-sidebar/search-sidebar.component.scss'],
   // templateUrl: './search-sidebar.component.html',

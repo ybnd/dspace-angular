@@ -4,7 +4,7 @@ import {
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'ds-custom-results-back-button',
+  selector: 'ds-themed-results-back-button',
   // styleUrls: ['./results-back-button.component.scss'],
   styleUrls: ['../../../../../app/shared/results-back-button/results-back-button.component.scss'],
   //templateUrl: './results-back-button.component.html',

@@ -5,7 +5,7 @@ import { SearchConfigurationService } from '../../../../app/core/shared/search/s
 import { ConfigurationSearchPageComponent as BaseComponent } from '../../../../app/search-page/configuration-search-page.component';
 
 @Component({
-  selector: 'ds-custom-configuration-search-page',
+  selector: 'ds-themed-configuration-search-page',
   // styleUrls: ['./configuration-search-page.component.scss'],
   styleUrls: ['../../../../app/shared/search/search.component.scss'],
   // templateUrl: './configuration-search-page.component.html'

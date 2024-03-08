@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ProfilePageComponent as BaseComponent } from '../../../../app/profile-page/profile-page.component';
 
 @Component({
-  selector: 'ds-custom-profile-page',
+  selector: 'ds-themed-profile-page',
   // styleUrls: ['./profile-page.component.scss'],
   styleUrls: ['../../../../app/profile-page/profile-page.component.scss'],
   // templateUrl: './profile-page.component.html'

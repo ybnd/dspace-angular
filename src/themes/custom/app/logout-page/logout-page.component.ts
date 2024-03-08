@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LogoutPageComponent as BaseComponent} from '../../../../app/logout-page/logout-page.component';
 
 @Component({
-  selector: 'ds-custom-logout-page',
+  selector: 'ds-themed-logout-page',
   // styleUrls: ['./logout-page.component.scss'],
   styleUrls: ['../../../../app/logout-page/logout-page.component.scss'],
   // templateUrl: './logout-page.component.html'

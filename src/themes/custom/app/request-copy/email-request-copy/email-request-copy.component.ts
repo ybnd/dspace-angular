@@ -4,7 +4,7 @@ import {
 } from 'src/app/request-copy/email-request-copy/email-request-copy.component';
 
 @Component({
-    selector: 'ds-custom-email-request-copy',
+    selector: 'ds-themed-email-request-copy',
     // styleUrls: ['./email-request-copy.component.scss'],
     styleUrls: [],
     // templateUrl: './email-request-copy.component.html',

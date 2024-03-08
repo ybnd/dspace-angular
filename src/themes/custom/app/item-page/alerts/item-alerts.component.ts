@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ItemAlertsComponent as BaseComponent } from '../../../../../app/item-page/alerts/item-alerts.component';
 
 @Component({
-  selector: 'ds-custom-item-alerts',
+  selector: 'ds-themed-item-alerts',
   // templateUrl: './item-alerts.component.html',
   templateUrl: '../../../../../app/item-page/alerts/item-alerts.component.html',
   // styleUrls: ['./item-alerts.component.scss'],

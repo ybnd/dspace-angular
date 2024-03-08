@@ -9,7 +9,7 @@ import { CommunityListComponent as BaseComponent } from '../../../../../app/comm
  * Which nodes were expanded is kept in the store, so this persists across pages.
  */
 @Component({
-  selector: 'ds-custom-community-list',
+  selector: 'ds-themed-community-list',
   // styleUrls: ['./community-list.component.scss'],
   // templateUrl: './community-list.component.html'
   templateUrl: '../../../../../app/community-list-page/community-list/community-list.component.html'

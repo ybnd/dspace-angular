@@ -4,7 +4,7 @@ import {
 } from '../../../../../app/shared/file-download-link/file-download-link.component';
 
 @Component({
-  selector: 'ds-custom-file-download-link',
+  selector: 'ds-themed-file-download-link',
   // templateUrl: './file-download-link.component.html',
   templateUrl: '../../../../../app/shared/file-download-link/file-download-link.component.html',
   // styleUrls: ['./file-download-link.component.scss'],

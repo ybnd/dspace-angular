@@ -4,7 +4,7 @@ import { SEARCH_CONFIG_SERVICE } from '../../../../app/my-dspace-page/my-dspace-
 import { SearchConfigurationService } from '../../../../app/core/shared/search/search-configuration.service';
 
 @Component({
-  selector: 'ds-custom-search-page',
+  selector: 'ds-themed-search-page',
   // styleUrls: ['./search-page.component.scss'],
   // templateUrl: './search-page.component.html'
   templateUrl: '../../../../app/search-page/search-page.component.html',

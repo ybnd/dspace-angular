@@ -8,7 +8,7 @@ import { FullItemPageComponent as BaseComponent } from '../../../../../app/item-
  */
 
 @Component({
-  selector: 'ds-custom-full-item-page',
+  selector: 'ds-themed-full-item-page',
   // styleUrls: ['./full-item-page.component.scss'],
   styleUrls: ['../../../../../app/item-page/full/full-item-page.component.scss'],
   // templateUrl: './full-item-page.component.html',

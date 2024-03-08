@@ -4,7 +4,7 @@ import {
 } from '../../../../../app/shared/search-form/search-form.component';
 
 @Component({
-  selector: 'ds-custom-search-form',
+  selector: 'ds-themed-search-form',
   // styleUrls: ['./search-form.component.scss'],
   styleUrls: ['../../../../../app/shared/search-form/search-form.component.scss'],
   // templateUrl: './search-form.component.html',

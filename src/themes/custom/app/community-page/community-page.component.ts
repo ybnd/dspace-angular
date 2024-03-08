@@ -4,7 +4,7 @@ import { fadeInOut } from '../../../../app/shared/animations/fade';
 
 
 @Component({
-  selector: 'ds-custom-community-page',
+  selector: 'ds-themed-community-page',
   // templateUrl: './community-page.component.html',
   templateUrl: '../../../../app/community-page/community-page.component.html',
   // styleUrls: ['./community-page.component.scss']

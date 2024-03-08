@@ -4,7 +4,7 @@ import { fadeIn, fadeInOut } from '../../../../app/shared/animations/fade';
 
 
 @Component({
-  selector: 'ds-custom-collection-page',
+  selector: 'ds-themed-collection-page',
   // templateUrl: './collection-page.component.html',
   templateUrl: '../../../../app/collection-page/collection-page.component.html',
   // styleUrls: ['./collection-page.component.scss']

@@ -4,7 +4,7 @@ import {
 } from '../../../../../../app/info/feedback/feedback-form/feedback-form.component';
 
 @Component({
-  selector: 'ds-custom-feedback-form',
+  selector: 'ds-themed-feedback-form',
   // templateUrl: './feedback-form.component.html',
   templateUrl: '../../../../../../app/info/feedback/feedback-form/feedback-form.component.html',
   // styleUrls: ['./feedback-form.component.scss'],

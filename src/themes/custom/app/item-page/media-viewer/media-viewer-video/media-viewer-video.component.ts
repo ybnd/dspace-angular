@@ -4,7 +4,7 @@ import {
 } from '../../../../../../app/item-page/media-viewer/media-viewer-video/media-viewer-video.component';
 
 @Component({
-  selector: 'ds-custom-media-viewer-video',
+  selector: 'ds-themed-media-viewer-video',
   // templateUrl: './media-viewer-video.component.html',
   templateUrl: '../../../../../../app/item-page/media-viewer/media-viewer-video/media-viewer-video.component.html',
   // styleUrls: ['./media-viewer-video.component.scss'],

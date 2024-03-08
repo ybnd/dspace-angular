@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { LogInComponent as BaseComponent } from '../../../../../app/shared/log-in/log-in.component';
 
 @Component({
-  selector: 'ds-custom-log-in',
+  selector: 'ds-themed-log-in',
   // templateUrl: './log-in.component.html',
   templateUrl: '../../../../../app/shared/log-in/log-in.component.html',
   // styleUrls: ['./log-in.component.scss'],

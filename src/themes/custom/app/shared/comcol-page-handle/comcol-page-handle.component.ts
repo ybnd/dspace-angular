@@ -7,7 +7,7 @@ import { ComcolPageHandleComponent as BaseComponent} from '../../../../../app/sh
  */
 
 @Component({
-  selector: 'ds-custom-comcol-page-handle',
+  selector: 'ds-themed-comcol-page-handle',
   // templateUrl: './comcol-page-handle.component.html',
   templateUrl: '../../../../../app/shared/comcol/comcol-page-handle/comcol-page-handle.component.html',
   // styleUrls: ['./comcol-page-handle.component.scss'],

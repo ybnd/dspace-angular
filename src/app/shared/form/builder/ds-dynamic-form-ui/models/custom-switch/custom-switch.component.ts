@@ -7,7 +7,7 @@ import { DynamicFormLayoutService, DynamicFormValidationService } from '@ng-dyna
 import { DynamicCustomSwitchModel } from './custom-switch.model';
 
 @Component({
-  selector: 'ds-custom-switch',
+  selector: 'ds-themed-switch',
   styleUrls: ['./custom-switch.component.scss'],
   templateUrl: './custom-switch.component.html',
 })

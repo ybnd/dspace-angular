@@ -3,7 +3,7 @@ import { slideSidebarPadding } from '../../../../app/shared/animations/slide';
 import { RootComponent as BaseComponent } from '../../../../app/root/root.component';
 
 @Component({
-  selector: 'ds-custom-root',
+  selector: 'ds-themed-root',
   // styleUrls: ['./root.component.scss'],
   styleUrls: ['../../../../app/root/root.component.scss'],
   // templateUrl: './root.component.html',
