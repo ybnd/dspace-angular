@@ -8,7 +8,7 @@ The rules are split up into plugins by language:
 - [TypeScript rules](./docs/ts/index.md)
 - [HTML rules](./docs/html/index.md)
 
-> Run `yarn docs:lint` to generate this documentation!
+> The documentation is auto-generated from source. Run `yarn docs:lint` to update it.
 
 ## Developing
 
