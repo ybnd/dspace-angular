@@ -18,10 +18,7 @@ import {
   getTestScheduler,
   hot,
 } from 'jasmine-marbles';
-import {
-  of as observableOf,
-  of,
-} from 'rxjs';
+import { of as observableOf } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing';
 
 import { APP_DATA_SERVICES_MAP } from '../../../../config/app-config.interface';
@@ -128,7 +125,7 @@ describe('BitstreamFormatsComponent', () => {
 
 
     const configurationDataService = jasmine.createSpyObj('ConfigurationDataService', {
-      findByPropertyName: of({ payload: { value: 'test' } }),
+      findByPropertyName: observableOf({ payload: { value: 'test' } }),
     });
 
     paginationService = new PaginationServiceStub();
@@ -271,7 +268,7 @@ describe('BitstreamFormatsComponent', () => {
       });
 
       const configurationDataService = jasmine.createSpyObj('ConfigurationDataService', {
-        findByPropertyName: of({ payload: { value: 'test' } }),
+        findByPropertyName: observableOf({ payload: { value: 'test' } }),
       });
 
       paginationService = new PaginationServiceStub();
@@ -341,7 +338,7 @@ describe('BitstreamFormatsComponent', () => {
       });
 
       const configurationDataService = jasmine.createSpyObj('ConfigurationDataService', {
-        findByPropertyName: of({ payload: { value: 'test' } }),
+        findByPropertyName: observableOf({ payload: { value: 'test' } }),
       });
 
       paginationService = new PaginationServiceStub();

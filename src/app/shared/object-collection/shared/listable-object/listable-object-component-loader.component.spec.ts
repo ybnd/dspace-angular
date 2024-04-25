@@ -13,7 +13,7 @@ import { By } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { provideMockStore } from '@ngrx/store/testing';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 import { AuthRequestService } from 'src/app/core/auth/auth-request.service';
 import { CookieService } from 'src/app/core/services/cookie.service';
 import { HardRedirectService } from 'src/app/core/services/hard-redirect.service';
@@ -75,7 +75,7 @@ describe('ListableObjectComponentLoaderComponent', () => {
         { provide: REQUEST, useValue: {} },
         {
           provide: ActivatedRoute,
-          useValue: { data: of({ dso: { payload: {} } }), params: of({}) },
+          useValue: { data: observableOf({ dso: { payload: {} } }), params: observableOf({}) },
         },
         provideMockStore({}),
         { provide: ThemeService, useValue: getMockThemeService('dspace') },

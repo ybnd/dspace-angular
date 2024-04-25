@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Observable,
-  of,
+  of as observableOf,
 } from 'rxjs';
 import {
   map,
@@ -105,7 +105,7 @@ export class DsoVersioningModalService {
    */
   getVersioningTooltipMessage(dso, tooltipMsgHasDraft, tooltipMsgCreate): Observable<string> {
     return this.isNewVersionButtonDisabled(dso).pipe(
-      switchMap((hasDraftVersion) => of(hasDraftVersion ? tooltipMsgHasDraft : tooltipMsgCreate)),
+      switchMap((hasDraftVersion) => observableOf(hasDraftVersion ? tooltipMsgHasDraft : tooltipMsgCreate)),
     );
   }
 }

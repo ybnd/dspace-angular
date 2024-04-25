@@ -6,7 +6,7 @@ import {
 } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 import {
   catchError,
   map,
@@ -51,7 +51,7 @@ export class SuggestionTargetsEffects {
           if (error instanceof Error) {
             console.error(error.message);
           }
-          return of(new RetrieveAllTargetsErrorAction());
+          return observableOf(new RetrieveAllTargetsErrorAction());
         }),
       );
     }),
@@ -83,7 +83,7 @@ export class SuggestionTargetsEffects {
                   if (error instanceof Error) {
                     console.error(error.message);
                   }
-                  return of(new RefreshUserSuggestionsErrorAction());
+                  return observableOf(new RefreshUserSuggestionsErrorAction());
                 }),
               );
           }),
@@ -91,7 +91,7 @@ export class SuggestionTargetsEffects {
             if (error instanceof Error) {
               console.error(error.message);
             }
-            return of(new RefreshUserSuggestionsErrorAction());
+            return observableOf(new RefreshUserSuggestionsErrorAction());
           }),
         );
     })),

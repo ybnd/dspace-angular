@@ -29,7 +29,6 @@ import {
 import {
   Observable,
   of as observableOf,
-  of,
 } from 'rxjs';
 
 import { APP_DATA_SERVICES_MAP } from '../../../config/app-config.interface';
@@ -201,7 +200,7 @@ describe('GroupsRegistryComponent', () => {
     };
 
     configurationDataService = jasmine.createSpyObj('ConfigurationDataService', {
-      findByPropertyName: of({ payload: { value: 'test' } }),
+      findByPropertyName: observableOf({ payload: { value: 'test' } }),
     });
 
     authorizationService = jasmine.createSpyObj('authorizationService', ['isAuthorized']);

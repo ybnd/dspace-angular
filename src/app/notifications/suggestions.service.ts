@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   forkJoin,
   Observable,
-  of,
+  of as observableOf,
 } from 'rxjs';
 import {
   catchError,
@@ -167,7 +167,7 @@ export class SuggestionsService {
    */
   public retrieveCurrentUserSuggestions(userUuid: string): Observable<SuggestionTarget[]> {
     if (hasNoValue(userUuid)) {
-      return of([]);
+      return observableOf([]);
     }
     return this.researcherProfileService.findById(userUuid, true).pipe(
       getFirstCompletedRemoteData(),
@@ -181,10 +181,10 @@ export class SuggestionsService {
             }),
           );
         } else {
-          return of([]);
+          return observableOf([]);
         }
       }),
-      catchError(() => of([])),
+      catchError(() => observableOf([])),
     );
   }
 
@@ -203,7 +203,7 @@ export class SuggestionsService {
     return workspaceitemService.importExternalSourceEntry(suggestion.externalSourceUri, resolvedCollectionId)
       .pipe(
         getFirstSucceededRemoteDataPayload(),
-        catchError(() => of(null)),
+        catchError(() => observableOf(null)),
       );
   }
 
@@ -213,7 +213,7 @@ export class SuggestionsService {
    */
   public ignoreSuggestion(suggestionId): Observable<RemoteData<NoContent>> {
     return this.deleteReviewedSuggestion(suggestionId).pipe(
-      catchError(() => of(null)),
+      catchError(() => observableOf(null)),
     );
   }
 

@@ -2,7 +2,7 @@ import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   Observable,
-  of,
+  of as observableOf,
 } from 'rxjs';
 import {
   filter,
@@ -151,7 +151,7 @@ export class VersionHistoryDataService extends IdentifiableDataService<VersionHi
       switchMap((res) => res.versionhistory),
       getFirstSucceededRemoteDataPayload(),
       switchMap((versionHistoryRD) => this.getLatestVersionFromHistory$(versionHistoryRD)),
-    ) : of(null);
+    ) : observableOf(null);
   }
 
   /**
@@ -162,8 +162,8 @@ export class VersionHistoryDataService extends IdentifiableDataService<VersionHi
   isLatest$(version: Version): Observable<boolean> {
     return version ? this.getLatestVersion$(version).pipe(
       take(1),
-      switchMap((latestVersion) => of(version.version === latestVersion.version)),
-    ) : of(null);
+      switchMap((latestVersion) => observableOf(version.version === latestVersion.version)),
+    ) : observableOf(null);
   }
 
   /**
@@ -176,13 +176,13 @@ export class VersionHistoryDataService extends IdentifiableDataService<VersionHi
       getFirstCompletedRemoteData(),
       switchMap((res) => {
         if (res.hasSucceeded && !res.hasNoContent) {
-          return of(res).pipe(
+          return observableOf(res).pipe(
             getFirstSucceededRemoteDataPayload(),
             switchMap((version) => this.versionDataService.getHistoryFromVersion(version)),
             map((versionHistory) => versionHistory ? versionHistory.draftVersion : false),
           );
         } else {
-          return of(false);
+          return observableOf(false);
         }
       }),
     );

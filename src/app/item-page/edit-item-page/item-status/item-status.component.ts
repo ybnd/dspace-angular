@@ -18,7 +18,7 @@ import {
   BehaviorSubject,
   combineLatest,
   Observable,
-  of,
+  of as observableOf,
   Subscription,
 } from 'rxjs';
 import {
@@ -226,7 +226,7 @@ export class ItemStatusComponent implements OnInit {
                 }),
               );
             } else {
-              return of(false);
+              return observableOf(false);
             }
           }),
           // Switch map pushes the register DOI operation onto a copy of the base array then returns to the pipe
@@ -254,7 +254,7 @@ export class ItemStatusComponent implements OnInit {
           toArray(),
         );
 
-        let orcidOps$ = of([]);
+        let orcidOps$ = observableOf([]);
         if (this.orcidAuthService.isLinkedToOrcid(item)) {
           orcidOps$ = this.orcidAuthService.onlyAdminCanDisconnectProfileFromOrcid().pipe(
             map((canDisconnect) => {

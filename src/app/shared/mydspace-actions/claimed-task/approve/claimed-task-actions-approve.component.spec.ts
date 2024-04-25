@@ -14,10 +14,7 @@ import {
   TranslateLoader,
   TranslateModule,
 } from '@ngx-translate/core';
-import {
-  of as observableOf,
-  of,
-} from 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 import { RequestService } from '../../../../core/data/request.service';
 import { SearchService } from '../../../../core/shared/search/search.service';
@@ -103,7 +100,7 @@ describe('ClaimedTaskActionsApproveComponent', () => {
 
     beforeEach(() => {
       spyOn(component.processCompleted, 'emit');
-      spyOn(component, 'startActionExecution').and.returnValue(of(null));
+      spyOn(component, 'startActionExecution').and.returnValue(observableOf(null));
 
       expectedBody = {
         [component.option]: 'true',

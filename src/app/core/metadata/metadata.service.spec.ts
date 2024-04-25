@@ -15,7 +15,6 @@ import { TranslateService } from '@ngx-translate/core';
 import {
   Observable,
   of as observableOf,
-  of,
 } from 'rxjs';
 
 import { AppConfig } from '../../../config/app-config.interface';
@@ -94,7 +93,7 @@ describe('MetadataService', () => {
     });
     router = {
       url: '/items/0ec7ff22-f211-40ab-a69e-c819b0b1f357',
-      events: of(new NavigationEnd(1, '', '')),
+      events: observableOf(new NavigationEnd(1, '', '')),
       routerState: {
         root: {},
       },
@@ -196,7 +195,7 @@ describe('MetadataService', () => {
   }));
 
   it('route titles should overwrite dso titles', fakeAsync(() => {
-    (translateService.get as jasmine.Spy).and.returnValues(of('DSpace :: '), of('Translated Route Title'));
+    (translateService.get as jasmine.Spy).and.returnValues(observableOf('DSpace :: '), observableOf('Translated Route Title'));
     (metadataService as any).processRouteChange({
       data: {
         value: {
@@ -212,7 +211,7 @@ describe('MetadataService', () => {
   }));
 
   it('other navigation should add title and description', fakeAsync(() => {
-    (translateService.get as jasmine.Spy).and.returnValues(of('DSpace :: '), of('Dummy Title'), of('This is a dummy item component for testing!'));
+    (translateService.get as jasmine.Spy).and.returnValues(observableOf('DSpace :: '), observableOf('Dummy Title'), observableOf('This is a dummy item component for testing!'));
     (metadataService as any).processRouteChange({
       data: {
         value: {

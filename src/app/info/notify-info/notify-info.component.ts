@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import {
   map,
   Observable,
-  of,
+  of as observableOf,
 } from 'rxjs';
 
 import { NotifyInfoService } from '../../core/coar-notify/notify-info/notify-info.service';
@@ -31,7 +31,7 @@ export class NotifyInfoComponent implements OnInit {
   /**
    * Observable containing the COAR REST INBOX API URLs.
    */
-  coarRestApiUrl: Observable<string[]> = of([]);
+  coarRestApiUrl: Observable<string[]> = observableOf([]);
 
   constructor(private notifyInfoService: NotifyInfoService) {}
 

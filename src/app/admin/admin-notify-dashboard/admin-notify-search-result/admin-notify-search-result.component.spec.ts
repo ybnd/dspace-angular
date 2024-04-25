@@ -8,10 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 import { cold } from 'jasmine-marbles';
-import {
-  of as observableOf,
-  of,
-} from 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 import { APP_DATA_SERVICES_MAP } from '../../../../config/app-config.interface';
 import { RemoteDataBuildService } from '../../../core/cache/builders/remote-data-build.service';
@@ -109,8 +106,8 @@ describe('AdminNotifySearchResultComponent', () => {
       getEndpoint: cold('a', { a: '' }),
     });
     adminNotifyMessageService = jasmine.createSpyObj('adminNotifyMessageService', {
-      getDetailedMessages: of(mockAdminNotifyMessages),
-      reprocessMessage: of(mockAdminNotifyMessages),
+      getDetailedMessages: observableOf(mockAdminNotifyMessages),
+      reprocessMessage: observableOf(mockAdminNotifyMessages),
     });
     requestService = jasmine.createSpyObj('requestService', {
       generateRequestId: requestUUID,
@@ -125,7 +122,7 @@ describe('AdminNotifySearchResultComponent', () => {
     });
 
     searchConfigService = jasmine.createSpyObj('searchConfigService', {
-      getCurrentConfiguration: of('NOTIFY.outgoing'),
+      getCurrentConfiguration: observableOf('NOTIFY.outgoing'),
     });
     objectCache = {} as ObjectCacheService;
 
@@ -190,7 +187,7 @@ describe('AdminNotifySearchResultComponent', () => {
   });
 
   it('should unsubscribe on destroy', () => {
-    (component as any).subs = [of(null).subscribe()];
+    (component as any).subs = [observableOf(null).subscribe()];
 
     spyOn((component as any).subs[0], 'unsubscribe');
     component.ngOnDestroy();

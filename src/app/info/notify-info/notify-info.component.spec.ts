@@ -4,7 +4,7 @@ import {
 } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
-import { of } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 import { NotifyInfoService } from '../../core/coar-notify/notify-info/notify-info.service';
 import { ActivatedRouteStub } from '../../shared/testing/active-router.stub';
@@ -31,8 +31,8 @@ describe('NotifyInfoComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(NotifyInfoComponent);
     component = fixture.componentInstance;
-    component.coarRestApiUrl = of([]);
-    spyOn(component, 'generateCoarRestApiLinksHTML').and.returnValue(of(''));
+    component.coarRestApiUrl = observableOf([]);
+    spyOn(component, 'generateCoarRestApiLinksHTML').and.returnValue(observableOf(''));
     fixture.detectChanges();
   });
 

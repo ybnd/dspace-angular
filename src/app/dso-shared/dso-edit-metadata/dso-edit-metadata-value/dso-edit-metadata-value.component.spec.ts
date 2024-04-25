@@ -12,7 +12,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   Observable,
-  of,
+  of as observableOf,
 } from 'rxjs';
 import { MetadataField } from 'src/app/core/metadata/metadata-field.model';
 import { MetadataSchema } from 'src/app/core/metadata/metadata-schema.model';
@@ -152,7 +152,7 @@ describe('DsoEditMetadataValueComponent', () => {
     ];
 
     relationshipService = jasmine.createSpyObj('relationshipService', {
-      resolveMetadataRepresentation: of(
+      resolveMetadataRepresentation: observableOf(
         new ItemMetadataRepresentation(metadataValue),
       ),
     });
@@ -215,7 +215,7 @@ describe('DsoEditMetadataValueComponent', () => {
     component = fixture.componentInstance;
     component.mdValue = editMetadataValue;
     component.dso = dso;
-    component.saving$ = of(false);
+    component.saving$ = observableOf(false);
     fixture.detectChanges();
   });
 

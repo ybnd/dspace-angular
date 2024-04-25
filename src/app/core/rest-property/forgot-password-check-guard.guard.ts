@@ -6,7 +6,7 @@ import {
 } from '@angular/router';
 import {
   Observable,
-  of,
+  of as observableOf,
 } from 'rxjs';
 
 import { AuthService } from '../auth/auth.service';
@@ -31,7 +31,7 @@ export class ForgotPasswordCheckGuard extends SingleFeatureAuthorizationGuard {
   }
 
   getFeatureID(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<FeatureID> {
-    return of(FeatureID.EPersonForgotPassword);
+    return observableOf(FeatureID.EPersonForgotPassword);
   }
 
 }

@@ -2,7 +2,7 @@ import {
   fakeAsync,
   waitForAsync,
 } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 import { getMockRequestService } from '../../shared/mocks/request.service.mock';
 import { createSuccessfulRemoteDataObject$ } from '../../shared/remote-data.utils';
@@ -175,7 +175,7 @@ describe('VersionHistoryDataService', () => {
 
   describe('isLatest$', () => {
     beforeEach(waitForAsync(() => {
-      spyOn(service, 'getLatestVersion$').and.returnValue(of(version2));
+      spyOn(service, 'getLatestVersion$').and.returnValue(observableOf(version2));
     }));
     it('should return false for version1', () => {
       service.isLatest$(version1).subscribe((res) => {
@@ -194,13 +194,13 @@ describe('VersionHistoryDataService', () => {
       versionService.findByHref.and.returnValue(createSuccessfulRemoteDataObject$<Version>(version1));
     }));
     it('should return false if draftVersion is false', fakeAsync(() => {
-      versionService.getHistoryFromVersion.and.returnValue(of(versionHistory));
+      versionService.getHistoryFromVersion.and.returnValue(observableOf(versionHistory));
       service.hasDraftVersion$('href').subscribe((res) => {
         expect(res).toBeFalse();
       });
     }));
     it('should return true if draftVersion is true', fakeAsync(() => {
-      versionService.getHistoryFromVersion.and.returnValue(of(versionHistoryDraft));
+      versionService.getHistoryFromVersion.and.returnValue(observableOf(versionHistoryDraft));
       service.hasDraftVersion$('href').subscribe((res) => {
         expect(res).toBeTrue();
       });
