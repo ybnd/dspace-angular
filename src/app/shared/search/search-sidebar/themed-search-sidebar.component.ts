@@ -30,15 +30,15 @@ import { SearchSidebarComponent } from './search-sidebar.component';
 })
 export class ThemedSearchSidebarComponent extends ThemedComponent<SearchSidebarComponent> {
 
-  @Input() configuration;
+  @Input() configuration: string;
   @Input() configurationList: SearchConfigurationOption[];
   @Input() currentScope: string;
   @Input() currentSortOption: SortOptions;
   @Input() filters: Observable<RemoteData<SearchFilterConfig[]>>;
-  @Input() resultCount;
+  @Input() resultCount: number;
   @Input() viewModeList: ViewMode[];
-  @Input() showViewModes = true;
-  @Input() inPlaceSearch;
+  @Input() showViewModes: boolean;
+  @Input() inPlaceSearch: boolean;
   @Input() searchOptions: PaginatedSearchOptions;
   @Input() sortOptionsList: SortOptions[];
   @Input() refreshFilters: BehaviorSubject<boolean>;

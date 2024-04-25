@@ -44,7 +44,7 @@ export class SearchSidebarComponent {
   /**
    * The configuration to use for the search options
    */
-  @Input() configuration;
+  @Input() configuration: string;
 
   /**
    * The list of available configuration options
