@@ -13,7 +13,10 @@ import {
 
 import { fixture } from '../../../test/fixture';
 import { getComponentSelectorNode } from '../../util/angular';
-import { stringLiteral } from '../../util/misc';
+import {
+  isUnitTestFile,
+  stringLiteral,
+} from '../../util/misc';
 import { DSpaceESLintRuleInfo } from '../../util/structure';
 import {
   inThemedComponentOverrideFile,
@@ -61,7 +64,7 @@ export const rule = ESLintUtils.RuleCreator.withoutDocs({
   create(context: TSESLint.RuleContext<Message, unknown[]>) {
     const filename = getFilename(context);
 
-    if (filename.endsWith('.spec.ts')) {
+    if (isUnitTestFile(filename)) {
       return {};
     }
 

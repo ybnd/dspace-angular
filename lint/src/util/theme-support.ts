@@ -233,6 +233,16 @@ export function isThemeableComponent(className: string): boolean {
   return themeableComponents.byBaseClass.has(className);
 }
 
+export function getTheme(filename: string): string | undefined {
+  const match = filename.match(/src\/themes\/([^\/]+)\/app\/.*/);
+
+  if (match) {
+    return match[1];
+  }
+
+  return undefined;
+}
+
 export function inThemedComponentOverrideFile(filename: string): boolean {
   const match = filename.match(/src\/themes\/[^\/]+\/(app\/.*)/);
 

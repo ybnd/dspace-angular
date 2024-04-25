@@ -26,3 +26,11 @@ export function toUnixStylePath(path: string): string {
   }
   return path;
 }
+
+export function isUnitTestFile(filename: string) {
+  return filename.endsWith('.spec.ts');
+}
+
+export function isIntegrationTestFile(filename: string) {
+  return filename.endsWith('.cy.ts');
+}

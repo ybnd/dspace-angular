@@ -16,6 +16,10 @@ import {
   removeWithCommas,
   replaceOrRemoveArrayIdentifier,
 } from '../../util/fix';
+import {
+  isIntegrationTestFile,
+  isUnitTestFile,
+} from '../../util/misc';
 import { DSpaceESLintRuleInfo } from '../../util/structure';
 import {
   allThemeableComponents,
@@ -168,11 +172,11 @@ export const rule = ESLintUtils.RuleCreator.withoutDocs({
     }
 
     // ignore tests and non-routing modules
-    if (filename.endsWith('.spec.ts')) {
+    if (isUnitTestFile(filename)) {
       return {
         [`CallExpression[callee.object.name = "By"][callee.property.name = "css"] > Literal:first-child[value = /.*${DISALLOWED_THEME_SELECTORS}.*/]`]: handleThemedSelectorQueriesInTests,
       };
-    } else if (filename.endsWith('.cy.ts')) {
+    } else if (isIntegrationTestFile(filename)) {
       return {
         [`CallExpression[callee.object.name = "cy"][callee.property.name = "get"] > Literal:first-child[value = /.*${DISALLOWED_THEME_SELECTORS}.*/]`]: handleThemedSelectorQueriesInTests,
       };
