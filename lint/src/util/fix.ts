@@ -89,7 +89,7 @@ export function removeWithCommas(context: RuleContext<any, any>, fixer: RuleFixe
   let prevToken = source.getTokenBefore(elementNode);
 
   if (nextToken !== null && prevToken !== null) {
-    if (nextToken.value === ',') {
+    if (!isLast(elementNode) && nextToken.value === ',') {
       nextToken = source.getTokenAfter(nextToken);
       if (nextToken !== null) {
         ops.push(fixer.removeRange([elementNode.range[0], nextToken.range[0]]));

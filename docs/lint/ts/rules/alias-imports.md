@@ -27,15 +27,39 @@ import { of as observableOf } from 'rxjs';
         
 ```typescript
 import { of } from 'rxjs';
+const thing$ = of('thing');
 ```
 Will produce the following error(s):
 ```
-This import must be aliased
+This import must be aliased to {{ local }}
+This import must be aliased to {{ local }}
 ```
         
 Result of `yarn lint --fix`:
 ```typescript
 import { of as observableOf } from 'rxjs';
+const thing$ = observableOf('thing');
+```
+        
+    
+##### imports with and without alias
+        
+```typescript
+import { of, of as observableOf } from 'rxjs';
+const thing1$ = of('thing1');
+const thing2$ = observableOf('thing2');
+```
+Will produce the following error(s):
+```
+This import must be aliased to {{ local }}
+This import must be aliased to {{ local }}
+```
+        
+Result of `yarn lint --fix`:
+```typescript
+import { of as observableOf } from 'rxjs';
+const thing1$ = observableOf('thing1');
+const thing2$ = observableOf('thing2');
 ```
         
     
@@ -43,15 +67,18 @@ import { of as observableOf } from 'rxjs';
         
 ```typescript
 import { of as ofSomething } from 'rxjs';
+const thing$ = ofSomething('thing');
 ```
 Will produce the following error(s):
 ```
+This import uses the wrong alias (should be {{ local }})
 This import uses the wrong alias (should be {{ local }})
 ```
         
 Result of `yarn lint --fix`:
 ```typescript
 import { of as observableOf } from 'rxjs';
+const thing$ = observableOf('thing');
 ```
         
     

@@ -53,22 +53,48 @@ export function getObjectPropertyNodeByName(objectNode: TSESTree.ObjectExpressio
   return undefined;
 }
 
-export function findUsages(context: AnyRuleContext, localNode: TSESTree.Identifier): TSESTree.Identifier[] {
+export function findUsages(context: AnyRuleContext, localNode: TSESTree.Identifier, strict = false): TSESTree.Identifier[] {
   const source = getSourceCode(context);
 
   const usages: TSESTree.Identifier[] = [];
 
   for (const token of source.ast.tokens) {
-    if (token.type === TSESTree.AST_TOKEN_TYPES.Identifier && token.value === localNode.name && !match(token.range, localNode.range)) {
+    if (
+      token.type === TSESTree.AST_TOKEN_TYPES.Identifier && token.value === localNode.name
+          && !match(token.range, localNode.range)
+    ) {
       const node = source.getNodeByRangeIndex(token.range[0]);
       // todo: in some cases, the resulting node can actually be the whole program (!)
-      if (node !== null) {
+      if (node !== null && node.parent?.type !== TSESTree.AST_NODE_TYPES.ImportSpecifier) {
+        if (strict && node.type !== TSESTree.AST_NODE_TYPES.Identifier) {
+          continue;
+        }
         usages.push(node as TSESTree.Identifier);
       }
     }
   }
 
   return usages;
+}
+
+export function hasExactImport(context: AnyRuleContext, from: string, identifier: string, local?: string) {
+  const source = getSourceCode(context);
+
+  if (local === undefined) {
+    local = identifier;
+  }
+
+  for (const statement of source.ast.body) {
+    if (statement.type === TSESTree.AST_NODE_TYPES.ImportDeclaration && statement.source.value === from) {
+      for (const specifier of statement.specifiers) {
+        if (specifier.type === TSESTree.AST_NODE_TYPES.ImportSpecifier && specifier.imported.name === identifier && specifier.local.name === local) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
 }
 
 export function findUsagesByName(context: AnyRuleContext, identifier: string): TSESTree.Identifier[] {
