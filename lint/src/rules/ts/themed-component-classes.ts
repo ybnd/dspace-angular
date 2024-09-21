@@ -5,10 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  ESLintUtils,
-  TSESTree,
-} from '@typescript-eslint/utils';
+import { TSESTree } from '@typescript-eslint/utils';
 import { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 import { fixture } from '../../../test/fixture';
@@ -18,7 +15,10 @@ import {
   getComponentStandaloneNode,
 } from '../../util/angular';
 import { appendObjectProperties } from '../../util/fix';
-import { DSpaceESLintRuleInfo } from '../../util/structure';
+import {
+  createTsRule,
+  DSpaceESLintRuleInfo,
+} from '../../util/structure';
 import {
   getBaseComponentClassName,
   inThemedComponentOverrideFile,
@@ -55,7 +55,7 @@ export const info = {
   defaultOptions: [],
 } as DSpaceESLintRuleInfo;
 
-export const rule = ESLintUtils.RuleCreator.withoutDocs({
+export const rule = createTsRule({
   ...info,
   create(context: RuleContext<Message, unknown[]>) {
     const filename = getFilename(context);

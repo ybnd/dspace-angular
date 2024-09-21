@@ -53,6 +53,7 @@ import { CSSVariableService } from './shared/sass-helper/css-variable.service';
 import { HostWindowState } from './shared/search/host-window.reducer';
 import { ThemeService } from './shared/theme-support/theme.service';
 
+
 @Component({
   selector: 'ds-app',
   templateUrl: './app.component.html',

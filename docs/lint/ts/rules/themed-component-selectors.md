@@ -1,3 +1,4 @@
+<!-- GENERATED ~ lint/src/util/templates/rule.ejs -->
 [DSpace ESLint plugins](../../../../lint/README.md) > [TypeScript rules](../index.md) > `dspace-angular-ts/themed-component-selectors`
 _______
 

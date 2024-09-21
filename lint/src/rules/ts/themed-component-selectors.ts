@@ -5,16 +5,16 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  ESLintUtils,
-  TSESTree,
-} from '@typescript-eslint/utils';
+import { TSESTree } from '@typescript-eslint/utils';
 import { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 import { fixture } from '../../../test/fixture';
 import { getComponentSelectorNode } from '../../util/angular';
 import { stringLiteral } from '../../util/misc';
-import { DSpaceESLintRuleInfo } from '../../util/structure';
+import {
+  createTsRule,
+  DSpaceESLintRuleInfo,
+} from '../../util/structure';
 import {
   inThemedComponentOverrideFile,
   isThemeableComponent,
@@ -56,7 +56,7 @@ Unit tests are exempt from this rule, because they may redefine components using
   defaultOptions: [],
 } as DSpaceESLintRuleInfo;
 
-export const rule = ESLintUtils.RuleCreator.withoutDocs({
+export const rule = createTsRule({
   ...info,
   create(context: RuleContext<Message, unknown[]>) {
     const filename = getFilename(context);

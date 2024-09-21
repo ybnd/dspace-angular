@@ -5,10 +5,7 @@
  *
  * http://www.dspace.org/license/
  */
-import {
-  ESLintUtils,
-  TSESTree,
-} from '@typescript-eslint/utils';
+import { TSESTree } from '@typescript-eslint/utils';
 import { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 import { fixture } from '../../../test/fixture';
@@ -16,7 +13,10 @@ import {
   removeWithCommas,
   replaceOrRemoveArrayIdentifier,
 } from '../../util/fix';
-import { DSpaceESLintRuleInfo } from '../../util/structure';
+import {
+  createTsRule,
+  DSpaceESLintRuleInfo,
+} from '../../util/structure';
 import {
   allThemeableComponents,
   DISALLOWED_THEME_SELECTORS,
@@ -66,7 +66,7 @@ There are a few exceptions where the base class can still be used:
   defaultOptions: [],
 } as DSpaceESLintRuleInfo;
 
-export const rule = ESLintUtils.RuleCreator.withoutDocs({
+export const rule = createTsRule({
   ...info,
   create(context: RuleContext<Message, unknown[]>) {
     const filename = getFilename(context);

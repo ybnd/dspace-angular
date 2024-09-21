@@ -7,11 +7,11 @@
  */
 import { TmplAstElement } from '@angular-eslint/bundled-angular-compiler';
 import { TemplateParserServices } from '@angular-eslint/utils';
-import { ESLintUtils } from '@typescript-eslint/utils';
 import { RuleContext } from '@typescript-eslint/utils/ts-eslint';
 
 import { fixture } from '../../../test/fixture';
 import {
+  createHtmlRule,
   DSpaceESLintRuleInfo,
   NamedTests,
 } from '../../util/structure';
@@ -48,7 +48,7 @@ The only exception to this rule are unit tests, where we may want to use the bas
   defaultOptions: [],
 } as DSpaceESLintRuleInfo;
 
-export const rule = ESLintUtils.RuleCreator.withoutDocs({
+export const rule = createHtmlRule({
   ...info,
   create(context: RuleContext<Message, unknown[]>) {
     if (getFilename(context).includes('.spec.ts')) {

@@ -5,15 +5,16 @@
  *
  * http://www.dspace.org/license/
  */
+import { ESLintUtils } from '@typescript-eslint/utils';
+import { NamedCreateRuleMeta } from '@typescript-eslint/utils/eslint-utils';
 import {
   InvalidTestCase,
-  RuleMetaData,
   RuleModule,
   ValidTestCase,
 } from '@typescript-eslint/utils/ts-eslint';
 import { EnumType } from 'typescript';
 
-export type Meta = RuleMetaData<string, unknown[]>;
+export type Meta = NamedCreateRuleMeta<string, unknown[]>;
 export type Valid = ValidTestCase<unknown[]>;
 export type Invalid = InvalidTestCase<string, unknown[]>;
 
@@ -43,6 +44,16 @@ export interface PluginExports {
   rules: Record<string, unknown>,
   index: RuleExports[],
 }
+
+const DOCUMENTATION = `file://${process.cwd()}/docs/lint`;
+
+export const createTsRule = ESLintUtils.RuleCreator(
+  name => `${DOCUMENTATION}/ts/rules/${name}.md`,
+);
+
+export const createHtmlRule = ESLintUtils.RuleCreator(
+  name => `${DOCUMENTATION}/html/rules/${name}.md`,
+);
 
 export function bundle(
   name: string,

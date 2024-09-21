@@ -1,3 +1,4 @@
+<!-- GENERATED ~ lint/src/util/templates/index.ejs -->
 [DSpace ESLint plugins](../../../lint/README.md) > HTML rules
 _______
 

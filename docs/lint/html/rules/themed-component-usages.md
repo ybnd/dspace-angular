@@ -1,3 +1,4 @@
+<!-- GENERATED ~ lint/src/util/templates/rule.ejs -->
 [DSpace ESLint plugins](../../../../lint/README.md) > [HTML rules](../index.md) > `dspace-angular-html/themed-component-usages`
 _______
 
