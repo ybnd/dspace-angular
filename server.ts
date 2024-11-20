@@ -84,6 +84,8 @@ extendEnvironmentWithAppConfig(environment, appConfig);
 // The REST server base URL
 const REST_BASE_URL = environment.rest.ssrBaseUrl || environment.rest.baseUrl;
 
+const RE = new RegExp(REST_BASE_URL, 'g');
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app() {
 
@@ -272,8 +274,11 @@ function serverSideRender(req, res, next, sendToUser: boolean = true) {
         // Replace REST URL with UI URL
         if (environment.ui.replaceRestUrl && REST_BASE_URL !== environment.rest.baseUrl) {
           const t0 = Date.now();
-          html = html.replace(new RegExp(REST_BASE_URL, 'g'), environment.rest.baseUrl);
-          console.log(`Replaced all SSR URLs in HTML in ${Date.now() - t0}ms`); // todo: remove this
+
+
+          const count = (html.match(RE) || []).length;
+          html = html.replace(RE, environment.rest.baseUrl);
+          console.log(`Replaced ${count} SSR URL(s) in HTML in ${Date.now() - t0}ms`); // todo: remove this
         }
 
         // save server side rendered page to cache (if any are enabled)
