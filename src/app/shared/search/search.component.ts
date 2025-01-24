@@ -33,6 +33,7 @@ import {
   filter,
   map,
   switchMap,
+  tap,
 } from 'rxjs/operators';
 
 import {
@@ -524,7 +525,7 @@ export class SearchComponent implements OnDestroy, OnInit {
    * @private
    */
   private retrieveSearchResults(searchOptions: PaginatedSearchOptions) {
-    this.resultsRD$.next(null);
+    // this.resultsRD$.next(null);
     this.lastSearchOptions = searchOptions;
     const followLinks = [
       followLink<Item>('thumbnail', { isOptional: true }),
@@ -552,18 +553,24 @@ export class SearchComponent implements OnDestroy, OnInit {
       this.useCachedVersionIfAvailable,
       true,
       ...followLinks,
-    ).pipe(getFirstCompletedRemoteData())
-      .subscribe((results: RemoteData<SearchObjects<DSpaceObject>>) => {
-        if (results.hasSucceeded) {
-          if (this.trackStatistics) {
-            this.service.trackSearch(searchOptionsWithHidden, results.payload);
-          }
-          if (results.payload?.page?.length > 0) {
-            this.resultFound.emit(results.payload);
-          }
+    ).pipe(
+      tap((rd) => {
+        if ((rd.isRequestPending || rd.isResponsePending) && this.resultsRD$.getValue() !== null) {
+          this.resultsRD$.next(null);
         }
-        this.resultsRD$.next(results);
-      });
+      }),
+      getFirstCompletedRemoteData(),
+    ).subscribe((results: RemoteData<SearchObjects<DSpaceObject>>) => {
+      if (results.hasSucceeded) {
+        if (this.trackStatistics) {
+          this.service.trackSearch(searchOptionsWithHidden, results.payload);
+        }
+        if (results.payload?.page?.length > 0) {
+          this.resultFound.emit(results.payload);
+        }
+      }
+      this.resultsRD$.next(results);
+    });
   }
 
   /**

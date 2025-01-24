@@ -9,6 +9,7 @@ import {
 import {
   distinctUntilChanged,
   map,
+  skipWhile,
   switchMap,
   take,
   tap,
@@ -28,9 +29,6 @@ import { SearchFilterConfig } from '../../../shared/search/models/search-filter-
 import { SearchObjects } from '../../../shared/search/models/search-objects.model';
 import { SearchResult } from '../../../shared/search/models/search-result.model';
 import { getSearchResultFor } from '../../../shared/search/search-result-element-decorator';
-import { combineLatest as observableCombineLatest, Observable } from 'rxjs';
-import { Injectable, OnDestroy } from '@angular/core';
-import { map, switchMap, take, skipWhile } from 'rxjs/operators';
 import { FollowLinkConfig } from '../../../shared/utils/follow-link-config.model';
 import { RemoteDataBuildService } from '../../cache/builders/remote-data-build.service';
 import { BaseDataService } from '../../data/base/base-data.service';
