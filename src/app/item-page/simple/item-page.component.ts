@@ -150,20 +150,8 @@ export class ItemPageComponent implements OnInit, OnDestroy {
    * Initialize instance variables
    */
   ngOnInit(): void {
-    // Get item request
     this.itemRD$ = this.route.data.pipe(
-      map((data) => {
-        const itemRD = data.dso;
-        // If the item has a valid itemRequest, add it to the item and set the itemRD payload to the
-        // modified ItemWithSupplementaryData object
-        if (hasValue(data.itemRequest)) {
-          const itemRequest = data.itemRequest;
-          itemRD.payload = Object.assign(new ItemWithSupplementaryData(itemRequest), itemRD.payload);
-        }
-        // Return itemRD
-        return itemRD;
-      },
-      ),
+      map((data) => data.dso as RemoteData<Item>),
     );
     this.itemPageRoute$ = this.itemRD$.pipe(
       getAllSucceededRemoteDataPayload(),

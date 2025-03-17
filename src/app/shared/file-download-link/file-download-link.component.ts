@@ -8,7 +8,10 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import {
+  ActivatedRoute,
+  RouterLink,
+} from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   combineLatest as observableCombineLatest,
@@ -19,6 +22,7 @@ import { map } from 'rxjs/operators';
 
 import {
   getBitstreamDownloadRoute,
+  getBitstreamDownloadWithAccessTokenRoute,
   getBitstreamRequestACopyRoute,
 } from '../../app-routing-paths';
 import { DSONameService } from '../../core/breadcrumbs/dso-name.service';
@@ -26,6 +30,7 @@ import { AuthorizationDataService } from '../../core/data/feature-authorization/
 import { FeatureID } from '../../core/data/feature-authorization/feature-id';
 import { Bitstream } from '../../core/shared/bitstream.model';
 import { Item } from '../../core/shared/item.model';
+import { ItemRequest } from '../../core/shared/item-request.model';
 import {
   hasValue,
   isNotEmpty,
@@ -74,6 +79,7 @@ export class FileDownloadLinkComponent implements OnInit {
   constructor(
     private authorizationService: AuthorizationDataService,
     public dsoNameService: DSONameService,
+    protected route: ActivatedRoute,
   ) {
   }
 
@@ -81,8 +87,14 @@ export class FileDownloadLinkComponent implements OnInit {
     if (this.enableRequestACopy) {
       this.canDownload$ = this.authorizationService.isAuthorized(FeatureID.CanDownload, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
       const canRequestACopy$ = this.authorizationService.isAuthorized(FeatureID.CanRequestACopy, isNotEmpty(this.bitstream) ? this.bitstream.self : undefined);
-      this.bitstreamPath$ = observableCombineLatest([this.canDownload$, canRequestACopy$]).pipe(
-        map(([canDownload, canRequestACopy]) => this.getBitstreamPath(canDownload, canRequestACopy)),
+      this.bitstreamPath$ = observableCombineLatest([
+        this.canDownload$,
+        canRequestACopy$,
+        this.route.data.pipe(
+          map(data => data.itemRequest),
+        ),
+      ]).pipe(
+        map(([canDownload, canRequestACopy, itemRequest]) => this.getBitstreamPath(canDownload, canRequestACopy, itemRequest)),
       );
     } else {
       this.bitstreamPath$ = observableOf(this.getBitstreamDownloadPath());
@@ -90,8 +102,10 @@ export class FileDownloadLinkComponent implements OnInit {
     }
   }
 
-  getBitstreamPath(canDownload: boolean, canRequestACopy: boolean) {
-    if (!canDownload && canRequestACopy && hasValue(this.item)) {
+  getBitstreamPath(canDownload: boolean, canRequestACopy: boolean, itemRequest: ItemRequest) {
+    if (!canDownload && hasValue(itemRequest)) {
+      return this.getAccessByTokenBitstreamPath(itemRequest);
+    } else if (!canDownload && canRequestACopy && hasValue(this.item)) {
       return getBitstreamRequestACopyRoute(this.item, this.bitstream);
     }
     return this.getBitstreamDownloadPath();
@@ -102,5 +116,13 @@ export class FileDownloadLinkComponent implements OnInit {
       routerLink: getBitstreamDownloadRoute(this.bitstream),
       queryParams: {},
     };
+  }
+
+  /**
+   * Resolve special bitstream path which includes access token parameter
+   * @param itemRequest the item request object
+   */
+  getAccessByTokenBitstreamPath(itemRequest: ItemRequest) {
+    return getBitstreamDownloadWithAccessTokenRoute(this.bitstream, itemRequest.accessToken);
   }
 }
